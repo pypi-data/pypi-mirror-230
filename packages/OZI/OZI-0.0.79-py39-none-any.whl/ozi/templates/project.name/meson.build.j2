@@ -1,0 +1,27 @@
+{%- for line in project.copyright_head.split('\n') -%}
+{{ '#' }} {{ line }}
+{%- endfor -%}
+config_files = [
+    '__init__.py',
+]
+python_files = config_files
+foreach file: config_files
+    python_files += file+'i'
+endforeach
+python_files += ['py.typed']
+if get_option('dev').enabled()
+    foreach file: python_files
+        fs.copyfile(file)
+        python.install_sources(file, subdir: '{{ project.name }}')
+    endforeach
+endif
+if false
+    executable('source_files', config_files)
+endif
+children = []
+foreach child: children
+    subdir(child)
+endforeach
+if false
+    executable('source_children', children)
+endif

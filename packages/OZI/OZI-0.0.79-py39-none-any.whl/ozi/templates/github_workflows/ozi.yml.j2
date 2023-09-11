@@ -1,0 +1,14 @@
+name: Semantic Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+{% include 'checkpoint.yml.j2' %}
+
+{% include 'release.yml.j2' %}
+
+{% include 'publish.yml.j2' %}
