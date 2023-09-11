@@ -1,0 +1,200 @@
+Metadata-Version: 2.1
+Name: hatch-zipped-directory
+Version: 0.1.0b4
+Summary: A custom builder to build zipped directories
+Project-URL: Homepage, https://github.com/dairiki/hatch-zipped-directory
+Author-email: Jeff Dairiki <dairiki@dairiki.org>
+License-Expression: MIT
+License-File: LICENSE.txt
+Keywords: hatch,packaging
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Plugins
+Classifier: Framework :: Hatch
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Topic :: System :: Archiving :: Packaging
+Requires-Python: >=3.7
+Requires-Dist: hatchling
+Description-Content-Type: text/markdown
+
+# hatch-zipped-directory
+
+[![PyPI - Version](https://img.shields.io/pypi/v/hatch-zipped-directory.svg)](https://pypi.org/project/hatch-zipped-directory)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/hatch-zipped-directory.svg)](https://pypi.org/project/hatch-zipped-directory)
+[![Tests](https://github.com/dairiki/hatch-zipped-directory/actions/workflows/tests.yml/badge.svg)](https://github.com/dairiki/hatch-zipped-directory/actions/workflows/tests.yml)
+[![Trackgit Views](https://us-central1-trackgit-analytics.cloudfunctions.net/token/ping/lhautvz4zffrt8jawcpl)](https://trackgit.com)
+
+-----
+
+This is a [Hatch](https://hatch.pypa.io/latest/) plugin that provides
+a custom builder to support building zip archives for quasi-manual
+installation into various foreign package installation systems.
+(Specifically, I use this for packaging
+[Inkscape](https://inkscape.org/) extensions and symbols libraries,
+but it may be useful in other contexts, such as deploying to cloud
+compute platforms.)
+
+The builder creates a zip archive.  All the contents of the zip
+archive will be included under a single specific top-level directory.
+The default name of the top-level directory is a file-name-safe
+version of the project name, however the name of the directory may be
+configured by setting the `install-name` key in the target-specific
+configuration section.
+This behavior may be disabled by setting `install-name = ''`.
+
+In addition to whatever files are selected for inclusion in the
+archive via Hatch’s regular [build configuration
+settings](https://hatch.pypa.io/latest/config/build/), any configured
+project README and license files will be included in the top level of
+the install directory within the zip archive.
+
+As well, a `METADATA.json` file containing the project metadata in
+JSON format (as described in
+[PEP 566](https://peps.python.org/pep-0566/#json-compatible-metadata))
+will be included in the top level of the install directory within the
+zip archive.
+
+
+## Example
+
+Assume a project source directory looking something like:
+```
+.
+├── pyproject.toml
+├── LICENSE.txt
+├── README.md
+├── src
+│   ├── subdir
+│   │   ├── data.txt
+│   │   └── more-code.py
+│   └── my-code.py
+└── tests
+    └── test_foo.py
+```
+
+Where `pyproject.toml` looks like:
+```toml
+[build-system]
+requires = [
+    "hatchling",
+    "hatch-zipped-directory",
+]
+build-backend = "hatchling.build"
+
+[project]
+name = "test-project"
+version = "0.42"
+
+[tool.hatch.build.targets.zipped-directory]
+install-name = "org.example.test"
+sources = [
+    "/src",
+]
+```
+
+Then, running
+```sh
+hatch build --target zipped-directory
+```
+
+will build a zip archive named `dist/test_project-0.42.zip` with the following
+structure:
+```
+.
+└── org.example.test
+    ├── LICENSE.txt
+    ├── METADATA.json
+    ├── README.md
+    ├── my-code.py
+    └── subdir
+        ├── data.txt
+        └── more-code.py
+```
+
+## Reproducible Builds
+
+By default, this plugin attempts to build [reproducible][reproducible
+builds] archives by setting the timestamps of the zip entries to a
+fixed value. When building in reproducible mode, the UNIX file modes
+of the archive entries is also normalized (to either 0644 or 0755
+depending on whether the file is executable.)
+
+The timestamp used for reproducible builds may be configured by
+setting the `SOURCE_DATE_EPOCH` environment variable.
+
+Reproducible builds may be disabled by setting `reproducible = false`
+in an appropriate section of `pyproject.toml` or `hatch.toml`.  See
+Hatch’s documentation on [Build Configuration] for details.
+
+
+## Author
+
+Jeff Dairiki <dairiki@dairiki.org>
+
+## License
+
+`hatch-zipped-directory` is distributed under the terms of the
+[MIT](https://spdx.org/licenses/MIT.html) license.
+
+[reproducible builds]: https://hatch.pypa.io/latest/config/build/#reproducible-builds
+[Build Configuration]: https://hatch.pypa.io/latest/config/build/
+
+
+## Changes
+
+### 0.1.0b4 (2023-09-10)
+
+#### Features
+
+- Add support for [reproducible builds] which are now enabled by
+  default. When enabled, timestamps in the zip archive are set to a
+  fixed value (configurable via the `SOURCE_DATE_EPOCH` environment
+  variable) and the UNIX access modes of archive members are
+  [normalized to either 0644 or 0755][mode-normalization] depending on
+  whether the file is executable or not.
+
+[reproducible builds]: https://hatch.pypa.io/latest/config/build/#reproducible-builds
+[mode-normalization]: https://github.com/pypa/flit/pull/66
+
+### 0.1.0b3 (2023-05-10)
+
+#### Features
+
+- Refactor JSON metadata code. Now we use `hatchling` to generate
+  conventionall RFC 822-formatted distribution metadata, then convert
+  that to JSON, explicitly following the steps outline in [PEP
+  566](https://peps.python.org/pep-0566/#json-compatible-metadata).
+  Among other things, this allows configuration of the
+  *Metadata-Version* by setting
+  `tool.hatch.build.targets.zipped-directory.core-metadata-version`.
+
+#### Tests
+
+- We now have 100% test coverage.
+
+### 0.1.0b2 (2023-01-10)
+
+#### Features
+
+- The prefixing of file names under a top-level directory in the zip
+  archive can now be disabled by setting `install-name = ""`.
+  Thank you @gwerbin([#1][])
+
+#### Bugs
+
+- Use explicit encoding in hatch metadata hook (for Windows).
+
+[#1]: https://github.com/dairiki/hatch-zipped-directory/issues/1
+
+### 0.1.0b1 (2022-10-07)
+
+Initial release.
