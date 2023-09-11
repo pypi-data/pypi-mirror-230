@@ -1,0 +1,78 @@
+Metadata-Version: 2.1
+Name: freeq
+Version: 0.0.11
+Summary: Zero-setup queue with e2e encryption for free in 1 line of code
+Home-page: https://github.com/hronecviktor/freeq
+Author: Viktor Hronec
+Author-email: zamr666@gmail.com
+License: Apache 2.0
+Project-URL: Source, https://github.com/hronecviktor/freeq
+Project-URL: Tracker, https://github.com/hronecviktor/freeq/issues
+Platform: linux
+Classifier: Natural Language :: English
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Software Development :: Libraries
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: async-timeout==4.0.3
+Requires-Dist: blinker==1.6.2
+Requires-Dist: certifi==2023.7.22
+Requires-Dist: cffi==1.15.1
+Requires-Dist: charset-normalizer==3.2.0
+Requires-Dist: click==8.1.7
+Requires-Dist: cryptography==41.0.3
+Requires-Dist: flask==2.3.3
+Requires-Dist: hiredis==2.2.3
+Requires-Dist: idna==3.4
+Requires-Dist: itsdangerous==2.1.2
+Requires-Dist: jinja2==3.1.2
+Requires-Dist: markupsafe==2.1.3
+Requires-Dist: pycparser==2.21
+Requires-Dist: pycryptodome==3.18.0
+Requires-Dist: redis[hiredis]==5.0.0
+Requires-Dist: requests==2.31.0
+Requires-Dist: urllib3==2.0.4
+Requires-Dist: werkzeug==2.3.7
+Requires-Dist: zstandard==0.21.0
+
+# FreeQ
+
+---
+
+## Zero-setup end-to-end encrypted message queue for free in 1 line of python
+
+---
+
+## TL;DR;
+
+No need to set up a server, a DB, redis, dedicated queue, hosted pub/sub and worrying about free tier limits, or anything.
+`pip install freeq` and go
+
+#### Install:
+```shell
+pip install -U freeq
+```
+#### Publisher:
+```python
+> from freeq import Queue
+> q = Queue(name='thisismyqueuename',                       # made up, super unique
+            access_key='so_noone_can_write_to_my_queue',    # made up, identifies the queue along with name
+            secret_key='i_shit_when_i_sneeze')              # made up, never leaves the client
+> q.put({"pool_temperature": "too low"})
+```
+#### Consumer:
+```python
+> from freeq import Queue
+> q = Queue(name='thisismyqueuename',                       # made up, super unique
+            access_key='so_noone_can_write_to_my_queue',    # made up, identifies the queue along with name
+            secret_key='i_shit_when_i_sneeze')              # made up, never leaves the client
+> event = q.get()
+```
