@@ -1,0 +1,91 @@
+Metadata-Version: 2.1
+Name: canvas-parent-api
+Version: 0.0.14
+Summary: A small async API wrapper for Canvas Parents.
+Home-page: https://github.com/schwartzpub/canvas_parent_api
+Author: Jacob Schwartz
+Author-email: Jacob Schwartz <jake@schwartzpub.com>
+License: Copyright (c) 2018 The Python Packaging Authority
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+Project-URL: Homepage, https://github.com/schwartzpub/canvas_parent_api
+Project-URL: Bug Tracker, https://github.com/schwartzpub/canvas_parent_api/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: aiohttp
+Requires-Dist: pydantic <1.10.0,>=1.8.2
+
+# Canvas Parent API
+This is an async wrapper for the [Canvas API](https://canvas.instructure.com/doc/api/) from Instructure.  There are a few types of objects this will retrieve based on the assumption that you are a parent with students enrolled with Canvas.  
+
+The types of objects that can be returned include:
+ - Observees (Students)
+ - Courses
+ - Assignments
+ - Submissions
+
+This module is provided for use with the Home Assistant custom integration [Canvas](https://github.com/schwartzpub/canvas_hassio) however it could be useful as a standalone module for your own projects as well.
+
+## Installing
+To install the module use:
+```python
+python3 -m pip install canvas-parent-api
+```
+
+### Get API Token
+If you are a parent, you will have a Canvas Parent account.  To get an API token, you must sign into the Canvas Parent application from a web browser.  This is typically using: https://<yourdistrict>.instructure.com/login/canvas
+
+Once you have signed into your account, navigate to Account > Settings.
+
+Under "Approved Integrations" click "+ New Access Token" to create a new API Token.
+
+Enter a Purpose and Expiration date (blank for no expiration).
+
+Be sure to save your API token, as you will have to generate a new token if this is lost.
+
+### Usage
+Example usage to get students, printing names:
+```python
+import asyncio
+from canvas_parent_api import Canvas
+
+base_url = "https://school.instructure.com"
+api_token = "randomstringthatisntreallyatoken"
+
+async def get_students():
+	client = Canvas(f"{base_url}",f"{api_token}")
+	return await client.observees()
+
+students = asyncio.run(get_students())
+
+for student in students:
+	print(student.name)
+```
+
+### Patch Notes
+
+ - 0.0.12:
+    - Added pagination support to automatically paginate to end of available requests
+
+ - 0.0.9:
+	- Added Submissions
