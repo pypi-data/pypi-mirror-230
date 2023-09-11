@@ -1,0 +1,150 @@
+----------
+# PHASE 1
+- [ ] hypergo tool create library out of a function so it can be tested
+- [ ] update config cli instead of blind update at runtime
+- [ ] prefixes for passbyref, serialization, compression, encryption, etc.
+- [x] context decorator
+- [x] local component runner
+- [x] decorators
+        - [x] serialization
+- [x] decorator refactor
+- [ ] sdk unit tests
+        - [ ] automated in linter
+- [ ] create an SDK file and message viewer (for compressed and encrypted and serialized messages)
+- [ ] more decorators
+        - [x] passbyref
+        - [ ] validation
+        - [x] compression
+        - [ ] encryption
+        - [ ] mapping
+        - [x] transactions
+- [ ] clean up utility class
+- [ ] graph fixes
+        - [x] xenon complexity issues
+        - [ ] group like types into subgraphs
+        - [x] support wildcard configurations
+        - [ ] show payloads or bindings
+- [ ] routing key specific configuration
+        - [ ] consolidate custom_properties into routing key configurations
+        - [x] custom_properties support (or equivalent)
+- [x] automatic passthru routing keys
+        - [ ] how do we terminate them if unconsumed
+- [ ] function injection
+        - [ ] safe cast arguments
+- [ ] mapper library
+- [ ] configuration version routing
+        - [ ] use mapper library to map old configuration into new
+- [ ] mapping instead of bindings
+        - [ ] dict/list/str parsing (use mapper library)
+                - [ ] functions with eval?
+                - [x] "?" wildcards
+- [ ] routing key management
+        - [ ] "matched input key"
+- [ ] transaction support
+        - [ ] higher level transactions
+                - [ ] request response
+                - [ ] map/reduce
+- [x] linting and mypy
+
+
+----------
+# PHASE 2
+
+- [ ] component unit test template
+- [ ] instrumentation
+- [ ] monitoring
+- [ ] exception handling
+- [ ] logging
+- [ ] kafka (or similar) event stream
+- [ ] additional decorators
+        - [ ] streaming
+----------
+
+- [ ] pycoverage
+- [ ] pytest on top of unittest
+- [ ] make sure utiltiy/safecast tests are thorough
+- [ ] hypergo cli
+        hypergo http, stdio, azure, rabbit, etc.
+- [ ] Combine Config and ConfigType, And Message and MessageType
+- [ ] Support for literals and operations (maybe?) in config.json bindings
+- [ ] Configuration manager permissions to components in deploy automation
+- [ ] Deployment automation for libraries to artifact store using twine
+- [ ] blue green deployment?
+- [ ] delete subscription filters before adding them
+- [ ] move all 3rd party libraries (like glom) into a utils module that wraps 3rd party libraries for utilities needed by the sdk.   This puts everything in one place and isolates the sdk from the libraries it uses.
+- [ ] pass by reference vs pass by value
+        - [ ] BYO storage
+- [ ] message should use the copy of the configuration on the message, not the executor's configuration
+        eg. if execution changes the output keys
+- [ ] "pass-thru" routing keys
+- [ ] routing key hierarchical model
+- [ ] from functools import singledispatch
+- [ ] low level system messages (eg. component started with hypergo version, and component version)
+- [ ] version management (sdk + components)
+- [ ] Components - no code execution on import
+- [ ] component names should change
+- [ ] component functions shouldn't be __main__
+- [ ] Production roll out
+- [ ] containers
+- [ ] cli support and stdin binding
+- [x] service bus binding for outbound
+- [ ] python async await
+- [ ] one click deploy
+- [ ] dynamic routingkey in function
+- [ ] hypergo graph
+- [x] Generator (yielding) (multiple publishes)
+- [ ] Python aspect orientation for logging, and exception handling
+- [ ] hijacking stdout (from print) and push into logging
+- [ ] Exception handling, exponential back off, etc.
+- [ ] Queue management (error queues, etc)
+- [ ] Logging
+- [ ] Instrumentation, Monitoring
+- [ ] Static graphing
+- [ ] Runtime graphing
+- [ ] Lineage
+- [ ] routingkey boolean logic
+- [ ] Context -> Message -> Payload
+- [ ] Move all azure_... classes into an Azure Package and remove "azure" from their filenames (maybe?)
+- [x] Create git project - Hypergo
+- [x] Add gitignore
+- [x] Black and other linters
+- [x] fix mypy types
+- [x] add compound types to types.py
+- [x] remove execution logic from (what should be a passive) message class
+- [x] Organize project and breakup files, create library
+- [x] Deploy into Azure
+- [ ] Eliminate all link dependencies (example SecretsManager) from sdk (provide a secretsmanager interface in the sdk and then use that interface in the secretsmanager implementation)
+        - have the secretsmanager inherit from dict
+- [ ] Add additional message metadata to datastructures
+- [ ] Separate stages: receive, unpack, consume, produce, package, send
+        (Compression, storage/pass-by-ref, serialize, inline conversions/mappings)
+        - [ ] conversion (eg. asb vs rmq) to Message
+        - [ ] deserialize
+        - [ ] validation
+        - [ ] mapping in
+        - [ ] execution
+        - [ ] mapping out
+        - [ ] validation out
+        - [ ] serialize
+        - [ ] convert
+
+        - [ ] encryption
+        - [ ] streaming
+- [x] Black and other linters
+- [ ] CICD for sdk
+- [ ] Forward from Azure SeviceBus Subscription to Queue (for error handling)
+- [ ] In-transit data protocol
+- [ ] protobuf, avro or JSONSchema validation for input and output
+- [ ] Python aspect orientation for logging, and exception handling
+- [ ] hijacking stdout (from print) and push into logging
+- [ ] function call bus (like sqllite (But message bus))
+- [ ] divergent and convergent orchestration (transactions/correlation)
+- [x] pypi (internal)
+- [ ] sdk build (circle?) -> pypi
+- [ ] Unit tests for sdk
+- [ ] Unit test pattern for component consumers of sdk
+- [ ] multilanguage support (stdio bridge), service executor (not azure lambda), cli, console executor
+        - [ ] support for other languages (stdio abstraction)
+- [ ] amqp/rmq wrapper
+- [ ] included tooling (database connectors, secrets manager, etc.) delivered through config and paramter mapping
+- [x] routingkey token sorting
