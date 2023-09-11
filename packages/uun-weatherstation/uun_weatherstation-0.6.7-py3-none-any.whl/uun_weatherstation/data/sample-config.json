@@ -1,0 +1,60 @@
+{
+    "gateway": {
+        "moduleTimers": {
+            "heartbeat": 120,
+            "config": 3600,
+            "weatherConditions": {
+                "get": 60,
+                "send": 90
+            },
+            "healthCheck": {
+                "weatherConditions": 300
+            }
+        },
+        "moduleBackupStorage": {
+            "weatherConditions": {
+                "path": "backup/weatherConditions.json",
+                "limit": 50
+            }
+        },
+        "weatherConditions": {
+            "timeout": 5,
+            "ipAddress": "http://192.168.1.7",
+            "endPointList": {
+                "currentConditions": "v1/current_conditions"
+            }
+        },
+        "healthCheck": {
+            "diagnosticsPath": "diagnostics",
+            "modules": {
+                "weatherConditions": {
+                    "leeway": 120
+                }
+            }
+        }
+    },
+    "uuThing": {
+        "uuIdentity": "xxx",
+        "accessCode1": "xxx",
+        "accessCode2": "xxx"
+    },
+    "uuApp": {
+        "gateway": "uuappg01-eu-w-1.plus4u.net",
+        "uuAppName": "ucl-weatherstation-maing01",
+        "awid": "xxx",
+        "uuCmdList": {
+            "weatherConditionsAdd": "weatherConditions/add",
+            "gatewayGetConfiguration": "gateway/getConfiguration",
+            "gatewayHeartbeat": "gateway/heartbeat"
+        }
+    },
+    "oidcGrantToken": {
+        "gateway": "uuidentity.plus4u.net",
+        "uuAppName": "uu-oidc-maing02",
+        "awid": "xxx",
+        "clientId": "xxx",
+        "clientSecret": "xxx",
+        "uuCmd": "oidc/grantToken",
+        "tokenPath": "./oidc-token"
+    }
+}
