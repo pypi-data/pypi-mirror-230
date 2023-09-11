@@ -1,0 +1,57 @@
+Metadata-Version: 2.1
+Name: ttvsplit
+Version: 0.3
+Summary: A Train Test Val Split library
+Home-page: UNKNOWN
+Author: Aryan Sakhala
+Author-email: ryansakhala@gmail.com
+License: UNKNOWN
+Platform: UNKNOWN
+Description-Content-Type: text/markdown
+
+
+# ttsvsplit - Train, Test, Validation Splitter
+
+A simple utility designed to seamlessly split datasets into train, test, and validation sets, inspired by `sklearn`'s `train_test_split`.
+
+## Installation
+
+To install `ttvsplit`, use pip:
+
+```
+pip install ttsvsplit
+```
+
+## Usage
+
+Using `ttvsplit` is straightforward. Import the `train_test_val_split` function and apply it on your features (`X`) and labels (`y`).
+
+Here's a basic example:
+
+```python
+import numpy as np
+from ttsvsplit import train_test_val_split
+
+# Sample data
+X = np.array([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12]])
+y = np.array([1, 0, 1, 0, 1, 0])
+
+X_train, y_train, X_test, y_test, X_val, y_val = train_test_val_split(X, y)
+```
+
+## Functions
+
+The library provides the following function:
+
+- `train_test_val_split(X, y, train_size=0.6, test_size=0.2, random_state=None)`: 
+  - **X**: Features to be split.
+  - **y**: Labels corresponding to the features.
+  - **train_size**: Proportion of the data to be used as training data (default: 0.6).
+  - **test_size**: Proportion of the data to be used as testing data (default: 0.2).
+  - **random_state**: Seed for reproducibility.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE.txt file for details.
+
+
