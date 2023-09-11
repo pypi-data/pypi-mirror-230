@@ -1,0 +1,73 @@
+[tool.poetry]
+name = "podmaker"
+version = "0.9.0"
+description = "Convert online media into podcast feeds."
+license = "Unlicense"
+authors = ["YogiLiu <YogiLiu@outlook.com>"]
+maintainers = ["YogiLiu <YogiLiu@outlook.com>"]
+readme = "README.md"
+homepage = "https://github.com/YogiLiu/podmaker"
+repository = "https://github.com/YogiLiu/podmaker"
+documentation = "https://github.com/YogiLiu/podmaker/blob/main/README.md"
+keywords = ["rss", "youtube", "podcast"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console"
+]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+tomlkit = "^0.12.1"
+pydantic = {extras = ["email"], version = "^2.2.0"}
+apscheduler = "^3.10.4"
+boto3 = { version = "^1.28.27", optional = true }
+yt-dlp = { version = "^2023.7.6", optional = true }
+
+[tool.poetry.extras]
+s3 = ["boto3"]
+youtube = ["yt-dlp"]
+all = ["boto3", "yt-dlp"]
+
+[tool.poetry.group.dev.dependencies]
+boto3-stubs = { extras = ["essential"], version = "^1.28.27" }
+autohooks = "^23.7.0"
+autohooks-plugin-ruff = "^23.6.1"
+autohooks-plugin-mypy = "^23.3.0"
+typing-extensions = "^4.7.1"
+
+[tool.poetry.scripts]
+podmaker = 'podmaker.cli:run'
+
+[tool.autohooks]
+mode = "poetry"
+pre-commit = ["autohooks.plugins.mypy", "autohooks.plugins.ruff"]
+
+[tool.ruff]
+select = ["C90", "F", "I", "PL"]
+target-version = "py39"
+line-length = 120
+
+[tool.mypy]
+python_version = "3.9"
+strict = true
+plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = ["yt_dlp", "apscheduler.*"]
+ignore_missing_imports = true
+
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+tag_format = "$version"
+version_scheme = "pep440"
+version_provider = "poetry"
+update_changelog_on_bump = true
+major_version_zero = true
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/YogiLiu/podmaker/issues"
