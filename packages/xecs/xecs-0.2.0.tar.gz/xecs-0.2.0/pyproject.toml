@@ -1,0 +1,71 @@
+[build-system]
+requires = ["maturin>=0.14,<0.15"]
+build-backend = "maturin"
+
+[project]
+name = "xecs"
+dependencies = [
+  "numpy",
+]
+requires-python = ">=3.11"
+readme = "README.rst"
+classifiers = [
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+]
+
+[project.optional-dependencies]
+dev = [
+  "black",
+  "ruff",
+  "mypy",
+  "pygame",
+  "pygame-widgets",
+  "pytest",
+  "pytest-benchmark",
+  "pytest-cov",
+  "sphinx",
+  "sphinx-copybutton",
+  "furo"
+]
+
+
+[tool.maturin]
+features = ["pyo3/extension-module"]
+python-source = "python"
+
+[tool.mypy]
+show_error_codes = true
+implicit_optional = false
+warn_no_return = true
+strict_optional = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+warn_unreachable = true
+disallow_any_generics = true
+
+[[tool.mypy.overrides]]
+module = [
+  "pygame_widgets.*",
+]
+ignore_missing_imports = true
+
+
+[tool.black]
+line-length = 79
+
+[tool.pytest.ini_options]
+testpaths = [
+  "tests",
+]
+python_files = [
+  "test_*.py",
+  "benchmark_*.py"
+]
+python_functions = [
+  "test_*",
+  "benchmark_*"
+]
