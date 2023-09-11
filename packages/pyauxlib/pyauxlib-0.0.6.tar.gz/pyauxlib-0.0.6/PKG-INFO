@@ -1,0 +1,88 @@
+Metadata-Version: 2.1
+Name: pyauxlib
+Version: 0.0.6
+Summary: Auxiliary library for python.
+Home-page: https://github.com/psolsfer/pyauxlib
+Author: Pablo Solís Fernández
+Author-email: pablosolisfernandez@gmail.com
+License: BSD-3-Clause
+Project-URL: Documentation, https://pyauxlib.readthedocs.io/
+Project-URL: Changelog, https://pyauxlib.readthedocs.io/en/latest/changelog.html
+Project-URL: Issue Tracker, https://github.com/psolsfer/pyauxlib/issues
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Utilities
+Requires-Python: >=3.10
+License-File: LICENSE
+License-File: AUTHORS.rst
+Requires-Dist: wrapt
+Provides-Extra: with-chardet
+Requires-Dist: chardet; extra == "with-chardet"
+
+========
+Overview
+========
+
+
+
+Auxiliary library for python.
+
+* Free software: BSD 3-Clause License
+
+Installation
+============
+
+::
+
+    pip install pyauxlib
+
+You can also install the in-development version with::
+
+    pip install https://github.com/psolsfer/pyauxlib/archive/main.zip
+
+
+Documentation
+=============
+
+
+https://pyauxlib.readthedocs.io/
+
+
+Development
+===========
+
+To run all the tests run::
+
+    tox
+
+Note, to combine the coverage data from all the tox environments run:
+
+.. list-table::
+    :widths: 10 90
+    :stub-columns: 1
+
+    - - Windows
+      - ::
+
+            set PYTEST_ADDOPTS=--cov-append
+            tox
+
+    - - Other
+      - ::
+
+            PYTEST_ADDOPTS=--cov-append tox
+
+
+Changelog
+=========
+
+0.0.0 (2023-06-01)
+------------------
+
+* First release on PyPI.
