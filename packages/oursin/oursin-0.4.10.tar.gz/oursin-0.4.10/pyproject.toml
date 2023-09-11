@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "oursin"
+version = "0.4.10"
+authors = [
+  { name="Daniel Birman", email="danbirman@gmail.com" },
+]
+description = "Urchin - Universal Renderer Creating Helpful Images for Neuroscience Python API"
+readme = "README.md"
+license = { file="LICENSE" }
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+  "python-socketio[client] >= 5.8,< 5.10",
+  "numpy >= 1.24.3,< 1.26.0",
+  "Pillow >= 9.5,< 10.1"
+]
+
+[project.urls]
+"Homepage" = "https://virtualbrainlab.org/urchin/installation_and_use.html"
+"Bug Tracker" = "https://github.com/VirtualBrainLab/Urchin/issues"
