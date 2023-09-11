@@ -1,0 +1,43 @@
+Metadata-Version: 2.1
+Name: ephyspy
+Version: 0.0.5
+Summary: Package to extract summary statistics from electrophysiological data.
+Author: Jonas Beck
+License: GPLv3
+Platform: UNKNOWN
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: pandas (>=1.5.3)
+Requires-Dist: numpy (>=1.23.5)
+Requires-Dist: matplotlib (>=3.4.2)
+Requires-Dist: scipy (>=1.9.1)
+Requires-Dist: scikit-learn (>=1.1.1)
+Provides-Extra: dev
+Requires-Dist: black ; extra == 'dev'
+Requires-Dist: isort ; extra == 'dev'
+Requires-Dist: pyright ; extra == 'dev'
+Requires-Dist: flake8 ; extra == 'dev'
+Requires-Dist: autoflake ; extra == 'dev'
+Requires-Dist: pre-commit ; extra == 'dev'
+
+<!-- [![codecov]()]() -->
+<!-- [![DOI]()]() -->
+[![PyPI version](https://badge.fury.io/py/ephyspy.svg)](https://badge.fury.io/py/ephyspy)
+[![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/berenslab/ephyspy/blob/main/CONTRIBUTING.md)
+[![Tests](https://github.com/berenslab/ephyspy/workflows/Tests/badge.svg?branch=main)](https://github.com/berenslab/ephyspy/actions)
+[![GitHub license](https://img.shields.io/github/license/berenslab/ephyspy)](https://github.com/berenslab/ephyspy/blob/main/LICENSE.txt)
+
+# EphysPy
+
+### Package to extract electrophysiological features from current clamp experiments.
+
+This package provies an API to extract a multitude of features from voltage clamp recordings with the help of the [AllenSDK](https://allensdk.readthedocs.io/en/latest/allensdk.ephys.html). 
+
+### Installation
+The package can be installed via `pip install ephyspy`.
+Alternatively, clone the package with `https://github.com/berenslab/ephyspy.git` and install using pip via `pip install -e ./ephyspy`.
+
+### Getting started
+To get started see [`example.ipynb`](https://github.com/berenslab/ephyspy/blob/main/example.ipynb).
+
