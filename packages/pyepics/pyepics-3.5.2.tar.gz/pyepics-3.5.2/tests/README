@@ -1,0 +1,20 @@
+This folder contains several tests of the Epics Channel Access Module,
+including for automated testing.
+
+To run the tests, you will need `softIoc` from epics base, and `procServ`.
+With Anaconda Python, these can be installed with
+
+    conda install -y -c conda-forge epics-base
+    conda install -y -c lcls-ii procserv
+
+Then, to run the tests, use
+
+    cd Setup
+    sh start_ioc.sh
+    python simulator.py &
+    ..
+
+With that, any of the `test_*.py` tests in this folder can be run.
+
+Older or more complex tests are in the UnsortedTests folder.  Those
+may be of interest, but are not run as part of the CI process.
