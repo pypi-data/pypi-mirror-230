@@ -1,0 +1,75 @@
+Metadata-Version: 2.1
+Name: nonebot-plugin-error-alert
+Version: 0.2.0
+Summary: 
+License: MIT
+Author: ssttkkl
+Author-email: huang.wen.long@hotmail.com
+Requires-Python: >=3.9,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: nb-cli (>=1.2.3,<2.0.0)
+Requires-Dist: nonebot-plugin-apscheduler (>=0.3.0)
+Requires-Dist: nonebot-plugin-datastore (>=1.0.0)
+Requires-Dist: nonebot-plugin-send-anything-anywhere (>=0.3.0)
+Requires-Dist: nonebot2 (>=2.0.0,<3.0.0)
+Description-Content-Type: text/markdown
+
+nonebot-plugin-error-alert
+========
+
+当Bot发生运行错误时发送消息提醒
+
+（插件基于logger实现，其他插件在Matcher运行过程抛出异常，或是记录ERROR级别的日志，都将视作Bot运行错误）
+
+## 卖家秀
+
+![1](img/1.png)
+
+## 指令
+
+### `/error_alert subscribe`
+
+订阅错误告警。发生错误时立即发送消息提醒至本账号。
+
+### `/error_alert subscribe --cron "<cron>"`
+
+订阅错误告警。但不会在发生错误时立即发送消息提醒，而是在满足cron表达式的时间点统一发送该时间段发生的错误告警。
+
+示例：`/error_alert subscribe --cron "0 0 * * * ?"`，每小时0分0秒时统一发送消息提醒
+
+### `/error_alert unsubscribe`
+
+取消订阅错误告警。
+
+### `/error_alert show`
+
+查看本账号订阅的错误告警。
+
+## 配置项
+
+### `error_alert_superuser_only`
+
+是否仅允许超级用户调用指令。
+
+默认值：`True`
+
+### `error_alert_plugins_blacklist`
+
+当错误涉及指定插件时不进行报错，设为`None`时不启用
+
+默认值：`None`
+
+### `error_alert_plugins_whitelist`
+
+仅当错误涉及指定插件时不进行报错，设为`None`时不启用
+
+默认值：`None`
+
+## LICENSE
+
+MIT License
+
