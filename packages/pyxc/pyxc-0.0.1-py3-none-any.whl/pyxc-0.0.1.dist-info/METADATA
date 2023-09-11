@@ -1,0 +1,87 @@
+Metadata-Version: 2.1
+Name: pyxc
+Version: 0.0.1
+Summary: Python point-to-point correlation library.
+Author: Sang-Hyeok Lee, Mattis Seehaus
+Maintainer: Sang-Hyeok Lee
+License: MIT License
+        
+        Copyright (c) 2023 S. Lee, M. Seehaus
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Homepage, https://github.com/polarities/PyXC
+Project-URL: Documentation, https://pyxc.readthedocs.org
+Project-URL: Repository, https://github.com/polarities/PyXC.git
+Keywords: Point-to-point correlation
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: scipy
+Requires-Dist: tqdm
+Requires-Dist: numpy >=1.21.3 ; python_version == "3.10"
+Requires-Dist: numpy >=1.23.2 ; python_version == "3.11"
+Provides-Extra: development
+Requires-Dist: pytest ; extra == 'development'
+Requires-Dist: jupyter ; extra == 'development'
+Requires-Dist: matplotlib ==3.7.1 ; extra == 'development'
+Requires-Dist: nbsphinx ==0.9.2 ; extra == 'development'
+Requires-Dist: numpydoc ==1.5.0 ; extra == 'development'
+Requires-Dist: pandas ==2.0.2 ; extra == 'development'
+Requires-Dist: pillow ==9.5.0 ; extra == 'development'
+Requires-Dist: scikit-image ==0.20.0 ; extra == 'development'
+Requires-Dist: sphinx-autoapi ==2.1.1 ; extra == 'development'
+Requires-Dist: sphinx-rtd-theme ==1.3.0 ; extra == 'development'
+Requires-Dist: sphinx ==7.0.1 ; extra == 'development'
+Requires-Dist: opencv-python ==4.8.0.76 ; extra == 'development'
+
+# XCorrelate: 2-dimensional correlation library.
+
+[![Documentation Status](https://readthedocs.org/projects/pyxc/badge/?version=latest)](https://pyxc.readthedocs.io/en/latest/?badge=latest)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8322342.svg)](https://doi.org/10.5281/zenodo.8322342)
+
+## About PyXC
+
+PyXC is a point-to-point correlation tool based on Python. This library aims for a self-documenting correlation library on top of the IPython environment.
+
+Please refer the following link for the documentation: [Read the docs](https://pyxc.readthedocs.io/en/latest/).
+
+## Install
+```bash
+pip install pyxc
+``` 
+## Requirement
+- Python 3.10 or higher
+- Numpy
+- Scipy
+
+## Functionality
+- Point-to-point correlation. For example:
+    - Correlation between EBSD and optical microscopy.
+    - Correlation between EBSD and nano-indentation grid.
+    
