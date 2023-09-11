@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "gpt_data_dictionary"
+version = "0.1.0"
+description = "data-dictionary is a Python package that automates the creation of data dictionaries utilizing LLM. It generates human-readable variable names and provides comprehensive metadata, making it an essential tool for data management, enhancing data interpretability and quality assurance."
+authors = ["leehanchung <lee.hanchung@gmail.com>"]
+license = "Apache-2.0"
+readme = "README.md"
+packages = [{include = "gpt_data_dictionary"}]
+classifiers = [
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+python-dotenv = "^1.0.0"
+openai = "^0.28.0"
+pydantic = "^2.3.0"
+langchain = "^0.0.285"
+pandas = "^2.1.0"
+fire = "^0.5.0"
+jinja2 = "^3.1.2"
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.25.2"
+ruff = "^0.0.287"
+black = "^23.9.0"
+pytest = "^7.4.2"
+mccabe = "^0.7.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
