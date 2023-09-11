@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "simba-vclients-config"
+version = "0.0.1rc1"
+description = "Dummy package to prevent any kind of dependency confusion attacks against internal python packages"
+authors = ["Appsec-Team SBB  <application-security@sbb.ch>"]
+readme = "README.md"
+packages = [{include = "dummy_package"}]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

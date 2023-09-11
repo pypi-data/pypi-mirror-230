@@ -1,0 +1,3 @@
+This is a dummy package intended to prevent any dependency confusion attacks against our internal Python packages at [SBB](https://www.sbb.ch/). For now this is the only foolproof way to prevent some dependency confusion attacks until the following PEP has been implemented: [PEP-708](https://peps.python.org/pep-0708/)
+
+For any questions regarding this package feel free to reach out to <application-security@sbb.ch>.
