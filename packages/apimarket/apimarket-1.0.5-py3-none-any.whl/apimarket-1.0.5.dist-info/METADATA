@@ -1,0 +1,78 @@
+Metadata-Version: 2.1
+Name: apimarket
+Version: 1.0.5
+Summary: API Market SDK for Python Development
+Home-page: https://apimarket.mx/
+Author: Carlos Eduardo Sanchez Torres (sanchezcarlosjr)
+Author-email: 24639141+sanchezcarlosjr@users.noreply.github.com
+License: MIT
+Project-URL: Documentation, https://github.com/api-market-company/apimarket-sdk-python
+Platform: any
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Topic :: Utilities
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Operating System :: Unix
+Classifier: Operating System :: MacOS
+Classifier: Operating System :: Microsoft :: Windows
+Description-Content-Type: text/x-rst; charset=UTF-8
+License-File: LICENSE.txt
+Requires-Dist: python-decouple
+Requires-Dist: importlib-metadata ; python_version < "3.8"
+Provides-Extra: testing
+Requires-Dist: setuptools ; extra == 'testing'
+Requires-Dist: pytest ; extra == 'testing'
+Requires-Dist: pytest-cov ; extra == 'testing'
+
+.. image:: https://img.shields.io/pypi/v/apimarket.svg
+   :alt: PyPI-Server
+   :target: https://pypi.org/project/apimarket/
+
+.. image:: https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Twitter
+   :alt: Twitter
+   :target: https://twitter.com/apimarketmx
+
+.. image:: https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold
+   :alt: Project generated with PyScaffold
+   :target: https://pyscaffold.org/
+
+
+=========
+apimarket
+=========
+
+API Market Python Open Source Development
+
+Installation
+------------
+
+.. code-block:: bash
+
+   pip install apimarket
+
+Fetch CURP details
+------------------
+
+.. code-block:: python3
+
+   import apimarket
+   result = apimarket.fetch_curp_details("LOOA531113HTCPBN07", api_key="")
+   print(result)
+
+CLI
+---
+
+.. code-block:: bash
+
+   apimarket -c LOOA531113HTCPBN07
+
+.. _pyscaffold-notes:
+
+Note
+----
+
+This project has been set up using PyScaffold 4.5. For details and usage information on PyScaffold see https://pyscaffold.org/.
