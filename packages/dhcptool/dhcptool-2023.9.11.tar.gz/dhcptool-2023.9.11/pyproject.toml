@@ -1,0 +1,25 @@
+[tool.poetry.scripts]
+dhcptool = "dhcptool.main:dhcp_main"
+
+[tool.poetry]
+name = "dhcptool"
+version = "2023.9.11"
+description = "支持option97发包"
+authors = ["mf.liang <mf.liang@outlook.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.6.8"
+scapy = "^2.5.0"
+pyyaml = "^6.0.1"
+
+
+[[tool.poetry.source]]
+name = "tsinghua"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+default = false
+secondary = false
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
