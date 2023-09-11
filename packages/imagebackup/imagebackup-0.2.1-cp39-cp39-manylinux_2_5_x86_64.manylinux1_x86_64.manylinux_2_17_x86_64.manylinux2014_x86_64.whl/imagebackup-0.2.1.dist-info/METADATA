@@ -1,0 +1,70 @@
+Metadata-Version: 2.1
+Name: imagebackup
+Version: 0.2.1
+Summary: Python package to read partclone, partimage and ntfsclone backup images & utility to mount images as virtual partitions.
+Author-email: joergmlpts <joergmlpts@outlook.com>
+Project-URL: Documentation, https://imagebackup.readthedocs.org
+Project-URL: Homepage, https://github.com/joergmlpts/imagebackup
+Project-URL: Bug Tracker, https://github.com/joergmlpts/imagebackup/issues
+Keywords: partclone,partimage,ntfsclone,image,backup
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: System :: Archiving :: Backup
+Classifier: Topic :: Utilities
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: lz4
+Requires-Dist: tqdm
+Requires-Dist: pyfuse3
+Requires-Dist: zstandard
+
+# vntfsclone, vpartclone & vpartimage - Mount Image Backups as Virtual Partitions
+
+At a low level, this package provides Python code to read the building blocks -
+headers, bitmaps, and blocks - of [partclone](https://partclone.org/),
+[partimage](https://www.partimage.org/) and
+[ntfsclone](https://linux.die.net/man/8/ntfsclone) backup
+images. These components may be used in other Python projects. Refer to the
+[API documentation](https://imagebackup.readthedocs.io/en/latest/api.html)
+for a comprehensive description of these components.
+
+## Virtual Partitions
+
+At a higher level, three command-line utilities based on this low-level code are
+also included. Their features are as follows:
+* They read partclone, partimage and ntfsclone images, verify checksums and
+  list contents.
+* They mount partclone, partimage and ntfsclone images - the backup of a
+  partition - as virtual partitions.
+
+These virtual partitions have the contents of the partition. They are created
+without allocating additional disk space. Just like a restored partition, for
+example, a virtual partition can be subjected to a file system consistency
+check (`fsck`).
+
+A virtual partition can be mounted as a file system. This is done with the
+help of a loop device and allows you to inspect the contents. Individual
+files and directories can be copied from image backups.
+
+# Full Documentation
+
+Our documentation is at [imagebackup.readthedocs.org](https://imagebackup.readthedocs.org).
+
+- [Utilities](https://imagebackup.readthedocs.io/en/latest/usage.html#utilities-vpartclone-vpartimage-and-vntfsclone)
+- [Installation](https://imagebackup.readthedocs.io/en/latest/usage.html#installation)
+- [API Tutorial](https://imagebackup.readthedocs.io/en/latest/api.html)
+- [API Reference](https://imagebackup.readthedocs.io/en/latest/api.html#detailed-api-documentation)
