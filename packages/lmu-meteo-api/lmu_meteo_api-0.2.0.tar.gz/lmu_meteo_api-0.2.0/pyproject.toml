@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "lmu-meteo-api"
+version = "0.2.0"
+description = "Python interface to request data from the LMU Meteorology station."
+authors = ["DanielKuebi <daniflug95@live.at>"]
+readme = "README.md"
+packages = [{include = "lmu_meteo_api"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pandas = "^2.1.0"
+requests = "^2.31.0"
+numpy = "^1.25.2"
+pytest = "^7.4.2"
+ipython = "^8.15.0"
+ipykernel = "^6.25.2"
+matplotlib = "^3.7.2"
+
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.25.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
