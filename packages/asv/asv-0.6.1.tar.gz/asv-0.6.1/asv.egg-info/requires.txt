@@ -1,0 +1,46 @@
+asv-runner>=v0.1.0
+json5
+tabulate
+
+[:platform_python_implementation != "PyPy"]
+pyyaml
+pympler
+
+[:platform_system == "Windows"]
+colorama
+
+[dev]
+ruff
+isort>=5.11.5
+
+[doc]
+sphinx
+sphinx_bootstrap_theme
+
+[hg]
+python-hglib
+
+[test]
+pytest
+pytest-xdist
+pytest-timeout
+pytest-rerunfailures>=10.0
+filelock
+virtualenv
+numpy
+feedparser
+selenium
+pytest-rerunfailures
+
+[test:platform_python_implementation != "PyPy"]
+scipy
+
+[test:platform_system != "Windows"]
+python-hglib
+
+[test:platform_system != "Windows" and platform_python_implementation != "PyPy"]
+rpy2
+
+[virtualenv]
+virtualenv
+packaging
