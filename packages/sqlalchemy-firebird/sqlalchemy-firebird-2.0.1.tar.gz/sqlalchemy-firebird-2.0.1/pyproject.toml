@@ -1,0 +1,27 @@
+[tool.pytest.ini_options]
+#addopts = "--tb native -v -r fxX --maxfail=100 -p no:warnings --log-info=sqlalchemy.engine "
+#addopts = "--tb native -v -r fxX --maxfail=300 -p no:warnings --dburi=firebird+fdb://sysdba@/E:/Project/.data/fb4/sqla_test.fdb?charset=UTF8&fb_library_name=E:/Project/.data/fb40/fbclient.dll --log-info=sqlalchemy.engine "
+#addopts = "--tb native -v -r fxX --maxfail=300 -p no:warnings --dburi=firebird+firebird://sysdba@/E:/Project/.data/fb4/sqla_test.fdb?charset=UTF8&fb_client_library=E:/Project/.data/fb40/fbclient.dll --log-info=sqlalchemy.engine "
+addopts = "--tb native -v -r fxX --maxfail=300 -p no:warnings --dburi=firebird+firebird://sysdba:masterkey@localhost:3040/E:/Project/.data/fb4/sqla_test.fdb?charset=UTF8 --log-info=sqlalchemy.engine "
+#addopts = "--tb native -v -r fxX --maxfail=300 -p no:warnings --dburi=firebird+fdb://sysdba@localhost:3040/E:/Project/.data/fb4/sqla_test.fdb?charset=UTF8 --log-info=sqlalchemy.engine "
+#addopts = "--tb native -v -r fxX --maxfail=300 -p no:warnings --dburi=firebird+fdb://sysdba@localhost:3050/E:/Project/.data/fb3/sqla_test.fdb?charset=UTF8 --log-info=sqlalchemy.engine "
+
+markers = [
+     "backend: mark test as for the backend",
+     "hanging: tests hanging during a full test suite run",
+]
+
+python_files = "test/*test_*.py"
+
+# SQLAlchemy-Firebird configuration for Black.
+[tool.black]
+line-length = 79
+target-version = ['py37']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.github
+  | \.pytest_cache
+  | _venv
+)/
+'''
