@@ -1,0 +1,78 @@
+Metadata-Version: 2.1
+Name: smart-pdf
+Version: 2023.9.11.0
+Summary: SmartPDF: AI powered pdf reader.
+Home-page: UNKNOWN
+Author: Sergei Belousov aka BeS
+Author-email: sergei.o.belousov@gmail.com
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: openai (==0.27.6)
+Requires-Dist: langchain (==0.0.285)
+Requires-Dist: PyPDF2 (==3.0.1)
+Requires-Dist: tiktoken (==0.4.0)
+Requires-Dist: faiss-cpu (==1.7.3)
+
+# SmartPDF
+
+A simple python library for AI-powered PDF documents processing.
+
+## Requirements
+
+* Linux, Windows, MacOS
+* Python 3.8.+
+* OpenAI API Key
+
+## Install package
+
+```bash
+pip install smart_pdf
+```
+
+## Install the latest version
+
+```bash
+git clone https://github.com/bes-dev/smart_pdf.git
+cd smart_pdf
+pip install -r requirements.txt
+pip install .
+```
+
+## Install the latest version
+
+```bash
+git clone https://github.com/bes-dev/random_face.git
+cd random_face
+pip install -r requirements.txt
+python download_model.py
+pip install .
+```
+
+## Demo
+
+```bash
+python -m smart_pdf.smart_pdf --help
+```
+
+## Example
+
+```python
+from smart_pdf import SmartPDF
+smart_doc = SmartPDF(
+    path=<path_to_pdf>,
+    openai_api_key=<openai_api_key>
+)
+print(smart_doc)
+print(f"Summary: {smart_doc.summary()}")
+print("Press q! to exit")
+while True:
+    request = input("> ")
+    if request == "q!":
+        break
+    print(smart_doc.smart_search(request))
+```
+
+
