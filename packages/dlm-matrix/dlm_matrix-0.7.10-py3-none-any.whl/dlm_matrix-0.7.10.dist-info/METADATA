@@ -1,0 +1,598 @@
+Metadata-Version: 2.1
+Name: dlm-matrix
+Version: 0.7.10
+Summary: Divergent Language Matrix
+Home-page: https://github.com/diomandeee/dlm_matrix
+Author: Mohamed Diomande
+Author-email: gdiomande7907@gmail.com
+License: MIT
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: aiohttp ==3.8.5
+Requires-Dist: aiosignal ==1.3.1
+Requires-Dist: altair ==5.1.0
+Requires-Dist: ansi2html ==1.8.0
+Requires-Dist: async-timeout ==4.0.3
+Requires-Dist: attrs ==23.1.0
+Requires-Dist: blis ==0.7.10
+Requires-Dist: cachetools ==5.3.1
+Requires-Dist: catalogue ==2.0.9
+Requires-Dist: certifi ==2023.7.22
+Requires-Dist: charset-normalizer ==3.2.0
+Requires-Dist: click ==8.1.7
+Requires-Dist: confection ==0.1.1
+Requires-Dist: contourpy ==1.1.0
+Requires-Dist: cycler ==0.11.0
+Requires-Dist: cymem ==2.0.7
+Requires-Dist: Cython ==0.29.36
+Requires-Dist: dash ==2.13.0
+Requires-Dist: dash-core-components ==2.0.0
+Requires-Dist: dash-html-components ==2.0.0
+Requires-Dist: dash-table ==5.0.0
+Requires-Dist: datasets ==2.14.4
+Requires-Dist: dill ==0.3.7
+Requires-Dist: filelock ==3.12.3
+Requires-Dist: Flask ==2.2.5
+Requires-Dist: fonttools ==4.42.1
+Requires-Dist: frozenlist ==1.4.0
+Requires-Dist: fsspec ==2023.6.0
+Requires-Dist: gitdb ==4.0.10
+Requires-Dist: GitPython ==3.1.32
+Requires-Dist: hdbscan ==0.8.33
+Requires-Dist: huggingface-hub ==0.16.4
+Requires-Dist: idna ==3.4
+Requires-Dist: importlib-metadata ==6.8.0
+Requires-Dist: itsdangerous ==2.1.2
+Requires-Dist: Jinja2 ==3.1.2
+Requires-Dist: joblib ==1.3.2
+Requires-Dist: jsonschema ==4.19.0
+Requires-Dist: jsonschema-specifications ==2023.7.1
+Requires-Dist: kiwisolver ==1.4.5
+Requires-Dist: langcodes ==3.3.0
+Requires-Dist: llvmlite ==0.40.1
+Requires-Dist: markdown-it-py ==3.0.0
+Requires-Dist: MarkupSafe ==2.1.3
+Requires-Dist: matplotlib ==3.7.2
+Requires-Dist: mdurl ==0.1.2
+Requires-Dist: mpmath ==1.3.0
+Requires-Dist: multidict ==6.0.4
+Requires-Dist: multiprocess ==0.70.15
+Requires-Dist: murmurhash ==1.0.9
+Requires-Dist: nest-asyncio ==1.5.7
+Requires-Dist: networkx ==3.1
+Requires-Dist: nltk ==3.8.1
+Requires-Dist: numba ==0.57.1
+Requires-Dist: numpy ==1.24.4
+Requires-Dist: openai ==0.27.9
+Requires-Dist: packaging ==23.1
+Requires-Dist: pandas ==2.0.3
+Requires-Dist: pathy ==0.10.2
+Requires-Dist: Pillow ==9.5.0
+Requires-Dist: plotly ==5.16.1
+Requires-Dist: preshed ==3.0.8
+Requires-Dist: prompt-toolkit ==3.0.39
+Requires-Dist: protobuf ==4.24.2
+Requires-Dist: pyarrow ==13.0.0
+Requires-Dist: pydantic ==1.10.12
+Requires-Dist: pydeck ==0.8.0
+Requires-Dist: Pygments ==2.16.1
+Requires-Dist: Pympler ==1.0.1
+Requires-Dist: pynndescent ==0.5.10
+Requires-Dist: pyparsing ==3.0.9
+Requires-Dist: python-dateutil ==2.8.2
+Requires-Dist: pytz ==2023.3
+Requires-Dist: pytz-deprecation-shim ==0.1.0.post0
+Requires-Dist: PyYAML ==6.0.1
+Requires-Dist: referencing ==0.30.2
+Requires-Dist: regex ==2023.8.8
+Requires-Dist: requests ==2.31.0
+Requires-Dist: retrying ==1.3.4
+Requires-Dist: rich ==13.5.2
+Requires-Dist: rpds-py ==0.10.0
+Requires-Dist: safetensors ==0.3.3
+Requires-Dist: scikit-learn ==1.3.0
+Requires-Dist: scipy ==1.11.2
+Requires-Dist: sentence-transformers ==2.2.2
+Requires-Dist: sentencepiece ==0.1.99
+Requires-Dist: six ==1.16.0
+Requires-Dist: smart-open ==6.3.0
+Requires-Dist: smmap ==5.0.0
+Requires-Dist: spacy ==3.6.1
+Requires-Dist: spacy-legacy ==3.0.12
+Requires-Dist: spacy-loggers ==1.0.4
+Requires-Dist: srsly ==2.4.7
+Requires-Dist: streamlit ==1.26.0
+Requires-Dist: sympy ==1.12
+Requires-Dist: tenacity ==8.2.3
+Requires-Dist: thinc ==8.1.12
+Requires-Dist: threadpoolctl ==3.2.0
+Requires-Dist: tiktoken ==0.4.0
+Requires-Dist: tokenizers ==0.13.3
+Requires-Dist: toml ==0.10.2
+Requires-Dist: toolz ==0.12.0
+Requires-Dist: torch ==2.0.1
+Requires-Dist: torchvision ==0.15.2
+Requires-Dist: tornado ==6.3.3
+Requires-Dist: tqdm ==4.66.1
+Requires-Dist: transformers ==4.32.1
+Requires-Dist: typer ==0.9.0
+Requires-Dist: typing-extensions ==4.7.1
+Requires-Dist: tzdata ==2023.3
+Requires-Dist: tzlocal ==4.3.1
+Requires-Dist: umap-learn ==0.5.3
+Requires-Dist: urllib3 ==2.0.4
+Requires-Dist: validators ==0.21.2
+Requires-Dist: wasabi ==1.1.2
+Requires-Dist: wcwidth ==0.2.6
+Requires-Dist: Werkzeug ==2.2.3
+Requires-Dist: xxhash ==3.3.0
+Requires-Dist: yarl ==1.9.2
+Requires-Dist: zipp ==3.16.2
+Requires-Dist: loguru ==0.7.1
+Requires-Dist: arrow ==1.2.3
+Requires-Dist: pgvector ==0.2.1
+
+# Divergent Language Matrix
+
+## Description
+Divergent Language Matrix is a novel approach designed to analyze and understand the intricate structures and dynamics within digital conversations. This repository contains the code and documentation necessary to implement the Divergent Language Matrix framework, allowing you to explore conversations in a new and comprehensive way.
+
+## Introduction
+In the realm of digital communication, understanding conversations goes beyond the surface-level exchange of messages. The Divergent Language Matrix framework recognizes conversations as dynamic systems, governed by evolving production rules that shape their evolution. This approach provides a deeper insight into the complexities of conversations by considering various factors such as semantic content, contextual embeddings, and hierarchical relationships.
+
+## Formulation
+Divergent Language Matrix (DLM) is designed to generate a lower-dimensional representation of complex, hierarchical text data, such as conversations. The algorithm preserves both semantic and structural relationships within the data, allowing for more efficient analysis and visualization.
+
+In the Divergent Language Matrix (DLM) framework, a conversation tree is formulated as a directed, acyclic graph where each node corresponds to a message in the conversation. Each message `t_i` is mathematically defined by a triplet `(d_i, s_i, c_i)`, such that:
+
+* x_coord (Depth): Represents the hierarchical level of a message. If a message is a direct reply to another message, it will be one level deeper (e.g., the original message is at depth 0, a reply to it is at depth 1, a reply to that reply is at depth 2, and so on).
+
+* y_coord (Order among siblings): Represents the order in which a message appears among its siblings. This is relevant when there are multiple replies (siblings) to a single message. It provides a sense of the sequence of the conversation.
+
+* z_coord (Homogeneity based on sibling count and similarity score): This is the most direct measure of homogeneity in the provided method.It serves as an essential indicator for both the structural and semantic relationships among messages at the same hierarchical level. The `z_coord` value is calculated differently depending on whether similarity scores are included.
+
+#### Isolated Messages (Zero Siblings)
+
+Messages that are the only replies to their parent are assigned a `z_coord` of 0. These messages are unique in their respective contexts and do not share the depth level with any other message. Thus, they do not need differentiation based on sibling relationships or similarity scores.
+
+#### Messages with Siblings
+
+Messages that are part of a set of sibling messages have their `z_coord` calculated using one of two methods:
+
+##### Without Considering Similarity Scores
+
+If similarity scores are not considered, the `z_coord` for each sibling message is calculated as:
+
+```python
+z_coord = -0.5 * (total_number_of_siblings - 1)
+```
+
+Here, all sibling messages will have the same `z_coord`, indicating that they belong to the same homogeneous group at that hierarchical level.
+
+##### Considering Similarity Scores
+
+If similarity scores are available, then the `z_coord` is calculated as:
+
+```python
+z_coord = (-0.5 + avg_similarity * 0.5) * (total_number_of_siblings - 1)
+```
+
+In this formula, `avg_similarity` is the average similarity score among all sibling messages. The resulting `z_coord` will weight the homogeneity both by structural position and semantic similarity.
+
+#### Example
+
+1. **Isolated message**: If a message has no siblings, its `z_coord = 0`.
+  
+2. **Multiple siblings without similarity scores**: For 3 siblings, each would have `z_coord = -0.5 * (3 - 1) = -1`.
+
+3. **Multiple siblings with similarity scores**: For 3 siblings with an average similarity score of 0.8, each would have `z_coord = (-0.5 + 0.8 * 0.5) * (3 - 1) = 0.3 * 2 = 0.6`.
+
+## Getting Started Guide
+
+This guide walks you through the process of setting up and running a sample code to visualize conversation data. The guide assumes you have a Python package named `dlm` and the conversation data is in a JSON format which can be downloaded from `chat.openai.com`.
+
+### Prerequisites
+
+1. **Download Conversation Data**: Log in to `chat.openai.com`, navigate to the relevant section and download your conversation data, usually available in JSON format.
+Certainly! Here's the enhanced step-by-step guide, with additional information about the optional parameters `api_key`, `use_embeddings`, and `animate`.
+
+---
+
+### Step-by-Step Guide to Using DLM Matrix for Conversation Analysis
+
+#### Step 1: Import Required Packages
+
+```python
+import dlm_matrix as dlm
+```
+
+#### Step 2: Set Up Directory Paths
+
+Replace the placeholders with your actual local directory paths.
+
+```python
+# Path to the downloaded JSON file containing conversations
+CONVERSATION_JSON_PATH = "<path_to_downloaded_conversation_json>"
+
+# Directory where you'd like to save the processed data
+BASE_PERSIST_DIR = "<path_to_save_directory>"
+
+# Name for the output file
+OUTPUT_NAME = "<output_file_name>"
+```
+
+#### Optional: OpenAI API Key
+
+```python
+# Your OpenAI API key (optional)
+API_KEY = "<openai_api_key>"
+```
+
+- **API_KEY (Optional)**: If you have an OpenAI API key, you can provide it here to use GPT-based embeddings for your data. If this parameter is not provided, the program will use a sentence transformer to generate embeddings.
+
+#### Step 3: Combine Conversations & Generate Chain Tree
+
+Combine the conversations and create a chain tree data structure for further analysis.
+
+```python
+combiner = dlm.ChainCombiner(
+    path=CONVERSATION_JSON_PATH,
+    base_persist_dir=BASE_PERSIST_DIR,
+    output_name=OUTPUT_NAME,
+    api_key=API_KEY,  # Optional
+    use_embeddings=False,  # Optional
+    animate=True,  # Optional
+    tree_range=(0, None)
+)
+
+chain_tree = combiner.process_trees()
+
+```
+- **api_key (Optional)**: If provided, GPT-based embeddings will be used for message text. Otherwise, a sentence transformer will be used.
+
+- **use_embeddings (Optional, default is False)**: This parameter controls whether precomputed embeddings are used for UMAP visualization or not.
+
+  - **True**: If set to True, the program will use precomputed embeddings. This speeds up the UMAP visualization process but might result in a visualization that is less contextually connected.
+
+  - **False**: When set to False, the program will dynamically compute the embeddings as part of the conversation processing. This is computationally more expensive but tends to provide several advantages:
+
+    1. **Contextual Awareness**: The embeddings are generated considering the specific context of each message in the conversation. This creates a more nuanced and contextually rich representation.
+  
+    2. **Temporal Sensitivity**: Because embeddings are generated in sequence, they are more sensitive to the temporal flow of the conversation, which could capture conversational dynamics better.
+
+    3. **Quality of Visualization**: The UMAP visualization is likely to be more interconnected and provide clearer insights into the thematic and conversational flow.
+    
+    4. **Up-to-Date Representations**: Dynamically computing embeddings ensures that you are using the most current version of the model for generating embeddings, allowing for potentially better performance and results.
+  
+  - **Why is this important?**: When embeddings are computed in a continuous sequence, the model considers the conversation context more holistically. This tends to result in a more contextually aware representation in the visualization, as the embeddings are sensitive to the sequence and flow of the conversation. Therefore, if you want a more nuanced, contextually connected representation, you might prefer to set this parameter to False.
+
+Note that setting `use_embeddings` to False will require more computational resources and may be slower, depending on the size of the conversation and the hardware capabilities.
+
+- **animate (Optional, default is False)**: This parameter dictates whether the program will generate an animated view of the conversation structure or not.
+
+  - **True**: When set to True, the program will create a 3D animated view of the conversation structure, providing you a unique perspective of how the conversation flows over time. This can be particularly helpful for understanding the evolution of topics and the dynamic between participants. However, it's important to note that this will be done for every conversation within the specified `tree_range`. Depending on the size of the conversations and the tree range you've set, this could be computationally intensive.
+
+  - **False**: If set to False, the program will skip the animation process, speeding up the overall computation and generation of the static UMAP visualizations.
+
+  - **Why use animation?**: An animated view allows you to visualize the ebb and flow of a conversation, adding an extra layer of context and depth that might not be evident in a static visualization. If you are conducting a detailed analysis and would like to understand the temporal aspects of your conversations, setting `animate` to True could provide valuable insights.
+
+- **tree_range (Optional, default is (0, None))**: This parameter specifies the range of conversation trees that you want to process within the larger data set. 
+
+  - **Format**: The parameter takes a tuple `(min_tree_size, max_tree_size)`. Replace `<min_tree_size>` and `<max_tree_size>` with the actual minimum and maximum tree indices you wish to process. 
+  ```python
+  chain_tree = combiner.process_trees(tree_range=(<min_tree_size>, <max_tree_size>))
+  ```
+  
+  - **Full Range**: If left at its default setting `(0, None)`, the program will process all available conversation trees in the dataset.
+  
+  - **Partial Range**: By specifying a range, you can focus the computation and visualization on a subset of conversations that interest you. This can be useful for test runs or for diving deep into specific segments of your data.
+  
+  - **Why use a range?**: Using a specific range allows you to optimize computational resources and time, especially when dealing with large datasets. It can also help you conduct a more focused analysis by selecting conversations that meet certain criteria.
+
+#### Step 4: Visualize the Data
+
+Finally, use the visualization utility to view the 3D scatter plot.
+
+```python
+dlm.plot_3d_scatter_psychedelic(file_path_or_dataframe=chain_tree).show()
+```
+
+## Traversing ChainTree
+
+```python
+import dlm_matrix as dlm
+
+# Path to the JSON file containing conversation data
+CONVERSATION_JSON_PATH = "<path_to_downloaded_conversation_json>"
+
+# Directory where processed data will be saved
+BASE_PERSIST_DIR = "<path_to_save_directory>"
+
+## Step 1: Initialize the ChainTreeBuilder
+builder = dlm.ChainTreeBuilder(
+    path=CONVERSATION_JSON_PATH, base_persist_dir=BASE_PERSIST_DIR
+)
+
+## Step 2: Build the Chain Tree
+tree = builder.as_list()[5]
+
+## Step 3: Initialize Coordinate Representation
+coord = dlm.ChainRepresentation(tree)
+
+## Step 4: Build the Coordinate Tree
+coordinate_tree = coord._procces_coordnates(local_embedding=False, animate=False)
+
+## Step 5: Initialize the Tree Traverser
+tree_traverser = dlm.CoordinateTreeTraverser(coordinate_tree)
+
+# Example 1: Find the node with x=5
+result = tree_traverser.traverse_depth_first(lambda x: x.x == 4)
+if result:
+    print("-" * 50)
+    print(f"Depth-first search found node with x=5: {result.message_info.message.content.text}")
+
+# Example 2: Find the node with x=10
+result = tree_traverser.traverse_breadth_first(lambda x: x.x == 10)
+if result:
+    print("-" * 50)
+    print(f"Breadth-first search found node with x=10: {result.message_info.message.content.text}")
+
+# Example 3: Find the node with y=7 and x=4
+result = tree_traverser.traverse_depth_first(lambda x: x.y == 7 and x.x == 4)
+if result:
+    print("-" * 50)
+    print(f"Depth-first search found node with y=7 and x=4: {result.message_info.message.content.text}")
+
+# Example 4: Find the first node where z is less than y
+result = tree_traverser.traverse_breadth_first(lambda x: x.z < x.y)
+if result:
+    print("-" * 50)
+    print(f"Breadth-first search found first node with z < y: {result.message_info.message.content.text}")
+
+# Example 5: Find the first node where t is greater than 10 and n_parts is less than 5
+result = tree_traverser.traverse_depth_first(lambda x: x.t > 10 and x.n_parts < 5)
+if result:
+    print("-" * 50)
+    print(f"Depth-first search found node with t > 10 and n_parts < 5: {result.message_info.message.content.text}")
+
+# Example 6: Find all nodes where z is greater than or equal to 10
+results = tree_traverser.traverse_depth_first_all(lambda x: x.z >= 10)
+if results:
+    print("-" * 50)
+    print("Depth-first search found all nodes with z >= 10:")
+    for res in results:
+        print(res.message_info.message.content.text)
+
+# Example 7: Find all nodes where x is greater than y
+results = tree_traverser.traverse_depth_first_all(lambda x: x.x > x.y)
+if results:
+    print("-" * 50)
+    print("Depth-first search found all nodes with x > y:")
+    for res in results:
+        print(res.message_info.message.content.text)
+
+# Example 8: Find the first node where x, y, and z are all equal
+result = tree_traverser.traverse_breadth_first(lambda x: x.x == x.y == x.z)
+if result:
+    print("-" * 50)
+    print(f"Breadth-first search found first node with x = y = z: {result.message_info.message.content.text}")
+
+# Example 9: Find all nodes with n_parts equal to 4
+results = tree_traverser.traverse_depth_first_all(lambda x: x.n_parts == 4)
+if results:
+    print("-" * 50)
+    print("Depth-first search found all nodes with n_parts = 4:")
+    for res in results:
+        print(res.message_info.message.content.text)
+
+# Final divider
+print("-" * 50)
+```
+
+In this example:
+
+- We start by setting up the `ChainTreeBuilder` to parse the conversation data from a JSON file.
+- We then use the builder to generate a list of chain trees and select one of them for further processing.
+- Using this tree, a coordinate representation is generated.
+- Finally, we utilize the `CoordinateTreeTraverser` class to find nodes that meet certain conditions based on their coordinates.
+
+Various search conditions are demonstrated in the examples, such as finding nodes with specific `x`, `y`, `z`, `t`, or `n_parts` values. by the temporal metadata associated with the message, normalized to a suitable scale for analysis.
+
+## Processing Stages
+
+1. **Text Preprocessing and Segmentation**:  
+   - Each message `M_{i,j}` is tokenized and segmented into `k` distinct parts: `P_{i,j} = {P_{i,j,1}, P_{i,j,2}, ..., P_{i,j,k}}`.
+   - Syntactic and semantic relations are maintained among these segmented parts, laying the groundwork for in-depth analysis.
+
+2. **Creating Contextual Embeddings with Sentence Transformers**:  
+   - We employ Sentence Transformers to generate high-quality, contextual embeddings for each text to create high-dimensional embeddings `E(P_{i,j,k})` for each part.
+
+### 3. Hierarchical Spatial-Temporal Coordinate Assignment
+
+The assignment of hierarchical spatial-temporal coordinates is a cornerstone in the DLM framework, bridging the gap between high-dimensional textual embeddings and the structured representation of a conversation. It assigns each segment a four-dimensional coordinate `(x, y, z, t)`, encoding both its place in the conversational hierarchy and its chronological order.
+
+#### 3.1. The Framework for Coordinate Assignment
+
+- **The Coordinate Tuple**: Every segment `P_{i,j,k}` within a given conversation `C_i` is mapped to a unique coordinate tuple `(x_{i,j,k}, y_{i,j,k}, z_{i,j,k}, t_{i,j,k})`.
+- **Rooted in Message Metadata**: The values of `x, y, z` are computed as functions `f(d_i, s_i, c_i)`, where `d_i, s_i, c_i` are as previously defined. 
+- **Chronological Timestamp**: `t_{i,j,k}` is defined by the temporal metadata associated with the message, normalized to a suitable scale for analysis.
+
+#### 3.2. Spatial Coordinate Calculations
+
+- **X-Axis (Thread Depth)**: `x_{i,j,k}` is directly proportional to `d_i`, representing the depth of the message in the conversation tree. It captures the level of nesting for each message.
+  
+  `x_{i,j,k} = f_x(d_i)`
+  
+- **Y-Axis (Sibling Order)**: `y_{i,j,k}` is a function of `s_i`, signifying the message's ordinal position among siblings.
+  
+  `y_{i,j,k} = f_y(s_i)`
+  
+- **Z-Axis (Sibling Density)**: `z_{i,j,k}` encapsulates the density of sibling messages at a given depth, calculated as a function of `c_i`.
+  
+  `z_{i,j,k} = f_z(c_i)`
+  
+These functions `f_x, f_y, f_z` can be linear or nonlinear mappings based on the specific requirements of the analysis.
+
+### 3.3. Temporal Coordinate Calculations 
+
+The temporal coordinate, denoted as `t_coord`, integrates both the message's temporal weight and its normalized depth in the conversation hierarchy. This offers a nuanced perspective on the timing of each message, factoring in its temporal context as well as its place in the conversation structure.
+
+- **Mathematical Representation:**
+
+The formula for `t_coord` is expressed as:
+
+```
+t_coord = dynamic_alpha_scale * temporal_weights[i] + (1 - dynamic_alpha_scale) * normalized_depth
+```
+
+#### Components:
+
+##### 1. `dynamic_alpha_scale`
+
+This is a dynamic scalar that helps balance the contribution of `temporal_weights[i]` and `normalized_depth`. It is computed dynamically, depending on variables like the type of message and the root of the sub-thread where the message resides.
+
+- **How It Varies**: 
+  - The scale is closer to 1 for messages that should be more sensitive to time.
+  - It moves closer to 0 for messages where hierarchical positioning is more critical.
+  
+- **Computation**: 
+  ```python
+  if callable(alpha_scale):
+      dynamic_alpha_scale = alpha_scale(sub_thread_root, message_type)
+  else:
+      dynamic_alpha_scale = alpha_scale
+  ```
+
+##### 2. `temporal_weights[i]`
+
+This signifies the temporal importance of the message at index `i` in the conversation.
+
+- **Components**: 
+  - `TDF` (Time Decay Factor): Determines how much older messages should be "penalized" in the weight calculation.
+  - `timestamp[i]`: The actual timestamp of the message.
+  
+- **Computation**:
+  ```python
+  temporal_weights[i] = TDF * timestamp[i]
+  ```
+
+##### 3. `normalized_depth`
+
+This is the depth of a message in the hierarchical structure, normalized so it remains consistent across sub-threads of varying sizes.
+
+- **Computation**:
+  ```python
+  normalized_depth = depth_of_message / max_depth_in_conversation
+  ```
+
+#### Notes:
+
+1. **Dynamic Alpha Scaling**: 
+    - The dynamic nature of the `alpha_scale` allows for flexibility in adjusting the `t_coord` according to the contextual specifics of each message.
+
+2. **Temporal Weight Calculation**: 
+    - The Time Decay Factor (`TDF`) can be customized to match the requirements of the analysis. For instance, it can be computed based on the average time interval between messages in the thread to which the message belongs.
+    
+3. **Depth Normalization**: 
+    - The normalization of depth is crucial to avoid biases in larger or more intricate conversation trees. It allows the model to account for the relative importance of a message's position within its specific context.
+
+By utilizing these variables and calculations, `t_coord` becomes a multifaceted metric, rich in information about each message's temporal and hierarchical importance in the conversation.
+
+#### 3.4. Final Coordinate Assignment
+
+After calculating these coordinates, each segment `P_{i,j,k}` in conversation `C_i` will have a unique 4D coordinate `(x_{i,j,k}, y_{i,j,k}, z_{i,j,k}, t_{i,j,k})`. These coordinates serve as a comprehensive representation of each segment's position in both the conversational hierarchy and the temporal sequence.
+
+### 4. Dynamic Message Ordering (DMO)
+
+The Dynamic Message Ordering (DMO) system utilizes a Hierarchical Spatial-Temporal Coordinate Assignment methodology to arrange messages in a conversation space. In essence, the DMO aims to spatially organize messages in such a way that:
+
+- Similar messages are closer in this space.
+- The spatial relationship of messages reflects the temporal relationship among them.
+- The hierarchical structure is reflected in the spatial coordinates.
+
+#### 4.1. Spacing Calculation (Method: `calculate_spacing`)
+
+In this part, the spacing `S` between siblings based on similarity scores is of utmost importance. Let's redefine the mathematical formulation with more specificity:
+
+- **Variable Definitions:**
+  - `n = Number of children, n = | children_ids |`
+  - `avg_similarity = Average of normalized similarity scores, (Sum(s_i) from i=1 to n) / n`
+  - `s_i = Individual normalized similarity scores`
+
+- **Mathematical Representation:**
+
+`S(n, avg_similarity, method) = { 0 if n <= 1; -0.5 x (n - 1) if method = "spacing"; (-0.5 + avg_similarity) x (n - 1) if method = "both" }`
+
+#### 4.2. Temporal Weights Calculation (Method: `calculate_temporal_weights`)
+
+The matrix of temporal weights is calculated as follows:
+
+- **Variable Definitions:**
+- `t = Vector of timestamps, t = [t_1, t_2, ..., t_n]`
+- `Delta T = Matrix of pairwise time differences, Delta T_{ij} = | t_i - t_j |`
+
+- **Mathematical Representation:**
+
+`W_{ij} = f(Delta T_{ij})`
+
+where `f(x)` is a decay function, applied element-wise.
+
+#### 4.3. Time Coordinate Calculation (Method: `calculate_time_coordinate`)
+
+In this part, the focus is to determine a singular time coordinate `T` for a message. We base it on its relationship with its siblings:
+
+- **Variable Definitions:**
+- `t_message = Timestamp of the current message`
+- `t_sibling_i = Timestamps of siblings`
+- `Delta t_i = t_sibling_i - t_message`
+
+- **Mathematical Representation:**
+
+`T(t_message, Delta t) = g(time_diff)`
+
+where `g(x)` is another decay function, and `time_diff` is the time difference between the message and a root message.
+
+#### 4.4. Time Decay Factor (Method: `time_decay_factor`)
+
+The time decay factor `D` will amalgamate the impacts of both individual message time and sibling relations:
+
+- **Variable Definitions:**
+- `avg(Delta t) = Average time differences between a message and its siblings`
+
+- **Mathematical Representation:**
+
+`D = g(time_diff) x avg(Delta t)`
+
+### 5. Dimensionality Reduction via UMAP (Uniform Manifold Approximation and Projection)
+
+UMAP plays a crucial role in reducing the dimensionality of the complex, high-dimensional message representations to a lower-dimensional space where relationships between messages are maintained.
+
+- **Variable Definitions:**
+  - `E(P_{i,j,k})` = Embedding for each message `i`, where `j` and `k` may denote specific features or layers in the embedding.
+  - `R` = Joint representation vector, `R = [E(P_{i,j,k}), x, y, z, t]`
+
+- **Mathematical Representation:**
+  
+  `R_reduced = UMAP(R)`
+
+Where `R_reduced` is the lower-dimensional representation of the original feature vector `R`.
+
+### 6. Clustering and Final Representation using HDBSCAN
+
+HDBSCAN provides an elegant solution to clustering by identifying clusters of varying shapes and densities, making it apt for this application.
+
+- **Variable Definitions:**
+  - `C` = Set of clusters, `C = { C1, C2, ..., Cm }`
+  - `R_reduced` = Lower-dimensional representations obtained from UMAP
+
+- **Mathematical Representation:**
+
+  `C = HDBSCAN(R_reduced)`
+
+- **Multi-layered Interpretation:**
+  
+Messages are now characterized not just by their semantic content but also by their spatial-temporal coordinates. This multi-layered approach allows for a more comprehensive understanding of the conversation's topology and semantic themes.
