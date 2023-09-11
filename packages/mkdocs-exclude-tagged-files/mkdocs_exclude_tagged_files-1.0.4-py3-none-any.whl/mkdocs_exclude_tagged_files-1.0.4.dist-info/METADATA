@@ -1,0 +1,39 @@
+Metadata-Version: 2.1
+Name: mkdocs-exclude-tagged-files
+Version: 1.0.4
+Summary: A mkdocs plugin that excludes files based on a list of frontmatter tags from being included in the final mkdocs output.
+Home-page: https://github.com/JonasDoesThings/mkdocs-exclude-tagged-files
+Author: Jonas Lorenz <jonas@jonasdoesthings.com>
+Author-email: jonas@jonasdoesthings.com
+License: MIT
+Keywords: mkdocs,mkdocs-plugin
+Description-Content-Type: text/markdown
+License-File: LICENSE.md
+Requires-Dist: mkdocs
+Requires-Dist: python-frontmatter
+Requires-Dist: charset-normalizer
+
+# MKDocs Exclude Tagged Files
+A simple plugin for excluding files from being included in the mkdocs output based on tags in their frontmatter.
+
+## Installation
+Run `pip install --upgrade mkdocs-exclude-tagged-files`
+
+## Configuration
+Basic Configuration in the `mkdocs.yml` file:
+```yaml
+plugins:
+  - mkdocs_exclude_tagged_files:
+      tags_to_exclude: ["confidential", "excluded"]
+```
+This configuration will exclude all files that have one of the tags "confidential" or "excluded" in their frontmatter.  
+For example this file will be excluded:
+```markdown
+---
+tags: ["confidential", "someothertag"]
+---
+# Content
+```
+
+By default, the plugin strips leading `#`-symbols from tags, so the tag `#excluded` will be treated the same as `excluded`.   
+If you want to disable this behavior set the config value `strip_leading_hashtags` to `false`.
