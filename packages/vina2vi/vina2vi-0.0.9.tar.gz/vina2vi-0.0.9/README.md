@@ -1,0 +1,90 @@
+# vina2vi
+`vina2vi` stands for _**Vi**etnamese **n**o **a**ccent **to** **Vi**etnamese_,  
+which is a Python package aiming at helping foreigners **decrypt** Vietnamese messages.  
+(More precisely, targeted to foreigners who already know the basics of the language.)
+
+Among other things, this Python package aims to
+- Restore Vietnamese diacritics
+- Translate acronyms, **đổi vần**, etc.
+- Correct spelling
+
+
+## Installation
+During development, I have used Python3.10.
+But I think all Python versions >= 3.8 will be fine.
+
+Run the following to install `vina2vi`:
+
+```bash
+pip install vina2vi
+```
+
+Alternatively, one can also install the latest version from GitLab as follows.
+
+```bash
+pip install git+https://gitlab.com/phunc20/vina2vi
+```
+
+
+## Usage
+I only work on this project on my spare time,
+and work slowly. This README is meant to
+get changed fast and a lot. Therefore, please pay
+attention to the versions and its README.
+For the moment, there is not much in
+the package that is super useful. As time goes by, I will add more.
+
+I roughly classify the code into the following categories
+- `models`
+- `metrics`
+- `util`
+
+
+### `vina2vi/models/`
+For example, one can try to play with one of the models
+```python
+In [1]: from vina2vi.models.tf.tuto_transformer import Tokenizers, Translator, Transformer
+
+In [2]: tokenizers = Tokenizers.from_pretrained()
+
+In [3]: input_vocab_size = tokenizers.vina.get_vocab_size().numpy().tolist()
+
+In [4]: target_vocab_size = tokenizers.vi.get_vocab_size().numpy().tolist()
+
+In [5]: transformer = Transformer.from_pretrained(input_vocab_size=input_vocab_size, target_vocab_size=target_vocab_size)
+
+In [6]: translator = Translator(tokenizers, transformer)
+
+In [7]: translator.translate("Sang nay toi dan con toi di cong vien choi.")
+Out[7]: 'sang này tôi đàn con tôi đi công viên chơi .'
+
+In [8]: translator.translate("Truong dai hoc xa hoi va nhan van")
+Out[8]: 'trường đại học xã hội và nhân văn'
+```
+
+
+### `vina2vi/util.py`
+There is an utility function to help tell whether a string contains
+non-Vietnamese characters, `is_foreign`. As the name suggests,
+- If the string contains characters other than the modern Vietnamese alphabets,
+  then `is_foreign` returns `True`
+- If the string consists exclusively of characters of modern Vietnamese alphabets,
+  then `is_foreign` returns `False`
+    - Languages whose alphabets are a subset of Vietnamese's are thus considered as Vietnamese
+    - Currently, we do not consider chữ Nôm as Vietnamese; maybe we will in the future
+
+```python
+In [1]: from vina2vi.util import Vietnamese
+
+In [2]: Vietnamese.is_foreign("Российская Федерация\tRossiyskaya Federatsiya")
+Out[2]: True
+
+In [3]: Vietnamese.is_foreign("\n\tRossiyskaya Federatsiya")
+Out[3]: False
+
+In [4]: Vietnamese.is_foreign("Tôi nói tiếng Việt Nam\t碎呐㗂越南")
+Out[4]: True
+
+In [5]: Vietnamese.is_foreign("Tôi nói tiếng Việt Nam\t")
+Out[5]: False
+```
