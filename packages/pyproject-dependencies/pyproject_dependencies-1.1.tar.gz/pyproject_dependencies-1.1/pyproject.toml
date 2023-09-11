@@ -1,0 +1,38 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pyproject-dependencies"
+dependencies = ["build", "packaging"]
+requires-python = ">=3.7"
+readme = "README.md"
+authors = [
+  {name = "Stéphane Bidoul", email = "stephane.bidoul@gmail.com"}
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: MIT License",
+]
+dynamic = ["version"]
+scripts = {pyproject-dependencies = "pyproject_dependencies.__main__:main"}
+
+[project.urls]
+Homepage = "https://github.com/sbidoul/pyproject-dependencies"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build]
+exclude = [
+    "/.github",
+]
+
+
+[tool.ruff]
+fix = true
+select = [
+    "E", "F", "W", "C90", "B", "I", "UP", "RUF", "TCH"
+]
+target-version = "py37"
+ignore = ["C901"]
