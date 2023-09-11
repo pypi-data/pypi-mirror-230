@@ -1,0 +1,14 @@
+[qbraid.providers]
+aws.device = qbraid.providers.aws:AwsDeviceWrapper
+aws.job = qbraid.providers.aws:AwsQuantumTaskWrapper
+ibm.device = qbraid.providers.ibm:IBMBackendWrapper
+ibm.job = qbraid.providers.ibm:IBMJobWrapper
+
+[qbraid.transpiler]
+braket = qbraid.transpiler.wrappers.braket_circuit:BraketCircuitWrapper
+cirq = qbraid.transpiler.wrappers.cirq_circuit:CirqCircuitWrapper
+pyquil = qbraid.transpiler.wrappers.pyquil_program:PyQuilProgramWrapper
+pytket = qbraid.transpiler.wrappers.pytket_circuit:PytketCircuitWrapper
+qasm2 = qbraid.transpiler.wrappers.qasm_str:QasmCircuitWrapper
+qasm3 = qbraid.transpiler.wrappers.qasm3_str:Qasm3CircuitWrapper
+qiskit = qbraid.transpiler.wrappers.qiskit_circuit:QiskitCircuitWrapper
