@@ -1,0 +1,82 @@
+[project]
+name = "anyforce"
+version = "0.29.4"
+description = ""
+authors = [
+    { name = "exherb", email = "i@4leaf.me" },
+]
+dependencies = [
+    "fastapi>=0.100.0",
+    "uvicorn[standard]>=0.23.1",
+    "pydantic[email]>=1.10.11,<2.0.0",
+    "python-jose[cryptography]>=3.3.0",
+    "tortoise-orm>=0.19.3",
+    "passlib[bcrypt]>=1.7.4",
+    "requests>=2.31.0",
+    "types-requests>=2.31.0.1",
+    "orjson>=3.9.2",
+    "python-json-logger>=2.0.7",
+    "Jinja2>=3.1.2",
+    "colorama>=0.4.6",
+    "aiohttp[speedups]>=3.8.5",
+    "starlette-context>=0.3.6",
+    "itsdangerous>=2.1.2",
+    "inflection>=0.5.1",
+    "aenum>=3.1.15",
+    "python-dateutil>=2.8.2",
+    "rq>=1.15.1",
+    "twine>=4.0.2",
+    "bleach>=6.0.0",
+    "yarl>=1.9.2",
+    "httptools>=0.6.0",
+    "frozenlist>=1.4.0",
+    "uvloop>=0.17.0",
+]
+requires-python = ">=3.10"
+
+[project.license]
+text = "COPYRIGHT"
+
+[project.urls]
+homepage = "https://github.com/42signal/anyforce"
+
+[build-system]
+requires = [
+    "pdm-pep517",
+]
+build-backend = "pdm.pep517.api"
+
+[tool.pdm]
+includes = [
+    "anyforce/**/*.py",
+    "anyforce/py.typed",
+    "README.md",
+]
+source = [
+    { name = "pypi", url = "https://mirrors.aliyun.com/pypi/simple", verify_ssl = true },
+]
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "flake8>=6.0.0",
+    "isort>=5.12.0",
+    "black>=23.7.0",
+    "pytest>=7.4.0",
+    "typer>=0.9.0",
+    "pytest-asyncio>=0.21.1",
+    "Faker>=19.1.0",
+    "pytest-cov>=4.1.0",
+    "twine>=4.0.2",
+    "httpx>=0.24.1",
+]
+
+[tool.isort]
+profile = "black"
+line_length = 79
+multi_line_output = 3
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = [
+    "tests",
+]
