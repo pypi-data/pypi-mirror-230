@@ -1,0 +1,40 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "netsky"
+version = "0.0.1"
+authors = [
+  { name="Cody", email="cody@dkdc.dev" },
+]
+description = "not skynet, obviously"
+readme = "readme.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+  'python-dotenv',
+  'toml',
+  'Pillow',
+  'typer[all]',
+  'requests',
+  'html2text',
+  'openai',
+  'marvin',
+  'ibis-framework[duckdb,polars,deltalake]',
+  'plotly',
+  'streamlit',
+  'texasholdem'
+]
+
+[project.urls]
+"Homepage" = "https://github.com/lostmygithubaccount/netsky"
+"Bug Tracker" = "https://github.com/lostmygithubaccount/netsky/issues"
+
+[project.scripts]
+netsky= "netsky.cli:app"
+
