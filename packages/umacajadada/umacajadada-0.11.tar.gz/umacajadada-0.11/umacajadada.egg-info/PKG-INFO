@@ -1,0 +1,74 @@
+Metadata-Version: 2.1
+Name: umacajadada
+Version: 0.11
+Summary: reads a file asynchronously during its execution while somewhere some other process writes to the same file
+Home-page: https://github.com/hansalemaos/umacajadada
+Author: Johannes Fischer
+Author-email: aulasparticularesdealemaosp@gmail.com
+License: MIT
+Keywords: read,write,same,time
+Classifier: Development Status :: 4 - Beta
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Utilities
+Description-Content-Type: text/markdown
+License-File: LICENSE.rst
+
+
+# reads a file asynchronously during its execution while somewhere some other process writes to the same file
+
+## Tested against Windows 10 / Python 3.10 / Anaconda - should work everywhere - pure Python
+
+## pip install umacajadada
+
+
+
+```python
+
+read_async(
+    file: str,
+    asthread: bool = True,
+    mode: str = "r",
+    action=lambda line: sys.stderr.write((str(line) + "\n")),
+    stoptrigger: list | tuple = (False,),
+):
+
+This function `read_async` reads a file asynchronously during its execution while somewhere some other
+process writes to the same file.
+
+Args:
+	file (str): The path to the file to be read.
+	asthread (bool, optional): If True, the function will start as a thread. Default is True.
+	mode (str, optional): The mode in which the file is opened. Default is 'r' (read mode).
+	action (function, optional): A function to be applied to each line of the file. Default is to write the line to stderr.
+	stoptrigger (list | tuple, optional): A list or tuple (preferably a list) that triggers the function to stop reading when its last element is True. Default is [False].
+	encoding (str, optional): The character encoding of the file. Default is 'utf-8'.
+	errors (str, optional): How to handle encoding errors. Default is 'backslashreplace'.
+
+Returns:
+	kthread.KThread or None: If as_thread is True, it returns a KThread object. Otherwise, it returns None.
+
+The advantage of this function is that it allows for real-time processing of the file while it is being written by another process.
+This is particularly useful in scenarios where the file is continuously updated, and the updates need to be processed immediately, such as in log monitoring or real-time data analysis.
+
+Example usage:
+	from threading import Timer
+	from time import time
+	newfile = f'c:\\testfilex{str(time()).replace(".","_")}.txt'
+	stoptrigger = [False,]
+	t = read_async(
+		file=newfile,
+		as_thread=True,
+		mode="r",
+		action=lambda line: sys.stderr.write((str(line) + "\n")),
+		stoptrigger=stoptrigger,
+	)
+	Timer(5, lambda: stoptrigger.append(True)).start() # Stops after 5 seconds and doesn't print anymore, but os.system goes on.
+	os.system("ping 8.8.8.8 -n 10 > " + newfile + "")
+	if not asthread:
+		return _read_file_async(file, mode=mode, action=action)
+	else:
+		return _start_as_tread(file, mode, action, stoptrigger)
+
+```
