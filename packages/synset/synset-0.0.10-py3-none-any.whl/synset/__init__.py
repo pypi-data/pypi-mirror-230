@@ -1,0 +1,3 @@
+__version__ = "0.0.10"
+from .core import synset, any2set
+__all__ = ["synset", "any2set"]
