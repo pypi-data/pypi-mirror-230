@@ -1,0 +1,50 @@
+Metadata-Version: 2.1
+Name: lmu-meteo-api
+Version: 0.2.0
+Summary: Python interface to request data from the LMU Meteorology station.
+Author: DanielKuebi
+Author-email: daniflug95@live.at
+Requires-Python: >=3.10,<4.0
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: ipykernel (>=6.25.2,<7.0.0)
+Requires-Dist: ipython (>=8.15.0,<9.0.0)
+Requires-Dist: matplotlib (>=3.7.2,<4.0.0)
+Requires-Dist: numpy (>=1.25.2,<2.0.0)
+Requires-Dist: pandas (>=2.1.0,<3.0.0)
+Requires-Dist: pytest (>=7.4.2,<8.0.0)
+Requires-Dist: requests (>=2.31.0,<3.0.0)
+Description-Content-Type: text/markdown
+
+# LMU Meteo Data API
+
+The LMU provides free high-quality meteodata through a web API, that can be accessed without authentification. This package should help to acess the API and return the data as dataframe.<br>
+The package is published on PyPi for easy installation using pip.
+
+## API documentation
+<url>https://www.meteo.physik.uni-muenchen.de/request-beta/</url>
+
+## How to install
+
+```
+pip install lmu_meteo_api
+```
+
+## For developers
+
+Set up you virtual environment
+```bash
+python3.10 -m venv .venv
+```
+
+Install dependencies
+```bash
+poetry install
+```
+
+(Optional) Publish new package
+```bash
+poetry build
+poetry publish
+```
