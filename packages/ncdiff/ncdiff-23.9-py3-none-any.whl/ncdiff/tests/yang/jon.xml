@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jon type="module" prefix="jon">
+  <namespace prefix="jon">urn:jon</namespace>
+  <jon:foo xmlns:jon="urn:jon" access="read-write" type="leaf" datatype="string"/>
+  <jon:tracking xmlns:jon="urn:jon" access="read-write" type="container">
+    <jon:enabled access="read-write" type="leaf" datatype="boolean" values="true|false"/>
+  </jon:tracking>
+  <jon:address xmlns:jon="urn:jon" access="read-write" type="list" key="first last" ordered-by="user">
+    <jon:last access="read-write" type="leaf" datatype="string" mandatory="true" is_key="true"/>
+    <jon:first access="read-write" type="leaf" datatype="string" mandatory="true" is_key="true"/>
+    <jon:street access="read-write" type="leaf" datatype="string"/>
+    <jon:city access="read-write" type="leaf" datatype="string"/>
+  </jon:address>
+  <jon:store xmlns:jon="urn:jon" access="read-write" type="leaf-list" default="Target" ordered-by="user"/>
+</jon>
