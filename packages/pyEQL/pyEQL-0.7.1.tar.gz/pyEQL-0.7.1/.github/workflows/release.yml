@@ -1,0 +1,42 @@
+name: release
+
+on:
+  release:
+    types: [published]
+
+  workflow_dispatch:
+
+jobs:
+  # https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes
+
+  deploy:
+    name: Upload release to PyPI
+    runs-on: ubuntu-latest
+    environment:
+      name: publish
+      url: https://pypi.org/p/pyEQL
+
+    permissions:
+      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install setuptools setuptools_scm wheel tox
+
+    - name: Build packages for distribution
+      run: |
+        tox -e clean,build
+
+    - name: Upload to PyPi
+      uses: pypa/gh-action-pypi-publish@v1.8.10
+
