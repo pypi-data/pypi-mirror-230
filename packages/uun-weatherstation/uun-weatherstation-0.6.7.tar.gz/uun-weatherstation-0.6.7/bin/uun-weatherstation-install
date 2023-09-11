@@ -1,0 +1,15 @@
+#!/usr/bin/env python3
+import os
+import shutil
+from uun_weatherstation import __path__ as pkg_path, __name__ as pkg_name
+pkg_name = pkg_name.replace('_', '-')
+pkg_path = pkg_path[0]
+
+user_home = os.path.expanduser("~")
+
+shutil.copy(f"{pkg_path}/data/sample-config.json", user_home)
+shutil.copy(f"{pkg_path}/data/start.sh", user_home)
+
+os.makedirs(f"{user_home}/.config/systemd/user/", exist_ok=True)
+shutil.copy(f"{pkg_path}/data/systemd.service", f"{user_home}/.config/systemd/user/{pkg_name}.service")
+

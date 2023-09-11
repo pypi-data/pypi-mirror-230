@@ -1,0 +1,88 @@
+#!/usr/bin/env python3
+
+import argparse
+import logging
+import os
+import signal
+import sys
+
+from uun_iot.Gateway import Gateway
+from uun_iot.utils import LoggingSystemdHandler
+from uun_weatherstation.modules import init
+
+__version__ = "0.6.7"
+__package__ = "uun_weatherstation"
+library = "uun_iot"
+
+
+def main():
+    argp = argparse.ArgumentParser(
+        prog=__package__,
+        description="Connect to weatherlink weatherstation and process informations and send to server.",
+    )
+    argp.add_argument(
+        "-v", "--version", action="version", version="%(prog) " + __version__
+    )
+    argp.add_argument(
+        "-l",
+        "--log",
+        metavar="loglevel",
+        dest="loglevel",
+        type=str,
+        help="level of logging: [DEBUG, INFO, WARNING, ERROR, CRITICAL]",
+        default="WARNING",
+    )
+    argp.add_argument(
+        "-c",
+        "--config",
+        metavar="configfile",
+        dest="config",
+        type=str,
+        help="config file location, defaults to 'config.json'",
+        default="config.json",
+    )
+    argp.add_argument(
+        "--systemd",
+        help="enable output in systemd-friendly format",
+        action="store_true",
+    )
+
+    sys.excepthook = lambda exctype, value, tb: logging.getLogger(
+        __package__
+    ).exception("Exception: ", exc_info=(exctype, value, tb))
+
+    args = argp.parse_args()
+
+    if not os.path.exists(args.config):
+        sys.exit(f"Could not find configuration file '{args.config}'")
+
+    loglevel = args.loglevel
+    llevel = getattr(logging, loglevel.upper(), None)
+    if not isinstance(llevel, int):
+        sys.exit(f"Invalid log level: {loglevel}")
+
+    loggerw = logging.getLogger(__package__)  # application specific logger
+    loggeru = logging.getLogger(library)  # library logger
+    loggerw.setLevel(llevel)
+    loggeru.setLevel(llevel)
+    handler = LoggingSystemdHandler() if args.systemd else logging.StreamHandler()
+    handler.setFormatter(logging.Formatter("%(name)s - %(levelname)s - %(message)s"))
+    loggerw.addHandler(handler)
+    loggeru.addHandler(handler)
+
+    # start module system
+    print("=== " + __package__ + " ===")
+    with Gateway(args.config, init) as g:
+        # Register a SIGTERM signal, as it is issued by systemd on stop/restart.
+        #   Because by default, it does not run destructors.
+        # Ctrl-C (SINGINT) correctly runs destructors, so no need to register.
+        # SIGUSR1 is used internally by HealthCheck to restart the gateway
+        signal.signal(signal.SIGTERM, g.signal_handler)
+        signal.signal(signal.SIGINT, g.signal_handler)
+        signal.signal(signal.SIGUSR1, g.signal_handler)
+
+        g.stopev.wait()
+
+
+if __name__ == "__main__":
+    main()
