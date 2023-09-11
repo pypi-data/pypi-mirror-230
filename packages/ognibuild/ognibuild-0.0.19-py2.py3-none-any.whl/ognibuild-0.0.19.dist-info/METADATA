@@ -1,0 +1,45 @@
+Metadata-Version: 2.1
+Name: ognibuild
+Version: 0.0.19
+Summary: Detect and run any build system
+Maintainer-email: Jelmer Vernooĳ <jelmer@jelmer.uk>
+License: GNU GPLv2 or later
+Project-URL: Homepage, https://jelmer.uk/code/ognibuild
+Classifier: Development Status :: 4 - Beta
+Classifier: License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Operating System :: POSIX
+Requires-Python: >=3.9
+License-File: LICENSE
+License-File: AUTHORS
+Requires-Dist: breezy (>=3.2)
+Requires-Dist: buildlog-consultant (>=0.0.29)
+Requires-Dist: requirements-parser
+Requires-Dist: toml
+Requires-Dist: setuptools
+Requires-Dist: ruamel.yaml
+Provides-Extra: debian
+Requires-Dist: debmutate ; extra == 'debian'
+Requires-Dist: python-debian ; extra == 'debian'
+Requires-Dist: python-apt ; extra == 'debian'
+Requires-Dist: brz-debian ; extra == 'debian'
+Requires-Dist: lz4 ; extra == 'debian'
+Provides-Extra: dep_server
+Requires-Dist: aiohttp ; extra == 'dep_server'
+Requires-Dist: aiohttp-openmetrics ; extra == 'dep_server'
+Provides-Extra: dev
+Requires-Dist: testtools ; extra == 'dev'
+Requires-Dist: types-setuptools ; extra == 'dev'
+Requires-Dist: types-psycopg2 ; extra == 'dev'
+Requires-Dist: google-cloud-logging ; extra == 'dev'
+Provides-Extra: gcp
+Requires-Dist: google-cloud-logging ; extra == 'gcp'
+Provides-Extra: remote
+Requires-Dist: breezy ; extra == 'remote'
+Requires-Dist: dulwich ; extra == 'remote'
+Provides-Extra: testing
+Requires-Dist: testtools ; extra == 'testing'
+Requires-Dist: types-toml ; extra == 'testing'
+
