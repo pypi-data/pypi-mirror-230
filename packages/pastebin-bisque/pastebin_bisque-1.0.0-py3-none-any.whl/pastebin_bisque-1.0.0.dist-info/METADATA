@@ -1,0 +1,153 @@
+Metadata-Version: 2.1
+Name: pastebin-bisque
+Version: 1.0.0
+Summary: Scrape all public Pastebin pastes from a user.
+Home-page: https://github.com/bbbbbrie/pastebin-bisque
+Author: Brie Carranza
+Author-email: hi@brie.ninja
+License: LGPL-3.0-or-later
+Project-URL: 📝 Documentation, https://pastebin-bisque.readthedocs.io/
+Project-URL: 🚀 Changelog, https://pastebin-bisque.readthedocs.io/en/latest/changelog.html
+Project-URL: 💡 Issue Tracker, https://github.com/bbbbbrie/pastebin-bisque/issues
+Keywords: pastebin,osint,security,research,scraping
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)
+Classifier: Operating System :: Unix
+Classifier: Operating System :: POSIX
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Classifier: Topic :: Utilities
+Requires-Python: >=3.7
+Description-Content-Type: text/x-rst
+License-File: LICENSE
+License-File: AUTHORS.rst
+Requires-Dist: loguru ==0.7.1
+Requires-Dist: beautifulsoup4 ==4.12.2
+Requires-Dist: certifi ==2023.7.22
+Requires-Dist: chardet ==5.2.0
+Requires-Dist: charset-normalizer ==3.2.0
+Requires-Dist: Click ==8.1.7
+Requires-Dist: idna ==3.4
+Requires-Dist: pathvalidate ==3.1.0
+Requires-Dist: requests ==2.31.0
+Requires-Dist: six ==1.16.0
+Requires-Dist: soupsieve ==2.5
+Requires-Dist: urllib3 ==2.0.4
+
+==============
+✨ Overview ✨
+==============
+
+The Pastebin Bisque is a small Python utility that uses BeautifulSoup to scrape a user's `Pastebin`_ profile. All public pastes from that user are downloaded to disk. Optionally, the pastes can be saved to a single `.zip` file.
+
+There is no rate-limiting protection built-in. Read about the `Pastebin Request Limits`_ if you anticipate generating a large number of requests. The file name provided by the Pastebin user will be prepended with the short URL that Pastebin provides. This allows a single directory with all pastes and no duplicates and makes the original URL fairly easy to reconstruct.
+
+.. _Pastebin: https://pastebin.com/
+.. _Pastebin Request Limits: https://pastebin.com/doc_scraping_api#2
+
+TL;DR - Scrape all public Pastebin pastes from a user.
+
+* Free software: GNU Lesser General Public License v3 or later (LGPLv3+)
+
+📦 Installation
+===============
+
+::
+
+    pip install pastebin-bisque
+
+
+📚 Documentation
+================
+
+
+https://pastebin-bisque.readthedocs.io/
+
+
+💻 Development
+==============
+
+To run all the tests run::
+
+    tox
+
+Consider using this to run the tests in parallel:
+
+    tox -p auto
+
+Note, to combine the coverage data from all the tox environments run:
+
+.. list-table::
+    :widths: 10 90
+    :stub-columns: 1
+
+    - - Windows
+      - ::
+
+            set PYTEST_ADDOPTS=--cov-append
+            tox
+
+    - - Other
+      - ::
+
+            PYTEST_ADDOPTS=--cov-append tox
+
+
+Changelog
+=========
+
+1.0.0 (09/10/2023)
+------------------
+
+v1.0.0: 🍰 Now On PyPI
+
+With this release, `pastebin-bisque` is now available on PyPI. You can install it with::
+
+  pip install pastebin-bisque
+
+This release is timed as an early celebration of the 🦄🌈  `original author`_'s 🍰 birthday.
+
+.. _original author: https://brie.dev/about
+
+0.3.0 (12/11/2022)
+------------------
+
+v0.3.0: 🤖🤝 Human and Bot Friendly
+
+This release is friendly for both humans *and* machines. Thanks to `your feedback`_, I pushed a new release that should make for a much better experience all around.
+
+.. _your feedback: https://github.com/bbbbbrie/pastebin-bisque/issues/6
+
+
+What's Changed
+++++++++++++++
+
+- Bump urllib3 from 1.25.8 to 1.26.5 by ``@dependabot``
+- Address feedback in `#6`_ by Brie Carranza in `#8`_
+
+.. _#6: https://github.com/bbbbbrie/pastebin-bisque/issues/6
+.. _#8: https://github.com/bbbbbrie/pastebin-bisque/pull/8
+
+0.2.0 (05/13/2020)
+------------------
+
+v0.2.0: Tidied Up
+
+This version has neater output.
+
+0.1.0 (03/01/2020)
+------------------
+
+v0.1.0: Inaugural Release
+
+This is the first release of Pastebin Bisque! All of the initial bugs have been squashed! There is documentation and a demo. 😸
