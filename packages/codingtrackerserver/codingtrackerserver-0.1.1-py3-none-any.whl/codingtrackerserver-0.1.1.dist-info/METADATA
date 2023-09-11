@@ -1,0 +1,53 @@
+Metadata-Version: 2.1
+Name: codingtrackerserver
+Version: 0.1.1
+Summary: Server that goes with the codingTracker app. It use aiohttp and sqlite3.0 to save data from the client. It also provide an entry point to get a complete rundown of every language used.
+Home-page: https://github.com/eguefif/codingTrackerServer
+License: MIT
+Author: Emmanuel Guefif
+Requires-Python: >=3.10,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: PyYAML (>=6.0.1,<7.0.0)
+Requires-Dist: aiohttp (>=3.8.5,<4.0.0)
+Requires-Dist: asyncio (>=3.4.3,<4.0.0)
+Project-URL: Repository, https://github.com/eguefif/codingTrackerServer
+Description-Content-Type: text/markdown
+
+# codingTrackerServer
+This is the server for the codingTracker app.
+
+## Description
+Using a REST api, it save in a sqlite3.0 db the time spend coding in
+language that are tracked by codingTracker app.
+
+## Getting Started
+
+### Dependencies
+poetry
+aiohttp
+pyyaml
+
+### Installing
+poetry install
+
+### Executing program
+Run the server:
+	poetry shell
+	python3 ./codingTrackerServer/server.py
+
+## Authors
+Contributors names and contact info
+
+Emmanuel Guefif
+eguefif@fastmail.com
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE.md file for details
+
+## Version
+0.1.1
+
