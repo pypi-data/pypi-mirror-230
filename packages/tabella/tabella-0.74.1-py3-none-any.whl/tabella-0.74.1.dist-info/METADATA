@@ -1,0 +1,70 @@
+Metadata-Version: 2.1
+Name: tabella
+Version: 0.74.1
+Summary: Open-RPC API interactive documentation.
+Home-page: https://gitlab.com/mburkard/tabella
+License: Apache-2.0
+Author: Matthew Burkard
+Author-email: matthewjburkard@gmail.com
+Requires-Python: >=3.10,<4.0
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Requires-Dist: Jinja2 (>=3.1.2,<4.0.0)
+Requires-Dist: case-switcher (>=1.3.13,<2.0.0)
+Requires-Dist: fastapi (>=0.103.0,<0.104.0)
+Requires-Dist: httpx (>=0.24.1,<0.25.0)
+Requires-Dist: jsonrpc2-objects (>=3.0.0,<4.0.0)
+Requires-Dist: lorem-pysum (>=1.4.3,<2.0.0)
+Requires-Dist: openrpc (>=8.0.1,<9.0.0)
+Requires-Dist: openrpcclientgenerator (>=0.42.3,<0.43.0)
+Requires-Dist: uvicorn (>=0.23.2,<0.24.0)
+Requires-Dist: websockets (>=11.0.3,<12.0.0)
+Project-URL: Repository, https://gitlab.com/mburkard/tabella
+Description-Content-Type: text/markdown
+
+# Methodology
+
+![](https://img.shields.io/badge/License-ApacheV2-blue.svg)
+![](https://img.shields.io/badge/code%20style-black-000000.svg)
+
+Interactive documentation for OpenRPC APIs.
+
+![Demo](https://gitlab.com/mburkard/tabella/-/raw/main/docs/demo.png)
+
+## Development Setup
+
+### Requirements
+
+- Python3.10+
+- [Poetry](https://python-poetry.org)
+- Node 18+
+
+### Install Dev Dependencies
+
+#### Python
+
+`poetry install`
+
+#### Node
+
+```shell
+cd node
+. build.sh
+```
+
+### Run Test Server
+
+```shell
+poetry shell
+uvicorn tests.integration.integration_app:app --reload
+```
+
+Then navigate to http://localhost:8000 in your browser.
+
+## Inspired By
+
+- [OPEN-RPC Playground](https://playground.open-rpc.org/)
+- [Swagger](https://swagger.io/)
+- [Redoc](https://github.com/Redocly/redoc)
+
