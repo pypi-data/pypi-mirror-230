@@ -1,0 +1,211 @@
+Metadata-Version: 2.1
+Name: milestonexprotectrestPython
+Version: 1.0.1
+Summary: Milestone XProtect REST Services Python3 Library
+Author: Todd Lucas
+Author-email: <thlucas@yahoo.com>
+Keywords: python,milestone,xprotect,surveillance,camera,security
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Operating System :: Unix
+Classifier: Topic :: Software Development
+Classifier: Topic :: System :: Logging
+Classifier: Natural Language :: English
+Classifier: License :: Free To Use But Restricted
+Requires-Python: >3.4.1
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: smartinspectPython >=3.0.19
+Requires-Dist: requests >=2.0
+Requires-Dist: requests-ntlm >=1.2.0
+
+<h1 class="modulename">
+Milestone XProtect REST Services Python3 Library
+</h1>
+
+# Overview
+This API provides Python programmers the ability to retrieve various configuration information for Milestone Systems XProtect Video Manegement Systems (VMS) products. 
+It utilizes the Milestone Systems XProtect VMS API Gateway addon product REST services to retrieve the information.
+More information on Milestone XProtect products can be found on the <a href="https://www.milestonesys.com/video-technology/platform/xprotect/" target="_blank">Milestone
+XProtect Products page</a>.
+
+# What this API *CAN* Do
+This API provides an easy way to retrieve XProtect configuration details:  Cameras, Microphones, Speakers, Product License Information, Site information, etc.  Check out
+the `XPRRestService` class help documentation, and any method that starts with "Get..." for more details.
+
+# What this API *CANNOT* Do (yet anyway)
+This API does not provide any functionality to ADD, UPDATE, or DELETE XProtect configurations.  The underlying XProtect REST services DO support these operations, but this API does not.
+
+# Requirements and Dependencies
+The following XProtect requirements must be met in order to utilize this API:
+
+* Milestone Systems XProtect Management Server 2023 R2, Version 23.2a+.
+
+    The XProtect Management Server provides web-services for various commands and configuration.
+    The XProtect software products can be downloaded from the: <a href="https://www.milestonesys.com/video-technology/platform/try-xprotect/" target="_blank">
+    Milestone XProtect Products download page</a>.
+
+* Milestone Systems XProtect VMS API Gateway.
+
+    The XProtect API Gateway Addon provides RESTful services for various commands and configuration management.
+    The XProtect software products can be downloaded from the <a href="https://doc.milestonesys.com/latest/en-US/standard_features/apigateway/installation/api_gway_install-api-gateway.htm" target="_blank">Milestone XProtect API Gateway download page</a>.
+
+    Installation of the XProtect API Gateway requires XProtect VMS 2022 R1 or later.
+
+The following Python-related requirements must be met in order to utilize this API:
+
+* Python 3.4 or greater (not tested with Python 2).
+
+* smartinspectPython package (>= 3.0.20) - for diagnostics and logging support.
+
+* requests package (>= 2.0).
+
+* requests-ntlm package (>= 1.2.0).
+
+# Documentation
+Documentation is located in the package library under the 'docs' folder; use the index.html as your starting point. 
+
+# Quick-Start Sample Code
+
+The following code snippet will get you started with establishing a connection to the XProtect REST API Gateway and retrieving a list of all Camera devices. 
+
+Check out the `XPRRestService` class "Get..." methods for more sample code.
+
+<details>
+  <summary>Get All Camera Devices</summary>
+
+``` python
+# package imports.
+from milestonexprotectrestpython.xprcollection import XPRCollection
+from milestonexprotectrestpython.xprfilteroperator import XPRFilterOperator
+from milestonexprotectrestpython.xprlogininfo import XPRLoginInfo
+from milestonexprotectrestpython.xprrestservice import XPRRestService
+
+# create XPRRestService instance and set server prefixes for our environment.
+xrest:XPRRestService = XPRRestService()
+xrest.ApiGatewayUrlPrefix = "https://myapigateway.example.com"
+xrest.IsSslVerifyEnabled = False
+
+# authenticate using xprotect basic auth credentials.
+loginInfo:XPRLoginInfo = xrest.LoginBasicUser("xpsampleadmin", "MyPassword@1")
+print("** Login Details:\n{0}\n".format(loginInfo))
+
+# get camera devices, both enabled and disabled.
+cams:XPRCollection = xrest.GetCameras(True)
+print("** Cameras (Enabled and Disabled):\n{0}\n".format(cams))
+```
+
+</details>
+
+# Licensing
+This project is licensed under the terms of the MIT End-User License Agreement (EULA) license.
+
+# Logging / Tracing Support
+
+The SmartInspectPython package (installed with this package) can be used to easily debug your applications that utilize this API.
+
+The following topics and code samples will get you started on how to enable logging support.  
+Note that logging support can be turned on and off without changing code or restarting the application.  
+Click on the topics below to expand the section and reveal more information.  
+
+<details>
+  <summary>Configure Logging Support Settings File</summary>
+  <br/>
+  Add the following lines to a new file (e.g. "smartinspect.cfg") in your application startup / test directory.  
+  Note the file name can be whatever you like, just specify it on the call to `SiAuto.Si.LoadConfiguration()` when initializing the logger.
+
+``` ini
+; smartinspect.cfg
+
+; SmartInspect Logging Configuration General settings.
+; - "Enabled" parameter to turn logging on (True) or off (False).
+; - "Level" parameter to control the logging level (Debug|Verbose|Message|Warning|Error).
+; - "AppName" parameter to control the application name.
+Enabled = False 
+Level = Verbose
+DefaultLevel = Debug
+AppName = My Application Name
+
+; SmartInspect Logging Configuration Output settings.
+; - Log to SmartInspect Console Viewer running on the specified network address.
+Connections = tcp(host=192.168.1.1,port=4228,timeout=5000,reconnect=true,reconnect.interval=10s,async.enabled=true)
+; - Log to a file, keeping 14 days worth of logs.
+;Connections = "file(filename=\"./tests/logfiles/logfile.log\", rotate=daily, maxparts=14, append=true)"
+; - Log to an encrypted file, keeping 14 days worth of logs.
+;Connections = "file(filename=\"./tests/logfiles/logfileEncrypted.sil\", encrypt=true, key=""1234567890123456"", rotate=daily, maxparts=14, append=true)"
+        
+; set defaults for new sessions
+; note that session defaults do not apply to the SiAuto.Main session, since
+; this session was already added before a configuration file can be loaded. 
+; session defaults only apply to newly added sessions and do not affect existing sessions.
+SessionDefaults.Active = True
+SessionDefaults.Level = Message
+SessionDefaults.ColorBG = 0xFFFFFF
+
+; configure some individual session properties.
+; note that this does not add the session to the sessionmanager; it simply
+; sets the property values IF the session name already exists.
+Session.Main.Active = True
+Session.Main.ColorBG = 0xFFFFFF
+```
+
+</details>
+
+<details>
+  <summary>Initialize Logging Support, MAIN module</summary>
+  <br/>
+  Add the following lines to your program startup module.  
+  This will import the necessary package modules, and initialize logging support.  
+  NOTE - This code should only be executed one time!  
+
+``` python
+# load SmartInspect settings from a configuration settings file.
+from smartinspectpython.siauto import *
+siConfigPath:str = "./tests/smartinspect.cfg"
+SIAuto.Si.LoadConfiguration(siConfigPath)
+
+# start monitoring the configuration file for changes, and reload it when it changes.
+# this will check the file for changes every 60 seconds.
+siConfig:SIConfigurationTimer = SIConfigurationTimer(SIAuto.Si, siConfigPath, 60)
+
+# get smartinspect logger reference.
+_logsi:SISession = SIAuto.Main
+
+# log system environment and application startup parameters.
+_logsi.LogSeparator(SILevel.Fatal)
+_logsi.LogAppDomain(SILevel.Verbose)
+_logsi.LogSystem(SILevel.Verbose)
+```
+
+</details>
+
+<details>
+  <summary>Initialize Logging Support, CLASS or sub-modules</summary>
+  <br/>
+  Add the following lines to your program supporting modules.  
+  This will import the necessary package modules, and initialize the shared logging session.  
+
+``` python
+# get smartinspect logger reference.
+from smartinspectpython.siauto import *
+_logsi:SISession = SIAuto.Main
+```
+
+</details>
+
+<details>
+  <summary>More Information on SmartInspect</summary>
+  <br/>
+  You can use SmartInspectPython by itself to create log files for your own applications.  
+  Use the following PIP command to install the SmartInspectPython package from PyPi.org:  
+  `pip install smartinspectpython`
+  <br/>
+  <br/>
+  The SmarrtInspect Redistributable Console Viewer (free) is required to view SmartInspect Log (.sil) formatted log files, as well capture packets via the TcpProtocol 
+  or PipeProtocol connections.  The Redistributable Console Viewer can be downloaded from the <a href="https://code-partners.com/offerings/smartinspect/releases/" target="_blank">Code-Partners Software Downloads Page</a>. Note that the "Redistributable Console Viewer" is a free product, while the "SmartInspect Full Setup" is 
+  the Professional level viewer that adds a few more bells and whistles for a fee.  Also note that a Console Viewer is NOT required to view plain text (non .sil) formatted 
+  log files.
+</details>
