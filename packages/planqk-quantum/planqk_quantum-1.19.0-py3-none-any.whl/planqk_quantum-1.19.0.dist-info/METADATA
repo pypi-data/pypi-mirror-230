@@ -1,0 +1,62 @@
+Metadata-Version: 2.1
+Name: planqk-quantum
+Version: 1.19.0
+Summary: Python library for the PlanQK Quantum Platform
+Home-page: https://github.com/planqk/planqk-quantum
+Author: Anaqor AG
+Author-email: info@anaqor.io
+License: apache-2.0
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests ==2.*
+Requires-Dist: qiskit ==0.43.2
+Requires-Dist: qiskit-ibm-runtime ==0.11.2
+Requires-Dist: qiskit-braket-provider ==0.0.4
+Requires-Dist: qiskit-ionq ==0.4.1
+Requires-Dist: dwave-ocean-sdk ==6.4.1
+
+# PlanQK Quantum SDK
+
+[![PyPI version](https://badge.fury.io/py/planqk-quantum.svg)](https://badge.fury.io/py/planqk-quantum)
+
+The PlanQK Quantum SDK is for developing quantum circuits using [Qiskit](https://pypi.org/project/qiskit) to be run on quantum devices provided by the [PlanQK Platform](https://docs.platform.planqk.de).
+This library is an **extension** for Qiskit.
+This means that you are able to seamlessly integrate and reuse your existing Qiskit code, leveraging the power and familiarity of a framework you are already accustomed to.
+
+## Getting Started
+
+Check out the following guides on how to get started with PlanQK:
+
+- [PlanQK Quickstart Guide](https://docs.platform.planqk.de/getting-started/quickstart.html)
+- [Using the PlanQK Quantum SDK](https://docs.platform.planqk.de/getting-started/using-sdk.html)
+
+## Installation
+
+The package is released on PyPI and can be installed via `pip`:
+
+```bash
+pip install --upgrade planqk-quantum
+```
+
+## Development
+
+To create a new Conda environment, run:
+
+```bash
+conda env create -f environment.yml
+```
+
+Then, to activate the environment:
+
+```bash
+conda activate planqk-quantum
+```
+
+To install the package in development mode, run:
+
+```bash
+pip install -e .
+```
