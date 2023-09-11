@@ -1,0 +1,26 @@
+# Used for source distributions (python setup.py sdist)
+# https://docs.python.org/2/distutils/sourcedist.html
+
+include README.md
+include gramex/*.yaml
+include gramex/*.csv
+include gramex/favicon.ico
+include gramex/download.vega.js
+include gramex/handlers/*.html
+include gramex/handlers/*.yaml
+include gramex/pptgen/*.json
+include gramex/pptgen2/config.yaml
+
+# Include Gramex apps
+graft gramex/apps
+
+# Include dependencies
+include .gitignore
+
+# Exclude Python build files, binary databases
+global-exclude __pycache__
+global-exclude *.py[cod]
+global-exclude *.sqlite3
+
+# Exclude node_modules from gramex/apps/
+prune gramex/apps/*/node_modules
