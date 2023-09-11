@@ -1,0 +1,1 @@
+from .Smartschool3 import Smartschool3
