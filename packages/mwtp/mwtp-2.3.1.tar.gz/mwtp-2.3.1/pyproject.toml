@@ -1,0 +1,60 @@
+[project]
+name = "mwtp"
+version = "2.3.1"
+description = "A parser for MediaWiki titles"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "GPL-3.0-only" }
+keywords = [ "mediawiki", "title", "page name", "parser" ]
+authors = [
+	{ name = "NDKDD", email = "adhominem259@gmail.com" }
+]
+classifiers = [
+	"Development Status :: 3 - Alpha",
+	"Intended Audience :: Developers",
+	"Operating System :: Microsoft :: Windows",
+	"Topic :: Software Development :: Build Tools",
+	"License :: OSI Approved :: GNU General Public License (GPL)",
+	"Programming Language :: Python :: 3",
+	"Programming Language :: Python :: 3.10",
+	"Programming Language :: Python :: 3.11",
+	"Programming Language :: Python :: 3 :: Only",
+	"Typing :: Typed"
+]
+
+[project.optional-dependencies]
+dev = [
+	"mypy~=1.4.1",
+	"pytest~=7.4.0",
+	"pytest-cov~=4.1.0",
+	"setuptools~=67.6.1",
+	"tox~=4.6.4"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/NguoiDungKhongDinhDanh/mwtp"
+"Bug tracker" = "https://github.com/NguoiDungKhongDinhDanh/mwtp/issues"
+"Documentation" = "https://mwtp.readthedocs.io/"
+
+[build-system]
+requires = ["setuptools>=67.6.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+addopts = "--cov=mwtp --cov-report=html --color=yes"
+testpaths = [
+	"tests"
+]
+
+[tool.mypy]
+mypy_path = "src"
+check_untyped_defs = true
+disallow_any_generics = true
+ignore_missing_imports = true
+no_implicit_optional = true
+show_error_codes = true
+strict_equality = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unused_configs = true
+no_implicit_reexport = true
