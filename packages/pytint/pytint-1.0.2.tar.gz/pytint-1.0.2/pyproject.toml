@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "pytint"
+version = "1.0.2"
+description = "python package to colorize envy icons, themes, etc."
+authors = ["toufy <ar.toufic@protonmail.com>"]
+license = "GPL-3.0-or-later"
+readme = "README.md"
+repository = "https://codeberg.org/toufy/pytint"
+include = ["*.pyi"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+python-magic = "^0.4.27"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.4.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
