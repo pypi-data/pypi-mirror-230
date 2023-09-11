@@ -1,0 +1,63 @@
+{% load i18n %}
+<script>
+  toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": true,
+    "progressBar": true,
+    "positionClass": "toast-top-center",
+    "preventDuplicates": false,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  };
+
+  $(function () {
+    $(document).ajaxError(function (event, jqXHR, settings, errorThrown) {
+        console.error(`ajaxError----[riso-message] ${jqXHR.status} - ${errorThrown}`);
+        toastr.error(`${jqXHR.status}`, `${errorThrown}`);
+      }
+    );
+  });
+</script>
+
+{% if messages %}
+  {% for message in messages %}
+    <script>
+      {% if message.tags == "success" %}
+        toastr.success("{{ message }}", "{% trans 'Success' %}");
+        {% elif message.tags == "info" %}
+        toastr.info("{{ message }}", "{% trans 'Info' %}");
+        {% elif message.tags == "warning" %}
+        toastr.warning("{{ message }}", "{% trans 'Warning' %}");
+      {% else %}
+        toastr.error("{{ message }}", "{% trans 'Error' %}");
+      {% endif %}
+    </script>
+  {% endfor %}
+{% endif %}
+
+{% if form.errors %}
+  <script id="id_form_error" type="application/json">
+      {{ form.errors.as_json }}
+    </script>
+  <script>
+    const form_errors = JSON.parse(document.getElementById('id_form_error').textContent.replaceAll('&quot;', '"'));
+    $.each(form_errors, function (key, value) {
+      $.each(value, function (index, _value) {
+        if (key === "__all__") {
+          toastr.error(_value.message, "{% translate 'Error' %}");
+        } else {
+          toastr.error(_value.message, key);
+        }
+      });
+    });
+  </script>
+{% endif %}
+
+
