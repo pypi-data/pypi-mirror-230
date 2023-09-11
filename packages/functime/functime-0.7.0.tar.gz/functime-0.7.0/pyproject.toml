@@ -1,0 +1,105 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "functime"
+version = "0.7.0"
+description = "Time-series machine learning at scale."
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [
+    { name = "functime Team", email = "team@functime.ai" },
+    { name = "Chris Lo", email = "chris@functime.ai" },
+    { name = "Daryl Lim", email = "daryl@functime.ai" },
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = [
+    "dask",
+    "flaml==2.0.2",
+    "holidays",
+    "kaleido==0.2.1",
+    "numpy",
+    "plotly",
+    "polars==0.19.2",
+    "pyarrow",
+    "pylance",
+    "pynndescent==0.5.8",
+    "rich>=12.0.0",
+    "scikit-learn==1.2.2",
+    "scipy",
+    "tqdm",
+    "typing-extensions",
+    "zarr",
+    "requests"
+]
+
+[project.urls]
+Homepage = "https://github.com/descendant-ai/functime"
+
+[project.optional-dependencies]
+cat = ["catboost"]
+xgb = ["xgboost"]
+lgb = ["lightgbm"]
+llm = ["openai", "tabulate", "tenacity", "tiktoken"]
+test = [
+    "aeon",
+    "coverage[toml]",
+    "fastapi",
+    "joblib",
+    "mlforecast==0.8.1",
+    "pandas",
+    "pytest-benchmark",
+    "pytest-memray",
+    "pytest-timeout",
+    "pytest",
+    "scikit-learn-intelex",
+    "statsmodels",
+]
+doc = ["mkdocs", "mkdocs-material", "mkdocstrings-python", "mkdocs-jupyter"]
+
+[tool.setuptools.packages.find]
+include = ["functime", "functime.*"]
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+
+[tool.pytest.ini_options]
+addopts = ["--strict-config", "--strict-markers"]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "benchmark: marks tests as part of benchmarking",
+    "multivariate: marks multivariate forecast test",
+]
+xfail_strict = true
+
+[tool.coverage.run]
+parallel = true
+source = ["tests", "functime"]
+context = '${CONTEXT}'
+
+[tool.ruff]
+select = [
+    "E", # pycodestyle errors
+    "W", # pycodestyle warnings
+    "F", # pyflakes
+    "I", # isort
+    "B", # flake8-bugbear
+]
+ignore = [
+    "E501", # line too long, handled by black
+    "B008", # do not perform function calls in argument defaults
+    "B905", # `zip()` without an explicit `strict=` parameter
+]
