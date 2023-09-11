@@ -1,0 +1,110 @@
+Metadata-Version: 2.1
+Name: hbmo
+Version: 1.0.3
+Summary: implementation of HBMO and MHBMO optimization algorithms
+Home-page: https://github.com/alimahmoodi78/hbmo
+Download-URL: https://github.com/alimahmoodi78/hbmo/archive/refs/tags/v1.0.tar.gz
+Author: Ali Mahmoodi
+Author-email: ali.mahmoodi7872@gmail.com
+License: MIT
+Keywords: Swarm-Based Optimization,Honey-Bee Mating Optimization
+Platform: UNKNOWN
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+Ali Mahmoodi[^a], Reza Piraei[^b], Seied Hosein Afzali[^b], and Majid Niazkar[^c]
+
+[^a]: Department of Computer Engineering, Shiraz University, 7136474616, Shiraz, Iran. ORCID: 0009-0005-3761-2494, Email address: ali.mahmoodi7872@gmail.com
+
+[^b]: Department of Civil Engineering, Shiraz University, 7134851156, Shiraz, Iran. ORCID: 0000-0001-7129-8076 and 0000-0002-9195-615X, Email address: piraeir@gmail.com and afzali@shirazu.ac.ir
+
+[^c]: Faculty of Science and Technology, Free University of Bozen-Bolzano, Piazza UniversitÃ  5, 39100 Bolzano, Italy. ORCID: 0000-0002-5022-1026, Email address: majid.niazkar@unibz.it
+
+# HBMO
+***
+in this work, we implemented swarm-based optimization algorithms called Honey-Bee Mating Optmization (HBMO) and Modified HBMO (MHBMO). The HBMO algorithm draws inspiration from the social life style of honeybees within a colony, specifically simulating the process of queen mating. A typical honeybee colony consists of various members, including a queen, workers, drones, and broods. The original version of the algorithm had a convergence problem where brood generation could get stuck in local optima. To address this issue, modifications have been made to the algorithm, resulting MHBMO. For more information regarding the details of HBMO algorithm you can refer to [Afshar et al.](https://doi.org/10.1016/j.jfranklin.2006.06.001), while for MHBMO algorithm you can refer to [Niknam et al.](https://doi.org/10.1016/j.energy.2010.10.062).
+## Traget Calculation Function
+First you need to define a function that calculates the target value for each sample in the input data. this function must have two input arguments: `params` and `data`.
+`params` is a 1-D `numpy.array` with size *P* (number of parameters) containing the parameters that you want to optimize.
+`data` is a 2-D `numpy.array` with size (*N*, *M*) containing *N* data samples with *M* features (columns).
+## HBMO input arguments
+`HBMO(n_param, calc_function, high, low, metric, init_pop, s_min_queen, s_max_queen, s_alpha, n_workers, seed)`
+
+`n_param`: number of parameters that need to be optimized.
+
+`calc_function`:target calculation function that we wxplained above.
+
+`high`: a list of upperbound values for each parameter.`Default`: 1 for all parameters.
+
+`low`: a list of lowerbound values for each parameter.`Default`: 0 for all parameters.
+
+`metric`: an evaluation function to measure the performance of parameters and it can be one of the 
+following values ('rmse', 'mse', 'mae'). `Default`: 'rmse'
+
+`init_pop`: the initial population of prameters. `Default`: 1,000
+
+`s_min_queen`: minimum possible speed of the queen. `default`: 1
+
+`s_max_queen`: maximum speed of the queen. `default`: 1,000,000
+
+`s_alpha`: a decay rate for speed of the queen. `Default`: 0.981
+
+`n_workers`: number of worker bees. `Default`: 10
+
+`seed`: a random seed value. `Default`: None
+## HBMO methods
+`HBMO.fit(data, targets, iterations)`: this method is for optimizing the parameters and it takes 3 inputs.
+1. `data` is a 2-D `numpy.array` with size (*N*, *M*) containing *N* data samples with *M* features.
+2. `targets` is a 1-D `numpy.array` with size *N* containing the real target values.
+3. `iterations` determines the number of iterations to optimize the parameters. `Default`: 20
+
+`HBMO.predict(data)`: this method is for predicting the target value for the given data.
+1. `data` is a 2-D `numpy.array` with size (*K*, *M*) containing *K* data samples with *M* features.
+
+`HBMO.plot_progress()`: this method is for plotting the progress of the queen's performance in each iteration.
+## Example
+In this example we will show you how to optimize several coefficients using HBMO/MHBMO algorithm to calculate the output based on a linear formula from the input features.
+First define the Target Calculation Function:
+```Python
+def my_function(params, data):
+    # separating the data features
+    f0 = data[:, 0]
+    f1 = data[:, 1]
+    f2 = data[:, 2]
+
+    # separating the parameters
+    a = params[0]
+    b = params[1]
+    c = params[2]
+    d = params[3]
+
+    # calculating the results using the formula
+    results = a*f0 + b*f1 + c*f2 + d
+
+    return results
+```
+and finally start the optimization using MHBMO algorithm.
+```Python
+from hbmo.optimizers import HBMO, MHBMO
+# instatiating from MHBMO class
+optim = MHBMO(n_param = 4,
+         calc_function = my_function,
+         high = [10, 12, 13, 15],
+         low = [0, 0, 0, 0],
+         metric = 'rmse',
+         init_pop = 1000,
+         s_min_queen = 1,
+         s_max_queen = 1e6,
+         s_alpha = 0.981,
+         n_workers = 10,
+         seed = 42)
+# starting the optimization process
+optim.fit(X_train, Y_train, iterations = 20)
+# plotting the progress
+optim.plot_progress()
+# predicting the targets for the test data
+predictions = optim.predict(X_test)
+# printing parameters with the best performance
+print(optim.queen)
+```
+
