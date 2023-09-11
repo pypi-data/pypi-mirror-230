@@ -1,0 +1,149 @@
+{% extends "main.html" %}
+{% load karaage_tags %}
+{% load applications %}
+{% load render_table from django_tables2 %}
+
+
+{% block title %}Application{% endblock %}
+
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href='{% url "index" %}'>Home</a>&nbsp;›
+    <a href="{% url 'kg_application_list' %}">Applications</a>&nbsp;›
+    {{ application }}
+</div>
+{% endblock %}
+
+
+{% block content %}
+<div id="content-main">
+    <div class="module">
+        <h2>Application Details</h2>
+        <p>{{ application.applicant }} has requested to <b>{{ application.info }}</b></p>
+
+        <div>
+            <h3>Current Status</h3>
+
+            <p>Application process:</p>
+            {% application_state application %}
+
+            {% if 'approve' in actions %}
+            <p><b>As you are {{ authorised_text }}, please Approve or Decline this request.</b></p>
+            {% endif %}
+
+            {% if 'approve' in actions or is_admin %}
+            <div class="object-tools">
+                <ul>
+                    {% if 'approve' in actions %}
+                    <li><a href="{% url 'kg_application_detail' application.id application.state 'approve' %}" class="yeslink">Approve</a></li>
+                    <li><a href="{% url 'kg_application_detail' application.id application.state 'cancel' %}" class="nolink">Decline</a></li>
+                    {% endif %}
+                    {% if is_admin %}
+                    <li><a href="{% url 'kg_application_logs' application.pk %}">Logs</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+
+        <div>
+            <h3>Application Details</h3>
+            <div class="table-container">
+                <table class="keyvalue">
+                    {% if is_admin %}
+                    <tr><th>Secret Token:</th><td>{{ application.secret_token }}</td></tr>
+                    {% endif %}
+                    <tr><th>Expires:</th><td>{{ application.expires }}</td></tr>
+                    <tr><th>Created by:</th><td>{{ application.created_by }}</td></tr>
+                    <tr><th>Created date:</th><td>{{ application.created_date }}</td></tr>
+                    <tr><th>Submitted date:</th><td>{{ application.submitted_date }}</td></tr>
+                    <tr><th>Complete date:</th><td>{{ application.complete_date }}</td></tr>
+                </table>
+            </div>
+        </div>
+
+        {% if application.new_applicant %}
+        {% with applicant=application.new_applicant %}
+        <div>
+            <h3>Requested Applicant Details</h3>
+            <div class="table-container">
+                <table class="keyvalue">
+                    <tr><th>Applicant type:</th><td>New applicant {% if is_admin and not application.existing_person %}<a href="{% url 'kg_applicant_edit' applicant.pk %}">[edit]</a>{% endif %}</td>
+                        <tr><th>Username:</th><td>{{ applicant.username }}</td></tr>
+                        <tr><th>Short name:</th><td>{{ applicant.get_short_name }}</td></tr>
+                        <tr><th>Full name:</th><td>{{ applicant.get_full_name }}</td></tr>
+                        <tr><th>Email:</th><td>{{ applicant.email|urlize }}</td></tr>
+                        <tr><th>Institute:</th><td>{% if applicant.institute %}<a href="{{ applicant.institute.get_absolute_url }}">{{ applicant.institute }}</a>{% else %}None{% endif %}</td></tr>
+                        {% if applicant.position %}<tr><th>Position:</th><td>{{ applicant.position }}</td></tr>{% endif %}
+                        {% if applicant.telephone %}<tr><th>Phone:</th><td>{{ applicant.telephone }}</td></tr>{% endif %}
+                        {% if applicant.mobile %}<tr><th>Mobile:</th><td>{{ applicant.mobile }}</td></tr>{% endif %}
+                        {% if applicant.department %}<tr><th>Department:</th><td>{{ applicant.department }}</td></tr>{% endif %}
+                        {% if applicant.supervisor %}<tr><th>Supervisor:</th><td>{{ applicant.supervisor }}</td></tr>{% endif %}
+                        {% if applicant.fax %}<tr><th>Fax:</th><td>{{ applicant.fax }}</td></tr>{% endif %}
+                </table>
+            </div>
+        </div>
+        {% endwith %}
+        {% endif %}
+
+        {% if application.existing_person %}
+        {% with applicant=application.existing_person %}
+        <div>
+            <h3>Current Applicant Details</h3>
+            <div class="table-container">
+                <table class="keyvalue">
+                    <tr><th>Applicant type:</th><td>Existing person <a href="{% url 'kg_person_detail' application.applicant.username %}">[view]</a></td>
+                        <tr><th>Username:</th><td>{{ applicant.username }}</td></tr>
+                        <tr><th>Short name:</th><td>{{ applicant.get_short_name }}</td></tr>
+                        <tr><th>Full name:</th><td>{{ applicant.get_full_name }}</td></tr>
+                        <tr><th>Email:</th><td>{{ applicant.email|urlize }}</td></tr>
+                        <tr><th>Institute:</th><td>{% if applicant.institute %}<a href="{{ applicant.institute.get_absolute_url }}">{{ applicant.institute }}</a>{% else %}None{% endif %}</td></tr>
+                        {% if applicant.position %}<tr><th>Position:</th><td>{{ applicant.position }}</td></tr>{% endif %}
+                        {% if applicant.telephone %}<tr><th>Phone:</th><td>{{ applicant.telephone }}</td></tr>{% endif %}
+                        {% if applicant.mobile %}<tr><th>Mobile:</th><td>{{ applicant.mobile }}</td></tr>{% endif %}
+                        {% if applicant.department %}<tr><th>Department:</th><td>{{ applicant.department }}</td></tr>{% endif %}
+                        {% if applicant.supervisor %}<tr><th>Supervisor:</th><td>{{ applicant.supervisor }}</td></tr>{% endif %}
+                    {% if applicant.fax %}<tr><th>Fax:</th><td>{{ applicant.fax }}</td></tr>{% endif %}
+                </table>
+            </div>
+        </div>
+        {% endwith %}
+        {% endif %}
+
+        {% if not application.existing_person %}
+        {% if 'duplicate' in actions %}
+        <div>
+            <h3>Similar People</h3>
+            <form method="post" action=".">{% csrf_token %}
+                <p>Please check that the applicant isn't an existing user.</p>
+                {% get_similar_people_table  application.applicant as table %}
+                {% render_table table %}
+                <input type="submit" name="duplicate" value="Mark duplicate person" class="button" />
+            </form>
+        </div>
+        {% endif %}
+        {% endif %}
+
+        {% application_request application %}
+
+        {% if is_admin %}
+        <div>
+            <h3>Comments</h3>
+            {% comments application.application_ptr %}
+            {% if is_admin %}
+            <div class="object-tools">
+                <ul>
+                    <li><a href="{% url 'kg_application_add_comment' application.pk %}" class="addlink">Add comment</a></li>
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <form method="post" action=".">{% csrf_token %}
+            {% application_actions %}
+        </form>
+    </div>
+</div>
+{% endblock %}
