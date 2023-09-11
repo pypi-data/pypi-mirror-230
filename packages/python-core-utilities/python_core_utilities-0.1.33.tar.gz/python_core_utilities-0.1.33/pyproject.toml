@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "python-core-utilities"
+version = "0.1.33"
+description = "A repository for core Python utilities"
+authors = ["Sean O'Leary <seamicole@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "core"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pytz = "^2023.3"
+types-pytz = "^2023.3.0.1"
+
+[tool.poetry.group.dev.dependencies]
+aiohttp = "^3.8.5"
+black = "^23.7.0"
+mypy = "^1.5.1"
+notebook = "^7.0.2"
+requests = "^2.31.0"
+types-requests = "^2.31.0.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
