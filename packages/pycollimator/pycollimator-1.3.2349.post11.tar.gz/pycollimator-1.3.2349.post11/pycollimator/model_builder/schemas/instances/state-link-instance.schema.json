@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://collimator.ai/models/state-link-instance.schema.json",
+
+  "title": "State Link Instance",
+  "type": "object",
+  "description": "",
+  "properties": {
+    "uuid": {
+      "$ref": "uuid.schema.json",
+      "description": "Unique ID for a state link"
+    },
+    "actions": {
+      "type": "array",
+      "description": "The actions to perform when transitioning from a state",
+      "items": {
+        "type": "string"
+      }
+    },
+    "guard": {
+      "type": "string",
+      "description": "The guard to check when transitioning from a state"
+    },
+    "sourceNodeId": {
+      "type": "string",
+      "description": "The ID of the source state node"
+    },
+    "destNodeId": {
+      "type": "string",
+      "description": "The ID of the destination state node"
+    },
+    "uiprops": {
+      "type": "object",
+      "properties": {
+        "sourceSide": {
+          "type": "string",
+          "enum": ["top", "right", "down", "left"]
+        },
+        "destSide": {
+          "type": "string",
+          "enum": ["top", "right", "down", "left"]
+        },
+        "sourceCoord": {
+          "type": "number"
+        },
+        "destCoord": {
+          "type": "number"
+        },
+        "startPoint": {
+          "type": "object",
+          "description": "The point where the link will start if there is no source node associated",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            }
+          },
+          "required": ["x", "y"]
+        },
+        "endPoint": {
+          "type": "object",
+          "description": "The point where the link will end if there is no dest node associated",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            }
+          },
+          "required": ["x", "y"]
+        },
+        "curveDeviation": {
+          "type": "object",
+          "description": "The deviation of the link's internal bezier curve control points (used for visually routing links around things)",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            }
+          },
+          "required": ["x", "y"]
+        }
+      },
+      "required": ["curveDeviation"]
+    }
+  },
+  "required": ["uuid", "uiprops"]
+}
