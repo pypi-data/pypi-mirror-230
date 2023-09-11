@@ -1,0 +1,69 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:z3c="http://namespaces.zope.org/z3c"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="interaktiv.recommendations">
+
+    <include package="plone.restapi" />
+
+    <!-- View: Recommendations Settings -->
+    <browser:page
+        name="recommendations_settings"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        class="interaktiv.recommendations.controlpanels.recommendations_settings.RecommendationsSettingsView"
+        permission="cmf.ManagePortal"
+        layer="interaktiv.recommendations.interfaces.IInteraktivRecommendationsLayer"
+    />
+
+    <adapter
+      factory="interaktiv.recommendations.controlpanels.recommendations_settings.RecommendationsControlpanel"
+      name="recommendations"
+    />
+
+    <!-- Custom Widget: TestDataImport -->
+    <class class="interaktiv.recommendations.controlpanels.widgets.TestDataImportWidget">
+      <require
+        permission="zope.Public"
+        interface="interaktiv.recommendations.controlpanels.widgets.ITestDataImportWidget"
+      />
+    </class>
+
+    <z3c:widgetTemplate
+      mode="input"
+      widget="interaktiv.recommendations.controlpanels.widgets.ITestDataImportWidget"
+      layer="z3c.form.interfaces.IFormLayer"
+      template="templates/widget_testdata_import.pt"
+      />
+
+    <!-- Custom Widget: Refresh -->
+    <class class="interaktiv.recommendations.controlpanels.widgets.RefreshWidget">
+      <require
+        permission="zope.Public"
+        interface="interaktiv.recommendations.controlpanels.widgets.IRefreshWidget"
+      />
+    </class>
+
+    <z3c:widgetTemplate
+      mode="input"
+      widget="interaktiv.recommendations.controlpanels.widgets.IRefreshWidget"
+      layer="z3c.form.interfaces.IFormLayer"
+      template="templates/widget_refresh.pt"
+      />
+
+    <!-- Custom Widget: Info -->
+    <class class="interaktiv.recommendations.controlpanels.widgets.InfoWidget">
+      <require
+        permission="zope.Public"
+        interface="interaktiv.recommendations.controlpanels.widgets.IInfoWidget"
+      />
+    </class>
+
+    <z3c:widgetTemplate
+      mode="input"
+      widget="interaktiv.recommendations.controlpanels.widgets.IInfoWidget"
+      layer="z3c.form.interfaces.IFormLayer"
+      template="templates/widget_info.pt"
+      />
+
+</configure>

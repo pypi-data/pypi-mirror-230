@@ -1,0 +1,27 @@
+<div class="field fieldset" i18n:domain="interaktiv.recommendations" tal:define="info python: view.get_recommender_info()">
+  <h2 i18n:translate="trans_label_recommender_info">Recommender Info</h2>
+
+  <div tal:condition="python: info.get('error')">
+    <h3 i18n:translate="trans_label_recommender_info_error">Error</h3>
+    <p>${python: info.get('error')}</p>
+  </div>
+
+  <div tal:condition="not: python: info.get('error')">
+
+    <p>
+      <label i18n:translate="trans_label_recommender_info_last_refresh">Last refresh at:</label>
+      ${python: info.get('last_refresh')}
+    </p>
+
+
+    <p>
+      <label i18n:translate="trans_label_recommender_info_vectors">Number of vectorized content:</label>
+      ${python: info.get('vectors')}
+    </p>
+    <p>
+      <label i18n:translate="trans_label_recommender_info_dimensions">Number of dimensions:</label>
+      ${python: info.get('dimensions')}
+    </p>
+  </div>
+
+</div>
