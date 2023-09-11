@@ -1,0 +1,5 @@
+import heimdall.configure_autoinstrumentation as configure_autoinstrumentation
+configure_autoinstrumentation.initialize()
+
+import requests
+print(requests.sessions.Session.send.opentelemetry_instrumentation_requests_applied)
