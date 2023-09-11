@@ -1,0 +1,450 @@
+debmutate (0.67) unstable; urgency=medium
+
+  * is_relation_implied: Improve handling of or relations.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Wed, 09 Aug 2023 22:51:58 +0100
+
+debmutate (0.66) unstable; urgency=medium
+
+  * is_relation_implied: fix logic when outer is empty
+  * debcargo: Handle default feature.
+  * rules: prevent deletion of shebang line.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Mon, 12 Jun 2023 19:33:54 +0100
+
+debmutate (0.65) unstable; urgency=medium
+
+  * Update version string. Fixes autopkgtest.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Fri, 27 Jan 2023 18:39:40 +0000
+
+debmutate (0.64) unstable; urgency=medium
+
+  * watch: Support substitutes.
+  * Add FormattingUnpreservable.diff().
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Fri, 27 Jan 2023 17:24:34 +0000
+
+debmutate (0.63) unstable; urgency=medium
+
+  * Add stricter typing.
+  * Make debmutate.change.increment_version public.
+  * Add debmutate.control.format_description for formatting a package
+    description.
+  * Raise better exception when "./debian/rules debian/control" fails.
+  * Add more possible 'DO NOT EDIT' strings.
+  * Don't delete generated files to get make to update them, but update
+    timestamp.
+  * Support blends-dev style debian/control generation.
+  * Cope with missing Build-Depends field when detecting control
+    template type.
+  * ControlEditor: Raise MissingSourceParagraph.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Thu, 10 Nov 2022 15:18:40 +0000
+
+debmutate (0.62) unstable; urgency=medium
+
+  * drop-mia-uploaders: Add support for debcargo.toml.
+  * debmutate._rules: Support dropping related comments.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Thu, 10 Nov 2022 14:54:33 +0000
+
+debmutate (0.61) unstable; urgency=medium
+
+  * Don't install tests.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Wed, 19 Oct 2022 17:03:43 +0100
+
+debmutate (0.60) unstable; urgency=medium
+
+  * Ship py.typed.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Tue, 18 Oct 2022 19:17:09 +0100
+
+debmutate (0.59) unstable; urgency=medium
+
+  * setup.cfg: Fix distribution name for python-pcre.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Fri, 07 Oct 2022 12:48:47 +0100
+
+debmutate (0.58) unstable; urgency=medium
+
+  * Migrate to setup.cfg.
+  * Provide watch extra.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Fri, 07 Oct 2022 12:12:18 +0100
+
+debmutate (0.57) unstable; urgency=medium
+
+  * Cope with multiple paragraphs in templated control files.
+  * Support editing control file templates that aren't 100% correct
+    deb822 files.
+  * Don't silently delete lintian overrides files when editing them.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Sat, 24 Sep 2022 02:03:35 +0100
+
+debmutate (0.56) unstable; urgency=medium
+
+  * deb822: Don't silently discard comments inside of fields.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Sun, 04 Sep 2022 13:47:02 +0100
+
+debmutate (0.55) unstable; urgency=medium
+
+  * Add strip_dfsg_suffix function.
+  * Update standards version to 4.6.1, no changes needed.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Mon, 29 Aug 2022 17:53:13 +0100
+
+debmutate (0.54) unstable; urgency=medium
+
+  * Bump python-debian dependency to 0.1.46.
+  * Fix handling of debcargo packages without features.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Fri, 08 Jul 2022 17:57:34 +0100
+
+debmutate (0.53) unstable; urgency=medium
+
+  * Bump python3-pcre from Recommends to Depends. Closes: #1012505
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Wed, 08 Jun 2022 16:35:10 +0100
+
+debmutate (0.52) unstable; urgency=medium
+
+  * Use pcre for better uscan compatibility when parsing watch files.
+  * Add debmutate.changelog.take_uploadership.
+  * Update uploadership in debmutate.changelog.release.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Mon, 06 Jun 2022 23:47:49 +0100
+
+debmutate (0.51) unstable; urgency=medium
+
+  * Add ControlEditor.wrap_and_sort.
+  * Drop support for non-RTS parser in python-debian; bump minimum
+    python-debian to 0.1.44.
+  * Add ControlEditor.sort_binary_packages.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Sun, 05 Jun 2022 16:20:23 +0100
+
+debmutate (0.50) unstable; urgency=medium
+
+  * Properly convert prerelease indicators back to cargo versions.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Wed, 25 May 2022 10:43:58 +0100
+
+debmutate (0.49) unstable; urgency=medium
+
+  * Improve handling of version suffixes in debianize_upstream_version.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Thu, 10 Mar 2022 20:54:49 +0000
+
+debmutate (0.48) unstable; urgency=medium
+
+  * Add debmutate.vendor module.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Tue, 22 Feb 2022 16:25:50 +0000
+
+debmutate (0.47) unstable; urgency=medium
+
+  * Drop use of the new repro parser from python-debian for control files, due
+    to bug #996785.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Sun, 09 Jan 2022 12:57:16 +0000
+
+debmutate (0.46) unstable; urgency=medium
+
+  * Re-enable use of the deb822 repro parser.
+  * Cope with the Description field missing from paragraphs.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Wed, 17 Nov 2021 17:24:12 +0000
+
+debmutate (0.45) unstable; urgency=medium
+
+  * Properly disable use of the deb822-repro parser.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Wed, 20 Oct 2021 22:31:50 +0100
+
+debmutate (0.44) unstable; urgency=medium
+
+  * Drop version constraints on python3-debian >= 0.1.42, no longer
+    necessary since deb822-repro support has been disabled.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Mon, 18 Oct 2021 18:32:51 +0100
+
+debmutate (0.43) unstable; urgency=medium
+
+  * Support python-debian git snapshots.
+  * Revert use of deb822-repro parser for the moment until bug 996783,
+    996784 and 996785 are resolved.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Mon, 18 Oct 2021 18:28:44 +0100
+
+debmutate (0.42) unstable; urgency=medium
+
+  * Re-enable use of the new python-debian repro parser.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Mon, 18 Oct 2021 15:43:35 +0100
+
+debmutate (0.41) unstable; urgency=medium
+
+  * Add debmutate._rules.discard_pointless_override.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Tue, 28 Sep 2021 22:57:13 +0100
+
+debmutate (0.40) unstable; urgency=medium
+
+  * Fix iteration of binary packages.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Sun, 19 Sep 2021 16:59:53 +0100
+
+debmutate (0.39) unstable; urgency=medium
+
+  * Add support for new formatting/comment-preserving debian/control
+    parser in python-debian.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Sun, 19 Sep 2021 12:27:06 +0100
+
+debmutate (0.38) unstable; urgency=medium
+
+  * Add support for y// patterns in watch files.
+  * When removing phony rules, also update .PHONY.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Mon, 13 Sep 2021 21:03:59 +0100
+
+debmutate (0.37) unstable; urgency=medium
+
+  * Fix drop-mia-uploaders.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Tue, 31 Aug 2021 10:07:57 +0100
+
+debmutate (0.36) unstable; urgency=medium
+
+  * Add debmutate.vcs.VcsUrl.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Mon, 23 Aug 2021 17:30:54 +0100
+
+debmutate (0.35) unstable; urgency=medium
+
+  * Add debmutate.versions.matches_release.
+  * Ship scripts for enabling Rules-Requires-Root and dropping MIA
+    uploaders.
+  * Suggest gnome-pkg-tools and postgresql-common, for updating
+    templated control files.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Mon, 07 Jun 2021 00:35:40 +0100
+
+debmutate (0.34) unstable; urgency=medium
+
+  * Various improvements to debcargo package handling, including support
+    for semver suffixes.
+  * Add debmutate.versions.debianize_upstream_version.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Fri, 30 Apr 2021 20:00:06 +0100
+
+debmutate (0.33) unstable; urgency=medium
+
+  * Add get_snapshot_revision.
+  * Import upstream_version_add_revision.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Fri, 02 Apr 2021 14:47:26 +0100
+
+debmutate (0.32) unstable; urgency=medium
+
+  * Factor out debmutate.versions.initial_debian_revision for use
+    elsewhere.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Mon, 29 Mar 2021 21:52:30 +0100
+
+debmutate (0.31) unstable; urgency=medium
+
+  * Add debian.changelog.is_unreleased_inaugural.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Mon, 29 Mar 2021 15:10:34 +0100
+
+debmutate (0.30) unstable; urgency=medium
+
+  * Fix corner cases editing changelog versions.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Fri, 26 Mar 2021 15:38:34 +0000
+
+debmutate (0.29) unstable; urgency=medium
+
+  * Add ChangelogEditor.auto_version.
+  * Add ChangelogEditor.create.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Fri, 26 Mar 2021 15:31:52 +0000
+
+debmutate (0.28) unstable; urgency=medium
+
+  * Use logging rather than warnings for deb822 warnings.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Mon, 22 Mar 2021 22:24:11 +0000
+
+debmutate (0.27) unstable; urgency=medium
+
+  * Support >> in is_dep_implied.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Mon, 22 Mar 2021 04:05:12 +0000
+
+debmutate (0.26) unstable; urgency=medium
+
+  * Fix maintscript reformatting.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Sun, 14 Mar 2021 22:58:45 +0000
+
+debmutate (0.25) unstable; urgency=medium
+
+  * Support debcargo-style UNRELEASED distributions.
+  * Add support for resolving formatting issues with merge3.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Sat, 13 Mar 2021 15:22:40 +0000
+
+debmutate (0.24) unstable; urgency=medium
+
+  * Set Section in source of debcargo packages, otherwise lintian-brush
+    will attempt to move it.
+  * Add missing dependency on tomlkit.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Sat, 06 Mar 2021 05:10:54 +0000
+
+debmutate (0.23) unstable; urgency=medium
+
+  * Split out
+    debmutate.debhelper.get_debhelper_compat_level_from_control.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Fri, 05 Mar 2021 18:03:22 +0000
+
+debmutate (0.22) unstable; urgency=medium
+
+  * Fix binary package editing for debcargo.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Wed, 03 Mar 2021 14:33:12 +0000
+
+debmutate (0.21) unstable; urgency=medium
+
+  * Add basic debcargo.toml support.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Wed, 03 Mar 2021 14:14:54 +0000
+
+debmutate (0.20) unstable; urgency=medium
+
+  * Fix compatibility with Python 3.6.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Thu, 11 Feb 2021 23:54:02 +0000
+
+debmutate (0.19) unstable; urgency=medium
+
+  * Install examples.
+  * Add MaintscriptEditor.append.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Thu, 11 Feb 2021 23:40:22 +0000
+
+debmutate (0.18) unstable; urgency=medium
+
+  * watch: Add support for tr// expressions in version mangle.
+  * Import rules module from lintian-brush as debmutate._rules.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Sat, 30 Jan 2021 16:36:05 +0000
+
+debmutate (0.17) unstable; urgency=medium
+
+  * Add allow_reformatting argument to all Editor constructors, rather
+    than looking at the REFORMATTING environment variable.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Mon, 04 Jan 2021 14:05:42 +0000
+
+debmutate (0.16) unstable; urgency=medium
+
+  * Support plain search mode in debian/watch.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Sun, 06 Dec 2020 14:58:26 +0000
+
+debmutate (0.15) unstable; urgency=medium
+
+  * Add debmutate.versions.
+  * Import find_extra_authors and find_thanks from brz-debian.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Sat, 21 Nov 2020 13:25:42 +0000
+
+debmutate (0.14) unstable; urgency=medium
+
+  * Add debmutate.changelog.release().
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Tue, 10 Nov 2020 02:37:13 +0000
+
+debmutate (0.13) unstable; urgency=medium
+
+  * Add changeblock_ensure_first_line function.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Sat, 07 Nov 2020 23:23:47 +0000
+
+debmutate (0.12) unstable; urgency=medium
+
+  * Add support for uversionmangle to Watch.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Wed, 04 Nov 2020 02:37:09 +0000
+
+debmutate (0.11) unstable; urgency=medium
+
+  * Add support for wildcards in lintian overrides.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Sun, 01 Nov 2020 15:31:01 +0000
+
+debmutate (0.10) unstable; urgency=medium
+
+  * Fix Python version number.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Thu, 08 Oct 2020 17:44:19 +0000
+
+debmutate (0.9) unstable; urgency=medium
+
+  * Add get_option / del_option members to Watch.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Sun, 27 Sep 2020 19:15:52 +0000
+
+debmutate (0.8) unstable; urgency=medium
+
+  * Add support for parsing maintscript files.
+  * Suppress warnings about substvars.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Sat, 26 Sep 2020 16:22:40 +0000
+
+debmutate (0.7) unstable; urgency=medium
+
+  * Do not accidentally add empty lines in control files.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Sat, 12 Sep 2020 15:39:34 +0000
+
+debmutate (0.6) unstable; urgency=medium
+
+  * Various improvements to quilt patch editing.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Tue, 08 Sep 2020 01:10:00 +0000
+
+debmutate (0.5) unstable; urgency=medium
+
+  * Deal with some more conflicts when editing cdbs templated control
+    files.
+  * debmutate.changelog: Add all_sha_prefixed.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Wed, 02 Sep 2020 17:34:18 +0000
+
+debmutate (0.4) unstable; urgency=medium
+
+  * Add debmutate.lintian_overrides module.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Mon, 27 Jul 2020 20:28:33 +0000
+
+debmutate (0.3) unstable; urgency=medium
+
+  * Add functions for expanding tags from gbp.conf.
+  * Add strip_changelog_message.
+  * Add more typing and documentation.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Thu, 16 Jul 2020 19:02:28 +0000
+
+debmutate (0.2) unstable; urgency=medium
+
+  * Initial release. Closes: #964421
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Mon, 06 Jul 2020 23:17:33 +0000
