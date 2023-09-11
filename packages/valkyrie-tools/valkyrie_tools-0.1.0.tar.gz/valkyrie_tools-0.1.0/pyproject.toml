@@ -1,0 +1,90 @@
+[tool.poetry]
+name = "valkyrie-tools"
+version = "0.1.0"
+authors = ["xransum <xransum@users.noreply.github.com>"]
+description = "The Valkyrie Python Project"
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/xransum/valkyrie"
+repository = "https://github.com/xransum/valkyrie"
+keywords = ["valkyrie"]
+
+[tool.poetry.scripts]
+ipcheck = "valkyrie.ipcheck:main"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+click = "^7.0"
+colorama = "^0.4.6"
+requests = "^2.31.0"
+logging = "^0.4.9.6"
+urllib3 = "^2.0.4"
+beautifulsoup4 = "^4.12.2"
+datetime = "^5.2"
+marshmallow = "^3.3.0"
+desert = "^2020.1.6"
+importlib-metadata = { version = "^1.5.0", python = "<3.8" }
+types-requests = "^2.31.0.2"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^5.3.2"
+coverage = { extras = ["toml"], version = "^5.0.1" }
+pytest-cov = "^2.8.1"
+pytest-mock = "^2.0.0"
+flake8 = "^3.7.9"
+black = "^19.10b0"
+flake8-black = "^0.1.1"
+flake8-import-order = "^0.18.1"
+flake8-bugbear = "^20.1.2"
+flake8-bandit = "^2.1.2"
+safety = "^1.8.5"
+mypy = "^0.761"
+pytype = { version = "^2020.1.8", python = "3.7" }
+flake8-annotations = "^2.0.0"
+typeguard = "^2.7.1"
+flake8-docstrings = "^1.5.0"
+darglint = "^1.1.2"
+xdoctest = "^0.11.0"
+sphinx = "^2.3.1"
+sphinx-autodoc-typehints = "^1.10.3"
+codecov = "^2.0.22"
+
+[tool.coverage.paths]
+source = ["src", "*/site-packages"]
+
+[tool.coverage.run]
+branch = true
+source = ["valkyrie_tools"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 50
+
+[tool.black]
+line-length = 88
+target-version = ['py37', 'py38', 'py39', 'py310', 'py311']
+include = '\.pyi?$'
+exclude = '''
+(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \..pytest_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)
+'''
+use-tabs = true
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
