@@ -1,0 +1,10 @@
+include README.md
+include LICENSE
+include conanfile.py
+include pyproject.toml
+
+graft webp_build
+graft tests
+
+recursive-exclude */.pytest_cache *
+recursive-exclude */__pycache__ *
