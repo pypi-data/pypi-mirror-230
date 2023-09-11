@@ -1,0 +1,33 @@
+Metadata-Version: 2.1
+Name: git-semver-tags
+Version: 1.0.1
+Summary: Compare and read semver-like versions from git tags.
+Author-email: Andrew Geiger <andrew@corsosystems.com>
+Project-URL: Homepage, https://github.com/CorsoSource/git-semver-tags
+Classifier: Development Status :: 4 - Beta
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.2
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# git-semver-tags
+Read and make sense of Git tags following the semver spec
+
+# Quickstart
+
+Install: `pip intall git-semver-tags`
+
+Import and simply pass in strings:
+
+```python
+from git_semver_tags import Version
+v = Version('1.2.3-alpha+b1234')
+```
+
+# Run tests
+
+To verify sanity, run a suite of examples to exercise it by changing to the module's test directory and running 
+
+`./tests/git_semver_tags> python -m unittest discover`
