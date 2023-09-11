@@ -1,0 +1,53 @@
+Metadata-Version: 2.1
+Name: hueprint
+Version: 1.0.1
+Summary: A simple package that enables coloured output in Python console applications.
+Home-page: https://github.com/matheusvilano/hueprint.git
+Author: Matheus Vilano
+Author-email: 
+License: MIT
+Project-URL: Author Website, https://www.matheusvilano.com/
+Project-URL: Git Repository, https://github.com/matheusvilano/hueprint
+Keywords: colour color hue console output print terminal text style format effect ANSI escape sequence
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.3
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+
+# Hueprint
+
+## Summary
+
+Hueprint is a simple package that allows the usage of colour and text effects in Python console applications.
+
+## Data Types
+
+The package introduces two simple enums: `EColour` and `EEffect`.
+
+## Functions
+
+- `cprint`: allows using `EColour` and `EEffect` for easy text style customization.
+- `sprint`: "success" style; green, no effect.
+- `eprint`: "error" style; red, no effect.
+- `wprint`: "warning" style; yellow, no effect.
+- `nprint`: "notification" style; blue, no effect.
+- `iprint`: a wrapper to the `pprint` function (from the `pprint` package).
+
+## Example
+
+`cprint` is the only function that differs from `print` in terms of number or arguments required, so this example will focus on that:
+
+```python
+    from hueprint import cprint
+    from hueprint.types import EColour, EEffect
+
+    text = "Hello, World!"
+    colour = EColour.CYAN
+    effect = EEffect.ITALIC
+
+    cprint(text, colour, effect)  # This will print the specified text in cyan and italic.
+```
