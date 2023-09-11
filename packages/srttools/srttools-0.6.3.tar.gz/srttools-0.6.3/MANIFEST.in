@@ -1,0 +1,17 @@
+include README.rst
+include CHANGES.rst
+include setup.cfg
+include LICENSE.rst
+include pyproject.toml
+
+recursive-include srttools *.pyx *.c *.pxd
+recursive-include docs *
+recursive-include licenses *
+recursive-include scripts *
+recursive-include srttools/data *.ini
+
+prune build
+prune docs/_build
+prune docs/api
+
+global-exclude *.pyc *.o
