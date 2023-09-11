@@ -1,0 +1,62 @@
+[tool.poetry]
+name = "worldex"
+version = "0.0.1a0"
+description = "Solutions for building geographic indices for indexing the world."
+authors = ["Aivin V. Solatorio <avsolatorio@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://www.github.com/avsolatorio/worldex"
+
+
+[tool.poetry.dependencies]
+
+
+[tool.poetry.group.lint.dependencies]
+
+[tool.poetry.group.typing.dependencies]
+
+
+[tool.poetry.group.dev]
+optional = true
+
+
+[tool.poetry.group.dev.dependencies]
+jupyter = "^1.0.0"
+playwright = "^1.28.0"
+setuptools = "^67.6.1"
+matplotlib = "^3.7.2"
+sqlalchemy = "^2.0.20"
+psycopg2-binary = "^2.9.7"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.4.0"
+
+[tool.ruff]
+ignore = ["E501"]
+select = [
+  "E", # pycodestyle
+  "F", # pyflakes
+  "I", # isort
+]
+exclude = ["tests/integration_tests/examples/non-utf8-encoding.py"]
+
+[tool.mypy]
+ignore_missing_imports = "True"
+disallow_untyped_defs = "True"
+exclude = ["notebooks"]
+
+[tool.coverage.run]
+omit = ["tests/*"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+
+
+[tool.poetry_bumpversion.file."worldex/__init__.py"]
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
