@@ -1,0 +1,81 @@
+[tool.poetry]
+name = "memrise_audio_uploader"
+version = "0.3.0"
+description = "Memrise audio uploader"
+authors = ["Olli Paakkunainen <olli@paakkunainen.fi>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/ollipa/memrise-audio-uploader"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "^2.27.0"
+lxml = "^4.8.0"
+google-cloud-texttospeech = "^2.14.0"
+pydantic = "^2.0.0"
+python-dotenv = "^1.0.0"
+pydantic-settings = "^2.0.0"
+
+[tool.poetry.group.dev.dependencies]
+ipython = "*"
+mypy = "*"
+black = "*"
+isort = "*"
+pylint = "*"
+pytest = "*"
+pytest-socket = "*"
+chainmock = "*"
+types-requests = "*"
+lxml-stubs = "*"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pylint.master]
+no-docstring-rgx = "^_|^Meta$"
+attr-rgx = "id|[a-z_][a-z0-9_]{2,30}$"
+extension-pkg-whitelist = "pydantic"
+
+[tool.pylint.messages_control]
+disable = [
+    "too-many-instance-attributes",
+    "too-few-public-methods",
+    "logging-fstring-interpolation",
+    "too-many-function-args",
+    "too-many-arguments",
+    "missing-class-docstring",
+    "too-many-locals",
+    "too-many-branches",
+]
+
+[tool.pylint.format]
+max-line-length = "120"
+
+[tool.isort]
+line_length = 100
+
+[tool.black]
+line_length = 100
+
+[tool.pytest.ini_options]
+addopts = "--disable-socket"
+
+[tool.mypy]
+plugins = ["pydantic.mypy"]
+
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = true
+disallow_subclassing_any = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_decorators = true
+check_untyped_defs = true
+no_implicit_optional = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+module = ["tests.*"]
+ignore_errors = true
