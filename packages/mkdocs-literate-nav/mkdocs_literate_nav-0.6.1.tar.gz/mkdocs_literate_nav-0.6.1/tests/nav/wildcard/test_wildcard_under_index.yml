@@ -1,0 +1,16 @@
+files:
+  index.md:
+  SUMMARY.md: |
+    - [b](b/index.md)
+        - [stuff](b/stuff.md)
+        - b/*.md
+  b/index.md:
+  b/a.md:
+  b/stuff.md:
+  b/z.md:
+output:
+- b:
+  - b/index.md
+  - stuff: b/stuff.md
+  - null: b/a.md
+  - null: b/z.md

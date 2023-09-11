@@ -1,0 +1,34 @@
+files:
+  SUMMARY.md: |
+    * Foo
+        * Bar
+            * [item](item.md)
+            * [Sub](sub/)
+  item.md:
+  sub/SUMMARY.md: |
+    * Foo
+        * Bar
+            * [item](item.md)
+            * [Sub](sub/)
+  sub/item.md:
+  sub/sub/SUMMARY.md: |
+    * Foo
+        * Bar
+            * [item](item.md)
+            * [Sub](sub/)
+  sub/sub/item.md:
+  sub/sub/sub/item.md:
+output:
+- Foo:
+  - Bar:
+    - item: item.md
+    - Sub:
+      - Foo:
+        - Bar:
+          - item: sub/item.md
+          - Sub:
+            - Foo:
+              - Bar:
+                - item: sub/sub/item.md
+                - Sub:
+                  - null: sub/sub/sub/item.md

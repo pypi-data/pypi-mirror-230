@@ -1,0 +1,19 @@
+files:
+  index.md:
+  SUMMARY.md: |
+    * [Frob](index.md)
+    * [Baz](baz.md)
+    * [Borgs](borgs/)
+  baz.md:
+  borgs/index.md:
+  borgs/SUMMARY.md: |
+    * [Bar](bar.md)
+    * [Foo](foo.md)
+  borgs/bar.md:
+  borgs/foo.md:
+output:
+- Frob: index.md
+- Baz: baz.md
+- Borgs:
+  - Bar: borgs/bar.md
+  - Foo: borgs/foo.md

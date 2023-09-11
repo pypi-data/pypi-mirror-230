@@ -1,0 +1,20 @@
+files:
+  index.md:
+  SUMMARY.md: |
+    * [Baz](baz.md)
+    * [Borgs](borgs/)
+  baz.md:
+  borgs/index.md:
+  borgs/SUMMARY.md: |
+    * [Bar](bar.md)
+    * [Foo](foo.md)
+  borgs/bar.md:
+  borgs/foo.md:
+implicit_index: true
+output:
+- null: index.md
+- Baz: baz.md
+- Borgs:
+  - null: borgs/index.md
+  - Bar: borgs/bar.md
+  - Foo: borgs/foo.md
