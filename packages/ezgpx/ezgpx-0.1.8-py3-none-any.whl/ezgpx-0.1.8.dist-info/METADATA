@@ -1,0 +1,93 @@
+Metadata-Version: 2.1
+Name: ezgpx
+Version: 0.1.8
+Summary: Easy to use Python GPX library
+Home-page: https://pypi.org/project/ezgpx/
+Download-URL: https://github.com/FABallemand/ezGPX
+Author: Fabien ALLEMAND
+Author-email: allemand.fabien@orange.fr
+License: GNU GPLv3
+Project-URL: Bug Tracker, https://github.com/FABallemand/ezGPX/issues
+Project-URL: Documentation, https://ezgpx.readthedocs.io/en/latest/
+Project-URL: Source Code, https://github.com/FABallemand/ezGPX
+Keywords: gpx,gpx-files,gpx-parser,gpx-reader,gpx-writer,gpx-converter,gpx-data
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: xmlschema
+Requires-Dist: pandas
+Requires-Dist: matplotlib
+Requires-Dist: basemap
+Requires-Dist: gmplot
+Requires-Dist: folium
+Requires-Dist: pytest
+
+# 🗺️ ezGPX
+
+![GitHub](https://img.shields.io/github/license/FABallemand/ezGPX)
+![PyPI - Version](https://img.shields.io/pypi/v/ezgpx)
+![GitHub last commit](https://img.shields.io/github/last-commit/FABallemand/ezGPX/main)
+[![Documentation Status](https://readthedocs.org/projects/ezgpx/badge/?version=latest)](https://ezgpx.readthedocs.io/en/latest/?badge=latest)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/ezgpx)
+
+## 🔎 Description
+Easy to use Python GPX library.
+
+- PyPi: https://pypi.org/project/ezgpx/
+- Documentation: https://ezgpx.readthedocs.io/en/latest/
+- Source code: https://github.com/FABallemand/ezGPX
+- Bug reports: https://github.com/FABallemand/ezGPX/issues
+
+## 🛠️ Installation
+
+```bash
+pip install ezgpx
+```
+
+## 🏁 Get started
+
+```python
+import ezgpx
+
+# Parse GPX file
+gpx = ezgpx.GPX("file.gpx")
+
+# Simplify (using Ramer-Dougle-Peucker algorithm)
+gpx.simplify()
+
+# Plot with Matplotlib
+gpx.matplotlib_plot(color="elevation",
+                    start_stop_colors=("green", "red"),
+                    way_points_color="blue",
+                    title=gpx.name(),
+                    duration=(0, 0),
+                    distance=(0.5, 0),
+                    ascent=None,
+                    pace=(1, 0),
+                    speed=None,
+                    file_path="img_1")
+
+# Remove metadata
+gpx.remove_metadata()
+
+# Write new simplified GPX file
+gpx.to_gpx("new_file.gpx")
+```
+![](img/matplotlib_plot_1.png)
+
+## 📚 References:
+
+### 🧭 Other Python GPX Library
+- [gpxpy](https://github.com/tkrajina/gpxpy)
+
+## 👤 Author
+- Fabien ALLEMAND
