@@ -1,0 +1,114 @@
+Metadata-Version: 2.1
+Name: pyfotmob
+Version: 0.0.3
+Summary: A Python library for interacting with the FotMob API
+Home-page: https://github.com/Yoo-Joo/PyFotMob
+Author: Youssef Ermili
+Author-email: youssef.ermili@gmail.com
+License: MIT
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.5
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests ==2.31.0
+Requires-Dist: pydantic ==1.10.8
+Requires-Dist: python-benedict ==0.32.0
+
+# PyFotMob ⚽
+<p align="center">
+  <img src="./assets/logo.png" alt="PyFotMob" width="230"/>
+</p>
+
+**PyFotMob** is a python module to streamline your interaction with the FotMob API. Access real-time football information for your applications. From analysis tools to news feeds and betting algorithms, PyFotMob offers a seamless interface for fixture details, live scores, player stats, and team info. Elevate your Python projects with accurate football data using PyFotMob ⚽.
+
+## Table of Contents 📝
+
+- [Project Description](#project-description-)
+- [Features](#features-)
+- [Installation](#installation-)
+- [Usage](#usage-)
+- [Contributions](#contributions-)
+- [License](#license-)
+
+
+## Project Description 📦
+
+**PyFotMob** is a Python module that simplifies access to football data through the FotMob API. It's a valuable tool for developers and football enthusiasts, offering real-time information for various applications. Whether you're building analysis tools, news feeds, or betting algorithms, PyFotMob provides access to fixture details, live scores, player stats, and team info. It eliminates the need for web scraping and complex API calls, allowing you to focus on enhancing your Python projects with accurate football data.
+
+Whether you're in sports betting, data science, or sports app development, PyFotMob is your reliable companion. Elevate your Python projects with the latest football insights.
+
+## Features 🍕
+
+List the main features and functionalities of **PyFotMob**.
+
+- Access live football information from the FotMob API.
+- Retrieve match dates, times, venues, and lineups.
+- Monitor ongoing match scores in real-time.
+- Access detailed player statistics for analysis.
+- Get comprehensive team data and standings.
+- Easily integrate with Python projects.
+- Abstracts complexity in API interactions.
+- Ensures up-to-date and accurate football data.
+
+
+## Installation 📥
+
+_Install PyFotMob via pip :_
+```shell
+pip install pyfotmob
+```
+
+
+## Usage 🤖
+
+_Get info about team by its id:_
+```python
+from pyfotmob import Team
+
+team = Team(8634)
+print(team.get())
+```
+
+
+## Contributions 🧑‍💻
+
+I welcome contributions to **PyFotMob**! Whether you're a developer, data enthusiast, or football fanatic, you can help improve this project. Here's how you can contribute:
+
+- **Fork the Repository,** Start by forking this repository to your GitHub account. This will create a copy of the project that you can freely experiment with.
+
+- **Clone the Repository,** Clone the forked repository to your local machine using the following command:
+```bash
+git clone https://github.com/Yoo-Joo/PyFotMob.git
+```
+
+- **Create a Branch,** Before making any changes, create a new branch for your contributions using a descriptive name:
+```bash
+git checkout -b feature/your-feature-name
+```
+
+- **Make Changes,** Implement your changes or add new features. Ensure your code follows the project's coding guidelines.
+
+- **Test,** Run tests and ensure that your changes do not break existing functionality.
+
+- **Commit,** Commit your changes with clear and concise commit messages:
+```bash
+git commit -m "Add feature X"
+```
+
+- **Push,** Push your changes to your forked repository:
+```bash
+git push origin feature/your-feature-name
+```
+
+- **Open a Pull Request,** Go to the original PyFotMob repository on GitHub and open a pull request. Describe your changes, why they're valuable, and any other relevant information.
+
+- **Collaborate,** Engage in discussions, address review comments, and work with maintainers to refine and merge your contribution.
+
+I appreciate your interest in improving PyFotMob and look forward to your contributions!
+
+
+## License ⚖️
+
+[MIT](./LICENSE) © Youssef Ermili
