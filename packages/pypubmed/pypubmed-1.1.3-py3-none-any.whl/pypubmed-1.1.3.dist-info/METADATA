@@ -1,0 +1,77 @@
+Metadata-Version: 2.1
+Name: pypubmed
+Version: 1.1.3
+Summary: Toolkits for NCBI Pubmed
+Home-page: https://github.com/suqingdong/pypubmed
+Author: suqingdong
+Author-email: suqingdong1114@gmail.com
+License: BSD License
+Project-URL: Documentation, https://pypubmed.readthedocs.io
+Project-URL: Tracker, https://github.com/suqingdong/pypubmed/issues
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Operating System :: OS Independent
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Topic :: Software Development :: Libraries
+Description-Content-Type: text/markdown
+Requires-Dist: lxml
+Requires-Dist: openpyxl
+Requires-Dist: python-dateutil
+Requires-Dist: w3lib
+Requires-Dist: click
+Requires-Dist: prettytable
+Requires-Dist: webrequests
+Requires-Dist: impact-factor
+Requires-Dist: simple-loggers
+Requires-Dist: googletranslate-python
+
+# NCBI Pubmed Toolkits
+
+## Requirements
+- Python3.6+
+
+## Installation
+```bash
+python3 -m pip install -U pypubmed
+```
+
+## Usage
+### `search`
+> search Pubmed with term
+```bash
+pypubmed search --help
+
+# do not translate
+pypubmed search -l 5 ngs
+
+# translate with a local proxies
+pypubmed -p http://127.0.0.1:1081 search ngs -l 5
+```
+
+### `advance-search`
+> advance search builder
+```bash
+pypubmed advance-search --help
+```
+![](https://suqingdong.github.io/pypubmed/src/advance-search.png)
+
+### `citations`
+> generate citations for given PMID
+```bash
+pypubmed citations --help
+```
+
+## Todos
+- [ ] HTML output
+- [ ] PDF downloader
+- [ ] GUI application
+- [ ] Local paper manager
+
+## Documents
+> https://pypubmed.readthedocs.io/en/latest/
+
+
