@@ -1,0 +1,37 @@
+[tool.poetry]
+name = "bittrade-luno"
+version = "0.1.1"
+description = "Reactive for luno"
+authors = ["Yu Jin <adamlyj89@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "bittrade_luno"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+reactivex = "^4.0.4"
+pydantic = "1.10.12"
+websocket-client = "^1.6.1"
+orjson = "^3.9.4"
+expression = "^4.2.4"
+ccxt = "2.6.5"
+ptpython = "^3.0.23"
+prompt-toolkit = "^3.0.39"
+requests = "^2.31.0"
+asyncio = "^3.4.3"
+websockets = "^10.4"
+elm-framework-helpers = "^0.3.1"
+rich = "^13.5.2"
+
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.4.1"
+hypothesis = "^6.82.3"
+pytest = "^7.4.0"
+ipython = "^8.14.0"
+pytest-cov = "^4.1.0"
+pyright = "^1.1.321"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
