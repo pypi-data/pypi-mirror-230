@@ -1,0 +1,2 @@
+class DjangoDocutilsException(Exception):
+    pass
