@@ -1,0 +1,69 @@
+[tool.poetry]
+name = "sdss-araviscam"
+version = "0.2.4"
+description = "Blackfly S GigE camera reader for SDSS-V/LVM"
+authors = ["Richard J. Mathar <mathar@mpia-hd.mpg.de>"]
+license = "BSD-3-Clause"
+readme = "README.md"
+keywords = ["SDSS-V","LVM"]
+packages = [
+    { include = "araviscam" },
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Operating System :: OS Independent",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Topic :: Multimedia :: Video :: Capture",
+    "Topic :: Scientific/Engineering :: Astronomy",
+]
+homepage = "https://wiki.sdss.org"
+repository = "https://github.com/sdss/araviscam"
+
+include = ["LICENSE", "README.md", "araviscam/*", "etc/*",
+	"docs/*"
+]
+
+exclude = [ "*.fits", "dist/*", "PKG-INFO"
+]
+
+[tool.poetry.dependencies]
+# note there may be other packages that need higher python versions....
+python = ">=3.7,<4"
+sdss-basecam = ">=0.5.0"
+PyGObject = ">=3.38.0"
+
+# there is no dependence on asyncio or math here: this is in stdlib since python3.3
+
+[tool.poetry.dev-dependencies]
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+fast = true
+
+[tool.ruff]
+line-length = 88
+target-version = 'py311'
+select = ["E", "F", "I"]
+unfixable = ["F841"]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401", "F403", "E402"]
+
+[tool.ruff.isort]
+known-first-party = ["araviscam"]
+lines-after-imports = 2
+section-order = ["future", "standard-library", "typing", "third-party", "sdss", "first-party", "local-folder"]
+
+[tool.ruff.isort.sections]
+typing = ["typing"]
+sdss = ["sdsstools", "clu", "basecam"]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+run = "BlackflyCam:main"
