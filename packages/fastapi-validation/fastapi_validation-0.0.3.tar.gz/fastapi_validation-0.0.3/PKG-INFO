@@ -1,0 +1,46 @@
+Metadata-Version: 2.1
+Name: fastapi_validation
+Version: 0.0.3
+Summary: FastAPI Event
+Project-URL: Homepage, https://github.com/megatron-global/fastapi-validation
+Project-URL: Bug Tracker, https://github.com/megatron-global/fastapi-validation/issues
+Author-email: Dzung Nguyen <dung@megatron-solutions.com>
+License-File: LICENSE
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+
+# FastAPI Validation
+
+### Setup python environment
+
+```shell
+python3 -m venv venv
+```
+
+### Active the python environemt
+
+```shell
+. venv/bin/activate
+```
+
+### Install requirements
+
+```shell
+pip install -r requirements.txt
+```
+
+## How to use
+
+```python
+# Init FastAPI
+
+# config/exception.py
+from config.i18n import i18n_service
+from bootstraps import app
+from fastapi_exception import FastApiException
+
+FastApiException.init(app, i18n_service)
+```
