@@ -1,0 +1,122 @@
+Metadata-Version: 2.1
+Name: tree-sitter-type-provider
+Version: 2.1.25
+Summary: Type providers for tree-sitter in Python.
+Author-email: Wen Kokke <wenkokke@users.noreply.github.com>
+License: MIT License
+        
+        Copyright (c) 2022 Wen Kokke
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Keywords: parser,tree-sitter,type-provider
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Topic :: Software Development :: Compilers
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: <3.12,>=3.7.1
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: tree-sitter ==0.20.1
+Requires-Dist: dataclasses-json <0.6,>=0.5.7
+Provides-Extra: mypy
+Requires-Dist: types-setuptools ; extra == 'mypy'
+Provides-Extra: test
+Requires-Dist: bumpver ; extra == 'test'
+Requires-Dist: mypy <2,>=1.1.1 ; extra == 'test'
+Requires-Dist: pytest <8,>=7.1.2 ; extra == 'test'
+Requires-Dist: pytest-golden <0.3,>=0.2.2 ; extra == 'test'
+
+![PyPI](https://img.shields.io/pypi/v/tree-sitter-type-provider)
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/wenkokke/py-tree-sitter-type-provider)
+[![GitHub Workflow Status](https://github.com/wenkokke/py-tree-sitter-type-provider/actions/workflows/ci.yml/badge.svg)](https://github.com/wenkokke/py-tree-sitter-talon/actions/workflows/ci.yml)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/wenkokke/py-tree-sitter-type-provider/dev.svg)](https://results.pre-commit.ci/latest/github/wenkokke/py-tree-sitter-type-provider/dev)
+
+# Type Providers for Tree Sitter
+
+Create a type AST from any `node-types.json` file, as well as a generic visitor class and a transformer class, and a function to convert to the AST from the `tree_sitter.Node` type.
+
+For example, the following code defines a module named `tree_sitter_javascript` from `tree-sitter-javascript/src/nodes.json`:
+
+```python
+import pathlib
+import tree_sitter_type_provider as tstp
+
+node_types_json = pathlib.Path("tree-sitter-javascript/src/node-types.json")
+node_types = tstp.NodeType.schema().loads(node_types_json.read_text(), many=True)
+
+def as_class_name(node_type_name: str) -> str:
+    class_name_parts: typing.List[str] = ["Js"]
+    for part in node_type_name.split("_"):
+        class_name_parts.append(part.capitalize())
+    return "".join(class_name_parts)
+
+sys.modules[__name__] = tstp.TreeSitterTypeProvider(
+    "tree_sitter_javascript",
+    node_types,
+    error_as_node=True,          # Include ERROR as a node in the AST
+    as_class_name=as_class_name, # How to convert node types to Python class names
+    extra=["comment"],           # Nodes which are marked as 'extra' in the grammar
+)
+```
+
+The module contains a number of dataclasses which represent the AST nodes:
+
+```python
+import tree_sitter as ts
+import tree_sitter_type_provider as tstp
+import typing
+
+@dataclass
+class JsArray(tstp.Node):
+    text: str
+    type_name: str
+    start_position: tstp.Point
+    end_position: tstp.Point
+    children: typing.List[typing.Union[JsExpression, JsSpreadElement]]
+
+@dataclass
+class JsDeclaration(tstp.Node):
+    text: str
+    type_name: str
+    start_position: tstp.Point
+    end_position: tstp.Point
+
+@dataclass
+class JsWhileStatement(tstp.Node):
+    text: str
+    type_name: str
+    start_position: tstp.Point
+    end_position: tstp.Point
+    body: JsStatement
+    condition: JsParenthesizedExpression
+
+...
+```
+
+As well as a function to convert to the AST:
+
+```python
+def from_tree_sitter(self, tsvalue: typing.Union[ts.Tree, ts.Node, ts.TreeCursor], *, encoding: str = 'utf-8') -> tstp.Node
+```
