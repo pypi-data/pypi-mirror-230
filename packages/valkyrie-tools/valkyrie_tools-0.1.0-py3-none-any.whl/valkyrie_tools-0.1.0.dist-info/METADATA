@@ -1,0 +1,104 @@
+Metadata-Version: 2.1
+Name: valkyrie-tools
+Version: 0.1.0
+Summary: The Valkyrie Python Project
+Home-page: https://github.com/xransum/valkyrie
+License: MIT
+Keywords: valkyrie
+Author: xransum
+Author-email: xransum@users.noreply.github.com
+Requires-Python: >=3.7,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: beautifulsoup4 (>=4.12.2,<5.0.0)
+Requires-Dist: click (>=7.0,<8.0)
+Requires-Dist: colorama (>=0.4.6,<0.5.0)
+Requires-Dist: datetime (>=5.2,<6.0)
+Requires-Dist: desert (>=2020.1.6,<2021.0.0)
+Requires-Dist: importlib-metadata (>=1.5.0,<2.0.0) ; python_version < "3.8"
+Requires-Dist: logging (>=0.4.9.6,<0.5.0.0)
+Requires-Dist: marshmallow (>=3.3.0,<4.0.0)
+Requires-Dist: requests (>=2.31.0,<3.0.0)
+Requires-Dist: types-requests (>=2.31.0.2,<3.0.0.0)
+Requires-Dist: urllib3 (>=2.0.4,<3.0.0)
+Project-URL: Repository, https://github.com/xransum/valkyrie
+Description-Content-Type: text/markdown
+
+# Valkyrie
+
+[![Tests](https://github.com/xransum/valkyrie/workflows/Tests/badge.svg)](https://github.com/xransum/valkyrie/actions?workflow=Tests)
+[![Codecov](https://codecov.io/gh/xransum/valkyrie/branch/master/graph/badge.svg)](https://codecov.io/gh/xransum/valkyrie)
+[![PyPI](https://img.shields.io/pypi/v/valkyrie-tools.svg)](https://pypi.org/project/valkyrie-tools/)
+[![Read the Docs](https://readthedocs.org/projects/valkyrie-tools/badge/)](https://valkyrie-tools.readthedocs.io/)
+
+Valkyrie is a robust set of CLI tools written in Python, designed for intricate web analysis. Delve into URLs, network traffic, and more with the might of Valkyrie.
+
+## Core Scripts & Implementations
+
+- **valkyrie**: The command center. Overview and configuration.
+  - Implementation: Standard Python libraries.
+
+- **curls**: Fetch URL details.
+  - Implementation: Use `requests` or `http.client`.
+
+- **digs**: Extract DNS records.
+  - Implementation: Utilize `dnspython`.
+
+- **whobe**: Domain ownership details.
+  - Implementation: Use `python-whois`.
+
+- **ipcheck**: Fetch IP details.
+  - Implementation: Leverage `ipwhois` or APIs like ipinfo.io.
+
+- **torcheck**: Check if IP is from the Tor network.
+  - Implementation: Query publicly available Tor exit node lists.
+
+- **virustotal**: Scan URLs/IPs with VirusTotal.
+  - Implementation: Interface with the VirusTotal API using `requests`.
+
+- **urlscan**: Deep URL analysis.
+  - Implementation: Use Python's `urllib`.
+
+- **heimdall**: Real-time network traffic monitor.
+  - Implementation: Use `pcapy` or `pyshark`.
+
+- **mjolnir**: Pinger for latency and uptime.
+  - Implementation: Utilize `ping3`.
+
+- **odinseye**: Deep packet inspection.
+  - Implementation: Leverage `pyshark`.
+
+- **frostbite**: Detect DDoS patterns.
+  - Implementation: Use `socket` and `scapy` for traffic analysis.
+
+- **runepeek**: Decode obfuscated URLs.
+  - Implementation: Use `urllib.parse` for URL decoding.
+
+- **bifrost**: Trace data packet paths.
+  - Implementation: Implement traceroute functionality with `scapy`.
+
+- **yggdrasil**: Network topology visualization.
+  - Implementation: Map networks with `networkx`, visualizing in CLI tables or ASCII.
+
+- **lokihide**: Detect steganography.
+  - Implementation: Use `stegano`.
+
+- **freyasight**: Vulnerability scanner.
+  - Implementation: Interface with NVD or similar databases using `requests`.
+
+- **valhallacall**: Automated alerting system.
+  - Implementation: Use `smtplib` for email alerts or APIs of messaging platforms.
+
+To use Valkyrie's toolkit, ensure you have Python3 installed, and install the necessary packages using pip. For example:
+
+```
+pip install requests dnspython python-whois ipwhois pcapy pyshark ping3 scapy networkx stegano
+```
+
+Dive deep into web analysis with the precision and agility of Valkyrie.
+

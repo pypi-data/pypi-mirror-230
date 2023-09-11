@@ -1,0 +1,10 @@
+__title__ = "valkyrie"
+__description__ = "Security Tools for Humans."
+__url__ = "https://valkyrie.readthedocs.io"
+__version__ = "1.0.0"
+__build__ = 0x022802
+__author__ = "Kevin Haas"
+__author_email__ = "me@kevin-haas.com"
+__license__ = "Apache 2.0"
+__copyright__ = "Copyright Kevin Haas"
+__hello__ = "\U0001f30e"
