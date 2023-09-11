@@ -1,0 +1,47 @@
+[build-system]
+requires = [
+  "setuptools>=64",
+  "setuptools_scm>=6.4",
+]
+
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+namespaces = true
+
+[tool.setuptools_scm]
+write_to = "src/file_reroute/_version.py"
+
+[project]
+name = "file_reroute"
+dynamic = ["version"]
+description = "file rerouting package that makes it easy to run python code for both"
+authors = [{ name = "RonaldsonBellande" }, { email = "ronaldsonbellande@gmail.com" }]
+maintainers = [{ name = "RonaldsonBellande" }, { email = "ronaldsonbellande@gmail.com" }]
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.0"
+classifiers = [
+  "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+  "Programming Language :: Python",
+]
+keywords = ["package", "setuptools"]
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-cov[all]", "mypy", "black"]
+
+[project.urls]
+Home = "https://github.com/RonaldsonBellande/file-reroute"
+Homepage = "https://github.com/RonaldsonBellande/file-reroute"
+documentation = "https://github.com/RonaldsonBellande/file-reroute"
+repository = "https://github.com/RonaldsonBellande/file-reroute"
+
+[tool.mypy]
+no_strict_optional = true
+ignore_missing_imports = true
+check_untyped_defs = true
