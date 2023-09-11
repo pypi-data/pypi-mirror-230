@@ -1,0 +1,90 @@
+version: "3.7"
+services:
+  airflow-scheduler:
+    container_name: hmd_airflow_scheduler
+    image: ${HMD_LOCAL_NS_CONTAINER_REGISTRY:-ghcr.io/neuronsphere}/hmd-img-airflow:${HMD_IMG_AIRFLOW_SERVER_VERSION:-stable}
+    entrypoint: /opt/airflow/entrypoint.sh
+    environment:
+      HMD_ENVIRONMENT: local
+      HMD_INSTANCE_NAME: airflow
+      HMD_REGION: ${HMD_REGION:-reg1}
+      HMD_CUSTOMER_CODE: ${HMD_CUSTOMER_CODE:-hmdd2}
+      HMD_DID: aaa
+      HMD_REPO_NAME: hmd-img-airflow
+      HMD_HOST_HOME: ${HMD_HOME}
+      DOCKER_URL: tcp://socket-proxy:2375
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: ${HMD_AIRFLOW__CORE__SQL_ALCHEMY_CONN:-postgresql://airflow:airflow@hmd_db/airflow}
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__API__AUTH_BACKEND: airflow.api.auth.backend.basic_auth
+      AIRFLOW_CONN_TRINO_CONN: ${HMD_AIRFLOW_CONN_TRINO_CONN:-trino://trino@trino:8081/hive}
+      AIRFLOW_CONN_TRINO_CONN_OVERWRITE: ${HMD_AIRFLOW_CONN_TRINO_CONN_OVERWRITE:-trino://trino@trino:8081/hive?__extra__=%7B%20%22session_properties%22%3A%20%7B%22hive.insert_existing_partitions_behavior%22%3A%20%22OVERWRITE%22%7D%7D}
+    volumes:
+      - type: bind
+        source: ${HMD_HOME}/transform/airflow/logs
+        target: /opt/airflow/logs
+      - type: bind
+        source: ${HMD_HOME}/transform/airflow/provider_transforms
+        target: /opt/airflow/provider_transforms
+      - type: bind
+        source: ${HMD_HOME}/transform/airflow/dag_generators
+        target: /opt/airflow/dags/dag_generators
+      - type: bind
+        source: ${HMD_HOME}
+        target: /hmd
+    depends_on:
+      - db
+      - socket-proxy
+
+  airflow-webserver:
+    container_name: hmd_airflow_webserver
+    image: ${HMD_LOCAL_NS_CONTAINER_REGISTRY:-ghcr.io/neuronsphere}/hmd-img-airflow:${HMD_IMG_AIRFLOW_SERVER_VERSION:-stable}
+    command: webserver
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    ports:
+      - 175:8080
+    environment:
+      HMD_ENVIRONMENT: local
+      HMD_INSTANCE_NAME: airflow
+      HMD_REGION: ${HMD_REGION:-reg1}
+      HMD_CUSTOMER_CODE: ${HMD_CUSTOMER_CODE:-hmdd2}
+      HMD_DID: aaa
+      HMD_REPO_NAME: hmd-img-airflow
+      HMD_HOST_HOME: ${HMD_HOME}
+      DOCKER_URL: tcp://socket-proxy:2375
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: ${HMD_AIRFLOW__CORE__SQL_ALCHEMY_CONN:-postgresql://airflow:airflow@hmd_db/airflow}
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__API__AUTH_BACKEND: airflow.api.auth.backend.basic_auth
+      AIRFLOW_CONN_TRINO_CONN: ${HMD_AIRFLOW_CONN_TRINO_CONN:-trino://trino@trino:8081/hive}
+      AIRFLOW_CONN_TRINO_CONN_OVERWRITE: ${HMD_AIRFLOW_CONN_TRINO_CONN_OVERWRITE:-trino://trino@trino:8081/hive?__extra__=%7B%20%22session_properties%22%3A%20%7B%22hive.insert_existing_partitions_behavior%22%3A%20%22OVERWRITE%22%7D%7D}
+    volumes:
+      - type: bind
+        source: ${HMD_HOME}/transform/airflow/logs
+        target: /opt/airflow/logs
+      - type: bind
+        source: ${HMD_HOME}/transform/airflow/provider_transforms
+        target: /opt/airflow/provider_transforms
+      - type: bind
+        source: ${HMD_HOME}/transform/airflow/dag_generators
+        target: /opt/airflow/dags/dag_generators
+      - type: bind
+        source: ${HMD_HOME}
+        target: /hmd
+    depends_on:
+      - db
+      - airflow-scheduler
+      - socket-proxy
+
+  socket-proxy:
+    image: alpine/socat
+    command: tcp-listen:2375,fork,reuseaddr unix-connect:/var/run/docker.sock
+    container_name: socket-proxy
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock

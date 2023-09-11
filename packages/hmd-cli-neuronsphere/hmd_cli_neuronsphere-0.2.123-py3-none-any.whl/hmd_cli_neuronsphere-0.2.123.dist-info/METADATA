@@ -1,0 +1,94 @@
+Metadata-Version: 2.1
+Name: hmd-cli-neuronsphere
+Version: 0.2.123
+Summary: Local NeuronSphere Control CLI
+Home-page: UNKNOWN
+Author: Adam Stortz
+Author-email: adam.stortz@hmdlabs.io
+License: Apache 2.0
+Platform: UNKNOWN
+Requires-Dist: aws-secretsmanager-caching (==1.1.1.5)
+Requires-Dist: boto3 (==1.21.7)
+Requires-Dist: botocore (==1.24.9)
+Requires-Dist: cachetools (==5.2.0)
+Requires-Dist: cement (==3.0.6)
+Requires-Dist: certifi (==2022.12.7)
+Requires-Dist: charset-normalizer (==2.0.12)
+Requires-Dist: colorlog (==6.6.0)
+Requires-Dist: google-auth (==2.9.1)
+Requires-Dist: hmd-cli-app (~=1.1.597)
+Requires-Dist: hmd-cli-tools (~=1.1.230)
+Requires-Dist: idna (==3.3)
+Requires-Dist: inquirerpy (==0.3.4)
+Requires-Dist: jinja2 (==3.0.3)
+Requires-Dist: jmespath (==0.10.0)
+Requires-Dist: kubernetes (==24.2.0)
+Requires-Dist: markupsafe (==2.1.0)
+Requires-Dist: oauthlib (==3.2.2)
+Requires-Dist: pfzy (==0.3.4)
+Requires-Dist: prompt-toolkit (==3.0.38)
+Requires-Dist: pyasn1 (==0.4.8)
+Requires-Dist: pyasn1-modules (==0.2.8)
+Requires-Dist: python-dateutil (==2.8.2)
+Requires-Dist: python-dotenv (==0.19.2)
+Requires-Dist: pyyaml (==6.0)
+Requires-Dist: requests (==2.28.2)
+Requires-Dist: requests-oauthlib (==1.3.1)
+Requires-Dist: rsa (==4.8)
+Requires-Dist: s3transfer (==0.5.2)
+Requires-Dist: six (==1.16.0)
+Requires-Dist: urllib3 (==1.26.8)
+Requires-Dist: wcwidth (==0.2.6)
+Requires-Dist: websocket-client (==1.3.3)
+
+.. HMD hmd-cli-neuronsphere documentation master file
+
+hmd-cli-neuronsphere
+=========================
+A CLI tool for controlling the Local NeuronSphere.
+
+Additional Requirements
+---------------------------------
+- Docker Compose
+- Docker
+
+Configuration
+---------------------------------
+Required Environment Variables:
+
+- `HMD_HOME`: folder to store data and configuration for Local NeuronSphere
+- `HMD_REPO_HOME`: folder containing NeuronSphere compliant projects, it is mounted into some services
+
+Commands
+---------------------------------
+
+- `hmd neuronsphere up`: starts all enabled services in the Local NeuronSphere
+- `hmd neuronsphere down`: stops all enabled services in the Local NeuronSphere
+- `hmd neuronsphere run`: run within a NeuronSphere Microservice project to run it locally for testing
+- `hmd neuronsphere update-images`: pull down updated images to run
+
+Included Services
+---------------------------------
+All services are enabled by default.
+
+- Gateway Proxy Server: used to forward calls to running NeuronSphere Microservices
+- Postgres Database: relational storage backend for running NeuronSphere Microservices
+- DynamoDB: NoSQL storage backend for running NeuronSphere Microservices
+- Jupyter Lab Server: used to run Jupyter Notebooks, mounts HMD_REPO_HOME for project access, located at `http://localhost:8888/`
+- NeuronSphere Transform Service: a local instance of the NeuronSphere Transform service to test NeuronSphere Transforms locally
+- Trino: a Trino database instance to use with local Transforms
+- Airflow: an Airflow instance used by the Transform Service, located at `http://localhost:175/`
+- Explorer Portal: an instance of the NeuronSphere Explorer portal for local dashboard development, located at `http://localhost:8088/`
+
+The following environment variables disable certain services by setting them to `'false'`.
+For example, `hmd configure set-env HMD_LOCAL_NEURONSPHERE_ENABLE_TRINO false` will disable Trino.
+
+- `HMD_LOCAL_NEURONSPHERE_ENABLE_TRINO`: disables Trino services
+- `HMD_LOCAL_NEURONSPHERE_ENABLE_AIRFLOW`: disables Airflow
+- `HMD_LOCAL_NEURONSPHERE_ENABLE_TRANSFORM`: disables Transform Service
+- `HMD_LOCAL_NEURONSPHERE_ENABLE_DYNAMODB`: disables DynamoDb
+- `HMD_LOCAL_NEURONSPHERE_ENABLE_APACHE_SUPERSET`: disables Explorer portal
+
+Disabled services are not started and removed the next time you run `hmd neuronsphere up`.
+
+

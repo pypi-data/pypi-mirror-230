@@ -1,0 +1,112 @@
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+version: "3.7"
+
+services:
+  namenode:
+    container_name: namenode
+    image: ${HMD_LOCAL_NS_CONTAINER_REGISTRY:-ghcr.io/neuronsphere}/hmd-img-hdfs-namenode:${HMD_IMG_HDFS_NAMENODE_VERSION:-stable}
+    volumes:
+      - type: bind
+        source: ${HMD_HOME}/trino/hadoop/dfs/name
+        target: /hadoop/dfs/name
+      - type: bind
+        source: ${HMD_HOME}/data
+        target: /hmd/data
+      - type: bind
+        source: ${HMD_HOME}/warehouse
+        target: /user/hive/warehouse
+    environment:
+      - CLUSTER_NAME=test
+    env_file:
+      - ./hadoop-hive.env
+    ports:
+      - "9870:9870"
+      - "8020:8020"
+  datanode:
+    container_name: datanode
+    image: ${HMD_LOCAL_NS_CONTAINER_REGISTRY:-ghcr.io/neuronsphere}/hmd-img-hdfs-datanode:${HMD_IMG_HDFS_DATANODE_VERSION:-stable}
+    volumes:
+      - type: bind
+        source: ${HMD_HOME}/trino/hadoop/dfs/data
+        target: /hadoop/dfs/data
+      - type: bind
+        source: ${HMD_HOME}/data
+        target: /hmd/data
+      - type: bind
+        source: ${HMD_HOME}/warehouse
+        target: /user/hive/warehouse
+    env_file:
+      - ./hadoop-hive.env
+    environment:
+      SERVICE_PRECONDITION: "namenode:9870"
+    ports:
+      - "9864:9864"
+  metastore:
+    container_name: metastore
+    image: ${HMD_LOCAL_NS_CONTAINER_REGISTRY:-ghcr.io/neuronsphere}/hmd-inf-hive-metastore:${HMD_INF_HIVE_METASTORE_VERSION:-stable}
+    env_file:
+      - ./hadoop-hive.env
+    environment:
+      - HADOOP_CONF_DIR=/opt/hadoop-3.2.3/conf
+      - USER=root
+    ports:
+      - "9083:9083"
+    volumes:
+      - type: bind
+        source: ${HMD_HOME}/data
+        target: /hmd/data
+      - type: bind
+        source: ${HMD_HOME}/warehouse
+        target: /user/hive/warehouse
+      - type: bind
+        source: ${HMD_HOME}/hive/config
+        target: /opt/metastore/conf
+      - type: bind
+        source: ${HMD_HOME}/hadoop/config
+        target: /opt/hadoop-3.2.3/conf
+
+    depends_on:
+      - db
+      - namenode
+      - datanode
+
+  trino:
+    container_name: trino
+    image: ${HMD_LOCAL_NS_CONTAINER_REGISTRY:-ghcr.io/neuronsphere}/hmd-img-trino:${HMD_IMG_TRINO_VERSION:-stable}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    ports:
+      - 8081:8081
+    volumes:
+      - type: bind
+        source: ${HMD_HOME}/trino/config
+        target: /etc/trino
+      - type: bind
+        source: ${HMD_HOME}/trino/data
+        target: /var/trino/data
+      - type: bind
+        source: ${HMD_HOME}/data
+        target: /hmd/data
+    depends_on:
+      graph-db:
+        condition: service_healthy
