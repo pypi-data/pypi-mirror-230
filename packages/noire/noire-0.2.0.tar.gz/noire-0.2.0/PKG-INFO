@@ -1,0 +1,40 @@
+Metadata-Version: 2.1
+Name: noire
+Version: 0.2.0
+Summary: Programmatic access to Mailman 2 via its publicly-accessible web interface.
+Home-page: https://github.com/geoffxy/noire/
+Author: Geoffrey Yu
+Author-email: geoffxy@gmail.com
+Maintainer: Geoffrey Yu
+Maintainer-email: geoffxy@gmail.com
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3 :: Only
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: beautifulsoup4>=4.12.2
+Requires-Dist: requests
+Requires-Dist: pydantic
+Provides-Extra: dev
+Requires-Dist: black; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Requires-Dist: pep517; extra == "dev"
+Requires-Dist: pylint; extra == "dev"
+Requires-Dist: types-beautifulsoup4; extra == "dev"
+Requires-Dist: types-requests; extra == "dev"
+
+# Noire
+
+Noire is a Python module that provides programmatic access to Mailman 2 via its
+publicly-accessible web user interface.
+
+Why the name "Noire"? This tool is meant to be a modern successor to
+[`blanche`](https://debathena.mit.edu/manpages/www/manpages/lucid/man1/blanche.1.html),
+but for Mailman. Noire is "black" in French, to contrast with "blanche"
+(French for "white").
+
+# License
+
+MIT
