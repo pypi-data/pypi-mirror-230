@@ -1,0 +1,19 @@
+[Unit]
+Description=uclWeatherStation Gateway Service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=~
+ExecStart=%h/start.sh -l WARNING --systemd
+
+Restart=on-failure
+RestartSec=30s
+
+ProtectSystem=strict
+ReadWritePaths=%h
+
+[Install]
+WantedBy=default.target
+
