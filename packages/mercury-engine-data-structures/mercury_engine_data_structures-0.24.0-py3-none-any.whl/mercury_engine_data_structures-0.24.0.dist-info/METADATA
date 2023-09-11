@@ -1,0 +1,53 @@
+Metadata-Version: 2.1
+Name: mercury-engine-data-structures
+Version: 0.24.0
+Summary: Construct file definitions for the Mercury Engine, the in-house game engine from MercurySteam
+Project-URL: Homepage, https://github.com/randovania/mercury-engine-data-structures
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: construct >=2.10.0
+Requires-Dist: zstd
+Provides-Extra: test
+Requires-Dist: pytest ; extra == 'test'
+Requires-Dist: pytest-cov ; extra == 'test'
+
+# Mercury Engine Data Structures
+Construct type definitions for Mercury Engine
+
+| Format   | Samus Returns (Read) | Samus Returns (Write) | Dread (Read) | Dread (Write) |
+| -------- |----------------------| --------------------- | ------------ | ------------- |
+| PKG      | &check;              | &check;               | &check;      | &check;       |
+| BMSAD    | &check;              | &check;               | &check;      | &check;       |
+| BMSSD    | &check;              | &check;               | &check;      | &check;       |
+| BRFLD    | Missing              | Missing               | &check;      | &check;       |
+| BMSLD    | &check;              | &check;               | Missing      | Missing       |
+| BMSCC    | &check;              | &check;               | &check;      | &check;       |
+| BRSA     | Missing              | Missing               | &check;      | &check;       |
+
+
+## Example Usage
+
+```python
+# TODO
+```
+
+## Colors for Text
+
+Metroid Dread uses the following annotations in text to change color:
+
+| Code | Color       |              |
+|------|-------------|--------------|
+| {c0} | White       | (Default)    |
+| {c1} | Yellow      |              |
+| {c2} | Red         |              |
+| {c3} | Pink        |              |
+| {c4} | Green       |              |
+| {c5} | Blue        |              |
+| {c6} | UI Active   | (Light blue) |
+| {c7} | UI Inactive | (Dim blue)   |
