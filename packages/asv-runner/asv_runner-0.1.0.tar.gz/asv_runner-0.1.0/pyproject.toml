@@ -1,0 +1,85 @@
+[tool.pdm.dev-dependencies]
+lint = [
+    "ruff",
+    "black",
+]
+
+[tool.pdm.scripts.lint]
+composite = [
+    "ruff --fix asv_runner/",
+    "black asv_runner/",
+]
+
+[tool.pdm.scripts.mkdoc]
+composite = [
+    "sphinx-build -b html docs/source docs/build/html",
+]
+
+[tool.ruff]
+line-length = 88
+extend-ignore = [
+    "E741",
+]
+select = [
+    "E",
+    "F",
+    "UP",
+    "I001",
+]
+
+[tool.black]
+line-length = 88
+target-version = [
+    "py37",
+]
+
+[tool.setuptools_scm]
+write_to = "asv_runner/_version.py"
+
+[project]
+name = "asv_runner"
+description = "Core Python benchmark code for ASV"
+authors = [
+    { name = "Rohit Goswami", email = "rog32@hi.is" },
+    { name = "Michael Droettboom", email = "mdroe@stsci.edu" },
+]
+maintainers = [
+    { name = "Rohit Goswami", email = "rog32@hi.is" },
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python",
+    "License :: OSI Approved :: BSD License",
+    "Topic :: System :: Benchmark",
+]
+version = "0.1.0"
+dependencies = []
+requires-python = ">=3.7"
+readme = "README.md"
+
+[project.license]
+text = "BSD-3-Clause"
+
+[project.optional-dependencies]
+docs = [
+    "furo",
+    "sphinx",
+    "sphinx-contributors",
+    "sphinx-copybutton",
+    "sphinx-design",
+    "sphinx-autobuild",
+    "sphinxcontrib-spelling",
+    "myst-parser>=2",
+    "sphinx-autodoc2>=0.4.2",
+]
+
+[project.urls]
+homepage = "https://asv.readthedocs.io/projects/asv-runner/en/latest/"
+repository = "https://github.com/airspeed-velocity/asv_runner"
+documentation = "https://asv.readthedocs.io/projects/asv-runner/en/latest/"
+
+[build-system]
+requires = [
+    "pdm-backend",
+]
+build-backend = "pdm.backend"
