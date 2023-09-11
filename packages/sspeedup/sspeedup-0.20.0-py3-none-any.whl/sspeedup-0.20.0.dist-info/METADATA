@@ -1,0 +1,64 @@
+Metadata-Version: 2.1
+Name: sspeedup
+Version: 0.20.0
+Summary: 开发工具箱
+Home-page: https://github.com/FHU-yezi/sspeedup
+License: MIT
+Author: yezi
+Author-email: yehaowei20060411@qq.com
+Requires-Python: >=3.8,<4.0
+Classifier: Development Status :: 4 - Beta
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Typing :: Typed
+Provides-Extra: ability-word-split
+Provides-Extra: api-litestar
+Provides-Extra: api-sanic
+Provides-Extra: config
+Provides-Extra: feishu-auth
+Provides-Extra: feishu-bitable
+Provides-Extra: pywebio
+Provides-Extra: qrcode
+Provides-Extra: word-split-jieba
+Requires-Dist: httpx (>=0.24.1,<0.25.0) ; extra == "feishu-auth" or extra == "feishu-bitable" or extra == "ability-word-split"
+Requires-Dist: jieba (>=0.42.1,<0.43.0) ; extra == "word-split-jieba"
+Requires-Dist: litestar (>=2.0.1,<3.0.0) ; extra == "api-litestar"
+Requires-Dist: motor (>=3.3.1,<4.0.0)
+Requires-Dist: msgspec (>=0.18.2,<0.19.0) ; extra == "config" or extra == "feishu-bitable" or extra == "api-litestar"
+Requires-Dist: pydantic (>=2.0.2,<3.0.0) ; extra == "api-sanic"
+Requires-Dist: pymongo (>=4.3.3,<5.0.0)
+Requires-Dist: pywebio (>=1.8.2,<2.0.0) ; extra == "pywebio"
+Requires-Dist: qrcode (>=7.4.2,<8.0.0) ; extra == "qrcode"
+Requires-Dist: sanic (>=23.3.0,<24.0.0) ; extra == "api-sanic"
+Requires-Dist: ujson (>=5.8.0,<6.0.0) ; extra == "api-sanic"
+Project-URL: Repository, https://github.com/FHU-yezi/sspeedup
+Description-Content-Type: text/markdown
+
+# sspeedup
+
+开发工具箱。
+
+支持调用 [CutUp](https://github.com/FHU-yezi/CutUp) 分词能力进行分词。
+
+包含 API 错误码与默认错误信息定义，面向 Sanic 和 Litestar 提供部分功能封装。
+
+支持使用 Sanic + Pydantic / Litestar + Msgspec 实现依赖注入。
+
+`sspeedup.cache.timeout` 包含一个过期缓存装饰器。
+
+支持记录运行日志。
+
+对 PyWwebIO 操作进行了封装和扩展。
+
+包含指数退避装饰器。
+
+支持终端彩色输出。
+
+支持通过 `qrcode` 库生成二维码。
+
+对字典和 `datetime` 库的常用操作进行了封装。
