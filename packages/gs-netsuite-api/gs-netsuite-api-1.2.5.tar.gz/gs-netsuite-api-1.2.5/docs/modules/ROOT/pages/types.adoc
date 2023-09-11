@@ -1,0 +1,38 @@
+= Index des types
+:gitlab-url: https://gitlab.ndp-systemes.fr/goodstock/netsuite-api/-/blob
+
+Voici les link:{gitlab-url}/{page-component-version}/src/gs_netsuite_api/data_types.py[Data Types] utilisé par link:{gitlab-url}/{page-component-version}/src/gs_netsuite_api/api.py[API]
+
+== ProductAPI
+- ProductData -> link:{gitlab-url}/{page-component-version}/output/xsd/lists/v2022_2_0/accounting.xsd[accounting.xsd] +
+`<complexType name="InventoryItem">`
+
+== PurchaseAPI
+- PurchaseOrderData -> link:{gitlab-url}/{page-component-version}/output/xsd/transactions/v2022_2_0/purchases.xsd[purchases.xsd] +
+`<complexType name="PurchaseOrder">`
+- PurchaseOrderLineData -> link:{gitlab-url}/{page-component-version}/output/xsd/transactions/v2022_2_0/purchases.xsd[purchases.xsd] +
+`<complexType name="PurchaseOrderItem">`
+
+== SaleAPI
+- SaleOrderData -> link:{gitlab-url}/{page-component-version}/output/xsd/transactions/v2022_2_0/sales.xsd[sales.xsd] +
+`<complexType name="SalesOrder">`
+- SaleOrderLineData -> link:{gitlab-url}/{page-component-version}/output/xsd/transactions/v2022_2_0/sales.xsd[sales.xsd] +
+`<complexType name="SalesOrderItem">`
+
+== ItemFulFillmentAPI
+- ItemPicking -> link:{gitlab-url}/{page-component-version}/output/xsd/transactions/v2022_2_0/sales.xsd[sales.xsd] +
+`<complexType name="ItemFulfillment">`
+- ItemMove -> link:{gitlab-url}/{page-component-version}/output/xsd/transactions/v2022_2_0/sales.xsd[sales.xsd] +
+`<complexType name="ItemFulfillmentItem">`
+
+== ItemReceiptAPI
+- ItemPicking -> link:{gitlab-url}/{page-component-version}/output/xsd/transactions/v2022_2_0/purchases.xsd[purchases.xsd] +
+`<complexType name="ItemReceipt">`
+- ItemMove -> link:{gitlab-url}/{page-component-version}/output/xsd/transactions/v2022_2_0/purchases.xsd[purchases.xsd] +
+`<complexType name="ItemReceiptItem">`
+
+== InventoryAdjustmentAPI
+- InventoryAdjustment -> link:{gitlab-url}/{page-component-version}/output/xsd/transactions/v2022_2_0/inventory.xsd[inventory.xsd] +
+`<complexType name="InventoryAdjustment">`
+- InventoryAdjustmentLine -> link:{gitlab-url}/{page-component-version}/output/xsd/transactions/v2022_2_0/inventory.xsd[inventory.xsd] +
+`<complexType name="InventoryAdjustmentInventory">`

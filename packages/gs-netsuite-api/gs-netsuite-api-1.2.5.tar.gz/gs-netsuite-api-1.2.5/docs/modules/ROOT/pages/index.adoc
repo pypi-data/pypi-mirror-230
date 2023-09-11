@@ -1,0 +1,41 @@
+:wsdl_version: 2022_2_0
+= Netsuite Api
+
+== Install
+
+=== Create a virtual env with `pyenv`
+[source, shell]
+----
+$ pyenv virtualenv 3.9 gs_netsuite_api
+$ pyenv activate gs_netsuite_api
+----
+
+=== Install dependencies
+
+[source, shell]
+----
+$ pip install -r requirements.txt
+----
+
+=== Credential
+
+[NOTE]
+A note inside the Bitwarden _GoodStock_ Collection with the name **NV Gallery - Netsuite Auth - PROD**.
+Copy the value of the note inside a file `./example/auth_netsuite.env`
+
+== Download The Soap API
+
+[source, shell]
+----
+$ python ./wsdldownloader
+----
+
+All the SAOP API will be downloaded inside the `output` folder.
+
+. The wsld will be indide `output/wsdl/{wsdl_version}`
+. The xsd will be inside `output/xsd/{wsdl_version}`
+
+=== How to use
+See in the `example` folder.
+
+IMPORTANT: Install the gs_netsuite_api before with a `pip install .`

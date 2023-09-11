@@ -1,0 +1,21 @@
+include:
+  - project: odoo-addons/ci-files
+    ref: v2
+    file:
+      - pipeline/classic_workflow.yml
+      - python/sexy_code.yml
+      - python/pyunit.yml
+      - python/build.yml
+      - python/deploy.yml
+      - python/deploy-tag.yml
+
+variables:
+  SUPPORT_PYTHON_VERSION: "3.8;3.9;3.10;3.11;latest"
+
+stages:
+  - test
+  - build
+  - deploy
+
+pyunittest:3.6:
+  allow_failure: true

@@ -1,0 +1,96 @@
+= Créer une nouvelle API
+
+== Création Dataclass
+
+Dans le fichier `data_types.py` ajouter la ou les classes python permetant de contenir les champs à mapper.
+Dans les `xsd` du dossier `output` trouver le complexe type voulu.
+
+[,python]
+----
+import dataclasses <1>
+
+@dataclasses.dataclass <1>
+class ProductData(RecordRef): <2>
+    str_field: str <3>
+    float_field: float <4>
+    recordRef_field: RecordRef <5>
+    datetime_field: datetime.datetime <6>
+
+----
+<1> Permet de faire des classes servant juste a contenir de la donnée plus rapidement
+<2> Ajoute automatiquement un champs `internal_id` et `name` dans la dataclass
+<3> Champ de type str, dans le xsd c'est habitulement le resultat du type `xsd:string`
+<4> Champ de type float, dans le xsd c'est habitulement le resultat du type `xsd:double`
+<5> Champ de type RecordRef, dans le xsd c'est habituelement le resultat du type `platformCore:RecordRef`
+<6> Champ de type `datetime`, dans le xsd c'est habituelement la valeur du type `xsd:dateTime`
+
+=== Dataclass contenant des lignes
+
+
+[,python]
+----
+import dataclasses
+
+@dataclasses.dataclass
+class DataClassHead(RecordRef):
+    ...
+    lines: List["DataClassLine"] = dataclasses.field(default_factory=list, repr=True) <1><2><3>
+
+
+
+class DataClassLine: <4>
+    ...
+----
+<1> Ajout un champ de type `List` de `DataClassLine`
+<2> La `default_factory` initialise ce champs en appelent `list()` si non fournit lors de la création
+<3> Ajoute ce champs dans le de la represention de cette class (`__repr__`, `__str__` utile lors d'uin `print()`)
+<4> Class des lignes qui n'est pas forcement une `dataclass`
+
+== Création de l'API
+
+Il exite des class pour simplifier la création d'API. Mais vous pouvez créer une API depuis 0.
+
+=== Depuis Zero
+
+Dans le fichier `api.py` ajouter un class, qui hérite de `GsNetSuiteApi` comme suit.
+
+Et surcharger chaque fonction pour faire appel a netsuite et convertir les resultat d'API en class python.
+
+[,python]
+----
+class MyNewApi(GsNetSuiteApi[DataClassHead]):
+
+    async def async_get_one(self, internal_id: int) -> DataClassHead:
+        pass
+
+    async def async_get_multi(self, internal_ids: List[int], params: SearchParams = None) -> List[DataClassHead]:
+        pass
+
+    async def async_get_since(self, created_since: datetime.datetime, params: SearchParams = None) -> List[DataClassHead]:
+        pass
+
+    async def async_get_all(self, params: SearchParams = None) -> List[DataClassHead]:
+        pass
+
+    async def async_get_ids_since(self, created_since: datetime.datetime, params: SearchParams = None) -> List[int]:
+        pass
+
+    async def async_get_ids(self, params: SearchParams = None) -> List[int]:
+        pass
+
+----
+
+=== BaseGsNetSuiteApi
+Cette class vous permet de ne plus s'occuper des fonctions de l'api vue dans <<_depuis_zero>>
+mais uniquement sur les parties spécifiques de votre ressource.
+
+Il faudra alors créer une class Heritant de celle-ci et surcharger toutes les methode avec `@abc.abstractmethod`. +
+
+NOTE: SaleAPI ou PurchaseAPI sont des bons exemples.
+
+=== Transaction
+
+Dans le dossier `transactions` de `output` il existe plein de record intéréssant.
+Si vous souhaitez créer une API simplifié pour l'un d'eux il faut créer une class heritant de `_TransactionAPI` de `api.py`
+
+Cette classe vous permet de ne surcharger que les information spécifique de votre transaction.

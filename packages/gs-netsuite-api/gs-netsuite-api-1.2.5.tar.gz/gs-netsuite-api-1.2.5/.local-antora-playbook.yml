@@ -1,0 +1,16 @@
+site:
+  title: Documentation Infra et hébergement NDP
+  start_page: gs_netsuite_api::index.adoc
+content:
+  sources:
+    - url: .
+      start_path: docs
+      branches: HEAD
+
+ui:
+  bundle:
+    url: https://gitlab.ndp-systemes.fr/documentation/ndp-antora-ui/-/jobs/artifacts/master/raw/public/ui-bundle.zip?job=bundle-stable
+    snapshot: true
+
+output:
+  dir: public

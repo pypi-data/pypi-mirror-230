@@ -1,0 +1,34 @@
+site_name: My Docs
+nav:
+  - "Mappers": mappers.md
+  - "CLI": cli.md
+  - "Database Options": db_options.md
+  - "Odoo Module": odoo_modules.md
+  - "Utils": utils.md
+theme:
+  name: "material"
+docs_dir: "docs/mkdocs"
+plugins:
+  - search:
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: [., ./src/gs_netsuite_api]
+          import:
+            - https://docs.python.org/3/objects.inv
+            - https://installer.readthedocs.io/en/stable/objects.inv  # demonstration purpose in the docs
+            - https://mkdocstrings.github.io/autorefs/objects.inv
+          options:
+            docstring_style: google
+            docstring_options:
+              ignore_init_summary: yes
+            merge_init_into_class: yes
+            show_submodules: no
+          rendering:
+            show_root_heading: true
+            show_root_full_path: true
+            members_order: "source"
+            show_signature_annotations: true
+          setup_commands:
+            - import sys

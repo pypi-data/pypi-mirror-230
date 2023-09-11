@@ -1,0 +1,28 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-yaml
+        exclude: .gitlab-ci.yml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
+    hooks:
+      - id: black
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: 'v0.0.263'
+    hooks:
+      - id: ruff
+  - repo: https://gitlab.com/devopshq/gitlab-ci-linter
+    rev: v1.0.3
+    hooks:
+      - id: gitlab-ci-linter
+        args:
+          - '--server'
+          - 'https://gitlab.ndp-systemes.fr'
+  # Use --insecure for self-signed certificate if you don't worry about security :)
+  # Or if you have a error: [SSL: CERTIFICATE_VERIFY_FAILED]
+  #        - '--insecure'
+  # Set GITLAB_PRIVATE_TOKEN to a project access token with `api` scope as environment variable to authenticate on your own
+  # Gitlab server

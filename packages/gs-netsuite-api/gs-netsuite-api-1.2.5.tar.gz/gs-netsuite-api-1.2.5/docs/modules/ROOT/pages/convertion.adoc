@@ -1,0 +1,69 @@
+= Convertion XSD en python
+
+Si dans une dataclass il vous manque un champs, alors vous pouvez l'ajouter.
+Ensuite, vous devez modifier aussi la fonction de conversion dans l'API.
+
+Dans les class vous verrez en commentaire le complexeType utilisé comme base de convertion.
+
+
+
+
+
+== Création Dataclass
+
+Dans le fichier `data_types.py` ajouter la ou les classes python permetant de contenir les champs à mapper.
+Dans les `xsd` du dossier `output` trouver le complexe type voulu.
+
+[,python]
+----
+import dataclasses <1>
+
+@dataclasses.dataclass <1>
+class ProductData(RecordRef): <2>
+    str_field: str <3>
+    float_field: float <4>
+    recordRef_field: RecordRef <5>
+    datetime_field: datetime.datetime <6>
+
+----
+<1> Permet de faire des classes servant juste a contenir de la donnée plus rapidement
+<2> Ajoute automatiquement un champs `internal_id` et `name` dans la dataclass
+<3> Champ de type str, dans le xsd c'est habitulement le resultat du type `xsd:string`
+<4> Champ de type float, dans le xsd c'est habitulement le resultat du type `xsd:double`
+<5> Champ de type RecordRef, dans le xsd c'est habituelement le resultat du type `platformCore:RecordRef`
+<6> Champ de type `datetime`, dans le xsd c'est habituelement la valeur du type `xsd:dateTime`
+
+
+== Dataclass contenant des lignes
+
+
+[,python]
+----
+import dataclasses
+
+@dataclasses.dataclass
+class DataClassHead(RecordRef):
+    ...
+    lines: List["DataClassLine"] = dataclasses.field(default_factory=list, repr=True) <1><2><3>
+
+
+
+class DataClassLine: <4>
+    ...
+----
+<1> Ajout un champ de type `List` de `DataClassLine`
+<2> La `default_factory` initialise ce champ en appelant `list()`, si non fournit lors de la création
+<3> Ajoute ce champ dans la représentation de cette class (`__repr__`, `__str__` utile lors d'un `print()`)
+<4> Class des lignes, qui n'est pas obligatoirement une `dataclass`
+
+
+== Les RecordRef
+
+Dans certain `xsd` vous aurez le type `platformCore:RecordRef`.
+Vous pouvez le convertir simplement en `data_types.RecordRef` graçe à sa fonction `data_types.RecordRef#from_rec_named`
+
+== Les custom fields
+
+Dans NetSuite chaque ressource peut avoir des `customField` dans un champs qui s'appelle `customFieldList`.
+Dans la classe `RecordRef` il existe la fonction `extract_custom_field`
+qui permet de simplement extraire la valeur en fonction du custom field recherché.
