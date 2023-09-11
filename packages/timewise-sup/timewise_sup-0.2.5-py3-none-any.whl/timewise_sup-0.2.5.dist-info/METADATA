@@ -1,0 +1,77 @@
+Metadata-Version: 2.1
+Name: timewise-sup
+Version: 0.2.5
+Summary: The Timewise Subtraction Pipeline produces mid-infrared difference photometry based on measurements by the WISE satelite
+Home-page: https://gitlab.desy.de/jannisnecker/timewise_sup
+License: BSD-3-Clause
+Author: Jannis Necker
+Author-email: jannis.necker@gmail.com
+Requires-Python: >=3.10,<3.11
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Provides-Extra: fpbot
+Provides-Extra: jupyter
+Requires-Dist: ampel-core (==0.8.4)
+Requires-Dist: ampel-hu-astro[ztf] (==0.8.3a20)
+Requires-Dist: corner (>=2.2.1,<3.0.0)
+Requires-Dist: extcats (>=2.4.3,<3.0.0)
+Requires-Dist: fpbot (>=1.1.2,<2.0.0) ; extra == "fpbot"
+Requires-Dist: jupyterlab (>=3.4.7,<4.0.0) ; extra == "jupyter"
+Requires-Dist: matplotlib-venn (>=0.11.9,<0.12.0)
+Requires-Dist: more-itertools (>=9.0.0,<10.0.0)
+Requires-Dist: nltk (>=3.7,<4.0)
+Requires-Dist: scikit-learn (>=1.1.2,<2.0.0)
+Requires-Dist: timewise (==0.4.5)
+Requires-Dist: tkpdfviewer (>=0.1,<0.2)
+Requires-Dist: uncertainties (>=3.1.7,<4.0.0)
+Project-URL: Documentation, https://jannisnecker.pages.desy.de/timewise_sup/docs/
+Project-URL: Repository, https://gitlab.desy.de/jannisnecker/timewise_sup
+Description-Content-Type: text/markdown
+
+![](docs/source/timewise_sup.png)
+# The Timewise Subtraction Pipeline
+
+This is all very new and exciting....
+
+
+## Installation
+
+It's highly recommended to install using `poetry`. This ensures an exact replica of the
+tested envronment with the verisions of all dependecnies resolved as documented in `poetry.lock`.
+
+```shell
+poetry install
+```
+
+Note that some systems might have problems with `poetry`s experimental (parallel) installer 
+(see [this](https://github.com/python-poetry/poetry/issues/3352) issue on GitHub).
+If the installation is stuck at `pending...` try interrupting, `poetry config experimental.new-installer false` and
+then try installing again.
+
+If this does not work you can resort to `pip`
+
+```shell
+pip install ./
+```
+
+or if you want to install in editable mode
+
+```shell
+pip install -e ./
+```
+
+
+## Set-up
+
+For running `timewise`, `MongoDB` and some other things, some environment variables should be specified. 
+You should check out the [`timewise` documentation](https://timewise.readthedocs.io/en/latest/?badge=latest).
+
+
+
+#### Using the DESY cluster
+
+To run the DESY cluster it is necessary to use [`conda`](https://conda.io). The part of the code that 
+produces the submit file for `HTCondor` will read your environment and activate your `conda` environment on the 
+cluster nodes.
+
