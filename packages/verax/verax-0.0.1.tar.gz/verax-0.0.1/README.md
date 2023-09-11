@@ -1,0 +1,51 @@
+# Verax
+*An simple-to-use AI-driven web framework that interprets natural language code to generate and serve dynamic web pages.*
+
+Transform your ideas into webpages with Verax! Whether you're an experienced developer or just getting started with web design, Verax offers an intuitive way to design and serve web pages using natural language.
+
+## Getting Started 🚀
+To get started, install Verax with pip:
+```bash
+pip install verax
+```
+## Basic Website 🌐
+Setting up a basic website using Verax:
+```python
+from verax import website
+
+site = website() # Initialize Verax
+
+site.set_path('.verx', 1) # Setup homepage with specific seed
+
+site.run(port=8000) # Host the site on port 8000
+```
+Verax uses a unique file type named .verx. These files contain natural language instructions for webpage design. Once these files are interpreted by Verax, it serves the webpage at a path corresponding to the filename.
+
+For instance, a file named signup.verx would be accessible via /signup on the hosted site.
+
+## Seeding 🌱
+The seed argument provides consistency across multiple server runs. When a .verx file is interpreted, the AI-driven design might slightly vary between executions. By specifying a seed, you ensure the design remains consistent. Verax manages this internally using .verxcache files that store the compiled HTML for a given seed, ensuring the same appearance each time.
+
+You can choose a different seed by changing the seed number here:
+```python
+site.set_path('.verx', 15)
+```
+In this case, 15 is the seed.
+
+## Example .verx file:
+```
+h1 with title saying 'Hello'
+paragraph with text 'Welcome to my AI-driven website!'
+```
+
+## Using a Custom Port 🔌
+To serve your website on a custom port.
+```python
+from verax import website
+
+site = website() # Initialize verax
+
+site.set_path('.verx', 1) # Setup homepage
+
+site.run(port=8080) # Host the site on port 8080
+```
