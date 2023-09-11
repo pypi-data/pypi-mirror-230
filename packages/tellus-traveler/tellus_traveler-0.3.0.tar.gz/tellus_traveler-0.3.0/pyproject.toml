@@ -1,0 +1,84 @@
+[project]
+name = "tellus-traveler"
+version = "0.3.0"
+description = "Client for Tellus Traveler API"
+authors = [
+    { name = "Takahiro Miyoshi", email = "takahiro-miyoshi@sankichi.net" },
+]
+dependencies = ["requests>=2.31.0"]
+readme = "README.md"
+requires-python = ">= 3.10"
+license = "MIT"
+
+[project.urls]
+homepage = "https://github.com/sankichi92/tellus-traveler-python"
+documentation = "https://tellus-traveler.readthedocs.io"
+repository = "https://github.com/sankichi92/tellus-traveler-python.git"
+changelog = "https://github.com/sankichi92/tellus-traveler-python/blob/main/CHANGELOG.md"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "ruff>=0.0.287",
+    "pyright>=1.1.325",
+    "types-requests>=2.31.0.2",
+    "pytest>=7.4.1",
+    "responses>=0.23.3",
+    "mkdocs>=1.5.2",
+    "mkdocstrings[python]>=0.23.0",
+    "mkdocs-material>=9.2.8",
+    "ipykernel>=6.25.2",
+    "mkdocs-jupyter>=0.24.2",
+    "python-dotenv>=1.0.0",
+    "geopandas>=0.13.2",
+    "matplotlib>=3.7.2",
+    "folium>=0.14.0",
+    "mapclassify>=2.6.0",
+    "black[jupyter]>=23.9.0",
+    "rioxarray>=0.15.0",
+]
+
+[tool.rye.scripts]
+test = "pytest"
+lint = { chain = ["lint:black", "lint:ruff", "lint:pyright"] }
+"lint:black" = "black --check ."
+"lint:ruff" = "ruff check ."
+"lint:pyright" = "pyright"
+fix = { chain = ["fix:black", "fix:ruff"] }
+"fix:black" = "black ."
+"fix:ruff" = "ruff check . --fix"
+doc = "mkdocs serve"
+"doc:build" = "mkdocs build"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.ruff]
+extend-include = ["*.ipynb"]
+extend-select = [
+    "I",  # isort
+    "D",  # pydocstyle
+    "B",  # flake8-bugbear
+    "PT", # flake8-pytest-style
+]
+ignore = [
+    "D417", # https://beta.ruff.rs/docs/settings/#pydocstyle
+]
+
+[tool.ruff.extend-per-file-ignores]
+"*.ipynb" = [
+    "D100", # Missing docstring in public module
+    "E402", # Module level import not at top of file
+    "B018", # Found useless expression. Either assign it to a variable or remove it.
+]
+"tests/*" = ["D"] # ignore pydocstyle in tests
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
+[tool.pyright]
+strict = ["src"]

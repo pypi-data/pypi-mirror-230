@@ -1,0 +1,42 @@
+name: Python
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: eifinger/setup-rye@v1
+        with:
+          enable-cache: true
+          cache-prefix: python-${{ matrix.python-version }}
+
+      - name: Pin Python version
+        run: rye pin ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: rye sync
+
+      - name: Lint with black
+        run: rye run lint:black
+
+      - name: Lint with ruff
+        run: rye run lint:ruff
+
+      - name: Type check with pyright
+        run: rye run lint:pyright
+
+      - name: Run the tests
+        run: rye run test
