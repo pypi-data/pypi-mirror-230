@@ -1,0 +1,98 @@
+[project]
+name = "hatch-zipped-directory"
+description = 'A custom builder to build zipped directories'
+requires-python = ">=3.7"
+license = "MIT"
+keywords = ["hatch", "packaging"]
+authors = [
+  { name = "Jeff Dairiki", email = "dairiki@dairiki.org" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Plugins",
+  "Framework :: Hatch",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Topic :: System :: Archiving :: Packaging",
+]
+dependencies = [
+    "hatchling",
+]
+dynamic = ["version", "readme"]
+
+[project.urls]
+Homepage = "https://github.com/dairiki/hatch-zipped-directory"
+
+[project.entry-points.hatch]
+zipped-directory = "hatch_zipped_directory.hooks"
+
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[tool.hatch.metadata.hooks.custom]
+# Custom hook in hatch_build.py concatenates README and CHANGES
+[tool.hatch.version]
+source = "vcs"
+[tool.hatch.build.targets.sdist]
+include = [
+    "/hatch_zipped_directory",
+    "/tests",
+    "/.flake8",
+    "/CHANGES.md",
+    "/README.md",
+]
+
+[tool.hatch.envs.default]
+dependencies = [
+  "pytest",
+  "pytest-cov",
+]
+[tool.hatch.envs.default.scripts]
+full = [
+    "pip freeze | paste -sd , -",
+    """pytest \
+        --cov-fail-under=100 \
+        --cov-report=term-missing \
+        --cov-config=pyproject.toml \
+        --cov=hatch_zipped_directory \
+        --cov=tests
+    """,
+]
+
+[tool.hatch.envs.dev]
+extra-dependencies = [
+  "flake8",
+  "flake8-bugbear",
+  "mypy",
+]
+[tool.hatch.envs.dev.scripts]
+lint = [
+    "flake8 {args:.}",
+    "mypy {args:hatch_zipped_directory}",
+]
+
+[tool.hatch.envs.test]
+extra-dependencies = []
+[[tool.hatch.envs.test.matrix]]
+python = ["37", "38", "39", "310", "311", "312"]
+
+[tool.coverage.run]
+branch = true
+parallel = true
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
