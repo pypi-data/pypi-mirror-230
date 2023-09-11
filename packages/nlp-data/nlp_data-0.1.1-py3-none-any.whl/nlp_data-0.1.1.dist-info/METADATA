@@ -1,0 +1,42 @@
+Metadata-Version: 2.1
+Name: nlp-data
+Version: 0.1.1
+Summary: 
+Author: wang mengdi
+Author-email: wangmengdi@pachiratech.com
+Requires-Python: >=3.7,<4.0
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: boto3 (>=1.28.8)
+Requires-Dist: datasets (>=2.14.1)
+Requires-Dist: docarray[aws] (>=0.37.1)
+Requires-Dist: openpyxl (>=3.1.2)
+Requires-Dist: pandas (>=2.1.0)
+Requires-Dist: pydantic (>=1.10.12)
+Requires-Dist: rich (>=13.4.2)
+Requires-Dist: tqdm (>=4.65.0)
+Requires-Dist: wasabi (>=1.1.1)
+Description-Content-Type: text/markdown
+
+## 普强内部NLP数据存储分享工具
+
+
+### 安装
+
+- pip install nlp-data
+
+### 使用
+- 读取数据
+   ```python 
+    from nlp_data import NLUDocStore
+    # 查看文档
+    NLUDocStore.list()
+    # 获取文档
+    docs = NLUDocStore.pull('xxx')
+    # 推送文档
+    NLUDocStore.push(docs=docs, name='xxx')
+    ```
