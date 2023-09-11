@@ -1,0 +1,44 @@
+{
+  "$schema": "../../block-class.schema.json",
+  "$id": "https://collimator.ai/models/blocks/base/signal_routing/bus_creator.json",
+  "base": {
+    "name": "BusCreator",
+    "namespace": "core",
+    "description": "Create a bus signal from all of the inputs.",
+    "feature_level": "dev",
+    "supports_models": true,
+    "supports_submodels": true,
+    "supports_experiments": true
+  },
+  "modes": {
+    "time": "agnostic"
+  },
+  "ports": {
+    "has_automatic_ports": true,
+    "outputs": {
+      "static": [
+        {
+          "name": "out_0"
+        }
+      ]
+    }
+  },
+  "parameter_definitions": [
+    {
+      "name": "bus_type",
+      "description": "The bus type to create a bus for.",
+      "$comment": "Displays the name, but stores the project scope ID. Used in conjunction with `project_uuid` to uniquely identify the bus type.",
+      "data_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "project_uuid",
+      "description": "The UUID of the project that the bus type belongs to.",
+      "$comment": "Implicitly set by `bus_type` selection.",
+      "data_type": "string",
+      "default_value": "",
+      "hidden": true,
+      "read_only": true
+    }
+  ]
+}

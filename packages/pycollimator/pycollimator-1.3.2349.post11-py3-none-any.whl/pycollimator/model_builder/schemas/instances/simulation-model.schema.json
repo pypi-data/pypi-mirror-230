@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://collimator.ai/models/simulation-model.schema.json",
+
+  "title": "SimulationModel",
+  "description": "Top-level simulation model",
+  "type": "object",
+
+  "properties": {
+    "$schema_version": {
+      "type": "string",
+      "description": "Schema version",
+      "default": "0.1",
+      "enum": ["0.1"]
+    },
+    "uuid": { "$ref": "uuid.schema.json" },
+    "name": {
+      "type": "string",
+      "description": "Name of this model"
+    },
+    "diagram": { "$ref": "model-diagram.schema.json" },
+    "configuration": { "$ref": "model-configuration.schema.json" },
+    "parameters": { "$ref": "parameters.schema.json" },
+    "parameter_list": { "$ref": "parameter-list.schema.json" },
+    "overrides": { "$ref": "overrides.schema.json" },
+    "linearization": { "$ref": "linearization-config.schema.json" },
+    "codegen": { "$ref": "codegen-config.schema.json" },
+    "fmucosim": { "$ref": "fmu-config.schema.json" },
+    "submodels": { "$ref": "submodels-section.schema.json" },
+    "state_machines": {
+      "title": "State Machines",
+      "type": "object",
+      "$comment": "Keys are state machine diagram UUIDs",
+      "description": "Map of state machine diagram UUIDs to their hierarchical info and other metadata",
+      "additionalProperties": { "$ref": "state-machine-diagram.schema.json" }
+    },
+    "reference_submodels": { "$ref": "reference-submodels.schema.json" }
+  },
+  "required": [
+    "$schema_version",
+    "uuid",
+    "name",
+    "diagram",
+    "submodels",
+    "configuration",
+    "parameters"
+  ],
+  "$comment": "submodels should be required"
+}
