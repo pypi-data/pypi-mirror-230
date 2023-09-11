@@ -1,0 +1,1 @@
+python -m PyQt5.uic.pyuic mytools.ui -o mytools.py
