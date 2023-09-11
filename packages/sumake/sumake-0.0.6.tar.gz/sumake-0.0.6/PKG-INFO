@@ -1,0 +1,32 @@
+Metadata-Version: 2.1
+Name: sumake
+Version: 0.0.6
+Summary: A generic makefile for projects.
+Home-page: https://github.com/SuCicada/sumake
+Author: SuCicada
+Author-email: pengyifu@gmail.com
+
+# sumake
+## use
+```
+pip install sumake -U
+```
+
+
+## dev
+make install
+
+pip install . 
+
+## zsh
+ ~/.zshrc
+
+```bash
+autoload -U compinit
+compinit
+_sumake() {
+_make "$@"
+}
+compdef _sumake sumake
+zstyle ':completion::complete:sumake:*:targets' call-command true
+```
