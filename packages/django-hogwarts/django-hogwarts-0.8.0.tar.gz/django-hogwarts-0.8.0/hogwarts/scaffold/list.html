@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="px-5 py-4">
+        <div class="d-flex justify-content-between">
+            <h3>[[ items ]] list</h3>
+            [# if create_path_name #]
+            <a href="{% url "[[ create_path_name ]]" %}" class="btn btn-dark">create</a>
+            [# endif #]
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    [# for field in fields -#]
+                        <td>[[ field.verbose_name ]]</td>
+                    [# endfor #]
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                [[ body_fields ]]
+                {% for [[ item ]] in [[ items ]] %}
+                    <tr>
+                        <td>{{ [[ item ]].[[ fields[0].name ]] }}</td>
+                        [# if detail_path_name -#]
+                        <td>
+                            <a href="{% url "[[ detail_path_name ]]" [[item]].pk %}">{{ [[ item ]].[[ fields[1].name ]] }}</a>
+                        </td>
+                        [# else #]
+                        <td>{{ [[ item ]].[[ fields[1].name ]] }}</td>
+                        [#- endif -#]
+                        [#- for field in fields[2:] -#]
+                            <td>{{ [[ item ]].[[ field.name ]] }}</td>
+                        [# endfor #]
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}

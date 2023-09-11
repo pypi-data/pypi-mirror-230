@@ -1,0 +1,46 @@
+[tool.poetry]
+name = "django-hogwarts"
+version = "0.8.0"
+description = "Django utilities for codegen and DX improvement"
+authors = ["adiletto64 <adiletdj19@gmail.com>"]
+packages = [{ include = "hogwarts" }]
+homepage = "https://github.com/adiletto64/django-hogwarts"
+readme = "README.md"
+repository = "https://github.com/adiletto64/django-hogwarts"
+documentation = "https://django-hogwarts.vercel.app/"
+keywords = ["django", "django-utils", "codegen"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Jinja2 = "^3.1.2"
+rich = "^13.5.2"
+
+[tool.poetry.dev-dependencies]
+isort = "^5.12.0"
+pytest-django = "^4.5.2"
+ipython = "^8.14.0"
+Django = "4.2.3"
+ruff = "^0.0.280"
+coverage = "^7.2.7"
+django-crispy-forms = "^2.0"
+crispy-bootstrap5 = "0.6"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings"
+python_files = ["test_*.py", "*_tests.py"]
+addopts = "-p no:warnings"
+
+[tool.ruff]
+ignore = ["E501"]
+exclude = ["__init__.py", "migrations"]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["E402"]
+
+[tool.coverage.run]
+source = ["hogwarts.magic_views", "hogwarts.magic_urls"]
+omit = ["hogwarts.tests"]
