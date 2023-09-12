@@ -1,0 +1,46 @@
+Metadata-Version: 2.1
+Name: aclib.dm
+Version: 1.0.0
+Summary: use dm plugin with python
+Home-page: https://github.com/AnsChaser/aclib.dm
+Author: AnsChaser
+Author-email: anschaser@163.com
+License: MIT
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: comtypes
+Requires-Dist: aclib.builtins
+Requires-Dist: aclib.winlib
+
+# Installation
+
+Please work with 32-bit python.
+
+```
+pip installl aclib.dm
+```
+
+
+# Usage
+
+```python
+from aclib.dm import DM
+
+DM.regDM()
+dm = DM()
+print(dm.Ver())
+```
