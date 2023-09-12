@@ -1,0 +1,31 @@
+from evergreenlib import ExcelParser_retain_duplicates, MasterData
+
+class GetOSV:
+
+    def __init__(self, filepath, sht_name, index):
+        self.filepath = filepath
+        self.sht_name = sht_name
+        self.index = index
+        self.df = ExcelParser_retain_duplicates(self.filepath, self.sht_name, self.index).read_data()
+
+    def further_process(self):
+        self.df = self.df.iloc[:, slice(2, 13)]
+        self.df.columns = ['Corp Acc', 'Text Rus', 'Text Eng',
+                           'Initials_Dr', 'Initials_Cr', 'OB_adj_Dr', 'OB_adj_Cr', 'Accruals_Dr', 'Accruals_Cr',
+                           'CB_Dr', 'CB_Cr']
+        self.df['Corp Acc'] = self.df['Corp Acc'].astype(str).str.split(".").str.get(0)
+        MasterData_dict = MasterData().further_process().set_index('Corp Acc').T.to_dict()
+        self.df['Consolidation_Account'] = self.df['Corp Acc'].apply(lambda x:
+                     MasterData_dict.get(x).get('Consolidation Account') if MasterData_dict.get(x) else None)
+        self.df['Consolidation_Account'] = self.df['Consolidation_Account'].astype(str).str.split(".").str.get(0)
+        self.df = self.df[~self.df['Corp Acc'].isin([None,"None"])]
+
+        return self.df
+
+
+if __name__ == '__main__':
+    x = GetOSV(r'V:\Accounting\Work\Мерц\2023\3 квартал\Июль 2023\Отчетность\Detail_July_2023.xlsx',
+               'ОСВ_Июль_2023',
+               'Rus Account')
+
+    x.further_process().to_clipboard()
