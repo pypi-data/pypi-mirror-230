@@ -1,0 +1,131 @@
+Metadata-Version: 2.1
+Name: pythonsdk
+Version: 0.11.0
+Summary: Python Software Dev Kit
+Author-email: lijok <lijok@pm.me>
+License: MIT License
+        
+        Copyright (c) 2023 Lijok
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Homepage, https://github.com/lijok/python-sdk
+Project-URL: Source Code, https://github.com/lijok/python-sdk
+Project-URL: Documentation, https://github.com/lijok/python-sdk/docs
+Project-URL: Changelog, https://github.com/lijok/python-sdk/blob/main/CHANGELOG.md
+Project-URL: Bug Tracker, https://github.com/lijok/python-sdk/issues
+Classifier: Development Status :: 1 - Planning
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Provides-Extra: aws
+Requires-Dist: boto3 >=1.24 ; extra == 'aws'
+Provides-Extra: cli
+Requires-Dist: black >=22.10.0 ; extra == 'cli'
+Requires-Dist: isort >=5.10.1 ; extra == 'cli'
+Provides-Extra: dev
+Requires-Dist: build >=0.8.0 ; extra == 'dev'
+Requires-Dist: twine >=4.0.1 ; extra == 'dev'
+Requires-Dist: hypothesis >=6.54.0 ; extra == 'dev'
+Requires-Dist: pytest >=7.1.3 ; extra == 'dev'
+Requires-Dist: pytest-asyncio >=0.19.0 ; extra == 'dev'
+Requires-Dist: freezegun >=1.2.2 ; extra == 'dev'
+Requires-Dist: boto3-stubs[cloudwatch,dynamodb,s3] >=1.26.127 ; extra == 'dev'
+Requires-Dist: uvloop >=0.17.0 ; extra == 'dev'
+Provides-Extra: lock-aws-dynamodb
+Requires-Dist: boto3 >=1.24 ; extra == 'lock-aws-dynamodb'
+Provides-Extra: lock-s3
+Requires-Dist: boto3 >=1.24 ; extra == 'lock-s3'
+Provides-Extra: metrics-aws-cloudwatch
+Requires-Dist: boto3 >=1.24 ; extra == 'metrics-aws-cloudwatch'
+Provides-Extra: testing
+Requires-Dist: black >=22.10.0 ; extra == 'testing'
+Requires-Dist: isort >=5.10.1 ; extra == 'testing'
+Requires-Dist: mypy >=0.982 ; extra == 'testing'
+
+# python-sdk
+Software Development Kit for Python, otherwise known as a Microservice Chassis, which handles cross-cutting concerns such as:
+- Logging
+- Metrics
+- Tracing
+- Configuration
+- Secrets
+- Versioning
+- Health checks
+
+## WARNING
+This library is still in development and does not have stable interfaces. While it is in use by some internal projects, it is not yet recommended for any productions workloads.
+
+## Requirements
+Python 3.10+
+
+## Installation
+```console
+pip install pythonsdk
+
+# If using AWS functionality
+pip install pythonsdk[aws]
+
+# If using CLI functionality
+pip install pythonsdk[cli]
+
+# If using `testing` package
+pip install pythonsdk[testing]
+```
+
+## Packages
+Below is an abstract of the functionality provided by this library. See [`docs`](https://github.com/lijok/python-sdk/blob/main/src/python_sdk/docs) for more information.
+
+### [`bin`](https://github.com/lijok/python-sdk/blob/main/src/python_sdk/bin/__init__.py)
+The `bin` package provides utilities for invoking processes while streaming, capturing and manipulating their output.
+
+### [`config`](https://github.com/lijok/python-sdk/blob/main/src/python_sdk/config/__init__.py)
+The `config` package provides a declarative mechanism for defining your application config, with support for multiple configuration sources (environment variables, remote HTTP endpoints, S3 objects, etc.) validation, secrets injection, hot-reloading, documentation, etc.
+
+### [`encoding`](https://github.com/lijok/python-sdk/blob/main/src/python_sdk/encoding/__init__.py)
+The `encoding` package provides some encoding utils commonly used when authoring networked APIs.
+
+### [`locks`](https://github.com/lijok/python-sdk/blob/main/src/python_sdk/locks/__init__.py)
+The `locks` package contains a distributed locking mechanism backed by multiple different providers.
+
+### [`log`](https://github.com/lijok/python-sdk/blob/main/src/python_sdk/log/__init__.py)
+The `log` package contains an externally configurable logging interface which supports structured logging and hot reloading.
+
+### [`secrets`](https://github.com/lijok/python-sdk/blob/main/src/python_sdk/secrets/__init__.py)
+The `secrets` package provides a simple interface for reading in secrets stored in secrets stores such as AWS Secrets Manager.
+
+### [`testing`](https://github.com/lijok/python-sdk/blob/main/src/python_sdk/testing/__init__.py)
+The `testing` package provides a highly opinionated acceptance test suite for enforcing code quality. 
+
+### [`versioning`](https://github.com/lijok/python-sdk/blob/main/src/python_sdk/versioning/__init__.py)
+The `versioning` package provides language-agnostic application versioning strategies.
+
+## Interfaces
+### CLI
+The cli `python-sdk` provides dev-time utilities such as a highly opinionated formatter (`python-sdk fmt`).
