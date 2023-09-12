@@ -1,0 +1,356 @@
+# streamlit-notification_center-component
+
+Streamlit component that listens to postMessage() traffic with a certain format.
+
+## Installation instructions
+
+```sh
+pip install streamlit_notification_center_component
+```
+
+## Testing instructions
+
+If you wish to test the component outside of another project, open two shells. In one, you'll want to run the react code in one shell and the python `__init__.py` in another. However, before you do this you need to open `__init__.py` first and change the flag `_RELEASE` from `True` to `False` or you'll get no output.
+
+In shell no.1 
+
+```sh
+cd notification_center/frontend
+npm install # if you haven't done this before
+npm start
+```
+
+In shell no.2
+
+```sh
+source venv/bin/activate
+streamlit run notification_center/__init__.py
+```
+
+If all went well, you'll see a window open up with some text and some buttons.
+
+## Usage instructions
+
+```python
+import streamlit as st
+from streamlit_notification_center_component import notification_center
+
+notification_center(key="globalnc")
+```
+
+## Helper JavaScript methods
+
+```js
+function ncSendMessage(target, body) {
+  Array.from(window.parent.frames).forEach((frame) => {
+    frame.postMessage({ type: 'nc', target: target, payload: body }, "*")
+  })
+}
+
+function ncClearTarget(target) {
+  Array.from(window.parent.frames).forEach((frame) => {
+    frame.postMessage({ type: 'nc', target: target, command: 'clear' }, "*")
+  })
+}
+
+function ncClearAll() {
+  Array.from(window.parent.frames).forEach((frame) => {
+    frame.postMessage({ type: 'nc', command: 'clear-all' }, "*")
+  })
+}
+```
+
+Let's talk about what's going on here. Each of these three functions loop over all frames in the parent and invoke a postMessage on them. The `type: 'nc'` code MUST be present or the notification_center widget will ignore the message.
+
+In cases where clearing the data from state on the streamlit side is desired, a `command:` property needs to be included. There are two possible values:
+
+ * **'clear'**: when present, a `target:` property must also be included to identify what to clear
+ * **'clear-all'**: when present, no other value than `type: 'nc'` needs be present. All messages stored in the `st.session_state._nc_data` dict will be removed.
+
+ Lastly, when it comes to a normal message to be queued, the way this works is that streamlit will receive the value from the component's call to `Streamlit.setComponentValue()`. This will be a pre-vetted object conforming to the following TypeScript type:
+
+ ```ts
+ export type NotificationMessage = {
+  type: 'nc';
+  target?: string;
+  payload?: any;
+  from?: string;
+  command?: null | 'clear' | 'clear-all';
+}
+```
+
+When not sending a command to clear and `type`, `target` and `payload` are all present, then the dict `st.session_state._nc_data` will have its key `.setdefault(target, [])`. This ensures that there is at least an empty array of values for the supplied target. Then the payload object is appended to this array. All streamlit code can check for and use values. 
+
+## Helper Python Methods
+
+In addition to providing the streamlit component for use, the component comes with several useful python functions that make working with the component much easier. These functions are obviously provided to aid on the streamlit/python side of things.
+
+### nc\_ensure()
+
+The `nc_ensure()` function is provided to ensure that the environment is setup properly for use. It is heavily used by the internal functions and can be used in your own scripts. For example, if you wish to setup your use of `notification_center()` in a separate file, you might do something like this:
+
+```python
+
+from notification_center import nc_ensure, nc_add_style
+
+def nc_setup():
+  # Ensure notification center globals are ready
+  nc_ensure()
+  
+  # Add styles for use with nc_html()
+  nc_add_style(f'* {{font-size:200%;}}')
+```
+
+This function would ensure that any poking or prodding to `st.session_state._nc_` variables would be ready to go if this is something you needed to do.
+
+### nc\_get(key, default_value=None)
+
+The `nc_get()` function allows the retrieval of the array of messages sent to the key in question. If no value exists with the supplied key then the default_value, defaulting to None, is what is returned.
+
+```python
+
+let button_presses = nc_get('button_clicks')
+if button_presses:
+  # do something
+```
+
+The value returned here will be a list or array of zero or more values sent to the `key` specified.
+
+### nc\_get\_last(key, default_value=None)
+
+Similar to `nc_get()` however this function returns the last value in the list associated with the supplied `key`. If the list is empty or none exists with that key, then the `default_value` is returned.
+
+```python
+let last_command = nc_get_last('executed_commands')
+st.write(f'The last command executed was {last_command}')
+```
+
+### nc\_get\_all()
+
+This function returns the entire dictionary of values stored on the session state
+
+```python
+let dictionary = nc_get_all()
+# work on the dictionary
+```
+
+### nc\_set(key, value)
+
+This is the value executed when `postMessage()` function is called and the NotificationCenter processes the contents successfully. The `key` value is used as a dictionary key and the `value` is appended to the array of previous messages for the same target.
+
+```python
+nc_set('person', {'name': 'Brielle', 'gender': 'Female'})
+```
+
+### nc\_has(key)
+
+This function returns `True` if the supplied key exists in the dictionary of NotificationCenter values, or `False` otherwise.
+
+```python
+if nc_has('people'):
+  people = nc_get('people')
+  # do work on the people list
+```
+
+### nc\_clear(key)
+
+This function will locate an existing `key` in the dictionary. These keys have a list as their value. The `.clear()` function will be invoked on the list.
+
+```python
+# User clicked on delete all people
+nc_clear('people')
+```
+
+### nc\_clear\_all()
+
+This function removes all keys and values from the NotificationCenter data store.
+
+```python
+nc_clear_all()
+```
+
+### nc\_add\_substitution(str\_or\_re, val\_or\_fn)
+
+This function allows you to specify a replacement or compiled regular expression that is used to search the contents of a to-be-rendered HTML snippet. The value or function (Callable) will be used in the place of the sought value. If the regular expression captured groups, they will be passed to the function as parameters.
+
+```python
+nc_add_substitution(re.compile(r':exit-button:(.*?):'), lambda title: f'<button>{title}</button>')
+nc_html(
+  f'''
+  <body>:exit-button:Click to exit:</body>
+  '''
+)
+```
+
+This code would replace the ":exit-button:Click to exit:" with "<button>Click to exit</button>" as an example.
+
+### nc\_add\_script\_src(src, attributes=None, raw=False)
+
+This function takes a script source (URL or path) and optionally a dictionary of HTML attributes, and appends a formatted script tag or raw source to the session state list. If 'raw' is False, the 'src' and 'attributes' are used to create a '<script>' tag using BeautifulSoup. Each of these tags are inserted in subsequent `nc_html()` calls.
+
+```python
+nc_add_script_src('https://remotejslibrary.com/script.js')
+nc_html(...) # remotejslibrary is automatically inserted into the nc_html
+```
+
+### nc\_add\_link\_rel(src, attributes=None, raw=False)
+
+This function takes a link source (URL or path) and optionally a dictionary of HTML attributes, and appends a formatted link tag or raw source to the '_nc_link_rels' session state list. If 'raw' is False, the 'href' and 'attributes' are used to create a '<link>' tag using BeautifulSoup. Each of these tags are inserted in subsequent `nc_html()` calls.
+
+```python
+nc_add_link_rel('https://remotescript.com/style.css')
+nc_html(...) # remote css script is automatically inserted into the nc_html
+```
+
+### nc\_add\_script(script)
+
+The function `nc_html()` is a more function version of the `st.components.v1.html()`. The `nc_html()` function will pre-inject CSS, JavaScript and any HTML snippets previously setup as global pre-defines. The `nc_add_script()` function allows you to add a snippet of JavaScript to all `nc_html()` calls before the supplied HTML string.
+
+```python
+nc_add_script(
+  f'''
+  Object.defineProperty(Array.prototype, 'first', { get: function() { return this?.[0] } })
+  '''
+)
+```
+
+After running this function, the next time `nc_html()` is invoked, the component added to the page will have access to JavaScript arrays with a getter on each instance called `.first` that dynamically returns the first value or `null` if there isn't one.
+
+### nc\_add\_style(style)
+
+The function `nc_html()` is a more function version of the `st.components.v1.html()`. The `nc_html()` function will pre-inject CSS, JavaScript and any HTML snippets previously setup as global pre-defines. The `nc_add_style()` function allows you to add a snippet of CSS to all `nc_html()` calls before the supplied HTML string.
+
+```python
+nc_add_styles(f'* {{ font-size: 200%; }}')
+```
+
+When executed, all subsequent `nc_html()` calls will find their contents' font sizes increased to 200%.
+
+### nc\_add\_html(html)
+
+This function adds a new snippet of html that will be included in all calls to `nc_html()`. 
+
+```python
+nc_add_html(f'<hr/>')
+```
+
+When next `nc_html()` is executed, it will always be preceded by a horizontal rule.
+
+### nc\_reset\_script\_srcs()
+
+This function removes all previously specified script sources. 
+
+### nc\_reset\_link\_rels()
+
+This function removes all previously specified link tags. 
+
+### nc\_reset\_subs()
+
+This function removes all previously specified substitutions. 
+
+### nc\_reset\_scripts()
+
+Resets all JavaScript snippets to the defaults. The defaults are the three aforementioned JavaScript Helper functions.
+
+### nc\_reset\_styles()
+
+This function removes all globally added CSS snippets previously added using `nc_add_style()`. 
+
+### nc\_reset\_html()
+
+Simlar in function to `nc_reset_scripts()` or `nc_reset_styles()`, the function `nc_reset_html()` removes all previously added HTML snippets.
+
+### nc\_listen(to, callback)
+
+Probably one of the most useful function, this call will execute the supplied callback whenever any new value is set with a `key`/`target` that matches the `to` value supplied to this function.
+
+```python
+unsub = nc_listen('add_person', lambda person: print(person))
+# when done
+unsub()
+```
+
+This function also returns a function or `Callable` that when invoked will trigger an unsubscribe on the internal event manager.
+
+### nc\_html(html, extra\_js=[], extra\_css=[], width=None, height=None, scrolling=False)
+
+The creme of the crop, injects a component of HTML into the page. This HTML iframe that gets injected will be prefixed by any previous calls to `nc_add_html()`, `nc_add_style()`, and `nc_add_script()`. Even when no other code is injected, at least the three helper JavaScript functions above will be present. This allows simple code like this to work:
+
+```python
+nc_html(f"<a onclick=\"ncSendMessage('target', {{...}})\">Send Message</a>")
+```
+
+### ns\_use\_bootstrap()
+
+This function invokes both `nc_add_link_rel()` and `nc_add_script_src()` to include Bootstrap 5.13 CSS and JavaScript libraries for each subsequent use of `nc_html()`. 
+
+## Usage Examples
+
+Okay, down to brass tacks. The `streamlit_notification_center_component`'s primary purpose is to allow code in other custom components to send data back to streamlit in one shared location or to allow HTML in a call to `st.components.v1.html` to communicate back to the Python streamlit side of things. Currently layout is very limited in streamlit from an HTML perspective. Being able to write a quick layout using something like a table or set of inline-block divs is doable using the `st.components.v1.html` approach. However as soon as you have an action or other feature that needs to send data back to streamlit, you've moved into custom component territory.
+
+### Working with `st.components.v1.html`
+
+Let's take the most common example first. If you wanted to introduce the following HTML with a stylized link that looks like a button
+
+````python
+from notification_center import notification_center, nc_html, nc_add_style, nc_listen
+
+notification_center(key="globalnc")
+
+nc_listen('data', lambda data: print('data added', data))
+
+nc_add_script(
+  f'''
+  function sendData() {{ ncSendMessage('data', {{msg: 'Stylized Button Pressed'}}) }}
+  '''
+)
+
+nc_add_style(
+  f'''
+  a.stylized-button {{
+    padding: 0.25em;
+    margin: 0.1em;
+    border: 1px solid slategrey;
+    background-color: lightslategray;
+    border-radius: 5px;
+    color: lightyellow;
+    cursor: pointer;
+    display: inline-block;
+    user-select: none;        
+  }}
+  '''
+)
+
+nc_html(f'<a class="stylized-button" onclick="sendData()">Button</a>')
+````
+
+What's going on here? Well, first off we are creating a new instance of the `notification_center()` component. The key supplied can be anything but will positively identify this NotificationCenter instance from another should there be one. If debug printing is enabled (see below) then you'll see "[NotificationCenter(key)][target] value" strings in the python logs. Note that key will be the `key=` value supplied when the `notification_center()` component is created, `target` will be the key the array of messages will be appended to and `value` will be the array of values for that `target`.
+
+Then we are injecting into the page a block of HTML with some CSS and JavaScript. You'll note in this example that the `ncSendMessage` function from above is being used in the block. This is the easiest way to handle sending a `postMessage()` call to all frames in the parent of the iframe this code will reside in. The `NotificationCenter` component will be residing in another iframe with how streamlit works. 
+
+We now have the ability to inject custom HTML that can speak back to streamlit into your streamlit pages. Something that was not provided by default behavior.
+
+### Working with custom components
+
+Other components should be able to import `notification_center` and use the `nc-` prefixed python functions for communicating with NotificationCenter data. As components send messages to the NotificationCenter, those values can be checked on the python side and can be worked with.
+
+### Debug messaging
+
+If you're running into trouble, turn on debug messaging. This is a runtime variable that is set in
+
+```python
+st.session_state.setdefault('_nc_debug', False)
+```
+
+To turn it on, simply change the value to True
+
+```python
+st.session_state._nc_debug = True
+```
+
+### Visual examples
+
+![Screenshot 2023-08-16 at 2 25 06 PM](https://github.com/cafemedia/streamlit_notification_center_component/assets/225558/643b1557-9a2c-49cb-9182-f1ddb28d23b4)
+
+
+After this point you'll see NotificationCenter messages appearing in your Python console.
