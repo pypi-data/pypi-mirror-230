@@ -1,0 +1,25 @@
+Metadata-Version: 2.1
+Name: hdf5tools
+Version: 0.3.1
+Summary: Python hdf5 tools
+Project-URL: Homepage, https://github.com/mullenkamp/hdf5tools
+Author-email: Mike Kittridge <mullenkamp1@gmail.com>
+License-Expression: Apache-2.0
+License-File: LICENSE
+Keywords: tethys
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Topic :: Scientific/Engineering :: Hydrology
+Requires-Dist: cftime
+Requires-Dist: h5py>=3.6.0
+Requires-Dist: hdf5plugin>=3.3.1
+Requires-Dist: xarray>=2022.03.0
+Description-Content-Type: text/x-rst
+
+hdf5-tools
+==================================
+
+This git repository contains a python package with an H5 class to load and combine one or more HDF5 data files (or xarray datasets) with optional filters. The class will then export the combined data to an HDF5 file, file object, or xr.Dataset. This class is designed to be fast and safe on memory. This means that files of any size can be combined and saved even on a PC with low memory (unlike xarray).
