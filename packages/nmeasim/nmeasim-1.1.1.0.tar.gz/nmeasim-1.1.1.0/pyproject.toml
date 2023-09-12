@@ -1,0 +1,37 @@
+[project]
+name = "nmeasim"
+description = "A Python GNSS/NMEA receiver simulation"
+authors = [
+    {email = "wjiang87@gmail.com"},
+    {name = "Wei Li Jiang"}
+]
+readme = "README.md"
+license = {file = "nmeasim/LICENSE"}
+requires-python = ">=3.7"
+keywords = ["gnss", "glonass", "gps", "nmea", "simulator"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License"
+]
+dependencies = [
+    'pyserial',
+    'geographiclib',
+    'importlib.metadata; python_version < "3.8"',
+]
+dynamic=["version"]
+
+[project.urls]
+homepage = "https://gitlab.com/nmeasim/nmeasim"
+repository = "https://gitlab.com/nmeasim/nmeasim"
+
+[project.scripts]
+nmeasim = "nmeasim.gui:main"
+
+[build-system]
+requires = ["setuptools>=61.2", "wheel", "setuptools_scm[toml]>=3.4.3"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+
+[tool.setuptools.packages.find]
+include = ["nmeasim"]

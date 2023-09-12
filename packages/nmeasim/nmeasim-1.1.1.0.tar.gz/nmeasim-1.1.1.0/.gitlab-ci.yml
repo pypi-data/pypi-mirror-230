@@ -1,0 +1,96 @@
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  CHOCO_CACHE_DIR: "$CI_PROJECT_DIR/.cache/choco"
+  TWINE_NON_INTERACTIVE: 1
+  TWINE_USERNAME: "__token__"
+
+cache:
+  paths:
+    - .cache/pip
+    - .cache/choco
+    - .venv/
+
+stages:
+  - build
+  - test
+  - publish
+
+build:packages:
+  stage: build
+  image: python:latest
+  before_script:
+    - git fetch --tags
+    - python -m venv .venv
+    - source .venv/bin/activate
+    - python -m pip install build
+  script:
+    - python -m build
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - dist/*
+
+build:exe:
+  stage: build
+  tags:
+    - shared-windows
+    - windows
+    - windows-1809
+  before_script:
+    - Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+    - choco config set cacheLocation "$env:CHOCO_CACHE_DIR"
+    - choco install --no-progress -y python
+    - RefreshEnv
+    - git fetch --tags
+    - python -m pip install pyinstaller
+  script:
+    - python -m pip install .
+    - pyinstaller pyinstaller/windows.spec
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - dist/nmeasim-*.exe
+
+test:twine:
+  stage: test
+  needs:
+    - build:packages
+  image: python:latest
+  before_script:
+    - python -m venv .venv
+    - python -m pip install twine
+  script:
+    - twine check dist/*
+
+test:pypi:
+  stage: test
+  only:
+    - tags
+  needs:
+    - build:packages
+  image: python:latest
+  before_script:
+    - python -m venv .venv
+    - python -m pip install twine
+  variables:
+    TWINE_PASSWORD: "$TESTPYPI_TOKEN"
+    TWINE_REPOSITORY: "testpypi"
+  script:
+    - twine upload --disable-progress-bar dist/*
+
+publish:pypi:
+  stage: publish
+  only:
+    - tags
+  when: manual
+  dependencies:
+    - build:packages
+    - test:pypi
+  image: python:latest
+  before_script:
+    - python -m venv .venv
+    - python -m pip install twine
+  variables:
+    TWINE_PASSWORD: "$PYPI_TOKEN"
+  script:
+    - twine upload --disable-progress-bar dist/*
