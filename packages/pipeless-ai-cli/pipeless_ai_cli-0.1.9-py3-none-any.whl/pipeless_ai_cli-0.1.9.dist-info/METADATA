@@ -1,0 +1,53 @@
+Metadata-Version: 2.1
+Name: pipeless-ai-cli
+Version: 0.1.9
+Summary: Pipeless is a framework to build and deploy multimodal perception apps in minutes without worrying about multimedia pipelines
+Home-page: https://pipeless.ai
+License: Apache-2.0
+Keywords: multimedia,framework,artificial-intelligence,pipeline,developer-tools
+Author: Miguel Angel Cabrera Minagorri
+Author-email: devgorri@gmail.com
+Requires-Python: >=3.10,<4.0
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: gitpython (>=3.1.35,<4.0.0)
+Requires-Dist: packaging (>=23.1,<24.0)
+Requires-Dist: pipeless-ai (>=0.1.0,<0.2.0)
+Requires-Dist: pyyaml (>=6.0.1,<7.0.0)
+Requires-Dist: typer[all] (>=0.9.0,<0.10.0)
+Project-URL: Documentation, https://github.com/miguelaeh/pipeless
+Project-URL: Repository, https://github.com/miguelaeh/pipeless
+Description-Content-Type: text/markdown
+
+# Pipeless CLI
+
+Pipeless is a framework to build and deploy multimodal perception apps in minutes without worrying about multimedia pipelines.
+Pipeless CLI is the CLI component of the framework.
+
+## Install
+
+Run the following command:
+
+```console
+pip install pipeless-ai-cli
+```
+
+## Usage
+
+```console
+pipeless --help
+```
+
+See the main docs for the [getting started](https://github.com/miguelaeh/pipeless) guide.
+
+## Development
+
+We use `poetry` to manage dependencies.
+
+The CLI depends on the core component. Both components are released separatedly.
+
+The `commands` directory contains all the commands that the CLI supports.
+The `templates` directory contains default application templates that users can select for their app scafolding.
+
