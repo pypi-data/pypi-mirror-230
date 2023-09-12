@@ -1,0 +1,25 @@
+[build-system] 
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta" 
+
+[project] 
+name = "telemed_sk"
+authors = [{name = "Skienda", email= "f.ischiboni@skienda.it"}]
+description = "Lo scopo di questa libreria è fornire uno strumento completo per il rilascio di modelli predittivi basati su serie temporali nell'ambito della Telemedicina, al fine di supportare la gestione e la pianificazione delle attività sulla Piattaforma Nazionale di Telemedicina (PNT)"
+requires-python = ">=3.9"
+classifiers = [ "Programming Language :: Python :: 3"]
+dependencies = ["dtaidistance==2.3.10","geopandas==0.13.0","hierarchicalforecast==0.3.0",
+                "matplotlib==3.7.1","mlflow==2.4.0","numpy==1.23.5","pandas==2.0.0","plotly==5.14.1",
+                "prophet==1.1.1","pytest==7.3.1","scikit_learn==1.2.2","scipy==1.11.1","seaborn==0.12.2",
+                "statsmodels==0.14.0","streamlit==1.23.1","tabulate==0.9.0","toml==0.10.2","tomli==2.0.1",
+                "typing_extensions==4.7.1","holidays==0.24","xgboost==1.7.6","fastparquet==2023.7.0"]
+dynamic = ["version"]
+
+[tool.setuptools.packages.find]
+where = ["./"]
+include = ["*"] # or define list of packages
+exclude = []
+namespaces = false
+
+[tool.setuptools.dynamic]
+version = {attr = "telemed_sk.__version__"} # read __version__ from packages __init__.py 
