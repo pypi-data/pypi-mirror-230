@@ -1,0 +1,99 @@
+Metadata-Version: 2.1
+Name: abstract-blockchain
+Version: 0.0.0.95
+Summary: The Abstract Blockchain package provides a collection of modules designed to simplify interaction with blockchain networks, smart contracts, and related components. It offers tools for managing RPC parameters, working with smart contract ABIs, and facilitating user-friendly interactions through graphical user interfaces (GUIs).
+Home-page: https://github.com/AbstractEndeavors/abstract_essentials/tree/main/abstract_blockchain
+Author: putkoff
+Author-email: partners@abstractendeavors.com
+Keywords: database,automation,API,testing,cryptography
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Software Development
+Classifier: Topic :: Utilities
+Classifier: Intended Audience :: Financial and Insurance Industry
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: PySimpleGUI (>=4.60.5)
+Requires-Dist: abstract-gui (>=0.0.53.5)
+Requires-Dist: abstract-security (>=0.0.1)
+Requires-Dist: abstract-utilities (>=0.2.0.52)
+Requires-Dist: abstract-webtools (>=0.1.0)
+Requires-Dist: hexbytes (>=0.3.1)
+Requires-Dist: requests (>=2.31.0)
+Requires-Dist: setuptools (>=66.1.1)
+Requires-Dist: web3 (>=6.9.0)
+
+---
+
+# Abstract Blockchain Package
+
+The **Abstract Blockchain** package provides a collection of modules designed to simplify interaction with blockchain networks, smart contracts, and related components. It offers tools for managing RPC parameters, working with smart contract ABIs, and facilitating user-friendly interactions through graphical user interfaces (GUIs).
+
+## Modules
+
+### `abstract_abis.py`
+
+This module provides the `ABIBridge` class, which serves as an interface to Ethereum smart contract ABIs. It allows you to interact with contract functions, retrieve read-only functions, get required input details, and call contract functions using a convenient interface. Additionally, it provides methods for fetching and categorizing RPC parameters for blockchain interaction.
+
+### `abstract_apis.py`
+
+This module offers the `RPCData` class that handles the management of RPC parameters for blockchain networks. It enables users to filter and select RPC parameters through a graphical user interface (GUI). The class also categorizes and organizes RPC parameters for ease of use in blockchain interactions.
+
+### `abstract_rpcs.py`
+
+This module provides utilities for working with blockchain RPC parameters. It includes functions to filter and categorize RPC parameters, organize them into sub-lists based on keys, and create a GUI for users to choose specific RPC parameters for blockchain interactions.
+
+### `abstract_utilities`
+
+This submodule contains utility functions used across the package for tasks such as working with JSON data, managing lists, and GUI components.
+
+### `abstract_gui`
+
+This submodule provides utilities for creating graphical user interfaces (GUIs) that enhance user interaction with blockchain-related features. It offers functions for creating windows, buttons, menus, and more, streamlining the process of building user-friendly interfaces.
+![Screenshot from 2023-09-04 05-08-36](https://github.com/AbstractEndeavors/abstract_essentials/assets/57512254/c66d74fa-97e1-442b-8237-e0a969e41768)
+![Screenshot from 2023-09-04 05-07-39](https://github.com/AbstractEndeavors/abstract_essentials/assets/57512254/70df9d24-62d0-4172-8870-b0df272748ce)
+![Screenshot from 2023-09-04 05-07-06](https://github.com/AbstractEndeavors/abstract_essentials/assets/57512254/002cd61a-427b-4642-8d4d-14594cf22cd1)
+
+## Example Usage
+
+```python
+from abstract_abis import ABIBridge
+from abstract_apis import Choose_RPC_Parameters_GUI, RPCData
+
+# Example usage of ABIBridge
+abi_manager = ABIBridge(contract_address='0x3dCCeAE634f371E779c894A1cEa43a09C23af8d5', rpc=default_rpc())
+read_only_functions = abi_manager.get_read_only_functions()
+for each in read_only_functions:
+    inputs = abi_manager.get_required_inputs(each)
+    if len(inputs) == 0:
+        result = abi_manager.call_function(each)
+        print(each, result)
+    else:
+        print(each, inputs)
+
+# Example usage of RPCData and GUI
+rpc_data = Choose_RPC_Parameters_GUI()
+rpc_manager = RPCData(rpc_data)
+w3 = rpc_manager.w3
+
+# Your blockchain interactions using w3...
+```
+
+## Installation
+
+The `abstract_blockchain` package can be installed using pip:
+
+```bash
+pip install abstract_blockchain
+```
+
+## License
+
+This package is released under the [MIT License](LICENSE).
+
+---
+
