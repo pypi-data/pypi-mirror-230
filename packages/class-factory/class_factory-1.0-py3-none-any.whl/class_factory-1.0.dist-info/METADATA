@@ -1,0 +1,487 @@
+Metadata-Version: 2.1
+Name: class-factory
+Version: 1.0
+Summary: package for factory mechanism for sub classes and auto import mechanism
+Author: Marc MALBERT
+Author-email: eldrad-59@hotmail.fr
+Classifier: Programming Language :: Python :: 3
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+
+class_factory - package for factory mechanism for sub classes and auto import mechanism
+=======================================================================================
+
+This package contains the 'ClassFactoryUser' class that allow a parent class and its subclass to access
+a factory mechanism to create new instances.  
+The class also enable the automatic import mehanism for subclasses. Handy when you design a all 
+familly of sub classes or plugin mechanism.
+
+# Basic Use
+What you have to do is listed in the doc of the base class :
+
+```python
+"""
+This class represents the base class for classes using a factory for their subclasses
+The following methods have to be overloaded :
+    * __get_factory_id
+    * __get_import_data_for_factory
+    * __get_base_class_for_factory
+    * __get_id_function_name_for_factory
+
+The following methods may be overloaded :
+    * __get_handled_exceptions_for_factory
+    * __get_id_exception_for_factory
+    * add_base_class
+"""
+```
+
+You also have of course to inherit from this base class :
+```python
+from class_factory import ClassFactoryUser
+
+class MyParentClass(ClassFactoryUser):
+    ...
+```
+
+## Description of the methods to overload
+### __get_factory_id
+#### doc 
+
+```python
+@classmethod
+def __get_factory_id(cls):
+    """
+    This method is designed to get the ID of the factory dedicated to this class
+    The name of the directory where subclasses are to be found is a good idea
+
+    :rtype: str
+    :return: the ID of the factory dedicated to this class
+    """
+```
+
+#### Details 
+Indeed, this method just requires to return a simple str ID. If you have absolutely no idea, 
+you can event return an empty string.  
+The role of this string is to differentiate several families of subclass, so if you have a single
+family don't worry about it.
+
+#### Example of completion
+
+```python
+@classmethod
+def __get_factory_id(cls):
+    """
+    This method is designed to get the ID of the factory dedicated to this class
+    The name of the directory where subclasses are to be found is a good idea
+
+    :rtype: str
+    :return: the ID of the factory dedicated to this class
+    """
+    return "My Plugins"
+```
+
+### __get_base_class_for_factory
+#### doc
+
+```python
+@classmethod
+def __get_base_class_for_factory(cls):
+    """
+    This method is designed to get the base class for the factory
+
+    :rtype: type
+    :return: the base class for the factory
+    """
+```
+
+#### Details
+Here you have to return a class the one from which all subclasses referenced in the factory will inherit.  
+Usualy, you will return the class that directly inherit from ClassFactoryUser. Be careful in this 
+case and return precisely the class not 'cls' as it would change for any subclass.
+
+#### Example of completion
+
+```python
+@classmethod
+def __get_base_class_for_factory(cls):
+    """
+    This method is designed to get the base class for the factory
+
+    :rtype: type
+    :return: the base class for the factory
+    """
+    return MyParentClass
+```
+
+### __get_id_function_name_for_factory
+#### doc
+
+```python
+@classmethod
+def __get_id_function_name_for_factory(cls):
+    """
+    This method is designed to get the name of the method returning the ID of the class for the factory
+
+    :rtype: str
+    :return: the name of the method returning the ID of the class for the factory
+    """
+```
+
+#### Details
+In the factory, each sub class is identified by an ID. This ID is taken as the result of a class 
+method. You will have to implement such a class method, but the factory requires the name of this method.
+This is precisely what you have to return here.
+
+#### Example of completion
+
+```python
+@classmethod
+def __get_id_function_name_for_factory(cls):
+    """
+    This method is designed to get the name of the method returning the ID of the class for the factory
+
+    :rtype: str
+    :return: the name of the method returning the ID of the class for the factory
+    """
+    return "get_plugin_id"
+```
+
+### __get_import_data_for_factory
+#### doc
+
+```python
+@classmethod
+def __get_import_data_for_factory(cls):
+    """
+    This method is designed to get the list of settings to import subclasses. Each item of the list contains :
+      - import_path : path from which files to import are searched recursively : <import_path>/*/**/<format_name>
+      - import_val : string replacing import path to import the files.
+        ex : <import_path>/a/b/<file name>
+           - if import_val == "":
+             the file will be imported this way : "from a.b import <module name>
+           - otherwise:
+               the file will be imported this way  "from <import_val>.a.b import <module name>
+      - format_name : glob token used to find the file to import (ex : task_*.py)
+      
+    :rtype: list[(str, str, str)]
+    :return: the list of settings to import subclasses : (import_path, import_val, format_name)
+    """
+```
+
+#### Details
+This is the technical part. You will have to tell the factory from where and how it will import the subclasses. 
+You may want to import from different directories. This is usually the case when you have embeded plugins 
+and user designed plugins in an other directory.
+All python modules containing a sub class will be searched through a glob pattern. To ease this mechanism 
+it is a good practice to have a precise prefix or suffix for all those modules.
+ 
+For each directory, you will have to return as described in the doc :
+* import_path : path from which files to import are searched recursively :
+* import_val : string replacing import path to import the files.
+* format_name : glob token used to find the file to import (ex : task_*.py)
+
+#### Example of completion
+
+```python
+@classmethod
+def __get_import_data_for_factory(cls):
+    """
+    This method is designed to get the list of settings to import subclasses. Each item of the list contains :
+      - import_path : path from which files to import are searched recursively : <import_path>/*/**/<format_name>
+      - import_val : string replacing import path to import the files.
+        ex : <import_path>/a/b/<file name>
+           - if import_val == "":
+             the file will be imported this way : "from a.b import <module name>
+           - otherwise:
+               the file will be imported this way  "from <import_val>.a.b import <module name>
+      - format_name : glob token used to find the file to import (ex : task_*.py)
+      
+    :rtype: list[(str, str, str)]
+    :return: the list of settings to import subclasses : (import_path, import_val, format_name)
+    """
+    my_dir = os.path.dirname(os.path.abspath("__file__"))
+    import_path = os.path.join(my_dir, "plugins")
+    format_name = "*_plugin.py"
+    import_val = "my_appp.plugins"
+    return [(import_path, import_val, format_name)]
+```
+
+### add_base_class
+#### doc
+
+```python
+@classmethod
+def add_base_class(cls):
+    """
+    This method is designed to know if the base class must be regitred in the factory
+
+    :rtype: bool
+    :return: True if the base class must be registred in the factory, False otherwise
+    """
+```
+
+#### Details
+Usualy, the base class is not contained by the factory (supposed to be an abstract class). If you
+want to register the base class, have this method return True. (Default behaviour is 'return False')
+
+#### Example of completion
+
+```python
+@classmethod
+def add_base_class(cls):
+    """
+    This method is designed to know if the base class must be regitred in the factory
+
+    :rtype: bool
+    :return: True if the base class must be registred in the factory, False otherwise
+    """
+    return True
+```
+
+### __get_handled_exceptions_for_factory
+#### doc
+
+```python
+@classmethod
+def __get_handled_exceptions_for_factory(cls):
+    """
+    This method is designed to get the tuple of exception types to be displayed directly,
+    without traceback when there is an import problem
+
+    :rtype handled_exceptions: tuple[Type[Exception]]
+    :return: tuple of exception types to be displayed directly, without traceback when there is an import problem
+    """
+```
+
+#### Details
+The factory mechanism as been designed in order to ignore bugs when a sub class module is imported.
+A warning is still displayed. The default behaviour is to display the full traceback of the error that 
+occured. However sometime, you may have conceived a precise error/exception and simply displaying this 
+exception is enough. For instance, when one of your pluggin depends on a third party library.
+  
+Here you have to return the list of Exceptions that will be directly displayed without traceback
+
+#### Example of completion
+
+```python
+@classmethod
+def __get_handled_exceptions_for_factory(cls):
+    """
+    This method is designed to get the tuple of exception types to be displayed directly,
+    without traceback when there is an import problem
+
+    :rtype handled_exceptions: tuple[Type[Exception]]
+    :return: tuple of exception types to be displayed directly, without traceback when there is an import problem
+    """
+    return (PyQtNotFoundLibrary, IncompleteEnvironmentError)
+```
+
+### __get_id_exception_for_factory
+#### doc
+
+```python
+@classmethod
+def __get_id_exception_for_factory(cls):
+    """
+    This method is designed to get the Exception or method instanciating an Exception when an ID is not found
+
+    :rtype: NoneType | (str) -> Exception
+    :return: Exception or method instanciating an Exception when an ID is not found
+    """
+```
+
+#### Details
+When you will use the factory, you will have to specify the ID of the instance you want to create. 
+Having a dedicated error for a unfound ID may be usefull for you, and you may have designed such an Exception.
+
+This method must return this exception, or a function that can return such an exception from the missing ID.
+
+#### Example of completion
+
+```python
+@classmethod
+def __get_id_exception_for_factory(cls):
+    """
+    This method is designed to get the Exception or method instanciating an Exception when an ID is not found
+
+    :rtype: NoneType | (str) -> Exception
+    :return: Exception or method instanciating an Exception when an ID is not found
+    """
+    return PluginIdNotFoundException
+```
+
+## Example of fully completed parent class
+
+```python
+import os
+from class_factory import ClassFactoryUser
+
+
+# ====================================
+class MyParentClass(ClassFactoryUser):
+    """
+    This class is parent class for all plugins
+    """
+    # ==========
+    @classmethod
+    def __get_factory_id(cls):
+        """
+        This method is designed to get the ID of the factory dedicated to this class
+        The name of the directory where subclasses are to be found is a good idea
+    
+        :rtype: str
+        :return: the ID of the factory dedicated to this class
+        """
+        return "My Plugins"
+    
+    # ==========
+    @classmethod
+    def __get_base_class_for_factory(cls):
+        """
+        This method is designed to get the base class for the factory
+    
+        :rtype: type
+        :return: the base class for the factory
+        """
+        return MyParentClass
+
+    # ==========
+    @classmethod
+    def __get_id_function_name_for_factory(cls):
+        """
+        This method is designed to get the name of the method returning the ID of the class for the factory
+    
+        :rtype: str
+        :return: the name of the method returning the ID of the class for the factory
+        """
+        return "get_plugin_id"
+
+    # ==========
+    @classmethod
+    def __get_import_data_for_factory(cls):
+        """
+        This method is designed to get the list of settings to import subclasses. Each item of the list contains :
+          - import_path : path from which files to import are searched recursively : <import_path>/*/**/<format_name>
+          - import_val : string replacing import path to import the files.
+            ex : <import_path>/a/b/<file name>
+               - if import_val == "":
+                 the file will be imported this way : "from a.b import <module name>
+               - otherwise:
+                   the file will be imported this way  "from <import_val>.a.b import <module name>
+          - format_name : glob token used to find the file to import (ex : task_*.py)
+          
+        :rtype: list[(str, str, str)]
+        :return: the list of settings to import subclasses : (import_path, import_val, format_name)
+        """
+        my_dir = os.path.dirname(os.path.abspath("__file__"))
+        import_path = os.path.join(my_dir, "plugins")
+        format_name = "*_plugin.py"
+        import_val = "my_appp.plugins"
+        return [(import_path, import_val, format_name)]
+
+    # ==========
+    @classmethod
+    def add_base_class(cls):
+        """
+        This method is designed to know if the base class must be regitred in the factory
+    
+        :rtype: bool
+        :return: True if the base class must be registred in the factory, False otherwise
+        """
+        return True
+
+    # ==========
+    @classmethod
+    def __get_handled_exceptions_for_factory(cls):
+        """
+        This method is designed to get the tuple of exception types to be displayed directly,
+        without traceback when there is an import problem
+    
+        :rtype handled_exceptions: tuple[Type[Exception]]
+        :return: tuple of exception types to be displayed directly, without traceback when there is an import problem
+        """
+        return (PyQtNotFoundLibrary, IncompleteEnvironmentError)
+
+    # ==========
+    @classmethod
+    def __get_id_exception_for_factory(cls):
+        """
+        This method is designed to get the Exception or method instanciating an Exception when an ID is not found
+    
+        :rtype: NoneType | (str) -> Exception
+        :return: Exception or method instanciating an Exception when an ID is not found
+        """
+        return PluginIdNotFoundException
+
+    # ==========  
+    @classmethod
+    def get_plugin_id(cls):
+        """
+        This method is designed to get the ID of the plugin
+        
+        :rtype: str
+        :return: the ID of the plugin
+        """
+        return cls.__name__
+```
+
+## Designing a sub class
+### Example
+
+```python
+class MyPlugin(MyParentClass):
+    """
+    Class for a plugin
+    """
+
+    # ==========  
+    @classmethod
+    def get_plugin_id(cls):
+        """
+        This method is designed to get the ID of the plugin
+        
+        :rtype: str
+        :return: the ID of the plugin
+        """
+        return "MY"
+```
+
+### Details
+Remember the '__get_id_function_name_for_factory' method returning "get_plugin_id" ?
+It means that your sub class (in this example) must implement a 'get_plugin_id' class method.  
+In the previous section the method returned 'cls.\__name\__'. This is a convenient way to have a default 
+behavious to generate all the ideas, but you need to use a specific ID for each sub class.  
+  
+Simply overload the method whose name is returned from '__get_id_function_name_for_factory' and don't
+forget to do it ! It is the only thing you have to do in your sub classes.
+
+
+# Using the factory
+## Access the factory
+Once all your sub classes have been created and registered in the factory, you'll want to use them.
+
+First, you have to get the factory. You can access it from any sub class of ClassFactoryUser
+
+```python
+factory = MyParentClass.get_factory()
+```
+
+Then the factory grants you access to several methods
+
+## Methods of the factory
+### get_ids_iterator
+The get_ids_iterator method returns an iterator over the different IDs of classes handled by the factory.
+
+### get_ids
+Similar to the previous method but returns a list instead of an iterator.
+
+### get_class_from_id
+This method returns a registered class from its ID.
+
+### get_instance_from_id
+This method is precisely what you expect from a factory and returns an instance of a registered class.  
+The first argument of the method is the ID of the class from which you want an instane.  
+The other arguments are the arguments you pass to the class to build your instance
+
