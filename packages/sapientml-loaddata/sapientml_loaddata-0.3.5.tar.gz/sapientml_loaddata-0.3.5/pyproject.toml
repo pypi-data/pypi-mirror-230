@@ -1,0 +1,57 @@
+[tool.poetry]
+name = "sapientml-loaddata"
+version = "0.3.5"
+description = "A SapientML plugin of CodeBlockGenerator for loading dataset"
+authors = ["The SapientML Authors"]
+maintainers = [
+    "Kosaku Kimura <kimura.kosaku@fujitsu.com>",
+    "Akira Ura <ura.akira@fujitsu.com>",
+]
+license = "Apache-2.0"
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.13"
+sapientml = "*"
+jinja2 = "^3.1.2"
+scikit-learn = "1.1.3"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+pytest-cov = "^4.1.0"
+pytest-xdist = "^3.3.1"
+black = "^23.7.0"
+flake8 = "^6.1.0"
+isort = "^5.12.0"
+pysen = "^0.10.5"
+pre-commit = "^3.3.3"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."sapientml.code_block_generator"]
+loaddata = "sapientml_loaddata:LoadData"
+
+[tool.poetry.plugins."sapientml.export_modules"]
+sample-dataset = "sapientml_loaddata.lib"
+
+[tool.pysen]
+version = "0.3.5"
+
+[tool.pysen-cli]
+settings_dir = ".pysen"
+
+[tool.pysen.lint]
+enable_black = true
+enable_flake8 = true
+enable_isort = true
+enable_mypy = false
+line_length = 120
+py_version = "0.3.5"
+
+[tool.pysen.lint.source]
+includes = ["sapientml_loaddata/", "tests/"]
+
+[tool.pytest.ini_options]
+addopts = "-s -x --cov=sapientml_loaddata"
+testpaths = ["tests"]
