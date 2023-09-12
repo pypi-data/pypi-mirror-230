@@ -1,0 +1,26 @@
+[build-system]
+requires = ["maturin>=0.14,<0.15"]
+build-backend = "maturin"
+
+[project]
+name = "blyss"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+    "requests",
+    "httpx",
+]
+dynamic = ["version"]
+description = "An SDK for private data retrieval, built on homomorphic encryption."
+keywords = ["privacy", "homomorphic", "encryption", "cryptography"]
+
+[project.urls]
+homepage = "https://blyss.dev"
+documentation = "https://docs.blyss.dev"
+repository = "https://github.com/blyssprivacy/sdk"
+changelog = "https://github.com/blyssprivacy/sdk/releases"
+
