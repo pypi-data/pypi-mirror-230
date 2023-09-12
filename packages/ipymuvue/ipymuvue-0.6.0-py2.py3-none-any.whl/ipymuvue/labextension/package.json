@@ -1,0 +1,55 @@
+{
+  "name": "ipymuvue",
+  "version": "0.6.0",
+  "description": "Reactive Jupyter Widgets (ipymuvue-implementation repackaged for Jupyter Notebooks, JupyterLab, …)",
+  "author": "Julian Rüth",
+  "main": "src/index.js",
+  "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/flatsurf/ipymuvue.git"
+  },
+  "keywords": [
+    "jupyter",
+    "widgets",
+    "ipython",
+    "ipywidgets",
+    "jupyterlab-extension"
+  ],
+  "files": [
+    "src/**/*.js"
+  ],
+  "scripts": {
+    "clean": "rimraf ../ipymuvue/labextension/",
+    "prepublish": "yarn run clean && (cd ../ts && yarn run build:prod) && yarn run build:prod",
+    "build": "jupyter labextension build --development True .",
+    "build:prod": "jupyter labextension build ."
+  },
+  "devDependencies": {
+    "@jupyterlab/builder": "^4.0.2",
+    "rimraf": "^2.6.1",
+    "webpack": "^5",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "@jupyter-widgets/base": "^1.1 || ^2 || ^3 || ^4",
+    "ipymuvueimplementation": "../ts",
+    "lodash": "^4.17.21"
+  },
+  "jupyterlab": {
+    "extension": "src/labplugin",
+    "outputDir": "../ipymuvue/labextension",
+    "sharedPackages": {
+      "@jupyter-widgets/base": {
+        "bundled": false,
+        "singleton": true
+      },
+      "vue": {},
+      "vue/dist/vue.esm-bundler.js": {}
+    },
+    "_build": {
+      "load": "static/remoteEntry.53678a7f8aad35c2e8c9.js",
+      "extension": "./extension"
+    }
+  }
+}
