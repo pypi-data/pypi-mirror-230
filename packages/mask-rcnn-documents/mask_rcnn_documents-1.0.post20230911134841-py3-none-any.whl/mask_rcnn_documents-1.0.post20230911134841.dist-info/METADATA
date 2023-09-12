@@ -1,0 +1,82 @@
+Metadata-Version: 2.1
+Name: mask-rcnn-documents
+Version: 1.0.post20230911134841
+Home-page: https://gitlab.univ-lr.fr/acadiie/document_layout_analysis/mask-rcnn
+Author: Guillaume Bernard
+Author-email: contact@guillaume-bernard.fr
+Project-URL: Bug Tracker, https://gitlab.univ-lr.fr/acadiie/document_layout_analysis/mask-rcnn/-/issues
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Intended Audience :: Science/Research
+Description-Content-Type: text/markdown
+Requires-Dist: numpy (>=1.23.5)
+Requires-Dist: opencv-python (>=4.7)
+Requires-Dist: Pillow (~=9.4)
+Requires-Dist: pytorch-lightning (~=1.9)
+Requires-Dist: torch (~=1.13)
+Requires-Dist: torchvision (~=0.14)
+
+# Train and test a MASK-RCNN model
+
+![Python 3.10](https://img.shields.io/badge/Python_Version-3.10-success)
+
+Tools to train and test a Mask-RCNN model using PyTorch.
+
+```text
+He, Kaiming, Georgia Gkioxari, Piotr Dollár, et Ross Girshick. « Mask R-CNN ».
+arXiv, 24 janvier 2018. http://arxiv.org/abs/1703.06870.
+```
+
+## Installation
+
+The scripts should be installed in your environment using pip by including the following line in your `requirements.txt` file.
+
+```text
+git+ssh://git@gitlab.univ-lr.fr/acadiie/document_layout_analysis/mask-rcnn.git#egg=mask-rcnn
+```
+
+## Usage
+
+### `train_mask_rcnn`
+
+```bash
+usage: train_mask_rcnn [-h] --data-path DATA_PATH --experiment-name EXPERIMENT_NAME --epochs EPOCHS [--batch-size BATCH_SIZE] [--device DEVICE] [--log-path LOG_PATH] [--mlflow-endpoint MLFLOW_ENDPOINT]
+
+Train a Mask-RCNN model based on ResNet-50
+
+options:
+  -h, --help            show this help message and exit
+  --data-path DATA_PATH
+                        Path to the directory where are stored the images and labels. In this directory, there should be a train and a val subdirectory, each containing another images and labels subdirectories.
+  --experiment-name EXPERIMENT_NAME
+                        Name of the experiment
+  --epochs EPOCHS, -e EPOCHS
+                        Number of epochs
+  --batch-size BATCH_SIZE, -bs BATCH_SIZE
+                        Batch size for the model
+  --device DEVICE, -d DEVICE
+                        Device on which to run the neural network
+  --log-path LOG_PATH   Where to log the model steps
+  --mlflow-endpoint MLFLOW_ENDPOINT
+                        URL to a MLFlow tracking system
+
+```
+
+### `test_mask_rcnn`
+
+```bash
+usage: Test Mask-RCNN model. [-h] --data-path DATA_PATH --model-checkpoint MODEL_CHECKPOINT [--threshold THRESHOLD]
+
+options:
+  -h, --help            show this help message and exit
+  --data-path DATA_PATH
+                        Path to the directory where are stored the images and labels. In this directory, there should be a test directory containing another images and labels subdirectories.
+  --model-checkpoint MODEL_CHECKPOINT
+                        Path to the model checkpoint to test
+  --threshold THRESHOLD
+                        Confidence threshold in the model to export the masks.
+
+```
