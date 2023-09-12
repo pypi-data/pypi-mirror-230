@@ -1,0 +1,29 @@
+Metadata-Version: 2.1
+Name: cgranges
+Version: 0.1
+Summary: Genomic interval overlap query for python
+Home-page: https://github.com/lh3/cgranges
+Author: Heng Li
+Author-email: lh3@me.com
+License: MIT
+Keywords: interval
+Classifier: Development Status :: 4 - Beta
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: POSIX
+Classifier: Programming Language :: C
+Classifier: Programming Language :: Cython
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering :: Bio-Informatics
+License-File: LICENSE.txt
+
+.. code:: python
+
+	import cgranges as cr
+	g = cr.cgranges();
+	g.add("chr1", 10, 20, 0)
+	g.add("chr1", 15, 25, 1)
+	g.index()
+	for st, en, label in g.overlap("chr1", 12, 16):
+		print(st, en, label)
