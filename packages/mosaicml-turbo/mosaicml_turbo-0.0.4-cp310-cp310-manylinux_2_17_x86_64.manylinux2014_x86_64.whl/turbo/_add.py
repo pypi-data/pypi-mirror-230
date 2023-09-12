@@ -1,0 +1,37 @@
+from typing import Optional
+
+import torch
+
+import _turbo_kernels as kernels
+
+from ._utils import num_blocks_to_use
+
+
+def my_add(a: torch.Tensor,
+           b: torch.Tensor,
+           out: Optional[torch.Tensor] = None,
+           block_size: int = 128) -> torch.Tensor:
+    assert a.shape == b.shape
+    if out is None:
+        out = torch.empty_like(a)
+    assert a.shape == out.shape
+
+    kernels.add(a.ravel(), b.ravel(), out.ravel(), block_size)
+    return out.reshape(a.shape)
+
+
+def my_fast_add(a: torch.Tensor,
+                b: torch.Tensor,
+                out: Optional[torch.Tensor] = None,
+                block_size: int = 256,
+                grid_size: int = -1) -> torch.Tensor:
+    assert block_size >= 64
+    assert a.shape == b.shape
+    if out is None:
+        out = torch.empty_like(a)
+    assert a.shape == out.shape
+    if grid_size < 1:
+        grid_size = num_blocks_to_use(a.numel(), block_size, 4)
+
+    kernels.add_fast(a.ravel(), b.ravel(), out.ravel(), block_size, grid_size)
+    return out.reshape(a.shape)
