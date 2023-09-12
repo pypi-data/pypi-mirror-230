@@ -1,0 +1,272 @@
+#!/usr/bin/python3
+# Copyright (C) 2018 Jelmer Vernooij <jelmer@debian.org>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+
+"""Functions for working with upstream metadata.
+
+This gathers information about upstreams from various places.
+Each bit of information gathered is wrapped in a UpstreamDatum
+object, which contains the field name.
+
+The fields used here match those in https://wiki.debian.org/UpstreamMetadata
+
+Supported fields:
+- Homepage
+- Name
+- Contact
+- Repository
+- Repository-Browse
+- Bug-Database
+- Bug-Submit
+- Screenshots
+- Archive
+- Security-Contact
+
+Extensions for upstream-ontologist.
+- SourceForge-Project: Name of the SourceForge project
+- Wiki: URL to a wiki
+- Summary: A one-line description
+- Description: Multi-line description
+- License: Short description of the license
+- Copyright
+- Maintainer
+- Authors
+
+Supported, but currently not set.
+- FAQ
+- Donation
+- Documentation
+- Registration
+- Webservice
+"""
+
+from typing import Optional, Sequence, TypeVar, Generic, List
+from dataclasses import dataclass
+from email.utils import parseaddr
+import ruamel.yaml
+
+
+try:
+    from typing import TypedDict  # type: ignore
+except ImportError:
+    from typing_extensions import TypedDict  # type: ignore
+
+
+from . import _upstream_ontologist
+
+
+SUPPORTED_CERTAINTIES = ["certain", "confident", "likely", "possible", None]
+
+version_string = "0.1.36"
+
+USER_AGENT = "upstream-ontologist/" + version_string
+# Too aggressive?
+DEFAULT_URLLIB_TIMEOUT = 3
+
+
+yaml = ruamel.yaml.YAML(typ='safe')
+
+
+@dataclass
+@yaml.register_class
+class Person:
+    yaml_tag = '!Person'
+
+    name: str
+    email: Optional[str] = None
+    url: Optional[str] = None
+
+    def __init__(self, name, email=None, url=None):
+        self.name = name
+        self.email = email
+        if url and url.startswith('mailto:'):
+            self.email = url[len('mailto:'):]
+            self.url = None
+        else:
+            self.url = url
+
+    @classmethod
+    def from_yaml(cls, constructor, node):
+        d = {}
+        for k, v in node.value:
+            d[k.value] = v.value
+        return cls(
+            name=d.get('name'),
+            email=d.get('email'),
+            url=d.get('url'))
+
+    @classmethod
+    def from_string(cls, text):
+        text = text.replace(' at ', '@')
+        text = text.replace(' -at- ', '@')
+        text = text.replace(' -dot- ', '.')
+        text = text.replace('[AT]', '@')
+        if '(' in text and text.endswith(')'):
+            (p1, p2) = text[:-1].split('(', 1)
+            if p2.startswith('https://') or p2.startswith('http://'):
+                url = p2
+                if '<' in p1:
+                    (name, email) = parseaddr(p1)
+                    return cls(name=name, email=email, url=url)
+                return cls(name=p1, url=url)
+            elif '@' in p2:
+                return cls(name=p1, email=p2)
+            return cls(text)
+        elif '<' in text:
+            (name, email) = parseaddr(text)
+            return cls(name=name, email=email)
+        else:
+            return cls(name=text)
+
+    def __str__(self):
+        if self.email:
+            return f'{self.name} <{self.email}>'
+        return self.name
+
+
+T = TypeVar('T')
+
+
+class UpstreamDatum(Generic[T]):
+    """A single piece of upstream metadata."""
+
+    __slots__ = ["field", "value", "certainty", "origin"]
+
+    field: str
+    value: T
+    certainty: Optional[str]
+    origin: Optional[str]
+
+    def __init__(self, field: str, value: T, certainty: Optional[str] = None,
+                 origin: Optional[str] = None) -> None:
+        self.field = field
+        if value is None:
+            raise ValueError(field)
+        self.value = value
+        if certainty not in SUPPORTED_CERTAINTIES:
+            raise ValueError(certainty)
+        self.certainty = certainty
+        self.origin = origin
+
+    def __eq__(self, other):
+        return (
+            isinstance(other, type(self))
+            and self.field == other.field
+            and self.value == other.value
+            and self.certainty == other.certainty
+            and self.origin == other.origin
+        )
+
+    def __str__(self):
+        return "{}: {}".format(self.field, self.value)
+
+    def __repr__(self):
+        return "{}({!r}, {!r}, {!r}, {!r})".format(
+            type(self).__name__,
+            self.field,
+            self.value,
+            self.certainty,
+            self.origin,
+        )
+
+
+UpstreamMetadata = TypedDict('UpstreamMetadata', {
+    'Name': UpstreamDatum[str],
+    'Contact': UpstreamDatum[str],
+    'Repository': UpstreamDatum[str],
+    'Repository-Browse': UpstreamDatum[str],
+    'Summary': UpstreamDatum[str],
+    'Bug-Database': UpstreamDatum[str],
+    'Bug-Submit': UpstreamDatum[str],
+    'Homepage': UpstreamDatum[str],
+    'Screenshots': UpstreamDatum[List[str]],
+}, total=False)
+
+
+class UpstreamPackage:
+    def __init__(self, family, name):
+        self.family = family
+        self.name = name
+
+
+# If we're setting them new, put Name and Contact first
+def upstream_metadata_sort_key(x):
+    (k, v) = x
+    return {
+        "Name": "00-Name",
+        "Contact": "01-Contact",
+    }.get(k, k)
+
+
+def min_certainty(certainties: Sequence[str]) -> str:
+    confidences = [certainty_to_confidence(c) for c in certainties]
+    return confidence_to_certainty(max([c for c in confidences if c is not None] + [0]))
+
+
+def certainty_to_confidence(certainty: Optional[str]) -> Optional[int]:
+    if certainty in ("unknown", None):
+        return None
+    return SUPPORTED_CERTAINTIES.index(certainty)
+
+
+def confidence_to_certainty(confidence: Optional[int]) -> str:
+    if confidence is None:
+        return "unknown"
+    try:
+        return SUPPORTED_CERTAINTIES[confidence] or "unknown"
+    except IndexError as e:
+        raise ValueError(confidence) from e
+
+
+def certainty_sufficient(
+    actual_certainty: Optional[str], minimum_certainty: Optional[str]
+) -> bool:
+    """Check if the actual certainty is sufficient.
+
+    Args:
+      actual_certainty: Actual certainty with which changes were made
+      minimum_certainty: Minimum certainty to keep changes
+    Returns:
+      boolean
+    """
+    actual_confidence = certainty_to_confidence(actual_certainty)
+    if actual_confidence is None:
+        # Actual confidence is unknown.
+        # TODO(jelmer): Should we really be ignoring this?
+        return True
+    minimum_confidence = certainty_to_confidence(minimum_certainty)
+    if minimum_confidence is None:
+        return True
+    return actual_confidence <= minimum_confidence
+
+
+_load_json_url = _upstream_ontologist.load_json_url  # noqa: F401
+
+
+class UrlUnverifiable(Exception):
+    """Unable to check specified URL."""
+
+    def __init__(self, url, reason):
+        self.url = url
+        self.reason = reason
+
+
+class InvalidUrl(Exception):
+    """Specified URL is invalid."""
+
+    def __init__(self, url, reason):
+        self.url = url
+        self.reason = reason
