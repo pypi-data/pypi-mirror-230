@@ -1,0 +1,299 @@
+Metadata-Version: 2.1
+Name: netsky
+Version: 0.0.3
+Summary: not skynet, obviously
+Project-URL: Homepage, https://github.com/lostmygithubaccount/netsky
+Project-URL: Bug Tracker, https://github.com/lostmygithubaccount/netsky/issues
+Author-email: Cody <cody@dkdc.dev>
+License-File: LICENSE
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.11
+Requires-Dist: html2text
+Requires-Dist: ibis-framework[deltalake,duckdb,polars]
+Requires-Dist: ipython
+Requires-Dist: marvin[ddg]
+Requires-Dist: openai
+Requires-Dist: pillow
+Requires-Dist: plotly
+Requires-Dist: python-dotenv
+Requires-Dist: requests
+Requires-Dist: streamlit
+Requires-Dist: toml
+Requires-Dist: typer[all]
+Description-Content-Type: text/markdown
+
+# netsky
+
+not skynet, obviously
+
+## getting started
+
+`pip install netsky`
+
+Create the `~/.netsky/.env` file. If you're reading this, you probably work at VoDa -- ask internally.
+
+### verify installation
+
+`netsky` should now be installed as a CLI tool:
+
+```python
+(venv) cody@dkdcsot netsky % netsky
+
+ Usage: netsky [OPTIONS] COMMAND [ARGS]...
+
+╭─ Options ─────────────────────────────────────────────────╮
+│ --version                     Show version.               │
+│ --install-completion          Install completion for the  │
+│                               current shell.              │
+│ --show-completion             Show completion for the     │
+│                               current shell, to copy it   │
+│                               or customize the            │
+│                               installation.               │
+│ --help                        Show this message and exit. │
+╰───────────────────────────────────────────────────────────╯
+╭─ Commands ────────────────────────────────────────────────╮
+│ ai                            ai                          │
+│ test                          test                        │
+╰───────────────────────────────────────────────────────────╯
+```
+
+Confirm commands work:
+
+```python
+(venv) cody@dkdcsot netsky % netsky test
+testing.ai: done...
+```
+
+And invoke advanced ai commands:
+
+```python
+(venv) cody@dkdcsot netsky % netsky ai
+netsky.ai:
+access to: netsky.ai
+```
+
+## examples
+
+To get started for real, run `netsky ai -i`. You will have an interactive Python session with access to the netsky.ai `bot` object. Interact with it!
+
+```python
+[ins] In [1]: bot("who are you?")
+netsky.ai: I am netsky.ai, your digital assistant designed to assist you
+with a wide variety of tasks. I was created by dkdc.dev and
+I've been designed to be intuitive and user-friendly, always
+ready to help you achieve your goals. Is there something
+specific you need assistance with?
+```
+
+### open in browser
+
+You can casually ask the bot to open links in your browser:
+
+```python
+[ins] In [2]: bot("can you open that dkdc.dev website in my b
+         ...: rowser?")
+netsky.ai: Sure, I have opened the dkdc.dev website in your browser.
+Please let me know if you need assistance with anything else.
+```
+
+### internet search
+
+While the bot is programmed to know its creator (`dkdc.dev`), it's not programmed to know anything about me -- it has to search the web for that!
+
+```python
+[ins] In [3]: bot("what is dkdc.dev?")
+netsky.ai: dkdc.dev is a personal website created by a person named
+Cody. It functions as a platform for him to practice writing,
+coding, and documenting projects. He has worked as a
+Technical Product Manager at Voltron Data focusing on data
+interfaces and open-source software like Ibis. Previously, he
+was a Product Manager at dbt Labs and Azure ML (Microsoft).
+His work mainly revolves around data, MLOps, and developer
+platforms.
+```
+
+### text summarization
+
+The bot can summarize text:
+
+```python
+[ins] In [4]: bot("can you find some recent posts from the si
+         ...: te?")
+netsky.ai: Here are some recent posts from dkdc.dev:
+
+1. [About](https://dkdc.dev/about/): A page dedicated to the
+creator of the site, Cody. He discusses his passion for
+progress through technology and his current and previous
+roles.
+
+2. [How I Built This
+Website](https://dkdc.dev/project/website/): This page
+provides insight into the process and tools used to build the
+dkdc.dev website.
+
+3. [Is Small Data
+Dead?](https://dkdc.dev/posts/is-small-data-dead/index.python):
+This blog post discusses the shift in the field of machine
+learning and data science from small to big data.
+
+Is there any specific post you want to know more about?
+
+[ins] In [5]: bot("can you summarize that third article for m
+         ...: e? list out the key points in bullet format. al
+         ...: so, open it in the browser first so I can take
+         ...: a look")
+netsky.ai: I have opened the blog post titled 'Is Small Data Dead?' in
+your browser. Here are the key points from the article:
+
+- The blog discusses the shift from small to big data in
+machine learning and data science.
+- The writer questions the relevance of small data in the
+current landscape.
+- The post highlights the challenges and opportunities
+brought about by this shift.
+- The change is reshaping our understanding and use of data.
+
+You can read it in detail
+(https://dkdc.dev/posts/is-small-data-dead/index.python).
+```
+
+**Author's note: the search engine (duck duck go's free whatever) is pretty bad; the second article it picked up is from my old site. This is a pretty weak link in the current implementation, but could easily be upgraded.
+
+### filesystem access
+
+```python
+[ins] In [6]: bot("what's in the current directory?")
+netsky.ai: Here are the files in the current directory:
+
+- LICENSE
+- justfile
+- dev-requirements.txt
+- pyproject.toml
+- readme.md
+- src/netsky/ai.py
+- src/netsky/__init__.py
+- src/netsky/cli.py
+- src/netsky/testing.py
+- src/netsky/__main__.py
+
+What would you like to do next?
+
+[ins] In [7]: bot("what kinda license is it?")
+netsky.ai: The software is licensed under the MIT License. Here are the
+key points:
+
+- Permission is granted, free of charge, to any person
+obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software
+without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software.
+- Persons to whom the Software is furnished are permitted to
+do so, subject to the condition that the above copyright
+notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+- The software is provided "as is", without warranty of any
+kind. This includes, but is not limited to, the warranties of
+merchantability, fitness for a particular purpose, and
+non-infringement.
+- The authors or copyright holders are not liable for any
+claim, damages, or other liability, whether in an action of
+contract, tort, or otherwise, arising from, out of, or in
+connection with the software or the use or other dealings in
+the software.
+
+Please let me know if you need any further clarification or
+if you have other questions.
+
+[ins] In [8]: bot("what's hte exact text?")
+netsky.ai: Here is the exact text of the license:
+
+Copyright (c) 2023 Cody
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy
+of this software and associated documentation files (the
+"Software"), to deal
+in the Software without restriction, including without
+limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell
+copies of the Software, and to permit persons to whom the
+Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall
+be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO
+EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES
+OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE
+SOFTWARE.
+
+This is a standard MIT license. It gives broad permissions to
+use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, under the conditions that
+the original copyright and permissions notice is included
+with all copies or substantial portions of the software. The
+software is provided "as is", without warranty of any kind.
+
+[ins] In [9]: bot("can you modify it to use the full name 'Co
+         ...: dy Peterson' instead of just 'Cody'?")
+netsky.ai: Before I proceed with this action, I just want to confirm
+that you want me to modify the text of the license file to
+replace 'Cody' with 'Cody Peterson'. Is that correct?
+
+[ins] In [10]: bot("yes")
+netsky.ai: I have updated the license file. It now reads 'Cody Peterson'
+instead of 'Cody'. Is there anything else I can assist you
+with?
+
+[ins] In [11]: !cat LICENSE
+Copyright (c) 2023 Cody Peterson
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+### database exploration with Ibis
+
+**work in progress**: working decently but needs some refactor
+
+### visualization with plotly
+
+**work in progress**: has not worked decently yet but should be doable
+
+### GitHub search
+
+implemented in a Marvin example, need to replicate or replace
+
+### ...and more!
+
+coming when the `netsky` can write its own code!
