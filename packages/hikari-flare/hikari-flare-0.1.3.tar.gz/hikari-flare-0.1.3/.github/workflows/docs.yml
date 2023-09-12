@@ -1,0 +1,27 @@
+name: docs
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      - name: "Install Dependencies"
+        run: |
+          pip install nox
+      - name: "Build"
+        run: |
+          nox -s sphinx
+      - name: Publish
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./docs/_build

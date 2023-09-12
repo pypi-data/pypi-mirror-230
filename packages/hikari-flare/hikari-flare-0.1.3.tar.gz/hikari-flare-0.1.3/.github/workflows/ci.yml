@@ -1,0 +1,30 @@
+name: ci
+on: [ push, pull_request ]
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.10' 
+    - uses: BSFishy/pip-action@v1
+      with:
+        packages: nox
+    - run: nox -s lint
+  
+  typechecking:
+    name: "typecheck"
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    - uses: BSFishy/pip-action@v1
+      with:
+        packages: nox
+    - run: nox -s pyright
