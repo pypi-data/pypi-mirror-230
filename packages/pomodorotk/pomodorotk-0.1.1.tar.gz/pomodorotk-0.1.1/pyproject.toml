@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "pomodorotk"
+version = "0.1.1"
+description = ""
+authors = ["Fernando López <fernando.e.lopez@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pydub = "^0.25.1"
+ffmpeg-python = "^0.2.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+pomodoro = "pomodorotk.pomodoro:main"

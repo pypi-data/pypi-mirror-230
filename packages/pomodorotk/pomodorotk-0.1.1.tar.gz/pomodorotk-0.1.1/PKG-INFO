@@ -1,0 +1,72 @@
+Metadata-Version: 2.1
+Name: pomodorotk
+Version: 0.1.1
+Summary: 
+Author: Fernando López
+Author-email: fernando.e.lopez@gmail.com
+Requires-Python: >=3.11,<4.0
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: ffmpeg-python (>=0.2.0,<0.3.0)
+Requires-Dist: pydub (>=0.25.1,<0.26.0)
+Description-Content-Type: text/markdown
+
+PomodoroTk
+==========
+
+Timer for pomodoro technique with GUI written in tkinter.
+
+
+Install with pipx or pip
+-------------------------
+
+```
+pipx install pomodorotk
+```
+
+or with pip:
+
+```
+pip install pomodorotk
+```
+
+### Run
+
+```
+pomodoro
+```
+
+Build single file executable
+----------------------------
+
+Install [PyEmpaq](https://pyempaq.readthedocs.io/)
+
+```
+# move to the directory containing this repo
+cd ..
+
+# build
+pyempaq pomodoro
+```
+
+Run with:
+
+```
+python pomodorotk.pyz
+```
+
+
+Develop
+-------
+
+Clone this repo and install dependencies with Poetry:
+
+```
+poetry install
+```
+
+## Run in development mode
+
+```
+poetry run pomodoro
+```
