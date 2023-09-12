@@ -1,0 +1,27 @@
+[build-system]
+requires      = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sim_sensors"
+version = "0.4.1"
+description = 'A collection of classes that simulate IoT sensors'
+readme = "README.md"
+authors = [{ name = "Ivan Šarić", email = "ivan@path-variable.com" },
+	   { name = "BlasePanda", email = "58369256+BlasePanda@users.noreply.github.com" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+]
+keywords = ['simulated', 'sensors', 'iot']
+dependencies = []
+requires-python = ">=3.9"
+
+[project.optional-dependencies]
+dev = ["black"]
+
+[project.urls]
+Homepage = "https://github.com/isaric/sim_sensors"
