@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "semantix-genai-serve"
+version = "0.0.3a0"
+description = ""
+authors = ["Dev Team <dev@semantix.ai>"]
+readme = "README.md"
+packages = [{include = "semantix_genai_serve"}]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.12"
+kserve = "0.11.0"
+transformers = ">=4.28.0"
+bitsandbytes = "0.41.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
