@@ -1,0 +1,91 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "aaanalysis"
+version = "0.1.0"
+description = "Python framework for interpretable protein prediction"
+authors = ["Stephan Breimann <stephanbreimann@gmail.de>"]
+license = "MIT"
+readme = "README.rst"
+include = ["data/*.xlsx", "data/benchmarks/*.tsv", "data/benchmarks/*.xlsx"]
+# Add classifiers to provide more details about the package.
+# Assuming your platform and OS compatibilities
+classifiers = [
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License"
+]
+
+# Requierements
+[tool.poetry.dependencies]
+python = "^3.5"
+cycler = "^0.11.0"
+et-xmlfile = "^1.1.0"
+fonttools = "^4.37.1"
+joblib = "^1.1.0"
+kiwisolver = "^1.4.4"
+matplotlib = "^3.5.3"
+numpy = "^1.23.2"
+openpyxl = "^3.0.10"
+packaging = "^21.3"
+pandas = "^1.4.3"
+patsy = "^0.5.2"
+Pillow = "^9.2.0"
+pyparsing = "^3.0.9"
+python-dateutil = "^2.8.2"
+pytz = "^2022.2.1"
+scikit-learn = "^1.1.2"
+scipy = "^1.9.0"
+seaborn = "^0.11.2"
+six = "^1.16.0"
+statsmodels = "^0.13.2"
+threadpoolctl = "^3.1.0"
+
+#... (keep the other dependencies as they are)
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2"
+pytest-mpl = "^0.13"
+sphinx = ">=5.0,<7.0"
+sphinx_rtd_theme = "^0.5.2"
+#sphinx_book_theme = "^1.0.1"
+#pydata_sphinx_theme = "^0.13.3"
+myst_nb = "^0.17.2"
+sphinx_design = "^0.5"
+sphinx_copybutton = "^0.5.2"
+sphinxext-opengraph = "^0.8.2"
+numpydoc = "1.5.0"
+
+# Optional dependencies
+#[tool.poetry.extras]
+#plots = ["matplotlib", "seaborn"]
+
+# Project URLs
+[tool.poetry.urls]
+"Repository" = "https://github.com/breimanntools/aaanalysis"
+"Documentation" = "https://aaanalysis.readthedocs.io"
+
+# If you use a tool for linting or formatting, you can add its configurations here.
+# For example, if you use `black` for formatting:
+[tool.black]
+line-length = 88
+exclude = '''
+/(
+    \.git
+  | \.venv
+  | \.eggs
+  | \.mypy_cache
+  | \.pytest_cache
+  | \__pycache__
+  | build
+  | dist
+)/
+'''
