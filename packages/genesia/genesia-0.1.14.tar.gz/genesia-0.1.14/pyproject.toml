@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "genesia"
+version = "0.1.14"
+description = "genesia cli"
+authors = ["lucasmrdt <lucas.marandat@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+click = "^8.1.7"
+yaspin = "^3.0.0"
+python-socketio = {extras = ["client"], version = "^5.8.0"}
+gitpython = "^3.1.32"
+python-dotenv = "^1.0.0"
+jinja2 = "^3.1.2"
+autoflake = "^2.2.0"
+black = "^23.7.0"
+isort = "^5.12.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+genesia = "genesia.cli:run_cli"
