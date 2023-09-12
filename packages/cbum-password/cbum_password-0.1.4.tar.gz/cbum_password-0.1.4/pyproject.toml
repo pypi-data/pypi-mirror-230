@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "cbum-password"
+version = "0.1.4"
+description = ""
+authors = ["Estevao <estevaopfon@gmail.com>"]
+readme = "README.md"
+packages = [{include = "cbum_password"}]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+
+[tool.poetry.scripts]
+cbum-password = 'cbum_password:main'
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
