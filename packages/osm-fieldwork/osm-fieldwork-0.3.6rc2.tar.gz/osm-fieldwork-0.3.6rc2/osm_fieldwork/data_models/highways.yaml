@@ -1,0 +1,15 @@
+select:
+    - osm_id: id
+    - version
+from:
+    - ways_line
+where:
+  tags:
+     - join_or:
+        - { highway: not null }
+keep:
+    - name
+    - smoothness
+    - surface
+    - tracktype
+    - width
