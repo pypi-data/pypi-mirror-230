@@ -1,0 +1,239 @@
+Metadata-Version: 2.1
+Name: azpype
+Version: 0.3.1
+Summary: A native Python interface wrapping AzCopy for bulk data transfer to and from Azure Blob Storage.
+Home-page: https://github.com/yusuf-jkhan1/azpype
+Author: Yusuf Khan
+License: MIT
+Platform: UNKNOWN
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Description-Content-Type: text/markdown
+Requires-Dist: appnope ==0.1.3
+Requires-Dist: asttokens ==2.2.1
+Requires-Dist: backcall ==0.2.0
+Requires-Dist: cffi ==1.15.1
+Requires-Dist: click ==8.1.3
+Requires-Dist: comm ==0.1.3
+Requires-Dist: cryptography ==40.0.2
+Requires-Dist: debugpy ==1.6.7
+Requires-Dist: decorator ==5.1.1
+Requires-Dist: executing ==1.2.0
+Requires-Dist: haikunator ==2.1.0
+Requires-Dist: ipykernel ==6.23.1
+Requires-Dist: ipython ==8.13.2
+Requires-Dist: jedi ==0.18.2
+Requires-Dist: jupyter-client ==8.2.0
+Requires-Dist: jupyter-core ==5.3.0
+Requires-Dist: matplotlib-inline ==0.1.6
+Requires-Dist: nest-asyncio ==1.5.6
+Requires-Dist: packaging ==23.1
+Requires-Dist: parso ==0.8.3
+Requires-Dist: pexpect ==4.8.0
+Requires-Dist: pickleshare ==0.7.5
+Requires-Dist: platformdirs ==3.5.1
+Requires-Dist: prompt-toolkit ==3.0.38
+Requires-Dist: psutil ==5.9.5
+Requires-Dist: ptyprocess ==0.7.0
+Requires-Dist: pure-eval ==0.2.2
+Requires-Dist: pyyaml ==6.0
+Requires-Dist: pycparser ==2.21
+Requires-Dist: Pygments ==2.15.1
+Requires-Dist: python-dateutil ==2.8.2
+Requires-Dist: python-dotenv ==1.0.0
+Requires-Dist: pyzmq ==25.0.2
+Requires-Dist: six ==1.16.0
+Requires-Dist: stack-data ==0.6.2
+Requires-Dist: tornado ==6.3.2
+Requires-Dist: traitlets ==5.9.0
+Requires-Dist: watchdog ==3.0.0
+Requires-Dist: wcwidth ==0.2.6
+Requires-Dist: certifi ==2023.7.22
+Requires-Dist: charset-normalizer ==3.2.0
+Requires-Dist: idna ==3.4
+Requires-Dist: requests ==2.31.0
+Requires-Dist: urllib3 ==2.0.4
+
+# Azpype 
+
+> NOTE: This is still a very early stage project. Public interfaces and large parts of the implmentation are still subject to change.
+
+Azpype is intended to primarily be an easy-to-use lightweight native Python interface to the already excellent AzCopy command line tool.
+
+The secondary aim is for it to extend the functionality with some additional scaffolding and functionality such as
+
+#### *Python enhanced logging*
+-- INFO HERE --
+
+#### *Config driven defaults*
+-- INFO HERE --
+
+#### *Out-of-the-box and custom Validation Checks*
+-- INFO HERE --
+
+---
+## Installation & Init
+
+Currently supports x86_64, and Apple Silicon
+
+> 📢 _**Important:** For both convenience and the purpose of behaving as a python native library; installing azpype will additionally download the platform appropriate precompiled [azcopy](https://github.com/Azure/azure-storage-azcopy/releases) binary (**v10.18.1**) and store it under
+`~/.azpype/`. This will be bundled in as part of the package distributuion and not as a separate installation script._
+
+Install via pip  
+```
+pip install azpype
+```
+
+Then from the terminal run
+```
+azpype-init
+```
+This will install and setup a `~/.azpype` directory and download the appropriate azcopy binary and baseline config.
+
+---
+## Usage
+
+### Setup for Authentication
+Currently azpype supports application service principal based and shared access signature (SAS) token authentication. 
+
+
+### Service Principal
+The recommended method is to use application service principals. To do so create/register the app in Azure and then grant it the appropriate RBAC permissions in any Blob Storage accounts you intend to use. 
+Ensure that the host that runs Azpype has access to the following environment variables via the host or process environment.
+-  `AZCOPY_TENANT_ID`
+- `AZCOPY_SPA_APPLICATION_ID`
+- `AZCOPY_SPA_CLIENT_SECRET`
+- `AZCOPY_AUTO_LOGIN_TYPE`
+
+#### Examples of setting the environment variables
+Setting and environment variable in python:
+```python
+import os
+
+#These are dummy values of course
+os.environ["AZCOPY_TENANT_ID"] = "12d3fba3-efac-1234-a1b2-3f4cafbcb123"
+os.environ["AZCOPY_SPA_APPLICATION_ID"] = "e1234c36-bc1e-4f23-ace7-cb088c04c123"
+os.environ["AZCOPY_SPA_CLIENT_SECRET"] = "cAl1Q~2mdABUUSCD2KEZzaF150P0jXAqKs2ANdMS"
+#This needs to be set so that interactive login is not needed
+os.environ["AZCOPY_AUTO_LOGIN_TYPE"]= "SPN" #SPN=Service Principal
+```
+
+Setting environment variables in python via .env:
+```python
+#pip install python-dotenv #if needed
+import os
+from dotenv import load_dotenv
+load_dotenv('.env')
+
+
+#This assumes you have an .env file in your working directory with an entry like:  
+#AZCOPY_TENANT_ID="12d3fba3-efac-1234-a1b2-3f4cafbcb123"
+tenant_id = os.getenv('AZCOPY_TENANT_ID')
+#etc
+```
+OR Set environment variable via shell (MacOS & Linux)
+```shell
+export AZCOPY_TENANT_ID=""12d3fba3-efac-1234-a1b2-3f4cafbcb123"
+```
+OR Set environment variable via shell (Windows)
+```shell
+setx AZCOPY_TENANT_ID ""12d3fba3-efac-1234-a1b2-3f4cafbcb123"
+```
+
+#### Shared Access Signature (SAS) Token
+
+For shared access signature use the `sas_token` parameter in the `Copy()` command and supply the sas token excluding the leading '?'
+
+### Configuration
+
+When pip installed a directory called `~/.azpype` will be created, underneath it there will be a configuration file called `copy_config.yaml`. These are default key-values that are options/arguments to the `Copy` command.
+For example the yaml could have values like this:
+```yaml
+# Overwrite the conflicting files and blobs at the destination if this flag is set to true.
+# Possible values include 'true', 'false', 'prompt', and 'ifSourceNewer'.
+# Default: 'true'
+overwrite: 'ifSourceNewer'
+
+# Create an MD5 hash of each file, and save the hash as the Content-MD5 property of the destination blob or file.
+# Only available when uploading.
+# Default: None
+put-md5: NULL
+```
+This would translate to the passing the azcopy cli `--put-md5` and `--overwrite 'ifSourceNewer`. These are passed to azpype as kwargs which are then appropriately parsed to construct the final command.
+
+### Copy
+
+Perhaps the most important interface and the primary workhorse command.
+
+Basic Usage
+
+```python
+from azpype.commands.copy import Copy
+
+#Syntax
+#Copy('file-system-source','blob-storage-destination', **kwargs).execute()
+
+azure_storage_account = "my_storage_account"
+blob_container="my_container"
+optional_container_path=""
+
+destination = f"https://{azure_storage_account}.blob.core.windows.net/{blob_container}/{optional_container_path}"
+
+source = "./test_payload"
+
+Copy(source, destination).execute()
+```
+
+
+---
+
+## 📝 Housekeeping TODOs
+
+- 📘 Add back in unittests for other modules
+- 📚 Update readme with better articulated out line of 'why'
+- 📖 Add Usage section
+- 📖 Add instructions on how to create the application service principal, grant it permissions and create the client secret.
+- ⏱️ Update readme with timed examples of Azpype/AzCopy along with azure-blob-storage synchronous and async
+- 📘 Add example notebooks
+
+---
+
+##  Authentication
+
+Currently, Azpype only accepts authenticating via Application Service Principal set via the following Azcopy environment variables:
+
+- `AZCOPY_TENANT_ID`
+- `AZCOPY_SPA_APPLICATION_ID`
+- `AZCOPY_SPA_CLIENT_SECRET`
+- `AZCOPY_AUTO_LOGIN_TYPE`
+
+These can be injected/overriden at runtime into the python process via
+```python
+import os
+os.environ["AZCOPY_TENANT_ID"] = <TenantID>
+# ...
+```
+
+Please follow good practices when handling these environment variables and client credentials. 
+
+Going forward Azpype aims to use a default precedence order for authentication, starting with MSI, then SPA, then SAS. Ideally using, or following the pattern of `DefaultAzureCredential()`. 
+
+---
+
+## 🚧 In-Development: FS Monitor 
+
+I'd love to get some feedback on this feature but my thought is for azpype to be as simple as possible I may create an 'agent' mode for it which takes advantage of the [watchdog](https://github.com/gorakhargosh/watchdog) package. Agent mode will allow Azpype to be deployed as a long-running background process, triggering actions based on file system events. For instance, poll every 5 minutes and run `Copy()` when a new file is detected. Then user code can do the appropriate stage clearing/archiving etc.
+
+> 🚧 _**Status:** Not yet in development_
+
+---
+
+## 🧪 Benchmark Grid Search 
+
+Currently, Azcopy provides a useful [benchmarking utility](https://learn.microsoft.com/en-us/azure/storage/common/storage-ref-azcopy-bench) which helps determine optimal concurrency for a given network, machine (assuming default settings of auto tuning to cores), number of files and size per file.
+
+The Benchmark grid search feature - will leverage this and create small grid search through various combinations of file count and file size, outputting plots/data to reflect the expected range of performance for Azcopy in that execution environment.
+
+> 🚧 _**Status:** Not yet in development_
+
