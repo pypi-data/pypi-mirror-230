@@ -1,0 +1,71 @@
+Metadata-Version: 2.1
+Name: ginga
+Version: 4.1.1
+Summary: A scientific image viewer and toolkit
+Home-page: https://ejeschke.github.io/ginga/
+Author: Ginga Maintainers
+Author-email: eric@naoj.org
+License: BSD
+Keywords: scientific,image,viewer,numpy,toolkit,astronomy,FITS
+Platform: UNKNOWN
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: POSIX
+Classifier: Programming Language :: C
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Topic :: Scientific/Engineering :: Astronomy
+Classifier: Topic :: Scientific/Engineering :: Physics
+Requires-Python: >=3.7
+Description-Content-Type: text/plain
+License-File: LICENSE.txt
+Requires-Dist: numpy (>=1.14)
+Requires-Dist: qtpy (>=2.0.1)
+Requires-Dist: astropy (>=3.2)
+Requires-Dist: pillow (>=6.2.1)
+Requires-Dist: importlib-metadata ; python_version == "3.7"
+Provides-Extra: docs
+Requires-Dist: sphinx-astropy ; extra == 'docs'
+Requires-Dist: sphinx-rtd-theme ; extra == 'docs'
+Provides-Extra: gtk3
+Requires-Dist: pycairo ; extra == 'gtk3'
+Requires-Dist: pygobject ; extra == 'gtk3'
+Provides-Extra: qt5
+Requires-Dist: PyQt5 ; extra == 'qt5'
+Requires-Dist: QtPy (>=1.1) ; extra == 'qt5'
+Provides-Extra: recommended
+Requires-Dist: python-magic (>=0.4.15) ; extra == 'recommended'
+Requires-Dist: scipy (>=0.18.1) ; extra == 'recommended'
+Requires-Dist: matplotlib (>=2.1) ; extra == 'recommended'
+Requires-Dist: opencv-python (>=4.5.4.58) ; extra == 'recommended'
+Requires-Dist: exifread (>=2.3.2) ; extra == 'recommended'
+Requires-Dist: beautifulsoup4 (>=4.3.2) ; extra == 'recommended'
+Requires-Dist: astroquery (>=0.3.5) ; extra == 'recommended'
+Requires-Dist: docutils ; extra == 'recommended'
+Requires-Dist: photutils ; extra == 'recommended'
+Provides-Extra: test
+Requires-Dist: attrs (>=19.2.0) ; extra == 'test'
+Requires-Dist: pytest-astropy ; extra == 'test'
+Provides-Extra: tk
+Requires-Dist: aggdraw ; extra == 'tk'
+Provides-Extra: web
+Requires-Dist: tornado ; extra == 'web'
+Requires-Dist: aggdraw ; extra == 'web'
+
+Ginga is a toolkit designed for building viewers for scientific image
+data in Python, visualizing 2D pixel data in numpy arrays.
+The Ginga toolkit centers around an image display class which supports
+zooming and panning, color and intensity mapping, a choice of several
+automatic cut levels algorithms and canvases for plotting scalable
+geometric forms.  In addition to this widget, a general purpose
+'reference' FITS viewer is provided, based on a plugin framework.
+
+Ginga is distributed under an open-source BSD licence. Please see the
+file LICENSE.txt in the top-level directory for details.
+
+
