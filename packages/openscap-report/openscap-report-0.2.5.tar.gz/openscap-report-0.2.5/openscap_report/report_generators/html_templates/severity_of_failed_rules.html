@@ -1,0 +1,37 @@
+{# Copyright 2022, Red Hat, Inc. #}
+{# SPDX-License-Identifier: LGPL-2.1-or-later #}
+{% set severity_of_failed_rules = report.get_severity_of_failed_rules_stats() %}
+<div class="progress">
+    {% if 0 !=  severity_of_failed_rules.unknown %}
+        <div class="progress-bar severity_of_failed_rules_unknown" role="progressbar"
+            aria-valuenow="{{ severity_of_failed_rules.unknown }}"
+            aria-valuemin="0"
+            aria-valuemax="{{ severity_of_failed_rules.sum_of_filed_rules }}"
+            aria-label="{{ severity_of_failed_rules.unknown }} rules have unknown severity from failed rules"
+            style="width:{{ severity_of_failed_rules.unknown_percent }}%;">{{ severity_of_failed_rules.unknown }} Unknown</div>
+    {% endif %}
+    {% if 0 !=  severity_of_failed_rules.low %}
+        <div class="progress-bar severity_of_failed_rules_low" role="progressbar"
+            aria-valuenow="{{ severity_of_failed_rules.low }}"
+            aria-valuemin="0"
+            aria-valuemax="{{ severity_of_failed_rules.sum_of_filed_rules }}"
+            aria-label="{{ severity_of_failed_rules.low }} rules have low severity from failed rules"
+            style="width:{{ severity_of_failed_rules.low_percent }}%;">{{ severity_of_failed_rules.low }} Low</div>
+    {% endif %}
+    {% if 0 !=  severity_of_failed_rules.medium %}
+        <div class="progress-bar severity_of_failed_rules_medium" role="progressbar"
+            aria-valuenow="{{ severity_of_failed_rules.medium }}"
+            aria-valuemin="0"
+            aria-valuemax="{{ severity_of_failed_rules.sum_of_filed_rules }}"
+            aria-label="{{ severity_of_failed_rules.medium }} rules have medium severity from failed rules"
+            style="width:{{- severity_of_failed_rules.medium_percent -}}%;">{{ severity_of_failed_rules.medium }} Medium</div>
+    {% endif %}
+    {% if 0 !=  severity_of_failed_rules.high %}
+        <div class="progress-bar severity_of_failed_rules_high" role="progressbar"
+            aria-valuenow="{{ severity_of_failed_rules.high }}"
+            aria-valuemin="0"
+            aria-valuemax="{{ severity_of_failed_rules.sum_of_filed_rules }}"
+            aria-label="{{ severity_of_failed_rules.high }} rules have high severity from failed rules"
+            style="width:{{ severity_of_failed_rules.high_percent }}%;">{{ severity_of_failed_rules.high }} High</div>
+    {% endif %}
+</div>
