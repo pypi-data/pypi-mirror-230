@@ -1,0 +1,29 @@
+name: Linux
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  ci:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.9, "3.10", 3.11]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - uses: excitedleigh/setup-nox@v2.1.0
+      - name: install libsndfile1 on ubuntu
+        run: sudo apt install libsndfile1
+      - name: run tests
+        run: |
+          nox -s test-data-download-source
+          nox -s test-data-download-generated-ci
+          nox -s coverage --verbose
+      - name: upload code coverage
+        uses: codecov/codecov-action@v3
