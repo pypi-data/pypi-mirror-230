@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="th">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>simple_commands</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
+        <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+        <style>
+            .code {
+                border-radius: 20px;
+            }
+        </style>
+        <script>
+        hljs.highlightAll();
+        </script>
+    </head>
+    <body class="p-3 m-0 border-0 bd-example m-0 border-0">
+        <main>
+            <ul class="nav">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="/">English description</a>
+                </li>
+            </ul>
+        </main>
+    <div id="title"><pre id="list_files_in_current_directory">
+        ไลบรารี simple_commands เป็นไลบรารี Python ที่ออกแบบมาเพื่อช่วยลดระยะเวลาในการเขียนโค้ด
+        โดยรวบรวมคำสั่งต่างๆ ไว้มากมาย ไลบรารีนี้เหมาะสำหรับนักพัฒนา Python 
+        ที่ต้องการเพิ่มประสิทธิภาพในการทำงานและลดเวลาในการเขียนโค้ดซ้ำๆ เดิมๆ
+        
+        ไลบรารี simple_commands ประกอบด้วยคำสั่งต่างๆ มากมาย เช่น
+        
+            คำสั่งสำหรับจัดการไฟล์และโฟลเดอร์
+            คำสั่งสำหรับจัดภาพ
+            คำสั่งสำหรับสร้างภาพด้สยภาพที่มีอยู่
+            คำสั่งสำหรับการดึงเวลาแต่ละประเทศ
+            คำสั่งสำหรับคณิต
+            คำสั่งสำหรับทำงานอื่นๆ ทั่วไป
+            ไลบรารีนี้ใช้งานง่าย เพียงแค่นำเข้าไลบรารีและเรียกใช้คำสั่งที่ต้องการ ไลบรารีจะดำเนินการคำสั่งนั้นทันที
+
+        วิธีใช้และคำสั่งมีดังนี้:
+
+        ดึงไลบรารีมาใช้:
+        <pre>
+            <code>
+                import simple_commands
+            </code>
+            ถ้าคุณ import simple_commands ปกติจะต้องพิม ชื่อโมดูล.ฟังก็ชัน
+            ถ้าคุณใช้from simple_commands import ฟังก์ชัน คุณจะใช้งานได้ด้วยไม่ต้องพิมชื่อโมดูลตามหลัง
+
+        </pre>
+
+        <div>
+ตัวอย่างการใช้งานไลบรารี simple_commands เกี่ยวกับไฟล์:
+            <pre>
+                <code class="code">
+                    main_folder(main_folder_path, file_type=None): ค้นหาไฟล์ในโฟลเดอร์หลักและโฟลเดอร์ย่อยแล้วส่งคืนรายการของไฟล์
+                        main_folder_path: เส้นทางไปยังโฟลเดอร์หลักที่คุณต้องการค้นหา
+                        file_type: ชนิดของไฟล์ที่คุณต้องการค้นหา (ค่าเริ่มต้นคือ None, หากต้องการค้นหาไฟล์รูปภาพให้ใช้ 'img')
+
+                    folder_file(path, file_type=None): ค้นหาไฟล์ในโฟลเดอร์ที่ระบุแล้วส่งคืนรายการของไฟล์
+                        path: เส้นทางไปยังโฟลเดอร์ที่คุณต้องการค้นหา
+                        file_type: ชนิดของไฟล์ที่คุณต้องการค้นหา (ค่าเริ่มต้นคือ None, หากต้องการค้นหาไฟล์รูปภาพให้ใช้ '.img')
+
+                    list_files_in_current_directory(): รายการไฟล์ที่อยู่ในไดเรกทอรีปัจจุบัน
+
+                    create_new_directory(directory_name): สร้างโฟลเดอร์ใหม่
+                        directory_name: ชื่อของโฟลเดอร์ที่คุณต้องการสร้าง
+
+                    move_file(source_path, destination_path): ย้ายไฟล์จากเส้นทางที่ระบุไปยังเส้นทางปลายทาง
+                        source_path: เส้นทางไปยังไฟล์ต้นทางที่คุณต้องการย้าย
+                        destination_path: เส้นทางไปยังตำแหน่งปลายทางที่คุณต้องการย้ายไป
+
+                    delete_directory(directory_path): ลบโฟลเดอร์และเนื้อหาข้างใน
+                        directory_path: เส้นทางไปยังโฟลเดอร์ที่คุณต้องการลบ
+                </code>
+            </pre>
+            </div>   
+            <div>
+ตัวอย่างการใช้งานไลบรารี simple_commands เกี่ยวกับภาพ:  
+                <pre>
+                    <code class="code">
+                        load_images(image_paths): โหลดรูปภาพจากเส้นทางที่กำหนดและส่งคืนรายการของรูปภาพที่โหลด
+                            image_paths: รายการของเส้นทางไฟล์ภาพที่คุณต้องการโหลด (ไม่บังคับ)
+
+                        gray_image(images, path=None, name=None, array=False): แปลงรูปภาพเป็นรูปภาพขาว-ดำและบันทึกหรือส่งคืนเป็นอาร์เรย์
+                            images: รายการของรูปภาพที่ต้องการแปลงเป็นรูปภาพขาว-ดำ
+                            path: ไดเรกทอรีที่คุณต้องการบันทึกรูปภาพขาว-ดำลง (ไม่บังคับ)
+                            name: ชื่อไฟล์ที่คุณต้องการใช้เมื่อบันทึกรูปภาพ (ไม่บังคับ)
+                            array: ส่งคืนรูปภาพขาว-ดำในรูปแบบอาร์เรย์หรือไม่ (ค่าเริ่มต้นคือ False)
+
+                        new_data_image(images, array=False, path=None, name=None, resize=None): สร้างข้อมูลรูปภาพใหม่โดยหมุนและ/หรือปรับขนาดรูปภาพ
+                            images: รายการของรูปภาพที่คุณต้องการปรับเปลี่ยน
+                            array: ส่งคืนข้อมูลรูปภาพใหม่ในรูปแบบอาร์เรย์หรือไม่ (ค่าเริ่มต้นคือ False)
+                            path: ไดเรกทอรีที่คุณต้องการบันทึกรูปภาพใหม่ลง (ไม่บังคับ)
+                            name: ชื่อไฟล์ที่คุณต้องการใช้เมื่อบันทึกรูปภาพใหม่ (ไม่บังคับ)
+                            resize: ขนาดที่คุณต้องการปรับเปลี่ยนเป็น (ความกว้าง, ความสูง) โดยไม่บังคับ
+
+                        use_PIL(image): แปลงรูปภาพ OpenCV เป็นรูปภาพ PIL (Python Imaging Library) และส่งคืน
+                            image: รูปภาพ OpenCV ที่คุณต้องการแปลง
+                        show(name, image): แสดงรูปภาพในหน้าต่างด้วย OpenCV
+                            name: ชื่อหน้าต่างแสดงรูปภาพ
+                            image: ชื่อไฟล์รูปภาพที่คุณต้องการแสดง
+                        adjust_img_color(image, number_new=1, color_value=0, color_value_end=1): ปรับสีรูปภาพและส่งคืนรายการรูปภาพที่ปรับแต่ง
+                            image: รูปภาพที่คุณต้องการปรับสี
+                            number_new: จำนวนรูปภาพใหม่ที่คุณต้องการสร้าง (ค่าเริ่มต้นคือ 1)
+                            color_value: ค่าสีเริ่มต้น (ค่าเริ่มต้นคือ 0)
+                            color_value_end: ค่าสีสิ้นสุด (ค่าเริ่มต้นคือ 1)
+                    </code>
+                </pre>
+            </div>
+            <div>
+ตัวอย่างการใช้งานไลบรารี simple_commands เกี่ยวกับฐานข้อมูล:
+                <pre>
+                    <code class="code">
+                        # สร้างอ็อบเจกต์ Database
+                        db = Database('my_database.db')
+
+                        # สร้างตาราง
+                        db.create_table('my_table', ['id INTEGER PRIMARY KEY', 'name TEXT', 'age INTEGER'])
+
+                        # เพิ่มข้อมูล
+                        db.insert_data('my_table', (1, 'Alice', 30))
+                        db.insert_data('my_table', (2, 'Bob', 25))
+
+                        # ดึงข้อมูลทั้งหมด
+                        all_data = db.select_all_data('my_table')
+                        for row in all_data:
+                            print(row)
+
+                        # ดึงข้อมูลเฉพาะคอลัมน์ที่ต้องการ
+                        selected_data = db.select_data(['name', 'age'], 'my_table')
+                        for row in selected_data:
+                            print(row)
+
+                        # อัปเดตข้อมูล
+                        update_values = {'age': 31}
+                        where_clause = 'id = 1'
+                        db.update_data('my_table', update_values, where_clause)
+
+                        # ลบข้อมูล
+                        delete_where_clause = 'id = 2'
+                        db.delete_data('my_table', delete_where_clause)
+
+                        # หลังจากใช้งานเสร็จแล้วควร disconnect ดาต้าเบส
+                        db.disconnect()
+
+                    </code>
+                </pre>
+            </div>
+            <div>
+ตัวอย่างการใช้งานไลบรารี simple_commands เกี่ยวกับเขตเวลา:
+                <pre>
+                    <code class="code">
+                        # สร้างอ็อบเจ็กต์ Time_zone โดยระบุโซนเวลาที่ต้องการ (ตัวอย่างใช้ "Asia/Bangkok")
+                        my_timezone = Time_zone("Asia/Bangkok")
+
+                        # เรียกใช้งานเมทอด get_current_time เพื่อดึงเวลาปัจจุบันในโซนเวลาที่เรากำหนด
+                        current_time = my_timezone.get_current_time()
+                        print("เวลาปัจจุบันในโซนเวลาที่ระบุ:", current_time)
+
+                        # ตั้งเวลา source_time
+                        source_time = datetime.datetime(2023, 9, 7, 12, 0, 0, tzinfo=pytz.timezone("UTC"))
+
+                        # เรียกใช้งานเมทอด convert_time เพื่อแปลงเวลาจากโซนเวลา source_time เป็น "Asia/Bangkok"
+                        target_timezone_name = "Asia/Bangkok"
+                        target_time = my_timezone.convert_time(source_time, target_timezone_name)
+                        print("เวลาในโซนเวลา", target_timezone_name, "คือ:", target_time)
+
+                        # เรียกใช้งานเมทอด add_hours เพื่อเพิ่ม 2 ชั่วโมงในเวลา source_time
+                        new_time = my_timezone.add_hours(source_time, 2)
+                        print("เวลาหลังเพิ่ม 2 ชั่วโมง:", new_time)
+
+                        # เรียกใช้งานเมทอด subtract_minutes เพื่อลด 30 นาทีออกจากเวลา source_time
+                        new_time = my_timezone.subtract_minutes(source_time, 30)
+                        print("เวลาหลังลด 30 นาที:", new_time)
+
+                        # เรียกใช้งานเมทอด time_difference เพื่อคำนวณระยะเวลาระหว่าง current_time และ target_time
+                        time_diff = my_timezone.time_difference(current_time, target_time)
+                        print("ระยะเวลาระหว่างเวลาปัจจุบันและเวลาในโซนเวลา", target_timezone_name, "คือ:", time_diff)
+                    </code>
+                </pre>
+            </div>
+            <div>
+ตัวอย่างการใช้งานไลบรารี simple_commands เกี่ยวกับคณิต:
+                <pre>
+                    <code class="code">
+                        calculate_triangle_area(base, height): คำนวณพื้นที่ของสามเหลี่ยม โดยรับค่าความยาวของฐาน (base) และความสูง (height) และคืนค่าพื้นที่.
+
+                        calculate_rectangle_area(length, width): คำนวณพื้นที่ของสี่เหลี่ยมผืนผ้า โดยรับค่าความยาว (length) และความกว้าง (width) และคืนค่าพื้นที่.
+
+                        calculate_square_area(side): คำนวณพื้นที่ของสี่เหลี่ยมจตุรัส โดยรับค่าความยาวของด้าน (side) และคืนค่าพื้นที่.
+
+                        calculate_circle_area(radius): คำนวณพื้นที่ของวงกลม โดยรับค่ารัศมี (radius) และคืนค่าพื้นที่โดยใช้ค่า π (pi).
+
+                        calculate_triangle_perimeter(side1, side2, side3): คำนวณความยาวเส้นรอบรูปสามเหลี่ยม โดยรับค่าความยาวของด้านทั้งสามด้าน (side1, side2, side3) และคืนค่าความยาวรอบรูปสามเหลี่ยม.
+
+                        calculate_rectangle_perimeter(length, width): คำนวณความยาวเส้นรอบรูปสี่เหลี่ยมผืนผ้า โดยรับค่าความยาว (length) และความกว้าง (width) และคืนค่าความยาวรอบรูป.
+
+                        calculate_square_perimeter(side): คำนวณความยาวเส้นรอบรูปสี่เหลี่ยมจตุรัส โดยรับค่าความยาวของด้าน (side) และคืนค่าความยาวรอบรูป.
+
+                        calculate_circle_circumference(radius): คำนวณความยาวเส้นรอบวงกลม โดยรับค่ารัศมี (radius) และคืนค่าความยาวรอบวงกลมโดยใช้ค่า π (pi).
+
+                        calculate_cone_volume(radius, height): คำนวณปริมาตรของทรงกรวย โดยรับค่ารัศมีฐาน (radius) และความสูง (height) และคืนค่าปริมาตรของทรงกรวย.
+
+                        calculate_cylinder_volume(radius, height): คำนวณปริมาตรของทรงกระบอก โดยรับค่ารัศมีฐาน (radius) และความสูง (height) และคืนค่าปริมาตรของทรงกระบอก.
+
+                        calculate_oxygen_cylinder_volume(diameter, height): คำนวณปริมาตรของทรงกระบอกออกซิเดียน โดยรับค่าเส้นผ่านศูนย์กลาง (diameter) และความสูง (height) และคืนค่าปริมาตรของทรงกระบอกออกซิเดียน.
+
+                        tempFtoC(F): แปลงอุณหภูมิจากฟาเรนไฮต์เป็นเซลเซียส.
+                        tempCtoF(C): แปลงอุณหภูมิจากเซลเซียสเป็นฟาเรนไฮต์.
+                    </code>
+                </pre>
+            </div>
+            <div>
+ตัวอย่างการใช้งานไลบรารี simple_commands เกี่ยวกับรหัสผ่าน:
+                <pre> 
+                    <code class="code">
+                        generate_random_password(length=12, use_uppercase=True, use_digits=True, use_symbols=True)
+                            length (ค่าเริ่มต้นคือ 12): พารามิเตอร์ length ระบุความยาวของรหัสผ่านที่ต้องการสร้าง ค่าเริ่มต้นคือ 12 ตัวอักษร.
+                            use_uppercase (ค่าเริ่มต้นคือ True): พารามิเตอร์ use_uppercase ระบุว่าควรรวมตัวอักษรตัวใหญ่ในรหัสผ่านหรือไม่ ถ้าตั้งค่าเป็น True จะรวมตัวอักษรตัวใหญ่, และถ้าตั้งค่าเป็น False จะไม่รวม.
+                            use_digits (ค่าเริ่มต้นคือ True): พารามิเตอร์ use_digits ระบุว่าควรรวมตัวเลขในรหัสผ่านหรือไม่ ถ้าตั้งค่าเป็น True จะรวมตัวเลข, และถ้าตั้งค่าเป็น False จะไม่รวม.
+                            use_symbols (ค่าเริ่มต้นคือ True): พารามิเตอร์ use_symbols ระบุว่าควรรวมสัญลักษณ์ (ตัวอักษรพิเศษ) ในรหัสผ่านหรือไม่ ถ้าตั้งค่าเป็น True จะรวมสัญลักษณ์, และถ้าตั้งค่าเป็น False จะไม่รวม.
+                    </code>
+                </pre>
+            </div>
+            <div>
+ตัวอย่างการใช้งานไลบรารี simple_commands เกี่ยวกับการบันทึกข้อมูล:
+                <pre>
+                    <code class="code">
+                        Retrieve_log(name, path, type="txt"): ฟังก์ชันนี้ใช้สำหรับคัดลอกไฟล์ log จากที่อยู่ loal(name,type) และวางไฟล์ log ที่ถูกคัดลอกไว้ใน path.
+
+                        create_log(name, type="txt"): ฟังก์ชันนี้ใช้สร้างไฟล์ log ใหม่โดยใช้โหมด 'x' ซึ่งจะสร้างไฟล์ใหม่เฉพาะถ้าไฟล์ยังไม่มีอยู่ ซึ่งถ้ามีการเรียกใช้งานแล้วไม่สามารถสร้างไฟล์ใหม่ได้ (ไฟล์มีอยู่แล้ว) ฟังก์ชันจะไม่ทำการเรียกใช้งานและคืนค่า None.
+
+                        adddata_to_log(name, text, type="txt"): ฟังก์ชันนี้ใช้เพิ่มข้อมูลเข้าไปในไฟล์ log โดยเปิดไฟล์ด้วยโหมด 'a' เพื่อเขียนข้อมูลต่อท้ายไฟล์ log.
+
+                        delete_log(name, type="txt"): ฟังก์ชันนี้ใช้สำหรับการลบไฟล์ log และย้ายไฟล์ที่ถูกลบไปยังโฟลเดอร์ deletedata และทำการบันทึกข้อมูลเกี่ยวกับการลบไฟล์ลงในฐานข้อมูล SQLite.
+
+                        recover_log(name, type="txt"): ฟังก์ชันนี้ใช้สำหรับการกู้คืนไฟล์ log ที่ถูกลบ โดยตรวจสอบเวลาที่ไฟล์ถูกลบและกลับคืนไฟล์ถ้าเวลาการลบไม่เกิน 30 วัน และเรียกคืนไฟล์จากโฟลเดอร์ deletedata หรือย้ายไฟล์กลับไปยังโฟลเดอร์ savedata ถ้าเวลาการลบไม่เกิน 30 วัน.
+
+                        list_log(name=None,type="txt"): ฟังก์ชันนี้ใช้สำหรับการแสดงรายการไฟล์ log ที่อยู่ในโฟลเดอร์ savedata หรือในโฟลเดอร์ที่ระบุใน name (หากระบุ) และคืนค่ารายการไฟล์นั้น.
+
+                        list_log_delete(name,type="txt"): ฟังก์ชันนี้ใช้สำหรับการแสดงรายการไฟล์ log ที่อยู่ในโฟลเดอร์ deletedata หรือในโฟลเดอร์ที่ระบุใน name (หากระบุ) และคืนค่ารายการไฟล์นั้น.
+
+                        return_data_log(name, type="txt"): ฟังก์ชันนี้ใช้สำหรับการอ่านข้อมูลจากไฟล์ log และคืนค่าข้อมูลเป็นข้อความ.
+
+                        delete_text_in_log(name, text_to_delete, type="txt"): ฟังก์ชันนี้ใช้สำหรับการลบข้อความในไฟล์ log โดยอ่านข้อมูลทั้งหมดในไฟล์ log, ค้นหาและลบข้อความที่ต้องการออก, และเขียนข้อมูลใหม่ลงในไฟล์ log โดยไม่รวมข้อความที่ถูกลบ.
+
+                        delete_alltext_log(name, type="txt"): ฟังก์ชันนี้ใช้สำหรับการลบข้อความทั้งหมดในไฟล์ log โดยเขียนข้อมูลใหม่ลงในไฟล์ log ให้ว่างเปล่า.
+                    </code>
+                </pre>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

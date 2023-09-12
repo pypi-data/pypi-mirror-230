@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>simple_commands</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
+        <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+        <style>
+            .code {
+                border-radius: 20px;
+            }
+        </style>
+        <script>
+        hljs.highlightAll();
+        </script>
+    </head>
+    <body class="p-3 m-0 border-0 bd-example m-0 border-0">
+        <main>
+            <ul class="nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="/-th">Thai description</a>
+                </li>
+            </ul>
+        </main>
+        <div id="title"><pre id="list_files_in_current_directory">
+            The simple_commands library is a Python library designed to help reduce the time required to write code.
+            With a collection of commands, this library is ideal for Python developers.
+            who want to increase work efficiency and reduce time spent writing repetitive code
+           
+            simple_commands library It contains many commands such as
+           
+                Commands for managing files and folders.
+                Command for taking pictures
+                Command for creating an image with an existing image.
+                Instructions for retrieving time by country
+                instructions for math
+                Commands for other general tasks
+                This library is easy to use. Just import the library and run the required commands. The library will execute that command immediately.
+            
+            How to use and commands are as follows:
+   
+            Fetch the library:
+            <pre>
+                <code>
+                    import simple_commands
+                </code>
+                When you import simple_commands, you normally have to write module_name.function_name to use functions from the module. However
+                if you use from simple_commands import function, you can use the functions directly without specifying the module name.
+            </pre>
+           
+            <div>
+Example of library use simple_commands About the file:
+                <pre>
+                    <code class="code">
+                        main_folder(main_folder_path, file_type=None): Searches files in main folder and subfolders and returns a list of files.
+                            main_folder_path: The path to the main folder you want to search.
+                            file_type: The type of file you want to search for. (Default is None, to search for image files use 'img')
+   
+                        folder_file(path, file_type=None): Searches for files in the specified folder and returns a list of files.
+                            path: The path to the folder you want to search.
+                            file_type: The type of file you want to search for. (Default is None, to search for image files use '.img')
+   
+                        list_files_in_current_directory(): List of files in the current directory.
+   
+                        create_new_directory(directory_name): Create a new folder.
+                            directory_name: The name of the folder you want to create.
+   
+                        move_file(source_path, destination_path): Move file from specified path to destination path.
+                            source_path: Path to the source file you want to move.
+                            destination_path: The path to the destination location you want to move to.
+   
+                        delete_directory(directory_path): Delete a folder and its contents.
+                            directory_path: Path to the folder you want to delete.
+                    </code>
+                </pre>
+                </div>
+                <div>
+Example of library usage simple_commands About the image:
+                    <pre>
+                        <code class="code">
+                           load_images(image_paths): Loads images from the given path and returns a list of loaded images.
+                                image_paths: List of image file paths you want to load (optional).
+   
+                           gray_image(images, path=None, name=None, array=False): Convert an image to black-and-white and save or return it as an array.
+                                images: List of images to be converted to black and white.
+                                path: The directory where you want to save the black-and-white image (optional).
+                                name: The file name you want to use when saving the image (optional).
+                                array: Return black-and-white images in array format? (Default is False)
+   
+                           new_data_image(images, array=False, path=None, name=None, resize=None): Create new image data by rotating and/or resizing the image.
+                                images: A list of the images you want to modify.
+                                array: Return new image data in array format? (Default is False)
+                                path: The directory where you want to save the new image to (optional).
+                                name: The file name you want to use when saving new photos (optional).
+                                resize: The size you want to adjust to (width, height) is optional.
+   
+                           use_PIL(image): Convert OpenCV images to PIL (Python Imaging Library) images and return them.
+                                image: The OpenCV image you want to convert.
+
+                           show(name, image): Show image in window with OpenCV
+                                name: Name of the image display window.
+                                image: The name of the image file you want to display.
+
+                           adjust_img_color(image, number_new=1, color_value=0, color_value_end=1): Adjusts image colors and returns a list of adjusted images.
+                                image: The image you want to adjust color for.
+                                number_new: The number of new photos you want to create. (default is 1)
+                                color_value: default color value
+                            </code>
+                        </pre>
+                    </div>
+                    <div>
+Example of library usage simple_commands About the database:
+                 <pre>
+                     <code class="code">
+                        # Create a Database object
+                        db = Database('my_database.db')
+
+                        # Create a table
+                        db.create_table('my_table', ['id INTEGER PRIMARY KEY', 'name TEXT', 'age INTEGER'])
+
+                        # Insert data
+                        db.insert_data('my_table', (1, 'Alice', 30))
+                        db.insert_data('my_table', (2, 'Bob', 25))
+
+                        # Retrieve all data
+                        all_data = db.select_all_data('my_table')
+                        for row in all_data:
+                            print(row)
+
+                        # Retrieve specific columns
+                        selected_data = db.select_data(['name', 'age'], 'my_table')
+                        for row in selected_data:
+                            print(row)
+
+                        # Update data
+                        update_values = {'age': 31}
+                        where_clause = 'id = 1'
+                        db.update_data('my_table', update_values, where_clause)
+
+                        # Delete data
+                        delete_where_clause = 'id = 2'
+                        db.delete_data('my_table', delete_where_clause)
+
+                        # After using the database, it's a good practice to disconnect
+                        db.disconnect()
+                     </code>
+                 </pre>
+             </div>
+             <div>
+Example of library usage simple_commands About time zones:
+                 <pre>
+                     <code class="code">
+                        # Create a Time_zone object by specifying the desired time zone (e.g., "Asia/Bangkok")
+                        my_timezone = Time_zone("Asia/Bangkok")
+
+                        # Call the get_current_time method to retrieve the current time in the specified time zone
+                        current_time = my_timezone.get_current_time()
+                        print("Current time in the specified time zone:", current_time)
+
+                        # Set a source_time
+                        source
+                        _time = datetime.datetime(2023, 9, 7, 12, 0, 0, tzinfo=pytz.timezone("UTC"))
+
+                        # Call the convert_time method to convert source_time to "Asia/Bangkok" time zone
+                        target_timezone_name = "Asia/Bangkok"
+                        target_time = my_timezone.convert_time(source_time, target_timezone_name)
+                        print("Time in the", target_timezone_name, "time zone is:", target_time)
+
+                        # Call the add_hours method to add 2 hours to source_time
+                        new_time = my_timezone.add_hours(source_time, 2)
+                        print("Time after adding 2 hours:", new_time)
+
+                        # Call the subtract_minutes method to subtract 30 minutes from source_time
+                        new_time = my_timezone.subtract_minutes(source_time, 30)
+                        print("Time after subtracting 30 minutes:", new_time)
+
+                        # Call the time_difference method to calculate the time difference between current_time and target_time
+                        time_diff = my_timezone.time_difference(current_time, target_time)
+                        print("Time difference between current time and time in", target_timezone_name, "is:", time_diff)
+
+                     </code>
+                 </pre>
+             </div>
+             <div>
+Example of library usage simple_commands About math:
+                 <pre>
+                     <code class="code">
+                         calculate_triangle_area(base, height): Calculate the area of a triangle. It takes the length of the base (base) and height (height) and returns the area.
+
+                         calculate_rectangle_area(length, width): Calculate the area of a rectangle. It takes the length (length) and width (width) and returns the area.
+
+                         calculate_square_area(side): Calculate the area of a square. It takes the length of the side (side) and returns the area.
+
+                         calculate_circle_area(radius): Calculate the area of a circle. It takes the radius (radius) and returns the area using the value π (pi).
+
+                         calculate_triangle_perimeter(side1, side2, side3): Calculate the perimeter of a triangle. It takes the lengths of three sides (side1, side2, side3) and returns the perimeter of the triangle.
+
+                         calculate_rectangle_perimeter(length, width): Calculate the perimeter of a rectangle. It takes the length (length) and width (width) and returns the perimeter.
+
+                         calculate_square_perimeter(side): Calculate the perimeter length of a square. It takes the length of the side (side) and returns the perimeter.
+
+                         calculate_circle_circumference(radius): Calculate the circumference length of a circle. It takes the radius (radius) and returns the length around the circle using the value π (pi).
+
+                         calculate_cone_volume(radius, height): Calculate the volume of a cone. It takes the base radius (radius) and height (height) and returns the volume of the cone.
+
+                         calculate_cylinder_volume(radius, height): Calculate the volume of a cylinder. It takes the base radius (radius) and height (height) and returns the volume of the cylinder.
+
+                         calculate_oxygen_cylinder_volume(diameter, height): Calculates the volume of an oxygen cylinder. It takes the diameter (diameter) and height (height) and returns the volume of the oxidian cylinder.
+
+                         tempFtoC(F): Convert temperature from Fahrenheit to Celsius.
+                         tempCtoF(C): Convert temperature from Celsius to Fahrenheit.
+                     </code>
+                 </pre>
+             </div>
+             <div>
+Example of library usage simple_commands About password:
+                <pre>
+                    <code class="code">
+                        generate_random_password(length=12, use_uppercase=True, use_digits=True, use_symbols=True)
+                            length (default is 12): The length parameter specifies the desired length of the password to generate. The default value is 12 characters.
+                            use_uppercase (default is True): The use_uppercase parameter determines whether to include uppercase letters in the password or not. If set to True, it will include uppercase letters, and if set to False, it will not.
+                            use_digits (default is True): The use_digits parameter specifies whether to include digits in the password or not. If set to True, it will include digits, and if set to False, it will not.
+                            use_symbols (default is True): The use_symbols parameter indicates whether to include symbols (special characters) in the password or not. If set to True, it will include symbols, and if set to False, it will not.
+                    </code>
+                </pre>
+             </div>
+             <div>
+Example of library usage simple_commands About saving data:
+                <pre>
+                    <code class="code">
+                        Retrieve_log(name, path, type="txt"): This function is used to copy a log file from the loal(name,type) location and paste it into the path.
+
+                        create_log(name, type="txt"): This function is used to create a new log file. It uses the 'x' mode, which creates a new file only if the file doesn't already exist. If the function is called and the file exists, it returns None without creating a new file.
+
+                        adddata_to_log(name, text, type="txt"): This function is used to append data to a log file. It opens the file in 'a' mode to write data at the end of the log file.
+
+                        delete_log(name, type="txt"): This function is used to delete a log file. It moves the deleted file to the deletedata folder and records information about the deletion in an SQLite database.
+
+                        recover_log(name, type="txt"): This function is used to recover a deleted log file. It checks the time when the file was deleted and, if the deletion occurred less than 30 days ago, it either retrieves the file from the deletedata folder or moves it back to the savedata folder.
+
+                        list_log(name=None, type="txt"): This function is used to list the log files in the savedata folder or in a folder specified by name (if provided) and returns a list of those files.
+
+                        list_log_delete(name, type="txt"): This function is used to list the log files in the deletedata folder or in a folder specified by name (if provided) and returns a list of those files.
+
+                        return_data_log(name, type="txt"): This function is used to read data from a log file and returns the data as a string.
+
+                        delete_text_in_log(name, text_to_delete, type="txt"): This function is used to delete specific text within a log file. It reads all data from the log file, searches and removes the text specified by the user, and then writes the modified data back to the log file, excluding the deleted text.
+
+                        delete_alltext_log(name, type="txt"): This function is used to delete all text content within a log file. It overwrites the log file with an empty file, effectively clearing all its contents.
+                    </code>
+                </pre>
+             </div>
+             <div>             
+            </div>
+        </div>
+    </body>
+</html>
