@@ -1,0 +1,12 @@
+[mass-driver.migration]
+commit_message = """Bump counter to 2"""
+
+branch_name = "my-branch"
+
+# PatchDriver class to use.
+# Selected via plugin name, from "massdriver.drivers" entrypoint
+driver_name = "counter"
+
+driver_config = { counter_file = "input.txt", target_count = 2 }
+
+# Note: No "forge" section = no forge activity to pursue (no PR)
