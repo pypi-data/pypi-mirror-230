@@ -1,0 +1,51 @@
+[tool.poetry]
+name = "pybedlite"
+version = "0.0.4"
+description = "Python classes for interfacing with bed intervals"
+authors = [
+	"Nils Homer <nils@fulcrumgenomics.com>",
+	"Tim Fennell <tim@fulcrumgenomics.com>",
+	"John Didion <john@fulcrumgenomics.com>",
+]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/fulcrumgenomics/pybedlite"
+repository = "https://github.com/fulcrumgenomics/pybedlite"
+keywords = ["bioinformatics"]
+classifiers = [
+	"Development Status :: 3 - Alpha",
+	"Environment :: Console",
+	"Intended Audience :: Developers",
+	"Intended Audience :: Science/Research",
+	"License :: OSI Approved :: MIT License",
+	"Operating System :: OS Independent",
+	"Programming Language :: Python :: 3",
+	"Topic :: Scientific/Engineering :: Bio-Informatics",
+	"Topic :: Software Development :: Documentation",
+	"Topic :: Software Development :: Libraries :: Python Modules",
+]
+include = ["LICENSE"]
+packages = [{ include = "pybedlite" }, { include = "cgranges" }]
+
+[tool.poetry.dependencies]
+python = "^3.8.0"
+attrs = "^23.0.0"
+sphinx = { version = "^7.0.0", optional = true }
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.0.0"
+mypy = "^1.5.0"
+flake8 = "^5.0.0"
+black = "^23.0.0"
+pytest-cov = "^4.0.0"
+
+[tool.poetry.extras]
+docs = ["sphinx"]
+
+[tool.poetry.build]
+script = "build.py"
+generate-setup-file = true
+
+[build-system]
+requires = ["poetry-core", "setuptools", "cython"]
+build-backend = "poetry.core.masonry.api"
