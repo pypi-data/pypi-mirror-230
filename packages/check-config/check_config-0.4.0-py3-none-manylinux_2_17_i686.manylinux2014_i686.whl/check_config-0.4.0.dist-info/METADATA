@@ -1,0 +1,57 @@
+Metadata-Version: 2.1
+Name: check_config
+Version: 0.4.0
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Rust
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Software Development :: Quality Assurance
+License-File: LICENSE
+Summary: Check configuration files.
+Keywords: automation,configuration
+Home-Page: https://pypi.org/project/check-config/
+Author: Marc Rijken <marc@rijken.org>
+Author-email: Marc Rijken <marc@rijken.org>
+Maintainer-email: Marc Rijken <marc@rijken.org>
+License: MIT
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown; charset=UTF-8; variant=GFM
+Project-URL: repository, https://github.com/mrijken/check-config
+Project-URL: documentation, https://check-config.readthedocs.io
+
+# Check Config
+
+It can be cumbersome when you have multiple projects and environments with configuration files which need to be
+upgraded and keep in sync regularly. Check-config will help you with i.e. making sure that the configuration
+file have the (upgraded) settings.
+
+Check-config works with checker files in which you define checks, ie
+
+```checkers.toml
+# check that .venv is included in the .gitignore
+[".gitignore".lines_present]
+__lines__ = ".venv"
+```
+
+With `check-config` you can check (for example in a build pipeline) whether your files passed the checks.
+
+Most checks can also be automatically fixed with `check-config --fix`, so in this case a missing line will
+be added to the `.gitignore`.
+
+A large number of [file types](features/#file-types) and [checks](checkers) are supported or will
+be supported in the near [future](features).
+
+## Documentation
+
+Check out the [documentation](https://check-config.readthedocs.io)
+
