@@ -1,0 +1,27 @@
+version: 1
+disable_existing_loggers: false
+formatters:
+  defaultformater:
+    "()": userstory8020.factory.AppDefaultFormater
+    format: "%(levelprefix)s [%(asctime)s %(name)s] - %(message)s"
+handlers:
+  default_stream:
+    class: logging.StreamHandler
+    level: INFO
+    formatter: defaultformater
+  
+  default_file:
+    class: logging.handlers.TimedRotatingFileHandler
+    when: m
+    interval: 5
+    backupCount: 5
+    filename: logs/app.log
+    level: DEBUG
+    formatter: defaultformater
+loggers:
+  "":
+    handlers:
+    - default_stream
+    - default_file
+    propagate: false
+    level: DEBUG
