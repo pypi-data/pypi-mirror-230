@@ -1,0 +1,73 @@
+Metadata-Version: 2.1
+Name: pyinvisiblewatermark
+Version: 0.1.0
+Summary: 
+Home-page: https://github.com/DannyLee1991/invisiblewatermark
+Author: lijianan
+Author-email: lijianan@tezign.com
+Requires-Python: >=3.9,<4.0
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: numpy (>=1.25.2,<2.0.0)
+Requires-Dist: pillow (>=10.0.0,<11.0.0)
+Requires-Dist: typer (>=0.9.0,<0.10.0)
+Project-URL: Repository, https://github.com/DannyLee1991/invisiblewatermark
+Description-Content-Type: text/markdown
+
+# 图片隐水印生成/解码
+
+复刻[https://invisiblewatermark.net/](https://invisiblewatermark.net/)的python版本实现。
+
+算法原理，参见:[https://invisiblewatermark.net/how-invisible-watermarks-work](https://invisiblewatermark.net/how-invisible-watermarks-work)
+
+## 安装
+
+```
+pip3 install pyinvisiblewatermark
+```
+
+## 使用
+
+### 命令行使用
+
+```
+# encode
+ivwm encode "hello world!" $YOUR_IMAGE_PATH
+
+# decode
+ivwm decode $INPUT_IMAGE_PATH $OUTPUT_IMAGE_PATH
+```
+
+### 代码使用
+
+```python
+# encode
+import invisiblewatermark as ivwm
+
+ivwm.generate_watermark(
+    img_fp="data/origin.png",
+    wm_txt="hello world!",
+    save_to="data/encode.png",
+    font="font/ZiTiQuanWeiJunHei-W1-2.ttf"
+)
+```
+
+```python
+# decode
+import invisiblewatermark as ivwm
+
+# 图片加水印示例
+ivwm.extract_watermark(
+    img_fp="data/encode.png",
+    save_to="data/decode.png"
+)
+```
+
+## 效果示例
+
+|原图|加水印图|水印解码图|水印文本|
+|:-:|:-:|:-:|:-:|
+|![](./docs/origin.png)|![](./docs/encode.png)|![](./docs/decode.png)|`hello world!`｜
+
