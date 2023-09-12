@@ -1,0 +1,89 @@
+Metadata-Version: 2.1
+Name: dbcc
+Version: 0.0.6
+Summary: Database connector.
+Home-page: https://github.com/Profi-Devs/dbcc
+Author: Stepan Starovoitov
+Author-email: stepan.startech@gmail.com
+License: BSD
+Project-URL: Code, https://github.com/Profi-Devs/dbcc
+Project-URL: Issue tracker, https://github.com/Profi-Devs/dbcc/issues
+Platform: any
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Web Environment
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Topic :: Database
+Classifier: Topic :: Database :: Database Engines/Servers
+Requires-Python: >=3.8
+Description-Content-Type: text/x-rst
+License-File: LICENSE
+License-File: AUTHORS
+Requires-Dist: pymongo (==4.5.0)
+Requires-Dist: asyncio (==3.4.3)
+Requires-Dist: motor (==3.3.1)
+Requires-Dist: mongomock-motor (==0.0.21)
+Provides-Extra: dev
+Requires-Dist: testfixtures ; extra == 'dev'
+Requires-Dist: pytest ; extra == 'dev'
+Requires-Dist: tox ; extra == 'dev'
+Requires-Dist: black ; extra == 'dev'
+Requires-Dist: sphinx ; extra == 'dev'
+Requires-Dist: alabaster ; extra == 'dev'
+Requires-Dist: doc8 ; extra == 'dev'
+Provides-Extra: docs
+Requires-Dist: sphinx ; extra == 'docs'
+Requires-Dist: alabaster ; extra == 'docs'
+Requires-Dist: doc8 ; extra == 'docs'
+Provides-Extra: tests
+Requires-Dist: testfixtures ; extra == 'tests'
+Requires-Dist: pytest ; extra == 'tests'
+Requires-Dist: tox ; extra == 'tests'
+Requires-Dist: black ; extra == 'tests'
+
+DBCC - Database Connector
+=========================
+.. image:: https://img.shields.io/badge/test-pass-00d200.svg
+    :target: nono
+
+.. image:: https://img.shields.io/badge/build-pass-00d200.svg
+    :target: nono
+
+.. image:: https://img.shields.io/badge/license-BSD-blue.svg?style=flat-square
+    :target: https://en.wikipedia.org/wiki/BSD_License
+
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/ambv/black
+
+Database connector for different DBs with same interface.
+
+Dbcc is Simple
+--------------
+.. code-block:: python
+
+    from dbcc import MongoTableEngine
+
+    db = MongoTableEngine(URL, DB_NAME)
+    collection = db["collection"]
+    result = await collection.create({"any":"entry"})
+    print(result["id"])
+
+Features
+--------
+In process
+
+To Do
+-----
+In process
+
+License
+-------
+dbcc is a `Stepan Starovoitov`_ open source project,
+distributed under the BSD license.
+
+.. _`Stepan Starovoitov`: https://starovoitov.startech.live
