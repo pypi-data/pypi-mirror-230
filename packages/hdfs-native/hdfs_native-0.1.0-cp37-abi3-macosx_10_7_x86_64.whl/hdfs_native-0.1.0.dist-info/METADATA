@@ -1,0 +1,34 @@
+Metadata-Version: 2.1
+Name: hdfs_native
+Version: 0.1.0
+Classifier: Programming Language :: Rust
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Requires-Dist: mypy ; extra == 'devel'
+Provides-Extra: devel
+Summary: Python bindings for hdfs-native Rust library
+Keywords: hadoop,hdfs
+Home-Page: https://github.com/Kimahriman/hdfs-native
+Author: Adam Binford <adamq43@gmail.com>
+Author-email: Adam Binford <adamq43@gmail.com>
+License: Apache-2.0
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown; charset=UTF-8; variant=GFM
+Project-URL: repository, https://github.com/Kimahriman/hdfs-native
+
+Native HDFS Python bindings based on hdfs-native Rust package.
+
+## Installation
+
+```bash
+pip install hdfs-native
+```
+
+## Example
+
+```python
+from hdfs_native import Client
+client = Client("hdfs://localhost:9000")
+
+status = client.get_file_info("/file.txt")
+```
