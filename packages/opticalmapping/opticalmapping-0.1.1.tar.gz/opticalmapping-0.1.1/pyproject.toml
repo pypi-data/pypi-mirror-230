@@ -1,0 +1,21 @@
+[build-system]
+requires = [
+    "setuptools>=42",
+    "wheel",
+    "pybind11>=2.6.0",
+    "extension-helpers",
+    "oldest-supported-numpy"
+]
+
+build-backend = "setuptools.build_meta"
+
+[tool.cibuildwheel]
+archs = ["auto64"]  # 64-bit only
+skip = "pp* *musllinux* cp312-*"  # disable PyPy, musl-based wheels, and Python 3.12 (waiting for dependencies to catch up)
+test-requires = ["pytest", "opencv-python-headless"]
+test-command = "pytest {project}/tests"
+
+[tool.cibuildwheel.macos]
+# https://cibuildwheel.readthedocs.io/en/stable/faq/#apple-silicon
+archs = ["x86_64", "universal2"]
+test-skip = ["*_arm64", "*_universal2:arm64"]
