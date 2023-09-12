@@ -1,0 +1,79 @@
+Metadata-Version: 2.1
+Name: mend-images-vuln
+Version: 2023.9.1
+Summary: Get vulnerabilities from Images
+Home-page: https://github.com/mend-toolkit/images-vuln
+Author: Mend Professional Services
+Author-email: ps@mend.io
+License: LICENSE.txt
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests ~=2.31.0
+Requires-Dist: urllib3 ~=2.0.4
+
+![Logo](https://resources.mend.io/mend-sig/logo/mend-dark-logo-horizontal.png)  
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://opensource.org/licenses/Apache-2.0)
+[![GitHub release](https://img.shields.io/github/release/mend-toolkit/mend-template.svg)](https://github.com/mend-toolkit/mend-template/releases/latest)  
+
+# Images Vulnerabilities
+The tool creates a list of vulnerabilities per image in format CSV.
+
+## Supported Operating Systems
+- **Linux (Bash):**	CentOS, Debian, Ubuntu, RedHat
+- **Windows (PowerShell):**	10, 2012, 2016
+
+## Prerequisites
+- Python 3.9+
+- Mend user with admin permissions
+
+## Installation
+```shell
+pip install mend-images-vuln
+```
+> **Note:** Depending on whether the package was installed as a root user or not, you need to make sure the package installation location was added to the `$PATH` environment variable.
+
+## Usage
+**Using command-line arguments only:**
+```shell
+images_vuln --user-key $WS_USERKEY --api-key $WS_APIKEY --url $WS_WSS_URL --email $WS_EMAIL --dir $OUTPUT_DIRECTORY
+```
+**Using environment variables:**
+```shell
+export WS_USERKEY=xxxxxxxxxxx
+export WS_APIKEY=xxxxxxxxxxx
+export WS_WSS_URL=https://saas.mend.io
+export WS_EMAIL=email@organization.com
+
+images_vuln --dir <Output folder>
+```
+> **Note:** Either form is accepted. For the rest of the examples, the latter form would be used
+
+## Configuration Parameters
+>**Note:** Parameters can be specified as either command-line arguments, environment variables, or a combination of both.
+>
+> Command-line arguments take precedence over environment variables.
+
+| CLI argument                      | Env. Variable         |   Type    | Required | Description                                                                                                                                                                                       |
+|:----------------------------------|:----------------------|:---------:|:--------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **&#x2011;&#x2011;help**          |                       | `switch`  |    No    | Show help and exit                                                                                                                                                                                |
+| **&#x2011;&#x2011;version**       |                       | `switch`  |    No    | Show current version and exit                                                                                                                                                                     |
+| **&#x2011;&#x2011;user-key**      | `WS_USERKEY`          | `string`  |   Yes    | Mend User Key                                                                                                                                                                                     |
+| **&#x2011;&#x2011;email**         | `WS_EMAIL`            | `string`  |   Yes    | Mend User Email                                                                                                                                                                                   |
+| **&#x2011;&#x2011;api-key**       | `WS_APIKEY`           | `string`  |   Yes    | Mend API Key                                                                                                                                                                                      |
+| **&#x2011;&#x2011;url**           | `WS_WSS_URL`          | `string`  |   Yes    | Mend Server URL                                                                                                                                                                                   |
+| **&#x2011;&#x2011;dir**           |                       | `string`  |    No    | Output directory for the CSV files (default: `$PWD`)                                                                                                                                              |
+| **&#x2011;&#x2011;separate**      |                       | `boolean` |    No    | If set to `True`, then a CSV file will be created for each repo. If set to `False`, then one consolidated CSV file will be made.(default: `True`)                                                                                                                                                                                 |
+| **&#x2011;&#x2011;proxy**         | `HTTP_PROXY`          | `string`  |    No    | Proxy host including port, with or without protocol prefix and optionally credentials. Expected formats:myproxy.host.com:1234,http://myproxy.host.com:1234,http://user:pass@myproxy.host.com:1234 |
+| **&#x2011;&#x2011;proxyUsername** | `HTTP_PROXY_USERNAME` | `string`  |    No    | Proxy username, if needed and if not included in the proxy host.                                                                                                                                  |
+| **&#x2011;&#x2011;proxyPassword** | `HTTP_PROXY_PASSWORD` | `string`  |    No    | Proxy password, if needed and if not included in the proxy host.                                                                                                                                  |
+  
+
+
