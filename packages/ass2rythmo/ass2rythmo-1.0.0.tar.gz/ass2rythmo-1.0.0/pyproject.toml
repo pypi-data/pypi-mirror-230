@@ -1,0 +1,39 @@
+[project]
+name = "ass2rythmo"
+version = "1.0.0"
+authors = [
+    { name="Olivier Jolly", email="olivier@pcedev.com" },
+]
+description = "Generate rythmo band from Ass subtitles"
+readme = "README.rst"
+requires-python = ">=3.2"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Topic :: Multimedia :: Sound/Audio",
+    "Topic :: Multimedia :: Video",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Development Status :: 4 - Beta",
+]
+dependencies = [
+    "numpy",
+    "freetype-py",
+    "pillow",
+    "attrs>=18.2.0",
+    "progressbar2",
+]
+license = {text = "GPLv3+"}
+keywords = ["ass rythmo subtitles subs"]
+
+[project.urls]
+"Homepage" = "https://gitlab.com/zeograd/ass2rythmo"
+"Bug Tracker" = "https://gitlab.com/zeograd/ass2rythmo/-/issues"
+
+[project.scripts]
+ass2rythmo = "ass2rythmo:main"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
