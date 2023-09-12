@@ -1,0 +1,47 @@
+Metadata-Version: 2.1
+Name: nannos
+Version: 2.5.4
+Summary: Fourier Modal Method for multilayer metamaterials
+Home-page: https://gitlab.com/nannos/nannos
+Author: Benjamin Vial
+License: GPL-3.0-or-later
+Project-URL: Code, https://gitlab.com/nannos/nannos
+Project-URL: Documentation, https://nannos.gitlab.io
+Project-URL: Issues, https://gitlab.com/nannos/nannos/issues
+Keywords: fourier modal method,diffraction,optics,photonics,metamaterials
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Classifier: Topic :: Utilities
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: importlib_metadata; python_version < "3.8"
+Requires-Dist: numpy>=1.9
+Requires-Dist: scipy>=1.0
+Requires-Dist: matplotlib
+Requires-Dist: autograd>=1.4
+Requires-Dist: jax
+Requires-Dist: jaxlib
+Requires-Dist: torch
+Requires-Dist: joblib
+Requires-Dist: colorlog
+Requires-Dist: shapely
+Requires-Dist: psutil
+Requires-Dist: nlopt
+Requires-Dist: ipython
+Requires-Dist: pyvista
+Requires-Dist: trame
+Requires-Dist: nest-asyncio
+Requires-Dist: ipywidgets
+Provides-Extra: gpu
+Requires-Dist: jax[cuda12_pip]; extra == "gpu"
+Provides-Extra: magma
+Requires-Dist: scikit-cuda; extra == "magma"
