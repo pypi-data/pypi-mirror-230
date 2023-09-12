@@ -1,0 +1,34 @@
+[tool.poetry]
+name = "django-settings-env"
+version = "4.6.1"
+description = "12-factor.net settings support for Django with .env and HashiCorp Vault support"
+authors = ["David Nugent <davidn@uniquode.io>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = ">= 3.1, <5.0"
+envex = ">= 2.1"
+django-class-settings = { version = "^0.2", optional = true }
+
+[tool.poetry.group.test.dependencies]
+pytest = ">7.0"
+pytest-cov = "^4.1.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.7.0"
+isort = "^5.12.0"
+ruff = "^0.0.285"
+pre-commit = "^3.3.3"
+
+[tool.poetry.extras]
+django-class-settings = ["django-class-settings"]
+
+[tool.pytest.ini-options]
+minversion = "7.0"
+pythonpath = [ "django_settings_env" ]
+testpaths = [ "tests" ]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
