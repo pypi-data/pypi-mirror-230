@@ -1,0 +1,103 @@
+Metadata-Version: 2.1
+Name: pymywatertoronto
+Version: 1.4.3
+Summary: Library built for Home Assistant to integrate with the City of Toronto MyWaterToronto service
+Author-email: MyWaterToronto <davepearce@live.com>
+License: MIT License
+        
+        Copyright (c) 2022 David Pearce
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Homepage, https://github.com/davecpearce/pymywatertoronto
+Keywords: water,meter,cityoftoronto
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: aiohttp
+Requires-Dist: aiohttp_retry
+Requires-Dist: pytz
+
+# 🌤️ Python Wrapper for MyWaterToronto REST API
+
+![Latest PyPI version](https://img.shields.io/pypi/v/pymywatertoronto) ![Supported Python](https://img.shields.io/pypi/pyversions/pymywatertoronto)
+
+This module communicates with the City of Toronto [MyWaterToronto](https://www.toronto.ca/services-payments/water-environment/how-to-use-less-water/mywatertoronto/) service.
+
+The module is primarily written for the purpose of being used in Home Assistant for the Custom Integration called [`mywatertoronto`](https://github.com/davecpearce/hacs-mywatertoronto) .
+
+This API will read the account information and obtain a list of address(es) and meter(s).
+
+Consumption data incude
+
+Unfortunately, the City of Toronto only appears to be pulling meter data every 1-2 days.
+
+## Install
+
+`pymywatertoronto` is available on PyPi:
+
+```bash
+pip install pymywatertoronto
+```
+
+## Consumption Buckets
+
+This library will provide the following consumption buckets
+
+- `Total usage`
+- `Today usage`
+- `Week-to-date usage`
+- `Month-to-date usage`
+- `Year-to-date usage`
+
+## Usage
+
+This library is primarily designed to be used in Home Assistant.
+
+The main interface for the library is the `pymywatertoronto.MyWaterToronto`. This interface takes 6 options:
+
+- `session`: (required) An existing _aiohttp.ClientSession_.
+- `account_number`: (required) Enter your Account No. found on the utility bill.
+- `client_number`: (required) Enter your Client No. found on the utility bill.
+- `last_name`: (required) Enter your Last Name - must match the first last name on the utility bill.
+- `postal_code`: (required) Enter your Postal Code - must match the postal code on the utility bill.
+- `last_payment_method`: (required) use the enumerations from _const.LastPaymentMethod_.
+
+Copy the _tests/template.env_ to _tests/.env_ file and update the account information with your your City of Toronto account information:
+
+```python
+ACCOUNT_NUMBER="000000000"
+CLIENT_NUMBER="000000000-00"
+LAST_NAME="lastname"
+POSTAL_CODE="A1A 1A1"
+LAST_PAYMENT_METHOD="4"
+```
+
+Use the enumerations from _const.LastPaymentMethod_.
+
+Run the test file:
+python tests/test_mywatertoronto.py [-h or --dump]
+
+--dump paramater will create two files containing data that is leveraged in the Home Assistant integration:
+
+- data_account_details.json
+- data_consumption.json
