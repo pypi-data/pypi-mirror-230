@@ -1,0 +1,65 @@
+Metadata-Version: 2.1
+Name: pyxu-gradient-descent
+Version: 0.1.0
+Summary: An accelerated gradient descent optimizer for Pyxu
+Home-page: https://github.com/joanrue/pyxu-gradient-descent
+Author: Joan Rue Queralt
+Author-email: joan.rue.q@gmail.com
+License: MIT
+Project-URL: Bug Tracker, https://github.com/joanrue/pyxu-gradient-descent/issues
+Project-URL: Documentation, https://github.com/joanrue/pyxu-gradient-descent#README.md
+Project-URL: Source Code, https://github.com/joanrue/pyxu-gradient-descent
+Project-URL: User Support, https://github.com/joanrue/pyxu-gradient-descent/issues
+Classifier: Framework :: Pycsou
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Scientific/Engineering :: Image Processing
+Requires-Python: <3.12,>=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pyxu
+Provides-Extra: _gpu
+Requires-Dist: nvidia-pyindex ; extra == '_gpu'
+Requires-Dist: cupy-cuda12x ; extra == '_gpu'
+Requires-Dist: cutensor-cu12 ; extra == '_gpu'
+Requires-Dist: nvidia-cudnn-cu12 ; extra == '_gpu'
+Requires-Dist: nvidia-cusparse-cu12 ; extra == '_gpu'
+Requires-Dist: nvidia-nccl-cu12 ; extra == '_gpu'
+Provides-Extra: complete_gpu
+Requires-Dist: nvidia-pyindex ; extra == 'complete_gpu'
+Requires-Dist: cupy-cuda12x ; extra == 'complete_gpu'
+Requires-Dist: cutensor-cu12 ; extra == 'complete_gpu'
+Requires-Dist: nvidia-cudnn-cu12 ; extra == 'complete_gpu'
+Requires-Dist: nvidia-cusparse-cu12 ; extra == 'complete_gpu'
+Requires-Dist: nvidia-nccl-cu12 ; extra == 'complete_gpu'
+Requires-Dist: nvidia-cufft-cu12 ; extra == 'complete_gpu'
+Requires-Dist: finufft <3,>=2.1 ; extra == 'complete_gpu'
+Provides-Extra: complete_no_gpu
+Requires-Dist: finufft <3,>=2.1 ; extra == 'complete_no_gpu'
+Provides-Extra: dev
+Requires-Dist: graphviz <1,>=0.20 ; extra == 'dev'
+Requires-Dist: ipython <9,>=8.14 ; extra == 'dev'
+Requires-Dist: pre-commit <4,>=3.3 ; extra == 'dev'
+Requires-Dist: pytest <8,>=7.4 ; extra == 'dev'
+Requires-Dist: pytest-cov ; extra == 'dev'
+Requires-Dist: sphinx <8,>=7.2 ; extra == 'dev'
+Requires-Dist: tox <5,>=4.6 ; extra == 'dev'
+Requires-Dist: matplotlib <4,>=3.7 ; extra == 'dev'
+Requires-Dist: scikit-image <1,>=0.21 ; extra == 'dev'
+Requires-Dist: pydata-sphinx-theme <1,>=0.13 ; extra == 'dev'
+Requires-Dist: sphinx-design <1,>=0.4.1 ; extra == 'dev'
+Requires-Dist: sphinx-copybutton <1,>=0.5.2 ; extra == 'dev'
+Requires-Dist: sphinx-codeautolink <1,>=0.15.0 ; extra == 'dev'
+Requires-Dist: sphinx-togglebutton <1,>=0.3.2 ; extra == 'dev'
+Provides-Extra: fft
+Requires-Dist: finufft <3,>=2.1 ; extra == 'fft'
+Provides-Extra: fft_gpu
+Requires-Dist: nvidia-cufft-cu12 ; extra == 'fft_gpu'
+
+An accelerated gradient descent optimizer for Pyxu
