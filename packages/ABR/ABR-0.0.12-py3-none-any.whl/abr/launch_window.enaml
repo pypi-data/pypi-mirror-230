@@ -1,0 +1,210 @@
+import subprocess
+
+from atom.api import Atom, Bool, Enum, Int, List, Str
+
+from enaml.core.api import Looper
+from enaml.layout.api import hbox, vbox
+from enaml.stdlib.fields import IntField
+from enaml.stdlib.message_box import information
+from enaml.widgets.api import (CheckBox, Container, Field, FileDialogEx,
+                               HGroup, Label, MainWindow, ObjectCombo,
+                               PushButton)
+
+
+from enaml.qt import QtCore
+STORE = QtCore.QSettings('ABR', 'ABRAnalysis')
+
+from abr import main_icon
+from abr.parsers import PARSER_MAP
+
+
+class Settings(Atom):
+
+    rater = Str()
+    waves = List()
+    filter_data = Bool()
+    shuffle = Bool()
+    filter_lb = Int()
+    filter_ub = Int()
+    last_directory = Str()
+    parser = Enum(*list(PARSER_MAP.keys()))
+
+    def _default_rater(self):
+        return STORE.value('rater', '')
+
+    def _observe_rater(self, event):
+        STORE.setValue('rater', self.rater)
+
+    def _default_filter_lb(self):
+        return STORE.value('filter_lb', 300)
+
+    def _observe_filter_lb(self, event):
+        STORE.setValue('filter_lb', self.filter_lb)
+
+    def _default_filter_ub(self):
+        return STORE.value('filter_ub', 3000)
+
+    def _observe_filter_ub(self, event):
+        STORE.setValue('filter_ub', self.filter_ub)
+
+    def _default_shuffle(self):
+        return bool(STORE.value('shuffle', 0))
+
+    def _default_last_directory(self):
+        return STORE.value('last_directory', '')
+
+    def _observe_shuffle(self, event):
+        STORE.setValue('shuffle', int(self.shuffle))
+
+    def _default_filter_data(self):
+        return bool(STORE.value('filter_data', 1))
+
+    def _observe_filter_data(self, event):
+        STORE.setValue('filter_data', int(self.filter_data))
+
+    def _default_waves(self):
+        result = STORE.value('waves', [1, 2, 3, 4, 5])
+        return [int(r) for r in  sorted(set(result))]
+
+    def _observe_waves(self, event):
+        STORE.setValue('waves', self.waves)
+
+    def _observe_last_directory(self, event):
+        STORE.setValue('last_directory', self.last_directory)
+
+    def get_default_args(self):
+        args = ['--parser', self.parser]
+        if self.rater:
+            args.extend(['--user', self.rater])
+        if self.filter_data:
+            args.extend(['--highpass', str(self.filter_lb)])
+            args.extend(['--lowpass', str(self.filter_ub)])
+        else:
+            args.append('--nofilter')
+        if self.waves:
+            args.append('--waves')
+            args.extend(str(w) for w in self.waves)
+        else:
+            args.append('--threshold-only')
+        return args
+
+    def launch_basic(self):
+        args = ['abr-gui']
+        args.extend(self.get_default_args())
+        result = subprocess.check_output(args)
+
+    def launch_batch(self):
+        directory = FileDialogEx.get_existing_directory(current_path=self.last_directory)
+        if not directory:
+            return
+
+        self.last_directory = directory
+        args = ['abr-batch', '--skip-errors']
+        args.append(directory)
+        args.extend(self.get_default_args())
+        if self.shuffle:
+            args.append('--shuffle')
+
+        result = subprocess.check_output(args)
+        if result.decode().strip() == 'No files to process':
+            mesg = 'No unrated ABR experiments found in {}'.format(directory)
+            information(None, 'No data', mesg)
+
+
+enamldef LaunchWindow(MainWindow):
+
+    title = 'ABR analysis'
+    icon = main_icon
+    attr settings = Settings()
+
+    Container:
+
+        constraints << [
+            vbox(
+                hbox(a_label, a_field),
+                hbox(p_label, p_field),
+                hbox(m_label, waves),
+                hbox(do_filter, filter_lb, l_filter_to, filter_ub, l_filter_end),
+                hbox(b_basic, b_loop),
+                shuffle,
+            ),
+            a_label.width == m_label.width,
+            a_label.width == p_label.width,
+            a_label.width == do_filter.width,
+            b_basic.width == b_loop.width,
+            m_label.v_center == waves.v_center,
+            shuffle.left == b_loop.left,
+        ]
+
+        Label: a_label:
+            text = 'Analyzer'
+
+        Field: a_field:
+            text := settings.rater
+
+        Label: m_label:
+            text = 'Measure waves'
+            align = 'center'
+
+        Label: p_label:
+            text = 'File format'
+
+        ObjectCombo: p_field:
+            items << list(PARSER_MAP.keys())
+            selected := settings.parser
+            to_string << PARSER_MAP.get
+
+        HGroup: waves:
+            Looper:
+                iterable << range(1, 6)
+
+                CheckBox:
+                    text = str(loop_item)
+                    checked << loop_item in settings.waves
+                    checked ::
+                        if checked:
+                            if loop_item not in settings.waves:
+                                waves = settings.waves[:]
+                                waves.append(loop_item)
+                                settings.waves = sorted(waves)
+                        else:
+                            if loop_item in settings.waves:
+                                waves = settings.waves[:]
+                                waves.remove(loop_item)
+                                settings.waves = sorted(waves)
+
+        CheckBox: do_filter:
+            text = 'Filter?'
+            checked := settings.filter_data
+
+        Label: l_filter_to:
+            text = 'to'
+            visible << do_filter.checked
+
+        Label: l_filter_end:
+            text = 'Hz'
+            visible << do_filter.checked
+
+        IntField: filter_lb:
+            visible << do_filter.checked
+            value := settings.filter_lb
+
+        IntField: filter_ub:
+            visible << do_filter.checked
+            value := settings.filter_ub
+
+        PushButton: b_basic:
+            text = 'Launch basic'
+            enabled << bool(settings.rater)
+            clicked ::
+                settings.launch_basic()
+
+        PushButton: b_loop:
+            text = 'Batch mode'
+            enabled << bool(settings.rater)
+            clicked ::
+                settings.launch_batch()
+
+        CheckBox: shuffle:
+            text = 'Shuffle?'
+            checked := settings.shuffle
