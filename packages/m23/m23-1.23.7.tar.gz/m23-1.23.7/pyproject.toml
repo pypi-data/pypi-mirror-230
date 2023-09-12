@@ -1,0 +1,35 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "m23"
+readme = "README.md"
+requires-python = ">=3.10"
+version = "1.23.7"
+dependencies = [
+    "numpy==1.24.2",
+    'toml==0.10.2',
+    'astropy==5.2.1',
+    'astroalign==2.4.1',
+    'typing_extensions==4.4.0',
+    'opencv-python==4.7.0.68',
+    'matplotlib==3.7.0',
+    'ephem==4.1.4',
+    'multiprocess==0.70.14'
+]
+
+[tool.semantic_release]
+branch = "main"
+version_variable = "src/m23/__init__.py:__version__"
+version_toml = "pyproject.toml:project.version"
+version_source = "tag"
+commit_version_number = true
+build_command = "pip install build && python -m build"
+upload_to_release = true
+
+[tool.pytest.ini_options]
+adopts = [
+    "--import-mode=importlib",
+    "--ignore=idea"
+]
