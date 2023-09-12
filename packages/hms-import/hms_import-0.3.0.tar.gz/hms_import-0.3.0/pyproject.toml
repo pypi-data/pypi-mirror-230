@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "hms-import"
+version = "0.3.0"
+description = "Uploads encrypted video files and metadata to Tator."
+authors = ["CVision AI, Inc. <info@cvisionai.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "hms_import"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+tqdm = "^4.65.0"
+tator = "^1.1.0"
+pillow = "^10.0.0"
+natsort = "^8.4.0"
+pynmea2 = "^1.19.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.3.0"
+ipython = "^8.13.2"
+pylint = "^2.17.4"
+neovim = "^0.3.1"
+jedi = "^0.19.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+hms-import = "hms_import:main"
+
+[tool.black]
+line-length = 100
+include = '.*\.pyi?$'
