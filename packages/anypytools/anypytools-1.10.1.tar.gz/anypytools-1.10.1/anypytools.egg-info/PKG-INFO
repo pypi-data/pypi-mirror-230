@@ -1,0 +1,115 @@
+Metadata-Version: 2.1
+Name: anypytools
+Version: 1.10.1
+Summary: Python tools and utilities for working with the AnyBody Modeling System
+Author-email: Morten Enemark Lund <melund@gmail.com>
+License: MIT License
+        
+        Copyright (c) 2017 Morten Enemark Lund
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+Project-URL: Homepage, https://anybody-research-group.github.io/anypytools-docs/
+Project-URL: Code, https://github.com/AnyBody-Research-Group/AnyPyTools
+Keywords: AnyBody Modeling System,AnyScript
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Framework :: Pytest
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Scientific/Engineering
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: numpy
+Requires-Dist: scipy
+Requires-Dist: tqdm
+Provides-Extra: full
+Requires-Dist: h5py; extra == "full"
+Requires-Dist: jupyter; extra == "full"
+Requires-Dist: matplotlib; extra == "full"
+Requires-Dist: pydoe; extra == "full"
+Requires-Dist: pandas; extra == "full"
+Requires-Dist: ipywidgets; extra == "full"
+Requires-Dist: pytest; extra == "full"
+
+# AnyPyTools
+
+[![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![test](https://github.com/AnyBody-Research-Group/AnyPyTools/actions/workflows/test.yml/badge.svg)](https://github.com/AnyBody-Research-Group/AnyPyTools/actions/workflows/test.yml)
+[![](https://anaconda.org/conda-forge/anypytools/badges/downloads.svg)](https://anaconda.org/conda-forge/anypytools)
+[![](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+[![JOSS paper](http://joss.theoj.org/papers/10.21105/joss.01108/status.svg)](https://doi.org/10.21105/joss.01108)
+
+AnyPyTools is a toolkit for working with the [AnyBody Modeling System (AMS)]
+from Python. It enables reproduceable research with the AnyBody Modeling System, and bridges the gap to whole ecosystem of open source scientific Python.
+
+The AnyPyTools Python package enables batch processing, parallization of model
+simulations, model sensitivity studies, and parameter studies, using either
+Monte-Carlo (random sampling) or Latin hypercube sampling. It makes reproducible
+research much easier and replaces the tedious process of manually automating the
+musculoskeletal simulations and aggregating the results.
+
+If you use the library for publications please **cite as:**
+
+> Lund et al., (2019). AnyPyTools: A Python package for reproducible research with the AnyBody Modeling System. Journal of Open Source Software, 4(33), 1108, <https://doi.org/10.21105/joss.01108>
+
+## Installation
+
+- Download and install the [Anaconda Python distribution]
+- After installation opens the Anaconda command prompt and type:
+
+```bash
+conda config --add channels conda-forge
+conda install anypytools
+```
+
+The library is also available on [PyPi](https://pypi.python.org/pypi/AnyPyTools) for installing using `pip`.
+
+
+## Usage
+
+The simplest case:
+
+```python
+from anypytools import AnyPyProcess
+app = AnyPyProcess()
+macro = [
+    'load "Model.main.any"',
+    'operation Main.Study.InverseDynamics',
+    'run',
+]
+app.start_macro(macro)
+```
+
+Please see the [Jupyter Notebook based tutorial], or check the the following for more information:
+
+- [AnyPyTools's Documentation](https://anybody-research-group.github.io/anypytools-docs)
+
+
+<img src="docs/_static/relax.png" alt="Don't panic" height="100px">
+
+
+[anaconda python distribution]: https://store.continuum.io/cshop/anaconda/
+[anybody modeling system (ams)]: http://www.anybodytech.com
+[jupyter notebook based tutorial]: http://nbviewer.jupyter.org/github/AnyBody-Research-Group/AnyPyTools/blob/master/docs/Tutorial/00_AnyPyTools_tutorial.ipynb
