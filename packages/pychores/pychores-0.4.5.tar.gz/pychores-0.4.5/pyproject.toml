@@ -1,0 +1,90 @@
+[build-system]
+requires = ["flit_scm"]
+build-backend = "flit_scm:buildapi"
+
+
+
+[tool.setuptools_scm]
+write_to = "backend/pychores/_version.py"
+root = ".."
+
+[tool.flit.sdist]
+exclude = [".gitignore"]
+include = ["flit_scm_backend", "pychores/_version.py", "pychores/app"]
+
+[project]
+name = "pychores"
+authors = [{name = "Yohann Rebattu", email = "yohann@rebattu.fr"}]
+license = {file = "LICENSE"}
+classifiers = ["License :: OSI Approved :: MIT License"]
+dynamic = ["version", "description"]
+dependencies = [
+    "flask",
+    "flask-cors",
+    "gunicorn",
+    "alembic",
+    "pytest-flask",
+    "flask-bcrypt",
+    "flask-jwt-extended",
+    "pydantic",
+]
+readme = "readme.md"
+[project.urls]
+Source = "https://gitlab.com/vanillasoft/chores/"
+
+[project.optional-dependencies]
+development = [
+    "pytest-cov",
+    "pytest-flake8",
+    "pytest-isort",
+    "pytest",
+    "flake8",
+    "flake8-pyproject",
+    "black",
+    "isort[colors]",
+    "pytest-factoryboy",
+    "mypy",
+    "types-Flask-Cors",
+    "psycopg2-binary",
+]
+
+[tool.flake8]
+exclude = [".eggs/*", ".venv/*"]
+max-line-length = 88
+ignore = ["F821","W503","E501","E203"]
+
+
+[tool.isort]
+src_paths = "."
+skip = ["alembic/env.py",".eggs"]
+skip_glob = ["alembic/versions/*", ".venv/**"]
+line_length=88
+multi_line_output=3
+include_trailing_comma="True"
+use_parentheses="True"
+color_output="True"
+
+[tool.coverage.run]
+omit = ["**/tests/**", "**/alembic/**"]
+
+[tool.coverage.report]
+show_missing = true
+
+
+[tool.mypy]
+files= "pychores/"
+python_version = "3.11"
+
+[[tool.mypy.overrides]]
+module = "flask_bcrypt.*"
+ignore_missing_imports = true
+
+[tool.black]
+extend-exclude = "pychores/_version.py"
+
+
+[tool.pytest]
+filterwarnings = ["error"]
+
+[tool.pytest.ini_options]
+markers =["build: marks test as build checker (need --build option to be run)"]
