@@ -1,0 +1,126 @@
+# License: MIT
+# Copyright © 2022 Frequenz Energy-as-a-Service GmbH
+
+[build-system]
+requires = [
+  "setuptools == 68.1.0",
+  "setuptools_scm[toml] == 7.1.0",
+  "frequenz-repo-config[api] == 0.5.2",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "frequenz-api-dispatch"
+description = "Frequenz gRPC API to propagate dispatches to microgrids"
+readme = "README.md"
+license = { text = "MIT" }
+keywords = [
+  "frequenz",
+  "python",
+  "api",
+  "grpc",
+  "protobuf",
+  "rpc",
+  "dispatch",
+  "cloud",
+  "microgrid",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: Software Development :: Libraries",
+  "Typing :: Typed",
+]
+requires-python = ">= 3.11, < 4"
+dependencies = [
+  "frequenz-api-common >= 0.3.1, < 0.4.0",
+  "googleapis-common-protos >= 1.56.2, < 2",
+  "grpcio >= 1.51.1, < 2",
+]
+dynamic = ["version"]
+
+[[project.authors]]
+name = "Frequenz Energy-as-a-Service GmbH"
+email = "floss@frequenz.com"
+
+[project.optional-dependencies]
+dev-docstrings = [
+  "pydocstyle == 6.3.0",
+  "darglint == 1.8.1",
+  "tomli == 2.0.1",      # Needed by pydocstyle to read pyproject.toml
+]
+dev-formatting = ["black == 23.9.1", "isort == 5.12.0"]
+dev-mkdocs = [
+  "mike == 1.1.2",
+  "mkdocs-gen-files == 0.5.0",
+  "mkdocs-literate-nav == 0.6.1",
+  "mkdocs-material == 9.2.3",
+  "mkdocs-section-index == 0.3.5",
+  "mkdocstrings[python] == 0.23.0",
+  "frequenz-repo-config[api] == 0.5.2",
+]
+dev-mypy = [
+  "mypy == 1.5.1",
+  # For checking the noxfile, docs/ script, and tests
+  "frequenz-api-dispatch[dev-mkdocs,dev-noxfile,dev-pytest]",
+]
+dev-noxfile = ["nox == 2023.4.22", "frequenz-repo-config[api] == 0.5.2"]
+dev-pylint = [
+  "pylint == 2.17.5",
+  # For checking the noxfile, docs/ script, and tests
+  "frequenz-api-dispatch[dev-mkdocs,dev-noxfile,dev-pytest]",
+]
+dev-pytest = [
+  "pytest == 7.4.2",
+  "frequenz-repo-config[extra-lint-examples] == 0.5.2",
+]
+dev = [
+  "frequenz-api-dispatch[dev-mkdocs,dev-docstrings,dev-formatting,dev-mkdocs,dev-mypy,dev-noxfile,dev-pylint,dev-pytest]",
+]
+
+[project.urls]
+Changelog = "https://github.com/frequenz-floss/frequenz-api-dispatch/releases"
+Issues = "https://github.com/frequenz-floss/frequenz-api-dispatch/issues"
+Repository = "https://github.com/frequenz-floss/frequenz-api-dispatch"
+Support = "https://github.com/frequenz-floss/frequenz-api-dispatch/discussions/categories/support"
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+
+[tool.isort]
+profile = "black"
+line_length = 88
+src_paths = ["benchmarks", "examples", "src", "tests"]
+
+[tool.pylint.similarities]
+ignore-comments = ['yes']
+ignore-docstrings = ['yes']
+ignore-imports = ['no']
+min-similarity-lines = 40
+
+[tool.pylint.messages_control]
+disable = [
+  "too-few-public-methods",
+  # disabled because it conflicts with isort
+  "wrong-import-order",
+  "ungrouped-imports",
+  # pylint's unsubscriptable check is buggy and is not needed because
+  # it is a type-check, for which we already have mypy.
+  "unsubscriptable-object",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["pytests"]
+
+[tool.setuptools.package-dir]
+"" = "py"
+
+[tool.setuptools.package-data]
+"*" = ["*.pyi"]
+
+[tool.setuptools_scm]
+version_scheme = "post-release"
