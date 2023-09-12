@@ -1,0 +1,66 @@
+Metadata-Version: 2.1
+Name: robopal
+Version: 0.1.2
+Summary: robopal: A Simulation Framework Based Mujoco
+Home-page: https://github.com/NoneJou072/robopal
+Author: Haoran Zhou, Yichao Huang, Zongdao Li, Yuhan Zhao, Yang Lu
+Author-email: jou072@126.com
+Classifier: License :: OSI Approved :: MIT License
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy >=1.24.0
+Requires-Dist: mujoco >=2.3.7
+Requires-Dist: pin
+Provides-Extra: gym
+Requires-Dist: gymnasium ; extra == 'gym'
+Provides-Extra: traj
+Requires-Dist: ruckig ~=0.9.2 ; extra == 'traj'
+
+<!-- Author: Haoran Zhou-->
+<!-- date: 04.01.2023 -->
+> English | [中文文档](README-CN.md)
+---
+<p>
+  <a href="https://codeup.teambition.com/62219d81e4c44077bd46bffe/RoboIMI/tree/master" alt="GitHub">
+    <img src="https://img.shields.io/github/actions/workflow/status/deepmind/mujoco/build.yml?branch=main">
+  </a>
+  <a href="https://mujoco.readthedocs.io/" alt="Documentation">
+    <img src="https://readthedocs.org/projects/mujoco/badge/?version=latest">
+  </a>
+  <a href="https://codeup.teambition.com/62219d81e4c44077bd46bffe/RoboIMI/tree/master" alt="License">
+    <img src="https://img.shields.io/github/license/deepmind/mujoco">
+  </a>
+</p>
+
+**robopal** is an open source robot simulation framework based on [MuJoCo](http://mujoco.org/), mainly used for deep reinforcement learning training and
+Control algorithm verification. A variety of control schemes and example environments are provided within the framework.  
+
+Compared with other frameworks, ours has the following advantages:
+* Higher motion accuracy, it is more in line with the motion in the real environment
+* High portability, more concise code, easy to learn and use
+* Rich task environment, such as compliant control, motion imitation, visual servoing, etc.
+
+## Installation  
+
+### Required environments
+
+* **Windows** (10+) / Linux
+* Python 3.9+
+* [MuJoCo-2.3.7](http://mujoco.org/)
+* [pinocchio](https://gepettoweb.laas.fr/doc/stack-of-tasks/pinocchio/master/doxygen-html/index.html) 2.6.20 
+
+### Install from source
+
+   ```commandline
+   $ git clone https://github.com/NoneJou072/robopal
+   $ cd robopal
+   $ pip install -e .
+   ```
+
+## Controller
+The development version mainly includes the following controllers:
+* Joint Space Controller  
+  Use Ruckig to plan joint positions, velocities, accelerations for smooth motion, and calculate torques based on pd control and dynamics
+* Cartesian Space Controller  
+  Position/rotation control in Cartesian space based on pd control and kinematics
