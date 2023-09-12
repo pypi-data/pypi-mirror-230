@@ -1,0 +1,78 @@
+Metadata-Version: 2.1
+Name: riweather
+Version: 0.5.1
+Summary: Grab publicly available weather data
+Home-page: https://github.com/ensley-nexant/riweather
+License: Apache-2.0
+Keywords: weather,noaa
+Author: John Ensley
+Author-email: jensley@resource-innovations.com
+Requires-Python: >=3.10,<4.0
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Provides-Extra: plots
+Requires-Dist: click (>=8.1.3,<9.0.0)
+Requires-Dist: folium (>=0.14.0,<0.15.0) ; extra == "plots"
+Requires-Dist: matplotlib (>=3.6.2,<4.0.0) ; extra == "plots"
+Requires-Dist: pandas (>=2.1.0,<3.0.0)
+Requires-Dist: pyproj (>=3.4.1,<4.0.0)
+Requires-Dist: pyshp (>=2.3.1,<3.0.0)
+Requires-Dist: requests (>=2.28.1,<3.0.0)
+Requires-Dist: shapely (>=2.0.0,<3.0.0)
+Requires-Dist: sqlalchemy (>=2.0.20,<3.0.0)
+Project-URL: Documentation, https://ensley-nexant.github.io/riweather
+Project-URL: Repository, https://github.com/ensley-nexant/riweather
+Description-Content-Type: text/markdown
+
+# riweather
+
+[![Tests](https://github.com/ensley-nexant/riweather/workflows/Tests/badge.svg)](https://github.com/ensley-nexant/riweather/actions?workflow=Tests)
+[![Codecov](https://codecov.io/gh/ensley-nexant/riweather/branch/main/graph/badge.svg)](https://codecov.io/gh/ensley-nexant/riweather)
+[![Release](https://github.com/ensley-nexant/riweather/actions/workflows/release.yml/badge.svg)](https://github.com/ensley-nexant/riweather/actions/workflows/release.yml)
+
+Grab publicly available weather data with `riweather`. [See the full documentation](https://ensley-nexant.github.io/riweather).
+
+## Installation
+
+Install with pip:
+
+```
+pip install riweather
+```
+
+To create interactive maps of weather station locations, install the package along with its optional dependencies:
+
+```
+pip install riweather[plots]
+```
+
+## Usage
+
+Given a latitude and longitude, get a list of weather stations sorted from nearest to farthest from that location.
+
+```python
+>>> import riweather
+
+>>> station_rank = riweather.rank_stations(39.98, -105.13, max_distance_m=20000)
+```
+
+Select the top station (or a different station):
+
+```python
+>>> station = riweather.select_station(station_rank, rank=0)
+```
+
+View information about that station:
+
+```python
+>>> station.name, station.usaf_id
+```
+
+And pull weather data from that station for a certain year.
+
+```python
+>>> station.fetch_temp_data(2022)
+```
+
