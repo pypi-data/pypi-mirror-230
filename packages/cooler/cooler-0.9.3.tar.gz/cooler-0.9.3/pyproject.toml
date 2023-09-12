@@ -1,0 +1,145 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cooler"
+description = "Sparse binary format for genomic interaction matrices."
+requires-python = ">=3.6"
+license = {text = "BSD-3-Clause"}
+authors = [
+  {name = "Nezar Abdennur", email = "nabdennur@gmail.com"},
+]
+maintainers = [
+  {name = "Open2C", email = "open.chromosome.collective@gmail.com"}
+]
+keywords = [
+    "genomics",
+    "bioinformatics",
+    "Hi-C",
+    "contact",
+    "matrix",
+    "sparse",
+    "format",
+    "hdf5"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+
+readme = "README.md"
+
+dependencies = [
+    "numpy>=1.9",
+    "scipy>=0.16",
+    "pandas>1.0",
+    "h5py>=2.5",
+    "click>=7",
+    "cytoolz",
+    "multiprocess",
+    "pyfaidx",
+    "asciitree",
+    "pyyaml",
+    "simplejson",
+]
+
+dynamic = ["version"]
+
+[project.optional-dependencies]
+test = [
+    "coverage[toml]",
+    "isort",
+    "pytest",
+    "pytest-cov",
+    "ruff",
+]
+docs = [
+    "autodocsumm",
+    "m2r",
+    "recommonmark",
+    "Sphinx>=1.6",
+    "sphinx-autobuild",
+    "sphinx_rtd_theme",
+]
+complete = [
+    "biopython",
+    "dask[array,dataframe]",
+    "ipytree>=0.2.2",
+    "ipywidgets>=8.0.0",
+    "matplotlib",
+    "pypairix",
+    "psutil",
+    "pysam",
+]
+dev = [
+    "cooler[complete,test]",
+]
+
+[project.urls]
+homepage = "https://open2c.github.io/cooler"
+documentation = "https://cooler.readthedocs.io"
+repository = "https://github.com/open2c/cooler"
+changelog = "https://github.com/open2c/cooler/blob/master/CHANGES.md"
+
+[project.scripts]
+cooler = "cooler.cli:cli"
+
+[tool.hatch.version]
+path = "src/cooler/_version.py"
+
+[tool.ruff]
+exclude = [
+    "__init__.py",
+    "__main__.py",
+]
+extend-select = [
+    "E",  # style errors
+    # "D",  # pydocstyle
+    "F",  # pyflakes
+    "I",  # isort
+    "RUF", # ruff-specific rules
+    "UP", # pyupgrade
+    "W",  # style  warnings
+]
+
+[tool.isort]
+profile = "black"
+skip_gitignore = true
+known_first_party = "cooler"
+
+[tool.pytest.ini_options]
+addopts = "--cov cooler --cov-config pyproject.toml --cov-report term-missing --cov-report html --cov-report=xml"
+filterwarnings = ["ignore::PendingDeprecationWarning"]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["cooler"]
+
+omit = [
+    "*/cooler/__main__.py",
+    "*/cooler/_version.py",
+    "*/cooler/sandbox/*",
+    "*/cooler/cli/csort.py"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "return NotImplemented",
+    "raise NotImplementedError"
+]
+
+[tool.hatch.envs.default.scripts]
+fix = "ruff --fix ."
+lint = "ruff src/cooler"  #tests
+test = "pytest ."
+docs = "sphinx-autobuild docs docs/_build/html"
