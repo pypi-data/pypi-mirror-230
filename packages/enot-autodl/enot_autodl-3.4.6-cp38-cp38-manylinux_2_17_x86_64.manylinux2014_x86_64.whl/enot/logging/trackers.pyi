@@ -1,0 +1,6 @@
+from typing import Any
+
+class RunningMeanLogger:
+    def __init__(self, momentum: float = ...) -> None: ...
+    @property
+    def running_value(self) -> Any: ...

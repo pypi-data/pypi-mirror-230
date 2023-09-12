@@ -1,0 +1,1 @@
+from enot.pruning.label_selector.scbo_label_selector.label_selector import SCBOPruningLabelSelector
