@@ -1,0 +1,12 @@
+include MANIFEST.in
+include .coveragerc
+include *.md
+recursive-include requirements *.txt
+recursive-include . *.md
+#exclude hermes/factors/alphax/**
+#exclude hermes/factors/experimental/**
+#exclude hermes/factors/macroeconmic/**
+#exclude hermes/factors/technical/**
+#exclude hermes/factors/fundamentals/**
+recursive-include hermes *.pyx
+#global-exclude factor_*.py
