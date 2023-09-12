@@ -1,0 +1,62 @@
+[tool.poetry]
+name = "ts-api"
+version = "0.1.9"
+description = "An unofficial wrapper for the TradeStation API."
+authors = ["Tyler Patterson <pattertj@duck.com>"]
+readme = "readme.md"
+repository = "https://github.com/pattertj/tradestation-api"
+homepage = "https://github.com/pattertj/tradestation-api"
+packages = [{include = "ts"}]
+license = "LICENSE"
+keywords = ["tradestation", "finance", "trading", "automated-trading", "tradestation-api", "ts-api"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3.0",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Office/Business :: Financial"
+]
+
+[tool.poetry.dependencies]
+python = ">=3.8.1,<4.0"
+httpx = "^0.24.1"
+
+[tool.poetry.group.dev.dependencies]
+deptry = "^0.12.0"
+mypy = "^1.4.1"
+pre-commit = "^3.3.3"
+bandit = "^1.7.5"
+flake8 = "^6.0.0"
+pydocstyle = "^6.3.0"
+flake8-bugbear = "^23.7.10"
+autopep8 = "^2.0.4"
+flake8-comprehensions = "^3.14.0"
+flake8-simplify = "^0.20.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 120
+target-version = ['py310']
+preview = true
+
+[tool.isort]
+line_length = 120
+profile = "black"
+
+[tool.mypy]
+files = ["ts"]
+disallow_untyped_defs = "True"
+no_implicit_optional = "True"
+check_untyped_defs = "True"
+warn_unused_ignores = "True"
+show_error_codes = "True"
+ignore_missing_imports="True"
