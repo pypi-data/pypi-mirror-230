@@ -1,0 +1,1 @@
+from enot.utils.module_replacement.prunable_modules.prunable_module import PrunableModule

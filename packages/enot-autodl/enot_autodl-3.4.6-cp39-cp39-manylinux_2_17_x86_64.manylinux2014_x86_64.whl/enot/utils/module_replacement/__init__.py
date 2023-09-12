@@ -1,0 +1,3 @@
+from enot.utils.module_replacement.prunable_modules_factory import PRUNABLE_MODULES_FACTORY
+from enot.utils.module_replacement.replace import replace_prunable_modules
+from enot.utils.module_replacement.replace import revert_modules_replacement

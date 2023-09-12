@@ -1,0 +1,6 @@
+from enot.tensor_trace.model_edit_utils import replace_named_value as replace_named_value
+from enot.utils.module_replacement import PRUNABLE_MODULES_FACTORY as PRUNABLE_MODULES_FACTORY
+from torch import nn
+
+def replace_prunable_modules(original_model: nn.Module, inplace: bool = ...) -> nn.Module: ...
+def revert_modules_replacement(original_model: nn.Module, inplace: bool = ...) -> nn.Module: ...
