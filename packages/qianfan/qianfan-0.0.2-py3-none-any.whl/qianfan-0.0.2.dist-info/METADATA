@@ -1,0 +1,150 @@
+Metadata-Version: 2.1
+Name: qianfan
+Version: 0.0.2
+Summary: 文心千帆大模型平台 Python SDK
+License: Apache-2.0 license
+Keywords: baidu,qianfan
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.7.0
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: erniebot (==0.1.0)
+Requires-Dist: setuptools (==67.8.0)
+
+# 千帆 SDK
+
+百度智能云千帆大模型平台 Python SDK
+
+## 安装
+
+```
+pip install qianfan
+```
+
+## 快速使用
+
+在使用之前，需要在千帆平台上创建应用，获得 API Key(**AK**) 和 Secret Key(**SK**)，具体流程参见[文档](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/Slkkydake)。
+
+在调用 SDK 前，需要先初始化 AK 和 SK，支持环境变量和参数两种初始化方式
+
+```python
+export QIANFAN_AK="..."
+export QIANFAN_SK="..."
+g = qianfan.ChatCompletion()
+
+# 或者
+g = qianfan.ChatCompletion(ak="...", sk="...")
+```
+
+### Chat 对话
+
+只需要提供模型名称和对话内容即可调用千帆平台所支持的包括 ERNIE-BOT 在内的预置模型
+
+```python
+resp = g.do(messages=[{       # 调用默认模型，即 ERNIE-Bot-turbo
+    "role": "user",
+    "content": "你好"
+}])
+print(resp['body']['result'])
+# 输出：
+# 你好！有什么我可以帮助你的吗？
+
+# 或者指定特定模型
+resp = g.do(model="ERNIE-Bot", messages=[{
+    "role": "user",
+    "content": "你好"
+}])
+```
+
+目前 SDK 支持的模型有：
+- [ERNIE-Bot-turbo](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/4lilb2lpf) （默认模型）
+- [ERNIE-Bot](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/jlil56u11)
+- [BLOOMZ-7B](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/Jljcadglj)
+- [Llama-2-7b-chat](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/Rlki1zlai)
+- [Llama-2-13b-chat](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/2lki2us1e)
+- [Llama-2-70b-chat](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/8lkjfhiyt)
+- [Qianfan-BLOOMZ-7B-compressed](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/nllyzpcmp)
+- [Qianfan-Chinese-Llama-2-7B](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/Sllyztytp)
+- [ChatGLM2-6B-32K](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/Bllz001ff)
+- [AquilaChat-7B](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/ollz02e7i)
+
+SDK 也支持
+- 异步：通过调用 `ado` 方法
+- 流式输出：通过传入 `stream=True`
+
+```python
+# 异步
+resp = await g.ado(model="ERNIE-Bot-turbo", messages=[{
+    "role": "user",
+    "content": "你好"
+}])
+print(resp['body']['result'])
+
+# 异步流式输出
+resp = await g.ado(model="ERNIE-Bot-turbo", messages=[{
+    "role": "user",
+    "content": "你好"
+}], stream=True)
+async for r in resp:
+    print(r['result'])
+# 输出：
+# 您好！
+# 我是百度研发的知识增强大语言模型，中文名是文心一言，英文名是ERNIE Bot。
+# 我能够与人对话互动，回答问题，协助创作，高效便捷地帮助人们获取信息、知识和灵感。
+```
+
+### Completion 补全
+
+对于不需要对话，仅需要根据 prompt 补全的场景和模型来说，可以使用 `qianfan.Completion`
+
+```python
+g = qianfan.Completion()
+resp = g.do(model="ERNIE-Bot", prompt="你好")
+# 输出：
+# 你好！有什么我可以帮助你的吗？
+
+# 同样支持流式
+resp = g.do(model="ERNIE-Bot", prompt="你好", stream=True)
+for r in resp:
+    print(r['result'])
+
+# 异步
+resp = await g.ado(model="ERNIE-Bot-turbo", prompt="你好")
+print(resp['body']['result'])
+
+# 异步流式
+resp = await g.ado(model="ERNIE-Bot-turbo", prompt="你好", stream=True)
+async for r in resp:
+    print(r['result'])
+```
+
+### Embedding 语义向量
+
+SDK 支持调用千帆平台大模型，将文本转化为用数值表示的向量形式，用于文本检索、信息推荐、知识挖掘等场景。
+
+```python
+# Embedding 基础功能
+e = qianfan.Embedding()
+resp = e.do(model="Embedding-V1", texts=[  # 省略 model 时则调用默认模型 Embedding-V1
+    "世界上最高的山"
+])
+print(resp['data'][0]['embedding'])
+# 输出
+# [0.062249645590782166, 0.05107472464442253, 0.033479999750852585, ...]
+
+# 异步调用
+resp = await e.ado(texts=[
+    "世界上最高的山"
+])
+print(resp['data'][0]['embedding'])
+```
+
+目前 SDK 预置的模型有：
+- [Embedding-V1](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/alj562vvu) （默认模型）
+- [bge-large-en](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/mllz05nzk)
+- [bge-large-zh](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/dllz04sro)
+
+## License
+
+Apache-2.0
