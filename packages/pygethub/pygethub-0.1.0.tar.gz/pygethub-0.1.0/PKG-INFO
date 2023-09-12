@@ -1,0 +1,111 @@
+Metadata-Version: 2.1
+Name: pygethub
+Version: 0.1.0
+Summary: Fetch data from GitHub
+Author-email: "@chrisammon3000" <gclindsey@gmail.com>
+License: MIT License
+        
+        Copyright (c) 2023 Gregory Lindsey
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Keywords: github,api,fetch,data,json
+Classifier: Development Status :: 3 - Alpha
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Utilities
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests>=2.31.0
+Provides-Extra: dev
+Requires-Dist: black>=21.12; extra == "dev"
+Provides-Extra: test
+Requires-Dist: pytest>=6.2; extra == "test"
+Requires-Dist: pytest-cov>=3.0; extra == "test"
+Requires-Dist: coverage>=6.0; extra == "test"
+
+# pygethub
+[![Build](https://github.com/chrisammon3000/pygethub/actions/workflows/run_tests.yml/badge.svg?style=for-the-badge)](https://github.com/chrisammon3000/pygethub/actions/workflows/run_tests.yml) [![codecov](https://codecov.io/github/chrisammon3000/pygethub/branch/main/graph/badge.svg?token=QSZLP51RWJ)](https://codecov.io/github/chrisammon3000/pygethub?style=for-the-badge) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
+
+`pygethub` is a simple Python library for working with the GitHub API. It provides easy-to-use functions for common tasks and supports pagination through the API responses.
+
+## Features
+
+- Get a list of commits for a specific repository.
+- Get a list of branches for a specific repository.
+- List GitHub users and organizations.
+- List repositories for a specific organization or user.
+- Get a list of contributors for a specific repository.
+- Check the rate limit for the authenticated user.
+- Start and resume pagination of global resources.
+
+## Installation
+
+To install `pygethub`, you can use pip:
+
+```
+pip install pygethub
+```
+
+## Usage
+
+Here is an example of how you can use `pygethub`:
+
+<!-- TODO Add example of using paginator with params, see gfe-db notebook for GitHub EDA list_branches -->
+```python
+from pygethub import list_commits, GitHubPaginator, list_users
+
+# List commits for a specific repository
+commits = list_commits('owner', 'repo', 'your-github-token')
+print(commits)
+
+# Use pagination to list users
+paginator = GitHubPaginator('your-github-token')
+
+# List users from the beginning, include other request parameters as keyword arguments
+users = paginator.get_paginator(list_users)
+for user in users:
+    print(user)
+
+# If you want to resume the listing from a certain user ID, use the `since` parameter
+users = paginator.get_paginator(list_users, since=500)
+for user in users:
+    print(user)
+
+# Similarly, you can use the `since` parameter with list_organizations to resume listing from a certain organization ID
+```
+
+## Development
+
+To install `pygethub`, along with the tools you need to develop and run tests, run the following in your virtual environment:
+
+```
+pip install -e .[dev,test]
+```
+
+## Contributing
+
+Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) on how to contribute to `pygethub`.
+
+## License
+
+`pygethub` is licensed under the terms of the MIT license. See the [LICENSE](LICENSE) file for the full license text.
