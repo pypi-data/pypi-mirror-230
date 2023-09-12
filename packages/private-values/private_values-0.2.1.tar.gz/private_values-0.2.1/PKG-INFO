@@ -1,0 +1,169 @@
+Metadata-Version: 2.1
+Name: private_values
+Version: 0.2.1
+Summary: Update class attributes from OsEnvironment or IniFile
+Home-page: https://github.com/centroid457/
+Author: Andrei Starichenko
+Author-email: centroid@mail.ru
+Project-URL: Source, https://github.com/centroid457/private_values
+Keywords: environs,environment,rc,ini,private,test several 123
+Classifier: Topic :: Security
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: System :: Logging
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Operating System :: OS Independent
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: Natural Language :: English
+Classifier: Typing :: Typed
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# private_values
+
+
+Designed to use private data like username/pwd kept secure in OsEnvironment or IniFile for your several home projects at ones.  
+And not open it in public.  
+Main goals: short implementation and OOP usage.  
+
+
+## Features
+
+1. get values from:
+   * Environment
+   * iniFile
+
+2. raise if no name in destination
+
+
+## License
+
+See the [LICENSE](LICENSE) file for license rights and limitations (MIT).
+
+
+## Release history
+
+See the [HISTORY.md](HISTORY.md) file for release history.
+
+
+## Installation
+
+```commandline
+pip install private-values
+```
+
+## Import
+
+```python
+from private_values import *
+```
+
+
+## GUIDE
+
+### 1. Env
+
+* what a simple usage
+
+```python
+from private_values import *
+
+
+class Cls:
+   user = PrivateEnv.get("NameInEnv_ForUser")
+   pwd = PrivateEnv.get("NameInEnv_ForPwd")
+```
+
+### 2. IniFile
+
+* Use defaults
+
+```python
+from private_values import *
+
+
+class Cls:
+   user = PrivateIni.get("NameInIni_ForUser")
+   pwd = PrivateIni.get("NameInIni_ForPwd")
+```
+
+* Use different sections
+
+```python
+from private_values import *
+
+
+class Cls:
+   user = PrivateIni.get("NameInIni_ForUser")
+   pwd = PrivateIni.get("NameInIni_ForPwd", section="CustomSection")
+```
+
+* Change directory or filename or default section
+
+str and pathlib are accepted
+
+```python
+from private_values import *
+
+
+class CustomIniValues(PrivateIni):
+   DIRPATH = "new/path/"
+   FILENAME = "my.ini"
+   SECTION = "CustomSection"
+
+
+class Cls:
+   user = CustomIniValues.get("NameInIni_ForUser")
+   pwd = CustomIniValues.get("NameInIni_ForPwd")
+```
+
+### 3. disable Exceptions
+
+* in method
+
+`_raise_exx` is useful in all *.get methods for both classes
+
+```python
+from private_values import *
+
+
+class Cls:
+   user = PrivateEnv.get("Name_ForUser", _raise_exx=False)
+   pwd = PrivateIni.get("Name_ForPwd", _raise_exx=False)
+
+   def connect(self):
+      if None in [self.user, self.pwd]:
+         return
+      pass
+```
+
+* in whole class
+
+`_raise_exx` is useful in all *.get methods for both classes
+
+```python
+from private_values import *
+
+
+class CustomEnvValues(PrivateEnv):
+   RAISE_EXX = False
+
+
+class CustomIniValues(PrivateIni):
+   RAISE_EXX = False
+
+
+class Cls:
+   user = CustomEnvValues.get("Name_ForUser")
+   pwd = CustomIniValues.get("Name_ForPwd")
+
+   def connect(self):
+      if None in [self.user, self.pwd]:
+         return
+      pass
+```
