@@ -1,0 +1,501 @@
+Metadata-Version: 2.1
+Name: GailBot
+Version: 0.0.2a4
+Summary: GailBot API
+Author-email: Muhammad Umair <muhammad.umair@tufts.edu>
+Maintainer-email: Human Interaction Lab - Tufts University <hilab-dev@elist.tufts.edu>
+License: MIT License
+        
+        Copyright (c) 2023 jasonycwu
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: homepage, https://sites.tufts.edu/hilab/gailbot-an-automatic-transcription-system-for-conversation-analysis/
+Project-URL: source, https://github.com/mumair01/GailBot
+Project-URL: tracker, https://github.com/mumair01/GailBot/issues
+Classifier: Intended Audience :: Science/Research
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Topic :: Scientific/Engineering
+Classifier: Operating System :: MacOS
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: absl-py (==1.4.0)
+Requires-Dist: aiohttp (==3.8.4)
+Requires-Dist: aiosignal (==1.3.1)
+Requires-Dist: alembic (==1.10.2)
+Requires-Dist: altgraph (==0.17.3)
+Requires-Dist: antlr4-python3-runtime (==4.9.3)
+Requires-Dist: anyio (==3.7.1)
+Requires-Dist: appdirs (==1.4.4)
+Requires-Dist: arrow (==1.2.3)
+Requires-Dist: asteroid-filterbanks (==0.4.0)
+Requires-Dist: astunparse (==1.6.3)
+Requires-Dist: async-timeout (==4.0.2)
+Requires-Dist: attrs (==22.2.0)
+Requires-Dist: audioread (==3.0.0)
+Requires-Dist: auto-py-to-exe (==2.33.0)
+Requires-Dist: av (==10.0.0)
+Requires-Dist: backoff (==2.2.1)
+Requires-Dist: backports.cached-property (==1.0.2)
+Requires-Dist: beautifulsoup4 (==4.12.2)
+Requires-Dist: black (==23.1.0)
+Requires-Dist: bleach (==6.0.0)
+Requires-Dist: blessed (==1.20.0)
+Requires-Dist: boto3 (==1.26.105)
+Requires-Dist: botocore (==1.29.105)
+Requires-Dist: bottle (==0.12.25)
+Requires-Dist: bottle-websocket (==0.2.9)
+Requires-Dist: build (==0.10.0)
+Requires-Dist: cachetools (==5.3.0)
+Requires-Dist: certifi (==2022.12.7)
+Requires-Dist: cffi (==1.15.1)
+Requires-Dist: cfgv (==3.3.1)
+Requires-Dist: charset-normalizer (==3.1.0)
+Requires-Dist: click (==8.1.3)
+Requires-Dist: cmaes (==0.9.1)
+Requires-Dist: cmudict (==1.0.13)
+Requires-Dist: colorama (==0.4.6)
+Requires-Dist: coloredlogs (==15.0.1)
+Requires-Dist: colorlog (==6.7.0)
+Requires-Dist: commonmark (==0.9.1)
+Requires-Dist: contourpy (==1.0.7)
+Requires-Dist: cPython (==0.0.6)
+Requires-Dist: croniter (==1.4.1)
+Requires-Dist: cryptography (==40.0.2)
+Requires-Dist: ctranslate2 (==3.18.0)
+Requires-Dist: cycler (==0.11.0)
+Requires-Dist: Cython (==3.0.0)
+Requires-Dist: dacite (==1.8.0)
+Requires-Dist: dateutils (==0.6.12)
+Requires-Dist: decorator (==4.4.2)
+Requires-Dist: deepdiff (==6.3.1)
+Requires-Dist: dict-to-dataclass (==0.0.8)
+Requires-Dist: distlib (==0.3.6)
+Requires-Dist: dnspython (==2.3.0)
+Requires-Dist: docopt (==0.6.2)
+Requires-Dist: docutils (==0.19)
+Requires-Dist: dotted-dict (==1.1.3)
+Requires-Dist: dotwiz (==0.4.0)
+Requires-Dist: dtw-python (==1.3.0)
+Requires-Dist: Eel (==0.16.0)
+Requires-Dist: einops (==0.6.1)
+Requires-Dist: entrypoints (==0.4)
+Requires-Dist: exceptiongroup (==1.1.1)
+Requires-Dist: exif (==1.6.0)
+Requires-Dist: fastapi (==0.101.0)
+Requires-Dist: faster-whisper (==0.7.1)
+Requires-Dist: ffmpeg-python (==0.2.0)
+Requires-Dist: filelock (==3.10.0)
+Requires-Dist: flake8 (==6.0.0)
+Requires-Dist: flatbuffers (==23.3.3)
+Requires-Dist: fonttools (==4.39.2)
+Requires-Dist: frozenlist (==1.3.3)
+Requires-Dist: fsspec (==2023.3.0)
+Requires-Dist: future (==0.18.3)
+Requires-Dist: gast (==0.5.3)
+Requires-Dist: gevent (==22.10.2)
+Requires-Dist: gevent-websocket (==0.10.1)
+Requires-Dist: google-api-core (==2.11.0)
+Requires-Dist: google-auth (==2.16.2)
+Requires-Dist: google-auth-oauthlib (==0.4.6)
+Requires-Dist: google-cloud-core (==2.3.2)
+Requires-Dist: google-cloud-speech (==2.18.0)
+Requires-Dist: google-pasta (==0.2.0)
+Requires-Dist: googleapis-common-protos (==1.59.0)
+Requires-Dist: greenlet (==2.0.2)
+Requires-Dist: grpcio (==1.51.3)
+Requires-Dist: grpcio-status (==1.51.3)
+Requires-Dist: h11 (==0.14.0)
+Requires-Dist: h5py (==3.8.0)
+Requires-Dist: huggingface-hub (==0.13.3)
+Requires-Dist: humanfriendly (==10.0)
+Requires-Dist: HyperPyYAML (==1.1.0)
+Requires-Dist: ibm-cloud-sdk-core (==3.16.2)
+Requires-Dist: ibm-watson (==7.0.0)
+Requires-Dist: identify (==2.5.21)
+Requires-Dist: idna (==3.4)
+Requires-Dist: imageio (==2.26.1)
+Requires-Dist: imageio-ffmpeg (==0.4.8)
+Requires-Dist: importlib-metadata (==5.2.0)
+Requires-Dist: importlib-resources (==5.12.0)
+Requires-Dist: iniconfig (==2.0.0)
+Requires-Dist: inquirer (==3.1.3)
+Requires-Dist: itsdangerous (==2.1.2)
+Requires-Dist: jaraco.classes (==3.2.3)
+Requires-Dist: jedi (==0.18.1)
+Requires-Dist: Jinja2 (==3.1.2)
+Requires-Dist: jmespath (==1.0.1)
+Requires-Dist: joblib (==1.2.0)
+Requires-Dist: julius (==0.2.7)
+Requires-Dist: keras (==2.12.0)
+Requires-Dist: keyring (==23.13.1)
+Requires-Dist: kiwisolver (==1.4.4)
+Requires-Dist: libclang (==15.0.6.1)
+Requires-Dist: librosa (==0.9.2)
+Requires-Dist: lightning (==2.0.6)
+Requires-Dist: lightning-cloud (==0.5.37)
+Requires-Dist: lightning-fabric (==2.0.6)
+Requires-Dist: lightning-utilities (==0.9.0)
+Requires-Dist: llvmlite (==0.39.1)
+Requires-Dist: lxml (==4.9.2)
+Requires-Dist: macholib (==1.16.2)
+Requires-Dist: Mako (==1.2.4)
+Requires-Dist: Markdown (==3.4.1)
+Requires-Dist: MarkupSafe (==2.1.2)
+Requires-Dist: matplotlib (==3.7.1)
+Requires-Dist: mccabe (==0.7.0)
+Requires-Dist: more-itertools (==9.1.0)
+Requires-Dist: moviepy (==1.0.3)
+Requires-Dist: mpmath (==1.3.0)
+Requires-Dist: multidict (==6.0.4)
+Requires-Dist: mypy-extensions (==1.0.0)
+Requires-Dist: networkx (==2.8.8)
+Requires-Dist: nltk (==3.8.1)
+Requires-Dist: nodeenv (==1.7.0)
+Requires-Dist: Nuitka (==1.5.3)
+Requires-Dist: numba (==0.56.4)
+Requires-Dist: numpy (==1.23.5)
+Requires-Dist: oauthlib (==3.2.2)
+Requires-Dist: omegaconf (==2.3.0)
+Requires-Dist: onnxruntime (==1.15.1)
+Requires-Dist: openai-whisper (==20230314)
+Requires-Dist: opt-einsum (==3.3.0)
+Requires-Dist: optuna (==3.1.0)
+Requires-Dist: ordered-set (==4.1.0)
+Requires-Dist: packaging (==23.0)
+Requires-Dist: pandas (==1.5.3)
+Requires-Dist: parso (==0.8.3)
+Requires-Dist: pathspec (==0.11.1)
+Requires-Dist: pep517 (==0.13.0)
+Requires-Dist: Pillow (==9.4.0)
+Requires-Dist: pkginfo (==1.9.6)
+Requires-Dist: platformdirs (==3.1.1)
+Requires-Dist: pluggy (==1.0.0)
+Requires-Dist: plum-py (==0.8.5)
+Requires-Dist: pooch (==1.7.0)
+Requires-Dist: pre-commit (==3.2.0)
+Requires-Dist: primePy (==1.3)
+Requires-Dist: proglog (==0.1.10)
+Requires-Dist: proto-plus (==1.22.2)
+Requires-Dist: protobuf (==4.22.1)
+Requires-Dist: psutil (==5.9.4)
+Requires-Dist: py (==1.11.0)
+Requires-Dist: pyannote.core (==5.0.0)
+Requires-Dist: pyannote.database (==5.0.1)
+Requires-Dist: pyannote.metrics (==3.2.1)
+Requires-Dist: pyannote.pipeline (==2.3)
+Requires-Dist: pyasn1 (==0.4.8)
+Requires-Dist: pyasn1-modules (==0.2.8)
+Requires-Dist: pycodestyle (==2.10.0)
+Requires-Dist: pycparser (==2.21)
+Requires-Dist: pydantic (==1.10.6)
+Requires-Dist: pyDeprecate (==0.3.2)
+Requires-Dist: pydub (==0.25.1)
+Requires-Dist: pyee (==9.0.4)
+Requires-Dist: PyExifTool (==0.5.5)
+Requires-Dist: pyflakes (==3.0.1)
+Requires-Dist: Pygments (==2.14.0)
+Requires-Dist: pyheck (==0.1.5)
+Requires-Dist: pyinstaller (==5.9.0)
+Requires-Dist: pyinstaller-hooks-contrib (==2023.1)
+Requires-Dist: PyJWT (==2.6.0)
+Requires-Dist: pymongo (==4.3.3)
+Requires-Dist: pyparsing (==3.0.9)
+Requires-Dist: pyproject-hooks (==1.0.0)
+Requires-Dist: PyQt6 (==6.4.2)
+Requires-Dist: PyQt6-Qt6 (==6.4.3)
+Requires-Dist: PyQt6-sip (==13.4.1)
+Requires-Dist: pyqtconsole (==1.2.2)
+Requires-Dist: pytest (==7.2.2)
+Requires-Dist: python-configuration (==0.8.2)
+Requires-Dist: python-dateutil (==2.8.1)
+Requires-Dist: python-editor (==1.0.4)
+Requires-Dist: python-multipart (==0.0.6)
+Requires-Dist: pytorch-lightning (==1.6.3)
+Requires-Dist: pytorch-metric-learning (==2.3.0)
+Requires-Dist: pytz (==2022.7.1)
+Requires-Dist: PyYAML (==6.0)
+Requires-Dist: QtPy (==2.2.0)
+Requires-Dist: readchar (==4.0.5)
+Requires-Dist: readme-renderer (==37.3)
+Requires-Dist: regex (==2022.10.31)
+Requires-Dist: requests (==2.28.2)
+Requires-Dist: requests-oauthlib (==1.3.1)
+Requires-Dist: requests-toolbelt (==0.10.1)
+Requires-Dist: resampy (==0.4.2)
+Requires-Dist: rfc3986 (==2.0.0)
+Requires-Dist: rich (==12.6.0)
+Requires-Dist: rsa (==4.9)
+Requires-Dist: ruamel.yaml (==0.17.21)
+Requires-Dist: ruamel.yaml.clib (==0.2.7)
+Requires-Dist: s3transfer (==0.6.0)
+Requires-Dist: sacremoses (==0.0.53)
+Requires-Dist: scikit-learn (==1.2.2)
+Requires-Dist: scipy (==1.10.1)
+Requires-Dist: selenium (==3.10.0)
+Requires-Dist: semantic-version (==2.10.0)
+Requires-Dist: semver (==3.0.1)
+Requires-Dist: sentencepiece (==0.1.97)
+Requires-Dist: setuptools-rust (==1.5.2)
+Requires-Dist: shellingham (==1.5.0.post1)
+Requires-Dist: simplejson (==3.18.4)
+Requires-Dist: singledispatchmethod (==1.0)
+Requires-Dist: six (==1.16.0)
+Requires-Dist: sniffio (==1.3.0)
+Requires-Dist: sortedcontainers (==2.4.0)
+Requires-Dist: sounddevice (==0.4.6)
+Requires-Dist: soundfile (==0.12.1)
+Requires-Dist: soupsieve (==2.4.1)
+Requires-Dist: speechbrain (==0.5.15)
+Requires-Dist: SQLAlchemy (==2.0.7)
+Requires-Dist: starlette (==0.27.0)
+Requires-Dist: starsessions (==1.3.0)
+Requires-Dist: syllable (==0.1.0)
+Requires-Dist: syllables (==1.0.7)
+Requires-Dist: sympy (==1.11.1)
+Requires-Dist: tabulate (==0.9.0)
+Requires-Dist: tensorboard (==2.12.0)
+Requires-Dist: tensorboard-data-server (==0.7.0)
+Requires-Dist: tensorboard-plugin-wit (==1.8.1)
+Requires-Dist: tensorboardX (==2.6.2)
+Requires-Dist: tensorflow-estimator (==2.12.0)
+Requires-Dist: termcolor (==2.2.0)
+Requires-Dist: threadpoolctl (==3.1.0)
+Requires-Dist: tiktoken (==0.3.1)
+Requires-Dist: tokenizers (==0.13.2)
+Requires-Dist: toml (==0.10.2)
+Requires-Dist: tomli (==2.0.1)
+Requires-Dist: torch (==2.0.1)
+Requires-Dist: torch-audiomentations (==0.11.0)
+Requires-Dist: torch-pitch-shift (==1.2.2)
+Requires-Dist: torchaudio (==2.0.2)
+Requires-Dist: torchmetrics (==0.11.4)
+Requires-Dist: torchvision (==0.15.2)
+Requires-Dist: tqdm (==4.65.0)
+Requires-Dist: traitlets (==5.9.0)
+Requires-Dist: transformers (==4.27.2)
+Requires-Dist: twine (==4.0.2)
+Requires-Dist: typed-ast (==1.5.4)
+Requires-Dist: typer (==0.7.0)
+Requires-Dist: typing-extensions (==4.5.0)
+Requires-Dist: urllib3 (==1.26.15)
+Requires-Dist: userpaths (==0.1.3)
+Requires-Dist: uvicorn (==0.23.2)
+Requires-Dist: validators (==0.20.0)
+Requires-Dist: virtualenv (==20.21.0)
+Requires-Dist: wcwidth (==0.2.6)
+Requires-Dist: webencodings (==0.5.1)
+Requires-Dist: websocket-client (==1.1.0)
+Requires-Dist: websockets (==11.0.3)
+Requires-Dist: Werkzeug (==2.2.3)
+Requires-Dist: whichcraft (==0.6.1)
+Requires-Dist: wrapt (==1.15.0)
+Requires-Dist: xattr (==0.10.1)
+Requires-Dist: yamllint (==1.29.0)
+Requires-Dist: yarl (==1.8.2)
+Requires-Dist: zipp (==3.15.0)
+Requires-Dist: zope.event (==4.6)
+Requires-Dist: zope.interface (==6.0)
+Requires-Dist: zstandard (==0.20.0)
+Provides-Extra: dev
+Requires-Dist: pytest ; extra == 'dev'
+Requires-Dist: pytest-cov ; extra == 'dev'
+Requires-Dist: pytest-timeout ; extra == 'dev'
+Requires-Dist: pytest-xdist ; extra == 'dev'
+Requires-Dist: ipython ; extra == 'dev'
+
+# GailBot
+
+## About
+
+Researchers studying human interaction, such as conversation analysts, psychologists, and linguists all rely on detailed transcriptions of language use. Ideally, these should include so-called paralinguistic features of talk, such as overlaps, prosody, and intonation, as they convey important information. However, transcribing these features by hand requires substantial amounts of time by trained transcribers. There are currently no Speech to Text (STT) systems that are able to annotate these features. To reduce the resources needed to create transcripts that include paralinguistic features, we developed a program called GailBot. GailBot combines STT services with plugins to automatically generate first drafts of conversation analytic transcripts. It also enables researchers to add new plugins to transcribe additional features, or to improve the plugins it currently uses. We argue that despite its limitations, GailBot represents a substantial improvement over existing dialogue transcription software.
+
+Find the full paper published by Dialogue and Discourse [here](https://journals.uic.edu/ojs/index.php/dad/article/view/11392).
+
+
+## Status
+
+GailBot version: 0.2a4
+Release type: API
+
+
+## Installation
+
+You will need run Gailbot with Python Version 3.10. GailBot and the necessary dependencies can be installed using pip with the following commands:
+```
+pip install --upgrade pip
+
+pip install gailbot
+pip install hmmlearn
+pip install git+https://github.com/linto-ai/whisper-timestamped
+pip install git+https://github.com/m-bain/whisperx.git
+```
+
+
+## Usage - GailBot API
+
+This release features a convenient API to use GailBot and create custom plugin suites. To use the API and its features, import the GailBot package like the following:
+
+```
+from gailbot import GailBot
+```
+
+Once you have imported the GailBot package, initialize an instance of GailBot called "gb" (or a name of your choosing) by doing the following ("ws_root" is takes a path to your workspace directory):
+
+```
+gb = GailBot(ws_root="your_workspace_path")
+```
+The GailBot API's methods are now available through your GailBot instance. Check out GailBot's backend documentation for a full list of method and their uses [here](https://gailbot-release-document.s3.us-east-2.amazonaws.com/Documentation/Backend_Technical_Documentation.pdf).
+
+
+### Example Usage 1 - Default Settings
+Now, we will try to use the GailBot on an input audio file.
+To do so, we will need initiate a GailBot instance, add input audio file as source, and transcribe. 
+This example uses GailBot's default settings with default engine (Whisper) and pre-installed plugin suite. Therefore, there is no need to create and apply profile settings.
+See the example below:
+```
+from gailbot import GailBot
+
+gb = GailBot(ws_root="your_workspace_path")
+
+gb.add_source(
+    source_path="your_source_file_path"
+    output_dir="your_output_directory_path"
+)
+gb.transcribe()
+```
+
+### Example Usage 2 - Custom Profile
+Here is an example of using GailBot with your customized transcription profile.
+To do so, you'll need to create a profile and apply it to input source files before transcribing with GailBot.
+See example on how to create a profile:
+```
+from gailbot import GailBot
+
+gb = GailBot(ws_root="your_workspace_path")
+
+gb.add_new_engine(
+    "new_google_engine", 
+    {"engine": "google", "google_api_key": GOOGLE_API_KEY}, 
+    overwrite=True,
+)
+
+TEST_PROFILE = {
+    "engine_setting_name": "new_google_engine",
+    "plugin_setting": ["HiLabSuite"],
+}
+
+gb.add_source(source_path="path_to_your_source", output_dir="your_output_directory_path")
+gb.apply_setting_to_source("path_to_your_source", TEST_PROFILE)
+gb.transcribe()
+```
+In the example above, we added Google Cloud STT engine called "new_google_engine" using your Google engine API key.
+Then, we used the Google engine to create a new profile called TEST_PROFILE. Here we also use GailBot's default plugin suite called HiLabSuite.
+Finally, we apply our custom profile to our input source and transcribe.
+
+
+## Supported Plugin Suites
+
+A core GailBot feature is its ability to apply plugin suites during the transcription process. While different use cases may require custom plugins, the Human Interaction Lab maintains and distributes a pre-developed plugin suite -- HiLabSuite. For more information about the default plugin suite, click [here](https://sites.tufts.edu/hilab/gailbot-an-automatic-transcription-system-for-conversation-analysis/).
+
+### Custom Plugins
+
+A core GailBot feature is its ability to allow researchers to develop and add custom plugins that may be applied during the transcription process, in addition to the provided built-in HiLabSuite. To create a compatible plugin suite for the Gailbot app, follow these steps:
+
+1. Prepare the Folder Structure and Files:
+Ensure your plugin suite directory contains the following files with specific names: "init.py," "CHANGELOG.md," "DOCUMENT.md," "TECH_DOCUMENT.md," "README.md," "format.md," and "config.toml." Include a subfolder named "src" within the main directory.
+
+    File Descriptions:
+
+    init.py: Used for package initialization and can be left empty.
+    format.md: Provides users information about generated output files.
+    CHANGELOG.md: Documents version-to-version changes.
+    README.md: Offers a high-level explanation and purpose of the plugin suite.
+    DOCUMENT.md: Contains specifics about algorithms, plugins, and developers.
+    TECH_DOCUMENT.md: Explains technical aspects like logging implementation.
+    config.toml: Vital file that outlines plugin execution order and settings.
+
+2. Configure config.toml:
+Begin with setting suite_name = "<mySuite>", matching the directory name. Define metadata in the [metadata] section, including Author, Email, and Version.
+
+3. Define Plugins:
+For each plugin, create a section in config.toml under plugins section. Specify plugin_name, dependencies, rel_path, and module_name.
+
+    plugin_name: The name of your plugin.
+    dependencies: A list of plugins needed before this one.
+    rel_path: Path to the file with the plugin's apply function.
+    module_name: The name of the file without the .py suffix.
+
+4. Plugin Coding:
+Define each plugin as a class with the exact name from plugin_name.
+Inside the class, include an apply function with the signature def apply(self, dependency_outputs: Dict[str, Any], methods: <your methods>).
+At the end of the apply function, set self.is_successful = True.
+
+5. Dependencies and Output Flow:
+Use the dependency_outputs dictionary to pass outputs between plugins.
+When a plugin depends on another, it receives previous plugin outputs through this dictionary, with plugin class name as the key.
+Ensure plugin classes are properly formatted in config.toml for the apply function to run.
+
+With correctly structured files, codes, and dependencies, your plugins will run as intended when uploaded to Gailbot. 
+Congratulations on creating your plugin suite for Gailbot, and thank you for following our tutorial! Happy transcribing!
+
+
+## Contribute
+
+Users are encouraged to direct installation and usage questions, provide feedback, details regarding bugs, and development ideas by [email](mailto:hilab-dev@elist.tufts.edu).
+
+
+## Acknowledgements
+
+Special thanks to members of the [Human Interaction Lab](https://sites.tufts.edu/hilab/) at Tufts University and interns that have worked on this project.
+
+
+## Cite
+
+Users are encouraged to cite GailBot using the following BibTex:
+```
+@article{umair2022gailbot,
+  title={GailBot: An automatic transcription system for Conversation Analysis},
+  author={Umair, Muhammad and Mertens, Julia Beret and Albert, Saul and de Ruiter, Jan P},
+  journal={Dialogue \& Discourse},
+  volume={13},
+  number={1},
+  pages={63--95},
+  year={2022}
+}
+```
+
+## Liability Notice
+
+Gailbot is a tool to be used to generate specialized transcripts. However, it
+is not responsible for output quality. Generated transcripts are meant to
+be first drafts that can be manually improved. They are not meant to replace
+manual transcription.
+
+GailBot may use external Speech-to-Text systems or third-party services. The
+development team is not responsible for any transactions between users and these
+services. Additionally, the development team does not guarantee the accuracy or 
+correctness of any plugin. Plugins have been developed in good faith and we hope 
+that they are accurate. However, users should always verify results.
+
+By using GailBot, users agree to cite Gailbot and the Tufts Human Interaction Lab
+in any publications or results as a direct or indirect result of using Gailbot.
