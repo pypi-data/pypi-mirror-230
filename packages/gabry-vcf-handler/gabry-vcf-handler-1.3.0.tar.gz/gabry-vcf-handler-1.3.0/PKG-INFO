@@ -1,0 +1,53 @@
+Metadata-Version: 2.1
+Name: gabry-vcf-handler
+Version: 1.3.0
+Summary: VCF to .csv handler catered to specific desired fields
+License: MIT
+Author-email: Nick Gabry <n.t.gabry@gmail.com>
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+
+# vcf-handler
+
+This repo is an installable python package and command line tool built for creating .csv files of annotated variants from VCF files. 
+Currently the main process annotates variants with the following information either found within the VCF or pulled from external sources:
+1. Depth of sequence coverage at the site of variation.
+2. Number of reads supporting the variant.
+3. Percentage of reads supporting the variant versus those supporting reference reads.
+4. Gene ID of the variant, type of variation (substitution,
+insertion, CNV, etc.) and their effect (missense, silent, intergenic, etc.) using 
+the [VEP hgvs API](https://rest.ensembl.org/#VEP)
+5. The minor allele frequency of the variant if available.
+
+This process supports handling of multi-allelic sites. No pre-decomposition needed. 
+
+This package is publicly installable from [PyPI](https://pypi.org/project/gabry-vcf-handler/). Once installed, the vcf-handler can be ran by importing the installed package:
+```
+>>> from vcf_handler.process import process_vcf
+>>> process_vcf('test_vcf_data.txt')
+INFO:vcf-handling:Checking VCF file
+INFO:vcf-handling:Writing annotated variants to output.csv
+```
+
+Or, if the repo is cloned to your local environment and you have [PDM installed](https://pdm.fming.dev/latest/), 
+running `pdm install` from the root directory will install all dependencies, allowing you to run the tooling from the command line:
+
+`pdm run vcf-handler -i "{path_to_vcf}" -o "{desired_path_out}"`
+
+## Code Walkthrough
+The main VCF to CSV runner in this package is `process.py`. Here we pass through a light VCF file formatting check prior to reading in our variants. Reading and writing of variants is managed through generators in order to allow easy scaling in the instance of VCF files that are multiple GBs in size. This low-memory reading and writing can prevent exceeding of resource caps in comparison to methods which read the entire file into memory as a bytes, strings, or dataframes. All reading / writing is managed in `utils/read_write.py`
+
+Once read in, each variant line is cast to a custom Variant class (`utils/Variant.py`) which has a handful of operations performed on it in order to scrape the necessary annotations. These are performed as class methods, and occasionally rely on outside helper functions (`utils/vep_helpers.py`). 
+
+The command line interfacing is managed through the `click` and `argparse` modules, and is all handled in `cli.py`
+
+## Developing
+
+This repo uses [PDM](https://pdm.fming.dev/latest/). Install PDM and then install dependencies with `pdm install`.
+
+Running test suite: `pdm run test`
+Running auto-linter: `pdm run lint-fix`
+
+## Releases
+
+This package is published on [PyPI](https://pypi.org/project/gabry-vcf-handler/). In order to create a new release, bump the version in the [pyproject.toml](pyproject.toml) file, create a PR, and merge that change into main. When that change is merged into main, the new version will be automatically recognized and published.
