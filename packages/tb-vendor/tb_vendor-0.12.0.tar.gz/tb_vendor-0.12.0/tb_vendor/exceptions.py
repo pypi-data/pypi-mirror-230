@@ -1,0 +1,4 @@
+
+
+class TbLoginError(Exception):
+    pass
