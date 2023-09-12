@@ -1,0 +1,42 @@
+[tool.poetry]
+name = "hrepr"
+version = "0.6.0"
+description = "Extensible HTML representation for Python objects."
+authors = ["Olivier Breuleux <breuleux@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/breuleux/hrepr"
+repository = "https://github.com/breuleux/hrepr"
+classifiers = [
+    'Development Status :: 4 - Beta',
+    'Intended Audience :: Developers',
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+ovld = "^0.3.2"
+
+[tool.poetry.dev-dependencies]
+black = ">=19.3b0"
+isort = ">=5.4.2"
+pytest = ">=7.2.0"
+pytest-cov = ">=4.0.0"
+flake8 = ">=5.0.0"
+pytest-regressions = ">=2.4.1"
+
+[tool.black]
+line-length = 80
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore:coroutine '_coro' was never awaited",
+]
+
+[tool.coverage.run]
+omit = [
+    "hrepr/textgen.py"
+]
+
+[build-system]
+requires = ["poetry-core>=1.3.2"]
+build-backend = "poetry.core.masonry.api"
