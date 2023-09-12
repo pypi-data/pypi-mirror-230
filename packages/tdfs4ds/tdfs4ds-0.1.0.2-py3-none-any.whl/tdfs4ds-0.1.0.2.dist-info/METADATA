@@ -1,0 +1,108 @@
+Metadata-Version: 2.1
+Name: tdfs4ds
+Version: 0.1.0.2
+Summary: A python package to simplify the usage of feature store using Teradata Vantage ...
+Author: Denis Molin
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+Requires-Dist: teradataml (>=17.20)
+Requires-Dist: pandas
+Requires-Dist: numpy
+
+# tdfs4ds : A Feature Store Library for Data Scientists working with Clearscape Analytics
+
+The tdfs library is a Python package designed for managing and utilizing Feature Stores in a Teradata Database. With a set of easy-to-use functions, tdfs enables the efficient creation, registration, and storage of features. It also simplifies the process of preparing feature data for ingestion, building datasets for data analysis, and obtaining already existing features.
+
+## Getting Started
+
+Install the tdfs package via pip:
+
+```bash
+pip install tdfs4ds
+```
+
+To utilize the functionality of the tdfs4ds package, import it in your Python script:
+
+```python
+import tdfs4ds
+```
+
+## Key Methods in tdfs Package
+
+The `tdfs4ds` package includes the following key methods:
+
+- `feature_store_catalog_creation(schema, if_exists='replace', table_name='FS_FEATURE_CATALOG')`: Creates a feature store catalog table in the Teradata database.
+
+- `get_feature_store_table_name(entity_id, feature_type)`: Generates table and view names for a feature store table based on the provided entity ID and feature type.
+
+- `feature_store_table_creation(entity_id, feature_type, schema, if_exists='replace', feature_catalog_name='FS_FEATURE_CATALOG')`: Creates a feature store table and a corresponding view in a Teradata database schema.
+
+- `register_features(entity_id, feature_names_types, schema, feature_catalog_name='FS_FEATURE_CATALOG')`: Registers features in the feature catalog table of a Teradata database.
+
+- `prepare_feature_ingestion(df, entity_id, feature_names, feature_version_default='dev.0.0', feature_versions=None, **kwargs)`: Prepares feature data for ingestion into the feature store.
+
+- `store_feature(entity_id, prepared_features, schema, feature_catalog_name='FS_FEATURE_CATALOG', **kwargs)`: Stores feature data in the corresponding feature tables in a Teradata database.
+
+- `build_dataset(entity_id, selected_features, schema, view_name, feature_catalog_name='FS_FEATURE_CATALOG', **kwargs)`: Builds a dataset view in a Teradata database based on the selected features and entity ID.
+
+- `GetAlreadyExistingFeatureNames(feature_name, schema, table_name='FS_FEATURE_CATALOG')`: Obtains already existing feature names.
+
+- `Gettdtypes(tddf, features_columns, schema, table_name='FS_FEATURE_CATALOG')`: Obtains Teradata types.
+
+- `upload_feature(df, entity_id, feature_names, schema_name, feature_catalog_name='FS_FEATURE_CATALOG', feature_versions='dev.0.0')`: This function uploads features from a Teradata DataFrame to the feature store. It creates a dictionary mapping each feature name to its corresponding version, gets the Teradata types of the features in df, registers the features in the feature catalog, prepares the features for ingestion, stores the prepared features in the feature store, builds a dataset view in the feature store, and returns the dataset view.
+
+
+## Example Workflow with `tdfs4ds` and `upload_features`
+
+Let's start with a Teradata DataFrame named "curves" which has been loaded with your data.
+
+### Basic Feature Engineering
+```python
+# Assume we have a curves DataFrame with columns 'feature1', 'feature2', 'timestamp', and 'entity_id'
+# Here's a quick example of simple feature engineering—calculating the ratio of 'feature1' to 'feature2':
+
+curves['feature1_to_2_ratio'] = curves['feature1'] / curves['feature2']
+feature_names = ['feature1', 'feature2', 'feature1_to_2_ratio']
+
+# Assuming that each 'entity_id' corresponds to a separate entity for which we have data,
+# and that we want to register these features for each entity:
+entities = curves['entity_id'].unique()
+```
+
+### Feature Registration and Storage
+Now, we can use the upload_features method to register these features in the feature catalog and store the feature values in the feature store:
+
+```python
+# Use upload_features to register the features and store them in the feature store
+dataset = tdfs.feature_store.upload_feature(
+    df=curves,
+    entity_id='entity_id', # column in DataFrame with entity IDs
+    feature_names=feature_names,
+    schema_name='your_schema_name',
+    feature_catalog_name='FS_FEATURE_CATALOG',
+    feature_versions='dev.0.0'
+)
+```
+
+### Creating Datasets and Enabling Time Travel
+
+One of the key strengths of this package is the ability to create datasets by selecting features in the feature store at a specific point in time, which enables "time travel". This is done through the build_dataset method, which is called internally by the upload_features method.
+
+For example, if you wanted to build a dataset using 'feature1' and 'feature1_to_2_ratio' for a specific entity on a specific date, you could do so as follows:
+
+```python
+selected_features = {'feature1':'dev.0.0', 'feature1_to_2_ratio':'dev.0.0'}
+
+dataset = tdfs.feature_store.build_dataset(
+    entity_id='entity_id', # specify entity ID
+    selected_features=selected_features,
+    schema='your_schema_name', 
+    view_name=None, 
+    feature_catalog_name='FS_FEATURE_CATALOG',
+    feature_version_date='2023-07-01'
+)
+```
+
+In this case, the build_dataset method would select 'feature1' and 'feature1_to_2_ratio' from the feature store for the specified entity as they were on '2023-07-01'. This dataset could then be used for further analysis or model building.
+
+**Note on Versioning:** In the `upload_feature` and `build_dataset` methods, the `'dev.0.0'` string indicates the version of the feature calculation process. This is critical as feature engineering often involves iterative development and improvement, which may lead to changes in how a feature is calculated over time. By including a version label such as `'dev.0.0'`, we can keep track of these changes and ensure reproducibility. It also enables us to 'travel back in time' by selecting the version of the feature as it was calculated at a specific point
