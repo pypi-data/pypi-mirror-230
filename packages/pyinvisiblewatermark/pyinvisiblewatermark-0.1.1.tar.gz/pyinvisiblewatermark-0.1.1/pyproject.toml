@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "pyinvisiblewatermark"
+version = "0.1.1"
+description = ""
+authors = ["lijianan <lijianan@tezign.com>"]
+readme = "README.md"
+homepage = "https://github.com/DannyLee1991/invisiblewatermark"
+repository = "https://github.com/DannyLee1991/invisiblewatermark"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+numpy = "^1.25.2"
+pillow = "^10.0.0"
+typer = "^0.9.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+ivwm = "pyinvisiblewatermark.cli:app"
+
