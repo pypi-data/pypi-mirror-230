@@ -1,0 +1,68 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "logyca"
+description = 'This package name is reserved by LOGYCA company'
+Home-page = "https://github.com/ccc/ccc"
+readme = "README.md"
+requires-python = ">=3.7"
+license = { text = "MIT" }
+authors = [
+    { name = "Jaime Andres Cardona Carrillo", email = "tecnologiaeinformacion@logyca.com" },
+]
+maintainers = [
+    { name = "Jaime Andres Cardona Carrillo", email = "tecnologiaeinformacion@logyca.com" },
+]
+packages = [
+    { include = "logyca" },
+]
+classifiers = [
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python",
+    "Topic :: Internet",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development",
+    "Typing :: Typed",
+    "Development Status :: 4 - Beta",
+    "Environment :: Web Environment",
+    "Framework :: Pydantic",
+    "Framework :: Pydantic :: 1",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+    "Topic :: Internet :: WWW/HTTP",
+]
+dependencies = [
+    "pydantic >=1.8",
+    "pytz >=2022.1",
+]
+dynamic = ["version"]
+
+[project.urls]
+Homepage = "https://github.com/ccc/ccc"
+Documentation = "https://ccc/"
+
+[tool.hatch.version]
+path = "logyca/__init__.py"
+
+# https://hatch.pypa.io/1.6/config/dependency/
+[project.optional-dependencies]
+test = [
+    "pytest >=7.1.3,<8.0.0",
+]
+logycafeaturesample = [
+    "sqlalchemy >=1.3.18,<2.0.8",
+]
