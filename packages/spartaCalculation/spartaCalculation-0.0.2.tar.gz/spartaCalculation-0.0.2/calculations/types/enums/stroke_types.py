@@ -1,0 +1,23 @@
+from enum import Enum
+
+
+class STROKE_TYPES(Enum):
+    FREESTYLE = "Freestyle"
+    BREASTSTROKE = "Breaststroke"
+    BUTTERFLY = "Butterfly"
+    BACKSTROKE = "Backstroke"
+    MEDLEY = "Medley"
+
+
+STROKE_TYPES_FOR_150IM = (
+    STROKE_TYPES.BACKSTROKE.value,
+    STROKE_TYPES.BREASTSTROKE.value,
+    STROKE_TYPES.FREESTYLE.value,
+)
+
+STROKE_TYPES_FOR_200_400IM = (
+    STROKE_TYPES.BUTTERFLY.value,
+    STROKE_TYPES.BACKSTROKE.value,
+    STROKE_TYPES.BREASTSTROKE.value,
+    STROKE_TYPES.FREESTYLE.value,
+)
