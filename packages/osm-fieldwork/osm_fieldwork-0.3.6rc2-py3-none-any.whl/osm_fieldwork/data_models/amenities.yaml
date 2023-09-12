@@ -1,0 +1,29 @@
+select:
+    osm_id: id
+from:
+    - nodes
+    - ways_poly
+where:
+  tags:
+    - join_or:
+        - { amenity: [brewery, cafe, bar, pub, fuel, fire_station, library,
+    townhall, courthouse, hospital, restaurant, clinic], shop:
+    [alcohol, bakery, car_parts, hardware, convienience, general],
+    cusine: not null}
+
+keep:
+  - leisure
+  - backcountry
+  - fee
+  - capacity:persons
+  - reservation
+  - capacity:caravans
+  - access
+  - tourism
+  - parking
+  - amenity
+  - shop
+  - cusine
+  - amenity
+  - convenience
+  - diesel
