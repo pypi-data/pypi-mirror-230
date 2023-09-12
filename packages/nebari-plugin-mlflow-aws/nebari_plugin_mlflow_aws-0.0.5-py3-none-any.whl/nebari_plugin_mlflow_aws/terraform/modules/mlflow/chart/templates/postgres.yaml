@@ -1,0 +1,67 @@
+{{- if and .Values.storage.db.enabled .Values.storage.db.selfHosted }}
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-postgres
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}-postgres
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-postgres
+  serviceName: {{ .Release.Name }}-postgres
+  replicas: {{ .Values.storage.db.replicas | default 1 }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-postgres
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-postgres
+        image: {{ .Values.storage.db.image.name }}:{{ .Values.storage.db.image.tag }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5432
+          protocol: TCP
+        env:
+        - name: PGDATA
+          value: /var/lib/postgresql/mlflow/data
+        - name: POSTGRES_USER
+          value: {{ .Values.db.username }}
+        - name: POSTGRES_PASSWORD
+          value: {{ .Values.db.password }}
+        - name: POSTGRES_DB
+          value: {{ .Values.db.dbName }}
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+        volumeMounts:
+        - name: {{ .Release.Name }}-postgres-pvc
+          mountPath: /var/lib/postgresql/mlflow
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ .Release.Name }}-postgres-pvc
+    spec:
+      accessModes:
+      - {{ .Values.storage.db.volume.accessMode }}
+      resources:
+        requests:
+          storage: {{ .Values.storage.db.volume.size }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-postgres
+  namespace: {{ .Release.Namespace }}
+spec:
+  ports:
+  - port: 5432
+    targetPort: 5432
+    protocol: TCP
+  selector:
+    app: {{ .Release.Name }}-postgres
+
+{{- end }}
