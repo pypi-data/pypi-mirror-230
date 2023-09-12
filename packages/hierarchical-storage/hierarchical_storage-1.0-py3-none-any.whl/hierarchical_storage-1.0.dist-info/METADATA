@@ -1,0 +1,306 @@
+Metadata-Version: 2.1
+Name: hierarchical-storage
+Version: 1.0
+Summary: package for tree like structure sorted by category with named data
+Home-page: UNKNOWN
+Author: Marc MALBERT
+Author-email: eldrad-59@hotmail.fr
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+
+hierarchical_storage - package for tree like structure sorted by category with named data
+=========================================================================================
+
+This package contains the HierarchicalNode class that defines a recursive structure. Each node 
+can have child nodes distributed among categories. Nodes can also of course store data.
+
+# Baisc Use
+## Instanciation
+
+First, you have to import the HierarchicalNode class.  
+The \_\_init__ method use the following signature :
+
+```python
+# ===================================================
+def __init__(self, node_category, name, parent=None):
+    """
+    Initialization of a HierarchicalNode instance
+
+    :type node_category: str
+    :param node_category: the category of the node
+
+    :type name: str
+    :param name: the name of the node
+
+    :type parent: NonetType | HierarchicalNode
+    :param parent: the parent of this node
+    """
+```
+
+You always have to precise a category for a node. Categories are just strings and you create your own
+categories, their are no imposed one. Here, for your first node, certainly a root node, you can use 
+"ROOT" as a category.  
+If the notion of category is not usefull for your data structure, just pass an empty string each time.  
+Ex :
+```python
+from hierarchical_storage import HierarchicalNode
+
+root_node = HierarchicalNode("ROOT", "My Enyclopedia")
+```
+
+## Populate structure
+In order to populate your structure, you simply have to create new nodes.
+When you create a node, you can precise its parent node. The new node will be automatically 
+added to the parent node in the category of the child node.
+
+Ex :
+```python
+volume_1 = HierarchicalNode("Volume", "Volume 1", parent=root_node)
+chapter_1 = HierarchicalNode("Chapter", "Chapter 1", parent=volume_1)
+```
+
+## Handle data
+Each node can store any data within a personnal dictionnary. You can update this dictionnary with the
+set_data method.
+
+```python
+# ===================================
+def set_data(self, data_name, value):
+    """
+    This method is designed to update or set a data of this node
+
+    :type data_name: str
+    :param data_name: the name of the data to update
+
+    :type value: any
+    :param value: the data to update or set
+    """
+```
+
+As you can see no speific type is expected for a data, just see it as a simple dictionnary.  
+The method is very easy to use.
+
+Ex :
+```python
+root_node.set_data("language", "English")
+volume_1.set_data("title", "Mathematics")
+chapter_1.set_data("title", "Early mathematics")
+```
+
+Getting data is performed the same way through the 'get_data' method.
+```python
+# ============================
+def get_data(self, data_name):
+    """
+    This method is designed to get a data from this node
+
+    :type data_name: str
+    :param data_name: the name of the data to get
+
+    :rtype: any
+    :return: the desired data
+    """
+```
+
+Ex :
+```python
+root_node.get_data("language")
+>>> English
+```
+
+You can also remove an entree from the data with the remove_data method :
+
+```python
+# ===============================
+def remove_data(self, data_name):
+    """
+    This method is designed to remove a data from this node
+
+    :type data_name: str
+    :param data_name: the name of the data to remove
+    """
+```
+
+Ex :
+```python
+root_node.remove_data("language")
+```
+
+To know the different keys of the data of a node you have two methods at your disposal : 
+get_data_names_iterator and get_data_names.
+The first one returns an iterator over the names of the data, the second one returns the list of names 
+of the data.
+
+```python
+# ================================
+def get_data_names_iterator(self):
+    """
+    This method is designed to get an iterator over the names of the data of this node
+
+    :rtype: Generator[str]
+    :return: an iterator over the names of the data of this node
+    """
+
+# =======================
+def get_data_names(self):
+    """
+    This method is designed to get the list of the names of the data of this node
+
+    :rtype: list[str]
+    :return: the list of the names of the data of this node
+    """
+```
+
+Finally if necessary you can get a copy of the data of the node with the get_data_dict method.
+
+```python
+# ======================
+def get_data_dict(self):
+    """
+    This method is designed to get the dictionnary of the data of the node
+    Warning : Modifying the returned dictionnary won't modiy the dictionnary of the instance, yet modifying the data itself will
+
+    :rtype: dict[str, any]
+    :return: the dictionnary of the data of the node
+    """
+```
+
+## Modify the hierarchy
+If you made a mistake when you created your structure, you can still change the hierarchy of data with 
+the three following methods:
+
+```python
+# ====================================
+def set_node_category(self, category):
+    """
+    This method is designed to update the category of the node
+
+    :type category: str
+    :param category: the new category of the node
+    """
+
+# ===============================
+def set_parent(self, new_parent):
+    """
+    This method is designed to set the parent of this HierarchicalNode
+
+    :type new_parent: NoneType | HierarchicalNode
+    :param new_parent: the new parent of this HierarchicalNode
+    """
+
+# =========================
+def add_child(self, child):
+    """
+    This method is designed to add a child node to this node
+
+    :type child: HierarchicalNode
+    :param child: The child node to add to this node
+    """
+
+# ============================
+def remove_child(self, child):
+    """
+    This method is designed to remove a child node from this node
+
+    :type child: HierarchicalNode
+    :param child: the child node to remove from this node
+    """
+```
+
+## Walk the hierarchy
+First you can always get the parent node of a node with the get_parent method :
+
+```python
+# ===================
+def get_parent(self):
+    """
+    This method is designed to get the parent of this node
+
+    :rtype: NoneType | HierarchicalNode
+    :return: The parent of this node
+    """
+```
+
+You can check the diffents categories of a node with the following methods :
+
+```python
+# ================================
+def get_categories_iterator(self):
+    """
+    This method is designed to get an iterator over the categories of this node
+
+    :rtype: Generator[str]
+    :return: an iterator over the categories of this node
+    """
+
+# =======================
+def get_categories(self):
+    """
+    This method is designed to get the list of categories of this node
+
+    :rtype: list[str]
+    :return: the list of categories of this node
+    """
+
+# ==============================
+def get_sorted_categories(self):
+    """
+    This method is designed to get the list of categories of this node ordered by name
+
+    :rtype: list[str]
+    :return: the list of categories of this node ordered by name
+    """
+```
+
+You can then get the different child nodes of a category with these methods :
+
+```python
+# ==========================================================
+def get_children_in_category_iterator(self, child_category):
+    """
+    This method is designed to get an iterator over the children within a category for this node
+
+    :type child_category: str
+    :param child_category: the inspected category
+
+    :rtype: Generator[HierarchicalNode]
+    :return: an iterator over the children within the desired category for this node
+    """
+
+# =================================================
+def get_children_in_category(self, child_category):
+    """
+    This method is designed to get the NamedSequence of children within a category for this node
+    Warning : modifying the result NamedSequence won't moddify this instance, yet modifying the contained nodes will
+
+    :type child_category: str
+    :param child_category: the inspected category
+
+    :rtype: NamedSequence[HierarchicalNode]
+    :return: the NamedSequence of children within the desired category for this node
+    """
+
+# ========================================================
+def get_sorted_children_in_category(self, child_category):
+    """
+    This method is designed to get the NamedSequence of children within a category for this node, ordered by name
+    Warning : modifying the result NamedSequence won't moddify this instance, yet modifying the contained nodes will
+
+    :type child_category: str
+    :param child_category: the inspected category
+
+    :rtype: NamedSequence[HierarchicalNode]
+    :return: the NamedSequence of children within the desired category for this node, ordered by name
+    """
+```
+
+## Checking the structure
+If you want to check your structure just apply str() to any instance. you will get a string
+depicting the whole hierarchy. This string does not contains the data. Only node names and categories.
+
+
