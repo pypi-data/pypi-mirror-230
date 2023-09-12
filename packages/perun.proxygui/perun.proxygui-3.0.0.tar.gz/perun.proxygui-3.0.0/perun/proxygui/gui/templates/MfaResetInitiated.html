@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block contentwrapper %}
+  <div
+    class="window {% if cfg.css_framework == 'MUNI' %}framework_muni{% else %}framework_bootstrap5 bg-light{% endif %}">
+    <div id="content">
+      {% block content %}
+        <div class="content">
+        <br />
+        {% if cfg.mfa_reset_translations.sections[lang] is not none %}
+          {% if cfg.mfa_reset_translations.format is not none and (cfg.mfa_reset_translations.format == 'HTML' or cfg.mfa_reset_translations.format == 'markdown') %}
+            <h3><span>{{ cfg.mfa_reset_translations.sections[lang].disclaimer | safe }}</span></h3>
+            <div class="margin-bottom-24 wrap-col"><span>{{ cfg.mfa_reset_translations.sections[lang].explanation | safe }}</span></div>
+          {% else %}
+            <h3><span>{{ cfg.mfa_reset_translations.sections[lang].disclaimer }}</span></h3>
+            <div class="margin-bottom-24 wrap-col"><span>{{ cfg.mfa_reset_translations.sections[lang].explanation }}</span></div>
+          {% endif %}
+        {% endif %}
+        <div class="row-main">
+          <div class="grid">
+            <div class="grid__cell size--l--3-12 size--s--1-2">
+              <p class="btn-wrap--wide">
+                <a href="{{ referrer }}" class="btn btn-primary btn-s btn-border">
+                  <span class="no-uppercase">{{ cfg.general_translations.sections[lang].cancel }}</span>
+                </a>
+              </p>
+            </div>
+            <div class="margin-left-24 grid__cell size--l--3-12 size--s--1-2">
+              <p class="btn-wrap--wide">
+                <a href="{{ send_mfa_reset_emails }}" class="btn btn-primary btn-s btn-accept">
+                  <span class="no-uppercase">{{ cfg.general_translations.sections[lang].continue }}</span>
+                </a>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endblock %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
