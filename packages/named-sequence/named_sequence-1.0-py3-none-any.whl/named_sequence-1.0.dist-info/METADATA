@@ -1,0 +1,54 @@
+Metadata-Version: 2.1
+Name: named-sequence
+Version: 1.0
+Summary: list like object allowing selection by name and index
+Author: Marc MALBERT
+Author-email: eldrad-59@hotmail.fr
+Classifier: Programming Language :: Python :: 3
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+
+named_sequence - list like object allowing selection by name and index
+====================================================
+
+This package contains the class NamedSequence.  
+This class reproduces the behaviour of a list (from which it inherits) but most list special functions such as \__getitem__ allow name and index as argument.  
+Methods formerly returning list (such as slicing with \__getitem__ or copy) now return a NamedSequence instance.
+
+NamedSequence instances requires an additional argument : the name of the method of the items to get their name.
+
+
+# Basic usage
+## Instanciation
+```python
+from named_sequence import NamedSequence
+
+class NamedItem(object):  # Used only to illusrate the behaviour
+    def __init__(self, name):
+        self.__name = name
+
+    def get_name(self):
+        return self.__name
+
+the_instance = NamedSequence((NamedItem("a"), NamedItem("b")), "get_name")
+```
+
+## getting or setting items
+```python
+a1 = the_instance["a"]
+a2 = the_instance[0]
+a1 is a2
+>>> True
+
+the_instance["b"] = NamedItem("a")
+the_instance["b"] = NamedItem("d")  # the name "b" no more exists
+>>> KeyError: "No item named 'b' !
+
+the_instance["a"] = NamedItem("a2")  # When name are present several time, the fist occurence is considered
+for elem in the_instance:
+    print(elem.get_name())
+>>> a2
+>>> a
+```
