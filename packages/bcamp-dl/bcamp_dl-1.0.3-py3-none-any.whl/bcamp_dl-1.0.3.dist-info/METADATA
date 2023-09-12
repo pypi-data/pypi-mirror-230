@@ -1,0 +1,102 @@
+Metadata-Version: 2.1
+Name: bcamp-dl
+Version: 1.0.3
+Summary: Download your collection from Bandcamp.
+Author-email: ReK42 <ReK42@users.noreply.github.com>
+Maintainer-email: ReK42 <ReK42@users.noreply.github.com>
+License: MIT License
+        
+        Copyright (c) 2023 ReK42
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Repository, https://github.com/ReK42/bcamp-dl
+Project-URL: Issues, https://github.com/ReK42/bcamp-dl/issues
+Keywords: bandcamp,music
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Multimedia :: Sound/Audio
+Classifier: Topic :: System :: Archiving
+Classifier: Topic :: Utilities
+Classifier: Typing :: Typed
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: browser-cookie3 ==0.19.1
+Requires-Dist: bs4 ==0.0.1
+Requires-Dist: requests ==2.31.0
+Requires-Dist: rich ==13.5.2
+Provides-Extra: build
+Requires-Dist: setuptools ==68.2.1 ; extra == 'build'
+Requires-Dist: setuptools-scm ==7.1.0 ; extra == 'build'
+Requires-Dist: build ==1.0.3 ; extra == 'build'
+Requires-Dist: twine ==4.0.2 ; extra == 'build'
+Provides-Extra: tests
+Requires-Dist: black ==23.9.1 ; extra == 'tests'
+Requires-Dist: mypy ==1.5.1 ; extra == 'tests'
+Requires-Dist: ruff ==0.0.288 ; extra == 'tests'
+Requires-Dist: types-beautifulsoup4 ; extra == 'tests'
+Requires-Dist: types-requests ; extra == 'tests'
+
+# bcamp-dl
+[![PyPi Version](https://img.shields.io/pypi/v/bcamp-dl.svg)](https://pypi.python.org/pypi/bcamp-dl)
+[![PyPI Status](https://img.shields.io/pypi/status/bcamp-dl.svg)](https://pypi.python.org/pypi/bcamp-dl)
+[![Python Versions](https://img.shields.io/pypi/pyversions/bcamp-dl.svg)](https://pypi.python.org/pypi/bcamp-dl)
+[![License](https://img.shields.io/github/license/ReK42/bcamp-dl)](https://github.com/ReK42/bcamp-dl/blob/main/LICENSE)
+[![Last Commit](https://img.shields.io/github/last-commit/ReK42/bcamp-dl/main?logo=github)](https://github.com/ReK42/bcamp-dl/commits/main)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/ReK42/bcamp-dl/build.yml?logo=github)](https://github.com/ReK42/bcamp-dl/actions)
+[![Linted by Ruff](https://img.shields.io/badge/linting-ruff-purple?logo=ruff&logoColor=white)](https://github.com/astral-sh/ruff)
+[![Code Style by Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
+Download your collection from Bandcamp.
+
+## Installation
+Install [Python](https://www.python.org/downloads/), then install `pipx` and use it to install `bcamp-dl`:
+```sh
+python -m pip install --upgrade pip setuptools pipx
+pipx install bcamp-dl
+```
+
+## Usage
+To use, login to Bandcamp using one of the supported browsers. All albums in your collection will be downloaded to the output directory, with subfolders, based on the filename format selected. If not specified, the defaults are to use Firefox and download as MP3 V0 to per-artist subfolders in the current directory.
+```sh
+bcamp-dl --browser <BROWSER> --file-format <FORMAT> --directory <DIR> <USERNAME>
+```
+
+For all options, run `bcamp-dl --help`
+
+## Development Environment
+```sh
+git clone https://github.com/ReK42/bcamp-dl.git
+cd bcamp-dl
+python -m venv .env
+source .env/bin/activate
+python -m pip install --upgrade pip setuptools pre-commit
+pre-commit install
+pip install -e .[tests]
+```
