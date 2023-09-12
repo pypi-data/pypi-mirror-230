@@ -1,0 +1,92 @@
+Metadata-Version: 2.1
+Name: cold-postman
+Version: 0.1.8
+Summary: A postman helps you to send cold mails
+Home-page: https://github.com/thisishugow/cold_postman
+License: MIT
+Author: thisishugow
+Author-email: 59921505+thisishugow@users.noreply.github.com
+Requires-Python: >=3.10,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: markdown2 (>=2.4.10,<3.0.0)
+Requires-Dist: pandas (>=2.1.0,<3.0.0)
+Requires-Dist: pendulum (>=2.1.2,<3.0.0)
+Requires-Dist: pyyaml (>=6.0.1,<7.0.0)
+Description-Content-Type: text/markdown
+
+# cold-postman  
+**cold_postman** is a marketing tool to help users write cold mails in markdown and send them via a manageable csv file.
+
+
+### Installation
+
+`pip install cold_postman`
+
+
+### Initialize the config
+
+```bash
+python -m cold_postman init db 
+python -m cold_postman init config 
+```
+#### About `config.yaml`
+```yaml
+batch_num: 10 # mails sent per batch
+password: ''  # password 
+smtp_port: 587 # port
+smtp_server: smtp.example.com # smtp server
+user: 'example@example.com' # user mail
+from: 'Mr.Example' 
+unsubscribe:
+  link: mailto:example@example.com # The link for List-Unsubscibe.
+  subject: Unsubscribe # The subject if is a mailto link.
+  message: I'd like to unsubscribe. # Default message of the mail.
+alter_name: '' # The alternative name if blank in first_name + last_name. 
+```
+#### About `control csv`
+
+Control csv is the receiver list. Columns decribed as below:  
+- `first_name`:  First name of the receiver.
+- `last_name`:  Last name of the receiver.
+- `email`:  Receiver's mail address.
+- `last_sent`: Timestamp of last contact.
+- `enabled`: (int) `[1, 0]`, `1`=*enabled*. `0`=*disabled*, which will be skiped while executing.  
+
+
+### Send Mail
+Command to start the sending task: 
+```bash
+# usage: __main__.py [-h] [-c CONFIG] [-d CRMDB] -m MESSAGE -t TITLE -s SIGNATURE [-a ATTACH]
+
+# options:
+#   -h, --help            show this help message and exit
+#   -c CONFIG, --config CONFIG
+#                         (Filepath) The file path of the config.
+#   -d CRMDB, --crmdb CRMDB
+#                         (Filepath) The file path of the crm DB.
+#   -m MESSAGE, --message MESSAGE
+#                         (Filepath) REQUIRED. The email content in markdown.
+#   -t TITLE, --title TITLE
+#                         (str) REQUIRED. The email title
+#   -s SIGNATURE, --signature SIGNATURE
+#                         (Filepath) REQUIRED. The signature in markdown
+#   -a ATTACH, --attach ATTACH
+#                         (Filepath) The attachment. 
+#   -u UNSUBSCRIBE, --unsubscribe UNSUBSCRIBE
+#                         (Bool) [True, False] Enable a unsubscribe link. Default=True
+#   -i INTERVAL, --interval INTERVAL
+#                         (Int) Interval (secs) between batchs. Default=10
+python -m cold_postman -m message.md -t 'Subject of the Mail' -s signature.md -a attachment.zip
+```  
+
+### Prepare a markdown content
+> The markdown content is converted to rtf via `markdown2`, which supports all the stardard syntax.    
+
+The image wrapped in inline has to be written as following syntax.
+```markdown
+![image_cid](file_path.png)
+```  
+The alternative description will be applied as a cid in rtf, so please name it carefully and DO NOT be duplicated. To prevent from missing image, an absolute file path is recommended for attached image. 
