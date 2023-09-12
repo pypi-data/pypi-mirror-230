@@ -1,0 +1,83 @@
+Metadata-Version: 2.1
+Name: istockphoto
+Version: 0.1.0
+Summary: Gracefully download dataset from istockphoto
+Home-page: https://github.com/QIN2DIM/istock_downloader
+License: GPL-3.0-or-later
+Keywords: istockphoto,downloader,spider,istock
+Author: QIN2DIM
+Author-email: yaoqinse@gmail.com
+Requires-Python: >=3.8,<4.0
+Classifier: License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Scientific/Engineering :: Image Processing
+Classifier: Topic :: Scientific/Engineering :: Image Recognition
+Classifier: Topic :: Software Development
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Dist: bs4
+Requires-Dist: httpx
+Project-URL: Documentation, https://github.com/QIN2DIM/istock_downloader
+Project-URL: Repository, https://github.com/QIN2DIM/istock_downloader
+Description-Content-Type: text/markdown
+
+# iStockPhoto Downloader
+
+## Introduction
+
+Gracefully download dataset from iStockPhoto.
+
+## Quickstart
+
+1. **Download PyPI package**
+
+   ```bash
+   pip install -U istockphoto
+   ```
+
+2. **Examples**
+
+   - Download images about `panda` phrase. 
+
+   ```python
+   import asyncio
+   
+   from istockphoto import Istock
+   
+   if __name__ == "__main__":
+       istock = Istock.from_phrase("panda")
+       asyncio.run(istock.mining())
+   ```
+
+   - Similar mode
+   
+   ```python
+   import asyncio
+   
+   from istockphoto import Istock
+   
+   # phrase, image_id
+   name2similar = [
+       ("horse", "1280951754"),
+       ("panda", "91781059"),
+       ("cat", "1325997570")
+   ]
+   
+   if __name__ == "__main__":
+       for name, similar in name2similar:
+           istock = Istock.from_phrase(name)
+           istock.more_like_this(similar)
+           asyncio.run(istock.mining())
+   ```
+   
+
+## What's more
+
+[Home · QIN2DIM/istockphoto Wiki (github.com)](https://github.com/QIN2DIM/istockphoto/wiki)
+
