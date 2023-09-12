@@ -1,0 +1,61 @@
+Metadata-Version: 2.1
+Name: gifcm
+Version: 0.0.0
+Summary: Easy gif animation of matplotlib figures
+Author-email: Martin Schubert <mfschubert@gmail.com>
+Maintainer-email: Martin Schubert <mfschubert@gmail.com>
+License: MIT License
+        
+        Copyright (c) 2023 Martin Schubert
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Keywords: gif,animation,matplotlib
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: matplotlib
+Requires-Dist: numpy
+Provides-Extra: dev
+Requires-Dist: bump-my-version ; extra == 'dev'
+Requires-Dist: darglint ; extra == 'dev'
+Requires-Dist: gifcm[tests] ; extra == 'dev'
+Requires-Dist: pre-commit ; extra == 'dev'
+Provides-Extra: tests
+Requires-Dist: parameterized ; extra == 'tests'
+Requires-Dist: pytest ; extra == 'tests'
+
+# gifcm 0.0.0
+
+Gifcm provides a context manager for easy creation of gif animations from matplotlib figures. It does not offer capabilities beyond existing tools such as [gif](https://github.com/maxhumber/gif) or [celluloid](https://github.com/jwkvam/celluloid), but rather a different API making use of context managers.
+
+## Installation
+TODO
+
+## Usage
+Example usage is as follows:
+```python
+animated_figure = AnimatedFigure(figure=plt.figure())
+
+for i in range(10):
+  with animated_figure.frame():
+    plt.plot(i, i, "o")
+
+animated_figure.save_gif("my_animation.gif")
+```
