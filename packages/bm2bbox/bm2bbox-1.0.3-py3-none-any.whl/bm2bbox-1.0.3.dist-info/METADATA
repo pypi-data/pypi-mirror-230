@@ -1,0 +1,42 @@
+Metadata-Version: 2.1
+Name: bm2bbox
+Version: 1.0.3
+Summary: Converts binary mask files to geojson files containing bounding boxes
+Author: Juraj Zvolenský
+Author-email: Juraj Zvolensky <juro.zvolensky@gmail.com>
+Maintainer-email: Juraj Zvolensky <juro.zvolensky@gmail.com>
+Keywords: geojson,bounding box,binary mask,image segmentation,object detection,computer vision
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Science/Research
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: geojson >=3.0.1
+Requires-Dist: iniconfig >=2.0.0
+Requires-Dist: numpy >=1.25.2
+Requires-Dist: opencv-python >=4.8.0
+Requires-Dist: packaging >=23.1
+Requires-Dist: pluggy >=1.3.0
+Requires-Dist: pytest >=7.4.1
+
+# bm2bbox
+A simple tool to generate bounding boxes and coordinates for machine learning
+
+
+# Examples
+
+*Image Folder with multiple images*
+
+bm2bbox -input "path/to/image_folder" -output "path/to/output/folder" 
+
+```bash
+bm2bbox -input "/home/jzvolensky/Documents/bm2bbox/test_data/image_folder" -output "/home/jzvolensky/Documents/bm2bbox/test_output"
+```
+
+*Single image*
+
+bm2bbox -input "path/to/image.png" -output "path/to/output/output.json
+
+```bash
+bm2bbox -input "/home/jzvolensky/Documents/bm2bbox/test_data/single_image/test_bm.png" -s -output "/home/jzvolensky/Documents/bm2bbox/test_output"
+```
