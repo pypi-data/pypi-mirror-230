@@ -1,0 +1,16 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools>=61.0"]
+[project]
+name = "demo-1-sdk"
+description = "An APIMatic demo"
+version = "1.1.0"
+readme = "README.md"
+requires-python = ">=3.7"
+keywords = ["API", "Petstore", "SDK"]
+authors = [{name = "APIMatic Team", email = "support@apimatic.io"}]
+urls = {Documentation = "https://docs.apimatic.io"}
+dependencies = ["apimatic-core~=0.2.0", "apimatic-core-interfaces~=0.1.0", "apimatic-requests-client-adapter~=0.1.0", "python-dateutil~=2.8.1", "enum34~=1.1, >=1.1.10"]
+classifiers = []
+[project.optional-dependencies]
+testutils = ["pytest>=7.2.2"]
