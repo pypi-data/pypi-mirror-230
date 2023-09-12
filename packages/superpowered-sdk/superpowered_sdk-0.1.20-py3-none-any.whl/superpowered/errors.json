@@ -1,0 +1,170 @@
+[
+    {
+        "category": "authentication-and-authorization",
+        "code": 1001,
+        "http_code": 403,
+        "name": "forbidden",
+        "reason": "Invalid credentials",
+        "python_sdk_exception": "AuthenticationFailedError"
+    },
+    {
+        "category": "request-validation",
+        "code": 2000,
+        "http_code": 400,
+        "name": "invalid-request",
+        "reason": "Invalid request body",
+        "python_sdk_exception": "InvalidRequestError"
+    },
+    {
+        "category": "request-validation",
+        "code": 2001,
+        "http_code": 400,
+        "name": "invalid-patch-type",
+        "reason": "Invalid type for key in patch request",
+        "python_sdk_exception": "InvalidRequestError"
+    },
+    {
+        "category": "request-validation",
+        "code": 2002,
+        "http_code": 400,
+        "name": "invalid-title",
+        "reason": "Title failed to meet validation requirements",
+        "python_sdk_exception": "InvalidRequestError"
+    },
+    {
+        "category": "request-validation",
+        "code": 2003,
+        "http_code": 400,
+        "name": "duplicate-document-content",
+        "reason": "Document with identical content already exists in knowledge base",
+        "python_sdk_exception": "DuplicateDocumentContentError"
+    },
+    {
+        "category": "request-validation",
+        "code": 2004,
+        "http_code": 400,
+        "name": "document-content-length-exceeded",
+        "reason": "Document content length exceeds maximum allowed",
+        "python_sdk_exception": "DocumentLengthError"
+    },
+    {
+        "category": "request-validation",
+        "code": 2005,
+        "http_code": 400,
+        "name": "duplicate-knowledge-base-name",
+        "reason": "Knowledge base with identical name already exists",
+        "python_sdk_exception": "DuplicateKnowledgeBaseError"
+    },
+    {
+        "category": "request-validation",
+        "code": 2006,
+        "http_code": 400,
+        "name": "invalid-knowledge-base-name",
+        "reason": "Knowledge base name failed to meet validation requirements",
+        "python_sdk_exception": "InvalidRequestError"
+    },
+    {
+        "category": "request-validation",
+        "code": 2007,
+        "http_code": 400,
+        "name": "reserved-filename",
+        "reason": "Filename is reserved for internal use",
+        "python_sdk_exception": "InvalidRequestError"
+    },
+    {
+        "category": "request-validation",
+        "code": 2008,
+        "http_code": 400,
+        "name": "unsupported-method",
+        "reason": "Method is not supported",
+        "python_sdk_exception": "InvalidRequestError"
+    },
+    {
+        "category": "request-validation",
+        "code": 2009,
+        "http_code": 400,
+        "name": "missing-required-field",
+        "reason": "Required field is missing in payload",
+        "python_sdk_exception": "InvalidRequestError"
+    },
+    {
+        "category": "request-validation",
+        "code": 2010,
+        "http_code": 400,
+        "name": "invalid-filename",
+        "reason": "Filename failed to meet validation requirements",
+        "python_sdk_exception": "InvalidRequestError"
+    },
+    {
+        "category": "request-validation",
+        "code": 2011,
+        "http_code": 400,
+        "name": "invalid-file-type",
+        "reason": "File type is not supported",
+        "python_sdk_exception": "InvalidRequestError"
+    },
+    {
+        "category": "request-validation",
+        "code": 2012,
+        "http_code": 400,
+        "name": "duplicate-file-name",
+        "reason": "Filename already exists",
+        "python_sdk_exception": "InvalidRequestError"
+    },
+    {
+        "category": "request-validation",
+        "code": 2013,
+        "http_code": 400,
+        "name": "storage-exceeds-account-limit",
+        "reason": "Storage exceeds account limit",
+        "python_sdk_exception": "InvalidRequestError"
+    },
+    {
+        "category": "request-validation",
+        "code": 2014,
+        "http_code": 400,
+        "name": "invalid-url",
+        "reason": "Invalid url provided.",
+        "python_sdk_exception": "InvalidRequestError"
+    },
+    {
+        "category": "request-validation",
+        "code": 2015,
+        "http_code": 400,
+        "name": "non-existent-knowledge-base-id",
+        "reason": "Knowledge base id(s) in request do not exist",
+        "python_sdk_exception": "InvalidRequestError"
+    },
+    {
+        "category": "request-validation",
+        "code": 2016,
+        "http_code": 400,
+        "name": "invalid-knowledge-base-id",
+        "reason": "Knowledge bases must all have the same 'language_code'",
+        "python_sdk_exception": "InvalidRequestError"
+    },
+    {
+        "category": "not-found",
+        "code": 3001,
+        "http_code": 404,
+        "name": "file-not-found",
+        "reason": "File not found",
+        "python_sdk_exception": "NotFoundError"
+    },
+    {
+        "category": "5XX",
+        "code": 5001,
+        "http_code": 502,
+        "name": "internal-server-error",
+        "reason": "Internal server error",
+        "python_sdk_exception": "InternalServerError"
+    },
+    {
+        "category": "5XX",
+        "code": 5003,
+        "http_code": 504,
+        "name": "gateway-timeout",
+        "reason": "Gateway timeout",
+        "python_sdk_exception": "TimeoutError"
+    }
+]
