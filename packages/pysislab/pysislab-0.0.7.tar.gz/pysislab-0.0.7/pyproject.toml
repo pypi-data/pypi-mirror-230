@@ -1,0 +1,27 @@
+[project]
+name = "pysislab"
+version = "0.0.7"
+authors = [{ name = "Ben Hong", email = "benjamin.hong476@gmail.com" }]
+description = "Package to fetch data from the CRISiSLab seismometer network"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/ben476/pysislab"
+"Bug Tracker" = "https://github.com/ben476/pysislab/issues"
+
+[build-system]
+requires = [
+    # Also declared in requirements.txt, if updating here please also update
+    # there
+    "Cython~=3.0.0",
+    "setuptools >= 35.0.2",
+]
+build-backend = "setuptools.build_meta"
