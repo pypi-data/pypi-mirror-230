@@ -1,0 +1,20 @@
+language: python
+
+sudo: false
+
+python:
+  - 3.9
+  - 3.10
+  - 3.11
+
+addons:
+  apt:
+    packages:
+    - iverilog
+    - verilator
+
+install:
+  - pip install pytest pytest-pythonpath pytest-xdist pyverilog numpy
+
+script:
+  - python -m pytest tests examples
