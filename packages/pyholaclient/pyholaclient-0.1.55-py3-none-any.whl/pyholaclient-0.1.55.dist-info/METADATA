@@ -1,0 +1,69 @@
+Metadata-Version: 2.1
+Name: pyholaclient
+Version: 0.1.55
+Summary: An API Wrapper for HolaClient
+Home-page: https://github.com/VienDC/HolaClientPY
+Author: Vien Catigan
+Author-email: vien@courvix.com
+License: GPL-3.0
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: httpx ==0.24.1
+
+# PyHolaClient
+A HolaClient API Wrapper using Python!
+
+[![Upload Python Package](https://github.com/VienDC/PyHolaClient/actions/workflows/python-publish.yml/badge.svg)](https://github.com/VienDC/PyHolaClient/actions/workflows/python-publish.yml)
+
+## Special Thanks to The HolaClient Team!
+- [HolaClient's Github](https://github.com/HolaClient/)
+- [CR072's Github (Main Dev)](https://github.com/CR072)
+
+Installation
+To install just run
+```bash
+pip install pyholaclient
+```
+
+## Usage
+### Setting up Client
+
+```python
+from pyholaclient import HolaClient
+
+client = HolaClient("https://foo.bar", "foo")
+```
+
+### Getting User's HCID 
+```
+from pyholaclient import HolaClient
+
+client = HolaClient("https://foo.bar", "foo")
+hcid = client.user_hcid(1000000000000000) # <= Discord ID
+print(hcid)
+```
+
+## Getting User Info
+from pyholaclient import HolaClient
+
+client = HolaClient("https://foo.bar", "foo")
+hcid = 1000
+user = client.user_info(hcid)
+
+print(user.email)
+print(user.first_name)
+print(user.last_name)
+print(user.username)
+print(user.id)
+print(user.root_admin) # <== True if Admin
+# And many more (Read pyholaclient/Classes/user.py)
+```
+
+### There are many more
+But for the sake of simplicity. Head to our Docs (WIP)
