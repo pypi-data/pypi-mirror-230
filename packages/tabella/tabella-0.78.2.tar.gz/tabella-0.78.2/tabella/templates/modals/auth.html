@@ -1,0 +1,47 @@
+<dialog id="auth-modal" class="modal-primary w-1/5 top-52">
+
+    {# Close Button #}
+    {% with title="Authorize", modal_id="auth-modal" %}
+        {% include "modals/_title_bar.html" %}
+    {% endwith %}
+
+    {# API Key Input #}
+    <div id="auth-input-div" class="flex pr-8 pl-8">
+        <label class="mb-4 w-full">
+            <span class="text-xl">API Key</span>
+            <input id="auth-input" class="input-primary form-input" autocomplete="off">
+        </label>
+    </div>
+
+    <div id="auth-result" class="hidden ml-12 mr-12 mb-2">
+        <div class="flex ml-2 mr-2 text-lg">
+            <p>Name:</p>
+            <p class="ml-auto mr-4">api_key</p>
+        </div>
+        <div class="flex ml-2 mr-2 text-lg">
+            <p>In:</p>
+            <p class="ml-auto mr-4">header</p>
+        </div>
+        <div class="flex ml-2 mr-2 text-lg">
+            <p>Value:</p>
+            <p class="ml-auto mr-4">********</p>
+        </div>
+    </div>
+
+    {# Submit Button #}
+    <div class="flex rounded-b-lg pb-4 pt-2">
+        <button id="auth-button"
+                class="ml-8 mr-8 p-1 rounded-lg w-full submit-button"
+                onclick="authorize()"
+                disabled>
+            Authorize
+        </button>
+    </div>
+
+</dialog>
+
+<script>
+    document.getElementById("auth-input").addEventListener(
+        "input", (e) => document.getElementById("auth-button").disabled = e.target.value === ""
+    );
+</script>
