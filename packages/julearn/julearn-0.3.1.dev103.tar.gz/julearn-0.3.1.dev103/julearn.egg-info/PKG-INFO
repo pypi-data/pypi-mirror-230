@@ -1,0 +1,100 @@
+Metadata-Version: 2.1
+Name: julearn
+Version: 0.3.1.dev103
+Summary: Juelich Machine Learning Library
+Author-email: Fede Raimondo <f.raimondo@fz-juelich.de>, Sami Hamdan <s.hamdan@fz-juelich.de>
+Maintainer-email: Sami Hamdan <s.hamdan@fz-juelich.de>
+License: AGPL-3.0-only
+Project-URL: homepage, https://juaml.github.io/julearn
+Project-URL: documentation, https://juaml.github.io/julearn
+Project-URL: repository, https://github.com/juaml/julearn
+Keywords: machine-learning
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Science/Research
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved
+Classifier: Natural Language :: English
+Classifier: Topic :: Software Development
+Classifier: Topic :: Scientific/Engineering
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE.md
+License-File: AUTHORS.rst
+Requires-Dist: numpy<1.26,>=1.24
+Requires-Dist: pandas<2.1,>=1.5.0
+Requires-Dist: scikit-learn>=1.2.0
+Requires-Dist: statsmodels<0.15,>=0.13
+Provides-Extra: dev
+Requires-Dist: tox; extra == "dev"
+Requires-Dist: pre-commit; extra == "dev"
+Provides-Extra: docs
+Requires-Dist: seaborn<0.13,>=0.12.2; extra == "docs"
+Requires-Dist: Sphinx<5.4,>=5.3.0; extra == "docs"
+Requires-Dist: sphinx-gallery<0.14,>=0.13.0; extra == "docs"
+Requires-Dist: furo<2023.0.0,>=2022.9.29; extra == "docs"
+Requires-Dist: sphinx_copybutton<0.6,>=0.5.0; extra == "docs"
+Requires-Dist: numpydoc<1.6,>=1.5.0; extra == "docs"
+Requires-Dist: towncrier==22.12.0; extra == "docs"
+Provides-Extra: deslib
+Requires-Dist: deslib<0.4,>=0.3.5; extra == "deslib"
+Provides-Extra: viz
+Requires-Dist: panel>=1.0.0b1; extra == "viz"
+Requires-Dist: bokeh>=3.0.0; extra == "viz"
+Requires-Dist: param>=1.11.0; extra == "viz"
+
+# julearn
+
+![PyPI](https://img.shields.io/pypi/v/julearn?style=flat-square)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/julearn?style=flat-square)
+![PyPI - Wheel](https://img.shields.io/pypi/wheel/julearn?style=flat-square)
+![GitHub](https://img.shields.io/github/license/juaml/julearn?style=flat-square)
+![Codecov](https://img.shields.io/codecov/c/github/juaml/julearn?style=flat-square)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+
+## About
+
+The Forschungszentrum Jülich Machine Learning Library
+
+Check our full documentation here: https://juaml.github.io/julearn/index.html
+Check our video tutorial here: [julearn Playlist](https://youtube.com/playlist?list=PLvb39y5Ge21CUjccmY_0kXRCwBBaikGf_)
+
+It is currently being developed and maintained at the [Applied Machine Learning](https://www.fz-juelich.de/en/inm/inm-7/research-groups/applied-machine-learning-aml) group at [Forschungszentrum Juelich](https://www.fz-juelich.de/en), Germany.
+
+## Installation
+
+Use `pip` to install from PyPI like so:
+
+```
+pip install julearn
+```
+
+## Licensing
+
+julearn is released under the AGPL v3 license:
+
+julearn, FZJuelich AML machine learning library.
+Copyright (C) 2020, authors of julearn.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+## Citing
+
+We still do not have a publication that you can use to cite julearn in your
+manuscript. However, julearn realies heavily on scikit-learn.
+
+Please cite scikit-learn: https://scikit-learn.org/stable/about.html#citing-scikit-learn
