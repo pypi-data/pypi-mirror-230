@@ -1,0 +1,39 @@
+[package]
+name = "check-config"
+version = "0.4.0"
+edition = "2021"
+license = "MIT"
+homepage = "https://pypi.org/project/check-config/"
+documentation = "https://check-config.readthedocs.io"
+repository = "https://github.com/mrijken/check-config"
+keywords = ["automation", "configuration"]
+authors = ["Marc Rijken <marc@rijken.org>"]
+readme = "README.md"
+description = "Check configuration files."
+
+exclude = [".github/*", "videos/*"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[[bin]]
+name = "check_config"
+
+[dependencies]
+toml = { version = "0.7.6", features = [] }
+serde = { version = "1.0", features = [] }
+serde_yaml = "0.9.25"
+toml_edit = "0.19.14"
+similar = "2.2.1"
+log = "0.4.20"
+clap = { version = "4.3.19", features = ["derive"] }
+regex = "1.9.1"
+thiserror = "1.0.44"
+serde_json = "1.0.104"
+tempfile = "3.7.1"
+dirs = "5.0.1"
+clap-verbosity-flag = "2.0.1"
+env_logger = "0.10.0"
+
+[profile.release]
+panic = "abort"
+lto = "fat"
+codegen-units = 1
