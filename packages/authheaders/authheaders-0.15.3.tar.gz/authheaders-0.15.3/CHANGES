@@ -1,0 +1,102 @@
+2023-09-11 Version 0.15.3
+  - Fix parsing of psddmarc.org CSV file for PSD domains
+  - Update PSL from upstream
+
+2023-03-05 Version 0.15.2
+  - Fix missing import for DNSException (Thanks Mark Sapiro)
+  - Update PSL from upstream
+
+2022-04-21 Version 0.15.1
+  - Correct issue with updated TXT record processing from 0.15.0
+  - Correct longstanding validation issue and return results as lower case
+    since ABNF allows for upper or lower case for everything except DMARC1 in
+    the version
+
+2022-04-17 Version 0.15.0
+  - Add dmarc-policy-find script to allow policy lookup and org determination
+    using multiple discovery methods (RFC 7489 (DMARC), RFC 9091 (PSD), and
+    DMARCbis) as of DMARCbis-07.  DMARCbis still under development and may
+    change
+  - Check all TXT records returned and return no result if there are multiple
+    DMARC records per RFC 7489, Section 6.6.3
+
+2021-10-18 Version 0.14.1
+  - Bump version to fix pypi artifacts, no code changes
+
+2021-10-18 Version 0.14.0
+  - Use email.utils to parse the From header addresses (Thanks to Adam Clark
+    for noting this issue and providing the fix) Fixes Github #5
+  - Correct minimum authres version requirment in setup.py
+  - Catch more errors.  Add DKIM temperror.  (Thanks to 'niftylettuce') Fixes
+    Github #18
+  - Skip DMARC records with no 'p' tag and don't raise an error (also thanks
+    to 'niftylettuce')  Fixes Github #14
+  - Fix issues with upper case characters in domain (Thanks to Mark Sapiro for
+    root causing the issue and providing a fix for the domain name regex)
+    Fixes Github #13
+  - Include ARC result comment is A-R header field when ARC fails.  Fixes
+    Github #12
+  - Handle the case where no valid From is found.  Fixes Github #15
+
+2020-01-25 Version 0.13.0
+  - Switch from the deprecated publicsuffix package to publicsuffix2
+  - Note: PSL unchanged since last update
+
+2020-01-23 Version 0.12.2
+  - Do not pass timestamp value to dkimpy for DKIM signing, only supported for
+    ARC (update documentation too) (Closes: Github Issue #3)
+  - Update PSL from upstream
+
+2019-12-10 Version 0.12.1
+  - Adapt tests to work with dkimpy 1.0.0 test dns API changes
+  - Update PSL from upstream
+
+2019-09-15 Version 0.12.0
+  - Implement RFC 7489 Section 6.6.1 multi-valued from processing for DMARC
+  - Implement support for distinct sub-domain policy ('sp' tag)
+  - Include DMARC policy in addition to raw DMARC result in A-R response
+  - Support 'np' non-existent domain policy (draft-ietf-dmarc-psd) in addition
+    to 'p' and 'sp'
+  - Fixed error with org domain determination in SPF portion of DMARC
+    validation
+  - Correct DMARC message from extraction so multiple from is properly
+    detected
+
+2019-04-24 Version 0.11.0
+  - Add support for PSD (Public Suffix Domain) DMARC, draft-ietf-dmarc-psd
+    - Check using local copy of psddmarc.org registry if present or
+      psddmarc.org DNS lookup service if not
+    - Add setup.py extension to add local copy of psddmarc.org registry
+  - Correct DMARC processing so that domains without DMARC records correctly
+    get a none result vice pass
+  - Correct DMARC portion of test suite so DMARC record look-ups in the test
+    data give an appropriate answer
+  - Change email domain extraction regex so it finds a domain more than two
+    lables (e.g. text.example.com)
+  - Add comment to DMARC results in the output Authentication Results header
+    field indicating if the DMARC record was from the from domain, the org
+    domain, or (if enabled) the public suffix domain
+  - Update PSL from upstream
+
+2018-11-25 Version 0.10.0
+  - Changed SPF check default to False in authenticate_message since pyspf is
+    not in install_requires
+  - Added new pslupdate option to setup.py so embedded public suffix list copy
+    can be easily updated
+  - Added new psllocal option to setup.py to set the location of a system
+    public suffix list to use in lieu of the embedded copy
+  - Only include domain part of Mail From address in smtp.mailfrom since RFC
+    7601 says this is virtually always the right thing to do
+  - Fixed SPF checks to they work and switched SPF check to use current vice
+    legacy pyspf API
+  - Fixed use of dnspython API in dmarc_lookup.py so DMARC records are
+    correclty returned
+  - Fixed dmarc_check to only use domain part of the Mail From address so SPF
+    based DMARC checks work
+  - Added version checks in setup.py so ipaddress is not required for
+    python3.3 and later (since it is in the standard library)
+  - Added COPYING file to document package licenses
+  - Added CHANGES file (only covers 0.9.3 and later)
+
+2018-10-30 Version 0.9.3
+  - Swtiched to using upstream dkimpy, rather than obselete Valimail fork
