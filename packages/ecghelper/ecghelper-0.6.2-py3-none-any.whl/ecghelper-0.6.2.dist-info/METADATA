@@ -1,0 +1,57 @@
+Metadata-Version: 2.1
+Name: ecghelper
+Version: 0.6.2
+Summary: Tools to load and process electrocardiogram data.
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.8
+Requires-Dist: cython>=0.29.34
+Requires-Dist: joblib>=1.2.0
+Requires-Dist: lxml>=4.9.2
+Requires-Dist: pip>=23.1.2
+Requires-Dist: pyedflib>=0.1.32
+Requires-Dist: scikit-learn>=1.2.2
+Requires-Dist: scipy>=1.10.1
+Requires-Dist: tqdm>=4.65.0
+Requires-Dist: types-lxml>=2023.3.28
+Requires-Dist: wfdb>=4.1.2
+Requires-Dist: xgboost>=1.7.4
+Provides-Extra: dev
+Requires-Dist: build; extra == 'dev'
+Requires-Dist: pytest; extra == 'dev'
+Requires-Dist: twine; extra == 'dev'
+Description-Content-Type: text/markdown
+
+# ecghelper
+
+A utility package for working with electrocardiograms, particularly 12-lead electrocardiograms.
+
+## Quickstart
+
+```sh
+pip install ecghelper
+```
+
+### Development
+
+Assuming `conda` or `mamba` are available in the shell, you can create a virtual environment for package development as follows.
+
+```sh
+conda create -y -n ecghelper "python>=3.9"
+conda activate ecghelper
+pip install ecghelper[dev]
+```
+
+If you are using `zsh`, you will need to escape the square brackets, i.e.:
+
+```sh
+pip install ecghelper\[dev\]
+```
+
+## Converting functions
+
+Debug - directly call the entry point.
+
+```
+python -m pdb src/ecghelper/__main__.py convert -i 82000.xml -f xml -o 82000_wfdb -t wfdb
+```
