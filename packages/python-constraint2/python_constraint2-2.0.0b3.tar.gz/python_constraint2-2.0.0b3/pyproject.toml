@@ -1,0 +1,96 @@
+[build-system]
+requires = [
+    "poetry-core>=1.7.0",
+    "setuptools>=67.7.2",
+    "Cython>=3.0.2",
+    "tomli>=2.0.1",
+]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "python-constraint2" # when set back to "python-constraint", don't forget to remove '2' in other places (e.g. README)
+packages = [{ include = "constraint", from = "." }]
+description = "python-constraint is a module for efficiently solving CSPs (Constraint Solving Problems) over finite domains."
+version = "2.0.0b3" # adhere to PEP440 versioning: https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/#id55
+authors = [
+    "Gustavo Niemeyer <gustavo@niemeyer.net>",
+    "Sébastien Celles <s.celles@gmail.com>",
+    "Floris-Jan Willemsen <fjwillemsen97@gmail.com>",
+]
+license = "BSD-2-Clause"
+readme = "README.rst"
+maintainers = ["Floris-Jan Willemsen <fjwillemsen97@gmail.com>"]
+repository = "https://github.com/python-constraint/python-constraint"
+documentation = "http://python-constraint.github.io/python-constraint/"
+keywords = [
+    "CSP",
+    "constraint solving problems",
+    "problem solver",
+    "SMT",
+    "satisfiability modulo theory",
+    "SAT",
+]
+classifiers = [
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Education",
+    "Natural Language :: English",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Software Development",
+    "Development Status :: 4 - Beta",
+]
+[tool.poetry.build]
+generate-setup-file = false
+script = "build.py"
+
+# ATTENTION: if anything is changed here, run `poetry update`
+[tool.poetry.dependencies]
+python = ">=3.8,<3.12" # when changing the minimum Python version, also change the test versions in the Noxfile and GitHub Actions
+[tool.poetry.group.dev.dependencies]
+Cython = "^3.0.2"
+
+# ATTENTION: if anything is changed here, run `poetry update` and `poetry export --with docs --without-hashes --format=requirements.txt > docs/requirements.txt`
+[tool.poetry.group.docs]
+optional = true
+[tool.poetry.group.docs.dependencies]
+sphinx = "^7.1.2"
+sphinx-autodoc-typehints = "^1.24.0"
+sphinx_rtd_theme = "^1.3.0"
+sphinx-pyproject = "^0.3.0"
+toml = "^0.10.2"
+
+# ATTENTION: if anything is changed here, run `poetry update`
+[tool.poetry.group.test]
+optional = true
+[tool.poetry.group.test.dependencies]
+pytest = "^7.4.0"
+pytest-cov = "^4.1.0"
+nox = "^2023.4.22"
+ruff = "^0.0.286"
+pep440 = "^0.1.2"
+tomli = "^2.0.1"      # can be replaced by built-in [tomllib](https://docs.python.org/3.11/library/tomllib.html) from Python 3.11
+
+[tool.black]
+line-length = 120
+[tool.ruff]
+line-length = 120
+src = ["constraint"]
+respect-gitignore = true
+exclude = ["docs", "examples", "tests"]
+select = [
+    "E",  # pycodestyle
+    "F",  # pyflakes,
+    "D",  # pydocstyle,
+    "UP", # pyupgrade
+]
+[tool.ruff.pydocstyle]
+convention = "google"
+
+[tool.pytest.ini_options]
+minversion = "7.4"
+pythonpath = [
+    "constraint",
+] # necessary to get coverage reports without installing with `-e`
+addopts = "--cov --cov-config=.coveragerc --cov-report html --cov-report term-missing --cov-fail-under 80"
+testpaths = ["tests"]
