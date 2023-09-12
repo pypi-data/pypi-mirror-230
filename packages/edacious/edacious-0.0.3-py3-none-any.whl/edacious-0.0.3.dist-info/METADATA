@@ -1,0 +1,29 @@
+Metadata-Version: 2.1
+Name: edacious
+Version: 0.0.3
+Summary: Edacious an Event Derive Architecture framework
+Home-page: https://github.com/eldad1221/edacious
+Author: Eldad Bishari
+Author-email: eldad@1221tlv.org
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: quickbelog >=1.1.0
+
+# Edacious an Event Derive Architecture framework
+
+Implementing an EDA usually requires a queue mechanism. Currently support Redis streams and Amazon Web Services SQS.
+
+Event must be a dict that contain data to be processed.
+Every event must have an event type (str) attribute, reserve key is `event-type`.
+
+To process an event the event type has to be associated to one or more event handlers.
+
+Event handler is a function that receive an event (dict) and process it, here is an example.
+
+    @event_handler(event_type='hello-world')
+    def my_handler(event: dict):
+        print(event)
+
