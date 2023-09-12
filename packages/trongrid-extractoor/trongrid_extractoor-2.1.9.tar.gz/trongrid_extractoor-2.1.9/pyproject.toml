@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "trongrid-extractoor"
+version = "2.1.9"
+description = "Extract transactions from the Trongrid API."
+authors = ["Chain Argos"]
+readme = "README.md"
+packages = [{include = "trongrid_extractoor"}]
+homepage = "https://chainargos.com"
+
+include = [
+    "CHANGELOG.md",
+    "LICENSE",
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.31.0"
+pendulum = "^2.1.2"
+rich = "^13.4.1"
+base58 = "^2.1.1"
+tenacity = "^8.2.2"
+requests_toolbelt = "^1.0.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry.scripts]
+extract_tron_events  = 'trongrid_extractoor:extract_tron_events'
+epoch_ms_to_datetime = 'trongrid_extractoor:epoch_ms_to_datetime'
+datetime_to_epoch_ms = 'trongrid_extractoor:datetime_to_epoch_ms'
+hex_address_to_tron  = 'trongrid_extractoor:hex_address_to_tron'
+tron_address_to_hex  = 'trongrid_extractoor:tron_address_to_hex'
