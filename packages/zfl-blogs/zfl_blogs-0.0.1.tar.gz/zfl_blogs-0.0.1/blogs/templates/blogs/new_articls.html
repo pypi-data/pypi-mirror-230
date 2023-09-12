@@ -1,0 +1,18 @@
+
+<!-- 新着記事リスト -->
+<div class="stick">
+  <div>
+    <div class="alert alert-warning" role="alert">
+      <strong>新着記事</strong>
+    </div>
+    {% for articl in new_articls %}
+    <a href="{% url 'blogs:detail' articl.pk %}">
+      <div>
+	<p>{{ articl.title }}</p>
+	<hr>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+
