@@ -1,0 +1,65 @@
+Metadata-Version: 2.1
+Name: fw-client
+Version: 0.7.0
+Summary: Flywheel HTTP API client.
+Home-page: https://gitlab.com/flywheel-io/tools/lib/fw-client
+License: MIT
+Keywords: Flywheel,API,HTTP,client
+Author: Flywheel
+Author-email: support@flywheel.io
+Requires-Python: >=3.8,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Dist: fw-http-client (>=1.4.1,<2.0.0)
+Requires-Dist: memoization (>=0,<1)
+Requires-Dist: packaging (>=23,<24)
+Requires-Dist: requests (>=2.27.1,<3.0.0)
+Requires-Dist: urllib3 (>=1.26)
+Project-URL: Documentation, https://gitlab.com/flywheel-io/tools/lib/fw-client
+Project-URL: Repository, https://gitlab.com/flywheel-io/tools/lib/fw-client
+Description-Content-Type: text/markdown
+
+# fw-client
+
+Flywheel HTTP API client.
+
+## Installation
+
+Add as a `poetry` dependency to your project:
+
+```bash
+poetry add fw-client
+```
+
+## Usage
+
+```python
+from fw_client import FWClient
+
+fw = FWClient(
+    api_key="site.flywheel.io:699uxdIh2wmqtdDyLJ",
+    client_name="my-app",
+    client_version="1.0",
+)
+projects = fw.get("/api/projects")
+project_labels = [proj.label for proj in projects]
+```
+
+## Development
+
+Install the project using `poetry` and enable `pre-commit`:
+
+```bash
+poetry install
+pre-commit install
+```
+
+## License
+
+[![MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
