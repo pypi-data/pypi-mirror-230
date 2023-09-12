@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mixxx-bisect"
+version = "0.1.1"
+description = "Finds Mixxx regressions by binary searching over prebuilt snapshots"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+classifiers = ["Topic :: Utilities"]
+keywords = ["mixxx", "bisect", "regression"]
+dependencies = [
+  "requests >= 2.31, < 3",
+  "beautifulsoup4 >= 4.12, < 5",
+  "tqdm >= 4.66, < 5",
+]
+
+[project.urls]
+Homepage = "https://github.com/fwcd/mixxx-bisect"
+Repository = "https://github.com/fwcd/mixxx-bisect"
+
+[project.scripts]
+mixxx-bisect = "mixxx_bisect:main"
+
+[tool.setuptools.packages]
+find = {}
+
+[tool.pyright]
+include = ["mixxx_bisect"]
