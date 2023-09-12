@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dgsolvdb"
+version = "0.0.0a0"
+authors = [
+    { name = "Jackosn Burns" },
+]
+license = { text = "MIT" }
+description = "Free energy of solvation database wrapper - no dependencies."
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+urls = { Homepage = "https://github.com/QuantumPioneer/dgsolvdb" }
+requires-python = ">=3.8"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["black", "isort", "pytest"]
+demos = ["jupyter"]
+
+[project.readme]
+file = "README.md"
+content-type = "text/markdown"
+
+[tool.isort]
+profile = "black"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["dgsolvdb*"]
+exclude = ["docs*", "examples*", "test*"]
