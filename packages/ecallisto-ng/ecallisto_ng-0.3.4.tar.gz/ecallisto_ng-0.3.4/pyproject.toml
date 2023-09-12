@@ -1,0 +1,35 @@
+[project]
+name = "ecallisto_ng"
+version = "0.3.4"
+authors = [{name = "Vincenzo Timmel", email = "vincenzo.timmel@fhnw.ch"}]
+description = "A Python package for the fetching (and some processing) of eCallisto data via the eCallisto API."
+readme = "README.md"
+
+requires-python = ">=3.9"
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    'numpy>=1.21.6',
+    'pandas>=2.0.0',
+    'plotly',
+    'matplotlib',
+    'requests',
+    'scikit-image>=0.20.0',
+    'pyarrow'
+
+]
+[project.optional-dependencies]
+nb = ['nbformat', 'ipython', 'ipykernel']
+dev = ['black', 'isort', 'twine', 'build']
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project.urls]
+Homepage = "https://github.com/i4Ds/ecallisto_ng"
+"Bug Tracker" = "https://github.com/i4Ds/ecallisto_ng/issues"
