@@ -1,0 +1,99 @@
+2023-09-08 Version: 1.0.15
+- Generated python2 2017-09-12 for Cbn.
+
+2023-08-08 Version: 1.0.14
+- Generated python2 2017-09-12 for Cbn.
+
+2023-08-08 Version: 1.0.13
+- Generated python2 2017-09-12 for Cbn.
+
+2023-07-13 Version: 1.0.12
+- Update API ListTransitRouterRouteEntries to support PathAttributes.
+
+2023-05-23 Version: 1.0.11
+- Update API DescribeGrantRulesToCen support ChildInstanceOwnerId and ChildInstanceId.
+
+2023-04-27 Version: 1.0.10
+- Update API DescribeCenAttachedChildInstanceAttribute support returning VPC Cidrs.
+
+2023-03-17 Version: 1.0.9
+- Update API CreateTransitRouteTableAggregation update request parameter TransitRouteTableAggregationScop to TransitRouteTableAggregationScope.
+- Update API DescribeTransitRouteTableAggregation update response parameter Scop to Scope.
+
+2023-03-13 Version: 1.0.8
+- Update API DescribeCens support parameter resourceGroupId.
+- Update API DescribeCens support parameter resourceGroupId, tag and response resourceGroupId, tags.
+
+2023-01-13 Version: 1.0.7
+- New API CreateTransitRouteTableAggregation.
+- New API DeleteTransitRouteTableAggregation.
+- New API DescribeTransitRouteTableAggregation.
+- New API DescribeTransitRouteTableAggregationDetail.
+- New API RefreshTransitRouteTableAggregation.
+- Update API CreateTransitRouterRouteTable support parameter RouteTableOptions.
+- Update API UpdateTransitRouterRouteTable support parameter RouteTableOptions.
+- Update API ListTransitRouterRouteTables support parameter RouteTableOptions and response RegionId, RouteTableOptions.
+- Update API UpdateTrafficMarkingPolicyAttribute support parameter AddTrafficMatchRules and DeleteTrafficMatchRules.
+- Update API ListTransitRouters support parameter Status, Type, TransitRouterName and FeatureFilter.
+- Update API DescribeFlowlogs support response TransitRouterAttachmentId and Interval.
+- Update API ListTransitRouterVpcAttachments support parameter OrderType, Status and response OrderType.
+- Update API ListTransitRouterRouteTableAssociations support parameter TransitRouterAttachmentResourceId, TransitRouterAttachmentResourceType and Status.
+- Update API ListTransitRouterRouteTablePropagations support parameter TransitRouterAttachmentResourceId, TransitRouterAttachmentResourceType and Status.
+
+2022-12-08 Version: 1.0.6
+- Add ListCenChildInstanceRouteEntriesToAttachment support query VPC instance route to Vpc Attachment.
+- Add ListTransitRouterAttachmentPropagations support query TransitRouter Propagations by Attachment Id.
+- ListTransitRouterMulticastGroups: add parameter isGroupSource, isGroupMember and NetworkInterfaceIds. add response TransitRouterMulticastDomainId. 
+- ListMulticastDomains: add response TransitRouterId.
+- ListCenInterRegionTrafficQosPolicies: add response TransitRouterId and TransitRouterAttachmentId. 
+- ListTrafficMarkingPolicies: add response TransitRouterId.
+- DescribeFlowlogs: add parameter TransitRouterAttachmentId.
+- DeleteTransitRouterConnectPeer: add ErrorCode.
+- ListTransitRouterVpcAttachments: add parameter VpcId.
+- ListTransitRouterMulticastGroups: param TransitRouterMulticastDomainId Required False.
+- DeleteTransitRouterConnectAttachment: add parameter Force.
+- DeleteTransitRouterVpcAttachment : add parameter Force.
+- DeleteTransitRouterVpnAttachment : add parameter Force.
+- DeleteTransitRouterVbrAttachment : add parameter Force.
+
+2022-11-28 Version: 1.0.5
+- Add CreateTransitRouterCidr support create TR Cidr.
+- Add ModifyTransitRouterCidr support modify TR Cidr.
+- Add DeleteTransitRouterCidr support delete TR Cidr.
+- Add ListTransitRouterCidr support list TR Cidr.
+- Add ListTransitRouterCidrAllocation support list TR Cidr allocation.
+- Update CreateTransitRouter support TR Cidr list.
+- Update ListTransitRouters support Cidr list.
+- Update ListTransitRouterVpnAttachments response support ChargeType.
+- CreateFlowlog add parameter tag.
+- DescribeFlowlogs add parameter tag and add response tags.
+- CreateTransitRouterMulticastDomain add parameter tag.
+- ListTransitRouterMulticastDomains add parameter tag and add response tags.
+- CreateTransitRouterRouteTable add parameter tag.
+- ListTransitRouterRouteTables add parameter tag and add response tags.
+- CreateTransitRouter add parameter tag.
+- ListTransitRouters add parameter tag and add response tags.
+
+2022-11-22 Version: 1.0.4
+- Update ListTransitRouterMulticastGroups offline parameter ConnectPeerId.
+- Update CreateCenBandwidthPackage offline parameter ServiceType.
+- Update ModifyCenBandwidthPackageSpec offline parameter ServiceType.
+- Update DescribeCenBandwidthPackages offline parameter ServiceType.
+
+2022-11-02 Version: 1.0.3
+- Update ListTransitRouterPrefixListAssociation support NextHop and NextHopType filter.
+- Update ListTransitRouterPrefixListAssociation support TransitRouterRouteTableId  filter.
+- Update ListTrafficMarkingPolicies no TrafficMatchRules field in response if no TrafficMarkingPolicyId in request.
+- Update ListCenInterRegionTrafficQosPolicies no TrafficQosQueues field in response if no TrafficQosPolicyId in request.
+
+2022-09-23 Version: 1.0.2
+- Add new API DescribeGrantRulesToResource .
+- Update DescribeGrantRulesToCen support MaxResult and nextToken .
+- Update ListTransitRouterPrefixlistAssociation return TransitRouterId and TransitRouterTableId .
+
+2022-08-26 Version: 1.0.1
+- Update param NextHopType visibility for DeleteTransitRouterPrefixListAssociation .
+
+2022-08-26 Version: 1.0.0
+- Add AvailableZones for ListTransitRouterAvailableResource.
+
