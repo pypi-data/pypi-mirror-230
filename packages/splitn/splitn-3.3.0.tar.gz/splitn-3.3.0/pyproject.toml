@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "splitn"
+version = "3.3.0"
+description = "splitn is a CLI application that generates combinations of chars being a result of splitting strings"
+authors = ["Michał Warzocha <warzocha.michal@icloud.com>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/born2Btiled/splitn"
+
+[tool.poetry.scripts]
+splitn = "splitn.main:main"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+argparse = "^1.4.0"
+rich = "^13.5.2"
+loguru = "^0.7.1"
+rstr = "^3.2.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.4.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
