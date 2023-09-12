@@ -1,0 +1,46 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+only-packages = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ethos"]
+
+[tool.hatch.build.sources]
+"src/ethos" = "ethos"
+
+[project]
+name = "ethosai"
+version = "0.1.2"
+authors = [
+  { name="Ethos AI", email="sdk-owners@ethosai.com" },
+]
+description = "Ethos SDK for Python"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+  "pydantic >= 1.10.5, < 2",
+  "urllib3 >= 1.25.3, < 2.1.0",
+  "python-dateutil >=2.8.2",
+  "aenum >=3.1.11",
+]
+
+[project.urls]
+# "Homepage" = "https://github.com/ethosai/ethos-python"
+# "Bug Tracker" = "https://github.com/ethosai/ethos-python/issues"
+
+[tool.black]
+target-version = ['py39']
+line-length = 100
+
+[tool.ruff]
+line-length = 100
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["E402", "F403", "F405", "F401"]
