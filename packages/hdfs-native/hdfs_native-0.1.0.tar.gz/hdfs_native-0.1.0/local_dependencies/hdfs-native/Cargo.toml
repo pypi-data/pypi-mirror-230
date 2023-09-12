@@ -1,0 +1,43 @@
+[package]
+name = "hdfs-native"
+version = "0.1.0"
+edition = "2021"
+authors = ["Adam Binford <adamq43@gmail.com>"]
+homepage = "https://github.com/Kimahriman/hdfs-native"
+repository = "https://github.com/Kimahriman/hdfs-native"
+keywords = ["hadoop", "hdfs"]
+description = "Native HDFS client implementation in Rust"
+readme = "../README.md"
+license = "Apache-2.0"
+resolver = "2"
+
+[dependencies]
+async-trait = { version = "0.1", optional = true }
+base64 = "0.21"
+bytes = "1"
+chrono = { version = "0.4", optional = true }
+crc = "3"
+futures = "0.3"
+gsasl-sys = { version = "0.2", optional = true }
+libc = "0.2"
+libgssapi = { version = "0.6", default_features = false, optional = true }
+log = "0.4"
+object_store = { version = "0.6", optional = true }
+prost = "0.11"
+prost-types = "0.11"
+roxmltree = "0.18"
+socket2 = "0.5"
+thiserror = "1"
+tokio = { version = "1", features = ["rt", "net", "io-util", "macros", "sync"] }
+url = "2"
+users = { version = "0.11", default_features = false }
+uuid = { version = "1", features = ["v4"] }
+
+[build-dependencies]
+prost-build = { version = "0.11" }
+protobuf-src = { version = "1.1", optional = true }
+
+[features]
+kerberos = ["libgssapi"]
+object_store = ["dep:object_store", "async-trait", "chrono"]
+token = ["gsasl-sys"]
