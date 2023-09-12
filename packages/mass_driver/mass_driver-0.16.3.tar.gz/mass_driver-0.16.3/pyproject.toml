@@ -1,0 +1,126 @@
+[tool.poetry]
+name = "mass_driver"
+version = "0.16.3"
+description = "Send bulk repo change requests"
+authors = ["Jb Doyon <jb@jiby.tech>"]
+readme = "README.md"
+license = "GPL-3.0-or-later"
+documentation = "https://jiby.tech/mass-driver"
+repository = "https://github.com/OverkillGuy/mass-driver"
+keywords = ["repo-automation"]
+classifiers = [
+    "Topic :: Software Development :: Code Generators",
+    "Development Status :: 3 - Alpha",
+]
+
+[tool.poetry.scripts]
+mass-driver = "mass_driver.cli:main"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+# Manipulate git repos: Clone, diff, commit patches...
+GitPython = "*"
+# Github Forge support.
+# Pinned exactly to follow advice from maintainer around
+# unstable semantic versioning[1]
+# [1]: https://github.com/PyGithub/PyGithub/issues/2472#issuecomment-1482378022
+PyGithub = "==1.58.2"
+# Mass-driver settings
+pydantic = "1.*"
+
+# Note: Linters not defined in this file but .pre-commit-config.yaml, which
+# installs/manages each tool in its own isolated virtualenv
+
+[tool.poetry.group.test.dependencies]
+pytest = "7.*"
+# Test coverage
+pytest-cov = "*"
+# Clearer assertion failures (colorful diff)
+pytest-clarity = "1.*"
+# Test-specific data folder
+pytest-datadir = "*"
+
+[tool.poetry.group.docs.dependencies]
+# Main documentation-as-code (HTML/PDF generator)
+Sphinx = "7.*"
+# Read the docs (pretty) theme for sphinx
+sphinx-rtd-theme = "1.*"
+# Markdown parser for sphinx: Sphinx uses "RST" files, this adds markdown
+myst-parser = "*"
+# Automatic Python module docs (javadoc-style)
+sphinx-autodoc2 = "*"
+# Display the output of a program in docs, cool for --help
+sphinxcontrib-programoutput = "^0.17"
+# Templated docs page like 'Drivers'
+sphinx-jinja = "*"
+# Generate Dash/Zeal "docsets" (offline dev-docs package) from HTML docs
+doc2dash = "*"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+# Make isort work with Black
+# Avoids conflicting imports
+# As per https://pycqa.github.io/isort/docs/configuration/black_compatibility/#using-a-config-file-such-as-isortcfg
+
+
+[tool.pytest.ini_options]
+addopts = """-vv \
+      --doctest-modules \
+      --cov=mass_driver \
+      --cov-report=xml:test_results/coverage.xml \
+      --cov-report=html:test_results/coverage.html \
+      --cov-report=term \
+      --junit-xml=test_results/results.xml"""
+
+[tool.ruff]
+# Always fix what you can, without needing CLI flags
+fix = true
+unfixable = [
+    "ERA", # do not autoremove commented out code
+]
+# Black compat:
+line-length = 88
+extend-exclude = ["docs/*"]
+
+
+# Enable pycodestyle (`E`) and Pyflakes (`F`) codes by default.
+# Add I = isort (import sorter), to remove need for isort itself
+# And D = pydocstyle for docstrings
+select = ["E", "F", "I", "D"]
+# D400/D415 = First line (of dosctrings) should end with [.?!]
+# E501 = "line-too-long", fixed by black already
+extend-ignore = ["D400", "D415", "E501"]
+
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+fixable = ["A", "B", "C", "D", "E", "F", "G", "I", "N", "Q", "S", "T", "W", "ANN", "ARG", "BLE", "COM", "DJ", "DTZ", "EM", "ERA", "EXE", "FBT", "ICN", "INP", "ISC", "NPY", "PD", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "RET", "RSE", "RUF", "SIM", "SLF", "TCH", "TID", "TRY", "UP", "YTT"]
+# Use Google-style docstrings
+pydocstyle = {convention = "google"}
+
+[tool.mypy]
+python_version = "3.11"
+check_untyped_defs = true
+
+[tool.poetry.plugins.'massdriver.drivers']
+counter = 'mass_driver.drivers.counter:Counter'
+precommit = 'mass_driver.drivers.precommit:PrecommitAutoupdate'
+shell = 'mass_driver.drivers.shell:ShellDriver'
+stamper = 'mass_driver.drivers.stamper:Stamper'
+
+[tool.poetry.plugins.'massdriver.forges']
+dummy = 'mass_driver.forges.dummy:DummyForge'
+github = 'mass_driver.forges.github:GithubPersonalForge'
+github-app = 'mass_driver.forges.github:GithubAppForge'
+
+[tool.poetry.plugins.'massdriver.sources']
+repo-list = 'mass_driver.sources.simple:RepolistSource'
+repo-filelist = 'mass_driver.sources.simple:RepoFilelistSource'
+template-filelist = 'mass_driver.sources.simple:TemplateFileSource'
+csv-filelist = 'mass_driver.sources.simple:CSVFileSource'
+github-search = 'mass_driver.sources.github_source:GithubPersonalSource'
+github-app-search = 'mass_driver.sources.github_source:GithubAppSource'
+
+[tool.poetry.plugins.'massdriver.scanners']
+root-files = 'mass_driver.scanners.basic_scanners:rootlevel_files'
+dockerfile-from = 'mass_driver.scanners.basic_scanners:dockerfile_from_scanner'
