@@ -1,0 +1,259 @@
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900");
+
+:root {
+  --pst-font-size-base: 17px;
+  --pst-sidebar-font-size: 1em;
+  --pst-font-family-base: "Source Sans Pro", var(--pst-font-family-base-system);
+  --pst-header-height: 3.5rem;
+
+  /* SunPy Variables */
+
+  /* SunPy Logo Colors */
+  /* These should not be directly used */
+  --sst-sunpy-logo-primary-color: #fe7900;
+  --sst-sunpy-logo-secondary-color: #fed20b;
+  --sst-sunpy-logo-gray: #444444;
+  --sst-sunpy-theme-orange: #bd5b00; /* A more accessible version of logo colour */
+
+  /* SunPy Theme Colors */
+  /* If you add or change the names of these please update the docs */
+  --sst-accent-color-bright: var(--sst-sunpy-logo-primary-color);
+  --sst-accent-color-muted: var(--sst-sunpy-theme-orange);
+  --sst-dark-color: var(--sst-sunpy-logo-gray);
+  --sst-darker-color: #333333;
+  --sst-darkest-color: #222222;
+  --sst-lightest-color: rgb(251, 251, 251);
+  --sst-lighter-color: rgb(231, 231, 231);
+  --sst-light-color: rgb(206, 206, 206);
+
+  /* Component Colours */
+  /* If you add or change the names of these please update the docs */
+  --sst-header-background: var(--sst-dark-color);
+  --sst-header-text: var(--sst-lighter-color);
+  --sst-sidebar-background-color: var(--pst-color-background);
+
+  /* sphinx-design themeing */
+  --sd-color-card-border-hover: var(--sst-accent-color-bright);
+}
+
+html[data-theme="light"] {
+  --pst-color-primary: var(--sst-darker-color);
+  --pst-color-secondary: var(--sst-accent-color-muted);
+  --pst-color-link: var(--sst-accent-color-muted);
+  --sst-footer-background-color: var(--sst-lightest-color);
+}
+
+html[data-theme="dark"] {
+  /* Swap primary and secondary for dark theme */
+  --pst-color-secondary: var(--sst-darker-color);
+  --pst-color-primary: var(--sst-accent-color-bright);
+  --pst-color-background: var(--sst-darkest-color);
+  /* Make the text colours slightly lighter than default as we are using a lighter background */
+  --pst-color-text-base: var(--sst-lighter-color);
+  --pst-color-text-muted: var(--sst-lighter-color);
+
+  --sst-header-background: var(--sst-darker-color);
+  --sst-footer-background-color: var(--sst-darker-color);
+  --sg-thumb-box-shadow-color: var(--sst-dark-color);
+  --sd-color-secondary: var(--pst-color-primary);
+}
+
+/* sphinx-gallery themeing */
+:root,
+html,
+body {
+  --sg-download-a-background-color: var(--sst-footer-background-color);
+  --sg-download-a-background-image: none;
+  --sg-download-a-border-color: none;
+  --sg-download-a-color: var(--pst-color-link);
+  --sg-download-a-hover-background-color: var(--sg-download-a-background-color);
+  --sg-download-a-hover-box-shadow-1: none;
+  --sg-download-a-hover-box-shadow-2: none;
+  --sg-thumb-hover-border: var(--sst-accent-color-bright);
+}
+
+/* Global Styling */
+a:visited {
+  color: var(--pst-color-link);
+}
+
+code.literal {
+  border: none;
+  background-color: inherit;
+}
+
+.always-light-theme {
+  color: var(--sst-darker-color) !important;
+}
+
+div.math {
+  flex-direction: row;
+  justify-content: center;
+}
+
+.modal {
+  --bs-modal-bg: var(--pst-color-background);
+}
+
+/* Flip the colours on graphviz graphs on dark mode */
+html[data-theme="dark"] div.graphviz > object.inheritance {
+  filter: invert(0.9);
+}
+
+/* Top Nav */
+nav.bd-header {
+  background-color: var(--sst-header-background) !important;
+  border-bottom: 3px;
+  border-bottom-color: var(--sst-accent-color-bright);
+  border-bottom-style: solid;
+  box-shadow: none;
+  margin-bottom: -3px;
+}
+
+nav.bd-header nav.navbar-nav li.nav-item {
+  padding-left: 0.6rem;
+}
+
+.bd-header .navbar-nav li a.nav-link {
+  color: var(--sst-header-text);
+}
+.bd-header .navbar-nav li a.nav-link:focus,
+.bd-header .navbar-nav li a.nav-link:hover {
+  color: var(--sst-accent-color-bright);
+}
+
+.bd-header a.navbar-brand {
+  font-weight: bold;
+  color: var(--sst-accent-color-bright);
+}
+
+.search-button {
+  color: var(--sst-header-text);
+}
+.search-button:hover {
+  color: var(--sst-accent-color-bright);
+}
+
+.theme-switch-button {
+  border: none;
+}
+
+html[data-theme="light"] .bd-sidebar-primary .theme-switch-button span {
+  color: var(--pst-color-muted);
+}
+
+.theme-switch-button span {
+  color: var(--sst-header-text);
+}
+
+.theme-switch-button:active,
+.theme-switch-button:hover {
+  background-color: var(--sst-accent-color-bright) !important;
+  border-color: var(--pst-color-on-background) !important;
+}
+
+.bd-header label.sidebar-toggle {
+  color: var(--sst-header-text);
+}
+
+/* Style the dropdown from the top nav */
+.bd-header .navbar-nav .dropdown .dropdown-menu {
+  --bs-dropdown-border-radius: 0rem;
+  background-color: var(--sst-header-background);
+  box-shadow: none;
+  margin-top: 0.85rem;
+  border: 0;
+  border-color: var(--sst-accent-color-bright);
+}
+
+/* Sidebar */
+.bd-sidebar-primary {
+  background-color: var(--sst-sidebar-background-color);
+  max-height: calc(100vh - var(--pst-header-height));
+  flex-basis: 22%;
+  border-right-width: 3px;
+  border-right-color: var(--sst-accent-color-bright);
+  top: var(--pst-header-height);
+}
+
+.bd-sidebar-secondary {
+  top: var(--pst-header-height);
+}
+
+.bd-sidebar a.navbar-brand {
+  height: fit-content;
+  margin: 0;
+  max-height: none;
+  padding: 0;
+}
+
+.bd-sidebar a.navbar-brand > p {
+  white-space: normal;
+  text-align: center;
+}
+
+.bd-navbar-elements .ms-2 {
+  margin-left: 0 !important;
+}
+
+img.logo__image {
+  height: var(--pst-header-height);
+}
+
+/* RTD Flyout tweaks */
+.bd-sidebar-primary div#rtd-footer-container .rst-other-versions input {
+  color: var(--pst-color-primary);
+}
+
+/* Bizzarely having a minimum height here fixes the permanent appearence of the */
+/* sidebar scrollbar */
+#rtd-footer-container {
+  min-height: 1rem;
+}
+
+/* Footers */
+
+.bd-footer {
+  background-color: var(--sst-footer-background-color);
+  width: 100%;
+  border-top: none;
+}
+
+/* Override the default start and end from pst here so we make it the same as our new center */
+.bd-footer .footer-items__end,
+.bd-footer .footer-items__start,
+.bd-footer .footer-items__center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.bd-footer .footer-items__center {
+  text-align: center;
+}
+
+.bd-footer .footer-items__end {
+  margin-left: 0;
+}
+
+.bd-footer a {
+  color: var(--pst-color-link);
+}
+
+.footer-links a {
+  display: inline-block;
+  padding: 0 10px;
+}
+
+/* This width is hard coded, ideally it should be when then content gets wider than */
+/* the viewport, I just don't know how to do that. */
+@media only screen and (max-width: 800px) {
+  .bd-footer .footer-items__end,
+  .bd-footer .footer-items__start {
+    display: none;
+  }
+  .bd-footer .footer-items__center {
+    align-items: center;
+  }
+}
