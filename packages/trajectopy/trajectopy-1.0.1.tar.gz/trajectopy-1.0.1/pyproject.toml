@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "trajectopy"
+version = "1.0.1"
+description = "Trajectory Evaluation in Python"
+authors = ["Gereon Tombrink <tombrink@igg.uni-bonn.de>"]
+license = "GPLv3"
+keywords = ["trajectory", "evaluation", "alignment", "similarity", "leverarm", "epsg", "robotics"]
+readme = "README.md"
+homepage = "https://github.com/gereon-t/trajectopy"
+repository = "https://github.com/gereon-t/trajectopy.git"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.12"
+autograd = ">=1.5"
+matplotlib = ">=3.6.3"
+networkx = ">=3.0"
+pandas = ">=1.5.3"
+numpy = ">=1.24.1"
+pointset = ">=0.1.5"
+PyQt6 = ">=6.4.2"
+PyQt6-Qt6 = ">=6.4.2"
+PyQt6-sip = ">=13.4.1"
+PyYAML = ">=6.0"
+scipy = ">=1.10.0"
+seaborn = ">=0.12.2"
+rosbags = ">=0.9.16"
+
+[tool.poetry.scripts]
+trajectopy = "trajectopy.__main__:main"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.5.1"
+

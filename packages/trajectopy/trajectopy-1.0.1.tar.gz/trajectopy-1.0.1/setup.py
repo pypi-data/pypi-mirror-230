@@ -1,0 +1,53 @@
+from setuptools import setup
+
+
+setup(
+    name="trajectopy",
+    version=open("trajectopy/version", "r", encoding="utf-8").read(),
+    description="Trajectory Evaluation in Python",
+    author="Gereon Tombrink",
+    author_email="tombrink@igg.uni-bonn.de",
+    url="https://github.com/gereon-t/trajectopy",
+    license="GPLv3",
+    long_description=open("README.md", "r", encoding="utf-8").read(),
+    long_description_content_type="text/markdown",
+    keywords=["trajectory", "evaluation", "alignment", "similarity", "leverarm", "epsg", "robotics"],
+    packages=[
+        "trajectopy",
+        "trajectopy.alignment",
+        "trajectopy.alignment.functional_model",
+        "trajectopy.approximation",
+        "trajectopy.evaluation",
+        "trajectopy.gui",
+        "trajectopy.gui.managers",
+        "trajectopy.gui.models",
+        "trajectopy.gui.views",
+        "trajectopy.plotting",
+        "trajectopy.settings",
+        "trajectopy.util",
+        "trajectopy.io",
+    ],
+    package_data={"trajectopy": ["version", "LICENSE", "gui/resources/*", "plotting/default.mplstyle"]},
+    zip_safe=False,
+    python_requires=">=3.9",
+    install_requires=[
+        "autograd>=1.5",
+        "matplotlib>=3.6.3",
+        "networkx>=3.0",
+        "pandas>=1.5.3",
+        "numpy>=1.24.1",
+        "pointset>=0.1.5",
+        "PyQt6>=6.4.2",
+        "PyQt6-Qt6>=6.4.2",
+        "PyQt6-sip>=13.4.1",
+        "PyYAML>=6.0",
+        "rosbags>=0.9.16",
+        "scipy>=1.10.0",
+        "seaborn>=0.12.2",
+    ],
+    entry_points={
+        "console_scripts": [
+            "trajectopy = trajectopy.__main__:main",
+        ],
+    },
+)
