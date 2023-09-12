@@ -1,0 +1,39 @@
+[build-system]
+requires = ['setuptools>=61.0.0']
+build-backend = 'setuptools.build_meta'
+
+
+[project]
+name = "django-toots"
+version = "0.0.1"
+authors = [{ name = "Rami", email = "ramiboutas@protonmail.com" }]
+description = "An app to manage toots (Mastodon posts) in a Django project"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+  "Development Status :: 1 - Planning",
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Framework :: Django",
+  "Framework :: Django :: 4",
+]
+
+dependencies = ["Mastodon.py", "django"]
+
+[tool.setuptools]
+
+packages = ["django_toots", "django_toots.migrations"]
+
+[project.urls]
+"Homepage" = "https://github.com/ramiboutas/django-toots"
+"Bug Tracker" = "https://github.com/ramiboutas/django-toots/issues"
+
+
+[tool.coverage.run]
+branch = true
+omit = ["tests/*", "manage.py", "config/*"]
+
+
+[tool.coverage.paths]
+source = ["django_toots/"]
