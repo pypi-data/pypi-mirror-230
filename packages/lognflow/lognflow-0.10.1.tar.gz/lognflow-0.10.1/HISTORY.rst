@@ -1,0 +1,178 @@
+History
+=======
+
+0.1.0 (2022-11-16)
+------------------
+
+* First release on PyPI.
+
+0.3.0 (2022-12-19)
+------------------
+
+* Very consistent and easy-to-handle interface
+
+0.3.2 (2022-12-27)
+------------------
+
+* log your dictionary.
+
+0.5.2 (2023-01-11)
+------------------
+
+* logger call takes txt only for the main_log
+* main_log name can have no time_stamp
+* All logs can be force_flush = True.
+* __del__ is well implemented.
+
+0.5.3 (2023-03-19)
+------------------
+
+* use logger.log_single('aName', aDict) to save a dictionary using numpy.savez
+* time_in_file_name has been changed to time_tag, sorry there! but early stages.
+* time_tag is True in the constructor, but could always be set to False
+* All tests passed!
+
+0.6.0 (2023-03-22)
+------------------
+* This is a stable release
+* All text files are handled by the with statement
+* Renaming bug is fixed
+* all tests run properly.
+* lognflow has all that logviewer has. We will check if dir exists at every use
+
+0.6.1 (2023-03-22)
+------------------
+* rename had a bug that is fixed
+
+0.6.2 (2023-03-25)
+------------------
+* made it possible to flush_all()
+* We support Python 3.7+ because of dataclasses
+* printprogress now can disable printing anything and return ETA at the __call__
+
+0.6.3 (2023-04-01)
+------------------
+* lognflow class does all logviewer does. Maybe it is time to remove logviewer.
+
+0.6.4 (2023-04-06)
+------------------
+* Better documentation and examples for readme
+* get_var is added to lognflow to get buffered variables logged by log_var
+
+0.6.5 (2023-04-26)
+------------------
+* Fixed a bug in the docs to allow sphinx compile it.
+* log_var will log only the valid time stamps.
+* added end keyword argument to log_text
+
+0.6.6 (2023-04-27)
+------------------
+* Better documentation
+* added tifffile imread to logviewer and imwrite to lognflow
+
+0.6.7 (2023-04-27)
+------------------
+* A bug in tifffile support was fixed
+
+0.6.8 (2023-05-04)
+------------------
+* Fixing readme for PyPI.
+* removed marker from log_plot. user marker and linestyle keyword arguments.
+* printprogress returns proper ETA every time if print_function is set to None::
+
+0.7.0 (2023-05-15)
+------------------
+* logviewer returns data by log_sigle if the full name is mentioned.
+
+0.7.1 (2023-05-22)
+------------------
+* printprogress supports lognflow.
+* bugs fixed in lognflow.
+* For now I guess lognflow and logviewer could be separate.
+
+0.7.2 (2023-05-25)
+------------------
+* bug fixed in logviewer
+* text_to_object added to logviewer to read dict or list logged via log_single
+* test pass for logviewer including the test for text_to_object
+
+0.7.3 (2023-06-01)
+------------------
+* bug fixed in logviewer in the use of suffix in get_stack_of_files
+* log_imshow takes colorbar and remove_axis_ticks flags.
+* every lognflow instance has a logviewer pointing to its log_dir called logged.
+
+0.7.4 (2023-06-26)
+------------------
+* critical bug fixed in log_imshow
+
+0.7.5 (2023-06-27)
+------------------
+* Added complex numbers to log_imshow
+
+0.7.6 (2023-07-17)
+------------------
+* printprogress can handle up to 99 days
+* log_text takes any save_as
+* If variable name has escape key is alright
+* If variable name is splitable, we replace them with _
+
+0.8.0 (2023-07-25)
+------------------
+* logger.save and savez are set to be identical to log_single.
+* logged.load is set to be identical to get_single.
+* utils.py is added to contain all misc functions.
+* replace_all added to utils
+
+0.8.1 (2023-07-26)
+------------------
+* a bug fixed in log_var
+
+0.8.2 (2023-08-02)
+------------------
+* the word save_as is now replaced with suffix as is in pathlib
+* all loggers can take the suffix as the extension in the parameter_name
+
+0.8.3 (2023-08-02)
+-----------------
+* critical bug fixed in log_var to support v0.8.2
+
+0.8.4 (2023-08-03)
+-----------------
+* variable names that are pecular will always be fixed first.
+* suffix can be read form the file name.
+* time_tag will always accompany file name unless stated otherwised.
+
+0.8.5 (2023-08-04)
+-----------------
+* Some functions can go to utils and be mentioned in the __init__
+* a bug was fixed in printprogress.
+
+0.8.6 (2023-08-04)
+-----------------
+* plt_utils was not added tp 0.8.5
+
+0.9.0 (2023-08-09)
+-----------------
+* copy() is now possible from a file or a variable name into another
+* default suffix in get_flist is *
+* logviewer.get_stack_of_files is only useful for reading data.
+* more tests are added.
+* moved multichannel_to_frame to utils
+
+0.9.1 (2023-08-25)
+-----------------
+* bug removed from plt_utils numbers_as_images_4D.
+* bug removed from printprogress when number of steps is very small.
+
+0.10.0 (2023-09-01)
+-----------------
+* I added multiprocessor to lognflow
+* bug fixed in logviewer
+
+0.10.1 (2023-09-12)
+-----------------
+* multi_channel_by_subplots bug fixed for non-square shape
+* default colormap is viridis everywhere
+* multiprocessor heavily debugged and made a lot easier to use
+* better tests added for multiprocessor
