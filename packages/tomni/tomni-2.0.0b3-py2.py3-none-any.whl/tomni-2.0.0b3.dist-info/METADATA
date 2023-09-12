@@ -1,0 +1,661 @@
+Metadata-Version: 2.1
+Name: tomni
+Version: 2.0.0b3
+Summary: Tomni is a collection of image analysis functions usefull for CytoSmart solution.
+Home-page: https://github.com/cytosmart-bv/tomni
+Author: Tom Nijhof
+License: ACADEMIC PUBLIC LICENSE
+Keywords: tomni
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: Numpy <2,>=1.18
+Requires-Dist: opencv-python-headless <4.7.0.0,>=4.3.0.38
+Requires-Dist: numpy-indexed <0.4,>=0.3.5
+Requires-Dist: scipy <2,>=1.4.1
+Requires-Dist: simplification <1.0.0,>=0.6.11
+Requires-Dist: Shapely <2,>=1.8
+
+# Tomni
+
+[![Build Status](https://cytosmart.visualstudio.com/CytoSmartImageAnalysis/_apis/build/status/cytosmart-bv.tomni?branchName=main)](https://cytosmart.visualstudio.com/CytoSmartImageAnalysis/_build/latest?definitionId=384&branchName=main)
+[![Downloads](https://pepy.tech/badge/tomni)](https://pepy.tech/project/tomni)
+
+Tomni is a python package that contains a collection of helper functions based on OpenCV and NumPy. It can be used for any python based computer vision or image analysis problem. The package simplifies the code and takes care of edge cages, everything from simplifying code like img_dim to compute optimization like labels2contours or illumination correction image processing. Tomni uses the image coordinates (same as OpenCV).
+
+Tomni is created by [CytoSMART](https://cytosmart.com).
+
+The package was developed in-house to centralize the helper function for computer vision problems. In 2021, CytoSMART engineers turned it to open source, enabling researchers and educators to use it for free.
+
+## Getting Tomni
+
+```cmd
+pip install tomni
+```
+
+## License
+
+Tomni is free for academic and educational use.
+
+For commercial use please contact [CytoSMART](https://cytosmart.com/contact).
+
+## The name
+
+The name Tomni is a combination of creator (Tom) and other CytoSMART product he was working on, [the Omni](https://cytosmart.com/products/omni). Tomni name was proposed by Denissa Daroţi, a former CytoSMART intern, who won a bet with her mentor by getting a (well deserved) 9/10 for her internship.
+
+## Features
+
+- Bounding box fitting (bbox fitting)
+  - Center bounding box fit
+  - Custom location box fit
+- Image helpers
+  - Get image dimensions
+  - Convert color of an image
+- Illumination correction
+  - Brightfield
+  - Fluorescence
+- Contour operations
+  - Get center
+  - Approximate circle by area
+  - Get roundness
+  - Get circularity
+- CytoSMART data format
+  - Tba
+- Json operation
+  - Add circularity property
+  - Scale object
+  - Translate object
+- Make a mask
+  - Ellipse
+  - Polygon
+- Shape fitting
+  - Rect around ellipse
+- Transformers of data format
+  - Contours to json
+  - Ellipse to json
+  - Json 2 contours
+  - Json 2 label
+  - Json 2 bbox
+  - Labels 2 contours
+  - Labels 2 lists of points
+
+
+## Examples
+
+### Diameter vs radius
+Most geometric operation use functions from OpenCV
+
+Some of these function return diameter and some radius of the circle. This is not consistent.
+
+For example, the function `cv2.minEnclosingCircle` returns the center and radius of the circle. The function `cv2.fitEllipse` returns the center and the major and minor axes of the ellipse.
+
+#### Min enclosing circle example
+```python
+import cv2
+import math
+import numpy as np
+
+points = np.array([[0, 0], [100, 0], [100, 100], [0, 100], [0, 0]], dtype=np.float32)
+
+center, radius = cv2.minEnclosingCircle(points)
+diameter = math.sqrt(50**2 + 50**2) 
+
+print("Center:", center)
+print("Major and Minor Axes:", radius)
+print("Diameter calculated with Pythagoras formula", diameter)
+
+```
+
+this results in the following output:
+```cmd
+Center: (50.0, 50.0)
+Major and Minor Axes: 70.71077728271484
+Diameter calculated with Pythagoras formula 70.71067811865476
+```
+#### Fit ellipse example
+```python
+import cv2
+import math
+import numpy as np
+
+# Generate some example points
+points = np.array([[0, 0], [100, 0], [100, 100], [0, 100], [0, 0]], dtype=np.float32)
+
+# Fit an ellipse to the points
+ellipse = cv2.fitEllipse(points)
+
+# Extract ellipse parameters
+center, axes, angle = ellipse
+
+diameter = math.sqrt(50**2 + 50**2) * 2
+
+print("Center:", center)
+print("Major and Minor Axes:", axes)
+print("Diameter calculated with Pythagoras formula", diameter)
+```
+
+this results in the following output:
+
+```cmd
+Center: (50.0, 49.95212173461914)
+Major and Minor Axes: (141.43260192871094, 141.5462188720703)
+Diameter: 141.4213562373095
+```
+Example is related to the following functions in the package
+
+
+## Credits
+
+Sorted alphabetically
+
+- Coenraad Stijne
+- Denisa Daroţi
+- Hristo Atanasov
+- Jan-Niklas Schneider
+- Jelle van Kerkvoorde
+- Kirsten Koopman
+- Lisa Koolen
+- Manon van Erp
+- Marina Tzenkova
+- Tom de Vries
+- Tom Nijhof
+
+
+# History
+2.0.0-b3 (2023-09-08) 
+------------------
+- Added check for rectangled contours.
+    - Adds extra point if rectangle.
+    - This allows us to initialize masks (of wells) that only consist of 4 points if required in the future.
+- Added unittests for empty and full masks from binary_mask and from_labeled_mask
+- Changed variable name in `ellipse` class from r1/r2 to diameter_1/diameter_2 etc for naming clarity.
+- BUGFIX: Multiplied minor axis and major axis by 2 in `ellipse` class, which was currently calculated as radii instead of diameters.
+- BUGFIX: Fixed average diameter in `ellipse` class, which was calculated with radii instead of diameters.
+- BUGFIX: removed assert, which took over half the time of the entire `from_binary_mask`.
+
+2.0.0-b2 (2023-08-04) 
+------------------
+- Moved feature_multiplier and metric_unit to to_dict() from from_dict(). 
+- Added inner contours options 
+- added binary2contours
+- change parameters for from_binary_mask
+- made contours2polygon
+
+2.0.0-b1 (2023-07-06)
+------------------
+- AnnotationManager function from_dict is called with an optional list of features
+- Changed Polygon and Ellipse classes to include the list of features initialized by AnnotationManager
+- to_dict function now only returns features in the dictionary that were asked for in the feature list
+- Added `feature_multiplier` and `metric_unit` as inputs to apply to the features' name and value outputs.
+- Added all features to `ellipse` and `polygon`.
+- Features are now in camelCasing when output `to_dict`
+
+2.0.0-b0 (2022-11-29)
+------------------
+- CDF-Main: Implement `filter` to allow filtering of annotations by feature values (aka gating).
+- CDF-Main: Implement `from_contours`.
+- CDF-Main: Implement `to_contours`.
+- CDF-Main: Implement `from_dict`.
+- CDF-Main: Implement `to_dict`. Includes rounding.
+- CDF-Main: Implement `__len__`.
+- CDF-Main: Implement `__iter__` and `__next__`.
+- Add polygon annotation class.
+- CDF-polygon: Implement `__eq__`
+- CDF-polygon: Remove useless point
+- Add ellipse annotation class.
+- CDF-ellipse: Implement `__eq__`
+- CDF-ellipse: Set all rotations between 0 and 90, flip radii if needed
+- Renamed `CytoSmartDataFormat` to `AnnotationManager`
+- Add `is_in_mask` for `Ellipse` and `Polygon`
+- Add `min_overlap`-parameter in `to_dict` to apply masks to filter annotations
+- Add `to_binary_mask` and `to_labeled_mask` for `AnnotationManager`, `Ellipse` and `Polygon`
+- Add init-function `from_binary_mask` and `from_labeled_mask` to `AnnotationManager`
+- Bugfix: Fixed a bug where `simplify_line` returns empty list when passing two points.
+- Add option to to compress polygons in `to_dict()`.
+
+1.15.0 (2022-12-05)
+------------------
+- Add json2bbox for ellipse with angle of rotation
+
+1.14.0 (2022-11-11)
+------------------
+- Add convert to color
+
+1.13.0 (2022-10-24)
+------------------
+- Add json2bbox for polygon and ellipse
+
+1.12.1 (2022-10-06)
+------------------
+- Update Json-circularity with circularity calculation from contour ops.
+
+1.12.0 (2022-04-15)
+------------------
+- BUGFIX: Import approximate_circle_by_area
+- Add roundness
+- Add contour operation circularity
+
+1.11.0 (2022-04-11)
+------------------
+- Add inner contours to labels2contours
+- Add inner contours to mask2json
+
+1.10.0 (2022-02-17)
+------------------
+- Add approximate_circle_by_area to contour operations
+- BUGFIX: Change type np.array to np.ndarray
+- DEPRECATE: Remove simplification so python 3.8+ can be used
+
+1.9.2 (2022-01-03)
+------------------
+- BUGFIX: Bufferoverflow make_mask_ellipse (again/still)
+    remove times 2 for all values in the function
+
+1.9.1 (2021-10-26)
+------------------
+- add ellipse to json2mask
+- BUGFIX: Bufferoverflow make_mask_ellipse
+- BUGFIX: Make make_mask_ellipse accept floats
+
+1.9.0 (2021-10-01)
+------------------
+- add mask2bbox
+- add contour2bbox
+- add check_overlap_bbox
+
+1.8.0 (2021-09-01)
+------------------
+- add mask2json
+- add json2mask
+
+1.7.4 (2021-07-02)
+------------------
+Upgrade/change requirements to work with python 3.9
+Opencv needed fuzzy requirments
+Remove scikit-image from requirements by replacing the function with numpy function
+
+1.7.3 (2021-06-23)
+------------------
+speedup positions2contour by replacing for-loop with numpy slicing
+
+1.7.2 (2021-04-21)
+------------------
+Migrate to github
+
+1.7.1 (2020-12-23)
+------------------
+updated setup file simplification<0.6
+
+1.7.0 (2020-12-03)
+------------------
+added new functions
+- add_area
+- summary_json
+- json2dict
+
+1.6.4 (2020-11-26)
+------------------
+- add  missing requirements in setup file
+
+1.6.3 (2020-11-25)
+------------------
+- bug fix. cropping now with deepcopy
+
+1.6.2 (2020-11-10)
+------------------
+-add fluo_tophat background subtraction
+
+1.6.1 (2020-11-04)
+------------------
+-add accuracy to json2vgg
+
+1.6.0 (2020-11-03)
+------------------
+- add json2vgg
+
+1.5.2
+------------------
+- add ellipse to vgg2json
+1.5.1
+------------------
+- fix rotation, flipping, crop import
+
+1.5.0
+------------------
+add json_operations
+- add crop list of jsons
+- add flipping json
+- add rotation json
+
+1.4.0
+------------------
+- add get center point contour
+- add get center point json
+- add vgg2json
+
+1.3.0
+------------------
+Updating of relative illumination correction.
+- add (optional) smoothing step
+- add (optional) resize step
+- add (optional) normalization
+
+1.2.0 (2020-07-02)
+------------------
+- Add translation of json functions
+
+1.1.0 (2020-03-11)
+------------------
+Updating of illumination correction.
+Splitting into two illumination correction:
+- absolute difference
+- relative difference
+
+1.0.0 (2020-03-06)
+------------------
+(new function)
+- add_circularity
+
+1.0.0 (2020-02-28)
+------------------
+Restructuring of tomni:
+- Migrated Visualization to cytoBoom
+- Migrated validation to manVal
+- Made sure every function followed:
+    function_name
+    - __init__.py
+    - main.py
+    - test_function_name
+- removed following function:
+-- channel_selecting (was only used for old cell counter)
+-- select_labels (complete replaceable by transformers.labels2listsOfPoints
+- Added docstring to all functions
+- Added typing to all functions
+- Renamed everything to pep8
+
+0.4.0 (2019-09-30)
+------------------
+Add transformer as category
+- Add labels 2 list of points as function
+
+0.3.3 (2019-09-17)
+------------------
+Draw_json (draw_json_mask_onto_image):
+- rename it from draw_json_mask_onto_image to draw_json
+- Make the Visualization of json shapes more dynamic.
+- Callable directly from Visualization
+- it return an image rather than manipulating it
+- converts the color to the color type of input
+
+0.2.1 (2019-07-24)
+------------------
+Remove f strings to prevent conflicts on python 3.5
+
+0.2.0 (2019-07-09)
+------------------
+Visualization is now part of tomni.
+
+STRUCTURE:
+BGR: All colors are Gray, BGR or BGRA. This because tomni is mostly combined with openCV usage.
+
+FUNCTION:
+- Add color converter
+- Add circle draw function that works with the input of the cell counter
+
+
+0.1.8 (2019-02-21)
+------------------
+- imdim: Function what gives the dimensions of an image from a numpy.ndarray
+- ellipse_mask: creates an ellipse at a given position, with given radius length but a fixed rotation
+
+0.0.1 (2018-10-15)
+------------------
+- First release on PyPI.
+
+
+                         ACADEMIC PUBLIC LICENSE
+                                version 1.1
+
+                           Copyright (C) 2021
+
+
+                                Preamble
+
+  This license contains the terms and conditions of using LuxConnector in
+noncommercial settings: at academic institutions for teaching and research
+use and for personal or educational purposes. You will find that this
+license provides noncommercial users of LuxConnector with rights that are
+similar to the well-known GNU General Public License, yet it retains the
+possibility for LuxConnector authors to financially support the development by
+selling commercial licenses. In fact, if you intend to use LuxConnector in a
+"for-profit" environment, where research is conducted to develop or enhance
+a product, is used in a commercial service offering, or when an entity uses
+LuxConnector to participate in government-funded, EU-funded, military or similar
+research projects, then you need to obtain a commercial license.
+In that case, or if you are unsure, please contact the Author info@cytosmart.com
+to inquire about commercial licenses.
+
+  What are the rights given to noncommercial users? Similarly to GPL, you
+have the right to use the software, to distribute copies, to receive source
+code, to change the software and distribute your modifications or the
+modified software. Also similarly to the GPL, if you distribute verbatim or
+modified copies of this software, they must be distributed under this
+license.
+
+  By modeling the GPL, this license guarantees that you're safe when using
+LuxConnector in your work, for teaching or research. This license guarantees
+that LuxConnector will remain available free of charge for nonprofit use. You
+can modify LuxConnector to your purposes, and you can also share your modifications.
+Even in the unlikely case of the authors abandoning LuxConnector entirely, this
+license permits anyone to continue developing it from the last release, and
+to create further releases under this license.
+
+  We believe that the combination of noncommercial open-source and commercial
+licensing will be beneficial for the whole user community, because income from
+commercial licenses will enable faster development and a higher level of
+software quality, while further enjoying the informal, open communication
+and collaboration channels of open source development.
+
+  The precise terms and conditions for using, copying, distribution and
+modification follow.
+
+
+                         ACADEMIC PUBLIC LICENSE
+
+    TERMS AND CONDITIONS FOR USE, COPYING, DISTRIBUTION AND MODIFICATION
+
+  0. Definitions
+
+  "Program" means a copy of LuxConnector, which is said to be distributed under
+this Academic Public License.
+
+  "Work based on the Program" means either the Program or any derivative work
+under copyright law: that is to say, a work containing the Program or a
+portion of it, either verbatim or with modifications and/or translated into
+another language.  (Hereinafter, translation is included without limitation
+in the term "modification".)
+
+  "Using the Program" means any act of creating executables that contain or
+directly use libraries that are part of the Program, running any of the
+tools that are part of the Program, or creating works based on the Program.
+
+Each licensee is addressed as "you".
+
+  1. Permission is hereby granted to use the Program free of charge for
+noncommercial purposes, including teaching and academic research at
+universities, colleges and other educational institutions and personal
+non-profit purposes. For using the Program for commercial purposes,
+including but not restricted to consulting activities, design of commercial
+hardware or software networking products, and joint research with a
+commercial entity, government-funded, EU-funded, military or similar
+research projects, you have to contact the Author at info@cytosmart.com
+for an appropriate license. Permission is also granted to use the Program
+for a reasonably limited period of time for the purpose of evaluating its
+usefulness for a particular purpose.
+
+  2. You may copy and distribute verbatim copies of the Program's
+source code as you receive it, in any medium, provided that you
+conspicuously and appropriately publish on each copy an appropriate
+copyright notice and disclaimer of warranty; keep intact all the
+notices that refer to this License and to the absence of any warranty;
+and give any other recipients of the Program a copy of this License
+along with the Program.
+
+  3. You may modify your copy or copies of the Program or any portion
+of it, thus forming a work based on the Program, and copy and
+distribute such modifications or work under the terms of Section 2
+above, provided that you also meet all of these conditions:
+
+    a) You must cause the modified files to carry prominent notices
+    stating that you changed the files and the date of any change.
+
+    b) You must cause any work that you distribute or publish, that in
+    whole or in part contains or is derived from the Program or any
+    part thereof, to be licensed as a whole at no charge to all third
+    parties under the terms of this License.
+
+These requirements apply to the modified work as a whole.  If
+identifiable sections of that work are not derived from the Program,
+and can be reasonably considered independent and separate works in
+themselves, then this License, and its terms, do not apply to those
+sections when you distribute them as separate works.  But when you
+distribute the same sections as part of a whole which is a work based
+on the Program, the distribution of the whole must be on the terms of
+this License, whose regulations for other licensees extend to the
+entire whole, and thus to each and every part regardless of who wrote it.
+(If the same, independent sections are distributed as part of a package
+that is otherwise reliant on, or is based on the Program, then the
+distribution of the whole package, including but not restricted to the
+independent section, must be on the unmodified terms of this License,
+regadless of who the author of the included sections was.)
+
+Thus, it is not the intent of this section to claim rights or contest
+your rights to work written entirely by you; rather, the intent is to
+exercise the right to control the distribution of derivative or
+collective works based or reliant on the Program.
+
+In addition, mere aggregation of another work not based on the Program
+with the Program (or with a work based on the Program) on a volume of
+storage or distribution medium does not bring the other work under
+the scope of this License.
+
+  4. You may copy and distribute the Program (or a work based on it,
+under Section 3) in object code or executable form under the terms of
+Sections 2 and 3 above provided that you also do one of the following:
+
+    a) Accompany it with the complete corresponding machine-readable
+    source code, which must be distributed under the terms of Sections
+    2 and 3 above on a medium customarily used for software interchange; or,
+
+    b) Accompany it with a written offer, valid for at least three
+    years, to give any third party, for a charge no more than your
+    cost of physically performing source distribution, a complete
+    machine-readable copy of the corresponding source code, to be
+    distributed under the terms of Sections 2 and 3 above on a medium
+    customarily used for software interchange; or,
+
+    c) Accompany it with the information you received as to the offer
+    to distribute corresponding source code.  (This alternative is
+    allowed only for noncommercial distribution and only if you received
+    the program in object code or executable form with such an offer,
+    in accord with Subsection b) above.)
+
+The source code for a work means the preferred form of the work for
+making modifications to it.  For an executable work, complete source
+code means all the source code for all modules it contains, plus any
+associated interface definition files, plus the scripts used to
+control compilation and installation of the executable.  However, as a
+special exception, the source code distributed need not include
+anything that is normally distributed (in either source or binary
+form) with the major components (compiler, kernel, and so on) of the
+operating system on which the executable runs, unless that component
+itself accompanies the executable.
+
+If distribution of executable or object code is made by offering
+access to copy from a designated place, then offering equivalent
+access to copy the source code from the same place counts as
+distribution of the source code, even though third parties are not
+compelled to copy the source along with the object code.
+
+  5. You may not copy, modify, sublicense, or distribute the Program
+except as expressly provided under this License.  Any attempt
+otherwise to copy, modify, sublicense or distribute the Program is
+void, and will automatically terminate your rights under this License.
+However, parties who have received copies, or rights, from you under
+this License will not have their licenses terminated so long as such
+parties remain in full compliance.
+
+  6. You are not required to accept this License, since you have not
+signed it.  Nothing else grants you permission to modify or distribute
+the Program or its derivative works; law prohibits these actions
+if you do not accept this License.  Therefore, by modifying or distributing
+the Program (or any work based on the Program), you indicate your
+acceptance of this License and all its terms and conditions for copying,
+distributing or modifying the Program or works based on it, to do so.
+
+  7. Each time you redistribute the Program (or any work based on the
+Program), the recipient automatically receives a license from the
+original licensor to copy, distribute or modify the Program subject to
+these terms and conditions.  You may not impose any further
+restrictions on the recipients' exercise of the rights granted herein.
+You are not responsible for enforcing compliance by third parties to
+this License.
+
+  8. If, as a consequence of a court judgment or allegation of patent
+infringement or for any other reason (not limited to patent issues),
+conditions are imposed on you (whether by court order, agreement or
+otherwise) that contradict the conditions of this License, they do not
+excuse you from the conditions of this License.  If you cannot
+distribute so as to satisfy simultaneously your obligations under this
+License and any other pertinent obligations, then as a consequence you
+may not distribute the Program at all.  For example, if a patent
+license would not permit royalty-free redistribution of the Program by
+all those who receive copies directly or indirectly through you, then
+the only way you could satisfy both it and this License would be to
+refrain entirely from distribution of the Program.
+
+If any portion of this section is held invalid or unenforceable under
+any particular circumstance, the balance of the section is intended to
+apply and the section as a whole is intended to apply in other
+circumstances.
+
+  9. If the distribution and/or use of the Program are restricted in
+certain countries either by patents or by copyrighted interfaces, the
+original copyright holder who places the Program under this License
+may add an explicit geographical distribution limitation excluding
+those countries, so that distribution is permitted only in or among
+countries not thus excluded.  In such case, this License incorporates
+the limitation as if written in the body of this License.
+
+                            NO WARRANTY
+
+  10. BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
+FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW.  EXCEPT WHEN
+OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES
+PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED
+OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS
+TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU.  SHOULD THE
+PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING,
+REPAIR OR CORRECTION.
+
+  11. IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED ON IN WRITING
+WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
+REDISTRIBUTE THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES,
+INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING
+OUT OF THE USE OR INABILITY TO USE THE PROGRAM INCLUDING BUT NOT LIMITED
+TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY
+YOU OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER
+PROGRAMS), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGES.
+
+                     END OF TERMS AND CONDITIONS
+
+Initially written by Andras Varga (public domain) for OMNeT++ https://omnetpp.org/intro/license,
+adapted by CytoSMART TECHNOLOGIES BV. The adaptation is licensed under CC0 1.0 (Public Domain Dedication).
