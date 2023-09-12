@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools", "wheel", "cmdstanpy>=1.0.7"]
+build-backend = "setuptools.build_meta"
+
+[tool.isort]
+profile = "black"
+
+[tool.black]
+line-length = 80
+python-version = ['py39', 'py310', 'py311']
+
+[tool.pytest.ini_options]
+log_cli = true
+log_cli_level = "INFO"
+
+# Install python packages that are required to install test dependencies
+# [tool.cibuildwheel]
+# before-test = [
+#     "pip install '.[development]'",
+#     "install_cmdstan --dir $(pwd)/pseudobatch/stan",
+# ]
