@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "loris_log"
+version = "0.1.1b1"
+description = "Log library to establish communication with FTP server and AWS CloudWatch; as well as to publish log message to these platforms."
+readme = "README.md"
+authors = [{ name = "Sze Ling", email = "sample@mail.com" }, { name = "Kah Seng", email = "sample@mail.com" }, { name = "Stanley", email = "sample@mail.com" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["log", "FTP", "CloudWatch"]
+dependencies = [
+    "astroid>=2.15.6",
+    "boto3>=1.28.37",
+    "botocore>=1.31.37",
+    "coverage>=7.3.0",
+    "dill>=0.3.7",
+    "isort>=5.12.0",
+    "jmespath>=1.0.1",
+    "lazy-object-proxy>=1.9.0",
+    "mccabe>=0.7.0",
+    "platformdirs>=3.10.0",
+    "pylint>=2.17.5",
+    "python-dateutil>=2.8.2",
+    "PyYAML>=6.0.1",
+    "s3transfer>=0.6.2",
+    "six>=1.16.0",
+    "tomli>=2.0.1",
+    "tomlkit>=0.12.1",
+    "typing_extensions>=4.7.1",
+    "urllib3>=1.26.16",
+    "wrapt>=1.15.0"
+]
+requires-python = ">=3.10"
+
+[project.urls]
+Homepage = "https://github.com/mikelim2/python-logging"

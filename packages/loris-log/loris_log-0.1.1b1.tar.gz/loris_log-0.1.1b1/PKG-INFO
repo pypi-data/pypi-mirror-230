@@ -1,0 +1,241 @@
+Metadata-Version: 2.1
+Name: loris_log
+Version: 0.1.1b1
+Summary: Log library to establish communication with FTP server and AWS CloudWatch; as well as to publish log message to these platforms.
+Author: Kah Seng, Sze Ling, Stanley
+Author-email: Sze Ling <sample@mail.com>, Kah Seng <sample@mail.com>, Stanley <sample@mail.com>
+Project-URL: Homepage, https://github.com/mikelim2/python-logging
+Keywords: log,FTP,CloudWatch
+Classifier: Development Status :: 4 - Beta
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: astroid>=2.15.6
+Requires-Dist: boto3>=1.28.37
+Requires-Dist: botocore>=1.31.37
+Requires-Dist: coverage>=7.3.0
+Requires-Dist: dill>=0.3.7
+Requires-Dist: isort>=5.12.0
+Requires-Dist: jmespath>=1.0.1
+Requires-Dist: lazy-object-proxy>=1.9.0
+Requires-Dist: mccabe>=0.7.0
+Requires-Dist: platformdirs>=3.10.0
+Requires-Dist: pylint>=2.17.5
+Requires-Dist: python-dateutil>=2.8.2
+Requires-Dist: PyYAML>=6.0.1
+Requires-Dist: s3transfer>=0.6.2
+Requires-Dist: six>=1.16.0
+Requires-Dist: tomli>=2.0.1
+Requires-Dist: tomlkit>=0.12.1
+Requires-Dist: typing_extensions>=4.7.1
+Requires-Dist: urllib3>=1.26.16
+Requires-Dist: wrapt>=1.15.0
+
+# Python Application Logging Module 
+
+The centralized application logging library.
+
+# Logging Data Level
+
+- FATAL: Log the application/ solution/ API state or behaviours that causes the system to terminate unintentionally; or have to cause the system to halt.
+- ERROR: Log the application/ solution/ API state or behaviours that causes the system response abnormally; or is returning not expected out; but the system is still running.
+- DEBUG: Log the application/ solution/ API behaviours or state change.
+- INFO: Log the AI model performance or output.
+
+# Unique ID Generation
+
+Please do use uuid4 for generating the random unique ID.
+
+```python 
+import uuid 
+
+id = uuid.uuid4()
+```
+
+Otherwise use uuid5 for fixed id generation.
+
+```python
+import uuid 
+
+id = uuid.uuid5(uuid.NAMESPACE_DNS, 'python.org')
+```
+
+# Examples
+
+## The Example of Creating the Log Group and Log Stream 
+
+This example shows the approach of creating the log group and log stream on the AWS CloudWatch.
+
+```python
+from lorisboto3Client import Boto3Client 
+
+aws_region = "<your_region>"
+aws_role_key = "<your_role_key>"
+aws_role_secret = "<your_aws_role_secret>"
+
+# Establishing connection with AWS Cloud Service
+client = Boto3Client(aws_region, aws_role_key, aws_role_secret)
+
+log_group_name = "<your_log_group>"
+log_stream_name = "<your_log_stream>"
+client.create_log_group_stream(log_group_name, log_stream_name)
+```
+
+
+## The Example of Getting Present Log Group
+
+This example shows the approach of getting the present log groups on the AWS CloudWatch.
+
+```python
+from loris_log.boto3Client import Boto3Client
+
+aws_region = "<your_region>"
+aws_role_key = "<your_role_key>"
+aws_role_secret = "<your_aws_role_secret>"
+
+# Establishing connection with AWS Cloud Service
+client = Boto3Client(aws_region, aws_role_key, aws_role_secret)
+
+# Pulling the log group names from the cloud.
+log_group = "<your_log_group_name>"
+response = client.get_log_groups(log_group)
+```
+
+## The Example of Getting Present Log Stream
+
+This example shows the approach of getting the present log streams on the AWS CloudWatch.
+
+```python
+from loris_log.boto3Client import Boto3Client 
+
+aws_region = "<your_region>"
+aws_role_key = "<your_role_key>"
+aws_role_secret = "<your_aws_role_secret>"
+
+# Establishing connection with AWS Cloud Service
+client = Boto3Client(aws_region, aws_role_key, aws_role_secret)
+
+# Pulling the log group names from the cloud.
+log_stream = "<your_log_stream_name>"
+response = client.get_log_groups(log_stream)
+```
+
+## The Example of Pushing Log to CloudWatch
+
+This example shows the approach of pushing the log message onto the AWS Cloudwatch for the specific log group, as well as log stream.
+
+```python
+from loris_log.boto3Client import Boto3Client
+from loris_log.customLog import CustomLog
+import uuid
+
+# define the credentials
+aws_region = "<your_region>"
+aws_role_key = "<your_role_key>"
+aws_role_secret = "<your_aws_role_secret>"
+
+# Establishing connection with AWS Cloud Service
+client = Boto3Client(aws_region, aws_role_key, aws_role_secret)
+
+# define the log group and log stream
+log_group = "<your_log_group_name>"
+log_stream = "<your_log_stream_name>"
+
+# example of creating debug message
+id = uuid.uuid4()
+name = "<your_log_name>"
+message = ["[200]", "your", "log", "message"]
+
+log = CustomLog.set_debug_message(id, name, message)
+
+# example of pushing the message to the cloudwatch
+client.set_log_message(log_group, log_stream, log)
+```
+
+## Example of Establishing Connection With Remote FTP Server
+
+This example shows the approach of establishing communication with the remote FTP server.
+
+```python
+from loris_log.ftpClient import FtpClient
+
+ftp_server_hostname = "<your_ftp_server_hostname>"
+ftp_server_port = int(your_ftp_port_number)
+ftp_server_username = "<your_username>"
+ftp_server_password = "<your_password>"
+
+client = FtpClient(ftp_server_hostname,
+                    ftp_server_port,
+                    ftp_server_username,
+                    ftp_server_password)
+```
+
+## Example of Pushing Embedded Device Data to Remote Server
+
+This example shows the approach of pushing embedded device data onto the remote FTP server.
+
+```python 
+from loris_log.ftpClient import FtpClient
+from loris_log.customLog import CustomLog
+import datetime
+
+# Establish the connection.
+ftp_server_hostname = "<your_ftp_server_hostname>"
+ftp_server_port = int(your_ftp_port_number)
+ftp_server_username = "<your_username>"
+ftp_server_password = "<your_password>"
+
+client = FtpClient(ftp_server_hostname,
+                    ftp_server_port,
+                    ftp_server_username,
+                    ftp_server_password)
+
+# Create the csv file
+flle_path = "log_testing/data"
+filename = "example"
+client.create_ftp_log_data(file_path, filename)
+
+# Construct the message string
+uu_id = uuid.uuid4()
+start_time = datetime.datetime.now()
+target_start_time = start_time.strftime("%H:%M:%S")
+end_time = datetime.datetime.now()
+target_end_time = end_time.strftime("%H:%M:%S")
+result = "32"
+groundtruth = "3"
+log = CustomLog.set_ftp_log_data(uu_id, target_start_time, target_end_time, result, groundtruth)
+
+# Push the message to remote FTP server
+client.set_ftp_log_data(file_path, filenanme, file_data_message)
+```
+
+## Example of Pushing the Log Message to Remote FTP Server
+
+This example shows the approach of pushing log message onto the remote FTP server.
+
+```python
+# Establish the connection.
+ftp_server_hostname = "<your_ftp_server_hostname>"
+ftp_server_port = int(your_ftp_port_number)
+ftp_server_username = "<your_username>"
+ftp_server_password = "<your_password>"
+
+client = FtpClient(ftp_server_hostname,
+                    ftp_server_port,
+                    ftp_server_username,
+                    ftp_server_password)
+      
+log_name = "<your_log_name>"
+log_message = ["your", "log", "message"]
+logfile_path = "log/testing"
+logfile_name = "sample"
+
+# Construct the log message.
+info_message = CustomLog.set_info_message(id, target_name, target_info_message)
+
+# Push the message onto the specfied file
+ftp_client.set_ftp_log_file(logfile_path, logfile_name)
+```
