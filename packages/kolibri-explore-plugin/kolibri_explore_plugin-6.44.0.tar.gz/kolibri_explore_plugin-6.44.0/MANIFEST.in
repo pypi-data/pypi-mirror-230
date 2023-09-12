@@ -1,0 +1,15 @@
+# webpack build-info is needed at runtime, but it’s only built at build time
+# by yarn, so setuptools doesn’t know about it. Similarly for the compiled app.
+include kolibri_explore_plugin/static/build-info.json
+recursive-include kolibri_explore_plugin/static/kolibri_explore_plugin.app *
+
+# build/kolibri_explore_plugin.app_stats.json is needed by Kolibri at runtime,
+# but it is created at build time.
+include kolibri_explore_plugin/build/kolibri_explore_plugin.app_stats.json
+
+# This is the dist form of welcomeScreen, which is not committed to git (but its
+# source in packages/welcome-screen, is). It needs to be in the dist tarball
+# because it’s consumed by kolibri-installer-android to show a welcome screen,
+# and kolibri-installer-android consumes the kolibri-explore-plugin wheel
+# directly.
+recursive-include kolibri_explore_plugin/welcomeScreen *.*
