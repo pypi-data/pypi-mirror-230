@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "progfiguration"
+version = "0.0.10"
+description = "PROGramatic conFIGURATION for your infrastructure"
+license = { text = "MIT" }
+readme = "readme.md"
+requires-python = ">=3.10"
+
+[[project.authors]]
+name = "Micah R Ledbetter"
+email = "me@micahrl.com"
+
+[project.scripts]
+progfiguration = "progfiguration.cli.progfiguration_core_cmd:main"
+
+[project.optional-dependencies]
+
+# Used for local development
+development = [
+    "black",
+    "build",
+    "furo",             # Sphinx theme
+    "invoke",
+    "mypy",
+    "sphinx",
+    "sphinx-argparse",
+    "sphinx-autoapi",
+    "sphinx-autobuild",
+    "twine",
+]
+
+# Used by our Github Actions workflow to autopublish documentation
+ghpages-builder = ["furo", "sphinx", "sphinx-argparse", "sphinx-autoapi"]
+
+[project.urls]
+Homepage = "https://github.com/mrled/progfiguration"
+
+[tool.black]
+line-length = 120
+
+[tool.setuptools.package-data]
+"progfiguration" = ["*"]
+
+[tool.mypy]
+exclude = ["build", "dist", "docs", "venv"]
+# Ignore missing imports because we do a lot of dynamic imports
+ignore_missing_imports = true
