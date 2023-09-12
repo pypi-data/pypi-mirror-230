@@ -1,0 +1,39 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% block detail-style %}
+    <link rel="stylesheet" href="{% static 'blogs/css/detail-style.css' %}">
+    <link rel="stylesheet" href="{% static 'blogs/css/tomorrow-night-bright.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- マークダウン記法のリスト -->
+{% include 'blogs/markdown_modal.html' %}
+
+<!-- コンテナ内　新規作成フォーム・マークダウンのコード -->
+<div class="blogs-title container">
+
+  <!-- 非表示リストに戻るリンク -->
+  <a class="text-violet" href="{% url 'blogs:private_index' %}">非表示リスト一覧へ戻る</a>
+
+  <!-- 新規作成フォーム -->
+  <form action="{% url 'blogs:new_blog' %}" method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="form-group">
+      <label for="{{ field.id }}">{{ field.label_tag }}</label>
+      {{ field }}
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary btn-sm">投稿</button>
+  </form>
+  <!-- 新規作成フォーム終 -->
+
+  <!-- markdownxのプレビュー表示 -->
+  {{ form.media }}
+
+</div>
+<br>
+<br>
+
+{% endblock %}

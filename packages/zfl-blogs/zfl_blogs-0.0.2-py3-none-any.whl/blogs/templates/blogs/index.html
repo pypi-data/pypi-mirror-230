@@ -1,0 +1,116 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+{% block blogs-style %}
+<link rel="stylesheet" href="{% static 'blogs/css/blogs-style.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- コンテナ内　カテゴリー・記事リスト・サイドバーなど -->
+<div class="container">
+
+  <!-- BootStrapのグリッドシステム -->
+  <div class="row">
+
+    <!-- メインバー -->
+    <div class="col-lg-8 col-sm-12 main-bar">
+
+      <!-- 看板 -->
+      <div class="jumbotron jumbotron-fluid">
+	<div class="container">
+	  <div style="display: flex;">
+	    <img class="d-flex align-self-center mr-3" src="{% static 'home/image/home_blogs.png' %}" alt="Generic placeholder image">
+	    <h2>{% block title %}Blog{% endblock %}</h2>
+	  </div>
+	  <p class="lead">  
+	  <a type="button" class="btn btn-outline-secondary btn-sm" href="{% url 'blogs:index' %}">Blog top</a>
+	  {% for category in category_list %}
+	  <a type="button" class="btn btn-secondary btn-sm" href="{% url 'blogs:category' category %}">{{ category }}</a>
+	  {% endfor %}
+	  </p>
+	</div>
+      </div><!-- 看板終 -->
+
+      <!-- 管理人のみ表示 -->
+      {% if request.user.is_superuser %}
+      <!-- 非公開記事のリンク -->
+      <a type="button" class="btn btn-success btn-sm" href="{% url 'blogs:private_index' %}">非公開 </a>
+      {% endif %}
+
+      <!-- 記事投稿件数 -->
+      {% if blogs.cunt != 0 %}
+      <p>投稿<strong>{{ blogs.count }}</strong>件</p>
+      {% endif %}
+
+      <!-- messagesが呼び出された時に表示 -->
+      {% if messages %}
+      <div class="alert alert-success" role="alert">
+	{% for message in messages %}
+	<strong>{{ message }}</strong>
+	{% endfor %}
+      </div>
+      {% endif %}
+
+      <!-- 記事のリスト -->
+      {% for blog in blogs %}
+      <div class="media">
+	<div class="media-body">
+	  {% if blog.category.thumbnail.bool %}
+	  <p>
+	  <img class="d-flex ml-3" src="{{ blog.category.thumbnail.url }}" alt="Generic placeholder image">
+	  </p>
+	  {% endif %}
+	  <p>
+	  <strong>{{ blog.created_at }}</strong> - 
+	  <strong class="text-warning">{{ blog.category.title }}</strong>
+	  {% if request.user.is_superuser %}
+	  <a href="{% url 'blogs:private' pk=blog.id %}">非公開</a>
+	  {% endif %}
+	  </p>
+	  <a class="a-link" href="{% url 'blogs:detail' blog.pk %}">
+	    <h5 class="mt-0 mb-1"><strong>{{ blog.title }}</strong></h5><br>
+	  </a>
+	  <p class="text-black-50">{{ blog.text | truncatechars:'100' | striptags }}</p>
+	</div>
+      </div>
+      {% endfor %}
+      <!-- 記事リスト終 -->
+
+      <!-- ページネーション -->
+      {% include 'blogs/page.html' %}
+    </div>
+    <!-- メインバー終 -->
+
+    <!-- サイドバー -->
+    <div class="col-lg-4 col-sm-12 side-bar">
+
+      <!-- ブログ記事アクセスのランキング表示 （一時停止）
+      { include 'blogs/top_10_ranking.html' %} -->
+
+      <!-- 追従表示 -->
+      <div class="stick">
+
+	<!-- ブログのカテゴリー分けされたグラフ表 -->
+	{% include 'blogs/category_graph.html' %}
+	<br>
+
+	<!-- カテゴリーリンク -->
+	<p class="lead">
+	<a type="button" class="btn btn-outline-secondary btn-sm" href="{% url 'blogs:index' %}">Blog top</a>
+	{% for category in category_list %}
+	<a type="button" class="btn btn-secondary btn-sm" href="{% url 'blogs:category' category %}">{{ category }}</a>
+	{% endfor %}
+	</p>
+	<!-- カテゴリーリンク終 -->
+
+      </div>
+    </div>
+    <!-- サイドバー終 -->
+
+  </div>
+  <!-- BootStrapのグリッドシステム終 -->
+
+</div>
+
+{% endblock %}
