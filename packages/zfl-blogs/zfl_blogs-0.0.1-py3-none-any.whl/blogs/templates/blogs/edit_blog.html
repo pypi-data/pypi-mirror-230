@@ -1,0 +1,40 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% block detail-style %}
+    <link rel="stylesheet" href="{% static 'blogs/css/detail-style.css' %}">
+    <link rel="stylesheet" href="{% static 'blogs/css/tomorrow-night-bright.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- マークダウン記法のリスト -->
+{% include 'blogs/markdown_modal.html' %}
+
+<!-- コンテナ内　記事更新フォーム・マークダウンのコード -->
+<div class="blogs-title container">
+
+  <!-- 非表示リストに戻るリンク -->
+  <a class="text-violet" href="{% url 'blogs:detail' blog.pk %}">記事詳細へ戻る</a>
+
+  <!-- 記事更新フォーム -->
+  <!-- FormViewで使用する場合、action="{ url 'blogs:edit_blog' blog.pk %}"のやり方もある。 -->
+  <form action="" method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="form-group">
+      <label for="{{ field.id }}">{{field.label_tag }}</label>
+      {{ field }}
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary btn-sm">再投稿</button>
+  </form>
+  <!-- 記事更新フォーム終 -->
+
+  <!-- markdownxのプレビュー表示 -->
+  {{ form.media }}
+
+</div>
+<br>
+<br>
+
+{% endblock %}
