@@ -1,0 +1,114 @@
+Metadata-Version: 2.1
+Name: croud
+Version: 1.7.0
+Summary: A command line interface for CrateDB Cloud
+Home-page: https://github.com/crate/croud
+Author: Crate.io
+Author-email: office@crate.io
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Database
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.8
+License-File: LICENSE
+Requires-Dist: appdirs ==1.4.4
+Requires-Dist: bitmath ==1.3.3.1
+Requires-Dist: certifi
+Requires-Dist: colorama ==0.4.6
+Requires-Dist: marshmallow ==3.20.1
+Requires-Dist: pyyaml ==6.0.1
+Requires-Dist: requests ==2.31.0
+Requires-Dist: tabulate <1.0,>=0.8
+Requires-Dist: yarl ==1.9.2
+Requires-Dist: halo ==0.0.31
+Requires-Dist: shtab ==1.6.4
+Requires-Dist: tqdm ==4.66.1
+Provides-Extra: development
+Requires-Dist: black ==23.7.0 ; extra == 'development'
+Requires-Dist: flake8 ==3.8.4 ; extra == 'development'
+Requires-Dist: isort ==5.12.0 ; extra == 'development'
+Requires-Dist: mypy ==0.812 ; extra == 'development'
+Provides-Extra: testing
+Requires-Dist: tox ==3.14.2 ; extra == 'testing'
+Requires-Dist: pytest-freezegun ==0.4.2 ; extra == 'testing'
+
+=====
+Croud
+=====
+
+|ci| |coverage| |rtd| |pypi-version|
+
+|
+
+*Croud* is a *command-line interface* (CLI) tool for `CrateDB Cloud`_ ☁.
+
+Installation
+============
+
+Using pip
+---------
+
+``croud`` can be installed using `pip`_::
+
+    $ python3 -m pip install --user -U croud
+
+To update, run::
+
+    $ pip install -U croud
+
+Contributing
+============
+
+This project is primarily maintained by Crate.io_, but we welcome community
+contributions!
+
+See the `developer docs`_ and the `contribution docs`_ for more information.
+
+Help
+====
+
+- Read the `project docs`_
+- Learn about `CrateDB Cloud`_
+- Check out our `support channels`_
+
+.. _contribution docs: https://github.com/crate/croud/blob/master/CONTRIBUTING.rst
+.. _Crate.io: http://crate.io/
+.. _developer docs: https://github.com/crate/croud/blob/master/DEVELOP.rst
+.. _pip: https://pip.pypa.io/en/stable/
+.. _project docs: https://crate.io/docs/cloud/cli/en/latest/
+.. _support channels: https://crate.io/support/
+.. _virtualenv: https://virtualenv.pypa.io/en/latest/
+.. _CrateDB Cloud: https://crate.io/products/cratedb-cloud/
+
+
+.. |ci| image:: https://github.com/crate/croud/actions/workflows/docs.yml/badge.svg
+    :alt: CI status
+    :scale: 100%
+    :target: https://github.com/crate/croud/actions/workflows/docs.yml
+
+.. |coverage| image:: https://codecov.io/gh/crate/croud/branch/master/graph/badge.svg
+    :alt: Code coverage
+    :scale: 100%
+    :target: https://codecov.io/gh/crate/croud
+
+.. |rtd| image:: https://readthedocs.org/projects/croud/badge/?version=latest
+    :alt: Read The Docs status
+    :scale: 100%
+    :target: https://croud.readthedocs.io/en/latest/
+
+.. |pypi-version| image:: https://badge.fury.io/py/croud.svg
+    :alt: Most recent version on PyPI
+    :scale: 100%
+    :target: https://pypi.org/project/croud/
+
+.. |python-versions| image:: https://img.shields.io/pypi/pyversions/croud.svg
+    :alt: Supported Python versions
+    :scale: 100%
+    :target: https://pypi.org/project/croud/
