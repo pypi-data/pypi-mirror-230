@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "pymavlog"
+version = "0.4.2"
+description = "A lightweight python library to parse MavLink log files"
+readme = "README.md"
+license = "MIT"
+authors = [
+    "Ricardo Martinez <rik@rmargar.net>"
+]
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Operating System :: POSIX",
+    "Operating System :: Unix"
+]
+repository = "https://github.com/rmargar/pymavlog"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+pymavlink = "^2.4"
+numpy = "^1.21"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7"
+pre-commit = "^2"
+pytest-cov = "^4"
+coverage = "^7"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.semantic_release]
+version_toml = [
+    "pyproject.toml:tool.poetry.version"
+]
+version_source = "tag"
+build_command = "pip install poetry && poetry build"
+repository = "pypi"
+branch = "main"
+commit_version_number = true
