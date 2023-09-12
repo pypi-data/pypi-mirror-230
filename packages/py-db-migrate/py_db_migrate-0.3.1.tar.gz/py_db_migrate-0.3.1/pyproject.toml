@@ -1,0 +1,62 @@
+[tool.poetry]
+name = "py-db-migrate"
+version = "0.3.1"
+description = "The CLI application for managing SQL migrations."
+authors = ["akemalyildirim1 <akemalyildirim1@gmail.com>"]
+readme = "README.md"
+repository = "https://github.com/akemalyildirim1/py-db-migrate"
+keywords = ["psql", "sql", "migration", "typer", "python"]
+
+[tool.poetry.urls]
+"Issue tracker" = "https://github.com/akemalyildirim1/py-db-migrate/issues"
+
+[tool.poetry.scripts]
+py-db-migrate = "py_db_migrate.main:app"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiofiles = "^23.2.1"
+asyncpg = "^0.28.0"
+overrides = "^7.4.0"
+pydantic = "^2.3.0"
+pyyaml = "^6.0.1"
+typer = {extras = ["all"], version = "^0.9.0"}
+pypika = "^0.48.9"
+
+[tool.poetry.group.dev.dependencies]
+coverage = "^7.3.0"
+pre-commit = "^3.3.3"
+pytest = "^7.4.1"
+pytest-asyncio = "^0.21.1"
+types-aiofiles = "^23.2.0.0"
+types-pyyaml = "^6.0.12.11"
+mypy = "^1.5.1"
+black = "^23.7.0"
+usort = "^1.0.7"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+include = '\.pyi?$'
+
+[tool.pydocstyle]
+convention = "google"
+ignore_decorators = "overrides"
+
+[tool.mypy]
+plugins = ["pydantic.mypy"]
+ignore_missing_imports = true
+strict_optional = false
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.3.1"
+tag_format = "$version"
+version_files = ["pyproject.toml"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
