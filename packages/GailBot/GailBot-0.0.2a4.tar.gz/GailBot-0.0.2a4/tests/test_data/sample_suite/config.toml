@@ -1,0 +1,19 @@
+
+suite_name = "sample_suite"
+
+[metadata]
+Author = "sample"
+Email = "n/a"
+Version = "v.1.0"
+
+[[plugins]]
+plugin_name = "SampleOne"
+dependencies = []
+rel_path = "src/sample_dir/sample_module1.py"
+module_name = "sample_module1"
+
+[[plugins]]
+plugin_name = "SampleTwo"
+dependencies = ["SampleOne"]
+rel_path = "src/sample_dir2/sample_module2.py"
+module_name = "sample_module2"

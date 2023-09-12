@@ -1,0 +1,34 @@
+# TESTING SUITE - READ ME
+# @Author: Jason Y. Wu
+# @Date: 2023-06-27 10:06:19
+
+The testing suite aims to provide unit testing and architectural testing for the
+Gailbot program. Unit tests for core, configs and plugins folder are found within
+subdirectories of corresponding names. Architectural testing is provided by
+test_small.py and test_api.py. Follow the instructions below to set up and run tests.
+
+# Set Up
+Download all (input) files and directories from https://drive.google.com/drive/folders/1y-xeLHTvcKMVQluOv0g-B7nXqk0sX2HG?usp=drive_link
+Modify [APP_ROOT] and [TEST_ROOT] variables in [test_data/path.py] to the appropriate
+paths on the developer's local machine.
+      APP_ROOT    Path to parent directory for GailBot's workspace directory
+      TEST_ROOT   Path to parent directory of 'gbtest' (folder from link)
+Modify AUDIOROOT and OUTPUTROOT in tests/core/engines/data.py
+
+# Run Tests
+To run tests, make sure you are in the root directory (one above "tests" directory)
+and run "pytest tests/[file_to_test{::function_to_test}]".
+      Example: "pytest tests/test_api.py::test_gailbot"
+      - This tests test_gailbot speficially in test_api.py
+
+      "pytest tests/"
+      - run all tests within the testing suite
+
+      "pytest tests/test_api.py" 
+      - run tests with all three engine configurations, using test inputs from
+      the gbtest folder
+
+      "pytest tests/test_small.py"
+      - run tests with mall test for whisper and watson engine, the test file 
+      are included within the same folder as the test_script, 
+      so that no need do download additional source file

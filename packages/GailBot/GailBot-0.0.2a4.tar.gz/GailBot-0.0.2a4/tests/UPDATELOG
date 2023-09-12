@@ -1,0 +1,92 @@
+#### CHANGES, NOTES AND UPDATES:
+# Author: Jason Wu
+
+# Friday, June 30
+Ran all tests, here are the results:
+    tests/configs/test_config.py ..
+    
+
+
+
+
+
+# General:
+made sure all api keys are accessed via setting_data.py
+
+# File specific:
+configs/test_configs.py:      added comments, added assertions, split original 
+                              into two tests (one for engines, one for log)
+
+core/test_google_engine.py:   added comments, imported missing Google API key paths
+                              added missing workspace output path (GOOGLE_OUT), 
+                              refactored test_chunking_large_audio; 10 tests in total (1 large file test)
+                              [test_core_run_engine] fails: ERROR 500: Transcription error: ERROR 501: Google STT transcription failed
+                              all others passed
+                              
+core/test_watson_am.py:       added comments, no refactoring needed
+                              [TODO] remove constant imports 
+
+core/test_watson_core.py:     [test_watson_core] fails bc supported format for 
+                              mediaHandler is diff from Watson core; 
+                              Watson tests on different input sizes ([test_watson_small], [test_watson_medium],
+                              [test_watson_large], [test_watson_large_wav])
+                              depend on watson_test()
+                              They all currently fail because Watson only supports "wav"
+                              but mediaHandler supports "mp3", "mpeg", "opus", "wav"
+                              [?]Question for Umair: should I change it?
+                              Commented all functions but the media file type assertion
+                              remain unresolved
+                              [TODO] remove constant imports 
+
+core/test_watson_lm.py:       [test_init_lm] failing because logger.info(model.get_base_model
+                              (WATSON_BASE_LANG_MODEL)) is somehow not recognizing parameter as a string
+                                    Update: the issue is with calling "_execute_watson_method" where "model_name" is not encapsulated when running get_base_model().
+                                    Fixed: replaced "model_name" with "[model_name]" in the testing file
+                              [failed_test_train_model] does not have input data for training. Does not run
+                              Commented all test functions
+                              [TODO] remove constant imports 
+
+core/test_whisper.py          Has same structure as the watson tests where there is a defined
+                              driver function that carries out the tests when called in
+                              other file size-specific tests. 
+                              [?] QUESTION: should the Google test be updated to do so as well?
+                              added [test_detect_speaker_short] test
+                              Fixed whisperEngine calling (parameters)
+                              Fixed [test_threading_whisper] threadpool executer mechanism by adding payload_workspace path
+                                    Currently, all outputs are piped to the same path
+                                    Consider having payload_workspace take a list like the input
+                                    files to distinguish them
+core/test_pipeline_s.py
+core/test_pipeline_v.py
+core/test_pipeline_u.py       Originally "test_pipeline.py"
+
+core/test_pipeline.py         New file created by me to integrate testing from all
+                              three files. In [core/test_pipeline_s.py], [core/test_pipeline_v.py],
+                              and [core/test_pipeline_u.py], they all create a TestComponent class
+                              that is used in individual tests. However, those tests tried to call
+                              Pipeline methods through a Component. 
+                              Designed a new test to see if pipeline recognizes a
+                              cyclical dependency graph
+                              Refactored [test_component_info] with correct method calls
+                              [TODO] incorporate Huggingface tests
+
+core/test_general.py          Inheriting most of the existing tests. Commented everything
+                              Fixed bug for [test_copy] where test fails should files exist
+                              Fixed path for [test_csv]
+
+core/test_logger.py           Deleted; functionality has been called elsewhere
+
+core/test_media.py            [TODO] move the global file path for testing at the top
+                              to a toml file.
+                              [?] Question for Umair: what is stereo?
+                              Maybe can use mediaHandler's is_supported() method to resolve issue above
+                              [test_record] backend function NOT implemented
+                              [stereo_mono_convert] removed duplicate, kept the second one
+                              [TODO] Fix failed tests (3 of them)
+
+core/test_thread.py           Fully functioning; no refactoring necessary
+                              All tests passed except for [test_error]
+
+core/test_plugins.py          [TODO] remove constant imports
+                              tests are fully commented
+                              [TODO] Need to redesign plugins all tests

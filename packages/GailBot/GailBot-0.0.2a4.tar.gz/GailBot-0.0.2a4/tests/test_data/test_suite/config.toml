@@ -1,0 +1,42 @@
+suite_name = "test_suite"
+
+[metadata]
+Author = "test"
+Email = "n/a"
+Version = "v.1.0"
+
+[[plugins]]
+plugin_name = "TestSucc1"
+dependencies = []
+rel_path = "src/folder1/test_succ1.py"
+module_name = "test_succ1"
+
+[[plugins]]
+plugin_name = "TestSucc2"
+dependencies = ["TestSucc1"]
+rel_path = "src/folder1/test_succ2.py"
+module_name = "test_succ2"
+
+[[plugins]]
+plugin_name = "TestFail1"
+dependencies = []
+rel_path = "src/folder1/test_fail1.py"
+module_name = "test_fail1"
+
+[[plugins]]
+plugin_name = "TestFail2"
+dependencies = ["TestFail1"]
+rel_path = "src/folder1/test_fail2.py"
+module_name = "test_fail2"
+
+[[plugins]]
+plugin_name = "TestSucc3"
+dependencies = ["TestSucc1", "TestSucc2"]
+rel_path = "src/folder2/test_succ3.py"
+module_name = "test_succ3"
+
+[[plugins]]
+plugin_name = "TestSucc4"
+dependencies = ["TestSucc1", "TestSucc2"]
+rel_path = "src/folder2/test_succ4.py"
+module_name = "test_succ4"
