@@ -1,0 +1,95 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic YWRtaW46YWRtaW4=
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:8980/opennms/rest/health
+  response:
+    body:
+      string: '{"healthy":true,"responses":[{"description":"Verifying installed bundles","status":"Success"},{"description":"Connecting
+        to ElasticSearch ReST API (Flows)","status":"Success"}]}'
+    headers:
+      Content-Length:
+      - '177'
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 22 Dec 2022 22:54:22 GMT
+      Health:
+      - Everything is awesome
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic YWRtaW46YWRtaW4=
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:8980/opennms/rest/info
+  response:
+    body:
+      string: '{"displayVersion":"30.0.4","version":"30.0.4","packageName":"opennms","packageDescription":"OpenNMS","ticketerConfig":{"plugin":null,"enabled":false},"datetimeformatConfig":{"zoneId":"America/Los_Angeles","datetimeformat":"yyyy-MM-dd''T''HH:mm:ssxxx"},"services":{"Eventd":"running","Alarmd":"running","Bsmd":"running","Ticketer":"running","Queued":"running","Actiond":"running","Notifd":"running","Scriptd":"running","Rtcd":"running","Pollerd":"running","SnmpPoller":"running","EnhancedLinkd":"running","Collectd":"running","Discovery":"running","Vacuumd":"running","EventTranslator":"running","PassiveStatusd":"running","Statsd":"running","Provisiond":"running","Reportd":"running","Ackd":"running","JettyServer":"running","KarafStartupMonitor":"running","Syslogd":"running","Telemetryd":"running","Trapd":"running","PerspectivePoller":"running"}}'
+    headers:
+      Content-Length:
+      - '847'
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 22 Dec 2022 22:54:23 GMT
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic YWRtaW46YWRtaW4=
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:8980/opennms/api/v2/nodes/2/metadata?offset=0&limit=0
+  response:
+    body:
+      string: '{"offset":0,"count":5,"totalCount":5,"metaData":[{"context":"requisition","key":"key","value":"value"},{"context":"requisition","key":"cust_name","value":"OpenNMS"},{"context":"requisition","key":"f5_hostname","value":"j1sd13i.nanthealth.com"},{"context":"requisition","key":"f5_timezone","value":"-7"},{"context":"requisition","key":"ra_fqdn","value":"remwmmaha2.mshome.net"}]}'
+    headers:
+      Content-Length:
+      - '378'
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 22 Dec 2022 22:54:23 GMT
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+version: 1

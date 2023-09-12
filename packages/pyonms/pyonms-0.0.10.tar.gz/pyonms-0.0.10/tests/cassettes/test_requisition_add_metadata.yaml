@@ -1,0 +1,117 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic YWRtaW46YWRtaW4=
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:8980/opennms/rest/health
+  response:
+    body:
+      string: '{"healthy":true,"responses":[{"description":"Verifying installed bundles","status":"Success"},{"description":"Cloud
+        status","message":"Cloud status=SERVING","status":"Success"},{"description":"Connecting
+        to ElasticSearch ReST API (Flows)","status":"Success"}]}'
+    headers:
+      Content-Length:
+      - '260'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 24 Feb 2023 00:18:51 GMT
+      Health:
+      - Everything is awesome
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic YWRtaW46YWRtaW4=
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:8980/opennms/rest/info
+  response:
+    body:
+      string: '{"displayVersion":"31.0.3","version":"31.0.3","packageName":"opennms","packageDescription":"OpenNMS","ticketerConfig":{"plugin":null,"enabled":false},"datetimeformatConfig":{"zoneId":"America/Los_Angeles","datetimeformat":"yyyy-MM-dd''T''HH:mm:ssxxx"},"services":{"Eventd":"running","Alarmd":"running","Bsmd":"running","Ticketer":"running","Queued":"running","Actiond":"running","Notifd":"running","Scriptd":"running","Rtcd":"running","Pollerd":"running","SnmpPoller":"running","EnhancedLinkd":"running","Collectd":"running","Discovery":"running","Vacuumd":"running","EventTranslator":"running","PassiveStatusd":"running","Statsd":"running","Provisiond":"running","Reportd":"running","Ackd":"running","JettyServer":"running","KarafStartupMonitor":"running","Syslogd":"running","Telemetryd":"running","Trapd":"running","PerspectivePoller":"running"}}'
+    headers:
+      Content-Length:
+      - '847'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 24 Feb 2023 00:18:51 GMT
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic YWRtaW46YWRtaW4=
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:8980/opennms/rest/requisitions/selfmonitor
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAALVWTY/TMBD9LzlvVk3Spt29AQKJA7ASXBBCyI3d1uDYxrH3g1X/O+Mkzc443T2B
+        eum892Ziz4ztecy04SK7/vaYSe2F27FmsFqjpTdO8LwT7lb26PeLrGFe7I17GKxWeJZz5tlgctE1
+        LrvWQamLTNqccQ5mVpTrywX8ygw8mGZ7wU+izjMfuuy6gL+6tbl1smUxenaTHWefY10nfL86zVpY
+        UAYfkF4azdSBOX7HnIBP3DIVniGPF9jVia4rqMMAzWXlXFZSWSs10UQbC+LSP4Z2KxyWIRSLgzdC
+        s63C2/mKFdsgFZd6j/gJQrIpfU+yCcIy6Zog/XuOdRNGhJ7EiiamTdsK7bFiRIhIa9HEwhDdBBJp
+        0J6ufkSwyAYsAAuR0JvivYYuU0rg3ZWLssyLRV6QKnJhmfPJFhBIpNDq0ibbwCgWy84q9vBmXo2U
+        IU63skvCnyAkm/XJCCDJThmDu26wkeDAOT4HvUnpktJlQleUrhJ6SellQq8ovUromtI1pqW2wVtz
+        R04VOSmKdf6D4XInBX+NU58QxMVLHzhOarW63CyvlmVN1q4E67BqsFPB23sr4cJIdScYy43ep1/O
+        15vL9dV6sVqSjbcMrus3Bg4Da3wfiiW9WC6q2N95VTzrN7uPzrGpczPSqduEE4f+tv+0/QmHuz+H
+        uhHE8Rz/XIAvD/ZZ556jjgHeMh9cskEEYzk8gmqeDoQisTZe7s6d5oTALqHtu7QL1ipJmoGUx1gR
+        C6n3nx86L1okSxnkZOEZuTMO328ThGUGLkF3ZtkJQVycJ0JHygvl/oXo3kzoAFPEQcj9AcdZllTW
+        kiBkb07saVuPAJYYQwJEE9Ewvkg2ry2BsVwZvNTexDRMKfFRi/vCObwhIphqcKcONhEYB73beKeI
+        7AnFYugZSPzNwWgSFMNI7g9wqxyM4mcqPeeQY4CU9H+f9BOEZLdCc/KcjMBM8ursyDPnZo7v2P3M
+        IWIzYZoSjCLxH2mRKFrH+eyqTDPcoONkOo1To93POuP/HczFcq9zyeP5revVqtxUi029js9knKdz
+        xbZCnQa8H150sadgjoApIj95dya4OFYPMRNS8oTAYSMR9/fPJvY4hzS53GXnxvbiX43tyecf49Tn
+        xb3vT/XvAKPN+IT9EjHUmLWpd6N5fLFScKjVbkxD9lLJ0jLFkOpg/kOVYo4hGTlkrLWQsHq9Lq7W
+        m9WmLuunVZ0+kmwgjii5bPtr9+R6VRVVtTj+BVa19SS4DQAA
+    headers:
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 24 Feb 2023 00:18:51 GMT
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+version: 1

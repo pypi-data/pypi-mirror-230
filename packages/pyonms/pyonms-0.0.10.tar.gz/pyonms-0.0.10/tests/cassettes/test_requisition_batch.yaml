@@ -1,0 +1,147 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic YWRtaW46YWRtaW4=
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:8980/opennms/rest/health
+  response:
+    body:
+      string: '{"healthy":true,"responses":[{"description":"Verifying installed bundles","status":"Success"},{"description":"Cloud
+        status","message":"Cloud status=SERVING","status":"Success"},{"description":"Connecting
+        to ElasticSearch ReST API (Flows)","status":"Success"}]}'
+    headers:
+      Content-Length:
+      - '260'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 24 Feb 2023 00:18:49 GMT
+      Health:
+      - Everything is awesome
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic YWRtaW46YWRtaW4=
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:8980/opennms/rest/info
+  response:
+    body:
+      string: '{"displayVersion":"31.0.3","version":"31.0.3","packageName":"opennms","packageDescription":"OpenNMS","ticketerConfig":{"plugin":null,"enabled":false},"datetimeformatConfig":{"zoneId":"America/Los_Angeles","datetimeformat":"yyyy-MM-dd''T''HH:mm:ssxxx"},"services":{"Eventd":"running","Alarmd":"running","Bsmd":"running","Ticketer":"running","Queued":"running","Actiond":"running","Notifd":"running","Scriptd":"running","Rtcd":"running","Pollerd":"running","SnmpPoller":"running","EnhancedLinkd":"running","Collectd":"running","Discovery":"running","Vacuumd":"running","EventTranslator":"running","PassiveStatusd":"running","Statsd":"running","Provisiond":"running","Reportd":"running","Ackd":"running","JettyServer":"running","KarafStartupMonitor":"running","Syslogd":"running","Telemetryd":"running","Trapd":"running","PerspectivePoller":"running"}}'
+    headers:
+      Content-Length:
+      - '847'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 24 Feb 2023 00:18:50 GMT
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic YWRtaW46YWRtaW4=
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:8980/opennms/rest/requisitions?offset=0&limit=2
+  response:
+    body:
+      string: !!binary |
+        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
+        cp5eAAA=
+    headers:
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 24 Feb 2023 00:18:50 GMT
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -1,0 +1,276 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic YWRtaW46YWRtaW4=
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:8980/opennms/rest/health
+  response:
+    body:
+      string: '{"healthy":true,"responses":[{"description":"Verifying installed bundles","status":"Success"},{"description":"Connecting
+        to ElasticSearch ReST API (Flows)","status":"Success"}]}'
+    headers:
+      Content-Length:
+      - '177'
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 22 Dec 2022 23:06:48 GMT
+      Health:
+      - Everything is awesome
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic YWRtaW46YWRtaW4=
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:8980/opennms/rest/info
+  response:
+    body:
+      string: '{"displayVersion":"30.0.4","version":"30.0.4","packageName":"opennms","packageDescription":"OpenNMS","ticketerConfig":{"plugin":null,"enabled":false},"datetimeformatConfig":{"zoneId":"America/Los_Angeles","datetimeformat":"yyyy-MM-dd''T''HH:mm:ssxxx"},"services":{"Eventd":"running","Alarmd":"running","Bsmd":"running","Ticketer":"running","Queued":"running","Actiond":"running","Notifd":"running","Scriptd":"running","Rtcd":"running","Pollerd":"running","SnmpPoller":"running","EnhancedLinkd":"running","Collectd":"running","Discovery":"running","Vacuumd":"running","EventTranslator":"running","PassiveStatusd":"running","Statsd":"running","Provisiond":"running","Reportd":"running","Ackd":"running","JettyServer":"running","KarafStartupMonitor":"running","Syslogd":"running","Telemetryd":"running","Trapd":"running","PerspectivePoller":"running"}}'
+    headers:
+      Content-Length:
+      - '847'
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 22 Dec 2022 23:06:48 GMT
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic YWRtaW46YWRtaW4=
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:8980/opennms/api/v2/events?offset=0&limit=5
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAANWVW0/bMBTHv8pRXtikLm1CLm2GkBgDCYmWaTBN08aDmzitRWpndgJUiO++46Rp
+        kzJKuUMfWp/E5+9z+9VXhohjRTMj6LSMUOQcV27LyERGkt3StBzb3mwZ9Jxq6/eVwSJ86Du20zJy
+        yoxAf5sipZxPlCnkqM14RiUnSZvk2Ri9WEgyJng7JizJJTVaRkKGNEHPI/Qa9I8/RTRmnEZQeUJx
+        WgCEQ1MDZhowJgpEGOZSFm7wkw5/HKByxiYUw/N8jLBnu37X9VqGErkM6eI8s9qdEkkmFM9URWac
+        aGcjV1Tiy3OS5Nrs98mYhPRMq09T/URlkvGRcd2au7C05mD5tmn1zI5prXKhlyFNdU4DbS+8v5Bo
+        F5PSOZNE7VW71pLqU6XIaEkNwoXcTZVT7LukJKMnzcp1O06vZURUhZKVAQTGyZipsjWAC6V/h1PA
+        /pTlhwvs1IqeFf1Spu6/GFWhBsYfDrXPrEWgmwAbVe034MOETGFIYZgQfvax6L/Wxe5nAlCP8aZO
+        LMUEFp0w4QTDrCKZ53BLseGCZeOmns5yUsYMG0tV3TAXezE7hfKSZVM9OweDo+9lwmj9wlXEVJqQ
+        6cxKRFkjNL/SmORJVvS1QmzzTsRSKc6ZQoWozUVEj0PCd8UkTXCooxWgfZu7wV6J2v+86zB17U63
+        67o1mBYat5IUC0nZiB+XLjWkCFs50DO/g6hOlec6nZ5nb3a7PX/NOS6D9pbneGfeyWJKdGtrBRnM
+        KgEJi2k4DROKO0gGZPFGT19YFSpoDspWuq1HTe8txggOogD8z7Bfr0UAugTzh7ilkZ4+oKk6P83c
+        aqfbzXcn0xRRS5ISRUkVjhGIGAOW9G9OVWlwYJNUyGzxUOIOFY5plCNG7QI4LHyI44EamOYdpL5s
+        ok2ukKr+zuEKsPQ44/gEfrk8nHFwuc/ups5+U9Q5jrX5mtQ5Xs9xfdfyPHt96jBo5/Wp89YYxlp6
+        75e6Z0v0gdR5Teo4Jn43dtZ9sJtXsJqO44zI+9K3QmQJQst1e+/u6rNc78kgnJeqiaMqC1aD8Vlu
+        hdkxS1GADsMEPbG3M/P08dwMpsC2Ds4LXladN0uN1fMt61WpecDVpYPW/0RvgZrH/qs/NTWPiuf5
+        qFn/sjm9/ge66rTN8BAAAA==
+    headers:
+      Content-Encoding:
+      - gzip
+      Content-Range:
+      - items 0-4/14223
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 22 Dec 2022 23:06:48 GMT
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic YWRtaW46YWRtaW4=
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:8980/opennms/api/v2/events?offset=5&limit=5
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAM2X32+bMBDH/xWLp1XKEiAESDZVqrpNirR01dKXaeuDi4/EE9jMNp1Qtf9955Af
+        hHZNui1KeEDY8p2/d74PBw+OTFMNxhkNOk4iS1E/GWlodlkPvcD3+x0H7sGOvj44nOFkFHjDjlMC
+        d0b23pUFCJHrrlSzHhcGlKBZr1DynmsuBevpZA6szIBdSQbThIqpocoAczpORu8gQzef0MXVZPqa
+        QcoFMHK9tibv7eYj8owTw3NAWWGEymIvDsIw6DhalirBaWfjCpcWVNEcUKJehCOotXRSqYDPxLQ2
+        6Tj3NCvt/IRyYf1XhR1po7iYOb86bbsxa9h4YRgN3MgdxMMoeGx8i6lWQA3ctEVHbsdhoBPFC4Nq
+        0eaC5KA1nQFJlcyJmUMzL6s8kIynkFRJBriCGkI3qdqsmVNNdJ2w0TdBltfb4vwGndpV5Cc3czJm
+        I+L5b8iHZkJGxOZhPYlrtmK0vjcu8Vru05JBrI4uedsrzu25y9mkjg3jPKigx2q0FWJ1rBahHo0l
+        rripUM3Vp8+Ti4+1Rhx+wSfGdZHRajkSqG5sOfDr54/LGnZn8Yxm0cIyocszfAcpLTOzqJoVPPEJ
+        w+P3veiY8AR9P4jjYOCF7v7woOjhacAT71GqjRAPzs4/6TkcOvE2Od89zbw+301OdMrk+LF3THLw
+        /Iae5+Jh+i8gx4/7p0FOsEelNkI8ODn/pOdw5ATb5BjIi8R+nO1EJ9yJDm6YSFRU9eZUsZ9UwVhY
+        CKSqpmWSYOLSMnsGnpUjAjU6Ky9k7Zjopp8WP17c95/kpzsVeTEBQxk1dD2NZX3BaIFboiteXDCm
+        0LMlYeh3vTDuxmF3EP6RPZyZyyZAuzfZEyn8lvPaSC0r7ImMvNqx7xmRgtgTJwV3ffJqfE1oHSrZ
+        CvRswdodgCCJzIsMFuW3TnfVfR6BBgbHFrkR9bffZS1GrKbdfAxe0lrE8gV3uYriRT3lKesWDG7s
+        HvEfZsHNnuWOSgf/q4Ns9Y11hYyeLNPWP8Lu1/UgfNQzNnu0Ks9eN1XBE5pl1UI/FjNWDJEpylTw
+        owRdDwTheSGV2UyqZivslRoUwRwnWAnow3aBvSg8aHiHB+v212/C5NgDXhAAAA==
+    headers:
+      Content-Encoding:
+      - gzip
+      Content-Range:
+      - items 5-9/14223
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 22 Dec 2022 23:06:48 GMT
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic YWRtaW46YWRtaW4=
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:8980/opennms/api/v2/events?offset=10&limit=5
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAO1XXY+bOBT9KxZPrZQSIExCs1WlqLutIjXpqBlpter2wYULWALbtc2M2FH/+15D
+        AiGTTDJSt+3DRqMRtq/P/eAcX3zviDTVYJy5742cWFQcH69GjhGGFm/aoR8GwWTkwC3Y0ad7hyU4
+        OQv9cORUwJy5/e8KCZyX2hUqG3ORgB4rYJwZRgv2D1wrVlJVb3gpl9yASmkMzsgp6BcoEOADbl6v
+        Ni8SSBmHhFgA0jickwtgDCsBQ5rOMKrIj7zZSwxNi0rh6ty5VuKWaSZ4gqZMLpJEgda44L8MXH8a
+        udHUvZrimqSKloCwuPjpM5ZDATVw8wAc64P5xYpJg6gI9Eq+XpA4pzwDwjiJBU9ZVilqlwn+mZzp
+        NqecavIFgP/Nyd4vQaexwbwpT9AYyGa9uiYJNRSxigLXLFAJ1gXTJWEWhPFsiGIUyzJQCGMEVi3F
+        LHPCjMbnrxWz81KJlBVARNp4UVAKA0MQG6X7aixf27cjshVWima2ikOzJkDGU6HKLstBObsYd5Gg
+        e7RukhpC7WUoKyWFBu32FhiGRiIoZmoM4s/Fx/Vy/a6NDcd/4VPCtCxovR3Z+JeWn2H7/H7LMMm8
+        oNkW0+1L+x1SWhXG+TbqGT05xWhm2cZpMZYdmcY6xqSqApI1+tnElG8MVfgWH+F1T0XyR8vuR0CG
+        rJ4h86anWD1g7r3Dqd3pYL2BZXzTbhk5t7So7PyKMm7xa2lHGnnDs6YMw33LZG9PI5CDHSckYiON
+        DiWyQPo2VCKpEmVDv71i7JInBUshrmPkqMmpIbSvT29jNaTbKs17oqAGbxDUWpE7ZnKyTObED38j
+        b/erMCc2+W4SbZCqCDig5Bb8wDexzl3yuDa+VxQPQ9DWu3W+MxoqY/3h42rx/j8TRnBWGOgtFhhO
+        Pc6pSu6ogiW3FBd4XFdxjLVKq+IRaeyAdsf+DoV0wETv4wzVMQ29cHZUHa5tFisw1J483TTyd5FQ
+        iS5P9wR/6p2UFs7kYl8f571cJh5M5Mo70l8sq46U5NkZv8/twdx0Hjzs78qS5jQgz5bXhLYZk2G+
+        z7sGhcdyKQtoONiVvb6gM/xasZ5qJBfLJRiqpY/svGb8pzQTvj3d3uxSeVIXObb7QCATzwb0s9oH
+        8noShFHkRdFkdrkYMOjge3WSQf/oGDM/yt7h+R2cPb4H6T3oJ723A07a300tWUyLot5+kmmkkf1A
+        o81nG+h2wAkrpVCmn1T7zXFcaVD2+ypGeiCG7RUXyfQHJfrjxef9mncTZLQ3eeLd5EgfOq0XL/z/
+        cnLmcoL1/Nm3k6cS+/O3fwEK87mOqQ8AAA==
+    headers:
+      Content-Encoding:
+      - gzip
+      Content-Range:
+      - items 10-14/14223
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 22 Dec 2022 23:06:48 GMT
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic YWRtaW46YWRtaW4=
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:8980/opennms/api/v2/events?offset=15&limit=5
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAANVXXY/aOBT9K1aeWokNQ4AQ2KoS6n4IqdBRGWlVdfvgxjfEUmJ7bWdGadX/vtcJ
+        hISPGWbbabt5QLGxj8+9Pude5bMnk8SA9WaDcc+LZSHwFd+stDR7VQ8HoyAY9jy4BTd6/9njDCcn
+        o6tpzyuAezP360sFQuTGl3rT58KCFjTrKy1vueFSsL6JU2BFBmwlGaxjKtaWagvM63kZ/QgZwrxB
+        iNVy/QuDhAtg5LrZTX53h8/IPSCW54C0wgkyiwZhMIyuep6RhY5x2ttD4VJFNc0BKZoqHEHdTi+R
+        GvhGrOstPe+WZoWbX1IuHH6p3MhYzcXG+9I73LdgrT2DcDQMRlF0FUXDyfHmD5hqDdTCzRHpQc9j
+        YGLNlUW2uGdOcjCGboAkWubEptDOyy4PJOMJxGWcAa6gltB9qvZrUmqIqRM2+1uQ7fNCvbxBULeK
+        3HGbkgWbkeBX8kc7HzPi0tBM4pJOiA56j4jP9pgDFsTR8MmLvnrprl1ulnVoGOZT8jkmYxwPR2O3
+        COkYFLjmtkQyqzdvl/PXNUUcvsM3xo3KaLkdCSSHFz4L6tfXWwFryO/ynKY0qPbGdHuHv0FCi8xW
+        qtmZJ3rQPHhkLJFT2U+pZndUw0I4G0hdros4xtQlRXaPfXZABGrz7FBIA0xMG6froHEUTk87yF+L
+        XC3BUkYtbaZR2HNGFR6JUFzNGdOI7LwwDfxBGPlR6I/HZ92HM6lsW+jhQy4zlYsjODTVVmMnMvLs
+        gXOfEymIu3Oi+NWAPFtcE1qHSjqBPq/c9hFAkFjmKoNKgE26S/9+E7SM8KNJ7kn9R5O4ztJ2ieP0
+        sD8mj2kuYlviXu2ieFRXObX7wAyT8Me2kxBL2zQahaNwernykfQ3ayedJtKIZXZSsd3SPRhfULtb
+        8R31kv1xB3p0z02peEyzrKxCQYmjjohMkLGGfwow9UAQniup7X5St1tkvzCgCWY+Rn0ghusOF3nz
+        e0X6XZ0XnnOegzJ9DEVwy2nGP8G15jnFdoTlaOFsmdBK6+esV5WkbTe6AObIg2F0zoMXN5zzXgmn
+        J7rEnMQpFegW7kqkSPim0FXuXIW1KTd1TLsy2r1NhofGrqRStJaT53q1vCauZiNWluF/DigHdwQ3
+        OeEOBB3dRUGTbzagEcZKzFqCUaaEW1Npmbt5LIQJR6ui0msT5NJCF8SxvKDlVAS5QCfkTZSddDYc
+        d0zweFxdBXUo5SZCVWglDRj/nKD/mr9dLVZ/Ppmixz/vh8p4Mgwm/7/OMhwOf44Pla+uud/6S+Xr
+        CD3dp8ojnPPhy79ZXRRhFxAAAA==
+    headers:
+      Content-Encoding:
+      - gzip
+      Content-Range:
+      - items 15-19/14223
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 22 Dec 2022 23:06:49 GMT
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+version: 1

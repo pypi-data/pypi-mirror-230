@@ -1,0 +1,140 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic YWRtaW46YWRtaW4=
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:8980/opennms/rest/health
+  response:
+    body:
+      string: '{"healthy":true,"responses":[{"description":"Verifying installed bundles","status":"Success"},{"description":"Connecting
+        to ElasticSearch ReST API (Flows)","status":"Success"}]}'
+    headers:
+      Content-Length:
+      - '177'
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 22 Dec 2022 22:57:22 GMT
+      Health:
+      - Everything is awesome
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic YWRtaW46YWRtaW4=
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:8980/opennms/rest/info
+  response:
+    body:
+      string: '{"displayVersion":"30.0.4","version":"30.0.4","packageName":"opennms","packageDescription":"OpenNMS","ticketerConfig":{"plugin":null,"enabled":false},"datetimeformatConfig":{"zoneId":"America/Los_Angeles","datetimeformat":"yyyy-MM-dd''T''HH:mm:ssxxx"},"services":{"Eventd":"running","Alarmd":"running","Bsmd":"running","Ticketer":"running","Queued":"running","Actiond":"running","Notifd":"running","Scriptd":"running","Rtcd":"running","Pollerd":"running","SnmpPoller":"running","EnhancedLinkd":"running","Collectd":"running","Discovery":"running","Vacuumd":"running","EventTranslator":"running","PassiveStatusd":"running","Statsd":"running","Provisiond":"running","Reportd":"running","Ackd":"running","JettyServer":"running","KarafStartupMonitor":"running","Syslogd":"running","Telemetryd":"running","Trapd":"running","PerspectivePoller":"running"}}'
+    headers:
+      Content-Length:
+      - '847'
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 22 Dec 2022 22:57:23 GMT
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic YWRtaW46YWRtaW4=
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:8980/opennms/api/v2/nodes/2/ipinterfaces?offset=0&limit=0
+  response:
+    body:
+      string: '{"offset":0,"count":1,"totalCount":1,"ipInterface":[{"ifIndex":22,"ipAddress":"192.168.86.160","lastIngressFlow":null,"lastEgressFlow":null,"snmpInterface":{"id":57,"ifType":131,"ifAlias":"Teredo
+        Tunneling Pseudo-Interface","ifIndex":22,"lastEgressFlow":null,"lastCapsdPoll":1671722943909,"hasFlows":false,"hasIngressFlows":false,"hasEgressFlows":false,"lastIngressFlow":null,"ifDescr":"Microsoft
+        Teredo Tunneling Adapter.","ifName":"tunnel_32512","physAddr":"5cff35de9e90","ifSpeed":0,"ifAdminStatus":2,"ifOperStatus":6,"lastSnmpPoll":null,"collectionUserSpecified":false,"collectionPolicySpecified":false,"nodeId":2,"collectFlag":"N","pollFlag":"N","collect":false,"poll":false},"isManaged":"M","snmpPrimary":"P","monitoredServiceCount":2,"nodeId":2,"isDown":false,"id":"5","hostName":"192.168.86.160","lastCapsdPoll":1671722943909}]}'
+    headers:
+      Content-Length:
+      - '836'
+      Content-Range:
+      - items 0-0/1
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 22 Dec 2022 22:57:23 GMT
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic YWRtaW46YWRtaW4=
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.28.1
+    method: GET
+    uri: http://localhost:8980/opennms/api/v2/nodes/2/ipinterfaces/192.168.86.160/services?offset=0&limit=0
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAO2PQUvEMBCF/8ucc0jaNLG5ycJKwRVBb+JhaJMlEJO1SZSl9L+bsrYHr14E9zRv
+        5g1v5psgGBN1AkUJ9CH7ogSBFBK63dZGPX7YXoN6mSCGPC7SZ+cIvGd01lg9roOYMOUICm6BgA/J
+        mvNqDeHTgzLooibgMKa7EAZQTEgmeStERWl9MfZo3WKIVkpBOReMr8n3wR9L+gE9HvVQbthT55Me
+        Dfa6K2nN9u3z+VTenMDjW6nw9HB4XNbLDp8vVczkyvNveZqqbX/wSMYko7KuG/Frnm638bBvnurm
+        CvTngV7nL6X76jsUBQAA
+    headers:
+      Content-Encoding:
+      - gzip
+      Content-Range:
+      - items 0-5/6
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 22 Dec 2022 22:57:23 GMT
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+version: 1
