@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tonita"
+version = "0.0.1"
+authors = [
+  { name="Tonita", email="dev@tonita.co" },
+]
+description = "Tonita Python Client Package"
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+requires-python = ">=3.9"
+dependencies = [
+    "requests",
+    "urllib3"
+]
+
+[project.urls]
+Homepage = "https://www.tonita.co/"
+Repository = "https://github.com/tonitaco/tonita-python/"
+
+[tool.setuptools]
+packages = ["tonita"]
