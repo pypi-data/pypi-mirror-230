@@ -1,0 +1,19 @@
+from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
+from google.protobuf import descriptor as _descriptor
+from typing import ClassVar as _ClassVar
+
+ALERT_CONDITION_ESCALATION_PROCESS_START_DEESCALATION: AlertConditionEscalationProcess
+ALERT_CONDITION_ESCALATION_PROCESS_START_ESCALATION: AlertConditionEscalationProcess
+ALERT_CONDITION_ESCALATION_PROCESS_STOP_DEESCALATION: AlertConditionEscalationProcess
+ALERT_CONDITION_ESCALATION_PROCESS_STOP_ESCALATION: AlertConditionEscalationProcess
+ALERT_SIGNAL_PRESENCE_ACK: AlertSignalPresence
+ALERT_SIGNAL_PRESENCE_LATCH: AlertSignalPresence
+ALERT_SIGNAL_PRESENCE_OFF: AlertSignalPresence
+ALERT_SIGNAL_PRESENCE_ON: AlertSignalPresence
+DESCRIPTOR: _descriptor.FileDescriptor
+
+class AlertSignalPresence(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = []
+
+class AlertConditionEscalationProcess(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = []
