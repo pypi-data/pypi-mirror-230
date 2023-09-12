@@ -1,0 +1,188 @@
+[build-system]
+requires = ['setuptools >= 61.0.0']
+build-backend = 'setuptools.build_meta'
+
+[project]
+name = 'bsl'
+version = '0.6.4'
+description = 'Real-time framework for online neuroscience research through LSL-compatible devices.'
+readme = 'README.md'
+license = {file = 'LICENSE'}
+requires-python = '>=3.8'
+authors = [
+    {name = 'Mathieu Scheltienne', email = 'mathieu.scheltienne@fcbg.ch'},
+    {name = 'Arnaud Desvachez', email = 'arnaud.desvachez@gmail.com'},
+    {name = 'Kyuhwa Lee', email = 'lee.kyuh@gmail.com'},
+]
+maintainers = [
+    {name = 'Mathieu Scheltienne', email = 'mathieu.scheltienne@fcbg.ch'},
+]
+keywords = [
+    'python',
+    'neuroscience',
+    'neuroimaging',
+    'EEG',
+    'LSL',
+    'real-time',
+    'brain',
+]
+classifiers = [
+    'Operating System :: Microsoft :: Windows',
+    'Operating System :: Unix',
+    'Operating System :: MacOS',
+    'Programming Language :: Python :: 3 :: Only',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Natural Language :: English',
+    'License :: OSI Approved :: BSD License',
+    'Intended Audience :: Science/Research',
+    'Intended Audience :: Developers',
+    'Topic :: Software Development',
+    'Topic :: Scientific/Engineering',
+]
+dependencies = [
+    'distro; sys_platform == "linux"',
+    'mne>=1.1.1',
+    'numpy>=1.21',
+    'packaging',
+    'psutil',
+    'pyqtgraph',
+    'PyQt5',
+    'scipy',
+]
+
+[project.optional-dependencies]
+build = [
+    'build',
+    'twine',
+]
+doc = [
+    'furo',
+    'matplotlib',
+    'memory-profiler',
+    'numpydoc',
+    'sphinx',
+    'sphinxcontrib-bibtex',
+    'sphinx-copybutton',
+    'sphinx-design',
+    'sphinx-gallery',
+    'sphinx-issues',
+]
+triggers = [
+    'pyparallel; sys_platform == "linux"',
+    'pyserial',
+]
+style = [
+    'bibclean',
+    'black',
+    'codespell',
+    'isort',
+    'pydocstyle[toml]',
+    'ruff',
+]
+test = [
+    'bsl[triggers]',
+    'pytest',
+    'pytest-cov',
+    'pytest-timeout',
+    'requests',
+]
+all = [
+    'bsl[build]',
+    'bsl[doc]',
+    'bsl[triggers]',
+    'bsl[style]',
+    'bsl[test]',
+]
+full = [
+    'bsl[all]',
+]
+
+[project.urls]
+homepage = 'https://bsl-tools.github.io/'
+documentation = 'https://bsl-tools.github.io/'
+source = 'https://github.com/fcbg-hnp-meeg/bsl'
+tracker = 'https://github.com/fcbg-hnp-meeg/bsl/issues'
+
+[project.scripts]
+bsl = 'bsl.commands.main:run'
+bsl-sys_info = 'bsl.commands.sys_info:run'
+bsl_stream_player = 'bsl.commands.bsl_stream_player:run'
+bsl_stream_recorder = 'bsl.commands.bsl_stream_recorder:run'
+bsl_stream_viewer = 'bsl.commands.bsl_stream_viewer:run'
+
+[tool.setuptools]
+include-package-data = false
+
+[tool.setuptools.packages.find]
+include = ['bsl*']
+exclude = ['bsl*tests']
+
+[tool.setuptools.package-data]
+"bsl.stream_viewer.control_gui.settings" = ["*.ini"]
+"bsl.lsl.lib" = ["*"]
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+include = '\.pyi?$'
+extend-exclude = '''
+(
+      __pycache__
+    | \.github
+    | setup.py
+    | pyproject.toml
+    | doc/
+)
+'''
+
+[tool.isort]
+profile = 'black'
+multi_line_output = 3
+line_length = 88
+py_version = 39
+extend_skip_glob = [
+    'setup.py',
+    'doc/*',
+]
+
+[tool.pydocstyle]
+convention = 'numpy'
+ignore-decorators = '(copy_doc|property|.*setter|.*getter|pyqtSlot|Slot)'
+match = '^(?!setup|__init__|test_).*\.py'
+match-dir = '^bsl.*'
+add_ignore = 'D100,D104,D107'
+
+[tool.ruff]
+line-length = 88
+extend-exclude = [
+    "doc",
+    "setup.py",
+]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.pytest.ini_options]
+minversion = '6.0'
+addopts = '--durations 20 --junit-xml=junit-results.xml --verbose'
+filterwarnings = []
+
+[tool.coverage.run]
+branch = true
+cover_pylib = false
+omit = [
+    '**/__init__.py',
+    '**/bsl/_version.py',
+    '**/bsl/commands/*',
+    '**/tests/**',
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    'pragma: no cover',
+    'if __name__ == .__main__.:',
+]
+precision = 2

@@ -1,0 +1,143 @@
+Metadata-Version: 2.1
+Name: bsl
+Version: 0.6.4
+Summary: Real-time framework for online neuroscience research through LSL-compatible devices.
+Author-email: Mathieu Scheltienne <mathieu.scheltienne@fcbg.ch>, Arnaud Desvachez <arnaud.desvachez@gmail.com>, Kyuhwa Lee <lee.kyuh@gmail.com>
+Maintainer-email: Mathieu Scheltienne <mathieu.scheltienne@fcbg.ch>
+License: MIT License
+        
+        Copyright (c) 2022 Mathieu Scheltienne
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: homepage, https://bsl-tools.github.io/
+Project-URL: documentation, https://bsl-tools.github.io/
+Project-URL: source, https://github.com/fcbg-hnp-meeg/bsl
+Project-URL: tracker, https://github.com/fcbg-hnp-meeg/bsl/issues
+Keywords: python,neuroscience,neuroimaging,EEG,LSL,real-time,brain
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: Unix
+Classifier: Operating System :: MacOS
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Natural Language :: English
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Intended Audience :: Science/Research
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development
+Classifier: Topic :: Scientific/Engineering
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: distro; sys_platform == "linux"
+Requires-Dist: mne>=1.1.1
+Requires-Dist: numpy>=1.21
+Requires-Dist: packaging
+Requires-Dist: psutil
+Requires-Dist: pyqtgraph
+Requires-Dist: PyQt5
+Requires-Dist: scipy
+Provides-Extra: build
+Requires-Dist: build; extra == "build"
+Requires-Dist: twine; extra == "build"
+Provides-Extra: doc
+Requires-Dist: furo; extra == "doc"
+Requires-Dist: matplotlib; extra == "doc"
+Requires-Dist: memory-profiler; extra == "doc"
+Requires-Dist: numpydoc; extra == "doc"
+Requires-Dist: sphinx; extra == "doc"
+Requires-Dist: sphinxcontrib-bibtex; extra == "doc"
+Requires-Dist: sphinx-copybutton; extra == "doc"
+Requires-Dist: sphinx-design; extra == "doc"
+Requires-Dist: sphinx-gallery; extra == "doc"
+Requires-Dist: sphinx-issues; extra == "doc"
+Provides-Extra: triggers
+Requires-Dist: pyparallel; sys_platform == "linux" and extra == "triggers"
+Requires-Dist: pyserial; extra == "triggers"
+Provides-Extra: style
+Requires-Dist: bibclean; extra == "style"
+Requires-Dist: black; extra == "style"
+Requires-Dist: codespell; extra == "style"
+Requires-Dist: isort; extra == "style"
+Requires-Dist: pydocstyle[toml]; extra == "style"
+Requires-Dist: ruff; extra == "style"
+Provides-Extra: test
+Requires-Dist: bsl[triggers]; extra == "test"
+Requires-Dist: pytest; extra == "test"
+Requires-Dist: pytest-cov; extra == "test"
+Requires-Dist: pytest-timeout; extra == "test"
+Requires-Dist: requests; extra == "test"
+Provides-Extra: all
+Requires-Dist: bsl[build]; extra == "all"
+Requires-Dist: bsl[doc]; extra == "all"
+Requires-Dist: bsl[triggers]; extra == "all"
+Requires-Dist: bsl[style]; extra == "all"
+Requires-Dist: bsl[test]; extra == "all"
+Provides-Extra: full
+Requires-Dist: bsl[all]; extra == "full"
+
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
+[![codecov](https://codecov.io/gh/fcbg-hnp-meeg/bsl/branch/main/graph/badge.svg?token=NTKBYPGFDZ)](https://codecov.io/gh/fcbg-hnp-meeg/bsl)
+[![tests](https://github.com/fcbg-hnp-meeg/bsl/actions/workflows/pytest.yml/badge.svg?branch=main)](https://github.com/fcbg-hnp-meeg/bsl/actions/workflows/pytest.yml)
+[![build](https://github.com/fcbg-hnp-meeg/bsl/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/fcbg-hnp-meeg/bsl/actions/workflows/build.yml)
+[![doc](https://github.com/fcbg-hnp-meeg/bsl/actions/workflows/doc.yml/badge.svg?branch=main)](https://github.com/fcbg-hnp-meeg/bsl/actions/workflows/doc.yml)
+[![PyPI version](https://badge.fury.io/py/bsl.svg)](https://badge.fury.io/py/bsl)
+[![Downloads](https://static.pepy.tech/personalized-badge/bsl?period=total&units=international_system&left_color=grey&right_color=blue&left_text=pypi%20downloads)](https://pepy.tech/project/bsl)
+[![Downloads](https://static.pepy.tech/personalized-badge/bsl?period=month&units=international_system&left_color=grey&right_color=blue&left_text=pypi%20downloads/month)](https://pepy.tech/project/bsl)
+
+[![Brain Streaming Layer](https://raw.githubusercontent.com/fcbg-hnp-meeg/bsl/main/doc/_static/icon-with-name/icon-with-name.svg)](https://fcbg-hnp-meeg.github.io/bsl)
+
+**BrainStreamingLayer** [(Documentation website)](https://fcbg-hnp-meeg.github.io/bsl)
+provides a real-time brain signal streaming framework.
+**BSL** contains an improved python-binding for the Lab Streaming Layer C++ library,
+`bsl.lsl`, replacing `pylsl`. This low-level binding is used in high-level objects to
+interact with LSL streams.
+
+Any signal acquisition system supported by native LSL or OpenVibe is also
+supported by BSL. Since the data communication is based on TCP, signals can be
+transmitted wirelessly. For more information about LSL, please visit the
+[LSL github](https://github.com/sccn/labstreaminglayer).
+
+# Install
+
+BSL supports `python ≥ 3.8` and is available on [PyPI](https://pypi.org/project/bsl/).
+Install instruction can be found on the
+[documentation website](https://fcbg-hnp-meeg.github.io/bsl/dev/install.html).
+
+# Acknowledgment
+
+**BSL** is based on **NeuroDecode**. The original version developed by
+[**Kyuhwa Lee**](https://github.com/dbdq) was recognised at
+[Microsoft Brain Signal Decoding competition](https://github.com/dbdq/microsoft_decoding)
+with the First Prize Award (2016) after achieving high decoding accuracy.
+**BSL** is based on the refactor version by
+[**Arnaud Desvachez**](https://github.com/dnastars) for the
+[Fondation Campus Biotech Geneva (FCBG)](https://github.com/fcbg-hnp-meeg) and
+development is still supported by the
+[Human Neuroscience Platform (FCBG)](https://hnp.fcbg.ch/).
+
+<img src="https://raw.githubusercontent.com/fcbg-hnp-meeg/bsl/main/doc/_static/partners/fcbg-hnp-meeg.png" width=150>
+
+# Copyright and license
+
+The code is released under the [MIT License](https://opensource.org/licenses/MIT).
