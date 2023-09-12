@@ -1,0 +1,118 @@
+Metadata-Version: 2.1
+Name: deTELpy
+Version: 0.1.8
+Summary: Python package of the deTEL translation error detection pipeline from mass-spectrometry data
+Home-page: https://git.mpi-cbg.de/atplab/detelpy
+Author: Cedric Landerer
+Author-email: landerer@mpi-cbg.de
+License: BSD
+Classifier: Development Status :: 1 - Planning
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pandas (==1.3.5)
+Requires-Dist: numpy
+Requires-Dist: dataclasses (>=0.6)
+Requires-Dist: pathlib (>=1.0.1)
+Requires-Dist: biopython (>=1.81)
+Requires-Dist: numba (>=0.57.1)
+Requires-Dist: scipy (>=1.7.3)
+Requires-Dist: tqdm (>=4.65.0)
+Requires-Dist: seaborn (>=0.12.2)
+Requires-Dist: matplotlib (>=3.5.3)
+Requires-Dist: gooey (>=1.0.7)
+Requires-Dist: python-dateutil
+
+- [detecting Translation Error Landscape: deTEL](#detecting-translation-error-landscape-detel)
+  - [deTEL Python package](#detel_python_package) 
+- [empirical Translation Error Landscape: eTEL](#empirical-translation-error-landscape-etel)
+  - [Command line options](#Command-line-options)
+  - [Example](#example)
+- [multinomial Translation Error Landscape: mTEL](#multinomial-translation-error-landscape-mtel)
+  - [Command line options](#command-line-options)
+  - [Examples](#examples)
+    - [Normal run](#normal-run)
+    - [Bootstrapping datasets](#bootstrapping-datasets)
+
+# detecting Translation Error Landscape: deTEL 
+deTEL is a simple pipeline that allows for the exploration of translation errors in mass-spectrometry data.
+deTEL consists of two components:
+* eTEL detects translation errors in mass-spectrometry data and explores the empirical translation error landscape.
+* mTEL is a model fitted to the translation errors detected by eTEL and describes the multinomial translation error landscape and extends the empirical translation error landscape.
+deTELpy packages these components into an easy to use python package.
+
+## deTEL Python package
+```bash
+pip install deTELpy
+
+python -m deTEL # To run eTEL/mTEL with GUI
+
+# To run eTEL with command line
+python -m deTEL eTEL -f tests/resources/s228c_orf_cds.fasta -psm tests/resources/psm.tsv -o tests/output -decoy rev_ -p substitutions -tol 0.005
+
+# To run mTEL with command line
+python -m deTEL mTEL -f tests/resources/results_ionquant2 -r tests/resources/tRNA_count/yeast_tRNA_count.csv -o tests/output -s 250 -p 100 -c 4.2e-17 -t 10 -b 100 -nb -1 -a n
+```
+
+# empirical Translation Error Landscape: eTEL 
+![empirical Translation Error Landscape (eTEL)](img/eTEL.png)
+eTEL detects the empirical translation error landscape by first performing an open search using MSFragger [(see: Perform open search)](#perform-open-search-with-fragger_open_search).
+The second step is to extract translation errors using custom pythons scripts packaged [(see: detect_substitutions)](#detect_substitutions).
+The output of eTEL can directly be used to fit the mTEL model [(see: multinomial Translation Error Landscape: mTEL)](#multinomial-translation-error-landscape-mtel).
+
+## Command line options
+* -f: Fasta file of coding sequences located, matching the amino acid sequenes used for the open search.
+* -psm: path to psm.tsv file created by the open search (by philosopher).
+* -s: Folder to which output files are writen.
+* -p: Prefix used for output files
+* -decoy: identification prefix of decoy sequences (default: rev_)
+* -tol: m/z tolerance, used to filter DP–BP couples that resemble substitutions and exclude pairs that resemble known PTM (default: 0.005)
+
+## Example
+The below command will detect substitutions in the specified ```psm.tsv``` created by the open search. 
+Since we may have one experimenet and want to collect all files in a common folder, we specify a prefix (```Experiment1```) to identify the output belonging to each individual experiment.
+
+```bash
+python -m deTEL eTEL -f project/fasta/s228c_orf_cds.fasta -psm project/open_search_experiment1/psm.tsv -o project/results -p Experiment1
+```
+
+# multinomial Translation Error Landscape: mTEL
+![<multinomial Translation Error Landscape (mTEL)](img/mTEL.png)
+mTEL uses observed translation errors to estimate a multinomial translation error landscape.
+mTEL is based on the competition of tRNAs and estimates affinity parameters between codon/anticodon pairs.
+
+## Command line options
+* -f: Folder with codon_count and error files.
+* -r: tRNA count file.
+* -o: Output folder.
+* -s: Number of samples of the chain.
+* -p: Number of posterior samples.
+* -c: Cell volume assumed (in cubic micrometers), Default: 4.2e-17 (approximate size of a yeast cell).
+* -t: Number to thin out chain by.
+* -b: Number of burn-in steps.
+* -nb: Number of sub-samplings performed.
+* -os: suffix added to output files (default: date).
+* -a: aggregate all datasets by summation (y,n) Default: No (n).
+
+## Examples
+
+### Normal run
+We assume that the folder ```ecoli``` contains all needed pairs of ```*_codon_counts.csv``` and ```*_substitution_errors.csv``` files.
+A cell volume of 0.6e-18 is assumed for E. coli. We will collect 1000 samples after disgarding 1000 burn-in samples. 
+In total, this run will perform (1000 + 1000) * 10 = 20000 steps. The last 200 samples will be used to estimate the posterior distributions of the indivisual parameters.
+```bash
+$ python -m deTEL mTEL -f ecoli -r tRNA_count/ecoli_tRNA_count.csv -c 0.6e-18 -o output/ecoli/ -s 1000 -p 200 -t 10 -b 1000
+```
+
+### Bootstrapping datasets
+We can bootstrap datasets as they can show a high variability. This allows us to explore parameter sensitivity and robustness.
+This run perfomes 20 resamplings with replacement of the datasets found in the folder ```yeast```, keeping the number of datasets constant.
+For each resampling, the model will collect 250 samples after 10 burn-in steps and perform a total of (250 + 10) * 20 = 5200. The last 100 samples of each run will be used to estimate the posterior mean.
+```bash
+$ python -m deTEL mTEL -f yeast -r tRNA_count/yeast_tRNA_count.csv -c 4.2e-17 -o output/yeast/ -s 250 -p 100 -t 20 -b 10 -nb 20
+```
+
