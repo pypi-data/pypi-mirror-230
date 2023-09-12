@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "asl_utility"
+version = "1.0.1"
+authors = [
+    { name="Autonomous Systems Lab" },
+    { name="Fabian Schreier", email="fabian.schreier@festo.com"}
+]
+description = "Utility components for numpy, math and transformations."
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "numpy >=1.21.0",
+    "typing-extensions >=4.0.0",
+    "Deprecated",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "scipy",
+]
+linting = [
+    "flake8",
+    "flake8-pyproject",
+    "flake8-formatter-junit-xml"
+]
+
+[tool.flake8]
+max-line-length = 9999
+count = true
+statistics = true
+extend-ignore = [
+    "F401", # module imported but unused
+    "W293", # blank line contains whitespace  -- Srsly, that is marked? -FS
+    "W391"  # blank line at end of file
+]
