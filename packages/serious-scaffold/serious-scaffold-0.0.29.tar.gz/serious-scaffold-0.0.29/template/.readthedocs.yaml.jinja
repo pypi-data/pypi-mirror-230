@@ -1,0 +1,12 @@
+build:
+  jobs:
+    post_build:
+      - make reports
+    post_install:
+      - make dev-docs
+  os: ubuntu-22.04
+  tools:
+    python: '{{ default_py }}'
+sphinx:
+  fail_on_warning: true
+version: 2
