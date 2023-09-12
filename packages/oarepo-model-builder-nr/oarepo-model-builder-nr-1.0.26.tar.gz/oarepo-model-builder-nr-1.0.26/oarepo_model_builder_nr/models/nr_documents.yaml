@@ -1,0 +1,87 @@
+NRDocumentMetadata:
+  $id: DocumentMetadata
+  extend: ['nr-common-metadata#CommonMetadata']
+
+  marshmallow:
+    class: nr_metadata.documents.services.records.schema.NRDocumentMetadataSchema
+  ui:
+    marshmallow:
+      class: nr_metadata.documents.services.records.ui_schema.NRDocumentMetadataUISchema
+
+  properties:
+    thesis:
+      ui:
+        detail: thesis
+        marshmallow:
+          class: nr_metadata.documents.services.records.ui_schema.NRThesisUISchema
+      marshmallow:
+        class: nr_metadata.documents.services.records.schema.NRThesisSchema
+      properties:
+        dateDefended:
+          type: date
+          label.cs: Datum obhajoby
+          label.en: Date defended
+        defended:
+          type: boolean
+          label.cs: Obhájeno?
+          label.en: Defended?
+        degreeGrantors[]:
+          ui:
+            detail: nr_degree_grantor
+            marshmallow:
+              class: nr_metadata.documents.services.records.ui_schema.NRDegreeGrantorUISchema
+          marshmallow:
+            class: nr_metadata.documents.services.records.schema.NRDegreeGrantorSchema
+          type: taxonomy
+          vocabulary-type: institutions
+          ^label.cs: Instituce / grantor
+          ^label.en: Degree grantor
+        studyFields[]:
+          type: keyword
+          ^label.cs: Oblasti studia
+          ^label.en: Study fields
+    collection:
+      type: keyword
+      label.cs: Kolekce
+      label.en: Collection
+
+DocumentModel:
+  $id: DocumentModel
+  marshmallow:
+    class: nr_metadata.documents.services.records.schema.NRDocumentRecordSchema
+  ui:
+    marshmallow:
+      class: nr_metadata.documents.services.records.ui_schema.NRDocumentRecordUISchema
+  use: [invenio]
+
+  properties:
+    syntheticFields:
+      properties:
+        person:
+          type: keyword
+          marshmallow:
+            read: false
+            write: false
+        institutions:
+          type: keyword
+          marshmallow:
+            read: false
+            write: false
+        keywords_cs:
+          type: keyword
+          marshmallow:
+            read: false
+            write: false
+        keywords_en:
+          type: keyword
+          marshmallow:
+            read: false
+            write: false
+      marshmallow:
+        class: nr_metadata.documents.services.records.schema.NRDocumentSyntheticFieldsSchema
+      ui:
+        marshmallow:
+          class: nr_metadata.documents.services.records.ui_schema.NRDocumentSyntheticFieldsUISchema
+
+    metadata:
+      use: ['nr-documents#DocumentMetadata']

@@ -1,0 +1,604 @@
+# Copyright (c) 2022, 2023 NTK, CESNET
+#
+# This software is released under the MIT License.
+# https://opensource.org/licenses/MIT
+
+NRAuthorityIdentifier:
+  $id: NRAuthorityIdentifier
+  properties:
+    identifier:
+      type: keyword
+      required: true
+      sample:
+        faker: isbn13
+      i18n.key: identifier
+      label.cs: Identifikátor
+      label.en: Identifier
+    scheme:
+      type: keyword
+      required: true
+      enum:
+        [
+          orcid,
+          scopusID,
+          researcherID,
+          czenasAutID,
+          vedidk,
+          institutionalID,
+          ISNI,
+          ROR,
+          ICO,
+          DOI,
+        ]
+      i18n.key: identifier_type
+      label.cs: Typ identifikátoru
+      label.en: Identifier type
+      hint.cs: |
+        Doporučujeme zadat alespoň jeden z typů identifikátorů.
+        Pokud potřebujete rozšířit nabídku typů identifikátorů, kontaktujte nás na support@narodni-repozitar.cz.
+      hint.en: |
+        We recommend providing at least one of the identifier types.
+        If you need to expand the range of identifier types, contact us at support@narodni-repozitar.cz.
+  ui:
+    detail: nr_authority_identifier
+    marshmallow:
+      class: nr_metadata.ui_schema.identifiers.NRAuthorityIdentifierUISchema
+      generate: false
+  marshmallow:
+    class: nr_metadata.schema.identifiers.NRAuthorityIdentifierSchema
+    generate: false
+
+NRAuthority:
+  $id: NRAuthority
+  properties:
+    nameType:
+      type: keyword
+      enum: [Organizational, Personal]
+      sample: [Organizational, Personal]
+      label.cs: Typ
+      label.en: Type
+      hint.cs: Jako tvůrce je možné označit osobu nebo instituci.
+      hint.en: It is possible to designate a person or an institution as the creator/contributor.
+    fullName:
+      type: keyword
+      required: true
+      label.cs: Jméno autora
+      label.en: Author name
+      sample:
+        faker: name
+    authorityIdentifiers[]:
+      use: 'nr-datatypes#NRAuthorityIdentifier'
+      #^uniqueItems: true
+    affiliations[]:
+      ui:
+        marshmallow:
+          class: nr_metadata.common.services.records.ui_schema_datatypes.NRAffiliationVocabularyUISchema
+      marshmallow:
+        class: nr_metadata.common.services.records.schema_datatypes.NRAffiliationVocabularySchema
+      sample:
+        faker: company
+      type: taxonomy
+      vocabulary-type: institutions
+      #^uniqueItems: true
+      label.cs: Afiliace
+      label.en: Affiliation
+      hint.cs: Uveďte instituci/instituce, pod jejíž záštitou jste se na tvorbě objektu podíleli.
+  ui:
+    detail: nr_authority
+    marshmallow:
+      class: nr_metadata.common.services.records.ui_schema_datatypes.NRAuthorityUIUISchema
+  marshmallow:
+    class: nr_metadata.common.services.records.schema_datatypes.NRAuthoritySchema
+
+NRObjectPID:
+  $id: NRObjectPID
+  label.cs: Identifikátor objektu
+  label.en: Object identifier
+  properties:
+    identifier:
+      type: keyword
+      required: true
+      sample:
+        faker: isbn13
+      label.cs: Identifikátor objektu
+      label.en: Object identifier
+    scheme:
+      type: keyword
+      required: true
+      enum: [DOI, Handle, ISBN, ISSN, RIV]
+      label.cs: Typ identifikátoru
+      label.en: Identifier type
+  ui:
+    detail: nr_object_pid
+    marshmallow:
+      class: nr_metadata.ui_schema.identifiers.NRObjectIdentifierUISchema
+      generate: false
+  marshmallow:
+    class: nr_metadata.schema.identifiers.NRObjectIdentifierSchema
+    generate: false
+
+NRDateOrRange:
+  $id: NRDateOrRange
+  type: edtf-interval
+
+NRDate:
+  $id: NRDate
+  type: edtf
+
+NRLocation:
+  $id: NRLocation
+  label.cs: Umístění
+  label.en: Location
+  properties:
+    place:
+      type: keyword
+      required: true
+      label.cs: Místo
+      label.en: Place
+    country:
+      use: 'nr-datatypes#NRCountry'
+  ui:
+    detail: location
+    marshmallow:
+      class: nr_metadata.common.services.records.ui_schema_datatypes.NRLocationUISchema
+  marshmallow:
+    class: nr_metadata.common.services.records.schema_datatypes.NRLocationSchema
+
+NRCountry:
+  $id: NRCountry
+  type: vocabulary
+  vocabulary-type: countries
+  label.cs: Země
+  label.en: Country
+  ui:
+    marshmallow:
+      class: nr_metadata.common.services.records.ui_schema_datatypes.NRCountryVocabularyUISchema
+  marshmallow:
+    class: nr_metadata.common.services.records.schema_datatypes.NRCountryVocabularySchema
+
+NRLongitude:
+  $id: NRLongitude
+  type: double
+  minimum: -180
+  maximum: 180
+  label.cs: Zeměpisná délka
+  label.en: Longitude
+
+NRLatitude:
+  $id: NRLatitude
+  type: double
+  minimum: -90
+  maximum: 90
+  label.cs: Zeměpisná šířka
+  label.en: Latitude
+
+NRAuthorityRole:
+  $id: NRAuthorityRole
+  type: vocabulary
+  vocabulary-type: contributor-roles
+  label.cs: Role přispěvatele
+  label.en: Contributor's role
+  ui:
+    marshmallow:
+      class: nr_metadata.common.services.records.ui_schema_datatypes.NRAuthorityRoleVocabularyUISchema
+  marshmallow:
+    class: nr_metadata.common.services.records.schema_datatypes.NRAuthorityRoleVocabularySchema
+
+NRRelatedItem:
+  $id: NRRelatedItem
+  label.cs: 'Vazba na/z dalších zdrojů:'
+  label.en: 'Link to/from other resources:'
+  description: linkdata, propojení přidružených dokumentů a datasetů.
+  ui:
+    detail: related_item
+    marshmallow:
+      class: nr_metadata.common.services.records.ui_schema_datatypes.NRRelatedItemUISchema
+  marshmallow:
+    class: nr_metadata.common.services.records.schema_datatypes.NRRelatedItemSchema
+  properties:
+    itemTitle:
+      description: název propojeného dokumentu
+      label.cs: Název
+      label.en: Title
+      type: fulltext
+      required: true
+
+    itemCreators[]:
+      #^uniqueItems: true
+      ^label.cs: Autoři
+      ^label.en: Authors
+
+      use: 'nr-datatypes#NRAuthority'
+      ui:
+        detail: creator
+        marshmallow:
+          class: nr_metadata.common.services.records.ui_schema_datatypes.NRRelatedItemCreatorUISchema
+      marshmallow:
+        class: nr_metadata.common.services.records.schema_datatypes.NRRelatedItemCreatorSchema
+      properties:
+        affiliations[]:
+          ^label.cs: Afiliace
+          ^label.en: Affiliation
+
+          type: taxonomy
+          vocabulary-type: institutions
+          ui:
+            marshmallow:
+              class: nr_metadata.common.services.records.ui_schema_datatypes.NRAffiliationVocabularyUISchema
+          marshmallow:
+            class: nr_metadata.common.services.records.schema_datatypes.NRAffiliationVocabularySchema
+
+    itemContributors[]:
+      #^uniqueItems: true
+      ^label.cs: Přispěvatelé
+      ^label.en: Contributors
+
+      use: 'nr-datatypes#NRAuthority'
+      ui:
+        detail: contributor
+        marshmallow:
+          class: nr_metadata.common.services.records.ui_schema_datatypes.NRRelatedItemContributorUISchema
+      marshmallow:
+        class: nr_metadata.common.services.records.schema_datatypes.NRRelatedItemContributorSchema
+      properties:
+        role:
+          use: 'nr-datatypes#NRAuthorityRole'
+        affiliations[]:
+          ^label.cs: Afiliace
+          ^label.en: Affiliation
+
+          type: taxonomy
+          vocabulary-type: institutions
+          ui:
+            marshmallow:
+              class: nr_metadata.common.services.records.ui_schema_datatypes.NRAffiliationVocabularyUISchema
+          marshmallow:
+            class: nr_metadata.common.services.records.schema_datatypes.NRAffiliationVocabularySchema
+
+    itemPIDs[]:
+      use: 'nr-datatypes#NRObjectPID'
+      #^uniqueItems: true
+
+    itemURL:
+      type: url
+      sample:
+        faker: url
+      label.cs: URL
+      label.en: URL
+
+    itemYear:
+      type: integer
+      label.cs: Rok
+      label.en: Year
+
+    itemVolume:
+      type: keyword
+      label.cs: Ročník
+      label.en: Volume
+
+    itemIssue:
+      type: keyword
+      label.cs: Číslo
+      label.en: Issue
+
+    itemStartPage:
+      type: keyword
+      label.cs: Počáteční strana
+      label.en: Start page
+
+    itemEndPage:
+      type: keyword
+      label.cs: Poslední strana
+      label.en: End page
+
+    itemPublisher:
+      type: keyword
+      label.cs: Vydavatel
+      label.en: Publisher
+
+    itemRelationType:
+      description: typ vztahu k původnímu popisovanému dok.
+      type: vocabulary
+      vocabulary-type: item-relation-types
+      label.cs: Typ vazby
+      label.en: Relation type
+      ui:
+        marshmallow:
+          class: nr_metadata.common.services.records.ui_schema_datatypes.NRItemRelationTypeVocabularyUISchema
+      marshmallow:
+        class: nr_metadata.common.services.records.schema_datatypes.NRItemRelationTypeVocabularySchema
+
+    itemResourceType:
+      use: 'nr-datatypes#NRResourceType'
+
+NRResourceType:
+  $id: NRResourceType
+  type: vocabulary
+  vocabulary-type: resource-types
+  sample: ['Bakalářská práce', 'Diplomová práce', 'Dataset']
+  label.cs: Typ zdroje
+  label.en: Resource type
+  ui:
+    marshmallow:
+      class: nr_metadata.common.services.records.ui_schema_datatypes.NRResourceTypeVocabularyUISchema
+  marshmallow:
+    class: nr_metadata.common.services.records.schema_datatypes.NRResourceTypeVocabularySchema
+
+NRFundingReference:
+  $id: NRFundingReference
+  label.cs: 'Projekt nebo financování'
+  label.en: 'Funding'
+  # informace o přidruženém projektu
+  #
+  # MIGRACE NUŠL - protože v datech NUŠL hrozný stav v polích pro poskytovatele.
+  # u českých projektů na základě prvních dvou znaků v řetězci s identifikátorem
+  # projektu lze přiřadit poskytovatele.
+  ui:
+    detail: funding_reference
+    marshmallow:
+      class: nr_metadata.common.services.records.ui_schema_datatypes.NRFundingReferenceUISchema
+  marshmallow:
+    class: nr_metadata.common.services.records.schema_datatypes.NRFundingReferenceSchema
+  properties:
+    projectID:
+      type: keyword
+      required: true
+      label.cs: Číslo projektu
+      label.en: Project double
+    projectName:
+      type: fulltext
+      label.cs: Název projektu
+      label.en: Project name
+    fundingProgram:
+      type: fulltext
+      label.cs: Výzkumný program
+      label.en: Funding program
+    funder:
+      use: 'nr-datatypes#NRFunder'
+
+NRSubject:
+  $id: NRSubject
+  label.cs: Klíčové slovo
+  label.en: Keyword
+  ui:
+    detail: subject
+    marshmallow:
+      class: nr_metadata.common.services.records.ui_schema_datatypes.NRSubjectUISchema
+  marshmallow:
+    class: nr_metadata.common.services.records.schema_datatypes.NRSubjectSchema
+  properties:
+    subjectScheme:
+      type: keyword
+      label.cs: Schema klíčového slova
+      label.en: Subject scheme
+      sample: ['keyword', 'czenas', 'psh']
+    subject:
+      type: multilingual
+      required: true
+      label.cs: Klíčová slova
+      label.en: Keywords
+      ui:
+        detail: string
+        marshmallow:
+          field: I18nStrUIField()
+          imports:
+            - import: oarepo_runtime.i18n.ui_schema.I18nStrUIField
+    valueURI:
+      type: url
+      label.cs: Definice klíčového slova
+      label.en: Subject definition URI
+      sample:
+        faker: url
+    classificationCode:
+      type: keyword
+
+NRSubjectCategory:
+  $id: NRSubjectCategory
+  type: vocabulary
+  vocabulary-type: subject-categories
+  label.cs: Oborové třídění
+  label.en: Subject categories
+  ui:
+    marshmallow:
+      class: nr_metadata.common.services.records.ui_schema_datatypes.NRSubjectCategoryVocabularyUISchema
+  marshmallow:
+    class: nr_metadata.common.services.records.schema_datatypes.NRSubjectCategoryVocabularySchema
+
+NRFunder:
+  $id: NRFunder
+  type: vocabulary
+  vocabulary-type: funders
+  label.cs: Poskytovatel financí
+  label.en: Funder
+  ui:
+    marshmallow:
+      class: nr_metadata.common.services.records.ui_schema_datatypes.NRFunderVocabularyUISchema
+  marshmallow:
+    class: nr_metadata.common.services.records.schema_datatypes.NRFunderVocabularySchema
+
+NRGeoLocation:
+  $id: NRGeoLocation
+  label.cs: Geolokace
+  label.en: Geolocation
+  ui:
+    detail: geolocation
+    marshmallow:
+      class: nr_metadata.common.services.records.ui_schema_datatypes.NRGeoLocationUISchema
+  marshmallow:
+    class: nr_metadata.common.services.records.schema_datatypes.NRGeoLocationSchema
+  properties:
+    geoLocationPlace:
+      description: Free description of the location; ie. Atlantic Ocean
+      type: keyword
+      required: true
+    geoLocationPoint:
+      properties:
+        pointLongitude:
+          use: 'nr-datatypes#NRLongitude'
+          required: true
+        pointLatitude:
+          use: 'nr-datatypes#NRLatitude'
+          required: true
+      ui:
+        detail: geolocation_point
+        marshmallow:
+          class: nr_metadata.common.services.records.ui_schema_datatypes.NRGeoLocationPointUISchema
+      marshmallow:
+        class: nr_metadata.common.services.records.schema_datatypes.NRGeoLocationPointSchema
+
+NRSystemIdentifier:
+  $id: NRSystemIdentifier
+  label.cs: Systémový identifikátor
+  label.en: System identifier
+  ui:
+    detail: identifier
+    marshmallow:
+      class: nr_metadata.ui_schema.identifiers.NRSystemIdentifierUISchema
+      generate: false
+  marshmallow:
+    class: nr_metadata.schema.identifiers.NRSystemIdentifierSchema
+    generate: false
+  properties:
+    identifier:
+      type: keyword
+      required: true
+      label.cs: Systémový identifikátor
+      label.en: System Identifier
+    scheme:
+      type: keyword
+      enum: [nusl, nuslOAI, originalRecordOAI, catalogueSysNo, nrOAI]
+      required: true
+      label.cs: Typ identifikátoru
+      label.en: Identifier type
+
+NREvent:
+  $id: NREvent
+  label.cs: Událost
+  label.en: Event
+  ui:
+    detail: identifier
+    marshmallow:
+      class: nr_metadata.common.services.records.ui_schema_datatypes.NREventUISchema
+  marshmallow:
+    class: nr_metadata.common.services.records.schema_datatypes.NREventSchema
+  properties:
+    eventNameOriginal:
+      # volný zápis celého názvu akce
+      type: fulltext
+      required: true
+      label.cs: Název akce
+      label.en: Event name
+
+    eventNameAlternate[]:
+      # zkrácená forma názvu akce nebo překladu. měla by fungovat jako alias pro vyhledávání
+      type: fulltext
+      label.cs: Alternativní název akce
+      label.en: Event alternate name
+
+    eventDate:
+      # rozsah konání akce/konference -  date or range.
+      use: 'nr-datatypes#NRDateOrRange'
+      required: true
+      label.cs: Datum konání akce
+      label.en: Event date
+
+    eventLocation:
+      use: 'nr-datatypes#NRLocation'
+      required: true
+
+NRLanguage:
+  $id: NRLanguage
+  type: vocabulary
+  vocabulary-type: languages
+  sample: ['cs', 'en', 'de', 'fr', 'it']
+  label.cs: Jazyk
+  label.en: Language
+  ui:
+    marshmallow:
+      class: nr_metadata.common.services.records.ui_schema_datatypes.NRLanguageVocabularyUISchema
+  marshmallow:
+    class: nr_metadata.common.services.records.schema_datatypes.NRLanguageVocabularySchema
+
+NRLicense:
+  $id: NRLicense
+  type: vocabulary
+  vocabulary-type: licenses
+  sample:
+    - 'CC BY'
+    - 'CC BY-SA'
+    - 'CC BY-NC'
+    - 'CC BY-ND'
+    - 'CC BY-NC-SA'
+    - 'CC BY-NC-ND'
+  label.cs: Licence
+  label.en: License
+  ui:
+    marshmallow:
+      class: nr_metadata.common.services.records.ui_schema_datatypes.NRLicenseVocabularyUISchema
+  marshmallow:
+    class: nr_metadata.common.services.records.schema_datatypes.NRLicenseVocabularySchema
+
+NRAccessRights:
+  $id: NRAccessRights
+  type: vocabulary
+  vocabulary-type: access-rights
+  sample: [open, embargoed, restricted, 'metadata only']
+  label.cs: Přístupová práva
+  label.en: Access rights
+  ui:
+    marshmallow:
+      class: nr_metadata.common.services.records.ui_schema_datatypes.NRAccessRightsVocabularyUISchema
+  marshmallow:
+    class: nr_metadata.common.services.records.schema_datatypes.NRAccessRightsVocabularySchema
+
+NRSeries:
+  $id: NRSeries
+  label.cs: Série
+  label.en: Series
+  # edice; tématicky sdružuje podobné věci, nemusí se jednat o pravou edici,
+  # ale tagování/grupování podobných záznamů
+  ui:
+    detail: series
+    marshmallow:
+      class: nr_metadata.common.services.records.ui_schema_datatypes.NRSeriesUISchema
+  marshmallow:
+    class: nr_metadata.common.services.records.schema_datatypes.NRSeriesSchema
+  properties:
+    seriesTitle:
+      type: keyword
+      required: true
+      # našeptávač již uložených hodnot
+      sample: ['series A', 'series B', 'series C']
+      label.cs: Název edice
+      label.en: Series title
+
+    seriesVolume:
+      type: keyword
+      sample: ['1', '2', '3', '4']
+      label.cs: Svazek edice
+      label.en: Series volume
+
+NRExternalLocation:
+  $id: NRExternalLocation
+  label.cs: Externí umístění
+  label.en: External location
+  # externí umístění dokumentu (mimo repozitáře), formát URL
+  ui:
+    detail: external_location
+    marshmallow:
+      class: nr_metadata.common.services.records.ui_schema_datatypes.NRExternalLocationUISchema
+  marshmallow:
+    class: nr_metadata.common.services.records.schema_datatypes.NRExternalLocationSchema
+  properties:
+    externalLocationURL:
+      type: url
+      required: true
+      sample:
+        faker: url
+      label.cs: Externí umístění zdroje
+      label.en: Resource external location
+
+    externalLocationNote:
+      type: fulltext
+      label.cs: Poznámka
+      label.en: Note
