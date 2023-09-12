@@ -1,0 +1,55 @@
+Metadata-Version: 2.1
+Name: gui-executor
+Version: 0.18.4
+Summary: Execute Python code in an automatically generated GUI App.
+Author-email: Rik Huygen <rik.huygen@kuleuven.be>
+License: MIT
+Project-URL: documentation, https://ivs-kuleuven.github.io/gui-executor/
+Project-URL: repository, https://github.com/IvS-KULeuven/gui-executor
+Keywords: GUI,execute,task
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Environment :: X11 Applications :: Qt
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Topic :: Utilities
+Requires-Python: >=3.8
+Description-Content-Type: text/x-rst
+Requires-Dist: rich >=13
+Requires-Dist: executor
+Requires-Dist: PyYAML
+Requires-Dist: matplotlib
+Requires-Dist: distro
+Requires-Dist: PyQt5 >=5.15
+Requires-Dist: ipython >=8
+Requires-Dist: ipykernel ==6.15.1
+Requires-Dist: jupyter-client ==6.1.12
+Requires-Dist: jupyter-core ==4.11.1
+Requires-Dist: qtconsole ==5.4.3
+Provides-Extra: test
+Requires-Dist: faker ; extra == 'test'
+Requires-Dist: lorem-text ; extra == 'test'
+
+
+# GUI Executor
+
+You ever wanted to execute your Python code from a simple GUI without the need to use a REPL or commandline? Look no further, use GUI Executor.
+
+
+## Installation
+
+Install this package in your virtual environment:
+
+```
+$ python3 -m pip install [--upgrade] gui-executor 
+```
+
+## Documentation
+
+You can find the documentation at https://ivs-kuleuven.github.io/gui-executor/.
+
+
+## Running the Tests
+
+```
+$ PYTHONPATH=~/Documents/PyCharmProjects/gui-executor/tests gui-executor --module-path tasks.shared --module-path tasks.specific --debug
+```
