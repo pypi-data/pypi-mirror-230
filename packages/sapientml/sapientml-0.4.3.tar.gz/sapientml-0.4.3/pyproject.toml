@@ -1,0 +1,72 @@
+# Copyright 2023 The SapientML Authors
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "sapientml"
+version = "0.4.3"
+description = "Generative AutoML for Tabular Data"
+authors = ["The SapientML Authors"]
+maintainers = [
+    "Kosaku Kimura <kimura.kosaku@fujitsu.com>",
+    "Akira Ura <ura.akira@fujitsu.com>",
+]
+license = "Apache-2.0"
+readme = "README.md"
+keywords = ["automl"]
+repository = "https://github.com/sapientml/sapientml"
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.13"
+sapientml-core = "^0.4.4"
+numpy = "^1.19.5"
+pandas = "^2.0.3"
+pydantic = "^2.1.1"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+pytest-cov = "^4.1.0"
+pytest-xdist = "^3.3.1"
+black = "^23.7.0"
+flake8 = "^6.1.0"
+isort = "^5.12.0"
+pysen = "^0.10.5"
+pre-commit = "^3.3.3"
+jedi = "^0.19.0"
+pygount = "^1.6.1"
+tabulate = "^0.9.0"
+
+[tool.pysen]
+version = "0.4.3"
+
+[tool.pysen-cli]
+settings_dir = ".pysen"
+
+[tool.pysen.lint]
+enable_black = true
+enable_flake8 = true
+enable_isort = true
+enable_mypy = false
+line_length = 120
+py_version = "0.4.3"
+
+[tool.pysen.lint.source]
+includes = ["sapientml/", "tests/"]
+
+[tool.pytest.ini_options]
+addopts = "-s -x --cov=sapientml"
+testpaths = ["tests"]
