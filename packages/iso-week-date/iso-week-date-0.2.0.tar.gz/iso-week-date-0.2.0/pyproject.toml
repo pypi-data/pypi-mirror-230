@@ -1,0 +1,94 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "iso-week-date"
+description = "Toolkit to work with str representing ISO Week date format"
+version = "0.2.0"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [{name = "Francesco Bruzzesi"}]
+
+requires-python = ">=3.8"
+
+dependencies = [
+    "typing-extensions; python_version < '3.11'",
+]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License"
+]
+
+[project.urls]
+repository = "https://github.com/fbruzzesi/iso-week-date"
+issue-tracker = "https://github.com/fbruzzesi/iso-week-date/issues"
+documentation = "https://fbruzzesi.github.io/iso-week-date/"
+
+[project.optional-dependencies]
+pandas = [
+    "pandas",
+]
+
+polars = [
+    "polars>=0.18.0",
+]
+
+dev = [
+    "black==23.3.0",
+    "interrogate==1.5.0",
+    "isort==5.12.0",
+    "pre-commit==2.21.0",
+    "ruff",
+]
+
+docs = [
+    "mkdocs>=1.4.2",
+    "mkdocs-material>=9.2.0",
+    "mkdocstrings[python]>=0.20.0",
+    "mkdocs-autorefs"
+]
+
+test = [
+    "pytest==7.2.0",
+    "pytest-xdist==3.2.1",
+    "coverage==7.2.1",
+]
+
+all = ["iso-week-date[pandas,polars]"]
+all-dev = ["iso-week-date[pandas,polars,dev,docs,test]"]
+
+[tool.setuptools.packages.find]
+include = ["iso_week_date*"]
+exclude = ["docs", "tests", "data", "docker", "results", "notebooks", "kubernetes"]
+
+[tool.setuptools.package-data]
+iso_week_date = ["py.typed"]
+
+[tool.black]
+line-length = 90
+target_version = ['py38']
+
+[tool.isort]
+py_version = 310
+profile = "black"
+line_length = 90
+
+[tool.ruff]
+line-length = 90
+ignore = [
+    "E731",  # do not assign a `lambda` expression, use a `def`
+    ]
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.coverage.run]
+source = [
+    "iso_week_date/",
+    ]

@@ -1,0 +1,163 @@
+Metadata-Version: 2.1
+Name: iso-week-date
+Version: 0.2.0
+Summary: Toolkit to work with str representing ISO Week date format
+Author: Francesco Bruzzesi
+License: MIT License
+        
+        Copyright (c) 2023 Francesco Bruzzesi
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: repository, https://github.com/fbruzzesi/iso-week-date
+Project-URL: issue-tracker, https://github.com/fbruzzesi/iso-week-date/issues
+Project-URL: documentation, https://fbruzzesi.github.io/iso-week-date/
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: License :: OSI Approved :: MIT License
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Provides-Extra: pandas
+Provides-Extra: polars
+Provides-Extra: dev
+Provides-Extra: docs
+Provides-Extra: test
+Provides-Extra: all
+Provides-Extra: all-dev
+License-File: LICENSE
+
+<img src="docs/img/iso-week-date-logo.svg" width=185 height=185 align="right">
+
+![](https://img.shields.io/github/license/FBruzzesi/iso-week)
+<img src ="docs/img/interrogate-shield.svg">
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+<img src="docs/img/coverage.svg">
+
+# ISO Week Date
+
+**iso-week-date** is a toolkit to work with strings representing [ISO Week date](https://en.wikipedia.org/wiki/ISO_week_date) in two formats, namely:
+
+- Week format **YYYY-WNN** (corresponding to the date format **%Y-W%V**)
+- Week date format **YYYY-WNN-D** (corresponding to the date format **%Y-W%V-%u**)
+
+(where YYYY respresents the year, W is a literal, NN respresents the week number, and D respresents the day of the week)
+
+In a nutshell it provides:
+
+- [`IsoWeek`](https://fbruzzesi.github.io/iso-week-date/api/isoweek) and [`IsoWeekDate`](https://fbruzzesi.github.io/iso-week-date/api/isoweekdate) classes implementing a series of methods to work with ISO Week (Date) formats and avoiding the pitfalls of going back and forth between string, date and datetime python objects
+- [pandas](https://fbruzzesi.github.io/iso-week-date/api/pandas) and [polars](https://fbruzzesi.github.io/iso-week-date/api/polars) functionalities to work with series of ISO Week dates
+
+---
+
+[Documentation](https://fbruzzesi.github.io/iso-week-date) | [Source Code](https://github.com/fbruzzesi/iso-week-date)
+
+---
+
+## Installation
+
+**iso-week-date** is published as a Python package on [pypi](https://pypi.org/project/iso-week-date/), and it can be installed with pip, or directly from source using git, or with a local clone:
+
+- **pip** (suggested):
+
+    ```bash
+    python -m pip install iso-week-date
+    ```
+
+- **pip + source/git**:
+
+    ```bash
+    python -m pip install git+https://github.com/FBruzzesi/iso-week-date.git
+    ```
+
+- **local clone**:
+
+    ```bash
+    git clone https://github.com/FBruzzesi/iso-week-date.git
+    cd iso-week-date
+    python -m pip install .
+    ```
+
+### Dependencies
+
+- To work with `IsoWeek` and `IsoWeekDate` classes, no additional dependency is required.
+- _pandas_ and _polars_ functionalities require the installation of the respective libraries.
+
+## Getting Started
+
+### Available features
+
+This is a high level overview of the features provided by the `iso-week-date` package.
+
+The [`IsoWeek`](https://fbruzzesi.github.io/iso-week-date/api/isoweek) and [`IsoWeekDate`](https://fbruzzesi.github.io/iso-week-date/api/isoweekdate) classes provide the following functionalities:
+
+- Parsing from string, date and datetime objects
+- Conversion to string, date and datetime objects
+- Comparison operations between `IsoWeek` (resp `IsoWeekDate`) objects
+- Addition with `int` and `timedelta` types
+- Subtraction with `int`, `timedelta` and `IsoWeek` (resp `IsoWeekDate`) types
+- Range between two `IsoWeek` (resp. `IsoWeekDate`) objects
+- `__next__` method to generate the next `IsoWeek` (resp. `IsoWeekDate`) object
+
+`IsoWeek` unique methods/features:
+
+- `days` properties that lists the dates in the given week
+- `nth` method to get the _nth_ day of the week as date
+- `in` operator and `contains` method to check if a (iterable of) week(s), string(s) and/or date(s) is contained in the given week
+- `weeksout` method to generate a list of weeks that are _n\_weeks_ after the given week
+- Addition and subtraction with `int` defaults to adding/subtracting weeks
+
+`IsoWeekDate` unique methods/features:
+
+- `day` property that returns the weekday as integer
+- `isoweek` property that returns the ISO Week of the given date (as string)
+- `daysout` method to generate a list of dates that are _n\_days_ after the given date
+- Addition and subtraction with `int` defaults to adding/subtracting days
+
+[`pandas_utils`](https://fbruzzesi.github.io/iso-week-date/api/pandas) and [`polars_utils`](https://fbruzzesi.github.io/iso-week-date/api/polars) modules provide functionalities to work with and move back and forth with _series_ of ISO Week date formats.
+
+In specific both modules implements the following functionalities:
+
+- `datetime_to_isoweek` and `datetime_to_isoweekdate` to convert a series of datetime objects to a series of ISO Week (date) strings
+- `isoweek_to_datetime` and `isoweekdate_to_datetime` to convert a series of ISO Week (date) strings to a series of datetime objects
+- `is_isoweek_series` and `is_isoweekdate_series` to check if a string series values match the ISO Week (date) format
+
+### Quickstart
+
+To get started with `IsoWeek` and `IsoWeekDate` classes please refer to the [quickstart](https://fbruzzesi.github.io/getting-started/quickstart) documentation section.
+
+To check examples on how to work with _pandas_ and _polars_ functionalities please refer to the [dataframe modules](https://fbruzzesi.github.io/getting-started/dataframe-modules) documentation section.
+
+### Custom offset
+
+One of the main reason for this library to exist is the need and the flexibility to work with custom offsets, i.e. to be able to add/subtract a custom offset (as `timedelta`) to the default ISO Week start and given date, and get a "shifted" week.
+
+This feature is available both in the `IsoWeek` and `IsoWeekDate` classes and the dataframe functionalities.
+
+To check an example see the [working with custom offset](https://fbruzzesi.github.io/iso-week-date/getting-started/quickstart/#working-with-custom-offset) section.
+
+## Contributing
+
+Please read the [contributing guidelines](https://fbruzzesi.github.io/iso-week-date/contribute) in the documentation site.
+
+## License
+
+The project has a [MIT Licence](https://github.com/FBruzzesi/iso-week-date/blob/main/LICENSE).
