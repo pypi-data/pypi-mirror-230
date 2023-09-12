@@ -1,0 +1,53 @@
+
+{% load menu_tags %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Test Template Tag</title>
+  </head>
+  <body>
+    menu group = {{menugroup}} <hr>
+    DAFTAR MENU :
+    <br>
+    {% menu_create 1 menugroup as my_menu %}
+
+    <ul>
+    {% for i in my_menu %}
+      <li>{{i}}</li>
+    {% endfor %}
+    </ul>
+    
+    {% comment %}
+        <hr>
+        DAFTAR AKTIF : (position company)
+        {% menu_active 8 as my_active %}
+        <ul>
+            <li>{{my_active}}</li>
+        </ul>   
+    {% endcomment %}
+
+    <hr>
+    DAFTAR AKTIF BY NAME : (position company profil)
+    {% menu_active_by_name 'company_profile' as my_active2 %}
+    <ul>
+        <li>{{my_active2}}</li>
+    </ul>  
+    
+    {% comment %}
+        {% for i in my_active2 %}
+        <ul>
+            <li>{{i}}</li>
+        </ul>  
+        {% endfor %}
+
+        
+        <hr>
+        Bread Crumb : (position company profile)
+        {% menu_breadcrumb 'company_profile' as my_active %}
+        <ul>
+            <li>{{my_active}}</li>
+        </ul>       
+    {% endcomment %}
+  </body>
+</html>

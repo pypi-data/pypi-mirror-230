@@ -1,0 +1,158 @@
+{% load static %}
+{% load menu_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Home 01</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<!-- <link rel="icon" type="image/png" href="{% static '/images/icons/favicon.png' %}"/> -->
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<!-- <link rel="stylesheet" type="text/css" href="{% static '/fonts/fontawesome-5.0.8/css/fontawesome-all.min.css' %}"> -->
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static '/fonts/iconic/css/material-design-iconic-font.min.css' %}">
+<!--===============================================================================================-->
+	<!-- <link rel="stylesheet" type="text/css" href="{% static '/vendor/animate/animate.css' %}"> -->
+<!--===============================================================================================-->	
+	<!-- <link rel="stylesheet" type="text/css" href="{% static '/vendor/css-hamburgers/hamburgers.min.css' %}"> -->
+<!--===============================================================================================-->
+	<!-- <link rel="stylesheet" type="text/css" href="{% static '/vendor/animsition/css/animsition.min.css' %}"> -->
+<!--===============================================================================================-->
+	<!-- <link rel="stylesheet" type="text/css" href="{% static '/css/util.min.css' %}"> -->
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+<!--===============================================================================================-->
+
+    <style>
+        a.clear-content-right::after {
+            content: none !important;          
+        }
+
+        .text-to-right {
+            text-indent: 10px;
+            white-space: nowrap;
+        }
+
+
+
+        
+    </style>
+</head>
+<body class="animsition">
+	
+	<!-- Header -->
+    <div class="container">
+        <div class="row">
+            <div class="col-5">
+                Example generating menus
+            </div>
+            <div class="col">
+                Create Using Library
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-5">
+                
+                <a class="logo-stick" href="index.html">
+                    <img src="images/icons/logo-01.png" alt="LOGO">
+                </a>
+
+                <ul class="main-menu">
+                    <li class="main-menu-active">
+                        <a href="index.html">Menu Original</a>
+                        <ul class="sub-menu">
+                            <li><a href="index.html">Homepage v1</a></li>
+                            <li>
+                                <a href="home-02.html">Homepage v2 &nbsp; <i class="zmdi zmdi-chevron-right"></i></a>
+                                    <ul class="sub-menu">
+                                        <li><a href="#">TEST </a></li>
+                                    </ul>
+                            </li>
+                            <li><a href="home-03.html">Homepage v3</a></li>
+                        </ul>
+                    </li>                    
+                </ul>                                            
+                
+            </div>
+        
+            <div class="col">
+                                           
+                <a class="logo-stick" href="index.html">
+                    <img src="images/icons/logo-01.png" alt="LOGO">
+                </a>
+
+                <ul class="main-menu">
+                    {% menu_create 1 1 as my_menu %}                    
+                    {% for n in my_menu %}
+
+                        {% if forloop.first %}                      
+                            <li class="main-menu-active">
+                        {% else %}
+                            <li>
+                        {% endif %}
+
+                        {% if n.haveChild %}
+                            <a href="#"> {{n.name}}
+                                {% if n.parent_id %}
+                                    <i class="zmdi zmdi-chevron-right text-to-right"></i>
+                                {% endif %}
+                            </a>
+                            <ul class="sub-menu">                            
+                        {% else %}                                
+                            <a class="clear-content-right" href="#"> {{n.name}} </a>                            
+                        {% endif %}
+                                                                        
+                        
+                        {% for i in n.haveChildEndTag %}
+                            <!-- Count = {{forloop.counter}} -->
+                            {% if forloop.last %}
+                                {% if n.parent_id %}
+                                    </li></ul>
+                                    {% if not n.haveChild %}                                                
+                                        </li> <!-- li -->                            
+                                    {% endif %}  
+                                {% else %}
+                                    </li> <!-- Root -->
+                                {% endif %}
+
+                            {% else %}
+                                </li></ul>
+                            {% endif %}       
+
+                        {% endfor %}                            
+                                                    
+                    {% endfor %}                                        
+                </ul>                                                
+                
+            </div>
+        </div>
+    </div>
+
+	
+
+	<!-- Back to top -->
+	<!-- <div class="btn-back-to-top" id="myBtn">
+		<span class="symbol-btn-back-to-top">
+			<span class="fas fa-angle-up"></span>
+		</span>
+	</div> -->
+
+	<!-- Modal Video 01-->
+	
+
+<!--===============================================================================================-->	
+	<script src="{% static '/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+	<!-- <script src="{% static '/vendor/animsition/js/animsition.min.js' %}"></script> -->
+<!--===============================================================================================-->
+	<!-- <script src="{% static '/vendor/bootstrap/js/popper.js' %}"></script> -->
+	<script src="{% static '/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<!-- <script src="{% static '/js/main.js' %}"></script> -->
+
+</body>
+</html>
