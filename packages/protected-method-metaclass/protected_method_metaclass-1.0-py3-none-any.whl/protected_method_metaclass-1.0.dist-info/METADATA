@@ -1,0 +1,138 @@
+Metadata-Version: 2.1
+Name: protected-method-metaclass
+Version: 1.0
+Summary: Metaclass enabling protected mecanism on method with the Protected decorator
+Home-page: UNKNOWN
+Author: Marc MALBERT
+Author-email: eldrad-59@hotmail.fr
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+
+protected_method_metaclass - Metaclass enabling the protected feature on methods
+================================================================================
+
+This package contains several metaclasses that allow the protected feature on the applied class and this all the subclasses.  
+The mechanism should works with multiple inheritance but you should still be carefull in this case.
+
+When overloading a protected method, the overloaded method can still be accessed with the '__old' prefix (see later)
+
+
+# Simple example
+## Creating a base class  
+
+```python
+from protected_method_metaclass import ProtectedMethodMetaClass, Protected
+
+# ==========================================================
+class BaseClass(object, metaclass=ProtectedMethodMetaClass):  # The base class must use the ProtectedMethodMetaClass metaclass
+
+    # ====================
+    def __init__(self, a):
+        self.__a = a
+
+    # ==============
+    def get_a(self):
+        return self.__a
+
+    # ========
+    @Protected  # Use the Protected decorator on private methods you want to make protected
+    def __set_a(self, a):
+        print("IN BASE CLASS")
+        self.__a = a
+
+```
+
+## Use with sub class and overloading
+
+```python
+# ==========================
+class SubClass_1(BaseClass):
+    # ===================
+    def __set_a(self, a):  # You don't need to repeat the Protected decorator to overload
+        print("IN SUB CLASS 1")
+        self.__old_set_a(a)  # use the '__old' prefix for the overloaded method
+
+    # =============================
+    def call_former_set_a(self, a):
+        self.__old_set_a(a)
+
+    # ==========================
+    def call_new_set_a(self, a):
+        self.__set_a(a)
+
+    # ========
+    @Protected  # You an declare protected method in any subclass of a class using the ProtectedMethodMetaClass metaclass
+    def __new_protected_method(self):
+        print("new_protected_method")
+
+the_instance = SubClass_1("a")
+the_instance.call_former_set_a("a1)
+>>> IN BASE CLASS
+the_instance.get_a()
+>>> a1
+
+the_instance.call_new_set_a("a2")
+>>> IN SUB CLASS 1
+>>> IN BASE CLASS
+the_instance.get_a()
+>>> a2
+```
+
+## Multiple sub classes
+The following example details the behaviour of a protected method and of the '__old' prefix when there is a  hierarchy of sub classes.  
+
+```python
+# ===========================
+class SubClass_2(SubClass_1):
+    # ===================
+    def __set_a(self, a):
+        print("IN SUB CLASS 2")
+        self.__old_set_a(a)
+
+the_instance = SubClass_2("a")
+the_instance.call_former_set_a("a1)  # The behaviour is not modified': __old_set_a' used in SubClass_1 still refers '__set_a' of BaseClass
+>>> IN BASE CLASS 
+the_instance.get_a()
+>>> a1
+
+the_instance.call_new_set_a("a2")  # The behaviours is modified as '__set_a' always points to the latest overloaded method
+>>> IN SUB CLASS 2
+>>> IN SUB CLASS 1
+>>> IN BASE CLASS
+the_instance.get_a()
+>>> a2
+```
+
+# PyQt5 and PySide2
+As most classes from PyQt or PySide2 use their own metaclass, the standard ProtectedMethodMetaClass is not directly usable for Qt classes.  
+The package protected_method_metaclass contains two other metaclasses compatible with PyQt5 or PySide2.
+They are designed to be used exactly as the native ProtectedMethodMetaClass with one for PyQt5 and one for PySide2.  
+Yet, you do not need to have any of those library installed as a requirement for the protected_method_metalass package.
+The matching metaclasses will be available only if the Qt libraries are installed and disabled otherwise.
+
+## Example with PyQt5
+
+```python
+from protected_method_metaclass import ProtectedMethodMetaClass_Qt
+from PyQt5.QtWidgets import QWidget
+
+class MyBaseWidget(QWidget, metaclass=ProtectedMethodMetaClass_Qt):
+    pass
+```
+
+## Example with PySide2
+
+```python
+from protected_method_metaclass import ProtectedMethodMetaClass_PySide2
+from PySide2.QtWidgets import QWidget
+
+class MyBaseWidget(QWidget, metaclass=ProtectedMethodMetaClass_PySide2):
+    pass
+```
+
+
