@@ -1,0 +1,69 @@
+Metadata-Version: 2.1
+Name: disnake-ext-fluent
+Version: 0.1.0
+Summary: Path to high-quality bot translations, opened.
+Keywords: disnake disnake.ext discord fluent projectfluent
+Author-Email: elenakrittik <dev.elenakrittik@gmail.com>
+License: LGPL-3.0-only
+Classifier: Development Status :: 3 - Alpha
+Classifier: License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)
+Classifier: Intended Audience :: Developers
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Software Development :: Localization
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Utilities
+Classifier: Typing :: Typed
+Project-URL: Repository, https://github.com/disnake-era/disnake-ext-fluent
+Project-URL: Documentation, https://disnake-ext-fluent.readthedocs.io/
+Requires-Python: >=3.8
+Requires-Dist: disnake==2.9.*
+Requires-Dist: fluent-runtime>=0.4.0
+Requires-Dist: typing-extensions>=4.7.1
+Description-Content-Type: text/markdown
+
+<!-- SPDX-License-Identifier: LGPL-3.0-only -->
+
+# disnake-ext-fluent
+
+`LocalizationProtocol` implementation for projects using Fluent.
+
+For usage example, see [the `example` folder](./example).
+
+This library supports `logging`.
+
+## Version Guarantees
+
+This project strictly follows [Cargo SemVer](https://doc.rust-lang.org/cargo/reference/semver.html).
+If you're used to Rust ecosystem, feel free to skip over. Otherwise, read next.
+
+The TL;DR of Cargo SemVer is that here, unlike "normal" SemVer where "major", "minor" and "patch"
+points are "hardcoded" in their positions, "major" version number corresponds to "the left-most
+non-zero version number", and "minor" and "patch" versions are counted to the right from "major"
+(if possible).
+
+Notably, this means that while the project's version stays "instable" (i.e. the leftmost version
+number is 0), breaking changes can occur on what most people consider "minor" version number,
+and everything else can happen on what most people consider "patch" version number.
+
+This scheme allows the project to give strong version guarantees without compromising on the ease
+of development and improvement and without breaking people's expectations. (If some project wants
+to strictly follow the "official" SemVer *and* frequently make breaking changes (for the better,
+we hope), they must constantly increase the major version number, which after just 5 breaking
+changes results in project's version being "5.x.x", which in turn may give observers falsy look of
+a "mature, stable and long-in-development" project).
+
+## License
+
+This project is licensed under the GNU Lesser General Public License, version 3; see
+[LICENSE](./LICENSE) for more.
+
+## Acknowledgements
+
+This project has portions of other software incorporated into it; please read
+[ACKNOWLEDGEMENTS.md](./ACKNOWLEDGEMENTS.md) for more.
