@@ -1,0 +1,197 @@
+Metadata-Version: 2.1
+Name: singleton-classes
+Version: 1.0
+Summary: package for different Singleton classes and metaclasses
+Author: Marc MALBERT
+Author-email: eldrad-59@hotmail.fr
+Classifier: Programming Language :: Python :: 3
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+
+singleton_classes - package for different Singleton classes and metaclasses
+===========================================================================
+
+This package contains different classes to handle singleton instances.
+The following type of singleton class are available :  
+* Singleton : A single instance is available
+* SingletonByClass : A single instance is available per class using this pattern
+* SingletonByClassAndId : A single instance with a given ID is available per class using this pattern
+
+# Basic Use
+## Example with the Singleton class
+
+```python
+from singleton_classes import Singleton
+
+# =============================================================================
+# You just have to inherit from the Singleton class to benefit from the feature
+
+class A(Singleton):
+    def __init__(self, a):
+        self.a = a
+
+a = A(8)
+
+
+# =====================================================================================
+# Once a first instance is created, you can acces it from anywhere by calling the class
+# with no arguemnt
+
+b = A()
+b is a
+>>> True
+
+
+# =======================================================
+# Trying to create a new instance will raise an Exception
+
+b = A(8)
+>>> singleton_classes.exceptions.singleton_exception.SingletonException: <class '__main__.A'> has been called with arguments. Unauthorized operation for Singleton sub classes !
+```
+
+## Example with the SingletonByClass class
+
+```python
+from singleton_classes import SingletonByClass
+
+# =============================================================================
+# You just have to inherit from the SingletonByClass class to benefit from the feature
+
+class A(SingletonByClass):
+    def __init__(self, a):
+        self.a = a
+
+class B(SingletonByClass):
+    def __init__(self, a):
+        self.a = a
+
+class C(B):
+    pass
+
+a = A(8)
+
+# =========================================================
+# You can create an instance per class even for sub classes
+b = B(8)
+c = C(8)
+
+
+# =====================================================================================
+# Just like before, once a first instance is created, you can acces it from anywhere
+# by calling the class with no arguemnt
+
+a2 = A()
+b2 = B()
+c2 = C()
+
+a2 is a
+>>> True
+
+b2 is b
+>>> True
+
+c2 is c
+>>> True
+
+# =======================================================
+# Trying to create a new instance will raise an Exception
+c = C(8)
+>>> singleton_classes.exceptions.singleton_by_class_exception.SingletonByClassException: <class '__main__.C'> has been called with arguments. Unauthorized operation for SingletonByClass sub classes !
+```
+
+## Example with the SingletonByClassAndId class
+Sometime, you just want to avoid data multiplication. You want your data to be easily accessible, but you do not want to create an new instance each time and gather the related data.  
+For instance, you have clients for your comapany, each client has a unique ID. You want to easily access the data of client through its ID, the SingletonByClassAndId class is designed for this case.
+
+```python
+from singleton_classes import SingletonByClassAndId
+
+# ====================================================================================
+# You have to inherit from the SingletonByClassAndId class to benefit from the feature
+#  * the first argument of the __init__ method must be the ID
+#  * don't forget to add the call to the super __init__ method with the ID !
+
+class SingleClient(SingletonByClassAndId):
+    def __init__(self, client_id, a):
+        super().__init__(client_id)
+        self.a = a
+
+class GroupClient(SingletonByClassAndId):
+    def __init__(self, client_id, a):
+        super().__init__(client_id)
+        self.a = a
+
+john = SingleClient("John Doe", 8)
+
+# ====================================================================
+# You can create an instance per class AND per ID even for sub classes
+jane = SingleClient("Jane Doe", 8)
+company_john = GroupClient("John Doe", 8)  # ID is unique per class
+
+
+# =====================================================================================
+# Just like before, once a first instance is created, you can acces it from anywhere
+# by calling the class with no arguemnt
+john2 = SingleClient("John Doe")
+jane2 = SingleClient("Jane Doe")
+company_john2 = GroupClient("John Doe")
+
+john2 is john
+>>> True
+
+jane2 is jane
+>>> True
+
+company_john2 is company_john
+>>> True
+
+# =======================================================
+# Trying to create a new instance will raise an Exception
+john3 = SingleClient("John Doe", 8)
+>>> singleton_classes.exceptions.singleton_by_class_and_id_exception.SingletonByClassAndIdException: <class '__main__.SingleClient'> has been called with more arguments than just id. Unauthorized operation for SingletonByClassAndId sub classes !
+```
+
+# Special method
+First, for the SingletonByClassAndId, you might require to get the id from an instance.
+Use the 'get_singleton_id' method for this.
+
+```python
+john.get_singleton_id()
+>>> John Doe
+```
+
+Sometime, the singleton feature is a bit to restrictive. You may want to create a new instance for some reason.  
+Two class methods allow such a mechanism :
+* new_unregistered_instance : creates a new instance but do not register it : If you call your class, you will still get the previous instance.  
+* new_ref_instance : creates a new instance and register it : If you call your class, you will get this precise instance
+
+These two methods have to be called with the same arguments as when you create an instance and are available for the three singleton classes
+
+```python
+from singleton_classes import SingletonByClass
+
+class MySingletonClass(SingletonByClass):
+    def __init__(self, a):
+        self.a = a
+
+a = MySingletonClass("Ref instance")
+a2 = MySingletonClass.new_unregistered_instance("Unregistred instance")
+a3 = MySingletonClass()
+
+a2 is a
+>>> False
+
+a3 is a
+>>> True
+
+a2 = MySingletonClass.new_ref_instance("Registred Instance")
+a3 = MySingletonClass()
+
+a2 is a
+>>> False
+
+a3 is a2
+>>> True
+```
