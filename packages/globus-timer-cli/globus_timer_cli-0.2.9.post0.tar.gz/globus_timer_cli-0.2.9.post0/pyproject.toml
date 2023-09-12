@@ -1,0 +1,48 @@
+[tool.poetry]
+name = "globus-timer-cli"
+version = "0.2.9.post0"
+description = "CLI for interacting with the timer API"
+authors = [
+    "Kurt McKee <kurt@globus.org>",
+]
+keywords = [
+  "globus",
+  "automation",
+  "cli"
+]
+classifiers = [
+  "Development Status :: 7 - Inactive",
+  "Intended Audience :: Developers",
+  "License :: Free To Use But Restricted",
+  "Programming Language :: Python :: 3.6",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Topic :: Internet :: WWW/HTTP",
+  "Topic :: Software Development :: Libraries :: Application Frameworks",
+  "Topic :: Software Development :: Libraries :: Python Modules"
+]
+readme = "pypi/README.md"
+license = "Apache-2.0"
+packages = [
+    { include = "timer_cli" }
+]
+
+[tool.poetry.scripts]
+globus-timer = "timer_cli.main:main"
+
+[tool.poetry.dependencies]
+python = ">=3.6"
+requests = "^2.24.0"
+click = "^7.1.2"
+globus-sdk = "^2.0.1"
+importlib-metadata = "^3.10.0"
+
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+use_parentheses = true
+force_sort_within_sections = true
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
