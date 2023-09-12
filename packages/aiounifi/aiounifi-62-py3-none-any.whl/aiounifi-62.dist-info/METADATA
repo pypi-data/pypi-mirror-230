@@ -1,0 +1,44 @@
+Metadata-Version: 2.1
+Name: aiounifi
+Version: 62
+Summary: Python library for communicating with UniFi Network Controller API
+Author-email: Robert Svensson <Kane610@users.noreply.github.com>
+License: MIT
+Project-URL: Source Code, https://github.com/Kane610/aiounifi
+Project-URL: Bug Reports, https://github.com/Kane610/aiounifi/issues
+Project-URL: Forum, https://community.home-assistant.io/t/unifi-network-integration-official-thread/
+Keywords: unifi,homeassistant
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Home Automation
+Requires-Python: >=3.11.0
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: aiohttp (>3.8)
+Requires-Dist: orjson (>3.9)
+Requires-Dist: segno (>=1.5.2)
+Provides-Extra: requirements
+Requires-Dist: aiohttp (~=3.8.5) ; extra == 'requirements'
+Requires-Dist: orjson (~=3.9.5) ; extra == 'requirements'
+Requires-Dist: segno (==1.5.2) ; extra == 'requirements'
+Provides-Extra: requirements_dev
+Requires-Dist: pre-commit (==3.4.0) ; extra == 'requirements_dev'
+Provides-Extra: requirements_test
+Requires-Dist: aioresponses (==0.7.4) ; extra == 'requirements_test'
+Requires-Dist: black (==23.9.1) ; extra == 'requirements_test'
+Requires-Dist: mypy (==1.5.1) ; extra == 'requirements_test'
+Requires-Dist: pytest (==7.4.2) ; extra == 'requirements_test'
+Requires-Dist: pytest-aiohttp (==1.0.5) ; extra == 'requirements_test'
+Requires-Dist: pytest-asyncio (==0.21.1) ; extra == 'requirements_test'
+Requires-Dist: pytest-cov (==4.1.0) ; extra == 'requirements_test'
+Requires-Dist: ruff (==0.0.287) ; extra == 'requirements_test'
+Requires-Dist: types-orjson (==3.6.2) ; extra == 'requirements_test'
+
+# aiounifi
+Asynchronous library to communicate with Unifi Controller
+
+## Acknowledgements
+* Paulus Schoutsen (balloob) creator of aiohue which most of this code repository is modeled after.
