@@ -1,0 +1,33 @@
+# guide: https://packaging.python.org/en/latest/tutorials/packaging-projects/
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+# https://packaging.python.org/en/latest/specifications/declaring-project-metadata
+[project]
+name = "nbdump"
+version = "0.0.1"
+description = "Dump files to Jupyter notebook."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [{ name = "Evan Arlian", email = "evanarlian2000@gmail.com" }]
+keywords = ["notebook", "kaggle"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = ["nbformat"]
+
+[project.urls]
+Homepage = "https://github.com/evanarlian/nbdump"
+
+[project.scripts]
+nbdump = "nbdump.cli:main"
+
+[tool.ruff]
+src = ["src"]
+
+# turns out src/<pkg_name> will be found automatically
+# https://github.com/pypa/packaging-problems/issues/615
