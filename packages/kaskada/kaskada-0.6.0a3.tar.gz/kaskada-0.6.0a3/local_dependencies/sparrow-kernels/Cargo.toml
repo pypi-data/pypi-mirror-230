@@ -1,0 +1,28 @@
+[package]
+name = "sparrow-kernels"
+version= "0.11.0"
+authors= ["Kaskada Developers"]
+edition= "2021"
+license= "Apache-2.0"
+publish = false
+description = """
+Computation kernels defined over Arrow arrays.
+"""
+
+[dependencies]
+sparrow-arrow = { path = "../sparrow-arrow" }
+anyhow = { version = "1.0.70", features = ["backtrace"] }
+arrow = { version = "43.0.0" }
+bitvec = { version = "1.0.1", features = ["serde"] }
+chrono = "0.4.24"
+chronoutil = "0.2.3"
+itertools = "0.11.0"
+num = "0.4.0"
+smallvec = { version = "1.10.0", features = ["union", "serde"] }
+static_init = "1.0.3"
+substring = "1.4.5"
+
+[lib]
+bench = false
+doctest = false
+

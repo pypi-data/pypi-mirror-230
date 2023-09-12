@@ -1,0 +1,29 @@
+[package]
+name = "sparrow-core"
+version= "0.11.0"
+authors= ["Kaskada Developers"]
+edition= "2021"
+license= "Apache-2.0"
+publish = false
+description = """
+Common components used by most Sparrow crates.
+"""
+
+[dependencies]
+sparrow-arrow = { path = "../sparrow-arrow" }
+anyhow = { version = "1.0.70", features = ["backtrace"] }
+arrow = { version = "43.0.0" }
+chrono = "0.4.24"
+decorum = "0.3.1"
+futures = "0.3.27"
+itertools = "0.11.0"
+num = "0.4.0"
+owning_ref = "0.4.1"
+parquet = { version = "43.0.0", features = ["async"] }
+serde = { version = "1.0.159", features = ["derive", "rc"] }
+static_init = "1.0.3"
+tonic = "0.9.2"
+tracing = "0.1.37"
+
+[lib]
+doctest = false
