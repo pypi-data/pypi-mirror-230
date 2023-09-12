@@ -1,0 +1,119 @@
+[tool.poetry]
+authors = ["Hume AI Dev <dev@hume.ai>"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+]
+description = "Hume AI Python Client"
+keywords = [
+  "hume",
+  "expressive",
+  "communication",
+  "audio",
+  "recognition",
+  "ai",
+  "analysis",
+  "detection",
+  "voice",
+  "sentiment",
+  "emotion",
+]
+license = "Proprietary"
+name = "hume"
+readme = "README.md"
+repository = "https://github.com/HumeAI/hume-python-sdk"
+version = "0.3.7"
+
+[tool.poetry.dependencies]
+python = ">=3.8.1,<4"
+requests = "^2.28.2"
+typing-extensions = "^4.3.0"
+websockets = { version = "^10.3", optional = true }
+jupyter = { version = "^1.0.0", optional = true }
+pydub = { version = "^0.25.1", optional = true }
+
+[tool.poetry.dev-dependencies]
+covcheck = { version = "^0.4.3", extras = ["toml"] }
+flake8 = "^6.0.0"
+ipykernel = "^6.22.0"
+mypy = "^1.0.1"
+pydocstyle = "^6.1.1"
+pylint = "^2.16.2"
+pyproject-flake8 = "^6.0.0"
+pytest = "^7.2.1"
+pytest-asyncio = "^0.19.0"
+pytest-cov = "^4.0.0"
+pytest-forked = "^1.4.0"
+pytest-xdist = "^2.5.0"
+semver = "^2.13.0"
+testbook = "^0.4.2"
+types-requests = "^2.25.11"
+types-setuptools = "^57.4.4"
+types-toml = "^0.10.1"
+yapf = "^0.32.0"
+
+[tool.poetry.group.docs]
+optional = true
+
+[tool.poetry.group.docs.dependencies]
+mike = "^1.1.2"
+mkdocs = "^1.4.3"
+mkdocs-material = "^9.1.9"
+mkdocstrings = { version = "^0.21.2", extras = ["python"] }
+
+[tool.poetry.extras]
+stream = ["websockets"]
+examples = ["jupyter", "pydub"]
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+
+[tool.covcheck.group.unit.coverage]
+branch = 63.0
+line = 80.0
+
+[tool.covcheck.group.service.coverage]
+branch = 64.0
+line = 87.0
+
+[tool.flake8]
+ignore = ""           # Required to disable default ignores
+max-line-length = 119
+
+[tool.mypy]
+disallow_incomplete_defs = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+
+[tool.pylint.basic]
+good-names = ["id", "f"]
+max-args = 12
+max-attributes = 9
+max-locals = 25
+notes = ["FIXME"]
+
+[tool.pylint.format]
+max-line-length = 119
+
+[tool.pylint.messages_control]
+disable = [
+  "logging-fstring-interpolation",
+  "unspecified-encoding",
+  "missing-docstring",
+  "wrong-import-order",
+  "duplicate-code",
+  "too-few-public-methods",
+]
+
+[tool.pylint.reports]
+output-format = "colorized"
+
+[tool.yapf]
+based_on_style = "pep8"
+column_limit = 119
+indent_width = 4
