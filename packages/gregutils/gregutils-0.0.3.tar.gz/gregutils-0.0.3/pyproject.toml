@@ -1,0 +1,34 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+include = [
+    "src",
+    "tests"
+]
+exclude = [
+
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/gregutils"]
+
+[project]
+name = "gregutils"
+version = "0.0.3"
+authors = [
+  { name="Anton Afanasev", email="web.afanasyev@gmail.com" },
+]
+description = "Usefull utils"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/afanasev90/gregutils"
+"Bug Tracker" = "https://github.com/afanasev90/gregutils/issues"
