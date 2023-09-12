@@ -1,0 +1,1 @@
+from semantix_genai_serve.semantix_kserve import SemantixTorchKserve
