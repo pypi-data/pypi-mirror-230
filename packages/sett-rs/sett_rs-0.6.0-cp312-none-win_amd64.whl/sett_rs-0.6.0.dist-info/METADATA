@@ -1,0 +1,53 @@
+Metadata-Version: 2.1
+Name: sett_rs
+Version: 0.6.0
+Requires-Dist: ruff ==0.0.287 ; extra == 'dev'
+Requires-Dist: mypy ==1.5.1 ; extra == 'dev'
+Requires-Dist: black ==23.9.0 ; extra == 'dev'
+Requires-Dist: pytest ==7.4.2 ; extra == 'dev'
+Provides-Extra: dev
+Summary: sett-rs Python bindings.
+Author: Gerhard Bräunlich <gerhard.braeunlich@id.ethz.ch>, Christian Ribeaud <christian.ribeaud@karakun.com>, Jarosław Surkont <jaroslaw.surkont@unibas.ch>, Simone Guzzi <simone.guzzi@sib.swiss>, Robin Engler <robin.engler@sib.swiss>
+Author-email: Gerhard Bräunlich <gerhard.braeunlich@id.ethz.ch>, Christian Ribeaud <christian.ribeaud@karakun.com>, Jarosław Surkont <jaroslaw.surkont@unibas.ch>, Simone Guzzi <simone.guzzi@sib.swiss>, Robin Engler <robin.engler@sib.swiss>
+License: LGPL-3.0-or-later
+Description-Content-Type: text/markdown; charset=UTF-8; variant=GFM
+Project-URL: Source Code, https://gitlab.com/biomedit/sett-rs
+
+# sett-rs Python bindings
+
+Building sett-rs Python bindings requires the
+[Rust toolchain](https://www.rust-lang.org/tools/install) and
+[maturin](https://github.com/PyO3/maturin).
+
+## Development
+
+Build and install directly in the current virtual env
+(run `maturin` in the directory where this `README.md` file is located).
+
+```shell
+maturin develop --release
+```
+
+Windows builds require non-default features.
+
+```shell
+maturin develop --release --no-default-features --features=crypto-cng
+```
+
+## Production
+
+See the GitLab CI file for the platform-specific instructions on building
+production-ready Python wheels.
+
+## Examples
+
+Transfer files over SFTP.
+
+```bash
+cd sett-rs/examples
+# Set up an sftp server for testing (public key authentication)
+docker run -v ${HOME}/.ssh/id_rsa.pub:/home/foo/.ssh/keys/id_rsa.pub:ro -p 2220:22 -d atmoz/sftp foo::1001::upload
+# Run speed test
+python speedtest.py
+```
+
