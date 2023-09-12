@@ -1,0 +1,79 @@
+Metadata-Version: 2.1
+Name: genai_evaluation
+Version: 0.1.1
+Summary: Evaluation of Generative AI Models
+Home-page: https://github.com/rajiviyer/genai_evaluation
+Author: Rajiv Iyer
+Author-email: raju.rgi@gmail.com
+License: MIT license
+Keywords: genai_evaluation
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+License-File: AUTHORS.rst
+
+# GENAI EVALUATION
+GenAI Evaluation is a library which contains methods to evaluate differences in Real & Synthetic Data. 
+#### Functions
+- **multivariate_ecdf**: Computes joint or multivariate ECDF in contrast to the univariate capabilities provided by packages like statsmodels
+- **ks_statistic**: Calculates the KS Statistic for two multivariate ECDFs  
+
+# Authors
+- [Dr. Vincent Granville](mailto:vincentg@mltechniques.com) - Research
+- [Rajiv Iyer](mailto:raju.rgi@gmail.com) - Development/Maintenance
+
+## Installation
+The package can be installed with
+```
+pip install genai_evaluation
+```
+
+## Tests
+The test can be run by cloning the repo and running:
+```
+pytest tests
+```
+In case of any issues running the tests, please run them after installing the package locally:
+
+```
+pip install -e .
+```
+
+## Usage
+
+Start by importing the class
+```Python
+from genai_evaluation import multivariate_ecdf, ks_statistic
+```
+
+Assuming we have two pandas dataframes (Real & Synthetic) and only numerical columns, we pass them to the multivariate_ecdf function which returns the computed multivariate ECDFs of both.
+```Python
+query_str, ecdf_real, ecdf_synth = multivariate_ecdf(real_data, synthetic_data, n_nodes = 1000, verbose = True)
+```
+
+We then calculate the multivariate KS Distance between the ECDFs
+```Python
+ks_stat = ks_statistic(ecdf_real, ecdf_synth)
+```
+
+## Motivation
+The motivation for this package comes from Dr. Vincent Granville's paper [Generative AI Technology Break-through: Spectacular Performance of New Synthesizer](https://mltechniques.com/2023/08/02/generative-ai-technology-break-through-spectacular-performance-of-new-synthesizer/)
+
+If you have any tips or suggestions, please contact us on email.
+
+# History
+
+## 0.1.0 (2023-09-11)
+- First release on PyPI.
+
+## 0.1.1 (2023-09-11)
+### Corrected
+- Function name from compute_ecdf to multivariate_ecdf
