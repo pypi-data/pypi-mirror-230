@@ -1,0 +1,40 @@
+Metadata-Version: 2.1
+Name: gitea_actions_webscraper
+Version: 0.0.5
+Summary: Enable temporarily Gitea Actions web scraping.
+Author: Benjamin Loison
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Project-URL: Homepage, https://codeberg.org/Benjamin_Loison/Gitea_Actions_Webscraper
+Project-URL: Bug tracker, https://codeberg.org/Benjamin_Loison/Gitea_Actions_Webscraper/issues
+Requires-Python: >=3.7
+Requires-Dist: requests
+Requires-Dist: lxml
+Description-Content-Type: text/markdown
+
+# Gitea Actions Webscraper
+
+Install with:
+
+```
+pip install gitea_actions_webscraper
+```
+
+Example usage:
+
+```py
+from gitea_actions_webscraper import GiteaActionsWebscraper
+import json
+
+print('Verifying Gitea Actions Webscraper configuration...')
+gitea_actions_webscraper = GiteaActionsWebscraper('https://codeberg.org', 'User/Repository', 'YOUR_i_like_gitea_COOKIE')
+print('Gitea Actions Webscraper configuration verified!')
+
+actions = gitea_actions_webscraper.getFirstActionsPage()
+lastAction = actions[0]
+print(lastAction.commitTitle)
+print(json.dumps(lastAction.getArtifacts(), indent = 4))
+print(json.dumps(lastAction.getLogs(), indent = 4))
+messages = '\n'.join([stepLog['message'] for stepLog in lastAction.getStepLogs(0)])
+print(messages)
+```
