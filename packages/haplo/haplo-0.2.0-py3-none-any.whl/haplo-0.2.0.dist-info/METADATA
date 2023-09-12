@@ -1,0 +1,72 @@
+Metadata-Version: 2.1
+Name: haplo
+Version: 0.2.0
+Summary: 
+Author: golmschenk
+Author-email: greg@olmschenk.com
+Requires-Python: >=3.11,<4.0
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: bokeh (>=3.2.2,<4.0.0)
+Requires-Dist: filelock (>=3.12.3,<4.0.0)
+Requires-Dist: numpy (>=1.25.2,<2.0.0)
+Requires-Dist: onnx (>=1.14.1,<2.0.0)
+Requires-Dist: onnxruntime (>=1.15.1,<2.0.0)
+Requires-Dist: pandas (>=2.1.0,<3.0.0)
+Requires-Dist: polars (>=0.19.2,<0.20.0)
+Requires-Dist: pyarrow (>=13.0.0,<14.0.0)
+Requires-Dist: pytest (>=7.4.2,<8.0.0)
+Requires-Dist: stringcase (>=1.2.0,<2.0.0)
+Requires-Dist: torch (>=2.0.1,<3.0.0)
+Requires-Dist: wandb (>=0.15.10,<0.16.0)
+Description-Content-Type: text/markdown
+
+# Setup
+This setup expects `conda` is installed in some form already. The minimal `conda` installer is available [here](https://docs.conda.io/en/latest/miniconda.html).
+
+1. Create a new `conda` environment for the project:
+
+        conda create -n ml4a python=3.8 -y
+
+2. Enter the `conda` environment:
+
+        conda activate ml4a
+
+3. Install the `ml4a` Python package:
+
+        pip install https://github.com/golmschenk/ml4a/tarball/master
+
+4. Download the trained model states:
+
+        python -m ml4a.download_model_states
+
+   We note that the model states downloaded via this command are for minimal model architectures designed for ease of use. The model state for our current best "parameters to phase amplitudes" model architecture can be downloaded [here](https://olmschenk-my.sharepoint.com/:f:/p/greg/EgNXsdvmyMlJg58-bEFS3_YBKcf5SDQpkKM1nEqVGWBt-A?e=L318gC).
+
+
+5. Exit the `conda` environment:
+
+        conda deactivate
+
+
+# Usage
+1. Enter the `conda` environment created during setup:
+
+        conda activate ml4a
+
+2. Add your input data to a CSV file. Each row should be a single example and the values should be delimited commas.There is no requirement for the number of digits for a value. Scientific notation using `e` or
+   `E` is allowed. See [parameters_template.csv](parameters_template.csv) and
+   [phase_amplitudes_template.csv](phase_amplitudes_template.csv) for examples.
+
+3. Run the inference for either a parameters or phase amplitudes CSV input, specifying your desired input and output
+   paths:
+
+        python -m ml4a.infer_from_phase_amplitudes_to_parameters input_phase_amplitudes.csv output_parameters.csv
+
+   or
+
+        python -m ml4a.infer_from_parameters_to_phase_amplitudes input_parameters.csv output_phase_amplitudes.csv
+
+4. Exit `conda` environment:
+
+        conda deactivate
+
