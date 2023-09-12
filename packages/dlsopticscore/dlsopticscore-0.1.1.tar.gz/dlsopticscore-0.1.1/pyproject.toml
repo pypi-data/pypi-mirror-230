@@ -1,0 +1,25 @@
+[project]
+name = "dlsopticscore"
+description = """\
+    A collection of functions and methods for calculations \
+    and analysis related to X-ray optical design.\
+    """
+version = "0.1.1"
+authors = [
+    { name = "Matthew Hand", email = "matthew.hand@diamond.ac.uk" }
+]
+dependencies = [
+    "h5py>=2.10.0",
+    "lmfit>=1.0.0",
+    "matplotlib>=3.2.1",
+    "numpy>=1.18.2",
+    "pandas>=1.0.3",
+    "Pillow>=7.0.0",
+    "scipy>=1.10"
+]
+
+[project.optional-dependencies]
+dev = [
+    "flake8",
+    "pytest"
+]
