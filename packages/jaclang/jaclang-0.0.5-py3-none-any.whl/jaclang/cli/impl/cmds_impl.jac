@@ -1,0 +1,57 @@
+"""Implementations for the jac command line interface."""
+import:py os;
+import:py shutil;
+
+"""Load a .jac file and return the entrypoint function."""
+:a:load
+(filename: str) {
+    if filename.endswith(".jac"){
+        [base, mod] = os.path.split(filename);
+        base = './' if not base else base;
+        mod=mod[:-4];
+        __jac_import__(target=mod, base_path=base);
+    } else {
+        "Not a .jac file." :> print;
+    }
+}
+
+"""Run the entrypoint of the given .jac file."""
+:a:run
+(filename: str, entrypoint: str, args: list) {
+    if filename.endswith(".jac"){
+        [base, mod] = os.path.split(filename);
+        base = './' if not base else base;
+        mod=mod[:-4];
+        mod = __jac_import__(target=mod, base_path=base);
+        :> ((mod, entrypoint) :> getattr );
+    } else {
+        "Not a .jac file." :> print;
+    }
+}
+
+:a:ast_tool
+(tool: str) {
+    import:py from jaclang.utils.lang_tools, AstTool;
+    if(hasattr(AstTool, tool)){
+        print(getattr(AstTool(), tool)());
+    } else {
+        print(f"Ast tool {tool} not found.");
+    }
+}
+
+"""Remove the __jac_gen__ , __pycache__ folders from the current directory recursevely."""
+:a:clean {
+    current_dir = os.getcwd();
+    jac_gen = "__jac_gen__";
+    py_cache = "__pycache__";
+    for root, dirs, files in os.walk(current_dir, topdown=True) {
+        for folder_name in dirs[:] {
+            if folder_name == jac_gen or folder_name == py_cache {
+                folder_to_remove = os.path.join(root, folder_name);
+                shutil.rmtree(folder_to_remove);
+                print(f"Removed folder: {folder_to_remove}");
+            }
+        }
+    }
+    print("Done cleaning.");
+}
