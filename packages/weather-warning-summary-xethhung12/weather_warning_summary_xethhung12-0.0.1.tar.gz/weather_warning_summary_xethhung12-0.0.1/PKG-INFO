@@ -1,0 +1,21 @@
+Metadata-Version: 2.1
+Name: weather-warning-summary-xethhung12
+Version: 0.0.1
+Summary: A small program to log the weather warning summary to sqlite database
+Project-URL: Homepage, https://github.com/xh-dev-py/weather-warning-summary-xethhung12
+Project-URL: Bug Tracker, https://github.com/xh-dev-py/weather-warning-summary-xethhung12/issues
+Author-email: Xeth Hung <admin@xethh.me>
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.7
+Requires-Dist: requests>=2.31.0
+Description-Content-Type: text/markdown
+
+# build
+```shell
+pip install -r requirements.txt
+rm -rf dist
+python -m build
+python -m twine upload dist/* -u __token__ -p pypi-AgEIcHlwaS5vcmcCJDQyOGRkOWI4LTYxNDYtNGQ2Ni04ZmVlLThiMjZlNzg5MDZhMAACKlszLCIyZTZkMmM3Yy03YTNkLTQwMDktYTM3Ny1hZWJlZWY4ZDQzNTUiXQAABiC96D2pMWOWxyiZXyYQ4wVY7pPmYsr7e7JdKDFt5mU7_Q
+```
