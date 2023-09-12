@@ -1,0 +1,171 @@
+Metadata-Version: 2.1
+Name: stepshifter3
+Version: 0.0.1
+Summary: A general purpose stepshifting algorithm for tabular data, based on BaseEstimator.
+Home-page: https://www.github.com/prio-data/stepshifter3
+Author: Tom Daniel Grande
+Author-email: tomdgrande@gmail.com
+License: MIT
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: geopandas>=0.13.2
+Requires-Dist: ingester3==1.9.1
+Requires-Dist: joblib==1.3.2
+Requires-Dist: lightgbm==4.0.0
+Requires-Dist: matplotlib>=3.7.0
+Requires-Dist: mlflow>=2.6.0
+Requires-Dist: numpy==1.25.0
+Requires-Dist: pandas==1.5.2
+Requires-Dist: seaborn==0.12.2
+Requires-Dist: scikit-learn>=1.3.0
+Requires-Dist: sqlalchemy==1.4.49
+Requires-Dist: views-mapper2
+Requires-Dist: xgboost==1.7.6
+Requires-Dist: viewser==6.0.0
+Requires-Dist: tqdm==4.66.1
+Requires-Dist: seaborn==0.12.2
+
+# StepShifter3 🛠️
+## A general purpose Python package for time series analysis of tabular data
+
+[![Official Website](https://img.shields.io/badge/PRIO_website-www.prio.org-darkgreen
+)](https://www.prio.org)
+[![VIEWS Forecasting Website](https://img.shields.io/badge/VIEWS_Forecasting-www.viewsforecasting.org-purple
+)](https://www.prio.org)
+[![GitHub Repo stars](https://img.shields.io/github/stars/prio.data/stepshifter3?style=social)](https://github.com/prio-data/stepshifter3/stargazers)
+[![Twitter Follow](https://img.shields.io/twitter/follow/PRIOresearch
+)](https://twitter.com/PRIOresearch)
+[![LinkedIn](https://img.shields.io/badge/PRIO_on_linkedin-LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/company/prio/?originalSubdomain=no)
+[![Unit Tests](https://img.shields.io/github/actions/workflow/status/prio-data/stepshifter3/ci.yml?label=unit%20tests)](https://github.com/prio-data/stepshifter3/actions/workflows/ci.yml)
+
+StepShifter3 is a Python package designed to facilitate time series analysis of tabular data. It is developed and maintained by the [Peace Research Institute Oslo (PRIO)](https://www.prio.org) as part of the [VIEWS project](https://www.prio.org/Projects/Project/?x=1749).
+
+
+## 📚 Table of Contents 
+
+1. [🛠 Installation](#installation)
+2. [📝 Usage](#usage)
+3. [🤝 Contributing](#contributing)
+4. [🔖 License](#license)
+5. [❓ FAQs](#faqs)
+6. [🙏 Credits](#credits)
+7. [📚 References](#references)
+## 🛠 Installation
+
+To install StepShifter3, you have two options:
+
+### 🚨 Recommended Branch: `stable`
+
+For a more stable experience, we recommend using the `stable` branch rather than the `main` branch. The `stable` branch contains well-tested and production-ready code, while the `main` branch may contain work-in-progress or experimental features that could be unstable.
+
+#### How to Switch to the `stable` branch:
+
+**Using Git CLI**:
+- For pip installation, clone the `stable` branch directly:
+  ```bash
+  git clone -b stable https://github.com/YourUsername/StepShifter3.git
+  ```
+- If you've already cloned the repository and are on the `main` branch, switch to `stable` with:
+  ```bash
+  git checkout stable
+  ```
+
+**Using GitHub Web Interface**:
+- If you're downloading the code from the GitHub web interface, make sure to switch to the `stable` branch using the branch dropdown before downloading.
+
+1. **Using pip**: 📦
+    ```bash
+    pip install StepShifter3
+    ```
+
+2. **From GitHub**: 🐱‍💻
+    ```bash
+    git clone https://github.com/YourUsername/StepShifter3.git
+    cd StepShifter3
+    python setup.py install
+    ```
+
+> [📖 **More Details**](docs/installation.md)
+
+
+
+
+## 📝 Usage
+The Stepshifter class is the main class of the package. It handles all models which is herited from the sklearn BaseEstimator class. 
+
+### Basic Usage with XGBRegressor and dummy data from synthetic data generator
+```python
+from StepShifter3 import StepShifter, SyntheticDataGenerator
+from xgboost import XGBRegressor 
+
+# generates a pandas multiindex dataframe with dummy data Indexes: month_id, country_id
+df = SyntheticDataGenerator("cm", 516, 60000, 242).generate_dataframe()
+
+#initialize the StepShifter3 object with the relevant parameters:
+# define some XGBRegressor parameters:
+params_xgb_reg = {
+    'objective': 'reg:squarederror',
+    'n_estimators': 500,
+    'max_depth': 3,
+    'learning_rate': 0.1,
+    'n_jobs': -1,
+    'eval_metric': 'rmse',
+    'early_stopping_rounds': 30
+}
+
+stepshifter_config_xgb_reg = { "target_column" : "ln_ged_sb_dep",
+                       "ID_columns" : ["month_id","country_id"],
+                       "time_column" : "month_id",
+                       "run_name" : 'xgb_reg_test_run_0',
+                       "experiment_name" : 'xgb_reg_experiment_0',
+                       "mlflow_tracking_uri" : 'http://127.0.0.1:5000',
+                       "tau^e_0" : 121, # training period start
+                       "tau^e_t" : 141, # training period end
+                       "tau^e_c" : 146, # calibration period end
+                       "tau^e_f" : 468, # forecast period end
+                       "tau_f" : 516,   # Test Forfecast end 
+                       "k": 13,
+                       "S": 5,
+                       "metrics_report": True,
+                       "combine_method": 'mean_of_all',
+                       }
+
+# initialize class
+stepshifter = StepShifter(XGBRegressor(**params_xgb_reg),df, stepshifter_config_xgb_reg)
+
+# fit and predict
+models = stepshifter.fit(stepshifter_config_xgb_reg['tau^e_0'],stepshifter_config_xgb_reg['tau^e_t'])
+predictions = stepshifter.predict(stepshifter_config_xgb_reg['tau^e_t'],stepshifter_config_xgb_reg['tau^e_c'])
+
+# Make model ensamble from training models and predict with a blended mean algorithm:
+
+M_ssa = stepshifter.stepcombine()
+
+X_test = stepshifter.X.loc[slice(136,136),slice(None),:]
+
+# Make predictions for 1 and 3 months ahead of time:
+blended_predictions = stepshifter.predict_ansamble(X_test,steps=[1,3])
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! To contribute:
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+Please read our [Contributing Guidelines](CONTRIBUTING.md) for more information.
+
+## 📚 References
+
+
+1. [Hegre et.al: Partitioning and time-shifting in VIEWS, fatalities002∗†](https://viewsforecasting.org/wp-content/uploads/VIEWS_Documentation_Partitioningandtimeshifting_Fatalities002.pdf)
+## 🔖 License
+
+Distributed under the MIT License. See [`LICENSE`](LICENSE) for more information.
+
+
+
