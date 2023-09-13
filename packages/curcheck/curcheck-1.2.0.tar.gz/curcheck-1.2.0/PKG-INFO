@@ -1,0 +1,70 @@
+Metadata-Version: 2.1
+Name: curcheck
+Version: 1.2.0
+Summary: Library for parsing SPA and MPA sites
+License: MIT
+Author: BulatXam
+Author-email: Khamdbulat@yandex.ru
+Requires-Python: >=3.7
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: aiohttp (>=3.8.3)
+Requires-Dist: lxml (>=4.9.2)
+Requires-Dist: pyppeteer (>=1.0.2)
+Description-Content-Type: text/markdown
+
+# <p align="center"> Curcheck </p>
+
+<p align="center">Library for parsing spa and mpa sites.
+
+___
+
+## Installation
+
+``` python
+pip install curcheck
+```
+
+___
+
+## How use
+
+``` python
+import asyncio
+
+from pyppeteer.page import Page
+
+from curcheck.router import ExecuteRouter
+from curcheck.dispatcher import Dispatcher
+
+
+dispatcher = Dispatcher()
+
+router = ExecuteRouter(
+    domain="https://web.whatsapp.com",
+    is_spa=True,
+    is_login=True
+)
+
+
+@router.page(
+    url="/", 
+)
+async def start(page: Page):
+    await asyncio.sleep(60)
+
+
+async def main():
+    dispatcher.include_router(router)
+    await dispatcher.start(headless=False)
+
+
+asyncio.run(main())
+
+```
+
