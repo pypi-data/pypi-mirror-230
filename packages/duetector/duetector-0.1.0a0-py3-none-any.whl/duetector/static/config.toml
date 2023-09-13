@@ -1,0 +1,106 @@
+# This is a auto generated config file for duetector🔍
+# You can modify this file to change duetector's behavior
+# For more information, please visit https://github.com/hitsz-ids/duetector
+
+# All config keys will be converted to lower case.
+# It's ok to use upper case or camel case for readability.
+
+[filter]
+disabled = false
+include_extension = true
+
+[filter.patternfilter]
+disabled = false
+enable_customize_exclude = true
+re_exclude_fname = [
+    "/proc",
+    "/sys",
+    "/lib",
+    "/dev",
+    "/run",
+    "/usr/lib",
+    "/etc/ld.so.cache",
+]
+re_exclude_comm = []
+exclude_pid = []
+exclude_uid = [
+    0,
+]
+exclude_gid = [
+    0,
+]
+
+[tracer]
+disabled = false
+include_extension = true
+
+[tracer.clonetracer]
+disabled = false
+attach_event = "__x64_sys_clone"
+poll_timeout = 10
+
+[tracer.tcpconnecttracer]
+disabled = false
+poll_timeout = 10
+
+[tracer.unametracer]
+disabled = false
+enable_cache = true
+
+[tracer.opentracer]
+disabled = false
+attach_event = "do_sys_openat2"
+poll_timeout = 10
+
+[collector]
+disabled = false
+include_extension = true
+
+[collector.dbcollector]
+disabled = false
+statis_id = ""
+
+[collector.dbcollector.backend_args]
+max_workers = 10
+
+[collector.dbcollector.db]
+table_prefix = "duetector_tracking"
+
+[collector.dbcollector.db.engine]
+url = "sqlite:///duetector-dbcollector.sqlite3"
+
+[collector.dequecollector]
+disabled = true
+statis_id = ""
+maxlen = 1024
+
+[collector.dequecollector.backend_args]
+max_workers = 10
+
+[monitor.bcc]
+disabled = false
+auto_init = true
+continue_on_exception = true
+
+[monitor.bcc.backend_args]
+max_workers = 10
+
+[monitor.bcc.poller]
+interval_ms = 500
+
+[monitor.sh]
+disabled = false
+auto_init = true
+timeout = 5
+
+[monitor.sh.backend_args]
+max_workers = 10
+
+[monitor.sh.poller]
+interval_ms = 500
+
+[db_analyzer.db]
+table_prefix = "duetector_tracking"
+
+[db_analyzer.db.engine]
+url = "sqlite:///duetector-dbcollector.sqlite3"
