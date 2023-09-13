@@ -1,0 +1,2 @@
+class PiplineTestError(Exception):
+    pass
