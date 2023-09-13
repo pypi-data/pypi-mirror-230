@@ -1,0 +1,4 @@
+
+
+class ArikedbClientError(Exception):
+    pass
