@@ -1,0 +1,1 @@
+from abaqus_mtx_parser import parse_mtx
