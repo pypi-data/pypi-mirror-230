@@ -1,0 +1,79 @@
+Metadata-Version: 2.1
+Name: coopgame
+Version: 1.16
+Summary: Tooling and templates used for building games
+Home-page: https://github.com/tylertjburns/coopgame
+Author: tburns
+Author-email: tyler.tj.burns@gmail.com
+License: MIT
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Intended Audience :: Developers
+Requires-Python: >3.5
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: coopgraph (==1.11)
+Requires-Dist: coopstructs (==1.7)
+Requires-Dist: cooptools (==1.18)
+Requires-Dist: coopui (==0.18)
+Requires-Dist: numpy (==1.24.2)
+Requires-Dist: pandas (==2.0.3)
+Requires-Dist: pygame (==2.2.0)
+Requires-Dist: pyquaternion (==0.9.9)
+Requires-Dist: python-dateutil (==2.8.2)
+Requires-Dist: pytz (==2023.3)
+Requires-Dist: scipy (==1.10.1)
+Requires-Dist: shapely (==2.0.1)
+Requires-Dist: six (==1.16.0)
+Requires-Dist: typing-extensions (==4.5.0)
+Requires-Dist: tzdata (==2023.3)
+
+# coopgame
+Library of tooling and templates used for building games
+
+Example:
+```
+from coopgame.gameTemplate import GameTemplate
+from coopstructs.vectors import Vector2
+import pygame
+from coopgame.colors import Color
+from coopgame.sprites import RectangleSprite
+
+class MyGame(GameTemplate):
+    def __init__(self):
+        super().__init__()
+
+        self.sprites = pygame.sprite.Group()
+
+    def draw(self, frames):
+        for entity in self.sprites:
+            self.screen.blit(entity.surf, entity.rect)
+
+    def handle_hover_over(self, mouse_pos_as_vector: Vector2):
+        pass
+
+    def handle_left_click(self):
+        self.sprites.add(RectangleSprite(self.mouse_pos_as_vector(), Color.BLUE, 10, 10))
+
+    def handle_right_click(self):
+        self.sprites.add(RectangleSprite(self.mouse_pos_as_vector(), Color.RED, 20, 30))
+
+    def handle_key_pressed(self, pressed_key):
+        if pressed_key == pygame.K_r:
+            self.sprites.empty()
+
+if __name__ == "__main__":
+    import logging
+    import loggingConfig
+
+    loggingConfig.initLogging(loggingLvl=logging.DEBUG)
+    game = MyGame()
+    game.main()
+```
+
