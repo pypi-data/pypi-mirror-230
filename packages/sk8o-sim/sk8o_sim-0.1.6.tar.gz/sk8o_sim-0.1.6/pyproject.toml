@@ -1,0 +1,28 @@
+[project]
+name = "sk8o_sim"
+version = "0.1.6"
+authors = [
+  { name="Dominik Hodan", email="hodandom@fel.cvut.cz" },
+]
+description = "A set of two simulation environments for robot SK8O developed at FEE CTU in Prague."
+dependencies = [
+    "control>=0.9",
+    "numpy>=1.25",
+    "omegaconf>=2.3.0",
+    "pygame",
+    "sympy",
+    "mujoco>=2.3.5",
+    "mujoco-python-viewer>=0.1.0"
+]
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+packages=['sk8o_sim']
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
