@@ -1,0 +1,86 @@
+Metadata-Version: 2.1
+Name: modisconverter
+Version: 0.2.0
+Summary: A library for converting MODIS data files
+Home-page: https://github.com/nasa/modisconverter
+Keywords: MODIS,Converter,HDF4,NetCDF4
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Intended Audience :: Science/Research
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.9, <4
+Description-Content-Type: text/markdown
+Requires-Dist: boto3 ==1.18.40
+Requires-Dist: GDAL
+Requires-Dist: pyhdf ==0.10.5
+Requires-Dist: netCDF4 ==1.6.3
+Requires-Dist: numpy ==1.24.2
+Requires-Dist: pandas ==1.5.3
+Requires-Dist: rasterio[s3] ==1.3.6
+Provides-Extra: dev
+Requires-Dist: ipython ==8.11.0 ; extra == 'dev'
+Requires-Dist: pytest ==7.2.2 ; extra == 'dev'
+Requires-Dist: pytest-cov ==4.0.0 ; extra == 'dev'
+Requires-Dist: nose ==1.3.7 ; extra == 'dev'
+Requires-Dist: requests ==2.28.2 ; extra == 'dev'
+Requires-Dist: setuptools >=68.1.0 ; extra == 'dev'
+Requires-Dist: wheel >=0.41.1 ; extra == 'dev'
+Requires-Dist: twine >=4.0.2 ; extra == 'dev'
+
+# modisconverter
+
+`modisconverter` is a Python package that converts MODIS data from HDF4 to NetCDF4 file format.
+
+## Prequisites
+
+- Python >= 3.9
+- GDAL >= 3.1.2, with supported file formats `HDF4` and `netCDF`
+
+## Installation
+
+This package is available on [PyPI](https://pypi.org/project/modisconverter/) and can be installed with [pip](https://pip.pypa.io/en/stable/user_guide/).
+
+Package install depends on having a Python `GDAL` package that matches the version of the underlying GDAL installation. It also requires the `rasterio` package to be built from source.
+
+```bash
+$ pip install GDAL==<installed-version-number> --no-binary rasterio modisconverter
+```
+
+e.g.
+
+```bash
+$ pip install GDAL==3.6.3 --no-binary rasterio modisconverter
+```
+
+You can find your installed GDAL version by using the `gdal-config` binary:
+
+```bash
+$ gdal-config --version
+```
+
+## Environment Considerations
+
+It's recommended to install the package in a [virtual environment](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/). Otherwise, if your machine can run Docker containers, installing the package in one provides natural isolation.
+
+For potential Docker images, you could consider using one of the [official GDAL images](https://hub.docker.com/r/osgeo/gdal/tags) from DockerHub, which contain a GDAL and Python installation.  For instance, the Ubuntu-based image `ghcr.io/osgeo/gdal:ubuntu-full-3.6.3`.  Note that the `pip` package manager may not be installed in such images.
+
+## Usage
+
+```python
+from modisconverter import convert_file
+
+src = 'example-modis.hdf'
+dst = 'example-modis.nc'
+convert_file(src, dst)
+```
+
+## Documentation
+
+Listed below are various documents pertaining to this project.
+
+- [Changelog](CHANGELOG.md) - Information on releases.
+- [Usage](docs/USAGE.md) - Detailed usage of the library.
