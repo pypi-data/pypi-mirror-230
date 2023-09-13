@@ -1,0 +1,30 @@
+name: Python Device Manager CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        # Test with versions of python installed on common devices
+        python-version: [3.6.9, 3.7.3, 3.x]
+    env:
+      PICTORUS_ENV: ci
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install flit
+        run: pip install flit==3.8.0
+      - name: Install test deps
+        run: python3 -m flit install --deps=develop
+      - name: Run tests
+        run: pytest
