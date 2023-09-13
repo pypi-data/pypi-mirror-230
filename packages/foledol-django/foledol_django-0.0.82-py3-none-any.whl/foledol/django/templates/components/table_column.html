@@ -1,0 +1,9 @@
+{% if type == 'date' %}
+{{ value|date:'d/m/Y' }}
+{% elif type == 'time' %}
+{{ value|time:'H:i' }}
+{% else %}
+    {% if not value is None %}
+    {{ value }}
+    {% endif %}
+{% endif %}
