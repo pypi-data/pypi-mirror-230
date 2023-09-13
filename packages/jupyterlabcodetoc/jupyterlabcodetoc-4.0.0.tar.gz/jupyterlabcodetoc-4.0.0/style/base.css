@@ -1,0 +1,284 @@
+.jpcodetoc-TableOfContents-placeholder {
+  text-align: center;
+}
+
+.jpcodetoc-TableOfContents-placeholderContent {
+  color: var(--jp-content-font-color2);
+  padding: 40px 15px;
+}
+
+.jpcodetoc-TableOfContents-content {
+  flex: 1 1 auto;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  overflow: auto;
+  background-color: var(--jp-layout-color1);
+}
+
+.jpcodetoc-TableOfContents-content li {
+  display: flex;
+  flex-direction: row;
+  padding: 4px 12px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.jpcodetoc-TableOfContents {
+  display: flex;
+  flex-direction: column;
+  background: var(--jp-layout-color1);
+  color: var(--jp-ui-font-color1);
+  font-size: var(--jp-ui-font-size1);
+  height: 100%;
+}
+
+.jpcodetoc-TableOfContents .jpcodetoc-stack-panel-header {
+  border-bottom: var(--jp-border-width) solid var(--jp-border-color2);
+  flex: 0 0 auto;
+  font-size: var(--jp-ui-font-size0);
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin: 0;
+  padding: 8px 12px;
+  text-transform: uppercase;
+}
+
+.jpcodetoc-toc-toolbar-icon,
+.jpcodetoc-toc-toolbar-icon-selected {
+  float: left;
+  padding: 0;
+  margin: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  background-size: 100%;
+  background-position: center;
+  height: 24px;
+  width: 24px;
+  border-radius: 2px;
+}
+
+[data-jp-theme-light='true'] .jpcodetoc-toc-toolbar-icon:hover {
+  background-color: var(--jp-input-background);
+}
+
+[data-jp-theme-light='false'] .jpcodetoc-toc-toolbar-icon:hover {
+  background-color: #3a3a3a;
+}
+
+[data-jp-theme-light='true'] .jpcodetoc-toc-toolbar-icon-selected {
+  background-color: var(--jp-layout-color2);
+}
+
+[data-jp-theme-light='false'] .jpcodetoc-toc-toolbar-icon-selected {
+  background-color: #565656;
+}
+
+.jpcodetoc-toc-toolbar {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  user-select: none;
+  border-bottom: var(--jp-border-width) solid var(--jp-border-color2);
+  height: 36px;
+  display: flex;
+  align-items: center;
+}
+
+.jpcodetoc-toc-entry-holder {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.jpcodetoc-toc-Collapser-child {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  position: absolute;
+  background: transparent;
+  top: 0;
+  bottom: 0;
+}
+
+.jpcodetoc-toc-Collapser-child:hover {
+  box-shadow: var(--jp-elevation-z2);
+  background: var(--jp-brand-color1);
+  opacity: var(--jp-cell-collapser-not-active-hover-opacity);
+}
+
+.jpcodetoc-toc-active-cell .jpcodetoc-toc-Collapser-child {
+  background: var(--jp-brand-color1);
+}
+
+.jpcodetoc-toc-entry-holder:hover .jpcodetoc-toc-Collapser-child {
+  box-shadow: var(--jp-elevation-z2);
+  background: var(--jp-brand-color1);
+  opacity: var(--jp-cell-collapser-not-active-hover-opacity);
+}
+
+.jpcodetoc-toc-active-cell .jpcodetoc-toc-Collapser-child:hover {
+  background: var(--jp-brand-color0);
+  opacity: 1;
+}
+
+.jpcodetoc-toc-active-cell:hover .jpcodetoc-toc-Collapser-child {
+  background: var(--jp-brand-color0);
+  opacity: 1;
+}
+
+.jpcodetoc-toc-tag-dropdown {
+  display: flex;
+  width: 100%;
+}
+
+.jpcodetoc-toc-tag-dropdown-button {
+  margin-left: auto;
+}
+
+.jpcodetoc-toc-tags-container {
+  padding: 4px;
+  width: 100%;
+  border-bottom: var(--jp-border-width) solid var(--jp-border-color2);
+}
+
+.jpcodetoc-toc-filter-button {
+  background-color: var(--jp-layout-color1);
+  border: solid 1px var(--jp-layout-color4);
+  border-radius: 3px;
+  width: fit-content;
+  padding: 5px;
+  padding-left: 6px;
+  padding-right: 6px;
+  margin-right: 17px;
+  color: var(--jp-layout-color5);
+  float: right;
+  font-size: 12px;
+  user-select: none;
+  margin-bottom: 13px;
+}
+
+.jpcodetoc-toc-filter-button:hover {
+  background-color: var(--jp-layout-color4);
+  border: solid 1px var(--jp-layout-color4);
+  color: var(--jp-layout-color1);
+}
+
+.jpcodetoc-toc-filter-button-na {
+  background-color: var(--jp-layout-color1);
+  border: solid 1px var(--jp-ui-font-color3);
+  border-radius: 3px;
+  width: fit-content;
+  padding: 5px;
+  padding-left: 6px;
+  padding-right: 6px;
+  margin-right: 17px;
+  color: var(--jp-ui-font-color3);
+  float: right;
+  font-size: 12px;
+  user-select: none;
+  margin-bottom: 13px;
+}
+
+.jpcodetoc-toc-no-tags-div {
+  font-size: 12px;
+  padding: 3px;
+  padding-bottom: 6px;
+  margin: auto;
+  color: var(--jp-layout-color4);
+}
+
+.jpcodetoc-toc-cell-item {
+  padding-left: 10px;
+  font-size: var(--jp-ui-font-size1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.jpcodetoc-markdown-cell {
+  font-size: var(--jp-ui-font-size0);
+}
+
+/* styles for tags */
+
+.jpcodetoc-toc-tag-label {
+  font-size: 11px;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  display: inline-block;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding-top: 0;
+  margin-top: -1px;
+  margin-bottom: 0;
+  user-select: none;
+}
+
+.jpcodetoc-toc-tag {
+  box-sizing: border-box;
+  height: 24px;
+  border-radius: 20px;
+  padding: 10px;
+  padding-bottom: 4px;
+  padding-top: 5px;
+  margin: 3px;
+  width: fit-content;
+  max-width: calc(100% - 25px);
+}
+
+.jpcodetoc-toc-selected-tag {
+  color: white;
+  background-color: #2196f3;
+  outline: none;
+}
+
+.jpcodetoc-toc-unselected-tag {
+  background-color: var(--jp-layout-color2);
+  outline: none;
+}
+
+.jpcodetoc-toc-tag-holder {
+  display: flex;
+  flex-wrap: wrap;
+  height: fit-content;
+  padding: 6px 20px 6px 9px;
+}
+
+.jpcodetoc-toc-Ellipses {
+  height: 16px;
+  margin-left: auto;
+}
+
+.jpcodetoc-toc-Ellipses:hover {
+  border: 1px solid var(--jp-border-color1);
+  border-radius: 50%;
+  background-color: var(--jp-layout-color0);
+}
+
+.jpcodetoc-toc-level-size-2 {
+  margin-left: 16px;
+}
+
+.jpcodetoc-toc-level-size-3 {
+  margin-left: 36px;
+}
+
+.jpcodetoc-toc-level-size-4 {
+  margin-left: 56px;
+}
+
+.jpcodetoc-toc-level-size-5 {
+  margin-left: 76px;
+}
