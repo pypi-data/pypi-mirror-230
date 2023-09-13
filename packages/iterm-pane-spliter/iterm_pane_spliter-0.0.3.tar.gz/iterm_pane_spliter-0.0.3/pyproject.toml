@@ -1,0 +1,29 @@
+[project]
+name =  "iterm-pane-spliter"
+authors = [
+    {name = "Raz Luvaton"},
+]
+description = "Split iTerm2 panes from the command line"
+readme = "README.md"
+classifiers = [
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11"
+]
+dependencies = [
+    'iterm2 ~= 2.7',
+]
+requires-python = ">=3.8.1"
+dynamic = ["version"]
+
+[project.urls]
+Documentation = "https://github.com/rluvaton/iterm-pane-spliter/tree/main/README.md"
+Source = "https://github.com/rluvaton/iterm-pane-spliter"
+Tracker = "https://github.com/rluvaton/iterm-pane-spliter/issues"
+
+[project.scripts]
+iterm-pane-spliter = "iterm_pane_spliter.__main__:cli"
