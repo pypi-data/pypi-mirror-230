@@ -1,0 +1,174 @@
+Metadata-Version: 2.1
+Name: salt-nornir
+Version: 0.20.4
+Summary: Salt-Nornir Proxy Minion SaltStack Modules
+Home-page: https://github.com/dmulyalin/salt-nornir
+License: MIT
+Keywords: Nornir,SaltStack,salt-extension
+Author: Denis Mulyalin
+Author-email: d.mulyalin@gmail.com
+Maintainer: Denis Mulyalin
+Maintainer-email: d.mulyalin@gmail.com
+Requires-Python: >=3.7,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Topic :: Utilities
+Provides-Extra: dataprocessor
+Provides-Extra: docs
+Provides-Extra: gnmi
+Provides-Extra: napalm
+Provides-Extra: netbox
+Provides-Extra: netconf
+Provides-Extra: netmiko
+Provides-Extra: prodmaxmaster
+Provides-Extra: prodmaxminion
+Provides-Extra: prodminmaster
+Provides-Extra: prodminminion
+Provides-Extra: pyats
+Provides-Extra: restconf
+Provides-Extra: robot
+Provides-Extra: scrapli
+Requires-Dist: N2G (>=0.3.0,<0.4.0) ; extra == "prodmaxmaster"
+Requires-Dist: Sphinx (==4.3.0) ; extra == "docs"
+Requires-Dist: cerberus (==1.3.4) ; extra == "prodmaxminion" or extra == "dataprocessor"
+Requires-Dist: diskcache (==5.6.1) ; extra == "prodmaxmaster" or extra == "prodmaxminion" or extra == "netbox"
+Requires-Dist: dnspython (==2.4.2) ; (python_version >= "3.8" and python_version < "4.0") and (extra == "prodmaxminion")
+Requires-Dist: genie[full] (==23.7) ; (sys_platform != "win32") and (extra == "prodmaxminion" or extra == "pyats")
+Requires-Dist: jinja2 (==3.1.2) ; extra == "prodminminion" or extra == "prodmaxminion"
+Requires-Dist: jmespath (==1.0.1) ; extra == "prodmaxminion" or extra == "dataprocessor"
+Requires-Dist: lxml (==4.9.3) ; extra == "dataprocessor"
+Requires-Dist: napalm (==4.1.0) ; extra == "prodmaxminion" or extra == "napalm"
+Requires-Dist: ncclient (==0.6.13) ; extra == "prodminminion" or extra == "prodmaxminion" or extra == "netconf"
+Requires-Dist: netmiko (==4.1.2) ; extra == "prodminminion" or extra == "prodmaxminion" or extra == "netmiko"
+Requires-Dist: nornir (==3.3.0)
+Requires-Dist: nornir-napalm (==0.4.0) ; extra == "prodmaxminion" or extra == "napalm"
+Requires-Dist: nornir-netmiko (==1.0.0) ; extra == "prodminminion" or extra == "prodmaxminion" or extra == "netmiko"
+Requires-Dist: nornir-scrapli (==2023.7.30) ; extra == "prodmaxminion"
+Requires-Dist: nornir_salt (>=0.20.0,<0.21.0)
+Requires-Dist: ntc-templates (>=3.0.0,<4.0.0) ; extra == "prodmaxminion" or extra == "dataprocessor"
+Requires-Dist: paramiko (==2.12.0) ; extra == "prodminminion" or extra == "prodmaxminion"
+Requires-Dist: picle (>=0.2.0,<0.3.0) ; extra == "prodmaxmaster"
+Requires-Dist: psutil (>=5.8,<6)
+Requires-Dist: puresnmp[crypto] (==2.0.0) ; extra == "prodmaxminion"
+Requires-Dist: pyats[full] (==23.7) ; (sys_platform != "win32") and (extra == "prodmaxminion" or extra == "pyats")
+Requires-Dist: pydantic (>=1.10.2,<=2.3.0)
+Requires-Dist: pygnmi (==0.8.12) ; extra == "prodmaxminion" or extra == "gnmi"
+Requires-Dist: pynetbox (==7.0.1) ; extra == "prodmaxmaster" or extra == "prodmaxminion" or extra == "netbox"
+Requires-Dist: pythonping (==1.1.4) ; extra == "prodmaxminion"
+Requires-Dist: pyyaml (==6.0.1) ; extra == "prodmaxminion" or extra == "dataprocessor"
+Requires-Dist: readthedocs-sphinx-search (==0.1.1) ; extra == "docs"
+Requires-Dist: requests (==2.25.1) ; extra == "prodminminion" or extra == "prodmaxminion" or extra == "restconf"
+Requires-Dist: rich (==13.5.2) ; extra == "prodminmaster" or extra == "prodmaxmaster"
+Requires-Dist: robotframework (==6.1.1) ; extra == "prodmaxmaster"
+Requires-Dist: scrapli (==2023.7.30) ; extra == "prodmaxminion" or extra == "scrapli"
+Requires-Dist: scrapli-community (==2023.7.30) ; extra == "prodmaxminion" or extra == "scrapli"
+Requires-Dist: scrapli-netconf (==2023.7.30) ; extra == "prodmaxminion" or extra == "netconf"
+Requires-Dist: sphinx_rtd_theme (==1.0.0) ; extra == "docs"
+Requires-Dist: sphinxcontrib-applehelp (==1.0.1) ; extra == "docs"
+Requires-Dist: sphinxcontrib-devhelp (==1.0.1) ; extra == "docs"
+Requires-Dist: sphinxcontrib-htmlhelp (==2.0.0) ; extra == "docs"
+Requires-Dist: sphinxcontrib-jsmath (==1.0.1) ; extra == "docs"
+Requires-Dist: sphinxcontrib-napoleon (==0.7) ; extra == "docs"
+Requires-Dist: sphinxcontrib-qthelp (==1.0.2) ; extra == "docs"
+Requires-Dist: sphinxcontrib-serializinghtml (==1.1.5) ; extra == "docs"
+Requires-Dist: sphinxcontrib-spelling (==7.2.1) ; extra == "docs"
+Requires-Dist: tabulate (==0.9.0) ; extra == "prodminmaster" or extra == "prodmaxmaster" or extra == "prodminminion" or extra == "prodmaxminion" or extra == "dataprocessor"
+Requires-Dist: textfsm (==1.1.2) ; extra == "prodminminion" or extra == "prodmaxminion"
+Requires-Dist: ttp (>=0.9.0,<0.10.0) ; extra == "prodmaxmaster" or extra == "prodminminion" or extra == "prodmaxminion" or extra == "dataprocessor"
+Requires-Dist: ttp-templates (>=0.3.0,<0.4.0) ; extra == "prodmaxmaster" or extra == "prodminminion" or extra == "prodmaxminion" or extra == "dataprocessor"
+Requires-Dist: xmltodict (==0.13.0) ; extra == "prodminminion" or extra == "prodmaxminion" or extra == "dataprocessor"
+Project-URL: Documentation, https://salt-nornir.readthedocs.io/
+Project-URL: Repository, https://github.com/dmulyalin/salt-nornir
+Description-Content-Type: text/markdown
+
+[![Downloads][pepy-downloads-badge]][pepy-downloads-link]
+[![PyPI][pypi-latest-release-badge]][pypi-latest-release-link]
+[![PyPI versions][pypi-versions-badge]][pypi-versions-link]
+[![GitHub Discussion][github-discussions-badge]][github-discussions-link]
+[![Code style: black][black-badge]][black-link]
+[![Documentation status][readthedocs-badge]][readthedocs-link]
+
+![logo][logo]
+
+# Salt Nornir
+
+Nornir centered SaltStack modules:
+
+- salt-nornir proxy minion module
+- salt-nornir execution module
+- salt-nornir state module
+- salt-nornir runner module
+- salt-nornir Netbox pillar module
+
+Nornir Proxy Minion helps to manage network devices at scale, refer to
+[documentation](https://salt-nornir.readthedocs.io/en/latest/index.html)
+for details.
+
+# Architecture
+
+Python and Plugins.
+
+![architecture][architecture]
+
+Nornir Proxy acts as a bridge between SaltStack and a wide set of open
+source network automation libraries.
+
+# Features
+
+- **CLI** management of devices over SSH or Telnet using Netmiko, Scrapli, Cisco Genie/PyATS or NAPALM
+- **NETCONF** management of network devices using Ncclient or Scrapli-Netconf
+- **HTTP API**/**RESTCONF** interact with devices using Python requests library
+- **gNMI** device management supported thanks to integration with PyGNMI library
+- **SNMPv1/2/3** support to manage device using puresnmp library
+- **Data Processing** using NTC-Templates, TTP, Jmespath, lxml, xmltodict libraries
+- **Network Testing** of state and configuration via SSH, Netconf, gNMI, HTTP or SNMP
+- **Python** is a first class citizen - write plugins, modules, scripts, codify work flows
+- **API** integrate with anything using SaltStack and Nornir Python API or SaltStack HTTP API
+- **Netbox** Source of Truth inventory integration for infrastructure management
+
+# Communication and discussion
+
+Network To Code [salt-nornir Slack Channel](https://app.slack.com/client/T09LQ7E9E/C02MPR34DGF)
+
+Open an [issue](https://github.com/dmulyalin/salt-nornir/issues)
+
+Start a [discussion](https://github.com/dmulyalin/salt-nornir/discussions)
+
+# Contributing
+
+Issues, bug reports and feature requests are welcomed. Feedback is a gift and we truly value it.
+
+# Developers Motto
+
+- if it is not in the docs it does not exist
+- if it is not tested it is broken
+- done is better than perfect
+- keep it stupid simple
+
+[logo]:                        docs/source/_images/SaltNornirLogo.png "salt nornir logo"
+[architecture]:                docs/source/_images/Nornir_proxy_minion_architecture_v2.png "salt nornir architecture"
+[pepy-downloads-badge]:        https://pepy.tech/badge/salt-nornir
+[pepy-downloads-link]:         https://pepy.tech/project/salt-nornir
+[pypi-versions-badge]:         https://img.shields.io/pypi/pyversions/salt-nornir.svg
+[pypi-versions-link]:          https://pypi.python.org/pypi/salt-nornir/
+[readthedocs-badge]:           https://readthedocs.org/projects/salt-nornir/badge/?version=latest
+[readthedocs-link]:            http://salt-nornir.readthedocs.io/?badge=latest
+[pypi-latest-release-badge]:   https://img.shields.io/pypi/v/salt-nornir.svg
+[pypi-latest-release-link]:    https://pypi.python.org/pypi/salt-nornir
+[github-discussions-link]:     https://github.com/dmulyalin/salt-nornir/discussions
+[github-discussions-badge]:    https://img.shields.io/static/v1?label=Discussions&message=Ask&color=blue&logo=github
+[black-badge]:                 https://img.shields.io/badge/code%20style-black-000000.svg
+[black-link]:                  https://github.com/psf/black
+[github-tests-badge]:          https://github.com/dmulyalin/salt-nornir/actions/workflows/main.yml/badge.svg
+[github-tests-link]:           https://github.com/dmulyalin/salt-nornir/actions
+
