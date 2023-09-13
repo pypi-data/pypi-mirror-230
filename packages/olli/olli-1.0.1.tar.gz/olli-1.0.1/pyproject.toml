@@ -1,0 +1,67 @@
+[tool.poetry]
+name = "olli"
+version = "1.0.1"
+description = "Olli searches your Loki logs and relays matching terms to Discord."
+authors = ["Joe Banks <joseph@josephbanks.me>", "Chris Lovering <chris.lovering.95@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+# Links
+homepage = "https://python-discord.github.io/olli/"
+repository = "https://github.com/python-discord/olli"
+documentation = "https://python-discord.github.io/olli/"
+
+keywords = ["loki", "discord", "logs", "observability"]
+
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators"
+]
+
+[tool.poetry.dependencies]
+python = "3.11.*"
+
+httpx = "0.25.0"
+loguru = "0.7.2"
+pydantic = "2.0.3"
+pydantic-settings = "2.0.3"
+schedule = "1.2.0"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "3.4.0"
+ruff = "0.0.288"
+taskipy = "1.12.0"
+
+[tool.poetry.scripts]
+olli = "olli.__main__:start"
+
+[tool.taskipy.tasks]
+lint = "pre-commit run --all-files"
+precommit = "pre-commit install"
+olli = "python -m olli"
+
+[tool.ruff]
+target-version = "py311"
+extend-exclude = [".cache"]
+ignore = [
+    "ANN002", "ANN003", "ANN101", "ANN102", "ANN401",
+    "ARG003",
+    "C901",
+    "D100", "D104", "D105", "D107", "D203", "D212", "D214", "D215", "D416",
+    "EM101",
+    "PLR",
+    "TRY003",
+]
+line-length = 120
+select = ["ALL"]
+
+[tool.ruff.isort]
+order-by-type = false
+case-sensitive = true
+combine-as-imports = true
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
