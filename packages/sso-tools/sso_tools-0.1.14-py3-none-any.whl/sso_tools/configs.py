@@ -1,0 +1,2 @@
+# JWT 알고리즘
+JWT_ALGORITHMS = "HS256"
