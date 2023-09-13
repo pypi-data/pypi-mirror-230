@@ -1,0 +1,12 @@
+title: GoDaddy
+description: A whois rule for GoDaddy
+contact:
+  provider: GoDaddy
+  address: https://supportcenter.godaddy.com/AbuseReport
+detection:
+  selection:
+    rawText|contains:
+      - abuse@godaddy.com
+  condition: selection
+logsource:
+  product: abuse_whois

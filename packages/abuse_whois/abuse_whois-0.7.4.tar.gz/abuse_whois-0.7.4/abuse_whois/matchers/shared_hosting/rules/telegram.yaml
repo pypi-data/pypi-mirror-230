@@ -1,0 +1,13 @@
+title: Telegram
+description: A shard hosting rule for Telegram
+contact:
+  provider: Telegram
+  address: abuse@telegram.org
+detection:
+  selection:
+    domain|endswith:
+      - .telegram.me
+      - telegram.me
+  condition: selection
+logsource:
+  product: abuse_whois

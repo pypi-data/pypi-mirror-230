@@ -1,0 +1,12 @@
+title: name.com
+description: A whois rule for name.com
+contact:
+  provider: name.com
+  address: https://www.name.com/abuse
+detection:
+  selection:
+    rawText|contains:
+      - abuse@name.com
+  condition: selection
+logsource:
+  product: abuse_whois

@@ -1,0 +1,12 @@
+title: Replit
+description: A shard hosting rule for Replit
+contact:
+  provider: Replit
+  address: contact@repl.it
+detection:
+  selection:
+    domain|endswith:
+      - .repl.co
+  condition: selection
+logsource:
+  product: abuse_whois

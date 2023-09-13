@@ -1,0 +1,15 @@
+title: Bitly
+description: A shard hosting rule for Bitly
+contact:
+  provider: Bitly
+  address: https://bitly.is/reporting-abuse
+detection:
+  selection:
+    domain|endswith:
+      - .bit.ly
+      - .bitly.com
+      - bit.ly
+      - bitly.com
+  condition: selection
+logsource:
+  product: abuse_whois

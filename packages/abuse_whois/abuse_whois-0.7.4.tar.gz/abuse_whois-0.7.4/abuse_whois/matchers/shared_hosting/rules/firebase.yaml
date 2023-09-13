@@ -1,0 +1,14 @@
+title: Firebase
+description: A shard hosting rule for Firebase
+contact:
+  provider: Firebase
+  address: firebase-removals@google.com
+detection:
+  selection:
+    domain|endswith: # ref. https://firebase.google.com/docs/hosting
+      - .web.app
+      - .firebaseapp.com
+      - .firebasestorage.googleapis.com
+  condition: selection
+logsource:
+  product: abuse_whois

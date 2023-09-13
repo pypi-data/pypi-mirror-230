@@ -1,0 +1,12 @@
+title: Fran Tech
+description: A whois rule for Franc Tech
+contact:
+  provider: Fran Tech
+  address: https://my.frantech.ca/submitticket.php?step=2&deptid=21
+detection:
+  selection:
+    rawText|contains:
+      - fdias@frantech.ca
+  condition: selection
+logsource:
+  product: abuse_whois

@@ -1,0 +1,13 @@
+title: DigitalOcean
+description: A whois rule for DigitalOcean
+contact:
+  provider: DigitalOcean
+  address: https://www.digitalocean.com/company/contact/#abuse
+detection:
+  selection:
+    rawText|contains:
+      - "descr:          Digital Ocean, Inc."
+      - abuse@digitalocean.com
+  condition: selection
+logsource:
+  product: abuse_whois

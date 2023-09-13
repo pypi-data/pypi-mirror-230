@@ -1,0 +1,12 @@
+title: Square
+description: A shard hosting rule for Square
+contact:
+  provider: Square
+  address: spoof@squareup.com
+detection:
+  selection:
+    domain|endswith:
+      - .square.site
+  condition: selection
+logsource:
+  product: abuse_whois
