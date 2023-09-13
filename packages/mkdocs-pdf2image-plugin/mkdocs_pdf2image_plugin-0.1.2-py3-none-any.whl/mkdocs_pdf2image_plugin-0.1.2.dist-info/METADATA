@@ -1,0 +1,66 @@
+Metadata-Version: 2.1
+Name: mkdocs-pdf2image-plugin
+Version: 0.1.2
+Summary: An MkDocs plugin to convert the first page of a pdf to an image
+Home-page: https://github.com/supcik/mkdocs-pdf2image-plugin
+License: Apache-2
+Keywords: mkdocs,python,markdown,wiki
+Author: Jacques Supcik
+Author-email: jacques.supcik@hefr.ch
+Requires-Python: >=3.10,<4.0
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Information Technology
+Classifier: License :: Other/Proprietary License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Provides-Extra: test
+Requires-Dist: mkdocs (>=1.5.2,<2.0.0)
+Requires-Dist: mkdocs-material (>=9.3.1,<10.0.0) ; extra == "test"
+Requires-Dist: pdf2image (>=1.16.3,<2.0.0)
+Project-URL: Repository, https://github.com/supcik/mkdocs-pdf2image-plugin
+Description-Content-Type: text/markdown
+
+# mkdocs-pdf2image-plugin
+
+This plugin generates images from the first page of PDF files. It is particularly useful when you want
+to include PDF presentations in your documentation.
+
+## Installation
+
+Install the package with pip:
+
+```bash
+pip install mkdocs-pdf2image-plugin
+```
+
+Note that this plugin uses Edouard Belval's [pdf2image](https://github.com/Belval/pdf2image) package, which requires
+[Poppler](https://poppler.freedesktop.org/) to be installed on your system. Read the [installation instructions](https://github.com/Belval/pdf2image/blob/master/README.md) on the pdf2image repository for more information.
+
+Activate the plugin in `mkdocs.yml`:
+
+```yaml
+plugins:
+  - search
+  - pdf2image:
+        src:
+            - path/to/*.pdf
+            - other/**/file.pdf
+        dpi: 300
+        format: png
+```
+
+## Configuration
+
+The plugin supports the following configuration options:
+
+| Option      | Description                                                                                                         |
+|-------------|---------------------------------------------------------------------------------------------------------------------|
+| `src`       | A **list** of path names to convert (see [documentation](https://docs.python.org/3/library/glob.html) for details). |
+| `dpi`       | Image quality in DPI (default 200).                                                                                 |
+| `fmt`       | Output image format. Valid options are `jpg` and `png`. Defaults to `jpg`.                                          |
+| `size`      | Size of the generated image, defaults to `(None, None)` or `!!python/tuple [NULL, NULL]` in _YAML_.                 |
+| `extension` | Output file extension, defaults to `fmt` option.                                                                    |
+| `force`     | Force image creation, defaults to `false`. It `true`, the generation is done even if the image already exist.       |
+
