@@ -1,0 +1,141 @@
+# PIPELINE DEFINITION
+# Name: gpt-tokenize
+# Inputs:
+#    encoding_type: str [Default: 'gpt2']
+#    input_data: system.Artifact
+#    train_size: float [Default: 0.9]
+# Outputs:
+#    train_dataset: system.Dataset
+#    val_dataset: system.Dataset
+components:
+  comp-gpt-tokenize:
+    executorLabel: exec-gpt-tokenize
+    inputDefinitions:
+      artifacts:
+        input_data:
+          artifactType:
+            schemaTitle: system.Artifact
+            schemaVersion: 0.0.1
+          description: Input text file contain training data
+      parameters:
+        encoding_type:
+          defaultValue: gpt2
+          description: 'Encodings used by OpenAI models. Defaults to "gpt2", alternatives
+            include
+
+            "cl100k_base" or "p50k_base". See
+
+            https://github.com/openai/openai-cookbook/blob/main/examples/How_to_count_tokens_with_tiktoken.ipynb
+
+            for more details.'
+          isOptional: true
+          parameterType: STRING
+        train_size:
+          defaultValue: 0.9
+          description: 'A value between 0.0 and 1.0 to represent the proportion of
+            the dataset
+
+            to include in the train split'
+          isOptional: true
+          parameterType: NUMBER_DOUBLE
+    outputDefinitions:
+      artifacts:
+        train_dataset:
+          artifactType:
+            schemaTitle: system.Dataset
+            schemaVersion: 0.0.1
+        val_dataset:
+          artifactType:
+            schemaTitle: system.Dataset
+            schemaVersion: 0.0.1
+deploymentSpec:
+  executors:
+    exec-gpt-tokenize:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - gpt_tokenize
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet     --no-warn-script-location 'numpy==1.21.6'\
+          \ 'google-cloud-storage==1.44.0' 'tiktoken==0.3.0' && \"$0\" \"$@\"\n"
+        - python3
+        - -m
+        - kfp.components.executor_main
+        image: dtpipelinecomponents/gpt_tokenize:v1.1.0
+pipelineInfo:
+  name: gpt-tokenize
+root:
+  dag:
+    outputs:
+      artifacts:
+        train_dataset:
+          artifactSelectors:
+          - outputArtifactKey: train_dataset
+            producerSubtask: gpt-tokenize
+        val_dataset:
+          artifactSelectors:
+          - outputArtifactKey: val_dataset
+            producerSubtask: gpt-tokenize
+    tasks:
+      gpt-tokenize:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-gpt-tokenize
+        inputs:
+          artifacts:
+            input_data:
+              componentInputArtifact: input_data
+          parameters:
+            encoding_type:
+              componentInputParameter: encoding_type
+            train_size:
+              componentInputParameter: train_size
+        taskInfo:
+          name: gpt-tokenize
+  inputDefinitions:
+    artifacts:
+      input_data:
+        artifactType:
+          schemaTitle: system.Artifact
+          schemaVersion: 0.0.1
+        description: Input text file contain training data
+    parameters:
+      encoding_type:
+        defaultValue: gpt2
+        description: 'Encodings used by OpenAI models. Defaults to "gpt2", alternatives
+          include
+
+          "cl100k_base" or "p50k_base". See
+
+          https://github.com/openai/openai-cookbook/blob/main/examples/How_to_count_tokens_with_tiktoken.ipynb
+
+          for more details.'
+        isOptional: true
+        parameterType: STRING
+      train_size:
+        defaultValue: 0.9
+        description: 'A value between 0.0 and 1.0 to represent the proportion of the
+          dataset
+
+          to include in the train split'
+        isOptional: true
+        parameterType: NUMBER_DOUBLE
+  outputDefinitions:
+    artifacts:
+      train_dataset:
+        artifactType:
+          schemaTitle: system.Dataset
+          schemaVersion: 0.0.1
+      val_dataset:
+        artifactType:
+          schemaTitle: system.Dataset
+          schemaVersion: 0.0.1
+schemaVersion: 2.1.0
+sdkVersion: kfp-2.0.1

@@ -1,0 +1,106 @@
+# PIPELINE DEFINITION
+# Name: gpu-accelerated-shap-for-xgboost
+# Inputs:
+#    enable_gpu: bool [Default: True]
+#    input_data: system.Artifact
+#    model: system.Model
+# Outputs:
+#    output_shap_values: system.Artifact
+components:
+  comp-gpu-accelerated-shap-for-xgboost:
+    executorLabel: exec-gpu-accelerated-shap-for-xgboost
+    inputDefinitions:
+      artifacts:
+        input_data:
+          artifactType:
+            schemaTitle: system.Artifact
+            schemaVersion: 0.0.1
+          description: CSV file with pre-processed data stored on GCS.
+        model:
+          artifactType:
+            schemaTitle: system.Model
+            schemaVersion: 0.0.1
+          description: 'The XGBoost model.joblib file stored in GCS in the format
+
+            "gs://my-bucket/path/to/model/model.joblib".'
+      parameters:
+        enable_gpu:
+          defaultValue: true
+          description: Boolean flag to enable computation using GPU
+          isOptional: true
+          parameterType: BOOLEAN
+    outputDefinitions:
+      artifacts:
+        output_shap_values:
+          artifactType:
+            schemaTitle: system.Artifact
+            schemaVersion: 0.0.1
+deploymentSpec:
+  executors:
+    exec-gpu-accelerated-shap-for-xgboost:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - gpu_accelerated_shap_for_xgboost
+        command:
+        - python3
+        - -m
+        - kfp.components.executor_main
+        image: europe-west2-docker.pkg.dev/dt-pc-dev/dt-pc-dev-components-repository/xgboost_shap_gpu:latest
+pipelineInfo:
+  name: gpu-accelerated-shap-for-xgboost
+root:
+  dag:
+    outputs:
+      artifacts:
+        output_shap_values:
+          artifactSelectors:
+          - outputArtifactKey: output_shap_values
+            producerSubtask: gpu-accelerated-shap-for-xgboost
+    tasks:
+      gpu-accelerated-shap-for-xgboost:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-gpu-accelerated-shap-for-xgboost
+        inputs:
+          artifacts:
+            input_data:
+              componentInputArtifact: input_data
+            model:
+              componentInputArtifact: model
+          parameters:
+            enable_gpu:
+              componentInputParameter: enable_gpu
+        taskInfo:
+          name: gpu-accelerated-shap-for-xgboost
+  inputDefinitions:
+    artifacts:
+      input_data:
+        artifactType:
+          schemaTitle: system.Artifact
+          schemaVersion: 0.0.1
+        description: CSV file with pre-processed data stored on GCS.
+      model:
+        artifactType:
+          schemaTitle: system.Model
+          schemaVersion: 0.0.1
+        description: 'The XGBoost model.joblib file stored in GCS in the format
+
+          "gs://my-bucket/path/to/model/model.joblib".'
+    parameters:
+      enable_gpu:
+        defaultValue: true
+        description: Boolean flag to enable computation using GPU
+        isOptional: true
+        parameterType: BOOLEAN
+  outputDefinitions:
+    artifacts:
+      output_shap_values:
+        artifactType:
+          schemaTitle: system.Artifact
+          schemaVersion: 0.0.1
+schemaVersion: 2.1.0
+sdkVersion: kfp-2.0.1
