@@ -1,0 +1,60 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "kooplearn"  
+version = "0.2.0.dev2"  
+description = "A package to learn Koopman operators" 
+readme = "README.md"
+requires-python = ">=3.9"
+
+authors = [
+  {name = "Pietro Novelli", email = "pietronvll@gmail.com" },
+  {name = "Grégoire Pacreau"},
+  {name = "Bruno Belucci", email = "bruno.belucci-teixeira@dauphine.eu"},
+]
+dependencies = [
+  "numpy>=1.20.0", #Sliding window view
+  "scipy",
+  "scikit-learn",
+  "tqdm"
+]
+
+[project.optional-dependencies]
+torch = [
+  "torch",
+  "lightning",
+  "pandas",
+]
+
+visualizer = [
+  "plotly",
+  "dash",
+  "dash-mantine-components",
+  "dash-iconify",
+  "pandas",
+]
+docs = [
+  "sphinx",
+  "sphinx-book-theme",
+  "sphinx-design",
+  "sphinxcontrib-bibtex",
+  "sphinx-autobuild",
+  "myst-nb"
+]
+dev = [
+  "kooplearn[torch]",
+  "kooplearn[visualizer]",
+  "kooplearn[docs]",
+  "pytest"
+]
+
+[project.urls]  # Optional
+"Homepage" = "https://github.com/CSML-IIT-UCL/kooplearn"
+
+[project.scripts] 
+kooplearn-dashboard = "kooplearn.dashboard.app:main"
+
+[tool.ruff]
+line-length = 300
