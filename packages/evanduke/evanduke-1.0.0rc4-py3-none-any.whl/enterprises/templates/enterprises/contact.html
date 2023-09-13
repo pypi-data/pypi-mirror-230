@@ -1,0 +1,46 @@
+{% extends 'enterprises/base.html' %}
+{% load static %}
+
+{% block title %}Evan Duke{% endblock title %}
+
+{% block extra-style %}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}" type="text/css" />
+{% endblock %}
+
+{% block content %}
+  <div class="block">
+    <div class="block-box text-highlight">
+      <div class="highlight">
+        <h1>Reach Out</h1>
+        <h3>Want to know if I can help?</h3>
+      </div>
+    </div>
+    <div class="block-box img-highlight">
+      <img src="{% static 'img/headshot.jpg' %}" alt="Evan Duke's headshot.">
+    </div>
+  </div>
+
+  <div class="form">
+    <form id="contact-form" method="post">
+    <p>Let me know what you need!</p>
+      {% csrf_token %}
+      <div class="fields">
+        {% for field in form %}
+          <div class="formfield">
+            {{ field.errors }}
+            {{ field.label_tag }} {{ field }}
+          </div>
+        {% endfor %}
+      </div>
+      <button id="contact" class="g-recaptcha" data-sitekey="{{ SITE_KEY }}" data-callback="onSubmit" data-action="{{ action }}">Send</button>
+    </form>
+    <p>Evan Duke Enterprises will never sell your data.</p>
+  </div>
+
+<script>
+  function onSubmit(token) {
+    document.getElementById("contact-form").submit();
+  }
+</script>
+
+{% endblock content %}
