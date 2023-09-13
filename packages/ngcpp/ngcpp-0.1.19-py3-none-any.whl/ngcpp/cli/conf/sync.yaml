@@ -1,0 +1,13 @@
+hydra:
+  run:
+    dir: /tmp/ngcpp/sync/${now:%Y-%m-%d}/${now:%H-%M-%S}
+  hydra_logging:
+    disable_existing_loggers: true
+  sweep:
+    dir: /tmp/ngcpp/sync/multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
+  job:
+    chdir: False
+
+file: .ngcpp/sync.yaml
+pbss_account: team-lpr-imagine
+ngc_path: null
