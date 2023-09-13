@@ -1,0 +1,24 @@
+2023-09-07 Version: 2.0.0
+- Generated python2 2017-08-01 for polardb.
+
+2022-12-05 Version: 1.0.6
+- Support GDN feature.
+
+2022-10-10 Version: 1.0.5
+- Support serverless feature.
+
+2022-08-04 Version: 1.0.4
+- Support new feature.
+
+2022-08-01 Version: 1.0.3
+- Support new feature.
+
+2022-04-24 Version: 1.0.2
+- Support new feature.
+
+2022-02-22 Version: 1.0.1
+ - Support RefreshProxyLevel.
+
+2022-02-09 Version: 1.0.0
+- Supported the latested feature.
+
