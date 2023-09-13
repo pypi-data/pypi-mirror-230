@@ -1,0 +1,32 @@
+Metadata-Version: 2.1
+Name: oreille
+Version: 0.1.3
+Summary: Oreille is a wrapper on OpenAPI Whisper API. It's provide support for long audio files.
+Home-page: https://github.com/julien-duponchelle/oreille
+Author: Julien Duponchelle
+Author-email: julien@duponchelle.info
+License: Apache Software License 2.0
+Keywords: oreille
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.5
+License-File: LICENSE
+License-File: AUTHORS.rst
+Requires-Dist: openai
+Requires-Dist: pydub
+
+OpenAPI Whisper support only files that are less than 25 MB. Oreille will break the audio file into chunks of 25 MB's or less.
+
+https://platform.openai.com/docs/guides/speech-to-text/longer-inputs
+Oreille will also compute the correct timing of the subtitle when merging the output of Whisper. So once you export the subtitle the timestamp of the subtitle will be right.
+You can open and save WAV files with pure python. For opening and saving non-wav files – like mp3 – you'll need ffmpeg or libav.
