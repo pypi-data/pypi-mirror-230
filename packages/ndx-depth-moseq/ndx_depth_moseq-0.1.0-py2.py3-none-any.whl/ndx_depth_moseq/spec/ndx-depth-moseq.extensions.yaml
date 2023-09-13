@@ -1,0 +1,229 @@
+groups:
+- neurodata_type_def: DepthImageSeries
+  neurodata_type_inc: ImageSeries
+  doc: An extension of ImageSeries that includes the depth of the most distant depth
+    for reference.
+  attributes:
+  - name: distant_depth
+    dtype: float32
+    doc: The depth of the most distant depth for reference.
+- neurodata_type_def: MoSeqExtractParameterGroup
+  neurodata_type_inc: NWBDataInterface
+  doc: A group of all the parameters used by moseq-extract.
+  attributes:
+  - name: angle_hampel_sig
+    dtype: int64
+    doc: Angle filter sig
+  - name: angle_hampel_span
+    dtype: int64
+    doc: Angle filter span
+  - name: bg_roi_depth_range_min
+    dtype: int64
+    doc: Minimum depth to search for floor of arena (in mm)
+  - name: bg_roi_depth_range_max
+    dtype: int64
+    doc: Maximum depth to search for floor of arena (in mm)
+  - name: bg_roi_dilate_x
+    dtype: int64
+    doc: Size of the mask dilation (to include environment walls) in the x dimension
+  - name: bg_roi_dilate_y
+    dtype: int64
+    doc: Size of the mask dilation (to include environment walls) in the y dimension
+  - name: bg_roi_fill_holes
+    dtype: bool
+    doc: If True, fill holes in ROI
+  - name: bg_roi_gradient_filter
+    dtype: bool
+    doc: If True, exclude walls with gradient filtering
+  - name: bg_roi_gradient_kernel
+    dtype: int64
+    doc: Kernel size for Sobel gradient filtering
+  - name: bg_roi_gradient_threshold
+    dtype: int64
+    doc: Gradient must be < this to include points
+  - name: bg_roi_index
+    dtype: int64
+    doc: Index of which background mask(s) to use.
+  - name: bg_roi_shape
+    dtype: text
+    doc: Shape to use for the mask dilation (ellipse or rect).
+  - name: bg_roi_weight_area
+    dtype: float64
+    doc: Feature weighting (area) of the background mask.
+  - name: bg_roi_weight_extent
+    dtype: float64
+    doc: Feature weighting (extent) of the background mask.
+  - name: bg_roi_weight_dist
+    dtype: float64
+    doc: Feature weighting (dist) of the background mask.
+  - name: cable_filter_iters
+    dtype: int64
+    doc: Number of cable filter iterations.
+  - name: cable_filter_shape
+    dtype: text
+    doc: Cable filter shape (rectangle or ellipse).
+  - name: cable_filter_size_x
+    dtype: int64
+    doc: Cable filter size (in pixels, x-direction).
+  - name: cable_filter_size_y
+    dtype: int64
+    doc: Cable filter size (in pixels, x-direction).
+  - name: centroid_hampel_sig
+    dtype: int64
+    doc: Hampel filter sig.
+  - name: centroid_hampel_span
+    dtype: int64
+    doc: Hampel filter span.
+  - name: chunk_overlap
+    dtype: int64
+    doc: Frames overlapped in each chunk. Useful for cable tracking.
+  - name: chunk_size
+    dtype: int64
+    doc: Number of frames for each processing iteration.
+  - name: compress
+    dtype: bool
+    doc: Convert .dat to .avi after successful extraction.
+  - name: compress_chunk_size
+    dtype: int64
+    doc: Chunk size for .avi compression.
+  - name: compress_threads
+    dtype: int64
+    doc: Number of threads for encoding.
+  - name: config_file
+    dtype: text
+    doc: Location of the config file.
+  - name: crop_size_width
+    dtype: int64
+    doc: Width of cropped mouse image.
+  - name: crop_size_height
+    dtype: int64
+    doc: Height of cropped mouse image.
+  - name: flip_classifier
+    dtype: text
+    doc: Location of the flip classifier used to properly orient the mouse (.pkl file).
+  - name: flip_classifier_smoothing
+    dtype: int64
+    doc: Number of frames to smooth flip classifier probabilities.
+  - name: fps
+    dtype: int64
+    doc: Frame rate of camera.
+  - name: frame_dtype
+    dtype: text
+    doc: Data type for processed frames.
+  - name: frame_trim_beginning
+    dtype: int64
+    doc: Frames to trim from beginning of data.
+  - name: frame_trim_end
+    dtype: int64
+    doc: Frames to trim from end of data.
+  - name: max_height
+    dtype: int64
+    doc: Max mouse height from floor (mm).
+  - name: min_height
+    dtype: int64
+    doc: Min mouse height from floor (mm).
+  - name: model_smoothing_clips_x
+    dtype: int64
+    doc: Model smoothing clips in the x-direction.
+  - name: model_smoothing_clips_y
+    dtype: int64
+    doc: Model smoothing clips in the y-direction.
+  - name: spatial_filter_size
+    dtype: int64
+    doc: Space prefilter kernel (median filter, must be odd).
+  - name: tail_filter_iters
+    dtype: int64
+    doc: Number of tail filter iterations.
+  - name: tail_filter_shape
+    dtype: text
+    doc: Tail filter shape.
+  - name: tail_filter_size_x
+    dtype: int64
+    doc: Tail filter size in the x-direction.
+  - name: tail_filter_size_y
+    dtype: int64
+    doc: Tail filter size in the y-direction.
+  - name: temporal_filter_size
+    dtype: int64
+    doc: Time prefilter kernel (median filter, must be odd).
+  - name: tracking_model_init
+    dtype: text
+    doc: Method for tracking model initialization.
+  - name: tracking_model_ll_clip
+    dtype: int64
+    doc: Clip log-likelihoods below this value.
+  - name: tracking_model_ll_threshold
+    dtype: int64
+    doc: Threshold on log-likelihood for pixels to use for update during tracking.
+  - name: tracking_model_mask_threshold
+    dtype: int64
+    doc: Threshold on log-likelihood to include pixels for centroid and angle calculation.
+  - name: tracking_model_segment
+    dtype: bool
+    doc: If True, segment likelihood mask from tracking model.
+  - name: use_plane_bground
+    dtype: bool
+    doc: If True, Use a plane fit for the background. Useful for mice that don't move
+      much.
+  - name: use_tracking_model
+    dtype: bool
+    doc: Use an expectation-maximization style model to aid mouse tracking. Useful
+      for data with cables.
+  - name: write_movie
+    dtype: bool
+    doc: Write a results output movie including an extracted mouse.
+- neurodata_type_def: MoSeqExtractGroup
+  neurodata_type_inc: NWBDataInterface
+  doc: Defines a group of all the MoSeq-extract outputs.
+  attributes:
+  - name: version
+    dtype: text
+    doc: Version of moseq2-extract.
+  datasets:
+  - name: background
+    neurodata_type_inc: GrayscaleImage
+    doc: Computed background image of the raw depth video.
+  - name: roi
+    neurodata_type_inc: GrayscaleImage
+    doc: Region of interest in the raw depth video.
+  groups:
+  - name: parameters
+    neurodata_type_inc: MoSeqExtractParameterGroup
+    doc: A group of all the parameters used by moseq-extract.
+  - name: flipped_series
+    neurodata_type_inc: TimeSeries
+    doc: Boolean array indicating whether the image was flipped left/right.
+  - name: processed_depth_video
+    neurodata_type_inc: DepthImageSeries
+    doc: Extracted depth video with aligned subject.
+  - name: loglikelihood_video
+    neurodata_type_inc: ImageMaskSeries
+    doc: Log-likelihood that the subject was detected for each pixel.
+  - name: position
+    neurodata_type_inc: Position
+    doc: 3D Position (x, y, height) of the subject in the depth video.
+  - name: heading_2d
+    neurodata_type_inc: CompassDirection
+    doc: Overall orientation of the subject (head-side) in 2D (x, y).
+  - name: speed_2d
+    neurodata_type_inc: TimeSeries
+    doc: 2D (x, y) Speed of the subject in the depth video.
+  - name: speed_3d
+    neurodata_type_inc: TimeSeries
+    doc: 3D (x, y, height) Speed of the subject in the depth video.
+  - name: angular_velocity_2d
+    neurodata_type_inc: TimeSeries
+    doc: 2D (x, y) Angular velocity of the subject in the depth video.
+  - name: length
+    neurodata_type_inc: TimeSeries
+    doc: Length of the subject in the depth video.
+  - name: width
+    neurodata_type_inc: TimeSeries
+    doc: Width of the subject in the depth video.
+  - name: area
+    neurodata_type_inc: TimeSeries
+    doc: Pixel-wise area of the subject in the depth video.
+  links:
+  - name: depth_camera
+    target_type: Device
+    doc: Link to the device (camera) that was used to record the original depth video.
