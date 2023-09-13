@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "upload_pytorch_model"
+version = "0.1.0"
+description = "Component to upload a PyTorch model to the Vertex Model Registry"
+authors = ["alvaroazabal <alvaro.azabal@datatonic.com>"]
+
+[tool.poetry.dependencies]
+python = "~3.9"
+google-cloud-storage = "^2.7.0"
+google-cloud-aiplatform = "^1.22.1"
+torch-model-archiver = "^0.7.1"
+kfp = "^2.0.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "7.2.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

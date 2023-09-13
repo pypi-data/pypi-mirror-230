@@ -1,0 +1,110 @@
+# PIPELINE DEFINITION
+# Name: load-tf-hf-model
+# Inputs:
+#    config_name: str
+#    kwargs: dict [Default: {}]
+#    model_args: dict [Default: {}]
+#    model_class_name: str
+#    model_name: str
+#    tokenizer_class_name: str
+# Outputs:
+#    hf_gcs_path: system.Artifact
+components:
+  comp-load-tf-hf-model:
+    executorLabel: exec-load-tf-hf-model
+    inputDefinitions:
+      parameters:
+        config_name:
+          parameterType: STRING
+        kwargs:
+          defaultValue: {}
+          isOptional: true
+          parameterType: STRUCT
+        model_args:
+          defaultValue: {}
+          isOptional: true
+          parameterType: STRUCT
+        model_class_name:
+          parameterType: STRING
+        model_name:
+          parameterType: STRING
+        tokenizer_class_name:
+          parameterType: STRING
+    outputDefinitions:
+      artifacts:
+        hf_gcs_path:
+          artifactType:
+            schemaTitle: system.Artifact
+            schemaVersion: 0.0.1
+deploymentSpec:
+  executors:
+    exec-load-tf-hf-model:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - load_tf_hf_model
+        command:
+        - python3
+        - -m
+        - kfp.components.executor_main
+        image: dtpipelinecomponents/load_huggingface_tensorflow:v1.1.0
+pipelineInfo:
+  name: load-tf-hf-model
+root:
+  dag:
+    outputs:
+      artifacts:
+        hf_gcs_path:
+          artifactSelectors:
+          - outputArtifactKey: hf_gcs_path
+            producerSubtask: load-tf-hf-model
+    tasks:
+      load-tf-hf-model:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-load-tf-hf-model
+        inputs:
+          parameters:
+            config_name:
+              componentInputParameter: config_name
+            kwargs:
+              componentInputParameter: kwargs
+            model_args:
+              componentInputParameter: model_args
+            model_class_name:
+              componentInputParameter: model_class_name
+            model_name:
+              componentInputParameter: model_name
+            tokenizer_class_name:
+              componentInputParameter: tokenizer_class_name
+        taskInfo:
+          name: load-tf-hf-model
+  inputDefinitions:
+    parameters:
+      config_name:
+        parameterType: STRING
+      kwargs:
+        defaultValue: {}
+        isOptional: true
+        parameterType: STRUCT
+      model_args:
+        defaultValue: {}
+        isOptional: true
+        parameterType: STRUCT
+      model_class_name:
+        parameterType: STRING
+      model_name:
+        parameterType: STRING
+      tokenizer_class_name:
+        parameterType: STRING
+  outputDefinitions:
+    artifacts:
+      hf_gcs_path:
+        artifactType:
+          schemaTitle: system.Artifact
+          schemaVersion: 0.0.1
+schemaVersion: 2.1.0
+sdkVersion: kfp-2.0.1

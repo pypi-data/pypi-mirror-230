@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "load_huggingface_torch"
+version = "0.1.0"
+description = "Component to load huggingface mdoel into GCS"
+authors = ["alvaroazabal <alvaro.azabal@datatonic.com>"]
+
+[tool.poetry.dependencies]
+python = "~3.9"
+transformers = "^4.28.1"
+google-cloud-storage = "^2.7.0"
+kfp = "^2.0.1"
+torch = "2.0.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "7.2.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
