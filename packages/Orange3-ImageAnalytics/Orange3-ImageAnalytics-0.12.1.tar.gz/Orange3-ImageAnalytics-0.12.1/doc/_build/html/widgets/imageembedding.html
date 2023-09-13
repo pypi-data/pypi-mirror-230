@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image Embedding &mdash; Orange3 Image Analytics  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Image Grid" href="imagegrid.html" />
+    <link rel="prev" title="Image Viewer" href="imageviewer.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Orange3 Image Analytics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="importimages.html">Import Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="imageviewer.html">Image Viewer</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Image Embedding</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#embedders">Embedders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="imagegrid.html">Image Grid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="saveimages.html">Save Images</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../scripting/image_embedder.html">Image Embedding module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Orange3 Image Analytics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Image Embedding</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/widgets/imageembedding.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="image-embedding">
+<h1>Image Embedding<a class="headerlink" href="#image-embedding" title="Link to this heading"></a></h1>
+<p>Image embedding through deep neural networks.</p>
+<p><strong>Inputs</strong></p>
+<ul class="simple">
+<li><p>Images: List of images.</p></li>
+</ul>
+<p><strong>Outputs</strong></p>
+<ul class="simple">
+<li><p>Embeddings: Images represented with a vector of numbers.</p></li>
+<li><p>Skipped Images: List of images where embeddings were not calculated.</p></li>
+</ul>
+<p><strong>Image Embedding</strong> reads images and uploads them to a remote server or evaluate them locally. Deep learning models are used to calculate a feature vector for each image. It returns an enhanced data table with additional columns (image descriptors).</p>
+<p>Images can be imported with <a class="reference internal" href="importimages.html"><span class="doc">Import Images</span></a> widget or as paths to images in a spreadsheet. In this case the column with images paths needs a three-row header with <em>type=image</em> label in the third row.</p>
+<p><img alt="../_images/header-example.png" src="../_images/header-example.png" /></p>
+<p>Image Embedding offers several embedders, each trained for a specific task. Images are sent to a server or they are evaluated locally on the user’s computer, where vectors representations are computed. SqueezeNet embedder offers a fast evaluation on users computer which does not require an internet connection. If you decide to use other embedders than SqueezeNet, you will need an internet connection. Images sent to the server are not stored anywhere.</p>
+<p><img alt="../_images/ImageEmbedding-stamped.png" src="../_images/ImageEmbedding-stamped.png" /></p>
+<ol class="simple">
+<li><p>Information on the number of embedded images and images skipped.</p></li>
+<li><p>Settings:</p>
+<ul class="simple">
+<li><p><em>Image attribute</em>: attribute containing images you wish to embed</p></li>
+<li><p><em>Embedder</em>:</p>
+<ul>
+<li><p>SqueezeNet: <a class="reference external" href="https://arxiv.org/abs/1602.07360">Small and fast</a> model for image recognition trained on ImageNet.</p></li>
+<li><p>Inception v3: <a class="reference external" href="https://arxiv.org/abs/1512.00567">Google’s Inception v3</a> model trained on ImageNet.</p></li>
+<li><p>VGG-16: <a class="reference external" href="https://arxiv.org/abs/1409.1556">16-layer image recognition model</a> trained on ImageNet.</p></li>
+<li><p>VGG-19: <a class="reference external" href="https://arxiv.org/abs/1409.1556">19-layer image recognition model</a> trained on ImageNet.</p></li>
+<li><p>Painters: A model trained to <a class="reference external" href="http://blog.kaggle.com/2016/11/17/painter-by-numbers-competition-1st-place-winners-interview-nejc-ilenic/">predict painters from artwork images</a>.</p></li>
+<li><p>DeepLoc: A model trained to analyze <a class="reference external" href="https://www.ncbi.nlm.nih.gov/pubmed/29036616">yeast cell images</a>.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Tick the box on the left to start the embedding automatically. Alternatively, click <em>Apply</em>. To cancel the embedding, click <em>Cancel</em>.</p></li>
+<li><p>Access help.</p></li>
+</ol>
+<section id="embedders">
+<h2>Embedders<a class="headerlink" href="#embedders" title="Link to this heading"></a></h2>
+<p><strong>InceptionV3</strong> is Google’s deep neural network for image recognition. It is trained on the ImageNet data set. The model we are using is available <a class="reference external" href="http://download.tensorflow.org/models/image/imagenet/inception-2015-12-05.tgz">here</a>. For the embedding, we use the activations of the penultimate layer of the model, which represents images with vectors.</p>
+<p><strong>SqueezeNet</strong> is a deep model for image recognition that achieves AlexNet-level accuracy on ImageNet with 50x fewer parameters. The model is trained on the ImageNet dataset. We re-implemented the SqueezeNet by using weights from the <a class="reference external" href="https://github.com/DeepScale/SqueezeNet">author’s pretrained model</a>. We use activations from pre-softmax (<code class="docutils literal notranslate"><span class="pre">flatten10</span></code>) layer as an embedding.</p>
+<p><strong>VGG16</strong> and <strong>VGG19</strong> are deep neural networks for image recognition proposed by Visual Geometry Group from the University of Oxford. They are trained on the ImageNet data set. We use a <a class="reference external" href="https://github.com/machrisaa/tensorflow-vgg">community implementation</a> of networks with original weights. As an embedding, we use activations of the penultimate layer - <code class="docutils literal notranslate"><span class="pre">fc7</span></code>.</p>
+<p>Image Embedding also includes <a class="reference external" href="https://github.com/inejc/painters"><strong>Painters</strong></a>, an embedder that was trained on 79,433 images of paintings by 1,584 painters and won Kaggle’s Painter by Numbers competition. Activations of the penultimate layer of the network are used as an embedding.</p>
+<p><strong>DeepLoc</strong> is a convolutional network trained on 21,882 images of single cells that were manually assigned to one of 15 localization compartments. We use the pre-trained network proposed by <a class="reference external" href="https://github.com/okraus/DeepLoc">authors</a>. The embeddings are activations of penultimate layer <code class="docutils literal notranslate"><span class="pre">fc_2</span></code>.</p>
+<p>An <a class="reference external" href="https://www.nature.com/articles/s41467-019-12397-x">article</a> by Godec et al. (2019) explains how the embeddings work and how to use it in Orange.</p>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h2>
+<p>Let us first import images from a folder with <a class="reference internal" href="importimages.html"><span class="doc">Import Images</span></a>. We have three images of an orange, a banana and a strawberry in a folder called Fruits. From <strong>Import Images</strong> we will send a data table containing a column with image paths to <strong>Image Embedding</strong>.</p>
+<p>We will use the default embedder <em>SqueezeNet</em>. The widget will automatically start retrieving image vectors from the server.</p>
+<p><img alt="../_images/ImageEmbedding-Example1.png" src="../_images/ImageEmbedding-Example1.png" /></p>
+<p>Once the computation is done, you can observe the enhanced data in a <strong>Data Table</strong>. With the retrieved embeddings, you can continue with any machine learning method Orange offers. Below is an example for clustering.</p>
+<p><img alt="../_images/ImageEmbedding-Example2.png" src="../_images/ImageEmbedding-Example2.png" /></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="imageviewer.html" class="btn btn-neutral float-left" title="Image Viewer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="imagegrid.html" class="btn btn-neutral float-right" title="Image Grid" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016, Laboratory of Bioinformatics, Faculty of Computer Science, University of Ljubljana.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
