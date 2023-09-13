@@ -1,0 +1,9 @@
+"""Constants for the HDG Bavaria Boiler package."""
+
+DATA_NODES_PATH = 'data_nodes.json'
+API_MANAGER_DATA_ENDPOINT = "/ApiManager.php?action=dataRefresh"
+
+BOILER_STATUS_DATAID = "22010"
+BOILER_TEMPERATURE_DATAID = "22003"
+BOILER_RETURN_FLOW_TEMPERATURE = "22004"
+BOILER_EXHAUST_TEMPERATURE_ID = "22001"
