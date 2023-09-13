@@ -1,0 +1,39 @@
+[tool.poetry]
+name = "ngcpp"
+version = "0.1.20"
+description = "A toolkit for ngc"
+authors = ["Qinsheng <qsh.zh27@gmail.com>"]
+readme = "README.md"
+keywords = ["jam", "experiment", "ngc"]
+license = "MIT"
+packages = [
+    {include = "ngcpp"},
+]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.12"
+typer = "^0.3.2"
+loguru = "^0.7.0"
+hydra-core = "^1.1.0"
+pyfzf = "^0.2.2"
+pandas = "^1.5.3"
+tqdm = "^4.65.0"
+requests = "^2.31.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+pre-commit = "^2.13.0"
+black = "^21.5b1"
+isort = "^5.8.0"
+pylint = "^2.8.3"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+ngc_cluster="ngcpp.cli.cluster_info:main"
+ngc_job="ngcpp.cli.job_info:main"
+ngc_init="ngcpp.cli.init:main"
+ngc_sync="ngcpp.cli.sync:main"
+ngc_resume="ngcpp.cli.resume:resume"
