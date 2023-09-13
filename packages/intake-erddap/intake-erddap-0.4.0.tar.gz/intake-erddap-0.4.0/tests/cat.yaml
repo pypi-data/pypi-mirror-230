@@ -1,0 +1,12 @@
+sources:
+  tables:
+    args:
+        server: "{{URI}}"
+    parameters: # User defined parameters
+      URI:
+        description: sqlite
+        type: str
+    description: "points to ERDDAP server"
+    driver: erddap_cat
+    direct_access: forbid
+    metadata: {}
