@@ -1,0 +1,28 @@
+{
+    "__note__": "Be aware of rules regarding the use of special characters in .json files. Google this.",
+    "meta_regex": {
+       "Date:": [["date"], ".*([0-9:]{8} [0-9/]+).*"],
+       "Run:": [["run"], ".*\"(.*)\""],
+       "Cycles": [["n_cycles"], "([0-9]+)"],
+       "Sweeps": [["n_sweeps"], "([0-9]+)"],
+       "IC Deadtime": [["ic_deadtime"], "([0-9+-E]+)"],
+       "IC Attenuation": [["ic_attenuation_factor"], "([0-9.]+)"],
+       "IC Faraday": [["ic_faraday_factor"], "([0-9.]+)"],
+       "Peak Integration Window": [["peak_window_size"], "([0-9]+)"],
+       "Faraday Baseline": [["faraday_baseline"], "([0-9.]+)"],
+       "Resolution": [["resolution"], "([0-9.]+)"],
+       "Servo Integration": [["servo_integration_time"], "([0-9.]+)"],
+       "TRA Integration": [["tra_integration_time"], "([0-9.]+)"]
+    },
+    "column_id": {
+        "delimiter": ",",
+        "timecolumn": 1,
+        "name_row": 48,
+        "pattern": "([A-z]{1,3}\\([0-9]{1,3}\\))"
+    },
+    "genfromtext_args": {
+        "delimiter": ",",
+        "skip_header": 52
+    },
+    "time_format": "%H:%M:%S %d/%b/%Y"
+}
