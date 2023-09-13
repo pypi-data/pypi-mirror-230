@@ -1,0 +1,45 @@
+#  Deployment Pipeline - Version MLOPS_VERSION
+#
+# We use the following branching and deployment strategy
+# 1) For all new commits to PRs from feature branches into develop, we deploy to dev
+# 2) Mergin the feature branch into development branch will trigger a deployment to test
+# 3) Merging the development branch into master will trigger a deployment to prod
+
+image: python:3.8.5
+
+clone:
+  lfs: true
+
+definitions:
+  .install-mlops: &install-mlops |
+    pip install akerbp.mlops[cdf]==MLOPS_VERSION
+
+pipelines:
+  pull-requests:
+    "**":
+      - step:
+          name: Deploy to Dev
+          deployment: dev-prediction
+          script:
+            # We want to deploy to dev for every commit to a feature branch PR into develop
+            - *install-mlops
+            - deploy_prediction_service
+
+  branches:
+    development: &dev-branch
+      - step: &deploy-to-test
+          name: Deploy to Test
+          deployment: test-prediction
+          script:
+            # We want to deploy to test when merging PRs into develop
+            - *install-mlops
+            - deploy_prediction_service
+    develop: *dev-branch
+
+    master: &master-branch
+      - step:
+          <<: *deploy-to-test
+          name: Deploy to prod
+          deployment: production-prediction
+          trigger: manual
+    main: *master-branch
