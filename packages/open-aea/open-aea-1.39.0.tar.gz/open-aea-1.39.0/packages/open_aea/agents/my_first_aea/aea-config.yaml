@@ -1,0 +1,31 @@
+agent_name: my_first_aea
+author: open_aea
+version: 0.1.0
+description: A simple agent to demo the echo skill.
+license: Apache-2.0
+aea_version: '>=1.0.0, <2.0.0'
+fingerprint:
+  README.md: bafybeiftiqiqpxn7ghrurhepquzqzk3su3x6wanlnolt2uj772fzgz574m
+fingerprint_ignore_patterns: []
+connections:
+- fetchai/stub:0.21.0:bafybeihijtaawc2adyewb3g7kta7hw6jyhyhoi7cotkzgqilves5zz7smm
+contracts: []
+protocols:
+- fetchai/default:1.0.0:bafybeiazamq4mogosgmr77ipita5s6sq6rfowubxf5rybfxikc772befxy
+- fetchai/state_update:1.0.0:bafybeiamdiu6y4jztw6y46puoc5xxj3yqqyiso37c4xadcn55om73veytm
+- open_aea/signing:1.0.0:bafybeifuxs7gdg2okbn7uofymenjlmnih2wxwkym44lsgwmklgwuckxm2m
+skills:
+- fetchai/echo:0.19.0:bafybeibyqdrhpn7ixfxw5tdvu2nwvrupof7sy3eh2ixavri74w24ik4l2i
+default_connection: fetchai/stub:0.21.0
+default_ledger: ethereum
+required_ledgers:
+- ethereum
+logging_config:
+  disable_existing_loggers: false
+  version: 1
+private_key_paths: {}
+default_routing: {}
+connection_private_key_paths: {}
+dependencies:
+  open-aea-ledger-ethereum:
+    version: <2.0.0,>=1.0.0
