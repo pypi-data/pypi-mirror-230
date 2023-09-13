@@ -1,0 +1,198 @@
+Metadata-Version: 2.1
+Name: intelliw-onnx
+Version: 0.0.2
+Summary: An easy to start Intelligent Workshop Algorithm Framework
+Home-page: http://git.yonyou.com/iuapaipaas/intelliw-onnx
+Author: yonyou
+Author-email: yonyou@yonyou.com
+Classifier: Development Status :: 3 - Alpha
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENCE
+Requires-Dist: numpy (>=1.20)
+Requires-Dist: onnx (>=1.14)
+Requires-Dist: onnxruntime (>=1.15)
+
+# Intelligent Workshop Algorithm Framework ONNX
+
+> intelliw-onnx  
+> This tool is an ONNX tool that provides various functions, including model conversion, model quantization, model pre- and post-processing.   
+> It can be used either through the command line or by calling it in code.
+
+
+### Installing
+Install and update using pip:
+```
+pip install -U intelliw-onnx
+```
+
+
+
+
+### Argument
+
+```
+model_path: [required]  Input path(model file or folder)
+model_type: [required]  Input model type(ex: paddle/pytorch)
+output:     [required]  Output path(ex: ./output.onnx)
+
+op_set:             Set op_set version(default: 11)
+input_shape:        [pytorch/paddle required]  Input shape for pytorch/paddle(ex: [1,3,224,224] or [1,3,224,224]/[1,3,56,56])
+model_def_file:      [pytorch/paddle required]  Paddle/pytorch model definition file location(ex: --model_def_file ./cnn.py)
+model_class_name:   [pytorch/paddle required]  Paddle/pytorch model class name(ex: --model_class_name CNN)
+model_weights_file:  Paddle/pytorch model weights file location(ex: --model_weights_file ./0.99667.pth)
+model_input_type:   Paddle/pytorch input type(default float, choice is ['float', 'float32', 'float16', 'uint8', 'int8', 'uint16', 'int16', 'uint32', 'int32', 'uint64', 'int64', 'bool'])
+params_file:         Paddle/pytorch params declaration file location(ex: --params_file ./params.py)
+output_num:         If output num of pytorch model > 1, you can specify it by --output_num
+keep_batch:         For pytorch, if set 1, the tool will keep model batch size(if 0, set it to dynamic(-1))"
+dynamic_batch:      If set 1, the tool will convert batch size to -1
+simplify:           Simplify the model(0:no simplify;1:do simplify; 2:for dynamic model)
+simplify_hw:        When h/w is -1, you can specify h/w as you expected(together with --simplify 2)
+force_simplify:     Force simplify the model(0:no simplify;1:do simplify; 2:for dynamic model)
+```
+
+`params_file` means `params.py`
+
+```
+# params.py
+param_dict = {
+    "n": 3, 
+    "your_params":"your_value"
+    ...
+}
+```
+
+### Pytorch to ONNX
+
+#### Code
+
+```
+from intelliw_onnx.convert import ONNXConvert, ConvertArgs
+
+if __name__ == '__main__':
+    args = ConvertArgs(model_path='./model.pth',
+                       model_type='pytorch',
+                       output='./test_tf_model.onnx',
+                       input_shape='[1,3,10,10]',
+                       model_def_file="./test_onnx_demo.py",
+                       model_class_name="MyCNNModel",
+                       params_file="./params.py")
+    converter = ONNXConvert(args)
+    converter.convert()
+```
+
+#### CMD
+
+```
+intelliw-onnx convert --model_path ./model.pth --model_type pytorch --output "./output.onnx" --input_shape '[1,3,10,10]' 
+  --model_def_file './test_onnx_demo.py' 
+  --model_class_name 'MyModel'  
+  --params_file ./params.py
+```
+
+#### Other Mode
+
+Use `model_weights_file`:
+
+Contains only weight parameters, model_path can be arbitrarily specified, and will not be used
+
+```
+intelliw-onnx convert --model_path ./xxx --model_type pytorch --output ./output.onnx 
+  --model_def_file ./unet.py
+  --model_class_name Net
+  --model_weights_file ./9_epoch_iou_0.9743422508239746.pth 
+  --input_shape [64,3,32,32]  
+```
+
+Contains only weight parameters, using classes in torchvision, the model_def_file parameter is not required , model_path
+can be arbitrarily specified, and will not be used
+
+```
+intelliw-onnx convert --model_path ./xxx --model_type pytorch --output ./output.onnx 
+  --model_class_name torchvision.models.resnet50 
+  --model_weights_file ./0.96966957919051920.9139525532770406.pth 
+  --input_shape [16,3,256,256]
+```
+
+Use multi input/output:
+
+```
+intelliw-onnx convert --model_path ./model.pth --model_type pytorch --output ./output.onnx 
+  --model_def_file ./pt_multi_input.py 
+  --model_class_name nettest 
+  --input_shape [1,3,200,300]/[1,3,200,300] 
+  --output_num 2 
+
+or
+
+intelliw-onnx convert --model_path ./model.pth --model_type pytorch --output ./output.onnx 
+  --model_def_file ./pt_multi_input.py 
+  --model_class_name nettest 
+  --model_weights_file ./multi_input_state.pth 
+  --input_shape [1,3,500,600]/[1,3,500,600] 
+  --output_num 2
+```
+
+### Paddle to ONNX
+
+#### Cde
+
+1 dynamic paddle model
+
+```
+from intelliw_onnx.convert import ONNXConvert, ConvertArgs
+
+if __name__ == '__main__':
+    args = ConvertArgs(model_path='./xxx',
+                       model_type='paddle',
+                       output='./paddle.onnx',
+                       input_shape='[1,1,28,28] ',
+                       model_def_file="./mnist.py ",
+                       model_class_name="LeNet",
+                       model_weights_file="./paddle_checkpoint/final.pdparams")
+    converter = ONNXConvert(args)
+    converter.convert()
+```
+
+2 static paddle model
+
+```
+from intelliw_onnx.convert import ONNXConvert, ConvertArgs
+
+if __name__ == '__main__':
+    args = ConvertArgs(model_path='./xxx',
+                       model_type='paddle',
+                       output='./paddle.onnx')
+    converter = ONNXConvert(args)
+    converter.convert()
+```
+
+#### CMD
+
+1 dynamic paddle model
+
+```
+intelliw-onnx --model_path ./xxx --model_type paddle 
+  --output ./paddle.onnx --model_def_file ./mnist.py 
+  --model_class_name LeNet --model_weights_file ./paddle_checkpoint/final.pdparams 
+  --input_shape [1,1,28,28] 
+
+or
+
+intelliw-onnx --model_path ./xxx --model_type paddle 
+  --output ./paddle.onnx --model_class_name paddle.vision.models.LeNet 
+  --model_weights_file ./paddle_checkpoint/final.pdparams --input_shape [1,1,28,28] 
+```
+
+2 static paddle model
+
+```
+intelliw-onnx --model_path ./paddle_model 
+  --model_type paddle --output ./paddle.onnx
+```
