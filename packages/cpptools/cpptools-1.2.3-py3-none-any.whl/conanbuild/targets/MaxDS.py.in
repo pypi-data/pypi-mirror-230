@@ -1,0 +1,65 @@
+from conans import ConanFile, tools
+from conans.util import files
+import os
+import shutil
+
+
+class MaxDSConan(ConanFile):
+    name = "MaxDS"
+    version = "@version@"
+    generators = "cmake"
+    settings = "os", "arch", "compiler", "build_type"
+    options = {"shared": [True, False]}
+    default_options = "shared=True"
+    url = "https://gitlab.gz.cvte.cn/1602/SDKs/MaxME"
+
+    def configure(self):
+        del self.settings.compiler.libcxx
+
+    def source(self):
+        self.run("git clone git@gitlab.gz.cvte.cn:1602/sdks/MaxME.git @git_ref@ .")
+        @checkout@
+        self.run("git submodule update --init --recursive")
+        
+    def build(self):
+        with tools.chdir(self.build_folder):
+            platform = 'win'
+            if(self.settings.os == 'Windows'):
+                if (self.settings.arch == 'x86_64'):
+                    platform = 'win64'
+            elif(self.settings.os == 'MacOS'):
+                platform = 'osx'
+            elif(self.settings.os == 'Linux'):
+                platform = 'linux'
+            if(self.settings.build_type == "Debug"):
+                self.run('python bootstrap.py %s --build_component=datastream'%(platform))
+            else:
+                self.run('python bootstrap.py %s --build_component=datastream'%(platform))
+            if(self.settings.os == "Windows"):
+                if(self.settings.arch == "x86"):
+                    self.run("cmake --build build/win32 --target DataStream --config %s"%self.settings.build_type)
+                elif(self.settings.arch == "x86_64"):
+                    self.run("cmake --build build/win64 --target DataStream --config %s"%self.settings.build_type)
+            
+
+    def package(self):
+        self.copy("MaxDataStreamI.h", dst="%s/include/MaxME"%self.package_folder, src="%s/sdk/src/DataStream/src/MaxME"%self.build_folder, keep_path=False)
+        self.copy("error.h", dst="%s/include/MaxME"%self.package_folder, src="%s/sdk/src/Commons/inc"%self.build_folder, keep_path=False)
+
+        os.makedirs("%s/lib"%self.package_folder)
+        os.makedirs("%s/bin"%self.package_folder)
+
+        if(self.settings.os == "Windows"):
+            if (self.settings.arch == "x86"):
+                shutil.copy("%s/build/win32/lib/%s/DataStream.lib"%(self.build_folder, self.settings.build_type), dst="%s/lib/"%self.package_folder)
+                shutil.copy("%s/build/win32/bin/%s/DataStream.dll"%(self.build_folder, self.settings.build_type), dst="%s/bin/"%self.package_folder)
+                shutil.copy("%s/build/win32/bin/%s/DataStream.pdb"%(self.build_folder, self.settings.build_type), dst="%s/bin/"%self.package_folder)
+            elif (self.settings.arch == "x86_64"):
+                shutil.copy("%s/build/win64/lib/%s/DataStream.lib"%(self.build_folder, self.settings.build_type), dst="%s/lib/"%self.package_folder)
+                shutil.copy("%s/build/win64/bin/%s/DataStream.dll"%(self.build_folder, self.settings.build_type), dst="%s/bin/"%self.package_folder)
+                shutil.copy("%s/build/win64/bin/%s/DataStream.pdb"%(self.build_folder, self.settings.build_type), dst="%s/bin/"%self.package_folder)
+        # Copying all installed files
+        # self.copy("*", src="%s" % os.path.join(self.source_folder, "install"), keep_path=True)
+
+    def package_info(self):
+        self.cpp_info.libs = ['DataStream']

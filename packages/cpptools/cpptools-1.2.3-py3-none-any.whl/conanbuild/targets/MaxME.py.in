@@ -1,0 +1,193 @@
+from conans import ConanFile, tools
+from conans.util import files
+import os
+import shutil
+import os.path
+import glob
+
+class MaxMEConan(ConanFile):
+    name = "MaxME"
+    version = "@version@"
+    generators = "cmake"
+    settings = "os", "arch", "compiler", "build_type"
+    options = {"shared": [True, False], "dotnet":[True, False]}
+    default_options = {"shared":True, "dotnet":False}
+    url = "https://gitlab.gz.cvte.cn/1602/SDKs/MaxME"
+
+    def configure(self):
+        del self.settings.compiler.libcxx
+        if('@OVER_SEA@' == 'true' and self.settings.os == "Windows"):
+            self.requires.add("ffmpeg/4.1-dev12@1602/oversea")
+
+    def source(self):
+        self.run("git clone git@gitlab.gz.cvte.cn:1602/sdks/MaxME.git @git_ref@ .")
+        @checkout@
+        self.run("git submodule update --init --recursive")
+        
+    def build(self):
+        with tools.chdir(self.build_folder):
+            extra_flags = ''
+            platform = 'win'
+            extra_options = ' --v3 '
+            if(self.settings.os == 'Windows'):
+                if (self.settings.arch == 'x86_64'):
+                    platform = 'win64'
+                if ('@OVER_SEA@' == 'true' ):
+                    extra_flags = '--extra_flags=-DOVERSEA_BUILD=ON'
+                #ignore over_sea setting
+                extra_flags = '--extra_flags="-DENABLE_PREPROC_BFSMOOTH=OFF -DENABLE_PREPROC_LIBPREENHANCE=OFF"'
+                if(self.options.dotnet == True):
+                    extra_options = " --dotnet " # --dotnet support v2 only, though it should not be a problem together with --v3
+            elif(self.settings.os == 'Macos'):
+                platform = 'osx'
+                if(self.options.shared):
+                    extra_flags='--extra_flags=-DFORCE_SHARED=ON'
+            elif(self.settings.os == 'iOS'):
+                platform = 'ios'
+                if(self.options.shared):
+                    extra_flags='--extra_flags=-DFORCE_SHARED=ON'
+            elif(self.settings.os == 'Linux'):
+                platform = 'linux'
+            elif(self.settings.os == 'Android'):
+                platform = 'android'
+                if(self.settings.arch == 'armv8'):
+                    platform = 'android64'
+
+            cmd = 'python bootstrap.py %s %s %s'%(platform, extra_options, extra_flags)
+            
+            if(self.channel != 'stable'):
+                cmd += ' --update_version'
+            if('Debug' == self.settings.build_type or self.settings.os == 'Linux'):
+                cmd += ' --debug'
+
+            print(cmd) 
+            android_on_win = tools.os_info.is_windows and self.settings.os == 'Android'
+            self.run(cmd, win_bash=android_on_win)
+
+            if(self.settings.os == "Windows"):
+                if(self.settings.arch == "x86"):
+                    tools.replace_in_file("build/win32/webrtc-src/webrtc/api/mediastream_interface_and_implicit_video_frame_api.cmake",  "mediastream_interface_and_implicit_video_frame_api", "ms_and_video_frame_api", strict=False)
+                    tools.replace_in_file("build/win32/webrtc-src/webrtc/api/libjingle_peerconnection_api.cmake",  "mediastream_interface_and_implicit_video_frame_api", "ms_and_video_frame_api", strict=False)
+                    self.run("cmake --build build/win32 --target MaxMediaEngine --config %s -- /maxcpucount:56"%self.settings.build_type)
+                    if(os.path.isfile("build/win32/tools/desktop_capture_host/desktop_capture_host.vcxproj")):
+                        self.run("cmake --build build/win32 --target desktop_capture_host --config %s -- /maxcpucount:56"%self.settings.build_type)
+                    if(os.path.isfile("build/win32/tools/flv2mp4/flv2mp4.vcxproj")):
+                        self.run("cmake --build build/win32 --target flv2mp4 --config %s -- /maxcpucount:56"%self.settings.build_type)
+                    if(os.path.isfile("build/win32/tools/check_opencl_compatibility/check_opencl_compatibility.vcxproj")):
+                        self.run("cmake --build build/win32 --target check_opencl_compatibility --config %s -- /maxcpucount:56"%self.settings.build_type)
+                    if(self.options.dotnet == True and os.path.isfile("build/win32/sdk/win/MaxMediaEngine/MaxMediaEngineDotNet/MaxMediaEngineDotNet.csproj")):
+                        self.run("cmake --build build/win32 --target MaxMediaEngineDotNET --config %s -- /maxcpucount:56"%self.settings.build_type)
+                elif(self.settings.arch == "x86_64"):
+                    tools.replace_in_file("build/win64/webrtc-src/webrtc/api/mediastream_interface_and_implicit_video_frame_api.cmake",  "mediastream_interface_and_implicit_video_frame_api", "ms_and_video_frame_api", strict=False)
+                    tools.replace_in_file("build/win64/webrtc-src/webrtc/api/libjingle_peerconnection_api.cmake",  "mediastream_interface_and_implicit_video_frame_api", "ms_and_video_frame_api", strict=False)
+                    self.run("cmake --build build/win64 --target MaxMediaEngine --config %s -- /maxcpucount:56"%self.settings.build_type)
+                    if(os.path.isfile("build/win64/tools/desktop_capture_host/desktop_capture_host.vcxproj")):
+                        self.run("cmake --build build/win64 --target desktop_capture_host --config %s -- /maxcpucount:56"%self.settings.build_type)
+                    if(os.path.isfile("build/win64/tools/check_opencl_compatibility/check_opencl_compatibility.vcxproj")):
+                        self.run("cmake --build build/win64 --target check_opencl_compatibility --config %s -- /maxcpucount:56"%self.settings.build_type)
+                    if(self.options.dotnet == True and os.path.isfile("build/win64/sdk/win/MaxMediaEngine/MaxMediaEngineDotNet/MaxMediaEngineDotNet.csproj")):
+                        self.run("cmake --build build/win64 --target MaxMediaEngineDotNET --config %s -- /maxcpucount:56"%self.settings.build_type)
+            elif (self.settings.os == "Linux"):
+                self.run("cmake --build build/linux --target MaxMediaEngine --config %s"%self.settings.build_type)
+            elif (self.settings.os == "Macos"):
+                self.run("cmake --build build/osx --target MaxMediaEngine --config %s"%self.settings.build_type)
+            elif (self.settings.os == "iOS"):
+                self.run("cmake --build build/ios --target MaxMediaEngine --config %s"%self.settings.build_type)
+            elif (self.settings.os == "Android"):
+                if(self.settings.arch=="armv8"):
+                    print("building android64 lib")
+                    self.run("cmake --build build/android64 --target MaxMediaEngine --config %s -- -j55"%self.settings.build_type)
+                else:
+                    print("building android lib")
+                    self.run("cmake --build build/android --target MaxMediaEngine --config %s -- -j55"%self.settings.build_type)
+
+
+    def package(self):
+        self.copy("*", dst="%s/include"%self.package_folder, src="%s/sdk/src/api/inc"%self.build_folder, keep_path=False)
+        self.copy("*", dst="%s/include/MaxME"%self.package_folder, src="%s/sdk/src/Commons/inc/MaxME"%self.build_folder, keep_path=False)
+            
+        os.makedirs("%s/lib"%self.package_folder)
+        os.makedirs("%s/bin"%self.package_folder)
+
+        install_lib_files_to_copy = ['MaxMediaEngine.lib', 'MaxDataChannel.lib']
+
+        install_binary_files_to_copy = ['MaxMediaEngine.dll', 'MaxMediaEngine.pdb',
+                                        'MaxDataChannel.dll', 'MaxDataChannel.pdb',
+                                        'desktop_capture_host.exe', 'desktop_capture_host.pdb',
+                                        'flv2mp4.exe', 'flv2mp4.pdb',
+                                        'check_opencl_compatibility.exe', 'check_opencl_compatibility.pdb',
+                                        'lib_maxme_video_preenhance_filter.dll', 'lib_maxme_video_preenhance_filter.pdb',
+                                        'lib_maxme_smooth_filter.dll', 'lib_maxme_smooth_filter.pdb',
+                                        'lib_maxme_record.dll', 'lib_maxme_record.pdb',
+                                        'lib_maxme_video_process_filter.dll', 'lib_maxme_video_process_filter.pdb',
+                                        'maxme.dll', 'maxme.pdb', 'MaxMediaEngineDotNET.dll',  # cli/dotnet
+                                        'System.ValueTuple.dll', 'System.ValueTuple.xml', 'Cvte.IO.cc.dll', 'Cvte.IO.cc.pdb', 'Cvte.IO.Log.config.dll' #cli/dotnet dependencies
+                                        ]
+        arch_dir = 'win32'
+        system_arch_dir = 'SysWOW64'
+
+        if (self.settings.os == "Windows"):
+            if (self.settings.arch == "x86_64"):
+                arch_dir = 'win64'
+                system_arch_dir = "System32"
+
+            for lib_file in install_lib_files_to_copy:
+                if(os.path.isfile("%s/build/%s/lib/%s/%s"%(self.build_folder, arch_dir, self.settings.build_type, lib_file))):
+                    shutil.copy("%s/build/%s/lib/%s/%s"%(self.build_folder, arch_dir, self.settings.build_type, lib_file), dst="%s/lib/"%self.package_folder)
+            for binary_file in install_binary_files_to_copy:
+                if(os.path.isfile("%s/build/%s/bin/%s/%s"%(self.build_folder, arch_dir, self.settings.build_type, binary_file))):
+                    shutil.copy("%s/build/%s/bin/%s/%s"%(self.build_folder, arch_dir, self.settings.build_type, binary_file), dst="%s/bin/"%self.package_folder)
+
+            if(self.settings.build_type == "Debug"):
+                if(os.path.isfile("C:/Windows/%s/D3DX9d_43.dll"%system_arch_dir)):
+                    shutil.copy("C:/Windows/%s/D3DX9d_43.dll"%system_arch_dir, dst="%s/bin/%s"%(self.package_folder, 'D3DX9_43.dll'))
+            else:
+                if(os.path.isfile("C:/Windows/%s/D3DX9_43.dll"%system_arch_dir)):
+                    shutil.copy("C:/Windows/%s/D3DX9_43.dll"%system_arch_dir, dst="%s/bin/"%self.package_folder)
+
+            if('@WITH_PDB@' == 'ON'):
+                SERVER_PDB_DIR = "D:\ML_SYMOBLS_MUST_NOT_BE_DELETED"
+                if('@PRO_BUILD@' == 'ON'):
+                    SERVER_PDB_DIR = "D:\ML_SYMOBLS_MUST_NOT_BE_DELETED\00000000_PRODUCTION_BUILD_PDBS"
+                print("PDB store location: %s"%SERVER_PDB_DIR)
+                sym_store_cmd = "symstore.exe add /r /f %s/bin/ /s %s /t MaxMediaEngine /compress"%(self.package_folder, SERVER_PDB_DIR)
+                os.system(sym_store_cmd)
+
+        elif(self.settings.os == "Linux"):
+            shutil.copy("%s/build/linux/lib/libMaxMediaEngine.so"%self.build_folder, dst="%s/lib/"%self.package_folder)
+        elif(self.settings.os == "Macos" or self.settings.os=='iOS'):
+            platform = "osx"
+            if(self.settings.os == "iOS"):
+                platform = "ios"
+            if(self.options.shared):
+                for file in glob.glob("%s/build/%s/lib/%s/*.dylib"%(self.build_folder, platform, self.settings.build_type)):
+                    shutil.copy(file, dst = "%s/lib/"%self.package_folder)
+            else:
+                for file in glob.glob("%s/build/%s/lib/%s/*.a"%(self.build_folder, platform, self.settings.build_type)):
+                    shutil.copy(file, dst = "%s/lib/"%self.package_folder)
+        elif(self.settings.os == "Android"):
+            platform = "android"
+            if(self.settings.arch=="armv8"):
+                platform = "android64"
+            if(self.options.shared):
+                for file in glob.glob("%s/build/%s/lib/%s/*.so"%(self.build_folder, platform, self.settings.build_type)):
+                    shutil.copy(file, dst = "%s/lib/"%self.package_folder)
+            else:
+                for file in glob.glob("%s/build/%s/lib/%s/*.a"%(self.build_folder, platform, self.settings.build_type)):
+                    shutil.copy(file, dst = "%s/lib/"%self.package_folder)
+
+
+    def package_info(self):
+        if(self.options.shared):
+            self.cpp_info.libs = ['MaxMediaEngine']
+        else:
+            self.cpp_info.libdirs= ['lib']
+            if(self.settings.os=='Macos' or self.settings.os=="iOS" or self.setting.os=="Android"):
+                self.cpp_info.libs = ['libCallAgent.a', 'libcommons.a','libDataStream.a',
+                                    'libdebug_switch.a','libDeviceNotifyCenter.a','libdisruptor.a',
+                                    'libice.a','liblogger.a','libmachineinfo.a',
+                                    'libMaxMediaEngine.a','libMediaStream.a','libMessages.a','libnattools.a',
+                                    'libnetworkdiagnostic.a','libObjcAdapter.a','libperformance.a',
+                                    'libPerformanceHelper.a','libProtocolModel.a','libreachability.a',
+                                    'librecord.a','libsdkconfiguration.a','libServiceAgent.a',
+                                    'libsocketio.a','libstatistics.a','libTcpClient.a']

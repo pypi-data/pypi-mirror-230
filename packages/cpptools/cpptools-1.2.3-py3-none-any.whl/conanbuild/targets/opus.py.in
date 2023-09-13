@@ -1,0 +1,154 @@
+from conans import ConanFile, tools, CMake, AutoToolsBuildEnvironment
+from conans.util import files
+import os
+import platform
+
+
+class OpusConan(ConanFile):
+    name = "opus"
+    version = "@version@"
+    generators = "cmake"
+    settings = "os", "arch", "compiler", "build_type"
+    options = {"shared": [True, False]}
+    default_options = "shared=False"
+    url = "https://gitlab.gz.cvte.cn:1602/3rd/opus"
+
+
+    def source(self):
+        self.run("git clone git@gitlab.gz.cvte.cn:1602/3rd/opus.git @git_ref@ .")
+        @checkout@
+        
+    def configure(self):
+        del self.settings.compiler.libcxx
+        if (self.settings.os == 'Android'):
+            self.requires.add('libne10/1.2.1@1602/stable', private=False)
+
+    def __buildLinux(self):
+        with tools.chdir(self.source_folder):
+            builder = AutoToolsBuildEnvironment(self)
+            self.run('autoreconf -fiv')
+            build_args = ['--enable-shared=no', 
+                            '--enable-custom-modes',
+                            '--disable-doc', 
+                            '--enable-static=yes', 
+                            '--with-pic=yes',
+                            '--disable-extra-programs',
+                            '--prefix=%s'%self.package_folder]
+            if (self.settings.arch != 'x86' and self.settings.arch != 'x86_64'):
+                build_args.append('--enable-fixed-point')
+                build_args.append('--disable-float-api')
+                build_args.append('--host=arm-linux')
+
+            if (self.settings.arch == 'x86'):
+                build_args.append('CFLAGS=-m32')
+
+            builder.fpic = True
+            builder.configure(args=build_args)
+            builder.make(args=['install'])
+            self.run('mv %s/include/opus/*.h %s/include/'%(self.package_folder, self.package_folder))
+            os.removedirs('%s/include/opus'%self.package_folder)
+
+    def __buildAndroid(self):
+        with tools.chdir(self.source_folder):
+            builder = AutoToolsBuildEnvironment(self, win_bash=platform.system()=='Windows')
+            self.run('autoreconf -fiv')
+            ne_info = self.deps_cpp_info['libne10']
+            ne_include_path = ne_info.include_paths[0]
+            ne_lib_path = ne_info.lib_paths[0]
+            build_args = [  '--enable-shared=no', 
+                            '--enable-custom-modes',
+                            '--enable-fixed-point',
+                            '--disable-float-api',
+                            '--disable-doc', 
+                            '--enable-static=yes', 
+                            '--with-pic=yes',
+                            '--disable-extra-programs',
+                            '--prefix=%s'%self.package_folder,
+                            '--with-NE10-libraries=%s'%ne_lib_path,
+                            '--with-NE10-includes=%s'%ne_include_path]
+            host = 'arm-linux-android'
+            sysPostfix = 'arm'
+            if(self.settings.arch == 'armv8'):
+                host = 'aarch64-linux-android'
+                sysPostfix = 'arm64'
+            nh = os.environ.get('NDK_HOME')
+            sysroot = '%s/platforms/android-%s/arch-%s'%(nh, self.settings.os.api_level, sysPostfix)
+            abi = 'arm-linux-androideabi'
+            if (self.settings.arch == 'armv8'):
+                abi = 'aarch64-linux-android'
+            pf = 'linux-x86_64'
+            if(platform.system()=='windows'):
+                pf = 'windows-x86_64'
+
+            CC = '%s/toolchains/%s-%s/prebuilt/%s/bin/%s-gcc'%(nh, abi, self.settings.compiler.version, pf, abi)
+            CPP = '%s/toolchains/%s-%s/prebuilt/%s/bin/%s-cpp'%(nh, abi, self.settings.compiler.version,pf, abi)
+            os.environ['CC'] = CC
+            os.environ['CPP'] = CPP
+            os.environ['CFLAGS'] = '--sysroot=%s -O3 -D__STDC_LIMIT_MACROS -fPIC'%sysroot
+            os.environ['CPPFLAGS'] = '--sysroot=%s -D__STDC_LIMIT_MACROS -fPIC'%sysroot
+
+            build_args.append('--host=%s'%host)
+            build_args.append('--with-sysroot=%s'%sysroot)
+
+            builder.configure(args=build_args)
+            builder.make(args=['install'])
+            self.run('mv %s/include/opus/*.h %s/include/'%(self.package_folder, self.package_folder))
+            os.removedirs('%s/include/opus'%self.package_folder)
+
+    def build(self):
+        if(self.settings.os == "Linux"):
+            self.__buildLinux()
+        elif(self.settings.os == "Android"):
+            self.__buildAndroid()
+        else:        
+            with tools.chdir(self.source_folder):
+                cmake = CMake(self)
+                cmake_options = ["-DBUILD_TEST=OFF", "-DBUILD_TOOL=OFF"]
+
+                if(self.settings.os == "iOS"):
+                    sysroot = "iphoneos"
+                    if(self.settings.arch == "x86" or self.settings.arch == "x86_64"):
+                        sysroot = "iphonesimulator"
+                    target_arch = str(self.settings.arch)
+                    if(self.settings.arch == "armv8"):
+                        target_arch = "arm64"
+                    elif(self.settings.arch == "x86"):
+                        target_arch = "i386"
+                    cmake_options.append("-DCMAKE_OSX_SYSROOT="+sysroot)
+                    cmake_options.append("-DCMAKE_OSX_ARCHITECTURES="+target_arch)
+                    cmake_options.append("-DIOS=TRUE")
+                elif(self.settings.os == "Macos"):
+                    sysroot = "macosx"
+                    target_arch = str(self.settings.arch)
+                    if(self.settings.arch == "x86"):
+                        target_arch = "i386"
+                    if(self.settings.arch == "armv8"):
+                        target_arch = "arm64"
+                    cmake_options.append("-DCMAKE_OSX_SYSROOT="+sysroot)
+                    cmake_options.append("-DCMAKE_OSX_ARCHITECTURES="+target_arch)
+                    cmake_options.append("-DMACOS=TRUE")
+                elif(self.settings.compiler == "Visual Studio"):
+                    cmake_options.append("-DCMAKE_CXX_FLAGS=/w")
+                    if (self.settings.compiler.runtime == 'MT' or self.settings.compiler.runtime == 'MTd'):
+                        tools.download(
+                            'https://artifactory.gz.cvte.cn/artifactory/binaries/1602/buildtool/UseStaticMsvcrt.cmake', 'UseStaticMsvcrt.cmake')
+                        cmake_options.append(
+                            "-DCMAKE_USER_MAKE_RULES_OVERRIDE=UseStaticMsvcrt.cmake")
+
+                cmake.configure(args=cmake_options)
+                cmake.build()
+                cmake.install()
+
+    def package(self):
+        self.output.warn("local cache: %s" % self.in_local_cache)
+        self.output.warn("develop: %s" % self.develop)
+        self.copy(pattern="*.h", dst="include/celt", src="%s/celt"%self.build_folder, keep_path=False)
+        self.copy(pattern="*.h", dst="include/opus", src="%s/src"%self.build_folder, keep_path=False)
+        self.copy(pattern="opus_custom.h", dst="include", src="%s/include"%self.build_folder, keep_path=False)
+        
+
+        # Copying all installed files
+        # self.copy("*", src="%s" % os.path.join(self.source_folder, "install"), keep_path=True)
+
+    def package_info(self):
+        self.cpp_info.libs = ['opus']

@@ -1,0 +1,46 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from conans import ConanFile, CMake, tools
+import os
+
+
+class OggConan(ConanFile):
+    name = "ogg"
+    version = "1.3.3"
+    description = "The OGG library"
+    url = "https://github.com/bincrafters/conan-ogg"
+    homepage = "https://github.com/xiph/ogg"
+    license = "BSD"
+    exports = ["LICENSE.md", "FindOGG.cmake"]
+    generators = "cmake"
+    settings = "os", "arch", "build_type", "compiler"
+    options = {"shared": [True, False], "fPIC": [True, False]}
+    default_options = "shared=False", "fPIC=True"
+
+    def config_options(self):
+        if self.settings.os == "Windows":
+            self.options.remove("fPIC")
+
+    def configure(self):
+        del self.settings.compiler.libcxx
+
+    def source(self):
+        self.run("git clone https://github.com/xiph/ogg.git @git_ref@ .")
+        @checkout@
+
+    def build(self):
+        cmake = CMake(self)
+        if self.settings.os != "Windows":
+            cmake.definitions["CMAKE_POSITION_INDEPENDENT_CODE"] = self.options.fPIC
+        cmake.configure()
+        cmake.build()
+        cmake.install()
+
+    def package(self):
+        self.copy("FindOGG.cmake")
+        self.copy("COPYING", src=self.source_subfolder, dst="licenses", keep_path=False)
+
+    def package_info(self):
+        self.cpp_info.libs = ['ogg']
+

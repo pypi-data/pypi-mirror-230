@@ -1,0 +1,58 @@
+from conans import ConanFile, tools, AutoToolsBuildEnvironment,MSBuild
+import os
+import platform
+
+class resiprocateConan(ConanFile):
+    name = "libmysqlconnectorc"
+    version = "@version@"
+    settings = "os", "arch", "compiler", "build_type"
+    options = {"shared": [True, False]}
+    default_options = "shared=False"
+    url = "https://gitlab.gz.cvte.cn/1602/3rd/mysqlconnectorc.git"
+    # build_requires = "OpenSSL/1.1.1@1602/stable"
+    
+    def source(self):
+        self.run("git clone git@gitlab.gz.cvte.cn/1602/3rd/mysqlconnectorc.git @git_ref@ .")
+        @checkout@
+
+    def configure(self):
+        del self.settings.compiler.libcxx
+
+    def buildUnix(self):
+        self.run('chmod +x dist/configure')
+        builder = AutoToolsBuildEnvironment(self)
+        cfgargs =['--disable-shared', '--enable-cxx', '--enable-stl', '--enable-pthread_api', 'CC=gcc']
+        cfgargs.append("--prefix=%s"%self.package_folder)
+        builder.configure(configure_dir="dist/", args=cfgargs)
+        #builder.make(args=["install"])    
+        self.run('make install') 
+
+    def build(self):
+        return
+
+    def package(self):
+        with tools.chdir(self.source_folder):
+            if (self.settings.os == "Windows"):
+                dir = "win_%s"%self.settings.arch
+                self.copy("%s/include/*.h"%dir, "%s/include/"%self.package_folder, keep_path=False)
+                self.copy("%s/include/mysql/*.h"%dir, "%s/include/mysql/"%self.package_folder, keep_path=False)
+                self.copy("%s/include/mysql/psi/*.h"%dir, "%s/include/mysql/psi/"%self.package_folder, keep_path=False)
+                self.copy("%s/lib/*.lib"%dir, "%s/lib/"%self.package_folder, keep_path=False)
+                self.copy("%s/lib/*.dll"%dir, "%s/bin/"%self.package_folder, keep_path=False)
+            if (self.settings.os == "Linux"):
+                dir = "linux_%s"%self.settings.arch
+                if (self.settings.arch == "x86"):
+                    bin_path = "mysql-connector-c-6.1.11-linux-glibc2.12-i686"                 
+                else:
+                    bin_path = "mysql-connector-c-6.1.11-linux-glibc2.12-x86_64"         
+                tools.untargz("%s/%s.tar.gz"%(dir, bin_path))
+                self.copy("%s/include/*.h"%bin_path, "%s/include/mysql/"%self.package_folder, keep_path=False)
+                self.copy("%s/include/mysql/*.h"%bin_path, "%s/include/mysql/"%self.package_folder, keep_path=False)
+                self.copy("%s/include/mysql/psi/*.h"%bin_path, "%s/include/mysql/psi/"%self.package_folder, keep_path=False)
+                self.copy("%s/lib/*.a"%bin_path, "%s/lib/"%self.package_folder, keep_path=False)
+
+    def package_info(self):
+        if(self.settings.os =='Windows'):
+            self.cpp_info.libs = ['libmysql.lib']
+        else:
+            self.cpp_info.libs = ['mysqlclient']

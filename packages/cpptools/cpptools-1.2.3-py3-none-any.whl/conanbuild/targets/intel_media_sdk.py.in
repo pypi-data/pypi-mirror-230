@@ -1,0 +1,43 @@
+from conans import ConanFile
+
+
+class IntelMediaSDKConan(ConanFile):
+    name = "intel_media_sdk"
+    version = "@version@"
+    author = "lijunping@mindlinker.com"
+    url = "https://gitlab.gz.cvte.cn/1602/3rd/intel-media-sdk"
+    description = "Intel Media SDK"
+    settings = "os", "compiler", "build_type", "arch"
+    options = {"shared": [True, False]}
+    default_options = {"shared": False}
+    generators = "cmake"
+    exports_sources = "*"
+    
+    def configure(self):
+        if not self.settings.os == "Windows":
+            raise Exception("intel_media_sdk only support Windows")
+    
+    def source(self):
+        self.run("git clone git@gitlab.gz.cvte.cn/1602/3rd/intel-media-sdk.git  @git_ref@ .")
+        @checkout@
+        
+    def build(self):
+        pass
+
+    def package(self):
+        self.copy("*.h", dst="include", src="libmfx/include", keep_path=False)
+        #self.copy("*.h", dst="include", src="libmfx/mfx_dispatch/include", keep_path=False)
+        self.copy("*.h", dst="include", src="sdk/sample_common/include", keep_path=False)
+        self.copy("*.h", dst="include/vm", src="sdk/sample_common/include/vm", keep_path=False)
+        self.copy("*.h", dst="include", src="sdk/sample_vpp/include", keep_path=False)
+        self.copy("*.h", dst="include", src="sdk/sample_encode/include", keep_path=False)
+        self.copy("*.h", dst="include", src="sdk/sample_decode/include", keep_path=False)
+        self.copy("*.lib", dst="lib", keep_path=False)
+        self.copy("*.dll", dst="bin", keep_path=False)
+        self.copy("*.dylib*", dst="lib", keep_path=False)
+        self.copy("*.so", dst="lib", keep_path=False)
+        self.copy("*.a", dst="lib", keep_path=False)
+
+    def package_info(self):
+        self.cpp_info.includedirs=['include','include/vm']
+        self.cpp_info.libs = ['libmfx','sample_common','sample_vpp','sample_encode','sample_decode']

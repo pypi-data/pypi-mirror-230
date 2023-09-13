@@ -1,0 +1,62 @@
+from conans import ConanFile, AutoToolsBuildEnvironment, tools
+import os
+from conans.tools import download
+from conans.tools import unzip
+from conans import CMake
+import shutil
+
+class luaConan(ConanFile):
+    name = "lua"
+    version = "@version@"
+    generators = "cmake"
+    settings = "os", "arch", "compiler", "build_type"
+    url="http://github.com/dwerner/conan-lua"
+    license="https://www.lua.org/license.html"
+    exports="FindLua.cmake"
+
+    def requirements(self):
+        if self.settings.os != 'Windows':
+            self.requires("readline/7.0@1602/stable")
+
+    def source(self):
+        self.run("git clone https://github.com/lua/lua.git @git_ref@ .")
+        @checkout@
+
+    def build(self):
+        self.target = {
+                "Macos":"macosx",
+                "Linux": "linux",
+                "Windows":"mingw"
+        }[str(self.settings.os)]
+
+        if self.settings.os != 'Windows':
+            tools.replace_in_file("src/Makefile", "lreadline", "lreadline -lncurses")
+            env_build = AutoToolsBuildEnvironment(self, win_bash=(self.target == "mingw"))
+
+            build_args = ["MYCFLAGS=-fPIC"]
+            if self.settings.os != 'Windows':
+                build_args.append("MYLDFLAGS=-L%s " % (env_build.library_paths[0]))
+
+            env_build.fpic = True
+            env_build.make(args = build_args, target=self.target)
+        else:
+            
+            cmake = CMake(self)
+            cmake.configure(source_folder= "%s/src" % self.unzipped_name)
+            cmake.build()
+
+    def package(self):
+        self.copy("FindLua.cmake", ".", ".")
+        if self.settings.os != 'Windows':
+            self.copy(pattern="*.h", dst="include", src="%s/src" % self.unzipped_name, keep_path=True)
+            self.copy(pattern="*.hpp", dst="include", src="%s/src" % self.unzipped_name, keep_path=True)
+            self.copy(pattern="*.a", dst="lib", src="%s/src" % self.unzipped_name, keep_path=True)
+            self.copy(pattern="*.lib", dst="lib", src="%s/src" % self.unzipped_name, keep_path=True)
+            self.copy(pattern="lua*", dst="bin", src="%s/src" % self.unzipped_name, keep_path=True)
+        else:
+            self.copy(pattern="*.h", dst="include", keep_path=False)
+            self.copy(pattern="*.hpp", dst="include", keep_path=False)
+            self.copy(pattern="*.lib", dst="lib", keep_path=False)
+
+    def package_info(self):
+        self.cpp_info.libs = ['lua']

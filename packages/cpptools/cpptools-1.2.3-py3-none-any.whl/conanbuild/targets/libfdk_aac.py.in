@@ -1,0 +1,281 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from conans import ConanFile, AutoToolsBuildEnvironment, tools
+import os
+import fnmatch
+import platform
+
+
+class FDKAACConan(ConanFile):
+    name = "libfdk_aac"
+    version = "@version@"
+    url = "https://github.com/bincrafters/conan-libfdk_aac"
+    description = "A standalone library of the Fraunhofer FDK AAC code from Android"
+    license = "https://github.com/mstorsjo/fdk-aac/blob/master/NOTICE"
+    exports_sources = ["CMakeLists.txt", "LICENSE"]
+    settings = "os", "arch", "compiler", "build_type"
+    homepage = "https://sourceforge.net/projects/opencore-amr/"
+    options = {"shared": [True, False], "fPIC": [True, False]}
+    default_options = "shared=False", "fPIC=True"
+
+    def getNdkVersion(self):
+        version = None
+        version_file = os.path.join(os.environ.get("NDK_HOME"), "source.properties")
+        with open(version_file, 'r') as fin:
+            for line in fin.readlines():
+                if "Pkg.Revision" in line:
+                    version = line.split("=")[-1].split(".")[0].strip()
+        return int(version)
+
+    @property
+    def is_winbash(self):
+        return self.settings.compiler != 'Visual Studio' and platform.system() == "Windows"
+
+    def config_options(self):
+        if self.settings.os == 'Windows':
+            del self.options.fPIC
+
+    def source(self):
+        source_url = "https://github.com/mstorsjo/fdk-aac/archive/v%s.tar.gz" % self.version
+        tools.get(source_url)
+        extracted_dir = "fdk-aac-" + self.version
+        os.rename(extracted_dir, "sources")
+
+    @property
+    def android_args(self):
+        if self.getNdkVersion() > 17:
+            configure_host   = {
+                "armv7": "arm-linux-androideabi", "armv8" : "aarch64-linux-android",
+                "x86"  : "i686-linux-android"   , "x86_64": "x86_64-linux-android"
+            } [str(self.settings.arch)]
+            clang_targets = {
+                "armv7": "armv7a-linux-androideabi", "armv8" : "aarch64-linux-android",
+                "x86"  : "i686-linux-android"      , "x86_64": "x86_64-linux-android"
+            } [str(self.settings.arch)]
+
+            sys_root          = os.path.join(os.environ.get("NDK_HOME"), "toolchains/llvm/prebuilt/{}-x86_64/sysroot".format(platform.system().lower()))
+            ndk_toolchain_bin = os.path.join(os.environ.get("NDK_HOME"), "toolchains/llvm/prebuilt/{}-x86_64/bin".format(platform.system().lower()))
+            configure_args    = ["--host={}".format(configure_host), "--with-sysroot={}".format(sys_root)]
+
+            os.environ['CC']       = "{}/clang"         .format(ndk_toolchain_bin)
+            os.environ['CXX']      = "{}/clang++"       .format(ndk_toolchain_bin)
+            os.environ['CFLAGS']   = "-target {}{}"     .format(clang_targets, self.settings.os.api_level)
+            os.environ['CXXFLAGS'] = "-target {}{}"     .format(clang_targets, self.settings.os.api_level)
+            os.environ['LD']       = "{}/ld"            .format(ndk_toolchain_bin)
+            os.environ['AR']       = "{}/llvm-ar"       .format(ndk_toolchain_bin)
+            os.environ['AS']       = "{}/clang"         .format(ndk_toolchain_bin)
+            os.environ['NM']       = "{}/llvm-nm"       .format(ndk_toolchain_bin)
+            os.environ['OBJCOPY']  = "{}/llvm-objcopy"  .format(ndk_toolchain_bin)
+            os.environ['OBJDUMP']  = "{}/llvm-objdump"  .format(ndk_toolchain_bin)
+            os.environ['RANLIB']   = "{}/llvm-ranlib"   .format(ndk_toolchain_bin)
+            os.environ['STRIP']    = "{}/llvm-strip"    .format(ndk_toolchain_bin)
+            os.environ['PATH']     = ndk_toolchain_bin + ":" + os.environ.get("PATH")
+
+            return configure_args
+        else:
+            configure_host   = {
+                "armv7": "arm-linux-androideabi", "armv8" : "aarch64-linux-android",
+                "x86"  : "i686-linux-android"   , "x86_64": "x86_64-linux-android"
+            } [str(self.settings.arch)]
+            ndk_platform     = {
+                "armv7": "arm", "armv8" : "arm64",
+                "x86"  : "x86", "x86_64": "x86_64"
+            } [str(self.settings.arch)]
+            toolchain_type   = {
+                "armv7": "arm-linux-androideabi", "armv8" : "aarch64-linux-android",
+                "x86"  : "x86"                  , "x86_64": "x86_64"
+            } [str(self.settings.arch)]
+            ndk_sources_arch = {
+                "armv7": "armeabi", "armv8" : "arm64-v8a",
+                "x86"  : "x86"    , "x86_64": "x86_64"
+            } [str(self.settings.arch)]
+
+            ndk_home          = os.environ.get("NDK_HOME")
+            sys_root          = os.path.join(ndk_home, "platforms/android-{}/arch-{}/".format(self.settings.os.api_level, ndk_platform))
+            ndk_toolchain_bin = os.path.join(ndk_home, "toolchains/{}-4.9/prebuilt/{}-x86_64/bin".format(toolchain_type, platform.system().lower()))
+            configure_args    = ["--host={}".format(configure_host), "--with-sysroot={}".format(sys_root)]
+
+            os.environ['CC']       = "{}/{}-gcc --sysroot={} -I{}usr/include".format(ndk_toolchain_bin, configure_host, sys_root, sys_root)
+            os.environ['CXX']      = "{}/{}-g++ --sysroot={} -I{}usr/include".format(ndk_toolchain_bin, configure_host, sys_root, sys_root)
+            os.environ['CPP']      = "{}/{}-cpp"        .format(ndk_toolchain_bin, configure_host)
+            os.environ['CFLAGS'] = "-Wall -nostdlib -DANDROID"
+            if (str(self.settings.arch) == "armv7"):
+                os.environ['CFLAGS'] += " -mfpu=neon -march=armv7-a"
+            elif(str(self.settings.arch) == "armv8"):
+                os.environ['CFLAGS'] += " -march=armv8-a"
+            os.environ['CXXFLAGS'] = os.environ['CFLAGS']
+            os.environ['LD']       = "{}/{}-ld"         .format(ndk_toolchain_bin, configure_host)
+            os.environ['AR']       = "{}/{}-ar"         .format(ndk_toolchain_bin, configure_host)
+            os.environ['AS']       = "{}/{}-as"         .format(ndk_toolchain_bin, configure_host)
+            os.environ['NM']       = "{}/{}-nm"         .format(ndk_toolchain_bin, configure_host)
+            os.environ['OBJCOPY']  = "{}/{}-objcopy"    .format(ndk_toolchain_bin, configure_host)
+            os.environ['OBJDUMP']  = "{}/{}-objdump"    .format(ndk_toolchain_bin, configure_host)
+            os.environ['RANLIB']   = "{}/{}-ranlib"     .format(ndk_toolchain_bin, configure_host)
+            os.environ['STRIP']    = "{}/{}-strip"      .format(ndk_toolchain_bin, configure_host)
+            os.environ['PATH']     = ndk_toolchain_bin + ":" + os.environ.get("PATH")
+            os.environ['LDFLAGS']  = " -nostdlib -Bdynamic -Wl,--whole-archive -Wl,--no-undefined -Wl,-z,noexecstack -Wl,-z,nocopyreloc"
+            os.environ['LDFLAGS'] += " -Wl,-soname,/system/lib/libz.so -Wl,-rpath-link={}/usr/lib,-dynamic-linker=/system/bin/linker".format(sys_root)
+            os.environ['LDFLAGS'] += " -L{}/sources/cxx-stl/gnu-libstdc++/4.9/libs/{}".format(ndk_home, ndk_sources_arch)
+            os.environ['LDFLAGS'] += " -L{}/toolchains/{}-4.9/prebuilt/{}-x86/{}/lib".format(ndk_home, toolchain_type, platform.system().lower(), configure_host)
+            os.environ['LDFLAGS'] += " -L{}/usr/lib -lc -lgcc -lm -ldl".format(sys_root)
+
+            return configure_args
+
+    @property
+    def osx_args(self):
+        build_args = []
+        if(self.settings.arch == "armv8"):
+            build_args.append("ASFLAGS=-arch arm64")
+            build_args.append("--host=aarch64-apple-darwin")
+
+        if (self.settings.build_type == "Debug"):
+            build_args.append("--enable-debug")
+        return build_args
+
+    @property
+    def ios_args(self):
+        target_arch = str(self.settings.arch)
+        build_args = []
+        target_platform = "iphoneos"
+        if(self.settings.arch == "armv8"):
+            target_arch = "arm64"
+        elif(self.settings.arch == "x86"):
+            target_arch = "i386"
+            target_platform = "iphonesimulator"
+        elif(self.settings.arch == "x86_64"):
+            target_platform = "iphonesimulator"
+
+        CC = "xcrun -sdk " + target_platform + " clang "            
+        extra_c_flags = "-arch %s "%target_arch
+        if(target_arch == "x86_64"):
+            target_platform = "iphonesimulator"
+            extra_c_flags += "-mios-simulator-version-min=7.0"
+            build_args.append('--host=x86_64-apple-darwin')
+        elif(target_arch == "i386"):
+            target_platform = "iphonesimulator"
+            extra_c_flags += "-mios-simulator-version-min=7.0"
+            build_args.append('--host=i386-apple-darwin')
+        elif(target_arch == "arm64"):
+            extra_c_flags += "-mios-version-min=7.0 -fembed-bitcode"
+            AS = "gas-preprocessor.pl -arch aarch64 -- %s"%CC
+            build_args.append('--host=aarch64-apple-darwin')
+            build_args.append("ASFLAGS=%s"%extra_c_flags)
+            build_args.append("AS=%s"%AS)
+        elif(target_arch == "armv7"):
+            extra_c_flags += "-mios-version-min=7.0 -fembed-bitcode"
+            AS = "gas-preprocessor.pl -arch arm -- %s"%CC
+            build_args.append('--host=arm-apple-darwin')
+            build_args.append("AS=%s"%AS)
+
+
+        if (self.settings.build_type == "Debug"):
+            build_args.append("--enable-debug")
+        else:
+            build_args.append("--enable-strip")
+
+        build_args.append("CC=%s"%CC)
+        build_args.append("CXX=%s"%CC)
+        build_args.append("CPP=%s -E"%CC)
+        build_args.append("CFLAGS=%s"%extra_c_flags)
+        build_args.append("LDFLAGS=%s"%extra_c_flags)
+        build_args.append("CPPFLAGS=%s"%extra_c_flags)
+
+        return build_args
+
+    @property
+    def linux_args(self):
+        build_args = []
+        if(self.settings.arch == "x86"):
+            build_args.append("CFLAGS=-m32 -fPIC")
+            build_args.append("LDFLAGS=-m32 -fPIC")
+            build_args.append("--host=i386-linux")
+        elif(self.settings.arch == "x86_64"):
+            build_args.append("CFLAGS=-m64 -fPIC")
+            build_args.append("LDFLAGS=-m64 -fPIC")
+        elif(self.settings.arch == "armv7"):
+            build_args.append("CFLAGS=-mfpu=neon -march=armv7-a -mfloat-abi=softfp -fPIC")
+            build_args.append("LDFLAGS=-mfpu=neon -march=armv7-a -mfloat-abi=softfp -fPIC")
+            build_args.append("--host=arm-linux-gnueabi")
+
+        return build_args
+
+    def build_vs(self):
+        with tools.chdir('sources'):
+            with tools.vcvars(self.settings, force=True):
+                #with tools.remove_from_path('mkdir'):
+                tools.replace_in_file('Makefile.vc',
+                                        'CFLAGS   = /nologo /W3 /Ox /MT',
+                                        'CFLAGS   = /nologo /W3 /Ox /%s' % str(self.settings.compiler.runtime))
+                self.run('nmake -f Makefile.vc')
+                self.run('nmake -f Makefile.vc prefix="%s" install' % os.path.abspath(self.package_folder))
+
+    def build_configure(self):
+        with tools.chdir('sources'):
+            win_bash = self.is_winbash
+            prefix = os.path.abspath(self.package_folder)
+            if self.is_winbash:
+                prefix = tools.unix_path(prefix, tools.MSYS2)
+            args = ['--prefix=%s' % prefix]
+            if self.options.shared:
+                args.extend(['--disable-static', '--enable-shared'])
+            else:
+                args.extend(['--disable-shared', '--enable-static'])
+            if self.settings.os != 'Windows' and self.options.fPIC:
+                args.append('--with-pic')
+
+            if (self.settings.os == 'Android'):
+                args.extend(self.android_args)
+            elif(self.settings.os == 'iOS'):
+                args.extend(self.ios_args)
+            elif(self.settings.os == 'Linux'):
+                args.extend(self.linux_args)
+            elif(self.settings.os == 'Macos'):
+                args.extend(self.osx_args)
+
+            if(win_bash):
+                env_build = AutoToolsBuildEnvironment(self, win_bash=win_bash)
+                self.run('autoreconf -fiv', win_bash=win_bash)
+            else:
+                env_build = AutoToolsBuildEnvironment(self)
+                self.run('autoreconf -fiv')
+            
+            env_build.configure(build=False, host=False, args=args)
+            env_build.make()
+            env_build.make(args=['install'])
+
+    def build(self):
+        if self.settings.compiler == 'Visual Studio':
+            self.build_vs()
+        else:
+            self.build_configure()
+
+    def package(self):
+        self.copy(pattern="NOTICE", src='sources', dst="licenses")
+        if self.settings.compiler == 'Visual Studio':
+            self.copy(pattern="fdk-aac.pc.in", src='sources', dst="lib/pkgconfig")
+            pc_in_file = os.path.join(self.package_folder, "lib/pkgconfig/fdk-aac.pc.in")
+            pc_file = os.path.join(self.package_folder, "lib/pkgconfig/fdk-aac.pc")
+            os.rename(pc_in_file, pc_file)
+            tools.replace_in_file(pc_file, "@prefix@", str(self.package_folder))
+            tools.replace_in_file(pc_file, "@exec_prefix@", "${prefix}")
+            tools.replace_in_file(pc_file, "@libdir@", "${exec_prefix}/lib")
+            tools.replace_in_file(pc_file, "@includedir@", "${exec_prefix}/lib")
+            tools.replace_in_file(pc_file, "@PACKAGE_VERSION@", self.version)
+            tools.replace_in_file(pc_file, "@LIBS_PUBLIC@", "")
+            tools.replace_in_file(pc_file, "@LIBS_PRIVATE@", "")
+
+            if self.options.shared:
+                exts = ['fdk-aac.lib']
+            else:
+                exts = ['fdk-aac.dll.lib', 'fdk-aac-1.dll']
+            for root, _, filenames in os.walk(self.package_folder):
+                for ext in exts:
+                    for filename in fnmatch.filter(filenames, ext):
+                        os.unlink(os.path.join(root, filename))
+
+    def package_info(self):
+        if self.settings.compiler == 'Visual Studio' and self.options.shared:
+            self.cpp_info.libs = ['fdk-aac.dll.lib']
+        else:
+            self.cpp_info.libs = ['fdk-aac']

@@ -1,0 +1,37 @@
+from conans import ConanFile, tools
+
+
+class SignalwireConan(ConanFile):
+    name = "signalwire-client-c"
+    version = "@version@"
+    settings = "os", "compiler", "build_type", "arch"
+    description = "<Description of Spandsp here>"
+    url = "None"
+    license = "None"
+    author = "None"
+    topics = None
+    
+    def source(self):
+        self.run("git clone git@gitlab.gz.cvte.cn:1602/3rd/conan-signalwire-client-c.git @git_ref@ .")
+        @checkout@
+
+    def package(self):
+        if self.settings.os == "Windows":
+            if self.settings.arch == "x86_64":
+                arch = "x64"
+            elif self.settings.arch == "x86":
+                arch = "Win32"
+                
+            if self.settings.build_type == "Debug":
+                build_type = "Debug"
+            else:
+                build_type = "Release"
+            
+            bin_path = "conan-signalwire-client-c/" + arch + "/" + build_type
+            
+            self.copy("*.lib", src=bin_path, dst="lib", keep_path=False)
+            self.copy("*.dll", src=bin_path, dst="lib", keep_path=False)
+            self.copy("*.h", src="conan-signalwire-client-c/include", dst="include/", keep_path=True)
+
+    def package_info(self):
+        self.cpp_info.libs = ["signalwire_client"]

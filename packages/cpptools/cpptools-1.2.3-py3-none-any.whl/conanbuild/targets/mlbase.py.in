@@ -1,0 +1,120 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from conans import ConanFile, AutoToolsBuildEnvironment
+from conans import tools
+import os
+import shutil
+from conans import CMake
+
+
+class MLBaseConan(ConanFile):
+    name = "mlbase"
+    version = "@version@"
+    url = "https://gitlab.gz.cvte.cn/1602/rtcbase/mlbase"
+    license = "MIT"
+    description = "Mindlinker basic utility"
+    generators = "cmake"
+    settings = "os", "arch", "compiler", "build_type"
+    options = {"shared": [True, False]}
+    default_options = "shared=False"
+    
+    
+    def source(self):
+        self.run("git clone git@gitlab.gz.cvte.cn/1602/rtcbase/mlbase.git @git_ref@ .")
+        @checkout@
+
+    def getNdkVersion(self):
+        version = None
+        version_file = os.path.join(os.environ.get("NDK_HOME"), "source.properties")
+        with open(version_file, 'r') as fin:
+            for line in fin.readlines():
+                if "Pkg.Revision" in line:
+                    version = line.split("=")[-1].split(".")[0].strip()
+        return int(version)
+
+    def config(self):
+        del self.settings.compiler.libcxx
+        self.requires.add("Poco/1.9.1libressl-solveReactorError@1602/stable", private=False)
+        self.requires.add("googletest/1.8.0@1602/stable", private=False)
+
+    def build(self):
+        with tools.chdir(self.source_folder):
+            cmake = CMake(self)
+            # Wrap original CMakeLists.txt for be able to include and call CONAN_BASIC_SETUP
+            # It will allow us to set architecture flags, link with the requires etc
+            cmake_options = []
+            cmake_options.append("-DMLBASE_CONAN_CREATE=ON")
+            cmake_options.append("-DWITH_TEST=OFF")
+            if self.options.shared:
+                cmake_options.append("-DMLBASE_SHARED=ON")
+            else:
+                cmake_options.append("-DMLBASE_SHARED=OFF")
+            cmake_options.append("-DMLBASE_EXPORT=ON")
+
+            if self.settings.os == "Android":
+                cmake_options.append("-DMLBASE_ANDROID=ON")
+                cmake.generator = "Unix Makefiles"
+                toolchain_file = os.environ.get(
+                    "NDK_HOME") + "/build/cmake/android.toolchain.cmake"
+                cmake_options.append("-DCMAKE_TOOLCHAIN_FILE="+toolchain_file)
+                if self.getNdkVersion() > 17:
+                    cmake_options.append("-DANDROID_TOOLCHAIN=clang")
+                    cmake_options.append("-DANDROID_STL=c++_static")
+                else:
+                    cmake_options.append("-DANDROID_TOOLCHAIN=gcc")
+                    cmake_options.append("-DANDROID_STL=gnustl_static")
+                if(self.settings.arch == "armv7"):
+                    cmake_options.append("-DANDROID_ABI=armeabi-v7a")
+                elif(self.settings.arch == "armv8"):
+                    cmake_options.append("-DANDROID_ABI=arm64-v8a")
+            elif self.settings.os == "iOS":
+                cmake_options.append("-DMLBASE_IOS=ON")
+                sysroot = "iphoneos"
+                if(self.settings.arch == "x86" or self.settings.arch == "x86_64"):
+                    sysroot = "iphonesimulator"
+                target_arch = str(self.settings.arch)
+                if(self.settings.arch == "armv8"):
+                    target_arch = "arm64"
+                elif(self.settings.arch == "x86"):
+                    target_arch = "i386"
+                cmake_options.append("-DCMAKE_OSX_SYSROOT="+sysroot)
+                cmake_options.append("-DCMAKE_OSX_ARCHITECTURES="+target_arch)
+            elif self.settings.os == "Macos":
+                cmake_options.append("-DMLBASE_MACOS=ON")
+                sysroot = "macosx"
+                target_arch = str(self.settings.arch)
+                if(self.settings.arch == "x86"):
+                    target_arch = "i386"
+                cmake_options.append("-DCMAKE_OSX_SYSROOT="+sysroot)
+                cmake_options.append("-DCMAKE_OSX_ARCHITECTURES="+target_arch)
+            elif self.settings.os == "Linux":
+                cmake_options.append("-DMLBASE_LINUX=ON")
+                if("CMAKE_TOOLCHAIN_FILE_NAME" in os.environ):
+                    cmake_options.append("-DCMAKE_TOOLCHAIN_FILE=%s"%os.environ.get("CMAKE_TOOLCHAIN_FILE_NAME"))
+                elif(self.settings.arch == "x86"):
+                    cmake_options.append("-DCMAKE_C_FLAGS=-m32 -fPIC")
+                    cmake_options.append("-DCMAKE_CXX_FLAGS=-m32 -fPIC")
+                    cmake_options.append("-DCMAKE_EXE_LINKER_FLAGS=-m32 -fPIC")
+                else:
+                    cmake_options.append("-DCMAKE_C_FLAGS=-fPIC")
+                    cmake_options.append("-DCMAKE_CXX_FLAGS=-fPIC")
+            elif self.settings.compiler == "Visual Studio":
+                cmake_options.append("-DMLBASE_WINDOWS=ON")
+                if (self.settings.compiler.runtime == 'MT' or self.settings.compiler.runtime == 'MTd'):
+                    tools.download('https://artifactory.gz.cvte.cn/artifactory/binaries/1602/buildtool/UseStaticMsvcrt.cmake', 'UseStaticMsvcrt.cmake')
+                    cmake_options.append("-DCMAKE_USER_MAKE_RULES_OVERRIDE=UseStaticMsvcrt.cmake")
+
+            cmake_options.append("-DCMAKE_INSTALL_PREFIX=%s" % self.package_folder)
+
+            cmake.configure(args=cmake_options, build_folder="build")
+            cmake.build()
+            cmake.install()
+
+    def package_info(self):
+        self.cpp_info.includedirs = ["include"]
+        self.cpp_info.libs = ["Device", "Foundation", "Media", "Thread"]
+        if self.options.shared:
+            self.cpp_info.defines.append("MLBASE_SHARED=ON")
+            if self.settings.compiler == "Visual Studio":
+                self.cpp_info.libs.extend(["ws2_32", "Iphlpapi.lib"])

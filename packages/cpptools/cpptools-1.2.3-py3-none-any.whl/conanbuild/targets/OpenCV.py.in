@@ -1,0 +1,84 @@
+from conans import ConanFile, CMake, tools
+import os
+
+class OpenCVConan(ConanFile):
+    name = "OpenCV"
+    version = "@version@"
+    license = "BSD"
+    url = "git@gitlab.gz.cvte.cn:1602/3rd/opencv.git"
+    description = "OpenCV"
+    settings = "os", "compiler", "build_type", "arch"
+    options = {"shared": [True, False]}
+    default_options = "shared=False"
+    generators = "cmake"
+    
+    def source(self):
+        self.run("git clone git@gitlab.gz.cvte.cn:1602/3rd/opencv.git @git_ref@ .")
+        @checkout@
+
+    def config(self):
+        self.requires.add("libjpeg/1.5.2@1602/stable")
+        self.options["libjpeg"].shared = self.options.shared
+        self.requires.add("zlib/1.2.11@1602/stable")
+        self.options["zlib"].shared = self.options.shared
+        self.requires.add("protobuf/3.5.0.1@1602/stable")
+        self.options["protobuf"].shared = self.options.shared
+        
+    def build(self):
+        cmake = CMake(self)
+        #cmake.parallel = False
+        cmake_options = ["-DWITH_GSTREAMER=OFF", 
+                         "-DWITH_GSTREAMER_0_10=OFF", 
+                         "-DWITH_GTK=OFF", 
+                         "-DWITH_WIN32UI=OFF",
+                         "-DBUILD_SHARED_LIBS=OFF", 
+                         "-DWITH_LAPACK=OFF",
+                         "-DWITH_OPENCL=ON", 
+                         "-DWITH_CUDA=OFF",
+                         "-DWITH_IPP=OFF",
+                         "-DWITH_PNG=ON", 
+                         "-DWITH_FFMPEG=OFF",
+                         "-DWITH_TIFF=OFF",
+                         "-DBUILD_opencv_python2=OFF",
+                         "-DBUILD_opencv_python3=OFF",
+                         "-DBUILD_JPEG=OFF",
+                         "-DBUILD_ZLIB=OFF",
+                         "-DWITH_PROTOBUF=ON"]
+        zlibDir = self.deps_cpp_info['zlib'].rootpath
+        jpegDir = self.deps_cpp_info['libjpeg'].rootpath
+        zlibDir = zlibDir.replace("\\", "/")
+        jpegDir = jpegDir.replace("\\", "/")
+        pbDir = self.deps_cpp_info['protobuf'].rootpath.replace("\\", "/")
+        
+        if(self.settings.os == "Windows"):
+            cmake_options.append("-DZLIB_INCLUDE_DIR=%s/%s" % (zlibDir, self.deps_cpp_info['zlib'].includedirs[0]))
+            cmake_options.append("-DZLIB_LIBRARY=%s/lib/%s.lib" % (zlibDir, self.deps_cpp_info['zlib'].libs[0]))
+            cmake_options.append("-DJPEG_INCLUDE_DIR=%s/%s" % (jpegDir, self.deps_cpp_info['libjpeg'].includedirs[0]))
+            cmake_options.append("-DJPEG_LIBRARY=%s/lib/%s.lib" % (jpegDir, self.deps_cpp_info['libjpeg'].libs[0]))
+            cmake_options.append("-DProtobuf_DIR=%s/cmake" % (pbDir))
+        else:
+            cmake_options.append("-DZLIB_INCLUDE_DIR=%s/%s" % (zlibDir, self.deps_cpp_info['zlib'].includedirs[0]))
+            cmake_options.append("-DZLIB_LIBRARY=%s/lib/lib%s.a" % (zlibDir, self.deps_cpp_info['zlib'].libs[0]))
+            cmake_options.append("-DJPEG_INCLUDE_DIR=%s/%s" % (jpegDir, self.deps_cpp_info['libjpeg'].includedirs[0]))
+            cmake_options.append("-DJPEG_LIBRARY=%s/lib/lib%s.a" % (jpegDir, self.deps_cpp_info['libjpeg'].libs[0]))
+            cmake_options.append("-DProtobuf_DIR=%s/lib/cmake/protobuf" % (pbDir))
+
+        cmake_options.append('-Dprotobuf_MODULE_COMPATIBLE=ON')
+        print(cmake_options)
+        cmake.configure(args=cmake_options, build_folder='build')
+        cmake.build()
+        cmake.install()
+
+    def package(self):
+        pass
+        
+    def package_info(self):
+        if(self.settings.os == "Macos" or self.settings.os == "Linux"):
+            self.cpp_info.libdirs.append('share/OpenCV/3rdparty/lib')
+        self.cpp_info.libs = ["opencv_calib3d", "opencv_dnn", "opencv_features2d", "opencv_flann", "opencv_highgui",
+            "opencv_imgcodecs", "opencv_imgproc", "opencv_ml", "opencv_objdetect", "opencv_photo", "opencv_shape", "opencv_stitching",
+            "opencv_superres", "opencv_video", "opencv_videoio", "opencv_videostab", "opencv_core", "IlmImf", "libjasper",
+            "libwebp", "ittnotify"]
+
+        if(self.settings.os != "Linux"):
+            self.cpp_info.libs.append("libpng")

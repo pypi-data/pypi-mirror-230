@@ -1,0 +1,113 @@
+from conans import ConanFile, tools, AutoToolsBuildEnvironment
+import os
+import platform
+
+
+class Openh264Conan(ConanFile):
+    name = "openh264"
+    version = "@version@"
+    settings = "os", "arch", "compiler", "build_type"
+    options = {"shared": [True, False]}
+    default_options = "shared=False"
+    url = "https://gitlab.gz.cvte.cn:1602/3rd/openh264"
+    
+    def source(self):
+        self.run("git clone git@gitlab.gz.cvte.cn:1602/3rd/openh264.git @git_ref@ .")
+        @checkout@
+
+    def configure(self):
+        del self.settings.compiler.libcxx
+
+    def buildAndroid(self):
+        if (tools.os_info.is_windows):
+            env_build = AutoToolsBuildEnvironment(self, win_bash=True)
+        else:
+            env_build = AutoToolsBuildEnvironment(self)
+
+        if (tools.os_info.is_windows):
+            self.run('export PATH=%s/tools:$PATH'%str(tools.unix_path(os.environ['ANDROID_SDK'])), win_bash=True)
+            ndkroot = str(tools.unix_path(os.environ['NDK_HOME']))
+        else:
+            self.run('export PATH=%s/tools:$PATH'%os.environ['ANDROID_SDK'])
+            ndkroot = str(os.environ['NDK_HOME'])
+        target = "android-%s"%str(self.settings.os.api_level)
+        arch = str(self.settings.arch)
+        if (arch == 'armv7'):
+            arch = 'arm'
+        elif(arch == 'armv8'):
+            arch = 'arm64'
+
+        tools.replace_in_file('build/platform-android.mk', 'NDKLEVEL = 12', 'NDKLEVEL = %s'%self.settings.os.api_level, strict=False)
+        if(tools.os_info.is_windows):
+            tools.replace_in_file('build/platform-android.mk', '$(NDKROOT)/ndk-build', '$(NDKROOT)/ndk-build.cmd', strict=False)
+
+        make_args = ["OS=android",  "USE_ASM=Yes",  "NDKROOT=%s"%ndkroot, "TARGET=%s"%target, "ARCH=%s"%arch]
+
+        env_build.make(args=make_args)
+
+    def buildWin(self):
+        with tools.vcvars(self.settings, filter_known_paths=False):
+            env_build = AutoToolsBuildEnvironment(self, win_bash=True)
+            arch = str(self.settings.arch)
+            if(arch == 'x86'):
+                arch = 'i386'
+
+            make_args = ["OS=msvc", "ARCH=%s"%arch , "USE_ASM=Yes", "BUILDTYPE=%s"%self.settings.build_type, "VERBOSE=1"]
+
+            if(self.settings.build_type == 'Release'):
+                tools.replace_in_file('build/platform-msvc.mk', '-MT', '-%s'%self.settings.compiler.runtime, strict=True)
+            else:
+                tools.replace_in_file('build/platform-msvc.mk', '-MTd', '-%s'%self.settings.compiler.runtime, strict=True)
+            
+            env_build.make(args=make_args)
+
+    def buildiOS(self):
+        env_build = AutoToolsBuildEnvironment(self)
+        arch = str(self.settings.arch)
+        if (arch == 'armv8'):
+            arch = 'arm64'
+        elif (arch == 'x86'):
+            arch = 'i386'
+        
+        make_args = ['OS=ios', 'USE_ASM=Yes', 'ARCH=%s'%arch, 'SDK_MIN=%s'%str(self.settings.os.version)]
+
+        env_build.make(args=make_args)
+
+    def buildUnix(self):
+        env_build = AutoToolsBuildEnvironment(self)
+
+        arch = str(self.settings.arch)
+        if (arch == 'x86'):
+            arch = 'i386'
+        if (arch == 'armv8'):
+            arch = 'arm64'
+
+        make_args = ['ARCH=%s'%arch]
+        if(self.settings.os == 'Linux' and (self.settings.arch == 'armv7' or self.settings.arch == 'armv8')):
+            make_args.append('USE_ASM=No')
+        else:
+            make_args.append('USE_ASM=Yes')
+
+        env_build.make(args=make_args)     
+
+    def build(self):
+        with tools.chdir(self.build_folder):
+            if(self.settings.os == "Windows"):
+                self.buildWin()
+            elif(self.settings.os == "Android"):
+                self.buildAndroid()
+            elif(self.settings.os == "iOS"):
+                self.buildiOS()
+            else:
+                self.buildUnix()
+
+    def package(self):
+        with tools.chdir(self.source_folder):
+            self.copy("codec/api/svc/*.h", "%s/include/api/svc/"%self.package_folder, keep_path=False)
+            if (self.settings.os == "Windows"):
+                self.copy("openh264.lib", "%s/lib/"%self.package_folder, keep_path=False)
+            else:
+                self.copy("libopenh264.a", "%s/lib/"%self.package_folder, keep_path=False)
+
+    def package_info(self):
+        self.cpp_info.libs = ['openh264']

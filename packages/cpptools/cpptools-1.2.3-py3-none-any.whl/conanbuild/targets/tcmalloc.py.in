@@ -1,0 +1,49 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import os
+from conans import ConanFile, tools, AutoToolsBuildEnvironment
+
+
+class TcMallocConan(ConanFile):
+    name = "tcmalloc"
+    version = "@version@"
+    license = "BSD"
+    url = "https://gitlab.gz.cvte.cn/1602/3rd/gperftools/"
+    homepage = "https://github.com/gperftools/gperftools"
+    description = "Main gperftools repository"
+    author = "CVTE 1602"
+    settings = "os_build", "arch_build", "compiler", "os"
+    options = {"shared": [True, False]}
+    default_options = "shared=False"
+    exports = ""
+    _source_subfolder = "source_subfolder"
+    _autotools = None
+
+
+    def source(self):
+        self.run("git clone git@gitlab.gz.cvte.cn:1602/3rd/gperftools.git @git_ref@ .")
+        @checkout@
+
+    def _configure_autotools(self):
+        if not self._autotools:
+            args = ["--disable-cpu-profiler", "--disable-heap-profiler", "--disable-heap-checker", "--disable-debugalloc", "--enable-minimal", "--disable-shared"]
+            self._autotools = AutoToolsBuildEnvironment(self, win_bash=False)
+            self._autotools.configure(args=args)
+        return self._autotools
+
+    def _build_configure(self):
+        autotools = self._configure_autotools()
+        autotools.make()
+        autotools.install()
+
+    def build(self):
+        if(self.settings.os=="Linux"):
+            self.run("./autogen.sh")
+            self._build_configure()
+        else:
+            pass  # TcMalloc is only for Linux. Build a empty conan-package for Windows to make conanfile.txt commonly.
+
+    #def package(self):
+
+    def package_info(self):
+        self.cpp_info.libs = ["tcmalloc_minimal"]

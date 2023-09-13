@@ -1,0 +1,221 @@
+from conans import ConanFile, tools, CMake, AutoToolsBuildEnvironment
+from conans.util import files
+import os
+import platform
+
+
+class LibjpegConan(ConanFile):
+    name = "libjpeg"
+    version = "@version@"
+    generators = "cmake"
+    settings = "os", "arch", "compiler", "build_type"
+    options = {"shared": [True, False]}
+    default_options = "shared=False"
+    url = "https://gitlab.gz.cvte.cn:1602/3rd/libjpeg-turbo"
+
+    def configure(self):
+        del self.settings.compiler.libcxx
+        
+    def source(self):
+        self.run("git clone git@gitlab.gz.cvte.cn:1602/3rd/libjpeg-turbo.git @git_ref@ .")
+        @checkout@
+
+    def buildAndroid(self):
+        android_version = str(self.settings.os.api_level)
+        ndk_home = os.environ.get('NDK_HOME')
+
+        toolchain_prefix = '%s/toolchains/' % ndk_home
+        configure_args = []
+        if(self.settings.arch == 'armv7'):
+            sysroot = '%s/platforms/android-%s/arch-arm' % (
+                ndk_home, android_version)
+            toolchain_prefix += 'arm-linux-androideabi-' + \
+                str(self.settings.compiler.version)+'/prebuilt/' + \
+                str.lower(platform.system()) + \
+                '-x86_64/bin/arm-linux-androideabi-'
+            host = 'arm-linux-androideabi'
+            cflags = '-march=armv7-a -mfloat-abi=softfp -fprefetch-loop-arrays  -DANDROID --sysroot=%s -D__ANDROID_API__=%s -isystem %s' % (
+                sysroot, android_version, sysroot)
+        elif(self.settings.arch == 'armv8'):
+            sysroot = '%s/platforms/android-%s/arch-arm64' % (
+                ndk_home, android_version)
+            toolchain_prefix += 'aarch64-linux-android-' + \
+                str(self.settings.compiler.version)+'/prebuilt/' + \
+                str.lower(platform.system()) + \
+                '-x86_64/bin/aarch64-linux-android-'
+            host = 'aarch64-linux-android'
+            cflags = '-fprefetch-loop-arrays  -DANDROID --sysroot=%s -D__ANDROID_API__=%s -isystem %s' % (
+                sysroot, android_version, sysroot)
+        elif(self.settings.arch == 'x86'):
+            sysroot = '%s/platforms/android-%s/arch-x86' % (
+                ndk_home, android_version)
+            toolchain_prefix += 'x86-'+str(self.settings.compiler.version)+'/prebuilt/'+str.lower(
+                platform.system())+'-x86_64/bin/i686-linux-android-'
+            host = 'i686-linux-android'
+            cflags = '-march=i686  -fprefetch-loop-arrays  -DANDROID --sysroot=%s -D__ANDROID_API__=%s -isystem %s' % (
+                sysroot, android_version, sysroot)
+        elif(self.settings.arch == 'x86_64'):
+            sysroot = '%s/platforms/android-%s/arch-x86_64' % (
+                ndk_home, android_version)
+            toolchain_prefix += 'x86_64-'+str(self.settings.compiler.version)+'/prebuilt/'+str.lower(
+                platform.system())+'-x86_64/bin/x86_64-linux-android-'
+            host = 'x86_64-linux-android'
+            cflags = '-march=x86_64  -fprefetch-loop-arrays  -DANDROID --sysroot=%s -D__ANDROID_API__=%s -isystem %s' % (
+                sysroot, android_version, sysroot)
+
+        os.environ['cc'] = toolchain_prefix+'gcc'
+        os.environ['ar'] = toolchain_prefix+'ar'
+        os.environ['nm'] = toolchain_prefix+'nm'
+        os.environ['cpp'] = toolchain_prefix+'cpp'
+        os.environ['ld'] = toolchain_prefix+'ld'
+        os.environ['ranlib'] = toolchain_prefix+'ranlib'
+        os.environ['objdump'] = toolchain_prefix+'objdump'
+        os.environ['strip'] = toolchain_prefix+'strip'
+        os.environ['CC'] = toolchain_prefix+'gcc'
+        os.environ['AR'] = toolchain_prefix+'ar'
+        os.environ['NM'] = toolchain_prefix+'nm'
+        os.environ['CPP'] = toolchain_prefix+'cpp'
+        os.environ['LD'] = toolchain_prefix+'ld'
+        os.environ['RANLIB'] = toolchain_prefix+'ranlib'
+        os.environ['OBJDUMP'] = toolchain_prefix+'objdump'
+        os.environ['STRIP'] = toolchain_prefix+'strip'
+        configure_args.append('--host=%s' % host)
+        configure_args.append('--with-sysroot=%s' % sysroot)
+        configure_args.append('CFLAGS=%s -fPIE' % cflags)
+        configure_args.append('CPPFLAGS=%s' % cflags)
+        configure_args.append('LDFLAGS=%s -pie' % cflags)
+        configure_args.append('--prefix=%s' % self.package_folder)
+        if(self.options['libjpeg'].shared):
+            configure_args.append('--enable-shared=yes')
+        else:
+            configure_args.append('--enable-shared=no')
+        configure_args.append('--enable-static=yes')
+
+        if (tools.os_info.is_windows):
+            env_build = AutoToolsBuildEnvironment(self, win_bash=True)
+        else:
+            env_build = AutoToolsBuildEnvironment(self)
+        if(tools.os_info.is_windows):
+            self.run("autoreconf -fiv", win_bash=True)
+        else:
+            self.run("autoreconf -fiv")
+        env_build.fpic = True
+        env_build.configure(args=configure_args, build=False, host=False)
+        env_build.make(args=["install"])
+
+    def buildiOS(self):
+        env_build = AutoToolsBuildEnvironment(self)
+
+        configure_args = ['--prefix=%s' % self.package_folder]
+        if(False):
+            configure_args.append('--enable-shared=yes')
+        else:
+            configure_args.append('--enable-shared=no')
+        configure_args.append('--enable-static=yes')
+        if(self.settings.arch == "armv7"):
+            ios_platformdir = '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform'
+            ios_sysroot = '%s/Developer/SDKs/iPhoneOS.sdk' % ios_platformdir
+
+            host_alias = 'arm-apple-darwin10'
+            CC = '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang'
+            cflags = "-mfloat-abi=softfp -isysroot %s -O3 -arch armv7 -miphoneos-version-min=10.0" % ios_sysroot
+            ccasflags = "%s -no-integrated-as" % cflags
+            os.environ['CCASFLAGS'] = ccasflags
+        elif(self.settings.arch == "armv8"):
+            ios_platformdir = '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform'
+            ios_sysroot = '%s/Developer/SDKs/iPhoneOS.sdk' % ios_platformdir
+
+            host_alias = 'aarch64-apple-darwin'
+            CC = '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang'
+            AS = "gas-preprocessor.pl -arch aarch64 -- %s" % CC
+            cflags = "-isysroot %s -arch arm64 -miphoneos-version-min=10.0 -funwind-tables" % ios_sysroot
+            os.environ['AS'] = AS
+        elif(self.settings.arch == "x86"):
+            ios_platformdir = '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform'
+            ios_sysroot = '%s/Developer/SDKs/iPhoneSimulator.sdk' % ios_platformdir
+
+            host_alias = 'i686-apple-darwin10'
+            CC = '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang'
+            cflags = "-isysroot %s -miphoneos-version-min=10.0 -funwind-tables --host" % ios_sysroot
+        elif(self.settings.arch == "x86_64"):
+            ios_platformdir = '/Users/gandalf/Downloads/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform'
+            ios_sysroot = '%s/Developer/SDKs/iPhoneSimulator.sdk' % ios_platformdir
+
+            host_alias = 'x86_64-apple-darwin'
+            CC = '/Users/gandalf/Downloads/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang'
+            cflags = "-isysroot %s -miphoneos-version-min=10.0 -funwind-tables " % ios_sysroot
+            configure_args.append('-without-simd')
+
+        os.environ['host_alias'] = host_alias
+        os.environ['CC'] = CC
+        os.environ['CFLAGS'] = cflags
+
+        self.run('autoreconf -fiv')
+        env_build.fpic = True
+        env_build.configure(args=configure_args)
+        env_build.make(args=['install'])
+
+    def buildUnix(self):
+        env_build = AutoToolsBuildEnvironment(self)
+        arch = str(self.settings.arch)
+        if (self.settings.arch == 'x86'):
+            arch = 'i686'
+        if (self.settings.os == 'Linux'):
+            toolchain = 'pc-linux-gnu'
+        elif (self.settings.os == 'Macos'):
+            toolchain = 'apple-darwin'
+
+        configure_args = ["--host=%s-%s" % (arch, toolchain)]
+        if (arch == 'i686'):
+            configure_args.append('CFLAGS=-m32')
+            configure_args.append('LDFLAGS=-m32')
+
+        if(toolchain == 'apple-darwin'):
+            configure_args.append('NASM=yasm')
+        configure_args.append('--prefix=%s' % self.package_folder)
+        # if(self.options['libjpeg'].shared):
+        #     configure_args.append('--enable-shared=yes')
+        # else:
+        configure_args.append('--enable-shared=no')
+        configure_args.append('--enable-static=yes')
+
+        self.run("autoreconf -fiv")
+        self.run("chmod +x simd/nasm_lt.sh")
+        env_build.fpic = True
+        env_build.configure(args=configure_args, build=False, host=False)
+        env_build.make(args=["install"])
+
+    def build(self):
+        with tools.chdir(self.source_folder):
+            if(self.settings.os == "Android"):
+                self.buildAndroid()
+            elif(self.settings.compiler == "Visual Studio"):
+                cmake = CMake(self)
+                cmake_options = ["-DBUILD_TEST=OFF", "-DBUILD_TOOL=OFF"]
+                cmake_options.append("-DCMAKE_CXX_FLAGS=/w")
+                if (self.settings.compiler.runtime == 'MT' or self.settings.compiler.runtime == 'MTd'):
+                    tools.download('https://artifactory.gz.cvte.cn/artifactory/binaries/1602/buildtool/UseStaticMsvcrt.cmake', 'UseStaticMsvcrt.cmake')
+                    cmake_options.append("-DCMAKE_USER_MAKE_RULES_OVERRIDE=UseStaticMsvcrt.cmake")
+                cmake.configure(args=cmake_options)
+                cmake.build()
+                cmake.install()
+            elif(self.settings.os == "iOS"):
+                self.buildiOS()
+            else:
+                self.buildUnix()
+
+    def package(self):
+        self.output.warn("local cache: %s" % self.in_local_cache)
+        self.output.warn("develop: %s" % self.develop)
+
+        # Copying all installed files
+        # self.copy("*", src="%s" % os.path.join(self.source_folder, "install"), keep_path=True)
+
+    def package_info(self):
+        if(self.settings.os == "Windows"):
+            if (self.options.shared):
+                self.cpp_info.libs = ['turbojpeg']
+            else :
+                self.cpp_info.libs = ['turbojpeg-static']
+        else :
+            self.cpp_info.libs = ['turbojpeg']

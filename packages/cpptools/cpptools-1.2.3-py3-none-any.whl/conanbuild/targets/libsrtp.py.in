@@ -1,0 +1,101 @@
+from conans import ConanFile, AutoToolsBuildEnvironment
+from conans import tools
+import os
+import shutil
+from conans import CMake
+
+
+class LibsrtpConan(ConanFile):
+    name = "libsrtp"
+    version = "@version@"
+    url = "git@gitlab.gz.cvte.cn:1602/3rd/libsrtp"
+    exports_sources = "*"
+    generators = "cmake"
+    settings = "os", "arch", "compiler", "build_type"
+    options = {"shared": [True, False]}
+    default_options = ("shared=False")
+
+    def configure(self):
+        del self.settings.compiler.libcxx
+        self.requires.add("libressl/3.3.3@1602/stable", private=False)
+
+    def source(self):
+        self.run('git clone git@gitlab.gz.cvte.cn:1602/3rd/libsrtp.git @git_ref@ .')
+        @checkout@
+
+    def build(self):
+        with tools.chdir(self.source_folder):
+            cmake = CMake(self)
+            # Wrap original CMakeLists.txt for be able to include and call CONAN_BASIC_SETUP
+            # It will allow us to set architecture flags, link with the requires etc
+            cmake_options = []
+
+            if self.settings.os == "Android":
+                cmake.generator = "Unix Makefiles"
+                toolchain_file = os.environ.get(
+                    "NDK_HOME") + "/build/cmake/android.toolchain.cmake"
+                cmake_options.append("-DCMAKE_TOOLCHAIN_FILE="+toolchain_file)
+                if(self.settings.compiler=="clang"):
+                    cmake_options.append("-DANDROID_TOOLCHAIN=clang")
+                    cmake_options.append("-DANDROID_STL=c++_static")
+                else:
+                    cmake_options.append("-DANDROID_TOOLCHAIN=gcc")
+                    cmake_options.append("-DANDROID_STL=gnustl_static")
+                
+                if(self.settings.arch == "armv7"):
+                    cmake_options.append("-DANDROID_ABI=armeabi-v7a")
+                elif(self.settings.arch == "armv8"):
+                    cmake_options.append("-DANDROID_ABI=arm64-v8a")
+            elif self.settings.os == "iOS":
+                sysroot = "iphoneos"
+                if(self.settings.arch == "x86" or self.settings.arch == "x86_64"):
+                    sysroot = "iphonesimulator"
+                target_arch = str(self.settings.arch)
+                if(self.settings.arch == "armv8"):
+                    target_arch = "arm64"
+                elif(self.settings.arch == "x86"):
+                    target_arch = "i386"
+                cmake_options.append("-DCMAKE_OSX_SYSROOT="+sysroot)
+                cmake_options.append("-DCMAKE_OSX_ARCHITECTURES="+target_arch)
+                cmake_options.append("-DIOS=TRUE")
+            elif(self.settings.os == "Macos"):
+                sysroot = "macosx"
+                target_arch = str(self.settings.arch)
+                if(target_arch == "x86"):
+                    target_arch = "i386"
+                if(target_arch == "armv8"):
+                    target_arch = "arm64"
+                cmake_options.append("-DCMAKE_OSX_SYSROOT="+sysroot)
+                cmake_options.append("-DCMAKE_OSX_ARCHITECTURES="+target_arch)
+                cmake_options.append("-DMACOS=TRUE")
+            elif(self.settings.os == "Linux"):
+                if("CMAKE_TOOLCHAIN_FILE_NAME" in os.environ):
+                    cmake_options.append("-DCMAKE_TOOLCHAIN_FILE=%s"%os.environ.get("CMAKE_TOOLCHAIN_FILE_NAME"))
+                elif(self.settings.arch == "x86"):
+                    cmake_options.append("-DCMAKE_C_FLAGS=-m32 -fPIC")
+                    cmake_options.append("-DCMAKE_CXX_FLAGS=-m32 -fPIC")
+                    cmake_options.append("-DCMAKE_EXE_LINKER_FLAGS=-m32 -fPIC")
+                else:
+                    cmake_options.append("-DCMAKE_C_FLAGS=-fPIC")
+                    cmake_options.append("-DCMAKE_CXX_FLAGS=-fPIC")
+            elif(self.settings.compiler == "Visual Studio"):
+                cmake_options.append("-DCMAKE_C_FLAGS=-DWIN32_LEAN_AND_MEAN")
+                cmake_options.append("-DCMAKE_CXX_FLAGS=-DWIN32_LEAN_AND_MEAN")
+                if (self.settings.compiler.runtime == 'MT' or self.settings.compiler.runtime == 'MTd'):
+                    tools.download('https://artifactory.gz.cvte.cn/artifactory/binaries/1602/buildtool/UseStaticMsvcrt.cmake', 'UseStaticMsvcrt.cmake')
+                    cmake_options.append("-DCMAKE_USER_MAKE_RULES_OVERRIDE=UseStaticMsvcrt.cmake")
+
+            if ("libressl" in self.deps_cpp_info.deps):
+                ssl_info = self.deps_cpp_info['libressl']
+                ssl_include_path = ssl_info.include_paths[0]
+                ssl_lib_path = ssl_info.lib_paths[0]
+                cmake_options.append(
+                    "-DOPENSSL_INCLUDE_DIR=%s" % ssl_include_path)
+
+            cmake.configure(args=cmake_options)
+            cmake.build()
+            cmake.install()
+
+    def package_info(self):
+        self.cpp_info.libs = ['srtp']
+        self.cpp_info.includedirs = ['include', 'include/crypto']

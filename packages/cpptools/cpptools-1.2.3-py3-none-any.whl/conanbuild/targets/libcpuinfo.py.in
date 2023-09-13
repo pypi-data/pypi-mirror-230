@@ -1,0 +1,52 @@
+from conans import ConanFile, tools, CMake
+from conans.util import files
+import os
+import shutil
+import os.path
+
+class LibcpuinfoConan(ConanFile):
+    name = "libcpuinfo"
+    version = "@version@"
+    generators = "cmake"
+    settings = "os", "arch", "compiler", "build_type"
+    options = {"shared":[True, False]}
+    default_options = "shared=False"
+    url = "https://github.com/pytorch/cpuinfo"
+    license = "https://github.com/pytorch/cpuinfo/blob/master/LICENSE"
+    description = "cpuinfo is a library to detect essential for performance optimization information about host CPU. " 
+
+    def configure(self):
+        del self.settings.compiler.libcxx
+
+    def source(self):
+        self.run('git clone git@gitlab.gz.cvte.cn:1602/3rd/cpuinfo.git  @git_ref@ .')
+        @checkout@
+        
+    def build(self):
+        build_dir = "%s/build"%self.build_folder
+        os.makedirs(build_dir)
+        with tools.chdir(build_dir):            
+            cmake = CMake(self)
+
+            cmake.definitions["CMAKE_INSTALL_PREFIX"]=self.package_folder
+            cmake.definitions["CPUINFO_LOG_LEVEL"]="none"
+            cmake.definitions["CPUINFO_BUILD_PKG_CONFIG"]="OFF"
+            cmake.definitions["CPUINFO_BUILD_TOOLS"]="OFF"
+            cmake.definitions["CPUINFO_BUILD_UNIT_TESTS"]="OFF"
+            cmake.definitions["CPUINFO_BUILD_MOCK_TESTS"]="OFF"
+            cmake.definitions["CPUINFO_BUILD_BENCHMARKS"]="OFF"
+            if(self.options.shared):
+                cmake.definitions["CPUINFO_LIBRARY_TYPE"]="shared"
+                cmake.definitions["CPUINFO_RUNTIME_TYPE"]="shared"
+            else:
+                cmake.definitions["CPUINFO_LIBRARY_TYPE"]="static"
+                cmake.definitions["CPUINFO_RUNTIME_TYPE"]="static"
+
+            cmake.configure(build_folder=build_dir)
+            cmake.build(build_dir=build_dir)
+            cmake.install(build_dir=build_dir)
+    def package_info(self):
+        if(self.settings.os == "Windows"):
+            self.cpp_info.libs = ['libcpuinfo']
+        else:
+            self.cpp_info.libs = ['cpuinfo']

@@ -1,0 +1,76 @@
+from conans import ConanFile, tools, AutoToolsBuildEnvironment, CMake
+import shutil, os
+
+
+class SpandspConan(ConanFile):
+    name = "spandsp"
+    version = "@version@"
+    settings = "os", "compiler", "build_type", "arch"
+    description = "<Description of Spandsp here>"
+    url = "None"
+    license = "None"
+    author = "None"
+    topics = None
+    options = {"shared": [True, False], "fPIC": [True, False]}
+    default_options = "shared=False", "fPIC=False"
+    
+    def source(self):
+        self.run("git clone git@gitlab.gz.cvte.cn:1602/3rd/spandsp.git @git_ref@ .")
+        @checkout@
+
+    def build(self):
+        self.build_configure()
+
+    def requirements(self):
+        self.requires.add("libtiff/4.0.8@1602/stable", private=False)
+        self.requires.add("libjpeg/1.5.2@1602/stable", private=False)
+
+    def build_configure(self):
+        with tools.chdir('spandsp'):
+            win_bash = self.settings.os == 'Windows'
+            args = []
+            if self.options.shared:
+                args.extend(['--disable-static', '--enable-shared'])
+            else:
+                args.extend(['--disable-shared', '--enable-static'])
+            if self.settings.os != 'Windows' and self.options.fPIC:
+                args.append('--enable-pic')
+            if self.settings.build_type == "Debug":
+                args.append('--enable-debug')
+
+            arch = {'x86': 'x86',
+                    'x86_64': 'x86_64',
+                    'armv7': 'armv7',
+                    'armv8': 'arm64',
+                    'mips': 'mips32',
+                    'mips64': 'mips64',
+                    'sparc': 'sparc'}.get(str(self.settings.arch))
+            compiler = 'gcc'
+            os_name = 'linux'
+            target = "%s-%s-%s" % (arch, os_name, compiler)
+            args.append('--target=%s' % target)
+
+            if self.settings.os != 'Windows':
+                self.run("./autogen.sh")
+                env_build = AutoToolsBuildEnvironment(self, win_bash=win_bash)
+                env_build.configure(args=args, host=False, build=False, target=False)
+                env_build.make()
+                env_build.make(args=['install'])
+            else:
+                cmake = CMake(self)
+                cmake.configure(source_folder="spandsp")
+                cmake.build()
+
+    def package(self):
+        if self.settings.os != 'Windows':
+            self.copy("*.a", dst="lib", keep_path=False)
+            self.copy("*.so", dst="lib", keep_path=False)
+            self.copy("*.h", src="spandsp/include", dst="include", keep_path=True)
+        else:
+            self.copy("*.lib", dst="lib", keep_path=False)
+            self.copy("*.dll", dst="lib", keep_path=False)
+            self.copy("*.h", src="spandsp/src/msvc/", dst="include/msvc", keep_path=False)
+            self.copy("*.h", src="spandsp/src/spandsp/", dst="include/spandsp", keep_path=True)
+
+    def package_info(self):
+        self.cpp_info.libs = ["spandsp"]
