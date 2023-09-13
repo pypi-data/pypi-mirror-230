@@ -1,0 +1,33 @@
+---
+type: object
+additionalProperties: false
+required: [host]
+
+properties:
+  kind:
+    type: string
+    enum: [git, src]
+    default: git
+
+  suffix:
+    type: string
+    default: ".git"
+
+  protocol:
+    type: string
+    enum: [ssh, git, http, https]
+    default: ssh
+
+  user:
+    type: string
+    default: git
+
+  port:
+    type: number
+
+  host:
+    type: string
+
+  # Additional attributes that the package implementation may or may not use.
+  attributes:
+    type: object
