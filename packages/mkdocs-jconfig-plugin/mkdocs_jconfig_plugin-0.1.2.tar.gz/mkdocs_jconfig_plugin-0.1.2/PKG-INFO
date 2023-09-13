@@ -1,0 +1,81 @@
+Metadata-Version: 2.1
+Name: mkdocs-jconfig-plugin
+Version: 0.1.2
+Summary: An MkDocs plugin to process configuration items with Jinja2
+Home-page: https://github.com/supcik/mkdocs-jconfig-plugin
+License: Apache-2
+Keywords: mkdocs,python,markdown,wiki
+Author: Jacques Supcik
+Author-email: jacques.supcik@hefr.ch
+Requires-Python: >=3.10,<4.0
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Information Technology
+Classifier: License :: Other/Proprietary License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Provides-Extra: test
+Requires-Dist: mkdocs (>=1.5.2,<2.0.0)
+Requires-Dist: mkdocs-macros-plugin (>=1.0.4,<2.0.0) ; extra == "test"
+Requires-Dist: mkdocs-material (>=9.3.1,<10.0.0) ; extra == "test"
+Project-URL: Repository, https://github.com/supcik/mkdocs-jconfig-plugin
+Description-Content-Type: text/markdown
+
+# mkdocs-jconfig-plugin
+
+This MkDocs plugin allows to process configuration variables using [Jinja](https://jinja.palletsprojects.com/) templates.
+
+## Installation
+
+Install the package with pip:
+
+```bash
+pip install mkdocs-jconfig-plugin
+```
+
+Activate the plugin in `mkdocs.yml`:
+
+```yaml
+plugins:
+  - search
+  - calendar
+  - jconfig
+```
+
+## Configuration
+
+The plugin can be configured in the `plugins` section of `mkdocs.yml` as follows:
+
+```yaml
+plugins:
+  - search
+  - calendar
+  - jconfig:
+      items:
+        - copyright
+```
+
+The plugin supports the following configuration options:
+
+| Option  | Description                                               |
+|---------|-----------------------------------------------------------|
+| `items` | The configuration variables to process. Defaults to `[]`. |
+
+## Typical usage
+
+This plugin is useful when you want to automatically adjust the year in the copyright:
+
+```yaml
+copyright: copyright {{ cal.today.year }} The Authors
+
+plugins:
+  - search
+  - calendar
+  - jconfig:
+      items:
+        - copyright
+```
+
+Note that you need to activate the [calendar](https://github.com/supcik/mkdocs-calendar-plugin) plugin for this to work.
+
