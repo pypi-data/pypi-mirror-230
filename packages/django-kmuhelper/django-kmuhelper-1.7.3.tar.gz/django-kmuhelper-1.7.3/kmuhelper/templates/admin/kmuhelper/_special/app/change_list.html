@@ -1,0 +1,25 @@
+{% extends 'admin/kmuhelper/change_list.html' %}
+
+{% load static kmuhelper_tags %}
+
+{% block breadcrumbs %}
+    {% get_admin_model as model %}
+
+    <div id="breadcrumbs" class="breadcrumbs">
+        <a href="{% url 'kmuhelper:app-desktop' %}">KMUHelper App</a> &gt; {{ model.admin_title }}
+    </div>
+
+    <script>
+        if (window !== window.top) { 
+            document.getElementById("breadcrumbs").style.display = "none";
+            document.getElementById("app-link").href = "{% url 'kmuhelper:app-mobile' %}";
+        }
+    </script>
+{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+
+    {% comment %} Load the changelist save on top script {% endcomment %}
+    <script src="{% static 'admin/kmuhelper/js/changelist_saveontop.js' %}"></script>
+{% endblock %}
