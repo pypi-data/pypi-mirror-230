@@ -1,0 +1,100 @@
+#! /bin/bash
+# c*ls  (BASH script) -- Colourised ls wrappers that use a pager
+#
+# Version:   1.3.0
+# Copyright: (c)2019 Alastair Irvine <alastair@plug.org.au>
+# Keywords:  ls less colour color
+# Notice:    
+# Licence:   This file is released under the GNU General Public License
+#
+# Description: Uses colour and pipes output to less, with a sensible prompt.
+# Licence details:
+#     This program is free software; you can redistribute it and/or modify
+#     it under the terms of the GNU General Public License as published by
+#     the Free Software Foundation; either version 2 of the License, or (at
+#     your option) any later version.
+#
+#     See http://www.gnu.org/licenses/gpl-2.0.html for more information.
+#
+#     You can find the complete text of the GPLv2 in the file
+#     /usr/share/common-licenses/GPL-2 on Debian systems.
+#     Or see the file COPYING in the same directory as this program.
+
+
+self=`basename "$0"`
+
+
+# *** FUNCTIONS ***
+
+
+# *** MAINLINE ***
+if [ "$1" = -V ] ; then
+  colorls-cli -V
+  exit 0
+fi
+
+
+# == sanity checking ==
+
+
+# == preparation ==
+case ${0##*/} in
+  cls)      compact=y ; short_opts=-FC  ; long_opts=--time-style=long-iso ;;
+  clls)     short_opts=-lF  ; long_opts=--time-style=long-iso ;;
+  cllls)    short_opts=-lF  ; long_opts=--time-style=full-iso ;;
+  cals)     short_opts=-FCA ; long_opts=--time-style=long-iso ;;
+  calls)    short_opts=-lFA ; long_opts=--time-style=long-iso ;;
+  callls)   short_opts=-lFA ; long_opts=--time-style=full-iso ;;
+  csls)     compact=y ; sudo=y ; short_opts=-FC  ; long_opts=--time-style=long-iso ;;
+  cslls)    sudo=y ; short_opts=-lF  ; long_opts=--time-style=long-iso ;;
+  csllls)   sudo=y ; short_opts=-lF  ; long_opts=--time-style=full-iso ;;
+  csals)    sudo=y ; short_opts=-FCA ; long_opts=--time-style=long-iso ;;
+  csalls)   sudo=y ; short_opts=-lFA ; long_opts=--time-style=long-iso ;;
+  csallls)  sudo=y ; short_opts=-lFA ; long_opts=--time-style=full-iso ;;
+esac
+
+
+# == processing ==
+declare -i extra_cols ownership_cols=2
+inums=n
+f=("$@")
+while [[ $# > 0 && "$1" == -* ]] ; do
+  case "$1" in
+    --*) ;;
+    *)   if [[ "$1" == -*i* ]] ; then
+           let ++extra_cols
+           inums=y
+         fi
+         [[ "$1" == -*s* ]] && let ++extra_cols ## blocks=y
+         if [[ "$1" == -*g* ]] ; then
+           let --extra_cols
+           let --ownership_cols ## no_owner=y
+         fi
+         if [[ "$1" == -*[oG]* ]] ; then
+           let --extra_cols
+           let --ownership_cols ## no_group=y
+         fi
+         [[ "$1" == -*h* ]] && human=y
+         [[ "$1" == -*l* ]] && compact=n
+         ;;
+  esac
+  shift
+done
+
+let size_column=5+extra_cols
+let before_size_column=size_column-1
+if [ -n "$sudo" ] ; then
+  sudo ls $short_opts --group-directories-first --color=always $long_opts "${f[@]}"
+  exit_code=$?
+else
+  ls $short_opts --group-directories-first --color=always $long_opts "${f[@]}"
+  exit_code=$?
+fi |
+  { if [ "$compact" = y ] ; then
+      cat
+    else
+      colorls-cli $size_column $inums $ownership_cols $human
+    fi ; } |
+  less -RS --prompt=M"[%pB\\%] ${*//./\\.}"
+
+exit $exit_code
