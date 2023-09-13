@@ -1,0 +1,121 @@
+{
+  "actions": {
+    "AnalyzeSentiment": [
+      {
+        "document": "情感分析。",
+        "input": "POST / HTTP/1.1\nHost: nlp.tencentcloudapi.com\nContent-Type: application/json\nX-TC-Action: AnalyzeSentiment\n<公共请求参数>\n\n{\n    \"Text\": \"我真开心。\"\n}",
+        "output": "{\n    \"Response\": {\n        \"Negative\": 0.004367333836853504,\n        \"Neutral\": 0.06927284598350525,\n        \"Positive\": 0.9263598322868347,\n        \"RequestId\": \"848b909b-5ed7-44ad-b4d0-72bcf0be4f2a\",\n        \"Sentiment\": \"positive\"\n    }\n}",
+        "title": "情感分析调用示例"
+      }
+    ],
+    "ClassifyContent": [
+      {
+        "document": "文本分类。",
+        "input": "POST / HTTP/1.1\nHost: nlp.tencentcloudapi.com\nContent-Type: application/json\nX-TC-Action: ClassifyContent\n<公共请求参数>\n\n{\n    \"Title\": \"巴萨队内危机重重，曝梅西跟董事会已决裂，巴托梅乌留他目的不纯\",\n    \"Content\": [\n        \"甘伯杯比赛，巴萨1-0击败艾尔切拿到了冠军，这是球队在甘伯杯上第43次拿下冠军，也是实现了8连冠的伟业，这支巴萨用一个冠军开启了新赛季的征途，本赛季能否从皇马手中夺得西甲冠军，非常让人期待。\",\n        \"目前这支巴萨，虽然用冠军拉开了新赛季的帷幕，但谁都知道，球队问题依然很大，内部目前是危机重重，第一个是转会市场动作缓慢，第二个是球队更新换代几乎为零，第三个是新帅更换，战术体系重新调整，第四个就是高层面临调整，第五个就是梅西的心情问题。\",\n        \"这5个问题里面，最后一个尤其重要，梅西的状态决定着这支巴萨的上限和未来。大家都知道，梅西这个夏天闹出离队，折腾了11天，最终是在合同约束下留在了巴萨，但回来后的他，在训练场及热身赛里，基本是没有笑容。\",\n        \"没有人能知道梅西目前的心情，他似乎是不开心的，而一个不开心的梅西，对于巴萨来说，等于是没有牙和爪子的老虎，没有太多的威胁力，而来自零点电台的消息，梅西跟巴萨董事会的关系已经决裂，有球是跟巴托梅乌，至今没跟巴托梅乌说过话。\",\n        \"巴托梅乌最近在接受采访的时候表示“不会和梅西介入冲突，坚决不会卖掉梅西，要让梅西在巴萨终老。”这番言论为巴托梅乌引来吐槽声音，事实上巴托梅乌不卖梅西的原因是一己私利而已，他不想在自己做主席的时候让梅西离开，这样他会成为千古罪人，所以他态度十分强硬，如果不是这个原因，早就卖掉梅西了。\",\n        \"在梅西留队后，巴托梅乌试图去缓解董事会跟梅西的关系，但双方裂痕已经产生了，根本就无法愈合了，接下来摆在巴萨面前的只有两个选择：要不本赛季跟梅西续约，要不梅西下赛季自由身离队了。\"\n    ]\n}",
+        "output": "{\n    \"Response\": {\n        \"FirstClassification\": {\n            \"Id\": 110,\n            \"Label\": \"sports\",\n            \"Name\": \"体育\",\n            \"Score\": 0.9999808073043823\n        },\n        \"RequestId\": \"cb3fe220-82f5-4359-9a48-9450573186e8\",\n        \"SecondClassification\": {\n            \"Id\": 11004,\n            \"Label\": \"sports_footballexternal\",\n            \"Name\": \"体育_国际足球\",\n            \"Score\": 0.8565764427185059\n        },\n        \"ThirdClassification\": {\n            \"Id\": 11004002,\n            \"Label\": \"sports_footballexternal_xijia\",\n            \"Name\": \"体育_国际足球_西甲\",\n            \"Score\": 0.8565764427185059\n        }\n    }\n}",
+        "title": "文本分类调用示例"
+      }
+    ],
+    "ComposeCouplet": [
+      {
+        "document": "对联生成。",
+        "input": "POST / HTTP/1.1\nHost: nlp.tencentcloudapi.com\nContent-Type: application/json\nX-TC-Action: ComposeCouplet\n<公共请求参数>\n\n{\n    \"Text\": \"阳光\",\n    \"TargetType\": 0\n}",
+        "output": "{\n    \"Response\": {\n        \"Content\": [\n            \"阳春白雪江山秀\",\n            \"光彩红梅岁月长\"\n        ],\n        \"RandomCause\": \"\",\n        \"RequestId\": \"e9cc9a63-e2e9-4f92-a419-0fd8bf25cdf6\",\n        \"TopScroll\": \"盛世新春\"\n    }\n}",
+        "title": "对联生成调用示例"
+      }
+    ],
+    "ComposePoetry": [
+      {
+        "document": "诗词生成。",
+        "input": "POST / HTTP/1.1\nHost: nlp.tencentcloudapi.com\nContent-Type: application/json\nX-TC-Action: ComposePoetry\n<公共请求参数>\n\n{\n    \"Text\": \"阳光\",\n    \"PoetryType\": 2,\n    \"Genre\": 5\n}",
+        "output": "{\n    \"Response\": {\n        \"Content\": [\n            \"洛阳无人见\",\n            \"江城日光流\",\n            \"月明山上路\",\n            \"柳暗水中洲\"\n        ],\n        \"RequestId\": \"a4878a27-7a5c-4cd4-b17d-6a1ff403f626\",\n        \"Title\": \"阳光\"\n    }\n}",
+        "title": "诗词生成调用示例"
+      }
+    ],
+    "EvaluateSentenceSimilarity": [
+      {
+        "document": "分析句子相似度",
+        "input": "POST / HTTP/1.1\nHost: nlp.tencentcloudapi.com\nContent-Type: application/json\nX-TC-Action: EvaluateSentenceSimilarity\n<公共请求参数>\n\n{\n    \"SentencePairList\": [\n        {\n            \"SourceText\": \"北京到上海的火车票\",\n            \"TargetText\": \"上海到北京的火车票\"\n        }\n    ]\n}",
+        "output": "{\n    \"Response\": {\n        \"RequestId\": \"d37e6fc7-aa12-42e4-b68a-e74dbe7548cb\",\n        \"ScoreList\": [\n            0.903129852566213\n        ]\n    }\n}",
+        "title": "句子相似度调用示例"
+      }
+    ],
+    "EvaluateWordSimilarity": [
+      {
+        "document": "分析词相似度",
+        "input": "POST / HTTP/1.1\nHost: nlp.tencentcloudapi.com\nContent-Type: application/json\nX-TC-Action:EvaluateWordSimilarity\n<公共请求参数>\n\n{\n    \"SourceWord\": \"香港\",\n    \"TargetWord\": \"北京\"\n}",
+        "output": "{\n    \"Response\": {\n        \"RequestId\": \"02bd6796-515a-452e-a455-23523fd6cfd9\",\n        \"Similarity\": 0.5935152769088745\n    }\n}",
+        "title": "词相似度调用示例"
+      }
+    ],
+    "GenerateKeywordSentence": [
+      {
+        "document": "通过输入两个中文关键词生成句子。",
+        "input": "POST / HTTP/1.1\nHost: nlp.tencentcloudapi.com\nContent-Type: application/json\nX-TC-Action:GenerateKeywordSentence\n<公共请求参数>\n\n{\n    \"WordList\": [\n        \"老鼠\",\n        \"月光\"\n    ],\n    \"Number\": 2,\n    \"Domain\": \"general\"\n}",
+        "output": "{\n    \"Response\": {\n        \"KeywordSentenceList\": [\n            {\n                \"TargetText\": \"12月下旬，老鼠渐渐苏醒，月光温柔，生肖鼠喜从天降。\"\n            },\n            {\n                \"TargetText\": \"在这里，老鼠看到了月亮，这就是月光。\"\n            }\n        ],\n        \"RequestId\": \"033daa29-dd1a-4f18-aa3b-b7a6b4d4dada\"\n    }\n}",
+        "title": "关键词句子生成调用示例"
+      }
+    ],
+    "ParseWords": [
+      {
+        "document": "词法分析",
+        "input": "POST / HTTP/1.1\nHost: nlp.tencentcloudapi.com\nContent-Type: application/json\nX-TC-Action:ParseWords\n<公共请求参数>\n\n{\n    \"Text\": \"我很喜欢看流浪地球这个电影\"\n}",
+        "output": "{\n    \"Response\": {\n        \"BasicParticiples\": [\n            {\n                \"BeginOffset\": 0,\n                \"Length\": 1,\n                \"Pos\": \"PN\",\n                \"Word\": \"我\"\n            },\n            {\n                \"BeginOffset\": 1,\n                \"Length\": 1,\n                \"Pos\": \"AD\",\n                \"Word\": \"很\"\n            },\n            {\n                \"BeginOffset\": 2,\n                \"Length\": 2,\n                \"Pos\": \"VV\",\n                \"Word\": \"喜欢\"\n            },\n            {\n                \"BeginOffset\": 4,\n                \"Length\": 1,\n                \"Pos\": \"VV\",\n                \"Word\": \"看\"\n            },\n            {\n                \"BeginOffset\": 5,\n                \"Length\": 2,\n                \"Pos\": \"VV\",\n                \"Word\": \"流浪\"\n            },\n            {\n                \"BeginOffset\": 7,\n                \"Length\": 2,\n                \"Pos\": \"NN\",\n                \"Word\": \"地球\"\n            },\n            {\n                \"BeginOffset\": 9,\n                \"Length\": 2,\n                \"Pos\": \"DT\",\n                \"Word\": \"这个\"\n            },\n            {\n                \"BeginOffset\": 11,\n                \"Length\": 2,\n                \"Pos\": \"NN\",\n                \"Word\": \"电影\"\n            }\n        ],\n        \"CompoundParticiples\": [\n            {\n                \"BeginOffset\": 0,\n                \"Length\": 1,\n                \"Pos\": \"PN\",\n                \"Word\": \"我\"\n            },\n            {\n                \"BeginOffset\": 1,\n                \"Length\": 1,\n                \"Pos\": \"AD\",\n                \"Word\": \"很\"\n            },\n            {\n                \"BeginOffset\": 2,\n                \"Length\": 2,\n                \"Pos\": \"VV\",\n                \"Word\": \"喜欢\"\n            },\n            {\n                \"BeginOffset\": 4,\n                \"Length\": 1,\n                \"Pos\": \"VV\",\n                \"Word\": \"看\"\n            },\n            {\n                \"BeginOffset\": 5,\n                \"Length\": 4,\n                \"Pos\": \"NN\",\n                \"Word\": \"流浪地球\"\n            },\n            {\n                \"BeginOffset\": 9,\n                \"Length\": 2,\n                \"Pos\": \"DT\",\n                \"Word\": \"这个\"\n            },\n            {\n                \"BeginOffset\": 11,\n                \"Length\": 2,\n                \"Pos\": \"NN\",\n                \"Word\": \"电影\"\n            }\n        ],\n        \"Entities\": [\n            {\n                \"BeginOffset\": 5,\n                \"Length\": 4,\n                \"Name\": \"电影\",\n                \"Type\": \"work.movie\",\n                \"Word\": \"流浪地球\"\n            }\n        ],\n        \"NormalText\": \"我很喜欢看流浪地球这个电影\",\n        \"RequestId\": \"6cd06531-5b5e-46ee-8ec2-ab66a9730e74\"\n    }\n}",
+        "title": "词法分析调用示例"
+      }
+    ],
+    "RetrieveSimilarWords": [
+      {
+        "document": "相似词召回",
+        "input": "POST / HTTP/1.1\nHost: nlp.tencentcloudapi.com\nContent-Type: application/json\nX-TC-Action:RetrieveSimilarWords\n<公共请求参数>\n\n{\n    \"Text\": \"林丹\",\n    \"Number\": 10\n}",
+        "output": "{\n    \"Response\": {\n        \"RequestId\": \"e246e84f-de88-46d0-b5dd-68ff94db40ad\",\n        \"WordList\": [\n            \"李宗伟\",\n            \"桃田贤斗\",\n            \"马龙\",\n            \"纳达尔\",\n            \"刘翔\",\n            \"张本智和\",\n            \"费德勒\",\n            \"孙杨\",\n            \"宁泽涛\",\n            \"朱婷\"\n        ]\n    }\n}",
+        "title": "相似词召回调用示例"
+      }
+    ],
+    "SentenceCorrection": [
+      {
+        "document": "对包含错别字的中文句子以及包含语法错误的英文句子进行纠错。",
+        "input": "POST / HTTP/1.1\nHost: nlp.tencentcloudapi.com\nContent-Type: application/json\nX-TC-Action:SentenceCorrection\n<公共请求参数>\n\n{\n    \"TextList\": [\n        \"这位外国网友说：这是地球最安全的锅加，在这里，我从未感到过害啪！\",\n        \"We always rent a little cottages from a sheep farmer and now we know his family.\"\n    ]\n}",
+        "output": "{\n    \"Response\": {\n        \"CorrectionList\": [\n            {\n                \"BeginOffset\": 16,\n                \"Confidence\": 0,\n                \"CorrectWord\": [\n                    \"国家\"\n                ],\n                \"CorrectionType\": 0,\n                \"DescriptionEn\": null,\n                \"DescriptionZh\": null,\n                \"Len\": 2,\n                \"Order\": 1,\n                \"Word\": \"锅加\"\n            },\n            {\n                \"BeginOffset\": 30,\n                \"Confidence\": 0,\n                \"CorrectWord\": [\n                    \"怕\"\n                ],\n                \"CorrectionType\": 0,\n                \"DescriptionEn\": null,\n                \"DescriptionZh\": null,\n                \"Len\": 1,\n                \"Order\": 1,\n                \"Word\": \"啪\"\n            },\n            {\n                \"BeginOffset\": 24,\n                \"Confidence\": 0,\n                \"CorrectWord\": [\n                    \"cottage\"\n                ],\n                \"CorrectionType\": 0,\n                \"DescriptionEn\": \"It appears that the noun \\\"cottage\\\" doesn't agree with \\\"a little\\\".\",\n                \"DescriptionZh\": \"在当前语境下，“cottages”作为名词和量词“a little”没有保持单复数一致，建议使用“cottage”以保持名词一致性。\",\n                \"Len\": 8,\n                \"Order\": 2,\n                \"Word\": \"cottages\"\n            }\n        ],\n        \"RequestId\": \"b183f9d5-b35a-4880-8a36-86883b9eea11\"\n    }\n}",
+        "title": "句子纠错调用示例"
+      }
+    ],
+    "TestingTextGeneration": [
+      {
+        "document": "文案创作（内测版）成功案例",
+        "input": "POST / HTTP/1.1\nHost: nlp.tencentcloudapi.com\nContent-Type: application/json\nX-TC-Action: TestingTextGeneration\n<公共请求参数>\n\n{\n    \"Model\": \"TestingModel\",\n    \"QueryId\": \"2121\",\n    \"Messages\": [\n        {\n            \"Role\": \"system\",\n            \"Content\": \"\"\n        },\n        {\n            \"Role\": \"user\",\n            \"Content\": \"天为什么是蓝的？\"\n        }\n    ],\n    \"Temperature\": 1,\n    \"TopP\": 1,\n    \"TopK\": 40,\n    \"RepetitionPenalty\": 1,\n    \"OutputSeqLen\": 1,\n    \"MaxInputSeqLen\": 1\n}",
+        "output": "{\n    \"Response\": {\n        \"RequestId\": \"246648dc-c6f6-4772-8db9-6d0cb6c716d6\",\n        \"Choices\": [\n            {\n                \"Message\": {\n                    \"Role\": \"assistant\",\n                    \"Content\": \"天空为什么是蓝色的，这是一个非常有趣的问题！其实，这个现象主要是因为大气中气体和其他粒子对阳光的散射作用造成的。\\n\\n当阳光穿过大气层时，它会遇到许多气体分子和其他小颗粒。这些颗粒非常小，以至于它们能够将阳光中的不同颜色的光线散射到不同的方向。其中，蓝色光线的波长较短，因此比其他颜色的光线更容易被散射。\\n\\n当蓝色光线被散射时，它会沿着各个方向传播，最终到达我们的眼睛。这就是为什么我们看到的天空是蓝色的原因。然而，由于人眼对不同颜色的光线的敏感度不同，我们通常看不到蓝色光线被散射的最远距离。因此，当我们看到天空时，我们看到的是蓝色光线被散射到各个方向的光斑。\\n\\n总之，天空之所以是蓝色，是因为阳光中的蓝色光线在大气中被散射，而其他颜色的光线则相对较少地被散射。\"\n                }\n            }\n        ],\n        \"Created\": 1692092667,\n        \"Id\": \"2121\",\n        \"Model\": \"TestingModel\",\n        \"Usage\": {\n            \"PromptTokens\": 7,\n            \"CompletionTokens\": 185,\n            \"TotalTokens\": 192\n        }\n    }\n}",
+        "title": "文案创作（内测版）"
+      },
+      {
+        "document": "参数错误",
+        "input": "POST / HTTP/1.1\nHost: nlp.tencentcloudapi.com\nContent-Type: application/json\nX-TC-Action: TestingTextGeneration\n<公共请求参数>\n\n{\n    \"Model\": \"TestingModel\",\n    \"QueryId\": \"2121\",\n    \"Temperature\": 0,\n    \"TopP\": 0,\n    \"TopK\": 0,\n    \"RepetitionPenalty\": 1,\n    \"Messages\": [\n        {\n            \"Role\": \"systemss\"\n        },\n        {\n            \"Role\": \"user2\",\n            \"Content\": \"天为什么是蓝的？\"\n        }\n    ],\n    \"OutputSeqLen\": 1,\n    \"MaxInputSeqLen\": 1\n}",
+        "output": "{\n    \"Response\": {\n        \"Error\": {\n            \"Code\": \"InvalidParameter\",\n            \"Message\": \"Messages.Role: systemss not in list: [system,user,assistant]\"\n        },\n        \"RequestId\": \"c625ff29-ab78-46cf-88f3-50041f69971d\"\n    }\n}",
+        "title": "文案创作（内测版）失败场景"
+      },
+      {
+        "document": "自我介绍",
+        "input": "POST / HTTP/1.1\nHost: nlp.tencentcloudapi.com\nContent-Type: application/json\nX-TC-Action: TestingTextGeneration\n<公共请求参数>\n\n{\n    \"Model\": \"TestingModel\",\n    \"QueryId\": \"12122\",\n    \"Messages\": [\n        {\n            \"Role\": \"system\",\n            \"Content\": \"\"\n        },\n        {\n            \"Role\": \"user\",\n            \"Content\": \"帮我写个自我介绍\"\n        },\n        {\n            \"Role\": \"assistant\",\n            \"Content\": \"大家好，我叫小张，今年25岁，来自美丽的江南水乡苏州。我毕业于XX大学，专业是计算机科学与技术。在大学期间，我积极参加各类实践活动，培养了自己的团队协作和沟通能力。\\\\n\\\\n工作方面，我于去年加入了某互联网公司，作为一名软件工程师，负责公司项目的开发和维护工作。我擅长用Java、Python等编程语言进行软件开发，并熟悉MySQL等数据库技术。在团队中，我乐于分享经验，并积极参与讨论，以推动技术水平的不断提升。\\\\n\\\\n业余时间，我喜欢看书、打篮球和旅行。通过这些活动，我拓宽了自己的人生视野，也结交了许多志同道合的朋友。\\\\n\\\\n我希望在未来的工作中，能够不断学习和成长，为公司的发展做出贡献，也为个人价值的实现而不懈努力。谢谢大家！\"\n        },\n        {\n            \"Role\": \"user\",\n            \"Content\": \"我叫和先生，帮我写个自我介绍\"\n        }\n    ]\n}",
+        "output": "{\n    \"Response\": {\n        \"Choices\": [\n            {\n                \"Message\": {\n                    \"Content\": \"大家好，我叫和先生，来自中国北京。我毕业于清华大学，主修计算机科学专业。在学校期间，我一直努力学习新知识，积极参加各种实践活动，不断挑战自己。通过这些经历，我不仅锻炼了扎实的专业技能，也形成了较强的团队协作能力和分析解决问题的能力。\\n\\n工作方面，我曾加入一家顶尖的创业公司担任技术总监，负责开发和管理公司的多个项目。我对前端和后端开发都有着丰富的经验，熟悉Java、Python等多种编程语言。在团队里，我总是乐于分享自己的经验和见解，推动团队技术创新。\\n\\n业余时间，我喜欢户外运动、骑行和参加公益活动。这些活动让我保持健康的身体和良好的心态，也让我更加关心社会，培养自己的责任感和同理心。\\n\\n我很期待能够加入贵公司，发挥自己的专业知识和热情，为公司的发展贡献力量，同时也为自己的成长积累更多的经验。谢谢大家！\",\n                    \"Role\": \"assistant\"\n                }\n            }\n        ],\n        \"Created\": 1692102278,\n        \"Id\": \"12122\",\n        \"Model\": \"TestingModel\",\n        \"RequestId\": \"886975d4-f865-4db6-afb7-f2fcfa8d08a5\",\n        \"Usage\": {\n            \"CompletionTokens\": 176,\n            \"PromptTokens\": 173,\n            \"TotalTokens\": 349\n        }\n    }\n}",
+        "title": "自我介绍文案生成"
+      }
+    ],
+    "TextEmbellish": [
+      {
+        "document": "对中文文本进行扩写。",
+        "input": "POST / HTTP/1.1\nHost: nlp.tencentcloudapi.com\nContent-Type: application/json\nX-TC-Action:TextEmbellish\n<公共请求参数>\n\n{\n    \"Text\": \"中国奥运健儿击败强敌，勇夺冬奥会首金\",\n    \"SourceLang\": \"zh\",\n    \"Number\": 2,\n    \"Style\": \"expansion\"\n}",
+        "output": "{\n    \"Response\": {\n        \"EmbellishList\": [\n            {\n                \"EmbellishType\": \"expansion\",\n                \"Text\": \"现在的中国跳水奥运健儿一路高歌猛进击败强敌，不负众望的勇夺温哥华冬奥会单板滑雪首金\"\n            },\n            {\n                \"EmbellishType\": \"expansion\",\n                \"Text\": \"年轻的中国冰雪奥运健儿一次次击败强敌，历史性的勇夺温哥华冬奥会史无前例的首金\"\n            }\n        ],\n        \"RequestId\": \"fd345650-b62b-4949-bdd7-d774152dba9a\"\n    }\n}",
+        "title": "文本润色调用示例"
+      }
+    ],
+    "TextWriting": [
+      {
+        "document": "对中文文本进行续写。",
+        "input": "POST / HTTP/1.1\nHost: nlp.tencentcloudapi.com\nContent-Type: application/json\nX-TC-Action:TextWriting\n<公共请求参数>\n\n{\n    \"Text\": \"今天天气不错\",\n    \"SourceLang\": \"zh\",\n    \"Number\": 2,\n    \"Domain\": \"general\",\n    \"Style\": \"xuanhuan_wuxia\"\n}",
+        "output": "{\n    \"Response\": {\n        \"RequestId\": \"40abc589-8603-458b-82a7-fe174e799085\",\n        \"WritingList\": [\n            {\n                \"PrefixText\": \"此事还得从这说起，\",\n                \"TargetText\": \"此事还得从这说起，他一路行来，不知不觉已到了洛阳城，这一日，他来到一处客栈，打听一下萧月生的消息。“师父，他来了！”江南云忽然开口，声音清脆悦耳，仿\"\n            },\n            {\n                \"PrefixText\": \"此事还得从这说起，\",\n                \"TargetText\": \"此事还得从这说起，那日在山东大会上，萧月生一眼看出，这个赵小四是武林中人，心中不由一动，觉得此人极有可能是华山派的弟子。“师父，他的轻功如何？”江南\"\n            }\n        ]\n    }\n}",
+        "title": "文本续写调用示例"
+      }
+    ]
+  },
+  "version": "1.0"
+}
