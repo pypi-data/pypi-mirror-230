@@ -1,0 +1,47 @@
+[project]
+name         = "MYCONF"         # Project name
+
+[project.core]
+in_format    = "csv"            # Input format
+out_format   = "pdf"            # Output format
+verbose      = 0                # Verbosity level (between 0 and 3)
+stopwords    = false            # Ignore stopwords when ordering papers
+ignore_pdf   = true             # Ignore pdf to extract metadata (unstable feature)
+sessions     = true             # Use sessions
+latex_encode = false            # Latex-encode diacritics 
+dump         = false            # Dump input config (for manual completion, cf retro-engineering)
+
+[project.csv]                   # Input data in CSV format (e.g. coming from easychair.org)
+id_col       = 0                # Index of paper id
+authors_col  = 1                # Index of authors
+title_col    = 2                # Index of title
+idhal_col    = 3                # Index of idhal (if needed)
+file_col     = 4                # Index of file name
+accept_col   = 7                # Index of status
+keywords_col = 8                # Index of keywords
+
+[project.xml]                   # Input data in XML format (e.g. coming from TALNarchives)
+xml_file     = ""               
+
+[project.zip]                   # Input data in Zip format (e.g. coming from sciencesconf.org)
+zip_file     = ""
+
+[project.pdf]
+tex_log      = false            # Removal of latex logs (cf debugging)
+img          = ""               # User's image directory
+language     = "fr"             # To select adequate latex template
+
+[project.acl]
+anthology_id = "myconf"         # Anthology ID (required for acl output format)
+bilingual    = false            # Bilingual bibtex fields 
+
+[project.hal]
+x_onbehalf   = ""               # Declare deposit owners
+stamp        = ""               # Declare HAL collections
+include_pdf  = false            # Include PDF in ingestion scripts (using SWORD API)
+guess        = false            # Let HAL guess affiliations
+dry_run      = false            # Use pre-prod server
+halid        = false            # Insert hal identifiers in papers (if template accepts it)
+update       = false            # Update existing references
+national     = false            # Declare event to be national
+no_meta      = false            # Do not update metadata (only PDF)
