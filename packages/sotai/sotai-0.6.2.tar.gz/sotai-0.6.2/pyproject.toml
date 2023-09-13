@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sotai"
+# This version must always be one version ahead of the current release, so it
+# matches the current state of development, which will always be ahead of the
+# current release. Use Semantic Versioning.
+version = "0.6.2"
+description = "A Python Library For Calibrated Modeling Built With PyTorch"
+readme = "docs/README.md"
+license = {text = "MIT"}
+authors = [
+  {name = "SOTAI", email = "support@sotai.ai"},
+]
+maintainers = [
+  {name = "SOTAI", email = "support@sotai.ai"},
+]
+classifiers=[
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+requires-python = ">=3.8,<3.11"
+dependencies = [
+    "graphlib-backport>=1.0.3",
+    "numpy<=1.23.5",
+    "pandas>=1.5.3",
+    "pydantic>=1.10.8,<2.0.0",
+    "torch>=2.0.0",
+    "torchmetrics>=0.11.4",
+    "torchvision>=0.15.1",
+    "tqdm>=4.65.0",
+]
+
+[project.urls]
+"Source" = "https://github.com/SOTAI-Labs/sotai"
+"Documentation" = "https://github.com/SOTAI-Labs/sotai/tree/main/docs"
+"Feature Requests" = "https://github.com/SOTAI-Labs/pytorch-calibrated/issues"
+"Bug Reports" = "https://github.com/SOTAI-Labs/pytorch-calibrated/issues"
