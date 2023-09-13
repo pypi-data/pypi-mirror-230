@@ -1,0 +1,159 @@
+Metadata-Version: 2.1
+Name: CryptoLyzer
+Version: 0.10.0
+Summary: Fast and flexible cryptographic protocol analyzer
+Author: Szilárd Pfeiffer
+Author-email: coroner@pfeifferszilard.hu
+Maintainer: Szilárd Pfeiffer
+Maintainer-email: coroner@pfeifferszilard.hu
+License: MPL-2.0
+Project-URL: Homepage, https://gitlab.com/coroner/cryptolyzer
+Project-URL: Changelog, https://cryptolyzer.readthedocs.io/en/latest/changelog
+Project-URL: Documentation, https://cryptolyzer.readthedocs.io/en/latest/
+Project-URL: Issues, https://gitlab.com/coroner/cryptolyzer/-/issues
+Project-URL: Source, https://gitlab.com/coroner/cryptolyzer
+Keywords: ssl tls gost ja3 hassh https pop3 smtp imap ftp rdp xmpp jabber ldap sieve ssh hsts
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Framework :: tox
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Information Technology
+Classifier: Intended Audience :: Science/Research
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)
+Classifier: Natural Language :: English
+Classifier: Operating System :: MacOS
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: POSIX
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Classifier: Programming Language :: Python
+Classifier: Topic :: Internet
+Classifier: Topic :: Internet :: File Transfer Protocol (FTP)
+Classifier: Topic :: Internet :: XMPP
+Classifier: Topic :: Security
+Classifier: Topic :: Security :: Cryptography
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Software Development :: Testing :: Traffic Generation
+Classifier: Topic :: Software Development :: Testing
+Description-Content-Type: text/x-rst
+License-File: LICENSE.txt
+Requires-Dist: attrs <22.0.1,>=19.1
+Requires-Dist: certvalidator
+Requires-Dist: cryptoparser >=0.10.0
+Requires-Dist: pyfakefs
+Requires-Dist: python-dateutil
+Requires-Dist: requests
+Requires-Dist: urllib3
+Requires-Dist: pathlib2 ==2.3.7.post1 ; python_version < "3.4"
+Requires-Dist: py2-ipaddress ; python_version < "3.4"
+Requires-Dist: typing ; python_version < "3.5"
+Requires-Dist: enum34 ==1.1.6 ; python_version < '3'
+Requires-Dist: pathlib2 ==2.3.7.post1 ; python_version < '3'
+Requires-Dist: Mock ; python_version < '3'
+Requires-Dist: unittest2 ; python_version < '3'
+Requires-Dist: pathlib2 ; python_version >= "3.4"
+Provides-Extra: pep8
+Requires-Dist: flake8 ; extra == 'pep8'
+Provides-Extra: pylint
+Requires-Dist: pylint ; extra == 'pylint'
+Provides-Extra: test
+Requires-Dist: coverage ; extra == 'test'
+
+**CryptoLyzer** is a fast and flexible server cryptographic settings analyzer library for Python with an easy-to-use
+`command line interface <https://en.wikipedia.org/wiki/Command-line_interface>`__ with both human-readable
+(`Markdown <https://en.wikipedia.org/wiki/Markdown>`__) and
+machine-readable (`JSON <https://en.wikipedia.org/wiki/JSON>`__) output.  It works with multiple cryptographic protocols
+(`SSL <https://en.wikipedia.org/wiki/Transport_Layer_Security#SSL_1.0,_2.0,_and_3.0>`__/
+`TLS <https://en.wikipedia.org/wiki/Transport_Layer_Security>`__,
+`opportunistic TLS <https://en.wikipedia.org/wiki/Opportunistic_TLS>`__,
+`SSH <https://en.wikipedia.org/wiki/Secure_Shell>`__) and analyzes additional security mechanisms
+(`web security <https://infosec.mozilla.org/guidelines/web_security>`__ related
+`HTTP response header fields <https://en.wikipedia.org/wiki/List_of_HTTP_header_fields#Response_fields>`__,
+`JA3 tag <https://engineering.salesforce.com/tls-fingerprinting-with-ja3-and-ja3s-247362855967>`__) or `HASSH
+tag <https://engineering.salesforce.com/open-sourcing-hassh-abed3ae5044c/>`__).
+
+Usage
+-----
+
+Pip
+^^^
+
+.. code:: shell
+
+   pip install cryptolyzer
+
+   cryptolyze tls all www.example.com
+   cryptolyze tls1_2 ciphers www.example.com
+   cryptolyze ssh2 ciphers www.example.com
+   cryptolyze http headers www.example.com
+
+Docker
+^^^^^^
+
+.. code:: shell
+
+   docker run --rm coroner/cryptolyzer tls all www.example.com
+   docker run --rm coroner/cryptolyzer tls1_2 ciphers www.example.com
+   docker run --rm coroner/cryptolyzer ssh2 ciphers www.example.com
+   docker run --rm coroner/cryptolyzer http headers www.example.com
+
+.. code:: shell
+
+   docker run -ti --rm -p 127.0.0.1:4433:4433 coroner/cryptolyzer ja3 generate 127.0.0.1:4433
+   openssl s_client -connect 127.0.0.1:4433
+
+   docker run -ti --rm -p 127.0.0.1:2121:2121 coroner/cryptolyzer ja3 generate ftp://127.0.0.1:2121
+   openssl s_client -starttls ftp -connect 127.0.0.1:2121
+
+.. code:: shell
+
+   docker run -ti --rm -p 127.0.0.1:2222:4433 coroner/cryptolyzer hassh generate 127.0.0.1:2222
+   openssl s_client -connect 127.0.0.1:2222
+
+Support
+-------
+
+Python implementation
+^^^^^^^^^^^^^^^^^^^^^
+
+-  CPython (2.7, 3.3+)
+-  PyPy (2.7, 3.5+)
+
+Operating systems
+^^^^^^^^^^^^^^^^^
+
+-  Linux
+-  macOS
+-  Windows
+
+Social Media
+------------
+
+-  `Twitter <https://twitter.com/CryptoLyzer>`__
+-  `Facebook <https://www.facebook.com/cryptolyzer>`__
+
+License
+-------
+
+The code is available under the terms of Mozilla Public License Version 2.0 (MPL 2.0).
+
+A non-comprehensive, but straightforward description of MPL 2.0 can be found at
+`Choose an open source license <https://choosealicense.com/licenses#mpl-2.0>`__ website.
+
+Credits
+-------
+
+-  `NLnet Foundation <https://nlnet.nl>`__ and `NGI Assure <https://www.assure.ngi.eu>`__, supports the project part of
+   the `Next Generation Internet <https://ngi.eu>`__ initiative.
+-  Icons made by `Freepik <https://www.flaticon.com/authors/freepik>`__ from `Flaticon <https://www.flaticon.com/>`__.
