@@ -1,0 +1,109 @@
+Metadata-Version: 2.1
+Name: osl
+Version: 0.5.0
+Summary: OHBA Software Library
+Author: OHBA Analysis Group
+License: MIT
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering :: Bio-Informatics
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy
+Requires-Dist: scipy
+Requires-Dist: matplotlib
+Requires-Dist: mne >=1.0.0
+Requires-Dist: scikit-learn
+Requires-Dist: fslpy
+Requires-Dist: sails
+Requires-Dist: tabulate
+Requires-Dist: pyyaml >=5.1
+Requires-Dist: neurokit2
+Requires-Dist: jinja2
+Requires-Dist: glmtools
+Requires-Dist: numba
+Requires-Dist: nilearn
+Requires-Dist: dask
+Requires-Dist: distributed
+Requires-Dist: parse
+Requires-Dist: opencv-python
+Requires-Dist: panel
+Requires-Dist: h5io
+Provides-Extra: dev
+Requires-Dist: setuptools >=41.0.1 ; extra == 'dev'
+Requires-Dist: pytest ; extra == 'dev'
+Requires-Dist: pytest-cov ; extra == 'dev'
+Requires-Dist: coverage ; extra == 'dev'
+Requires-Dist: flake8 ; extra == 'dev'
+Provides-Extra: doc
+Requires-Dist: sphinx ==4.0.2 ; extra == 'doc'
+Requires-Dist: numpydoc ; extra == 'doc'
+Requires-Dist: sphinx-gallery ; extra == 'doc'
+Requires-Dist: pydata-sphinx-theme ; extra == 'doc'
+Provides-Extra: full
+Requires-Dist: setuptools >=41.0.1 ; extra == 'full'
+Requires-Dist: pytest ; extra == 'full'
+Requires-Dist: pytest-cov ; extra == 'full'
+Requires-Dist: coverage ; extra == 'full'
+Requires-Dist: flake8 ; extra == 'full'
+Requires-Dist: sphinx ==4.0.2 ; extra == 'full'
+Requires-Dist: numpydoc ; extra == 'full'
+Requires-Dist: sphinx-gallery ; extra == 'full'
+Requires-Dist: pydata-sphinx-theme ; extra == 'full'
+
+OHBA Software Library (OSL)
+===========================
+
+Install from Source Code
+------------------------
+The recommended installation depends on your operating system. OSL can be installed from source using:
+```
+git clone https://github.com/OHBA-analysis/osl.git
+cd osl
+conda env create -f envs/<os>.yml
+conda activate osl
+pip install -e .
+```
+where the environment file `<os>.yml` can be:
+
+- `linux.yml` for a generic linux machine.
+- `m1_mac.yml` if you are using a modern Mac computer.
+- `hbaws.yml` if you are using an OHBA workstation at Oxford.
+- `bmrc.yml` if you are using the BMRC at Oxford.
+
+Note, all of the above environments come with Jupyter Notebook installed. The `hbaws.yml` and `m1_mac.yml` environments also comes with Spyder installed.
+
+Deleting osl
+------------
+If you installed osl using the instructions above then to completely remove it simply delete the conda environment and delete the repo on your local machine:
+```
+conda env remove -n osl
+rm -rf osl
+```
+
+For Developers
+--------------
+Run tests:
+```
+cd osl
+pytest tests
+```
+or to run a specific test:
+```
+cd osl/tests
+pytest test_file_handling.py
+```
+
+Build documentation:
+```
+python setup.py build_sphinx
+```
+Compiled docs can be found in `doc/build/html/index.html`.
