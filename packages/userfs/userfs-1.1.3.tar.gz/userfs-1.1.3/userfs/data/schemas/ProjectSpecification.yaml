@@ -1,0 +1,39 @@
+---
+type: object
+additionalProperties: false
+required: [source, path]
+
+properties:
+  source:
+    type: string
+
+  path:
+    type: string
+
+  # If not specified, use the key name.
+  repository:
+    type: string
+
+  # Generic attributes to apply to the repository, so the package can
+  # understand how to interact with it.
+  #
+  # Data specified here should be useful to multiple interaction
+  # implementations.
+  attributes:
+    type: object
+
+  # Options provided to the source-fetching mechanisms.
+  fetch:
+    type: object
+
+  # Options provided to the software update mechanism.
+  update:
+    type: object
+
+  # Options provided to the software building mechanism.
+  build:
+    type: object
+
+  # Options provided to the software deploying mechanism.
+  deploy:
+    type: object

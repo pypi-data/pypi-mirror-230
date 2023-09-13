@@ -1,0 +1,28 @@
+---
+type: object
+additionalProperties: false
+
+properties:
+  directory:
+    type: string
+    default: ~/src
+
+  # Paths to search for hook modules.
+  hooks:
+    type: array
+    items:
+      type: string
+
+  sources:
+    type: object
+    additionalProperties: false
+    patternProperties:
+      "^[a-zA-Z0-9-_.]+$":
+        $ref: package://userfs/schemas/SourceSpecification.yaml
+
+  projects:
+    type: object
+    additionalProperties: false
+    patternProperties:
+      "^[a-zA-Z0-9-_.]+$":
+        $ref: package://userfs/schemas/ProjectSpecification.yaml
