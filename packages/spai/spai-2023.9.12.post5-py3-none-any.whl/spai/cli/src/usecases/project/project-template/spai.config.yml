@@ -1,0 +1,33 @@
+project: getting-started
+# optional, use folder name by default if not specified
+# should be able to define storage here and use in all services (unless overwritten)
+
+scripts:
+  - name: downloader
+    storage: data # only for cloud
+    run_every: 1
+    run_on_start: True
+  - name: ndvi
+    storage: data # only for cloud
+    run_every: 1
+    run_on_start: True
+notebooks:
+  - name: analytics
+    storage: data # only for cloud
+    run_every: 1
+    run_on_start: True
+apis:
+  - name: analytics
+    storage: data # only for cloud
+    port: 8011 # only for cloud
+  - name: xyz
+    storage: data # only for cloud
+    port: 8012 # only for cloud
+uis:
+  - name: map
+    command: streamlit run uis/map/main.py --server.address localhost # local
+    # command: streamlit run main.py # cloud
+    port: 8501 # only for cloud
+    env: # use api names as url placeholders (local and cloud)
+      ANALYTICS_URL: api.analytics 
+      XYZ_URL: api.xyz 
