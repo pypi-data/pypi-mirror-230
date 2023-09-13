@@ -1,0 +1,40 @@
+Metadata-Version: 2.1
+Name: python_io_capture
+Version: 0.0.1.4
+Summary: capture and report function IO at runtime
+Home-page: UNKNOWN
+Author: SecurityLab-UCD
+Author-email: yfhe@ucdavis.edu
+License: UNKNOWN
+Project-URL: Bug Tracker, https://github.com/SecurityLab-UCD/python-io-capture/issues
+Project-URL: Documentation, https://github.com/SecurityLab-UCD/python-io-capture/blob/main/README.md
+Project-URL: Source Code, https://github.com/SecurityLab-UCD/python-io-capture
+Platform: UNKNOWN
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+
+# python-io-capture
+
+capture and report function IO at runtime
+
+## Installation
+
+```bash
+pip3 install python-io-capture
+```
+
+## Usage
+
+```python
+from example import example
+from py_io_capture import decorate_module, dump_records
+import atexit
+
+example = decorate_module(example)
+atexit.register(dump_records, "demo_dump.json")
+
+if __name__ == "__main__":
+    example.main()
+```
+
+
