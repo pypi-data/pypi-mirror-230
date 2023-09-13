@@ -1,0 +1,12 @@
+title: Cloudflare
+description: A shard hosting rule for Cloudflare
+contact:
+  provider: Cloudflare
+  address: https://www.cloudflare.com/abuse/form
+detection:
+  selection:
+    domain|endswith:
+      - .workers.dev
+  condition: selection
+logsource:
+  product: abuse_whois

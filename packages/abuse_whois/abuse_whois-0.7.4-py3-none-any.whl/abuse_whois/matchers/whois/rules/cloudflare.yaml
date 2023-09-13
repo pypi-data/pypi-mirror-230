@@ -1,0 +1,12 @@
+title: Cloudflare
+description: A whois rule for Cloudflare
+contact:
+  provider: Cloudflare
+  address: https://www.cloudflare.com/abuse/form
+detection:
+  selection:
+    rawText|contains:
+      - abuse@cloudflare.com
+  condition: selection
+logsource:
+  product: abuse_whois

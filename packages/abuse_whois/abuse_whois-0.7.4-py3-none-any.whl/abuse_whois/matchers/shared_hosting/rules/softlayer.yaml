@@ -1,0 +1,12 @@
+title: SoftLayer
+description: A shard hosting rule for SoftLayer
+contact:
+  provider: SoftLayer
+  address: abuse@softlayer.com
+detection:
+  selection:
+    domain|endswith:
+      - .appdomain.cloud
+  condition: selection
+logsource:
+  product: abuse_whois

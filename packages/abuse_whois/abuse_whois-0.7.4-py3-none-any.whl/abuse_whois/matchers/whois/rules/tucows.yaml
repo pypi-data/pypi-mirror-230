@@ -1,0 +1,13 @@
+title: Tucows
+description: A whois rule for Tucows
+contact:
+  provider: Tucows
+  address: https://tucowsdomains.com/report-abuse/
+detection:
+  selection:
+    rawText|contains:
+      - abuse@tucows.com
+      - domainabuse@tucows.com
+  condition: selection
+logsource:
+  product: abuse_whois

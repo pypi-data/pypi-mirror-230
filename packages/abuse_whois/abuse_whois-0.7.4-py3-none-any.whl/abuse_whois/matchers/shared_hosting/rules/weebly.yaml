@@ -1,0 +1,12 @@
+title: Weebly
+description: A shard hosting rule for Weebly
+contact:
+  provider: Weebly
+  address: https://www.weebly.com/uk/spam
+detection:
+  selection:
+    domain|endswith:
+      - .weebly.com
+  condition: selection
+logsource:
+  product: abuse_whois

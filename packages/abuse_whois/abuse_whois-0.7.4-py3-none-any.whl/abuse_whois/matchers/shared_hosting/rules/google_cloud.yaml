@@ -1,0 +1,13 @@
+title: Google Cloud
+description: A shard hosting rule for GoogleCloud
+contact:
+  provider: Google Cloud
+  address: https://support.google.com/code/contact/cloud_platform_report
+detection:
+  selection:
+    domain|endswith:
+      - .appspot.com
+      - .googleapis.com
+  condition: selection
+logsource:
+  product: abuse_whois

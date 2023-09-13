@@ -1,0 +1,12 @@
+title: Adobe
+description: A shard hosting provider rule for Adobe
+contact:
+  provider: Adobe
+  address: hellospark@adobe.com
+detection:
+  selection:
+    domain|endswith:
+      - .spark.adobe.com
+  condition: selection
+logsource:
+  product: abuse_whois
