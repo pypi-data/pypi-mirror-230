@@ -1,0 +1,87 @@
+[build-system]
+requires = ["setuptools >= 40.6.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.coverage.run]
+branch = true
+source = ["sett"]
+omit = [
+    "sett/gui/resources/*",
+    "sett/gui/__main__.py",
+    "sett/gui/main_window.py",
+    "sett/gui/keys_tab.py",
+    "sett/gui/decrypt_tab.py",
+    "sett/gui/encrypt_tab.py",
+    "sett/gui/transfer_tab.py",
+    "sett/gui/file_selection_widget.py",
+]
+
+[tool.tox]
+legacy_tox_ini = '''
+[tox]
+envlist = py{38,39,310,311},report
+isolated_build = true
+
+[testenv]
+setenv =
+    SETT_LEGACY=true
+    py{38,39,310,311}: COVERAGE_FILE = .coverage.{envname}
+depends =
+    report: py{38,39,310,311}
+deps =
+    PySide2
+    pytest
+    pytest-cov
+    pytest-randomly
+    pytest-factoryboy
+commands =
+    pytest {posargs: --cov --cov-report=}
+
+[testenv:report]
+deps = coverage[toml]
+skip_install = true
+parallel_show_output = True
+commands =
+    coverage combine
+    coverage report
+'''
+
+[tool.mypy]
+strict = true
+files = ["sett", "test", "benchmark"]
+
+[[tool.mypy.overrides]]
+module = [
+    "socks",
+    "sockshandler",
+    "PySide2",
+    "matplotlib",
+    "matplotlib.pyplot",
+    "seaborn",
+    "minio",
+    "minio.error",
+    "factory",
+    "darkdetect",
+]
+ignore_missing_imports = true
+
+[tool.pylint.MAIN]
+jobs = 2
+load-plugins = ["pylint.extensions.docparams", "biomedit_lints"]
+
+[tool.pylint.'MESSAGES CONTROL']
+default-docstring-type = "sphinx"
+ignored-modules = ["PySide2", "PySide6"]
+extension-pkg-allow-list = ["PySide2", "PySide6", "sett_rs"]
+min-similarity-lines = 6
+ignore-comments = "yes"
+ignore-docstrings = "yes"
+disable = "line-too-long,missing-docstring,invalid-name,too-many-instance-attributes,too-many-arguments,too-many-locals,too-few-public-methods,too-many-lines,fixme"
+output-format = "text"
+reports = "no"
+
+[tool.commitizen]
+name = "cz_customize"
+
+[tool.commitizen.customize]
+schema_pattern = "((fixup|squash)\\!\\s)?(|build|ci|docs|feat|fix|perf|refactor|style|test|chore|revert|bump)(\\(\\S+\\))?!?:(\\s.*)"
