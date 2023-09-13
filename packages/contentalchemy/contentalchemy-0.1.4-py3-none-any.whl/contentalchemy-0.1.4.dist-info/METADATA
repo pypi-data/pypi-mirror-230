@@ -1,0 +1,48 @@
+Metadata-Version: 2.1
+Name: contentalchemy
+Version: 0.1.4
+Summary: 
+Author: nguyenthanhquang152
+Author-email: nguyenthanhquang.cse@gmail.com
+Requires-Python: >=3.8,<4.0
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: beautifulsoup4 (>=4,<5)
+Requires-Dist: lxml (>=4.9,<5.0)
+Requires-Dist: markdown (>=3.4.4,<4.0.0)
+Requires-Dist: markdownify (>=0.11.6,<0.12.0)
+Requires-Dist: mistune (>=3.0.1,<4.0.0)
+Requires-Dist: nh3 (>=0.2.14,<0.3.0)
+Requires-Dist: pillow (>=10.0.0,<11.0.0)
+Requires-Dist: playwright (>=1.36.0,<2.0.0)
+Description-Content-Type: text/markdown
+
+# Introduction
+
+Why do we start this repo?
+
+- Image processing: Snap HTML contents embedded math notations.
+
+# Image snapper:
+
+## Config: 
+
+ENV VARS:
+
+CA_HEADLESS_URL: default is empty, you should set it a headless browser 
+
+(I.e: Browserless, Browserstack, Chrominum, Chrome Stabe)
+
+## Code snippets:
+
+```python
+from contentalchemy.images.sync_api.snapper import HTMLSnapper
+
+
+html_str = "<p>abc</p>"
+snapper = HTMLSnapper()
+original_encoded = snapper.html_to_encoded_image(html_str)
+```
