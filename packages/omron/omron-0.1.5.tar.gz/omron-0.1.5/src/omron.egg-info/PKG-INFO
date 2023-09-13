@@ -1,0 +1,26 @@
+Metadata-Version: 2.1
+Name: omron
+Version: 0.1.5
+Summary: A library to communicate with Omron devices
+Home-page: https://aphyt.com
+Author: Joseph Ryan
+Author-email: jr@aphyt.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: GNU General Public License v2 (GPLv2)
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+
+# Omron F430 and F440 Vision Sensor
+
+```python
+from omron import f4_tcp_serial
+
+
+if __name__ == '__main__':
+    f4_instance = f4_tcp_serial.F4TCPSerial()
+    f4_instance.connect("192.168.250.15")
+    f4_instance.get_image('file.jpg')
+    f4_instance.close()
+```
