@@ -1,0 +1,117 @@
+Metadata-Version: 2.1
+Name: scikit-psl
+Version: 0.3.1
+Summary: Probabilistic Scoring List classifier
+Home-page: https://github.com/stheid/scikit-psl
+License: MIT
+Author: Stefan Heid
+Author-email: stefan.heid@upb.de
+Requires-Python: >=3.9,<3.13
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: joblib (>=1.3.2,<2.0.0)
+Requires-Dist: numpy (>=1.25.2,<2.0.0)
+Requires-Dist: pandas (>=2.1.0,<3.0.0)
+Requires-Dist: scikit-learn (>=1.3.0,<2.0.0)
+Requires-Dist: scipy (>=1.11.2,<2.0.0)
+Requires-Dist: sortedcontainers (>=2.4.0,<3.0.0)
+Project-URL: Repository, https://github.com/stheid/scikit-psl
+Description-Content-Type: text/markdown
+
+[![License](https://img.shields.io/github/license/stheid/scikit-psl)](https://github.com/stheid/scikit-psl/blob/master/LICENSE)
+[![Pip](https://img.shields.io/pypi/v/scikit-psl)](https://pypi.org/project/scikit-psl)
+
+
+# Probabilistic Scoring Lists
+
+Probabilistic scoring lists are incremental models that evaluate one feature of the dataset at a time.
+PSLs can be seen as a extension to *scoring systems* in two ways:
+- they can be evaluated at any stage allowing to trade of model complexity and prediction speed.
+- they provide a probability distribution over scores instead of hard thresholds.
+
+Scoring Systems are used as decision support for human experts in medical or law domains.
+
+The implementation adheres to the [sklearn-api](https://scikit-learn.org/stable/glossary.html#glossary-estimator-types).
+
+# Install
+```bash
+pip install scikit-psl
+```
+
+# Usage
+
+For examples have a look at the `examples` folder, but here is a simple example
+
+
+```python
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+
+from skpsl import ProbabilisticScoringList
+
+# Generating synthetic data with continuous features and a binary target variable
+X, y = make_classification(n_informative=10, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.2, random_state=42)
+
+psl = ProbabilisticScoringList({-1, 1, 2})
+psl.fit(X_train, y_train)
+print(f"Brier score: {psl.score(X_test, y_test):.4f}")
+"""
+Brier score: 0.2438  (lower is better)
+"""
+
+df = psl.inspect(5)
+print(df.to_string(index=False, na_rep="-", justify="center", float_format=lambda x: f"{x:.2f}"))
+"""
+ Stage Threshold  Score  T = -2  T = -1  T = 0  T = 1  T = 2  T = 3  T = 4  T = 5
+  0            -     -       -       -   0.51      -      -      -      -      - 
+  1     >-2.4245  2.00       -       -   0.00      -   0.63      -      -      - 
+  2     >-0.9625 -1.00       -    0.00   0.00   0.48   1.00      -      -      - 
+  3      >0.4368 -1.00    0.00    0.00   0.12   0.79   1.00      -      -      - 
+  4     >-0.9133  1.00    0.00    0.00   0.12   0.12   0.93   1.00      -      - 
+  5      >2.4648  2.00    0.00    0.00   0.07   0.07   0.92   1.00   1.00   1.00 
+"""
+```
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## 0.3.1 - 2023-09-12
+
+### Fixed
+
+- PSL is now correctly handles when all instances belong to the negative class
+- #1 if the first feature is assigned a negative score, it is now assigned the most negative score
+
+## 0.3.0 - 2023-08-10
+
+### Added
+
+- PSL classifier can now run with continuous data and optimally (wrt. expected entropy) select thresholds to binarize the data
+
+### Changed
+
+- Significantly improved optimum calculation for MinEntropyBinarizer (the same optimization algorithm is shared with the psls internal binarization algorithm)
+
+
+## 0.2.0 - 2023-08-10
+
+### Added
+
+- PSL classifier
+  - introduced parallelization
+  - implemented l-step lookahead
+  - simple inspect(·) method that creates a tabular representation of the model
+    
+
+## 0.1.0 - 2023-08-08
+
+### Added
+
+- Initial implementation of the PSL algorithm
