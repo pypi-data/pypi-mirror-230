@@ -1,0 +1,71 @@
+let arrays = properties.*[type == 'array']
+
+rule ensure_properties_do_not_support_multitype {
+    properties.* {
+        this is_struct
+
+        this[*] {
+            type exists OR
+            '$ref' exists
+            <<
+            {
+                "result": "NON_COMPLIANT",
+                "check_id": "COM001",
+                "message": "each property MUST specify type"
+            }
+            >>
+            type !is_list
+            <<
+            {
+                "result": "NON_COMPLIANT",
+                "check_id": "COM002",
+                "message": "type MUST NOT have combined definition"
+            }
+            >>
+        }
+
+    }
+}
+
+
+rule ensure_array_doesnt_use_anyof when %arrays !empty {
+    %arrays[*] {
+        items exists
+        <<
+        {
+            "result": "NON_COMPLIANT",
+            "check_id": "COM003",
+            "message": "property array MUST be modeled via items"
+        }
+        >>
+
+        items.anyOf not exists
+        <<
+        {
+            "result": "NON_COMPLIANT",
+            "check_id": "COM004",
+            "message": "property array MUST NOT specify items via anyOf"
+        }
+        >>
+
+
+        items.allOf not exists
+        <<
+        {
+            "result": "NON_COMPLIANT",
+            "check_id": "COM005",
+            "message": "property array MUST NOT specify items via allOf"
+        }
+        >>
+
+
+        items.oneOf not exists
+        <<
+        {
+            "result": "NON_COMPLIANT",
+            "check_id": "COM006",
+            "message": "property array MUST NOT specify items via oneOf"
+        }
+        >>
+    }
+}
