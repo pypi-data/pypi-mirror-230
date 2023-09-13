@@ -1,0 +1,67 @@
+Metadata-Version: 2.1
+Name: textual-game-of-life
+Version: 0.4.0
+Summary: An implementation of Conway's game of life (cellular automata) in the terminal using textual.
+Author-email: Thomas Crha <thomas@9bitbyte.com>
+Project-URL: Homepage, https://github.com/thomascrha/textual-game-of-life
+Project-URL: Bug Tracker, https://github.com/thomascrha/textual-game-of-life/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: importlib-metadata==6.8.0
+Requires-Dist: linkify-it-py==2.0.2
+Requires-Dist: markdown-it-py==3.0.0
+Requires-Dist: mdit-py-plugins==0.4.0
+Requires-Dist: mdurl==0.1.2
+Requires-Dist: Pygments==2.16.1
+Requires-Dist: rich==13.5.2
+Requires-Dist: textual==0.35.1
+Requires-Dist: typing_extensions==4.7.1
+Requires-Dist: uc-micro-py==1.0.2
+Requires-Dist: zipp==3.16.2
+Provides-Extra: test
+Requires-Dist: black; extra == "test"
+Requires-Dist: pre-commit; extra == "test"
+Requires-Dist: mypy; extra == "test"
+Requires-Dist: pytest; extra == "test"
+Requires-Dist: pytest-cov; extra == "test"
+Provides-Extra: deploy
+Requires-Dist: build; extra == "deploy"
+Requires-Dist: twine; extra == "deploy"
+Requires-Dist: setuptools>=61.0; extra == "deploy"
+
+# textual-game-of-life
+
+An implementation of Conway's game of life (cellular automata) in the terminal using textual.
+
+[textual-game-of-life](https://github.com/thomascrha/textual-game-of-life/assets/5226462/66dd4153-d286-4680-ac73-8fd63e60c00e)
+
+## installation
+
+```
+pip install textual-game-of-life
+```
+
+## usage
+
+```
+textual-game-of-life
+```
+
+## todo
+
+- [ ] make brush draggable.
+- [ ] add feature to make save file anything i.e. file dialog
+- [ ] add a way to change the brush size.
+- [ ] add a command line interface for all the options and settings.
+- [ ] make cursor black when on a white cell and white when on a black cell.
+- [x] make resize canvas not delete existing data.
+- [x] add toggle for starting/stopping the game.
+- [x] add about and help dialogs.
+- [x] add a way to save/load the current state of the game.
+- [x] add left and right to change the horizontal width of the canvas.
+- [x] add up and down to change the vertical width of the canvas.
+- [x] add a way to change the speed of the game.
