@@ -1,0 +1,62 @@
+Metadata-Version: 2.1
+Name: pubtools-sign
+Version: 0.0.2
+Summary: Collection of tools producing signed artifacts
+Author-email: Jindrich Luza <jluza@redhat.com>
+License-File: LICENSE
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Software Development :: Build Tools
+Requires-Python: >=3.7
+Requires-Dist: ansible-core
+Requires-Dist: click
+Requires-Dist: marshmallow
+Requires-Dist: monotonic
+Requires-Dist: piny
+Requires-Dist: pyopenssl
+Requires-Dist: python-qpid-proton
+Requires-Dist: requests
+Requires-Dist: typing-extensions
+Provides-Extra: dev
+Requires-Dist: pytest; extra == 'dev'
+Requires-Dist: tox; extra == 'dev'
+Description-Content-Type: text/x-rst
+
+===============
+ pubtools-sign
+===============
+
+Set of scripts used for signing 
+
+
+Requirements
+============
+
+* Python 3.7+
+
+Features
+========
+* pubtools-sign
+* pubtools-sign-clearsign 
+* pubtools-sign-containersign 
+
+Setup
+=====
+
+::
+
+  $ pip install -r requirements.txt
+  $ pip install . 
+  or
+  $ python setup.py install
+
+Usage
+=====
