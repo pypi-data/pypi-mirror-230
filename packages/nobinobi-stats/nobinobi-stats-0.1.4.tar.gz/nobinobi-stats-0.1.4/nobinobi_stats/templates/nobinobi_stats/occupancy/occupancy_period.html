@@ -1,0 +1,70 @@
+<!--
+  ~   Copyright (C) Prolibre Sarl 2019 <Florian Alu> <alu@prolibre.com>
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License and any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+{% extends "nobinobi_child/base.html" %}
+{% load i18n %}
+
+{% block title %}({{ from_date|date:"SHORT_DATE_FORMAT" }} - {{ end_date|date:"SHORT_DATE_FORMAT" }}) - {{ title }}{% endblock %}
+
+{% block breadcrumb %}
+  {{ block.super }}
+  <li class="breadcrumb-item active">{{ title }}</li>
+{% endblock %}
+
+{% block content_title %}
+  {{ title }}
+{% endblock %}
+{% block content_card_title %}{{ from_date|date:"SHORT_DATE_FORMAT" }} - {{ end_date|date:"SHORT_DATE_FORMAT" }}{% endblock %}
+{% block content_card_body %}
+  {% include "includes/messages.html" %}
+
+  <table class="table table-bordered">
+    <thead class="bg-dark-gradient">
+    <tr>
+      <th>&nbsp;</th>
+      {% for period, period_value in dict_table.total.period.items %}
+        <th>{{ period_value.name }}</th>
+      {% endfor %}
+      <th>{% trans "Average" %}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for classroom, classroom_value in dict_table.classroom.items %}
+      <tr>
+        <td scope="row" class="bg-info-gradient">{{ classroom_value.name }} <small>({{ classroom_value.capacity }})</small></td>
+        {% for period in classroom_value.period.values %}
+          <td>{{ period.average }} <small>({{ period.percentage }}%)</small></td>
+        {% endfor %}
+        <td>{{ classroom_value.average.total }} {% trans "or" %} {{ classroom_value.average.percentage }}%</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr class="bg-dark-gradient">
+      <td scope="row">{% trans "Total" %} <small>({{ dict_table.total.classroom }})</small></td>
+      {% for period in dict_table.total.period.values %}
+        <td>{{ period.total }} <small>({{ period.percentage }}%)</small></td>
+      {% endfor %}
+      <td>{{ dict_table.total.average.total }} {% trans "or" %} {{ dict_table.total.average.percentage }}%</td>
+    </tr>
+    </tfoot>
+  </table>
+
+{% endblock %}
+{% block content_card_footer %}
+
+{% endblock %}
