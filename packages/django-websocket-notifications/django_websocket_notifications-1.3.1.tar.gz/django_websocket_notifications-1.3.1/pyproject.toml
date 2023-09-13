@@ -1,0 +1,67 @@
+[tool.poetry]
+name = "django-websocket-notifications"
+version = "1.3.1"
+description = "A Django package to handle notifications using Django Channels and WebSockets."
+readme = "README.rst"
+authors = ["Marcos Gabarda <hey@marcosgabarda.com>"]
+license = "MIT"
+homepage = "https://github.com/marcosgabarda/django-websocket-notifications"
+packages = [{ include = "websocket_notifications" }]
+
+classifiers = [
+  "Environment :: Web Environment",
+  "Framework :: Django",
+  "License :: OSI Approved :: MIT License",
+]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<4.0"
+django = ">=4.0.0"
+channels = ">=2.4.0"
+django-model-utils = ">=4.0.0"
+djangorestframework = ">=3.11.0"
+django-snitch = ">=2.1.0"
+single-source = "^0.3.0"
+
+[tool.poetry.group.dev.dependencies]
+pylint = "^2.17.5"
+pytest = "^7.4.0"
+black = "^23.7.0"
+factory_boy = "^3.2.1"
+django-test-plus = "=2.2.1"
+pytest-django = "^4.5.2"
+pytest-cov = "^4.1.0"
+mypy = "^1.5.1"
+isort = "^5.12.0"
+
+
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+line_length = 88
+
+[tool.black]
+line-length = 88
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | node_modules
+)/
+'''
+
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
