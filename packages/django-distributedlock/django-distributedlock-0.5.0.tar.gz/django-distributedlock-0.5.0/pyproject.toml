@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "django-distributedlock"
+version = "0.5.0"
+authors = [{name = "Erik Rivera", email = "erik.river@gmail.com"}]
+maintainers = [{name = "Paul Logston", email = "code@logston.me"}]
+license = {text = "BSD"}
+description = "Distributed locking in Django"
+keywords = ["distributed", "lock"]
+readme = "README.rst"
+requires-python = ">=3.4"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/15five/django-distributedlock"
+
+[project.optional-dependencies]
+testing = ["django", "gevent"]
+
+[tool.setuptools]
+packages = ["distributedlock"]
