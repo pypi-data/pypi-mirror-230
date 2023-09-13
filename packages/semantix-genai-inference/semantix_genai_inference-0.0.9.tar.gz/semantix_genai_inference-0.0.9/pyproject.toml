@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "semantix-genai-inference"
+version = "0.0.9"
+description = ""
+authors = ["Dev Team <dev@semantix.ai>"]
+readme = "README.md"
+packages = [{include = "semantix_genai_inference"}]
+
+[tool.poetry.dependencies]
+python = ">=3.8"
+aiohttp = "^3.8.4"
+click = "^8.1.4"
+pyyaml = "^6.0.1"
+
+[tool.poetry.scripts]
+semantix-ai = 'semantix_genai_inference.cli:cli'
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
