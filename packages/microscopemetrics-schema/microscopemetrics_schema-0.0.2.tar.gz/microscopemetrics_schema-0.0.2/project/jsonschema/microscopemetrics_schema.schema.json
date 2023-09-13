@@ -1,0 +1,1907 @@
+{
+    "$defs": {
+        "ArgolightBDataset": {
+            "additionalProperties": false,
+            "description": "An Argolight sample pattern B dataset",
+            "if": {
+                "properties": {
+                    "processed": {
+                        "const": 1
+                    }
+                },
+                "required": [
+                    "processed"
+                ]
+            },
+            "properties": {
+                "acquisition_date": {
+                    "description": "The date of the acquisition",
+                    "format": "date",
+                    "type": "string"
+                },
+                "comment": {
+                    "description": "A human readable comment about the dataset",
+                    "items": {
+                        "$ref": "#/$defs/Comment"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "description": "A description of an entity",
+                    "type": "string"
+                },
+                "experimenter": {
+                    "description": "The experimenter that performed the imaging experiment",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "input": {
+                    "$ref": "#/$defs/ArgolightBInput",
+                    "description": "An input element for the analysis"
+                },
+                "name": {
+                    "description": "The name of an entity",
+                    "type": "string"
+                },
+                "output": {
+                    "$ref": "#/$defs/ArgolightBOutput",
+                    "description": "An output element from the analysis"
+                },
+                "processed": {
+                    "description": "Has the dataset been processed by microscope-metrics",
+                    "type": "boolean"
+                },
+                "processing_date": {
+                    "description": "The date of the processing by microscope-metrics",
+                    "format": "date",
+                    "type": "string"
+                },
+                "processing_log": {
+                    "description": "The log of the processing by microscope-metrics",
+                    "type": "string"
+                },
+                "sample": {
+                    "description": "The sample that was imaged",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "input",
+                "processed"
+            ],
+            "then": {
+                "properties": {
+                    "output": {}
+                },
+                "required": [
+                    "output"
+                ]
+            },
+            "title": "ArgolightBDataset",
+            "type": "object"
+        },
+        "ArgolightBDistanceKeyValues": {
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "channel_A": {
+                    "description": "The first channel number to which the measurements apply",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "type": "array"
+                },
+                "channel_B": {
+                    "description": "The second channel number to which the measurements apply",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "type": "array"
+                },
+                "mad_3d_dist": {
+                    "description": "Median absolute deviation of the 3D distances between spots for each permutation of channel A and B",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "mad_z_dist": {
+                    "description": "Median absolute deviation of the Z distances between spots for each permutation of channel A and B",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "mean_3d_dist": {
+                    "description": "Mean of the 3D distances between spots for each permutation of channel A and B",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "mean_z_dist": {
+                    "description": "Mean of the Z distances between spots for each permutation of channel A and B",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "median_3d_dist": {
+                    "description": "Median of the 3D distances between spots for each permutation of channel A and B",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "median_z_dist": {
+                    "description": "Median of the Z distances between spots for each permutation of channel A and B",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "std_3d_dist": {
+                    "description": "Standard deviation of the 3D distances between spots for each permutation of channel A and B",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "std_z_dist": {
+                    "description": "Standard deviation of the Z distances between spots for each permutation of channel A and B",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                }
+            },
+            "title": "ArgolightBDistanceKeyValues",
+            "type": "object"
+        },
+        "ArgolightBInput": {
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "argolight_b_image": {
+                    "$ref": "#/$defs/ImageAsNumpy",
+                    "description": "Input parameter: image of the argolight b pattern provided as a 5D numpy array in the order TZYXC"
+                },
+                "bit_depth": {
+                    "description": "Detector bit depth",
+                    "maximum": 64,
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "lower_threshold_correction_factors": {
+                    "description": "Input parameter: correction factor for the lower thresholds.  Must be a tuple with len = nr of channels or a float if all equal",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "remove_center_cross": {
+                    "description": "Input parameter: remove the center cross found in some Argolight patterns",
+                    "type": "boolean"
+                },
+                "saturation_threshold": {
+                    "description": "Tolerated saturation threshold. If the amount of saturated pixels is above this threshold,  the image is considered as saturated and the analysis is not performed.",
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "sigma_x": {
+                    "description": "Input parameter: smoothing factor for objects detection in the X axis",
+                    "maximum": 10,
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "sigma_y": {
+                    "description": "Input parameter: smoothing factor for objects detection in the Y axis",
+                    "maximum": 10,
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "sigma_z": {
+                    "description": "Input parameter: smoothing factor for objects detection in the Z axis",
+                    "maximum": 5,
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "spots_distance": {
+                    "description": "Input parameter: distance between argolight spots",
+                    "type": "number"
+                },
+                "upper_threshold_correction_factors": {
+                    "description": "Input parameter: correction factor for the upper thresholds. Must be a tuple with len = nr of channels or a float if all equal",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "argolight_b_image",
+                "saturation_threshold",
+                "spots_distance",
+                "sigma_z",
+                "sigma_y",
+                "sigma_x"
+            ],
+            "title": "ArgolightBInput",
+            "type": "object"
+        },
+        "ArgolightBIntensityKeyValues": {
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "channel": {
+                    "description": "The channel number to which the measurements apply",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "type": "array"
+                },
+                "intensity_max_spot": {
+                    "description": "Integrated intensity of the most intense spot for each channel",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "intensity_max_spot_roi": {
+                    "description": "ROI number of the most intense spot for each channel",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "type": "array"
+                },
+                "intensity_min_spot": {
+                    "description": "Integrated intensity of the least intense spot for each channel",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "intensity_min_spot_roi": {
+                    "description": "ROI number of the least intense spot for each channel",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "type": "array"
+                },
+                "mad_mean_intensity": {
+                    "description": "Median absolute deviation of all spots integrated intensity for each channel",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "mean_intensity": {
+                    "description": "Mean of all spots integrated intensity for each channel",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "median_intensity": {
+                    "description": "Median of all spots integrated intensity for each channel",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "min_max_intensity_ratio": {
+                    "description": "Ratio between the integrated intensities between the most intense and the least intense spots for each channel",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "nr_of_spots": {
+                    "description": "Number of argolight spots detected for each channel",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "type": "array"
+                },
+                "std_mean_intensity": {
+                    "description": "Standard deviation of all spots integrated intensity for each channel",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                }
+            },
+            "title": "ArgolightBIntensityKeyValues",
+            "type": "object"
+        },
+        "ArgolightBOutput": {
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "distance_measurements": {
+                    "$ref": "#/$defs/ArgolightBDistanceKeyValues",
+                    "description": "Key Distance Measurements on Argolight spots"
+                },
+                "intensity_measurements": {
+                    "$ref": "#/$defs/ArgolightBIntensityKeyValues",
+                    "description": "Key Intensity Measurements on Argolight spots"
+                },
+                "spots_centroids": {
+                    "description": "Centroids of the argolight spots provided as a list of ROIs, one per channel",
+                    "items": {
+                        "$ref": "#/$defs/Roi"
+                    },
+                    "type": "array"
+                },
+                "spots_distances": {
+                    "$ref": "#/$defs/TableAsDict",
+                    "description": "Table of distances between argolight spots"
+                },
+                "spots_labels_image": {
+                    "description": "Labels image of the argolight segmented spots provided as a 5D numpy array in the order TZYXC. Image intensities correspond to ROI labels",
+                    "type": "string"
+                },
+                "spots_properties": {
+                    "$ref": "#/$defs/TableAsDict",
+                    "description": "Table of properties of the argolight spots"
+                }
+            },
+            "title": "ArgolightBOutput",
+            "type": "object"
+        },
+        "ArgolightEDataset": {
+            "additionalProperties": false,
+            "description": "An Argolight sample pattern E dataset.\nIt contains resolution data on the axis indicated:\n- axis 1 = Y resolution = lines along X axis\n- axis 2 = X resolution = lines along Y axis",
+            "if": {
+                "properties": {
+                    "processed": {
+                        "const": 1
+                    }
+                },
+                "required": [
+                    "processed"
+                ]
+            },
+            "properties": {
+                "acquisition_date": {
+                    "description": "The date of the acquisition",
+                    "format": "date",
+                    "type": "string"
+                },
+                "comment": {
+                    "description": "A human readable comment about the dataset",
+                    "items": {
+                        "$ref": "#/$defs/Comment"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "description": "A description of an entity",
+                    "type": "string"
+                },
+                "experimenter": {
+                    "description": "The experimenter that performed the imaging experiment",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "input": {
+                    "$ref": "#/$defs/ArgolightEInput",
+                    "description": "An input element for the analysis"
+                },
+                "name": {
+                    "description": "The name of an entity",
+                    "type": "string"
+                },
+                "output": {
+                    "$ref": "#/$defs/ArgolightEOutput",
+                    "description": "An output element from the analysis"
+                },
+                "processed": {
+                    "description": "Has the dataset been processed by microscope-metrics",
+                    "type": "boolean"
+                },
+                "processing_date": {
+                    "description": "The date of the processing by microscope-metrics",
+                    "format": "date",
+                    "type": "string"
+                },
+                "processing_log": {
+                    "description": "The log of the processing by microscope-metrics",
+                    "type": "string"
+                },
+                "sample": {
+                    "description": "The sample that was imaged",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "input",
+                "processed"
+            ],
+            "then": {
+                "properties": {
+                    "output": {}
+                },
+                "required": [
+                    "output"
+                ]
+            },
+            "title": "ArgolightEDataset",
+            "type": "object"
+        },
+        "ArgolightEInput": {
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "argolight_e_image": {
+                    "$ref": "#/$defs/ImageAsNumpy",
+                    "description": "Image of the argolight e pattern provided as a 5D numpy array in the order TZYXC"
+                },
+                "axis": {
+                    "description": "Axis along which resolution is being measured. 1=Y, 2=X",
+                    "maximum": 2,
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "bit_depth": {
+                    "description": "Detector bit depth",
+                    "maximum": 64,
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "measured_band": {
+                    "description": "Fraction of the image across which intensity profiles are measured",
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "prominence_threshold": {
+                    "description": "Peak prominence used as a threshold to distinguish two peaks.  Defaults to the value defined by the Rayleigh criteria",
+                    "maximum": 0,
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "saturation_threshold": {
+                    "description": "Tolerated saturation threshold. If the amount of saturated pixels is above this threshold,  the image is considered as saturated and the analysis is not performed.",
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                }
+            },
+            "required": [
+                "argolight_e_image",
+                "saturation_threshold",
+                "axis",
+                "measured_band",
+                "prominence_threshold"
+            ],
+            "title": "ArgolightEInput",
+            "type": "object"
+        },
+        "ArgolightEKeyValues": {
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "channel": {
+                    "description": "The channel number to which the measurements apply",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "type": "array"
+                },
+                "focus_slice": {
+                    "description": "Z position at which focus has been measured",
+                    "items": {
+                        "minimum": 0,
+                        "type": "integer"
+                    },
+                    "type": "array"
+                },
+                "peak_height_A": {
+                    "description": "Height of first peak in the intensity profiles",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "peak_height_B": {
+                    "description": "Height of second peak in the intensity profiles",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "peak_position_A": {
+                    "description": "Position of first peak in the intensity profiles",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "peak_position_B": {
+                    "description": "Position of second peak in the intensity profiles",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "peak_prominence_A": {
+                    "description": "Prominence of first peak in the intensity profiles",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "peak_prominence_B": {
+                    "description": "Prominence of second peak in the intensity profiles",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "rayleigh_resolution": {
+                    "description": "Rayleigh resolution measured",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                }
+            },
+            "title": "ArgolightEKeyValues",
+            "type": "object"
+        },
+        "ArgolightEOutput": {
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "intensity_profiles": {
+                    "$ref": "#/$defs/TableAsDict",
+                    "description": "Intensity profiles of the argolight lines provided as tables. One table per channel"
+                },
+                "key_measurements": {
+                    "$ref": "#/$defs/ArgolightEKeyValues",
+                    "description": "Key Measurements on Argolight E images"
+                },
+                "peaks_rois": {
+                    "description": "ROIs of the peaks found in the argolight images",
+                    "items": {
+                        "$ref": "#/$defs/Roi"
+                    },
+                    "type": "array"
+                }
+            },
+            "title": "ArgolightEOutput",
+            "type": "object"
+        },
+        "ChannelSeries": {
+            "additionalProperties": false,
+            "description": "A series whose values represent channel",
+            "properties": {
+                "values": {
+                    "items": {
+                        "type": "integer"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "values"
+            ],
+            "title": "ChannelSeries",
+            "type": "object"
+        },
+        "Color": {
+            "additionalProperties": false,
+            "description": "A color as defined by RGB values and an optional alpha value",
+            "properties": {
+                "alpha": {
+                    "description": "The alpha value of the color (optional)",
+                    "maximum": 255,
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "b": {
+                    "description": "The blue value of the color",
+                    "maximum": 255,
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "g": {
+                    "description": "The green value of the color",
+                    "maximum": 255,
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "r": {
+                    "description": "The red value of the color",
+                    "maximum": 255,
+                    "minimum": 0,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "r",
+                "g",
+                "b"
+            ],
+            "title": "Color",
+            "type": "object"
+        },
+        "Column": {
+            "additionalProperties": false,
+            "description": "A column",
+            "properties": {
+                "name": {
+                    "description": "The name of the column",
+                    "type": "string"
+                },
+                "values": {
+                    "description": "The values of the column",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "name",
+                "values"
+            ],
+            "title": "Column",
+            "type": "object"
+        },
+        "Comment": {
+            "additionalProperties": false,
+            "description": "A comment",
+            "properties": {
+                "text": {
+                    "description": "The text of the comment",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "text"
+            ],
+            "title": "Comment",
+            "type": "object"
+        },
+        "Ellipse": {
+            "additionalProperties": false,
+            "description": "An ellipse as defined by x, y coordinates and x and y radii",
+            "properties": {
+                "c": {
+                    "description": "The c coordinate of the shape",
+                    "type": "integer"
+                },
+                "fill_color": {
+                    "$ref": "#/$defs/Color",
+                    "description": "The fill color of the shape"
+                },
+                "label": {
+                    "description": "The label of the shape",
+                    "type": "string"
+                },
+                "stroke_color": {
+                    "$ref": "#/$defs/Color",
+                    "description": "The stroke color of the shape"
+                },
+                "stroke_width": {
+                    "description": "The stroke width of the shape",
+                    "type": "integer"
+                },
+                "t": {
+                    "description": "The t coordinate of the shape",
+                    "type": "integer"
+                },
+                "x": {
+                    "description": "The x coordinate of the bounding box of the ellipse",
+                    "type": "number"
+                },
+                "x_rad": {
+                    "description": "The x radius of the ellipse",
+                    "type": "number"
+                },
+                "y": {
+                    "description": "The y coordinate of the bounding box of the ellipse",
+                    "type": "number"
+                },
+                "y_rad": {
+                    "description": "The y radius of the ellipse",
+                    "type": "number"
+                },
+                "z": {
+                    "description": "The z coordinate of the shape",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "x",
+                "y",
+                "x_rad",
+                "y_rad"
+            ],
+            "title": "Ellipse",
+            "type": "object"
+        },
+        "Experimenter": {
+            "additionalProperties": false,
+            "description": "The person that performed the experiment or developed the protocol",
+            "properties": {
+                "name": {
+                    "description": "The name of the experimenter",
+                    "type": "string"
+                },
+                "orcid": {
+                    "description": "The ORCID of the experimenter",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "orcid"
+            ],
+            "title": "Experimenter",
+            "type": "object"
+        },
+        "FieldIlluminationDataset": {
+            "additionalProperties": false,
+            "description": "A field illumination dataset",
+            "if": {
+                "properties": {
+                    "processed": {
+                        "const": 1
+                    }
+                },
+                "required": [
+                    "processed"
+                ]
+            },
+            "properties": {
+                "acquisition_date": {
+                    "description": "The date of the acquisition",
+                    "format": "date",
+                    "type": "string"
+                },
+                "comment": {
+                    "description": "A human readable comment about the dataset",
+                    "items": {
+                        "$ref": "#/$defs/Comment"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "description": "A description of an entity",
+                    "type": "string"
+                },
+                "experimenter": {
+                    "description": "The experimenter that performed the imaging experiment",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "input": {
+                    "$ref": "#/$defs/FieldIlluminationInput"
+                },
+                "name": {
+                    "description": "The name of an entity",
+                    "type": "string"
+                },
+                "output": {
+                    "$ref": "#/$defs/FieldIlluminationOutput"
+                },
+                "processed": {
+                    "description": "Has the dataset been processed by microscope-metrics",
+                    "type": "boolean"
+                },
+                "processing_date": {
+                    "description": "The date of the processing by microscope-metrics",
+                    "format": "date",
+                    "type": "string"
+                },
+                "processing_log": {
+                    "description": "The log of the processing by microscope-metrics",
+                    "type": "string"
+                },
+                "sample": {
+                    "description": "The sample that was imaged",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "input",
+                "processed"
+            ],
+            "then": {
+                "properties": {
+                    "output": {}
+                },
+                "required": [
+                    "output"
+                ]
+            },
+            "title": "FieldIlluminationDataset",
+            "type": "object"
+        },
+        "FieldIlluminationInput": {
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "bit_depth": {
+                    "description": "Detector bit depth",
+                    "maximum": 64,
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "center_threshold": {
+                    "description": "Input parameter: relative threshold for what is going to be considered as the intensity center of the image",
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "corner_fraction": {
+                    "description": "Input parameter: the proportion of the image to be considered as corner or center",
+                    "maximum": 0,
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "field_illumination_image": {
+                    "$ref": "#/$defs/ImageAsNumpy",
+                    "description": "Input parameter: homogeneity image provided as a numpy array in the order. While the analysis accepts multiple channels, the T and Z dimensions are expected to be 1."
+                },
+                "intensity_map_size": {
+                    "description": "Input parameter: the size of the output intensity map in pixels",
+                    "maximum": 512,
+                    "minimum": 5,
+                    "type": "integer"
+                },
+                "saturation_threshold": {
+                    "description": "Tolerated saturation threshold. If the amount of saturated pixels is above this threshold,  the image is considered as saturated and the analysis is not performed.",
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "sigma": {
+                    "description": "Input parameter: the sigma for the smoothing gaussian filter to be applied prior to analysis",
+                    "maximum": 100,
+                    "minimum": 0,
+                    "type": "number"
+                }
+            },
+            "required": [
+                "field_illumination_image",
+                "saturation_threshold",
+                "center_threshold",
+                "corner_fraction",
+                "sigma",
+                "intensity_map_size"
+            ],
+            "title": "FieldIlluminationInput",
+            "type": "object"
+        },
+        "FieldIlluminationKeyValues": {
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "bottom_center_intensity_mean": {
+                    "description": "The mean intensity of the bottom-center of the image",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "bottom_center_intensity_ratio": {
+                    "description": "The mean intensity of the bottom-center of the image  divided by the maximum intensity of the center of illumination",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "bottom_left_intensity_mean": {
+                    "description": "The mean intensity of the bottom-left of the image",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "bottom_left_intensity_ratio": {
+                    "description": "The mean intensity of the bottom-left of the image  divided by the maximum intensity of the center of illumination",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "bottom_right_intensity_mean": {
+                    "description": "The mean intensity of the bottom-right of the image",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "bottom_right_intensity_ratio": {
+                    "description": "The mean intensity of the bottom-right of the image  divided by the maximum intensity of the center of illumination",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "center_of_mass_x": {
+                    "description": "The x coordinate of the center of mass of the center of illumination region. In pixels",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "center_of_mass_y": {
+                    "description": "The y coordinate of the center of mass of the center of illumination region. In pixels",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "channel": {
+                    "description": "The channel number to which the measurements apply",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "type": "array"
+                },
+                "decile_0": {
+                    "description": "The 0th decile of the intensity distribution of the maximum intensity",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "decile_1": {
+                    "description": "The 1st decile of the intensity distribution of the maximum intensity",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "decile_2": {
+                    "description": "The 2nd decile of the intensity distribution of the maximum intensity",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "decile_3": {
+                    "description": "The 3rd decile of the intensity distribution of the maximum intensity",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "decile_4": {
+                    "description": "The 4th decile of the intensity distribution of the maximum intensity",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "decile_5": {
+                    "description": "The 5th decile of the intensity distribution of the maximum intensity",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "decile_6": {
+                    "description": "The 6th decile of the intensity distribution of the maximum intensity",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "decile_7": {
+                    "description": "The 7th decile of the intensity distribution of the maximum intensity",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "decile_8": {
+                    "description": "The 8th decile of the intensity distribution of the maximum intensity",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "decile_9": {
+                    "description": "The 9th decile of the intensity distribution of the maximum intensity",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "max_intensity": {
+                    "description": "The maximum intensity of the center of illumination",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "max_intensity_pos_x": {
+                    "description": "The x coordinate of the maximum intensity of the center of illumination. In pixels",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "max_intensity_pos_y": {
+                    "description": "The y coordinate of the maximum intensity of the center of illumination. In pixels",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "middle_center_intensity_mean": {
+                    "description": "The mean intensity of the middle-center of the image",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "middle_center_intensity_ratio": {
+                    "description": "The mean intensity of the middle-center of the image  divided by the maximum intensity of the center of illumination",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "middle_left_intensity_mean": {
+                    "description": "The mean intensity of the middle-left of the image",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "middle_left_intensity_ratio": {
+                    "description": "The mean intensity of the middle-left of the image  divided by the maximum intensity of the center of illumination",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "middle_right_intensity_mean": {
+                    "description": "The mean intensity of the middle-right of the image",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "middle_right_intensity_ratio": {
+                    "description": "The mean intensity of the middle-right of the image  divided by the maximum intensity of the center of illumination",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "nb_pixels": {
+                    "description": "The area occupied by the center of illumination region. In pixels",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "type": "array"
+                },
+                "top_center_intensity_mean": {
+                    "description": "The mean intensity of the top-center of the image",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "top_center_intensity_ratio": {
+                    "description": "The mean intensity of the top-center of the image  divided by the maximum intensity of the center of illumination",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "top_left_intensity_mean": {
+                    "description": "The mean intensity of the top-left corner of the image",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "top_left_intensity_ratio": {
+                    "description": "The mean intensity of the top-left corner of the image  divided by the maximum intensity of the center of illumination",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "top_right_intensity_mean": {
+                    "description": "The mean intensity of the top-right corner of the image",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "top_right_intensity_ratio": {
+                    "description": "The mean intensity of the top-right corner of the image  divided by the maximum intensity of the center of illumination",
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                }
+            },
+            "title": "FieldIlluminationKeyValues",
+            "type": "object"
+        },
+        "FieldIlluminationOutput": {
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "center_of_illumination": {
+                    "$ref": "#/$defs/Roi",
+                    "description": "Point ROIs marking the center of illumination"
+                },
+                "corner_rois": {
+                    "$ref": "#/$defs/Roi",
+                    "description": "ROIs used to compute the corner intensities"
+                },
+                "intensity_map": {
+                    "description": "Intensity map of the field illumination",
+                    "type": "string"
+                },
+                "intensity_profiles": {
+                    "$ref": "#/$defs/TableAsDict",
+                    "description": "Intensity profiles for the field illumination analysis in the different directions"
+                },
+                "key_values": {
+                    "$ref": "#/$defs/FieldIlluminationKeyValues",
+                    "description": "Key-Value pairs containing the Key measurements for the field illumination analysis"
+                },
+                "profile_rois": {
+                    "$ref": "#/$defs/Roi",
+                    "description": "ROIs used to compute the intensity profiles"
+                }
+            },
+            "title": "FieldIlluminationOutput",
+            "type": "object"
+        },
+        "Image2D": {
+            "additionalProperties": false,
+            "description": "A 2D image in YX order",
+            "properties": {
+                "data": {
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "description": "A description of an entity",
+                    "type": "string"
+                },
+                "image_url": {
+                    "description": "An URL linking to the image",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "The name of an entity",
+                    "type": "string"
+                },
+                "source_image_url": {
+                    "description": "A list of URLs linking to the images that were used as a source",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "x": {
+                    "$ref": "#/$defs/PixelSeries"
+                },
+                "y": {
+                    "$ref": "#/$defs/PixelSeries"
+                }
+            },
+            "required": [
+                "y",
+                "x",
+                "data",
+                "image_url"
+            ],
+            "title": "Image2D",
+            "type": "object"
+        },
+        "Image5D": {
+            "additionalProperties": false,
+            "description": "A 5D image in TZYXC order",
+            "properties": {
+                "c": {
+                    "$ref": "#/$defs/ChannelSeries"
+                },
+                "data": {
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "description": "A description of an entity",
+                    "type": "string"
+                },
+                "image_url": {
+                    "description": "An URL linking to the image",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "The name of an entity",
+                    "type": "string"
+                },
+                "source_image_url": {
+                    "description": "A list of URLs linking to the images that were used as a source",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "t": {
+                    "$ref": "#/$defs/TimeSeries"
+                },
+                "x": {
+                    "$ref": "#/$defs/PixelSeries"
+                },
+                "y": {
+                    "$ref": "#/$defs/PixelSeries"
+                },
+                "z": {
+                    "$ref": "#/$defs/PixelSeries"
+                }
+            },
+            "required": [
+                "t",
+                "z",
+                "y",
+                "x",
+                "c",
+                "data",
+                "image_url"
+            ],
+            "title": "Image5D",
+            "type": "object"
+        },
+        "ImageAsNumpy": {
+            "additionalProperties": false,
+            "description": "An image as a numpy array in TZYXC order",
+            "properties": {
+                "data": {
+                    "$ref": "#/$defs/MetaObject"
+                },
+                "description": {
+                    "description": "A description of an entity",
+                    "type": "string"
+                },
+                "image_url": {
+                    "description": "An URL linking to the image",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "The name of an entity",
+                    "type": "string"
+                },
+                "source_image_url": {
+                    "description": "A list of URLs linking to the images that were used as a source",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "image_url"
+            ],
+            "title": "ImageAsNumpy",
+            "type": "object"
+        },
+        "ImageMask": {
+            "additionalProperties": false,
+            "description": "A base object for all microscope-metrics masks",
+            "properties": {
+                "data": {
+                    "items": {
+                        "type": "boolean"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "description": "A description of an entity",
+                    "type": "string"
+                },
+                "image_url": {
+                    "description": "An URL linking to the image",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "The name of an entity",
+                    "type": "string"
+                },
+                "source_image_url": {
+                    "description": "A list of URLs linking to the images that were used as a source",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "x": {
+                    "$ref": "#/$defs/PixelSeries"
+                },
+                "y": {
+                    "$ref": "#/$defs/PixelSeries"
+                }
+            },
+            "required": [
+                "y",
+                "x",
+                "data",
+                "image_url"
+            ],
+            "title": "ImageMask",
+            "type": "object"
+        },
+        "Line": {
+            "additionalProperties": false,
+            "description": "A line as defined by x1, y1, x2, y2 coordinates",
+            "properties": {
+                "c": {
+                    "description": "The c coordinate of the shape",
+                    "type": "integer"
+                },
+                "fill_color": {
+                    "$ref": "#/$defs/Color",
+                    "description": "The fill color of the shape"
+                },
+                "label": {
+                    "description": "The label of the shape",
+                    "type": "string"
+                },
+                "stroke_color": {
+                    "$ref": "#/$defs/Color",
+                    "description": "The stroke color of the shape"
+                },
+                "stroke_width": {
+                    "description": "The stroke width of the shape",
+                    "type": "integer"
+                },
+                "t": {
+                    "description": "The t coordinate of the shape",
+                    "type": "integer"
+                },
+                "x1": {
+                    "description": "The x coordinate of the first point of the line",
+                    "type": "number"
+                },
+                "x2": {
+                    "description": "The x coordinate of the second point of the line",
+                    "type": "number"
+                },
+                "y1": {
+                    "description": "The y coordinate of the first point of the line",
+                    "type": "number"
+                },
+                "y2": {
+                    "description": "The y coordinate of the second point of the line",
+                    "type": "number"
+                },
+                "z": {
+                    "description": "The z coordinate of the shape",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "x1",
+                "y1",
+                "x2",
+                "y2"
+            ],
+            "title": "Line",
+            "type": "object"
+        },
+        "Mask": {
+            "additionalProperties": false,
+            "description": "A mask as defined by a boolean image",
+            "properties": {
+                "c": {
+                    "description": "The c coordinate of the shape",
+                    "type": "integer"
+                },
+                "fill_color": {
+                    "$ref": "#/$defs/Color",
+                    "description": "The fill color of the shape"
+                },
+                "label": {
+                    "description": "The label of the shape",
+                    "type": "string"
+                },
+                "mask": {
+                    "$ref": "#/$defs/ImageMask",
+                    "description": "The mask image"
+                },
+                "stroke_color": {
+                    "$ref": "#/$defs/Color",
+                    "description": "The stroke color of the shape"
+                },
+                "stroke_width": {
+                    "description": "The stroke width of the shape",
+                    "type": "integer"
+                },
+                "t": {
+                    "description": "The t coordinate of the shape",
+                    "type": "integer"
+                },
+                "x": {
+                    "description": "The x coordinate of the top left corner of the mask",
+                    "type": "integer"
+                },
+                "y": {
+                    "description": "The y coordinate of the top left corner of the mask",
+                    "type": "integer"
+                },
+                "z": {
+                    "description": "The z coordinate of the shape",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "y",
+                "x"
+            ],
+            "title": "Mask",
+            "type": "object"
+        },
+        "MetaObject": {
+            "additionalProperties": true,
+            "description": "",
+            "title": "MetaObject",
+            "type": "object"
+        },
+        "MetricsDataset": {
+            "additionalProperties": false,
+            "description": "A base object on which microscope-metrics runs the analysis",
+            "properties": {
+                "acquisition_date": {
+                    "description": "The date of the acquisition",
+                    "format": "date",
+                    "type": "string"
+                },
+                "comment": {
+                    "description": "A human readable comment about the dataset",
+                    "items": {
+                        "$ref": "#/$defs/Comment"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "description": "A description of an entity",
+                    "type": "string"
+                },
+                "experimenter": {
+                    "description": "The experimenter that performed the imaging experiment",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "name": {
+                    "description": "The name of an entity",
+                    "type": "string"
+                },
+                "processed": {
+                    "description": "Has the dataset been processed by microscope-metrics",
+                    "type": "boolean"
+                },
+                "processing_date": {
+                    "description": "The date of the processing by microscope-metrics",
+                    "format": "date",
+                    "type": "string"
+                },
+                "processing_log": {
+                    "description": "The log of the processing by microscope-metrics",
+                    "type": "string"
+                },
+                "sample": {
+                    "description": "The sample that was imaged",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "processed"
+            ],
+            "title": "MetricsDataset",
+            "type": "object"
+        },
+        "PixelSeries": {
+            "additionalProperties": false,
+            "description": "A series whose values represent pixels or voxels or a single integer defining the shape of the dimension",
+            "properties": {
+                "values": {
+                    "items": {
+                        "type": "integer"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "values"
+            ],
+            "title": "PixelSeries",
+            "type": "object"
+        },
+        "Point": {
+            "additionalProperties": false,
+            "description": "A point as defined by x and y coordinates",
+            "properties": {
+                "c": {
+                    "description": "The c coordinate of the shape",
+                    "type": "integer"
+                },
+                "fill_color": {
+                    "$ref": "#/$defs/Color",
+                    "description": "The fill color of the shape"
+                },
+                "label": {
+                    "description": "The label of the shape",
+                    "type": "string"
+                },
+                "stroke_color": {
+                    "$ref": "#/$defs/Color",
+                    "description": "The stroke color of the shape"
+                },
+                "stroke_width": {
+                    "description": "The stroke width of the shape",
+                    "type": "integer"
+                },
+                "t": {
+                    "description": "The t coordinate of the shape",
+                    "type": "integer"
+                },
+                "x": {
+                    "description": "The x coordinate of the point",
+                    "type": "number"
+                },
+                "y": {
+                    "description": "The y coordinate of the point",
+                    "type": "number"
+                },
+                "z": {
+                    "description": "The z coordinate of the shape",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "y",
+                "x"
+            ],
+            "title": "Point",
+            "type": "object"
+        },
+        "Polygon": {
+            "additionalProperties": false,
+            "description": "A polygon as defined by a series of vertexes and a boolean to indicate if closed or not",
+            "properties": {
+                "c": {
+                    "description": "The c coordinate of the shape",
+                    "type": "integer"
+                },
+                "fill_color": {
+                    "$ref": "#/$defs/Color",
+                    "description": "The fill color of the shape"
+                },
+                "is_open": {
+                    "description": "Is the polygon open. By default, it is closed (false)",
+                    "type": "boolean"
+                },
+                "label": {
+                    "description": "The label of the shape",
+                    "type": "string"
+                },
+                "stroke_color": {
+                    "$ref": "#/$defs/Color",
+                    "description": "The stroke color of the shape"
+                },
+                "stroke_width": {
+                    "description": "The stroke width of the shape",
+                    "type": "integer"
+                },
+                "t": {
+                    "description": "The t coordinate of the shape",
+                    "type": "integer"
+                },
+                "vertexes": {
+                    "description": "A list of vertexes defining the polygon",
+                    "items": {
+                        "$ref": "#/$defs/Vertex"
+                    },
+                    "type": "array"
+                },
+                "z": {
+                    "description": "The z coordinate of the shape",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "vertexes",
+                "is_open"
+            ],
+            "title": "Polygon",
+            "type": "object"
+        },
+        "Protocol": {
+            "additionalProperties": false,
+            "description": "Set of instructions for preparing and imaging a sample",
+            "properties": {
+                "authors": {
+                    "description": "The authors of the protocol",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "description": "A description of an entity",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "The name of an entity",
+                    "type": "string"
+                },
+                "url": {
+                    "description": "The URL where the protocol can be found",
+                    "type": "string"
+                },
+                "version": {
+                    "description": "The version of the protocol",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "version",
+                "url"
+            ],
+            "title": "Protocol",
+            "type": "object"
+        },
+        "Rectangle": {
+            "additionalProperties": false,
+            "description": "A rectangle as defined by x, y coordinates and width, height",
+            "properties": {
+                "c": {
+                    "description": "The c coordinate of the shape",
+                    "type": "integer"
+                },
+                "fill_color": {
+                    "$ref": "#/$defs/Color",
+                    "description": "The fill color of the shape"
+                },
+                "h": {
+                    "description": "The height of the rectangle",
+                    "type": "number"
+                },
+                "label": {
+                    "description": "The label of the shape",
+                    "type": "string"
+                },
+                "stroke_color": {
+                    "$ref": "#/$defs/Color",
+                    "description": "The stroke color of the shape"
+                },
+                "stroke_width": {
+                    "description": "The stroke width of the shape",
+                    "type": "integer"
+                },
+                "t": {
+                    "description": "The t coordinate of the shape",
+                    "type": "integer"
+                },
+                "w": {
+                    "description": "The width of the rectangle",
+                    "type": "number"
+                },
+                "x": {
+                    "description": "The x coordinate of the top left corner of the rectangle",
+                    "type": "number"
+                },
+                "y": {
+                    "description": "The y coordinate of the top left corner of the rectangle",
+                    "type": "number"
+                },
+                "z": {
+                    "description": "The z coordinate of the shape",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "x",
+                "y",
+                "w",
+                "h"
+            ],
+            "title": "Rectangle",
+            "type": "object"
+        },
+        "Roi": {
+            "additionalProperties": false,
+            "description": "A ROI. Collection of shapes and an image to which they are applied",
+            "properties": {
+                "description": {
+                    "description": "A description of the ROI",
+                    "type": "string"
+                },
+                "image": {
+                    "description": "The image to which the ROI is applied",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "label": {
+                    "description": "The label of the ROI",
+                    "type": "string"
+                },
+                "shapes": {
+                    "items": {
+                        "$ref": "#/$defs/Shape"
+                    },
+                    "type": "array"
+                }
+            },
+            "title": "Roi",
+            "type": "object"
+        },
+        "Sample": {
+            "additionalProperties": false,
+            "description": "A sample is a standard physical object that is imaged by a microscope",
+            "properties": {
+                "description": {
+                    "description": "A description of an entity",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "The name of an entity",
+                    "type": "string"
+                },
+                "protocol": {
+                    "description": "The protocol used to prepare the sample",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "The type of the sample",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "protocol"
+            ],
+            "title": "Sample",
+            "type": "object"
+        },
+        "TableAsPandasDF": {
+            "additionalProperties": false,
+            "description": "A table as a Pandas DataFrame",
+            "properties": {
+                "description": {
+                    "description": "A description of an entity",
+                    "type": "string"
+                },
+                "df": {
+                    "$ref": "#/$defs/MetaObject",
+                    "description": "A Pandas DataFrame object"
+                },
+                "name": {
+                    "description": "The name of an entity",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "df"
+            ],
+            "title": "TableAsPandasDF",
+            "type": "object"
+        },
+        "TimeSeries": {
+            "additionalProperties": false,
+            "description": "A series whose values represent time",
+            "properties": {
+                "values": {
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "values"
+            ],
+            "title": "TimeSeries",
+            "type": "object"
+        },
+        "Vertex": {
+            "additionalProperties": false,
+            "description": "A vertex as defined by x and y coordinates",
+            "properties": {
+                "x": {
+                    "description": "The x coordinate of the vertex",
+                    "type": "number"
+                },
+                "y": {
+                    "description": "The y coordinate of the vertex",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "x",
+                "y"
+            ],
+            "title": "Vertex",
+            "type": "object"
+        }
+    },
+    "$id": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": true,
+    "description": "A base object on which microscope-metrics runs the analysis",
+    "metamodel_version": "1.7.0",
+    "properties": {
+        "acquisition_date": {
+            "description": "The date of the acquisition",
+            "format": "date",
+            "type": "string"
+        },
+        "comment": {
+            "description": "A human readable comment about the dataset",
+            "items": {
+                "$ref": "#/$defs/Comment"
+            },
+            "type": "array"
+        },
+        "description": {
+            "description": "A description of an entity",
+            "type": "string"
+        },
+        "experimenter": {
+            "description": "The experimenter that performed the imaging experiment",
+            "items": {
+                "type": "string"
+            },
+            "type": "array"
+        },
+        "name": {
+            "description": "The name of an entity",
+            "type": "string"
+        },
+        "processed": {
+            "description": "Has the dataset been processed by microscope-metrics",
+            "type": "boolean"
+        },
+        "processing_date": {
+            "description": "The date of the processing by microscope-metrics",
+            "format": "date",
+            "type": "string"
+        },
+        "processing_log": {
+            "description": "The log of the processing by microscope-metrics",
+            "type": "string"
+        },
+        "sample": {
+            "description": "The sample that was imaged",
+            "type": "string"
+        }
+    },
+    "required": [
+        "processed"
+    ],
+    "title": "microscopemetrics-schema",
+    "type": "object",
+    "version": null
+}

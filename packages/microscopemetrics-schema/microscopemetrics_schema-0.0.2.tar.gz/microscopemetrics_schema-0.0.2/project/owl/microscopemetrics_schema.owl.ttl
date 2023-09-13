@@ -1,0 +1,1857 @@
+@prefix IAO: <http://purl.obolibrary.org/obo/IAO_> .
+@prefix linkml: <https://w3id.org/linkml/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema> a owl:Ontology ;
+    rdfs:label "microscopemetrics-schema" ;
+    IAO:0000700 <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ChannelSeries>,
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Color>,
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Column>,
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Comment>,
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Experimenter>,
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/KeyValues>,
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetaObject>,
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsInput>,
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsOutput>,
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/NamedObject>,
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/PixelSeries>,
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Roi>,
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Shape>,
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Tag>,
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/TimeSeries>,
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Vertex> ;
+    linkml:id "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema" ;
+    linkml:imports "core_schema",
+        "linkml:types",
+        "samples/argolight_schema",
+        "samples/field_illumination_schema" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Ellipse> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Ellipse" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x_rad> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y_rad> ;
+            owl:qualifiedCardinality 1 ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Shape> ;
+    skos:definition "An ellipse as defined by x, y coordinates and x and y radii" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Image2D> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Image2D" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/PixelSeries> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/PixelSeries> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:allValuesFrom linkml:Float ;
+                        owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/data> ] [ a owl:Restriction ;
+                        owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/data> ;
+                        owl:someValuesFrom linkml:Float ] ) ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ImageInline> ;
+    skos:definition "A 2D image in YX order" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Line> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Line" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x1> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y2> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y1> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x2> ;
+            owl:qualifiedCardinality 1 ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Shape> ;
+    skos:definition "A line as defined by x1, y1, x2, y2 coordinates" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Mask> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Mask" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ImageMask> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/mask> ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y> ;
+            owl:qualifiedCardinality 1 ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Shape> ;
+    skos:definition "A mask as defined by a boolean image" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Point> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Point" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x> ;
+            owl:qualifiedCardinality 1 ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Shape> ;
+    skos:definition "A point as defined by x and y coordinates" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Polygon> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Polygon" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass linkml:Boolean ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/is_open> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:allValuesFrom <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Vertex> ;
+                        owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/vertexes> ] [ a owl:Restriction ;
+                        owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/vertexes> ;
+                        owl:someValuesFrom <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Vertex> ] ) ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Shape> ;
+    skos:definition "A polygon as defined by a series of vertexes and a boolean to indicate if closed or not" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Rectangle> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Rectangle" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/w> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/h> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x> ;
+            owl:qualifiedCardinality 1 ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Shape> ;
+    skos:definition "A rectangle as defined by x, y coordinates and width, height" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/TableAsPandasDF> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "TableAsPandasDF" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetaObject> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/df> ;
+            owl:qualifiedCardinality 1 ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Table> ;
+    skos:definition "A table as a Pandas DataFrame" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightBDataset> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "ArgolightBDataset" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightBOutput> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/output> ],
+        [ a owl:Restriction ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightBInput> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/input> ;
+            owl:qualifiedCardinality 1 ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsDataset> ;
+    skos:definition "An Argolight sample pattern B dataset" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightEDataset> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "ArgolightEDataset" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightEOutput> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/output> ],
+        [ a owl:Restriction ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightEInput> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/input> ;
+            owl:qualifiedCardinality 1 ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsDataset> ;
+    skos:definition """An Argolight sample pattern E dataset.
+It contains resolution data on the axis indicated:
+- axis 1 = Y resolution = lines along X axis
+- axis 2 = X resolution = lines along Y axis""" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/FieldIlluminationDataset> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "FieldIlluminationDataset" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/FieldIlluminationOutput> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/output> ],
+        [ a owl:Restriction ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/FieldIlluminationInput> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/input> ;
+            owl:qualifiedCardinality 1 ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsDataset> ;
+    skos:definition "A field illumination dataset" .
+
+linkml:SubsetDefinition a owl:Class .
+
+linkml:TypeDefinition a owl:Class .
+
+linkml:topValue a owl:DatatypeProperty ;
+    rdfs:label "value" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Tag> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Tag" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/text> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/id> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/description> ] ;
+    skos:definition "A tag" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/acquisition_date> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "acquisition_date" ;
+    rdfs:range linkml:Date ;
+    skos:definition "The date of the acquisition" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/alpha> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "alpha" ;
+    rdfs:range linkml:Integer ;
+    skos:definition "The alpha value of the color (optional)" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/authors> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "authors" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Experimenter> ;
+    skos:definition "The authors of the protocol" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/b> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "b" ;
+    rdfs:range linkml:Integer ;
+    skos:definition "The blue value of the color" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/comment> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "comment" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Comment> ;
+    skos:definition "A human readable comment about the dataset" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/df> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "df" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetaObject> ;
+    skos:definition "A Pandas DataFrame object" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/experimenter> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "experimenter" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Experimenter> ;
+    skos:definition "The experimenter that performed the imaging experiment" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/fill_color> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "fill_color" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Color> ;
+    skos:definition "The fill color of the shape" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/g> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "g" ;
+    rdfs:range linkml:Integer ;
+    skos:definition "The green value of the color" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/h> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "h" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The height of the rectangle" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/id> a owl:ObjectProperty,
+        linkml:SlotDefinition .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/image> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "image" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Image> ;
+    skos:definition "The image to which the ROI is applied" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/image_url> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "image_url" ;
+    rdfs:range linkml:String ;
+    skos:definition "An URL linking to the image" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/is_open> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "is_open" ;
+    rdfs:range linkml:Boolean ;
+    skos:definition "Is the polygon open. By default, it is closed (false)" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/mask> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "mask" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ImageMask> ;
+    skos:definition "The mask image" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/orcid> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "orcid" ;
+    rdfs:range linkml:String ;
+    skos:definition "The ORCID of the experimenter" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/processed> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "processed" ;
+    rdfs:range linkml:Boolean ;
+    skos:definition "Has the dataset been processed by microscope-metrics" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/processing_date> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "processing_date" ;
+    rdfs:range linkml:Date ;
+    skos:definition "The date of the processing by microscope-metrics" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/processing_log> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "processing_log" ;
+    rdfs:range linkml:String ;
+    skos:definition "The log of the processing by microscope-metrics" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/protocol> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "protocol" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Protocol> ;
+    skos:definition "The protocol used to prepare the sample" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/r> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "r" ;
+    rdfs:range linkml:Integer ;
+    skos:definition "The red value of the color" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/sample> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "sample" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Sample> ;
+    skos:definition "The sample that was imaged" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/shapes> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "shapes" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Shape> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/source_image_url> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "source_image_url" ;
+    rdfs:range linkml:String ;
+    skos:definition "A list of URLs linking to the images that were used as a source" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/stroke_color> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "stroke_color" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Color> ;
+    skos:definition "The stroke color of the shape" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/stroke_width> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "stroke_width" ;
+    rdfs:range linkml:Integer ;
+    skos:definition "The stroke width of the shape" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/type> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "type" ;
+    rdfs:range linkml:String ;
+    skos:definition "The type of the sample" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/url> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "url" ;
+    rdfs:range linkml:String ;
+    skos:definition "The URL where the protocol can be found" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/version> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "version" ;
+    rdfs:range linkml:String ;
+    skos:definition "The version of the protocol" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/w> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "w" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The width of the rectangle" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x1> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "x1" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The x coordinate of the first point of the line" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x2> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "x2" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The x coordinate of the second point of the line" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x_rad> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "x_rad" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The x radius of the ellipse" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y1> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "y1" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The y coordinate of the first point of the line" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y2> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "y2" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The y coordinate of the second point of the line" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y_rad> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "y_rad" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The y radius of the ellipse" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightBInput> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "ArgolightBInput" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ImageAsNumpy> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/argolight_b_image> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/sigma_x> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/lower_threshold_correction_factors> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/upper_threshold_correction_factors> ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/sigma_y> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/bit_depth> ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/saturation_threshold> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:Boolean ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/remove_center_cross> ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/sigma_z> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/spots_distance> ;
+            owl:qualifiedCardinality 1 ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsInput> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightBOutput> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "ArgolightBOutput" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightBDistanceKeyValues> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/distance_measurements> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/TableAsDict> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/spots_properties> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ImageAsNumpy> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/spots_labels_image> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Roi> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/spots_centroids> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightBIntensityKeyValues> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/intensity_measurements> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/TableAsDict> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/spots_distances> ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsOutput> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightEInput> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "ArgolightEInput" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/bit_depth> ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/prominence_threshold> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/measured_band> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ImageAsNumpy> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/argolight_e_image> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/axis> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/saturation_threshold> ;
+            owl:qualifiedCardinality 1 ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsInput> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightEOutput> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "ArgolightEOutput" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Roi> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peaks_rois> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/TableAsDict> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/intensity_profiles> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightEKeyValues> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/key_measurements> ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsOutput> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/argolight_b_image> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "argolight_b_image" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ImageAsNumpy> ;
+    skos:definition "Input parameter: image of the argolight b pattern provided as a 5D numpy array in the order TZYXC" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/argolight_e_image> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "argolight_e_image" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ImageAsNumpy> ;
+    skos:definition "Image of the argolight e pattern provided as a 5D numpy array in the order TZYXC" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/axis> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "axis" ;
+    rdfs:range linkml:Integer ;
+    skos:definition "Axis along which resolution is being measured. 1=Y, 2=X" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/channel_A> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "channel_A" ;
+    rdfs:range linkml:Integer ;
+    rdfs:subPropertyOf <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/channel> ;
+    skos:definition "The first channel number to which the measurements apply" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/channel_B> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "channel_B" ;
+    rdfs:range linkml:Integer ;
+    rdfs:subPropertyOf <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/channel> ;
+    skos:definition "The second channel number to which the measurements apply" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/distance_measurements> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "distance_measurements" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightBDistanceKeyValues> ;
+    skos:definition "Key Distance Measurements on Argolight spots" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/focus_slice> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "focus_slice" ;
+    rdfs:range linkml:Integer ;
+    skos:definition "Z position at which focus has been measured" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/intensity_max_spot> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "intensity_max_spot" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Integrated intensity of the most intense spot for each channel" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/intensity_max_spot_roi> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "intensity_max_spot_roi" ;
+    rdfs:range linkml:Integer ;
+    skos:definition "ROI number of the most intense spot for each channel" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/intensity_measurements> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "intensity_measurements" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightBIntensityKeyValues> ;
+    skos:definition "Key Intensity Measurements on Argolight spots" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/intensity_min_spot> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "intensity_min_spot" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Integrated intensity of the least intense spot for each channel" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/intensity_min_spot_roi> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "intensity_min_spot_roi" ;
+    rdfs:range linkml:Integer ;
+    skos:definition "ROI number of the least intense spot for each channel" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/intensity_profiles> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "intensity_profiles" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/TableAsDict> ;
+    skos:definition "Intensity profiles of the argolight lines provided as tables. One table per channel" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/key_measurements> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "key_measurements" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightEKeyValues> ;
+    skos:definition "Key Measurements on Argolight E images" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/lower_threshold_correction_factors> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "lower_threshold_correction_factors" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Input parameter: correction factor for the lower thresholds.  Must be a tuple with len = nr of channels or a float if all equal" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mad_3d_dist> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "mad_3d_dist" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Median absolute deviation of the 3D distances between spots for each permutation of channel A and B" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mad_mean_intensity> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "mad_mean_intensity" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Median absolute deviation of all spots integrated intensity for each channel" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mad_z_dist> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "mad_z_dist" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Median absolute deviation of the Z distances between spots for each permutation of channel A and B" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mean_3d_dist> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "mean_3d_dist" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Mean of the 3D distances between spots for each permutation of channel A and B" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mean_intensity> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "mean_intensity" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Mean of all spots integrated intensity for each channel" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mean_z_dist> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "mean_z_dist" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Mean of the Z distances between spots for each permutation of channel A and B" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/measured_band> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "measured_band" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Fraction of the image across which intensity profiles are measured" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/median_3d_dist> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "median_3d_dist" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Median of the 3D distances between spots for each permutation of channel A and B" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/median_intensity> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "median_intensity" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Median of all spots integrated intensity for each channel" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/median_z_dist> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "median_z_dist" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Median of the Z distances between spots for each permutation of channel A and B" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/min_max_intensity_ratio> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "min_max_intensity_ratio" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Ratio between the integrated intensities between the most intense and the least intense spots for each channel" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/nr_of_spots> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "nr_of_spots" ;
+    rdfs:range linkml:Integer ;
+    skos:definition "Number of argolight spots detected for each channel" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_height_A> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "peak_height_A" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Height of first peak in the intensity profiles" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_height_B> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "peak_height_B" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Height of second peak in the intensity profiles" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_position_A> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "peak_position_A" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Position of first peak in the intensity profiles" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_position_B> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "peak_position_B" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Position of second peak in the intensity profiles" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_prominence_A> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "peak_prominence_A" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Prominence of first peak in the intensity profiles" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_prominence_B> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "peak_prominence_B" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Prominence of second peak in the intensity profiles" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peaks_rois> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "peaks_rois" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Roi> ;
+    skos:definition "ROIs of the peaks found in the argolight images" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/prominence_threshold> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "prominence_threshold" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Peak prominence used as a threshold to distinguish two peaks.  Defaults to the value defined by the Rayleigh criteria" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/rayleigh_resolution> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "rayleigh_resolution" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Rayleigh resolution measured" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/remove_center_cross> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "remove_center_cross" ;
+    rdfs:range linkml:Boolean ;
+    skos:definition "Input parameter: remove the center cross found in some Argolight patterns" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/sigma_x> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "sigma_x" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Input parameter: smoothing factor for objects detection in the X axis" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/sigma_y> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "sigma_y" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Input parameter: smoothing factor for objects detection in the Y axis" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/sigma_z> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "sigma_z" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Input parameter: smoothing factor for objects detection in the Z axis" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/spots_centroids> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "spots_centroids" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Roi> ;
+    skos:definition "Centroids of the argolight spots provided as a list of ROIs, one per channel" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/spots_distance> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "spots_distance" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Input parameter: distance between argolight spots" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/spots_distances> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "spots_distances" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/TableAsDict> ;
+    skos:definition "Table of distances between argolight spots" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/spots_labels_image> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "spots_labels_image" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ImageAsNumpy> ;
+    skos:definition "Labels image of the argolight segmented spots provided as a 5D numpy array in the order TZYXC. Image intensities correspond to ROI labels" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/spots_properties> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "spots_properties" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/TableAsDict> ;
+    skos:definition "Table of properties of the argolight spots" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/std_3d_dist> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "std_3d_dist" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Standard deviation of the 3D distances between spots for each permutation of channel A and B" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/std_mean_intensity> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "std_mean_intensity" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Standard deviation of all spots integrated intensity for each channel" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/std_z_dist> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "std_z_dist" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Standard deviation of the Z distances between spots for each permutation of channel A and B" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/upper_threshold_correction_factors> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "upper_threshold_correction_factors" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Input parameter: correction factor for the upper thresholds. Must be a tuple with len = nr of channels or a float if all equal" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_center_intensity_mean> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "bottom_center_intensity_mean" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The mean intensity of the bottom-center of the image" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_center_intensity_ratio> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "bottom_center_intensity_ratio" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The mean intensity of the bottom-center of the image  divided by the maximum intensity of the center of illumination" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_left_intensity_mean> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "bottom_left_intensity_mean" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The mean intensity of the bottom-left of the image" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_left_intensity_ratio> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "bottom_left_intensity_ratio" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The mean intensity of the bottom-left of the image  divided by the maximum intensity of the center of illumination" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_right_intensity_mean> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "bottom_right_intensity_mean" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The mean intensity of the bottom-right of the image" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_right_intensity_ratio> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "bottom_right_intensity_ratio" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The mean intensity of the bottom-right of the image  divided by the maximum intensity of the center of illumination" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/center_of_illumination> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "center_of_illumination" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Roi> ;
+    skos:definition "Point ROIs marking the center of illumination" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/center_of_mass_x> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "center_of_mass_x" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The x coordinate of the center of mass of the center of illumination region. In pixels" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/center_of_mass_y> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "center_of_mass_y" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The y coordinate of the center of mass of the center of illumination region. In pixels" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/center_threshold> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "center_threshold" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Input parameter: relative threshold for what is going to be considered as the intensity center of the image" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/corner_fraction> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "corner_fraction" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Input parameter: the proportion of the image to be considered as corner or center" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/corner_rois> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "corner_rois" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Roi> ;
+    skos:definition "ROIs used to compute the corner intensities" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_0> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "decile_0" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The 0th decile of the intensity distribution of the maximum intensity" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_1> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "decile_1" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The 1st decile of the intensity distribution of the maximum intensity" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_2> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "decile_2" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The 2nd decile of the intensity distribution of the maximum intensity" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_3> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "decile_3" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The 3rd decile of the intensity distribution of the maximum intensity" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_4> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "decile_4" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The 4th decile of the intensity distribution of the maximum intensity" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_5> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "decile_5" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The 5th decile of the intensity distribution of the maximum intensity" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_6> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "decile_6" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The 6th decile of the intensity distribution of the maximum intensity" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_7> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "decile_7" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The 7th decile of the intensity distribution of the maximum intensity" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_8> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "decile_8" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The 8th decile of the intensity distribution of the maximum intensity" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_9> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "decile_9" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The 9th decile of the intensity distribution of the maximum intensity" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/field_illumination_image> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "field_illumination_image" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ImageAsNumpy> ;
+    skos:definition "Input parameter: homogeneity image provided as a numpy array in the order. While the analysis accepts multiple channels, the T and Z dimensions are expected to be 1." .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/input> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "input" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/FieldIlluminationInput> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/intensity_map> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "intensity_map" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Image5D> ;
+    skos:definition "Intensity map of the field illumination" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/intensity_map_size> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "intensity_map_size" ;
+    rdfs:range linkml:Integer ;
+    skos:definition "Input parameter: the size of the output intensity map in pixels" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/intensity_profiles> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "intensity_profiles" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/TableAsDict> ;
+    skos:definition "Intensity profiles for the field illumination analysis in the different directions" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/key_values> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "key_values" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/FieldIlluminationKeyValues> ;
+    skos:definition "Key-Value pairs containing the Key measurements for the field illumination analysis" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/max_intensity> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "max_intensity" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The maximum intensity of the center of illumination" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/max_intensity_pos_x> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "max_intensity_pos_x" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The x coordinate of the maximum intensity of the center of illumination. In pixels" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/max_intensity_pos_y> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "max_intensity_pos_y" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The y coordinate of the maximum intensity of the center of illumination. In pixels" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_center_intensity_mean> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "middle_center_intensity_mean" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The mean intensity of the middle-center of the image" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_center_intensity_ratio> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "middle_center_intensity_ratio" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The mean intensity of the middle-center of the image  divided by the maximum intensity of the center of illumination" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_left_intensity_mean> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "middle_left_intensity_mean" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The mean intensity of the middle-left of the image" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_left_intensity_ratio> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "middle_left_intensity_ratio" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The mean intensity of the middle-left of the image  divided by the maximum intensity of the center of illumination" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_right_intensity_mean> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "middle_right_intensity_mean" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The mean intensity of the middle-right of the image" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_right_intensity_ratio> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "middle_right_intensity_ratio" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The mean intensity of the middle-right of the image  divided by the maximum intensity of the center of illumination" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/nb_pixels> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "nb_pixels" ;
+    rdfs:range linkml:Integer ;
+    skos:definition "The area occupied by the center of illumination region. In pixels" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/output> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "output" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/FieldIlluminationOutput> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/profile_rois> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "profile_rois" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Roi> ;
+    skos:definition "ROIs used to compute the intensity profiles" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/sigma> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "sigma" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Input parameter: the sigma for the smoothing gaussian filter to be applied prior to analysis" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_center_intensity_mean> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "top_center_intensity_mean" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The mean intensity of the top-center of the image" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_center_intensity_ratio> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "top_center_intensity_ratio" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The mean intensity of the top-center of the image  divided by the maximum intensity of the center of illumination" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_left_intensity_mean> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "top_left_intensity_mean" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The mean intensity of the top-left corner of the image" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_left_intensity_ratio> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "top_left_intensity_ratio" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The mean intensity of the top-left corner of the image  divided by the maximum intensity of the center of illumination" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_right_intensity_mean> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "top_right_intensity_mean" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The mean intensity of the top-right corner of the image" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_right_intensity_ratio> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "top_right_intensity_ratio" ;
+    rdfs:range linkml:Float ;
+    skos:definition "The mean intensity of the top-right corner of the image  divided by the maximum intensity of the center of illumination" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ChannelSeries> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "ChannelSeries" ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:allValuesFrom linkml:Integer ;
+                        owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/values> ] [ a owl:Restriction ;
+                        owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/values> ;
+                        owl:someValuesFrom linkml:Integer ] ) ] ;
+    skos:definition "A series whose values represent channel" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Image5D> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Image5D" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/PixelSeries> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/PixelSeries> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/TimeSeries> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/t> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ChannelSeries> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/c> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/PixelSeries> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/z> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:allValuesFrom linkml:Float ;
+                        owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/data> ] [ a owl:Restriction ;
+                        owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/data> ;
+                        owl:someValuesFrom linkml:Float ] ) ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ImageInline> ;
+    skos:definition "A 5D image in TZYXC order" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ImageMask> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "ImageMask" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/PixelSeries> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/PixelSeries> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:allValuesFrom linkml:Boolean ;
+                        owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/data> ] [ a owl:Restriction ;
+                        owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/data> ;
+                        owl:someValuesFrom linkml:Boolean ] ) ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ImageInline> ;
+    skos:definition "A base object for all microscope-metrics masks" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsObject> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "MetricsObject" ;
+    rdfs:subClassOf <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/NamedObject> ;
+    skos:definition "A base object for all microscope-metrics objects" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Protocol> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Protocol" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Experimenter> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/authors> ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/url> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/version> ;
+            owl:qualifiedCardinality 1 ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/NamedObject> ;
+    skos:definition "Set of instructions for preparing and imaging a sample" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Sample> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Sample" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/type> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Protocol> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/protocol> ;
+            owl:qualifiedCardinality 1 ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/NamedObject> ;
+    skos:definition "A sample is a standard physical object that is imaged by a microscope" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Table> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Table" ;
+    rdfs:subClassOf <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsObject> ;
+    skos:definition "A table" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/TimeSeries> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "TimeSeries" ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:allValuesFrom linkml:Float ;
+                        owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/values> ] [ a owl:Restriction ;
+                        owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/values> ;
+                        owl:someValuesFrom linkml:Float ] ) ] ;
+    skos:definition "A series whose values represent time" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/c> a owl:ObjectProperty,
+        linkml:SlotDefinition .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/columns> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "columns" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Column> ;
+    skos:definition "A list of the columns of the table" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/label> a owl:ObjectProperty,
+        linkml:SlotDefinition .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/t> a owl:ObjectProperty,
+        linkml:SlotDefinition .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/text> a owl:ObjectProperty,
+        linkml:SlotDefinition .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/vertexes> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "vertexes" ;
+    rdfs:range <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Vertex> ;
+    skos:definition "A list of vertexes defining the polygon" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/z> a owl:ObjectProperty,
+        linkml:SlotDefinition .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightBDistanceKeyValues> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "ArgolightBDistanceKeyValues" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mad_z_dist> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/std_z_dist> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/std_3d_dist> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/channel_A> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mad_3d_dist> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/median_z_dist> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/channel_B> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mean_z_dist> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/median_3d_dist> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mean_3d_dist> ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/KeyValues> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightBIntensityKeyValues> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "ArgolightBIntensityKeyValues" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/median_intensity> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/std_mean_intensity> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/intensity_min_spot> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mad_mean_intensity> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/intensity_max_spot_roi> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/min_max_intensity_ratio> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/intensity_min_spot_roi> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/channel> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/intensity_max_spot> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/nr_of_spots> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mean_intensity> ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/KeyValues> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightEKeyValues> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "ArgolightEKeyValues" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_prominence_A> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_height_A> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_prominence_B> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/channel> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_position_B> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_height_B> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/rayleigh_resolution> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/focus_slice> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_position_A> ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/KeyValues> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/input> a owl:ObjectProperty,
+        linkml:SlotDefinition .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/output> a owl:ObjectProperty,
+        linkml:SlotDefinition .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/FieldIlluminationInput> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "FieldIlluminationInput" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/corner_fraction> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/bit_depth> ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/center_threshold> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/intensity_map_size> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ImageAsNumpy> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/field_illumination_image> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/sigma> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/saturation_threshold> ;
+            owl:qualifiedCardinality 1 ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsInput> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/FieldIlluminationKeyValues> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "FieldIlluminationKeyValues" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_right_intensity_ratio> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_left_intensity_ratio> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/max_intensity> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_left_intensity_ratio> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_right_intensity_mean> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_2> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/max_intensity_pos_x> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_1> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/nb_pixels> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/channel> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_7> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_right_intensity_ratio> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_center_intensity_ratio> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_6> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_5> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_left_intensity_ratio> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_8> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_right_intensity_ratio> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_0> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_left_intensity_mean> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_right_intensity_mean> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_center_intensity_ratio> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_center_intensity_mean> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/center_of_mass_x> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/center_of_mass_y> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_right_intensity_mean> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_center_intensity_mean> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_left_intensity_mean> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_4> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/max_intensity_pos_y> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_center_intensity_mean> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_3> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_center_intensity_ratio> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_9> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_left_intensity_mean> ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/KeyValues> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/FieldIlluminationOutput> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "FieldIlluminationOutput" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Image5D> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/intensity_map> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Roi> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/profile_rois> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/TableAsDict> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/intensity_profiles> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Roi> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/center_of_illumination> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/FieldIlluminationKeyValues> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/key_values> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Roi> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/corner_rois> ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsOutput> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Comment> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Comment" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/text> ;
+            owl:qualifiedCardinality 1 ] ;
+    skos:definition "A comment" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ImageInline> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "ImageInline" ;
+    rdfs:subClassOf <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Image> ;
+    skos:definition "A base object for all microscope-metrics images that are stored as arrays in line" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsDataset> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "MetricsDataset" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/processing_log> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Comment> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/comment> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:Date ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/acquisition_date> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Experimenter> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/experimenter> ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Boolean ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/processed> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Sample> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/sample> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:Date ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/processing_date> ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/NamedObject> ;
+    skos:definition "A base object on which microscope-metrics runs the analysis" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/bit_depth> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "bit_depth" ;
+    rdfs:range linkml:Integer ;
+    skos:definition "Detector bit depth" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/description> a owl:ObjectProperty,
+        linkml:SlotDefinition .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/name> a owl:ObjectProperty,
+        linkml:SlotDefinition .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/saturation_threshold> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "saturation_threshold" ;
+    rdfs:range linkml:Float ;
+    skos:definition "Tolerated saturation threshold. If the amount of saturated pixels is above this threshold,  the image is considered as saturated and the analysis is not performed." .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Column> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Column" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/name> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:allValuesFrom linkml:String ;
+                        owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/values> ] [ a owl:Restriction ;
+                        owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/values> ;
+                        owl:someValuesFrom linkml:String ] ) ] ;
+    skos:definition "A column" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Image> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Image" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/image_url> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:String ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/source_image_url> ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsObject> ;
+    skos:definition "A base object for all microscope-metrics images" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetaObject> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "MetaObject" ;
+    skos:exactMatch linkml:Any .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsInput> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "MetricsInput" ;
+    skos:definition "An abstract class for analysis inputs" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsOutput> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "MetricsOutput" ;
+    skos:definition "An abstract class for analysis outputs" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Vertex> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Vertex" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y> ;
+            owl:qualifiedCardinality 1 ] ;
+    skos:definition "A vertex as defined by x and y coordinates" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Color> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Color" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/g> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/alpha> ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/r> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/b> ;
+            owl:qualifiedCardinality 1 ] ;
+    skos:definition "A color as defined by RGB values and an optional alpha value" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Experimenter> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Experimenter" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/name> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/orcid> ;
+            owl:qualifiedCardinality 1 ] ;
+    skos:definition "The person that performed the experiment or developed the protocol" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/KeyValues> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "KeyValues" ;
+    skos:definition "A collection of key-value pairs" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/NamedObject> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "NamedObject" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/name> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/description> ] ;
+    skos:definition "An object with a name and a description" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/channel> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "channel" ;
+    rdfs:range linkml:Integer ;
+    skos:definition "The channel number to which the measurements apply" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/data> a owl:ObjectProperty,
+        linkml:SlotDefinition .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ImageAsNumpy> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "ImageAsNumpy" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetaObject> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/data> ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Image> ;
+    skos:definition "An image as a numpy array in TZYXC order" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/PixelSeries> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "PixelSeries" ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:allValuesFrom linkml:Integer ;
+                        owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/values> ] [ a owl:Restriction ;
+                        owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/values> ;
+                        owl:someValuesFrom linkml:Integer ] ) ] ;
+    skos:definition "A series whose values represent pixels or voxels or a single integer defining the shape of the dimension" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/TableAsDict> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "TableAsDict" ;
+    rdfs:subClassOf [ a owl:Class ;
+            owl:intersectionOf ( [ a owl:Restriction ;
+                        owl:allValuesFrom <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Column> ;
+                        owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/columns> ] [ a owl:Restriction ;
+                        owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/columns> ;
+                        owl:someValuesFrom <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Column> ] ) ],
+        <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Table> ;
+    skos:definition "A table inlined in a metrics dataset" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/values> a owl:ObjectProperty,
+        linkml:SlotDefinition .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x> a owl:ObjectProperty,
+        linkml:SlotDefinition .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y> a owl:ObjectProperty,
+        linkml:SlotDefinition .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Shape> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Shape" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Color> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/stroke_color> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/stroke_width> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Color> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/fill_color> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/label> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/c> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:Integer ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/t> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:Float ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/z> ] ;
+    skos:definition "A shape" .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Roi> a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Roi" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/label> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Image> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/image> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Shape> ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/shapes> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/description> ] ;
+    skos:definition "A ROI. Collection of shapes and an image to which they are applied" .
+
+linkml:ClassDefinition a owl:Class .
+
+linkml:SlotDefinition a owl:Class .
+
+
