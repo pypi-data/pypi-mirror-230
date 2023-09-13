@@ -1,0 +1,45 @@
+[tool.poetry]
+name = "mkdocs-pdf2image-plugin"
+version = "0.1.2"
+description = "An MkDocs plugin to convert the first page of a pdf to an image"
+authors = ["Jacques Supcik <jacques.supcik@hefr.ch>"]
+repository = "https://github.com/supcik/mkdocs-pdf2image-plugin"
+license = "Apache-2"
+readme = "README.md"
+packages = [{ include = "mkdocs_pdf2image" }]
+keywords = ["mkdocs", "python", "markdown", "wiki"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology"
+]
+exclude = ["test"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+mkdocs = "^1.5.2"
+pdf2image = "^1.16.3"
+mkdocs-material = { version = "^9.3.1", optional = true }
+
+[tool.poetry.extras]
+test = ["mkdocs-material"]
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.9.1"
+pylint = "^2.17.5"
+isort = "^5.12.0"
+pre-commit = "^3.4.0"
+ruff = "^0.0.288"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins]
+
+[tool.poetry.plugins."mkdocs.plugins"]
+pdf2image = "mkdocs_pdf2image.plugin:Pdf2ImagePlugin"
+
+[tool.ruff]
+# On top of the defaults (`E`, `F`), enable flake8-bugbear (`B`) and flake8-quotes (`Q`).
+select = ["E", "F", "B", "Q", "N", "I", "UP", "PL", "RUF", "C90"]
