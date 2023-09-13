@@ -1,0 +1,39 @@
+version: 1
+disable_existing_loggers: false
+# colours from https://github.com/tqdm/tqdm/blob/master/tqdm/std.py#L151
+formatters:
+  system:
+    format: "\x1b[37m[SYSTEM] %(asctime)s - [%(levelname)s] - %(message)s\x1b[0m"
+  program:
+    format: "[PROGRAM] %(message)s"
+handlers:
+  system:
+    class: logging.StreamHandler
+    level: 0
+    formatter: system
+    stream: ext://sys.stdout
+  program_stdout:
+    class: logging.StreamHandler
+    level: 0
+    formatter: program
+    stream: ext://sys.stdout
+  program_stderr:
+    class: logging.StreamHandler
+    level: 0
+    formatter: program
+    stream: ext://sys.stderr
+loggers:
+  datasphere:
+    level: ${LOG_LEVEL}
+    handlers: [system]
+  ${PROGRAM_STDOUT_LOGGER}:
+    level: INFO
+    handlers: [program_stdout]
+  ${PROGRAM_STDERR_LOGGER}:
+    level: INFO
+    handlers: [program_stderr]
+  lzy:
+    level: ERROR
+    handlers: [system]
+root:
+  level: WARNING
