@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61.0", "paramiko>=2.11.0", "plogger>=1.0.8", "python-dateutil>=2.8.1"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["plinux"]
+
+[project]
+name = "plinux"
+version = "2.1.1"
+authors = [
+    { name = "Andrey Komissarov", email = "a.komisssarov@gmail.com" },
+]
+description = "The cross-platform tool to execute bash commands remotely."
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/c-pher/plinux"
