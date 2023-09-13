@@ -1,0 +1,54 @@
+[project]
+name = "fsspec-git-annex"
+description = "A fsspec implementation for git-annex repositories"
+dynamic = []
+authors = [
+    { name = "Matthias Riße", email = "m.risse@fz-juelich.de" },
+]
+requires-python = ">=3.8"
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+]
+keywords = [
+    "fsspec",
+    "git-annex",
+]
+dependencies = [
+    "fsspec[fuse]>=2023.9.0",
+]
+version = "0.1.0"
+
+[project.license]
+file = "LICENSES/Apache-2.0.txt"
+
+[project.urls]
+Homepage = "https://github.com/matrss/fsspec-git-annex"
+
+[project.scripts]
+git-annex-mount = "fsspec_git_annex.cli.git_annex_mount:main"
+
+[project.entry-points."fsspec.specs"]
+git-annex = "fsspec_git_annex.filesystem:GitAnnexFileSystem"
+
+[build-system]
+requires = [
+    "pdm-backend",
+]
+build-backend = "pdm.backend"
+
+[tool.pdm.dev-dependencies]
+test = [
+    "pytest>=7.4.2",
+]
+lint = [
+    "black>=23.9.1",
+    "isort>=5.12.0",
+    "ruff>=0.0.287",
+    "reuse>=2.1.0",
+]
+
+[tool.pdm.version]
+source = "scm"
