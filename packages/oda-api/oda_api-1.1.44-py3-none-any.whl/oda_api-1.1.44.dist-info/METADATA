@@ -1,0 +1,31 @@
+Metadata-Version: 2.1
+Name: oda-api
+Version: 1.1.44
+Summary: API plugin  for CDCI online data analysis
+Author: Andrea Tramacere, Volodymyr Savchenko
+Author-email: contact@odahub.io
+Requires-Python: >=2.7
+License-File: LICENSE.rst
+Requires-Dist: requests
+Requires-Dist: future
+Requires-Dist: astropy >=3.2
+Requires-Dist: json-tricks
+Requires-Dist: matplotlib
+Requires-Dist: numpy
+Requires-Dist: jsonschema
+Requires-Dist: pyjwt
+Requires-Dist: astroquery
+Requires-Dist: scipy
+Requires-Dist: rdflib
+Requires-Dist: black
+Provides-Extra: extra-test
+Requires-Dist: pytest-xdist[psutil] ; extra == 'extra-test'
+Requires-Dist: astroquery >=0.4.4 ; extra == 'extra-test'
+Provides-Extra: gw
+Requires-Dist: gwpy ; extra == 'gw'
+Requires-Dist: ligo.skymap ; extra == 'gw'
+Provides-Extra: test
+Requires-Dist: pytest-xdist[psutil] ; extra == 'test'
+Requires-Dist: astroquery >=0.4.4 ; extra == 'test'
+Requires-Dist: sentry-sdk ; extra == 'test'
+
