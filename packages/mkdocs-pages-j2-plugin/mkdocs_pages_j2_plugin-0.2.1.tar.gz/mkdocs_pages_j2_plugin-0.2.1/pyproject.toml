@@ -1,0 +1,51 @@
+[tool.poetry]
+name = "mkdocs-pages-j2-plugin"
+version = "0.2.1"
+description = "An MkDocs plugin to generate '.pages' from 'pages.j2'"
+authors = ["Jacques Supcik <jacques.supcik@hefr.ch>"]
+repository = "https://github.com/supcik/mkdocs-pages-j2-plugin"
+license = "Apache-2"
+readme = "README.md"
+packages = [{ include = "pagesj2" }]
+keywords = ["mkdocs", "python", "markdown", "wiki"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology"
+]
+exclude = ["test"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+mkdocs = "^1.5.2"
+jinja2 = "^3.1.2"
+mkdocs-material = { version = "^9.3.1", optional = true }
+mkdocs-macros-plugin = { version = "^1.0.4", optional = true }
+mkdocs-awesome-pages-plugin = { version = "^2.9.2", optional = true }
+
+[tool.poetry.extras]
+test = [
+    "mkdocs-material",
+    "mkdocs-macros-plugin",
+    "mkdocs-awesome-pages-plugin"
+]
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.9.1"
+pylint = "^2.17.5"
+isort = "^5.12.0"
+pre-commit = "^3.4.0"
+ruff = "^0.0.288"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins]
+
+[tool.poetry.plugins."mkdocs.plugins"]
+pages-j2 = "pagesj2.plugin:PagesJ2Plugin"
+
+[tool.ruff]
+# On top of the defaults (`E`, `F`), enable flake8-bugbear (`B`) and flake8-quotes (`Q`).
+select = ["E", "F", "B", "Q", "N", "I", "UP", "PL", "RUF", "C90"]
