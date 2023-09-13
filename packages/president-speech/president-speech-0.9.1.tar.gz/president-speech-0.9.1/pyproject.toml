@@ -1,0 +1,70 @@
+[project]
+name = "president-speech"
+version = "0.9.1"
+description = "helper pip package module for analyzing presidential speech records (including basic data)"
+authors = [
+    {name = "dmario24", email = "data.mario24@gmail.com"},
+]
+dependencies = [
+    "streamlit==1.26.0",
+    "termplotlib>=0.3.9",
+    "tabulate>=0.9.0",
+    "fastparquet>=2023.8.0",
+    "pyarrow>=13.0.0",
+    "requests>=2.31.0",
+    "pandas>=2.0.3",
+    "streamlit-chat>=0.1.1",
+    "konlpy>=0.6.0",
+    "dask>=2023.5.0",
+    "segno>=1.5.2",
+    "qrcode-artistic>=2.1.0",
+]
+requires-python = ">=3.8,!=3.9.7"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+ps-db-init = 'president_speech.extract_speech_from_pdf:run'
+ps-search = 'president_speech.cli:search'
+ps-wordcount = 'president_speech.cli:word_count'
+
+[tool.setuptools.packages.find]
+# scanning for namespace packages is true by default in pyproject.toml, so
+# you do NOT need to include the following line.
+namespaces = true
+where = ["src"]
+
+[tool.setuptools.package-data]
+"president_speech.db" = ["init.db"]
+"*" = ["*.parquet"]
+
+[tool.pdm]
+[tool.pdm.dev-dependencies]
+test = [
+    "pytest>=7.4.2",
+    "pytest-cov>=4.1.0",
+]
+doc = [
+    "mkdocs>=1.5.2",
+    "mkdocstrings[python]>=0.23.0",
+    "mkdocs-material>=9.2.8",
+]
+dev = [
+    "jupyter>=1.0.0",
+    "pandas-downcast>=1.2.4",
+    "setuptools>=68.2.0",
+]
+
+[tool.pdm.scripts]
+ctest = "pytest --cov"
+ptest = "pytest -s"
+test = "pytest"
+runweb = "streamlit run src/president_speech/webapp/home.py"
+
+[project.urls]
+"Homepage" = "https://github.com/edu-data-mario/president-speech"
+"Bug Tracker" = "https://github.com/edu-data-mario/president-speech/issues"
