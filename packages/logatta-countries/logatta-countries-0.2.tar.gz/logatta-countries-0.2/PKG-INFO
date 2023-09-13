@@ -1,0 +1,63 @@
+Metadata-Version: 2.1
+Name: logatta-countries
+Version: 0.2
+Summary: A Django app that adds cities and countries to your project.
+Home-page: https://www.example.com/
+Author: ashrf Obiedat
+Author-email: ash2881997@gmail.com
+License: BSD-3-Clause  # Example license
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Django
+Classifier: Framework :: Django :: 3.2
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content
+Requires-Python: >=3.8
+License-File: LICENSE
+
+
+# django-countries
+
+
+django-countries is a Django app to  that provides sessional features to your Django project.
+
+
+Detailed documentation is in the "docs" directory.
+
+Quick start
+
+1. Add "polls" to your INSTALLED_APPS setting like this::
+
+    INSTALLED_APPS = [
+        ...,
+        "countries",
+    ]
+
+
+2. Include the polls URLconf in your project urls.py like this::
+
+    path("countries/", include("countries.urls")),
+
+3. Run ``python manage.py migrate`` to create the polls models.
+
+4. Run ``python manage.py upload_data`` to upload the data to the database.
+
+5. Start the development server and visit http://127.0.0.1:8000/admin/
+   to create a poll (you'll need the Admin app enabled).
+
+6. Visit http://127.0.0.1:8000/polls/ to participate in the poll
+
+
+7. to import MyResponse ,get_path , etc...
+use ``from countries.utils import *``
+
+
+``from countries.utils import MyResponse ,get_path , etc...``
+
