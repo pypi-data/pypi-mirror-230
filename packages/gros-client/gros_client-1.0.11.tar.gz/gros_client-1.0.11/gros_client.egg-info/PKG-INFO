@@ -1,0 +1,27 @@
+Metadata-Version: 2.1
+Name: gros-client
+Version: 1.0.11
+Summary: fftai-robot controller sdk
+Home-page: https://github.com/FFTAI/gros_client_py
+Author: jax
+Author-email: jax <ming.li@fftai.com>
+License: MIT
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests>=2.31.0
+Requires-Dist: websocket-client>=1.6.2
+
+# 安装依赖
+# pip install gros_client
+
+# 引入依赖
+from gros_client import Human
+
+# 实例化human对象
+human = Human(host='192.168.9.17')
+# 调用启动方法
+human.start()
