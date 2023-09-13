@@ -1,0 +1,4782 @@
+{
+  "name": "microscopemetrics-schema",
+  "description": "A schema for microscope-metrics, a python package for microscope QC",
+  "title": "microscopemetrics-schema",
+  "see_also": [
+    "https://MontpellierRessourcesImagerie.github.io/microscopemetrics-schema"
+  ],
+  "id": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema",
+  "imports": [
+    "linkml:types",
+    "core_schema",
+    "samples/field_illumination_schema",
+    "samples/argolight_schema"
+  ],
+  "license": "GNU GPL v3.0",
+  "prefixes": [
+    {
+      "prefix_prefix": "microscopemetrics_schema",
+      "prefix_reference": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/"
+    },
+    {
+      "prefix_prefix": "linkml",
+      "prefix_reference": "https://w3id.org/linkml/"
+    },
+    {
+      "prefix_prefix": "example",
+      "prefix_reference": "https://example.org/"
+    }
+  ],
+  "default_prefix": "microscopemetrics_schema",
+  "default_range": "string",
+  "types": [
+    {
+      "name": "string",
+      "definition_uri": "https://w3id.org/linkml/String",
+      "description": "A character string",
+      "notes": [
+        "In RDF serializations, a slot with range of string is treated as a literal or type xsd:string.   If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"string\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "exact_mappings": [
+        "schema:Text"
+      ],
+      "base": "str",
+      "uri": "http://www.w3.org/2001/XMLSchema#string",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "integer",
+      "definition_uri": "https://w3id.org/linkml/Integer",
+      "description": "An integer",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"integer\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "exact_mappings": [
+        "schema:Integer"
+      ],
+      "base": "int",
+      "uri": "http://www.w3.org/2001/XMLSchema#integer",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "boolean",
+      "definition_uri": "https://w3id.org/linkml/Boolean",
+      "description": "A binary (true or false) value",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "exact_mappings": [
+        "schema:Boolean"
+      ],
+      "base": "Bool",
+      "uri": "http://www.w3.org/2001/XMLSchema#boolean",
+      "repr": "bool",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "float",
+      "definition_uri": "https://w3id.org/linkml/Float",
+      "description": "A real number that conforms to the xsd:float specification",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"float\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "exact_mappings": [
+        "schema:Float"
+      ],
+      "base": "float",
+      "uri": "http://www.w3.org/2001/XMLSchema#float",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "double",
+      "definition_uri": "https://w3id.org/linkml/Double",
+      "description": "A real number that conforms to the xsd:double specification",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "close_mappings": [
+        "schema:Float"
+      ],
+      "base": "float",
+      "uri": "http://www.w3.org/2001/XMLSchema#double",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "decimal",
+      "definition_uri": "https://w3id.org/linkml/Decimal",
+      "description": "A real number with arbitrary precision that conforms to the xsd:decimal specification",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"decimal\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "broad_mappings": [
+        "schema:Number"
+      ],
+      "base": "Decimal",
+      "uri": "http://www.w3.org/2001/XMLSchema#decimal",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "time",
+      "definition_uri": "https://w3id.org/linkml/Time",
+      "description": "A time object represents a (local) time of day, independent of any particular day",
+      "notes": [
+        "URI is dateTime because OWL reasoners do not work with straight date or time",
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"time\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "exact_mappings": [
+        "schema:Time"
+      ],
+      "base": "XSDTime",
+      "uri": "http://www.w3.org/2001/XMLSchema#time",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "date",
+      "definition_uri": "https://w3id.org/linkml/Date",
+      "description": "a date (year, month and day) in an idealized calendar",
+      "notes": [
+        "URI is dateTime because OWL reasoners don't work with straight date or time",
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"date\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "exact_mappings": [
+        "schema:Date"
+      ],
+      "base": "XSDDate",
+      "uri": "http://www.w3.org/2001/XMLSchema#date",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "datetime",
+      "definition_uri": "https://w3id.org/linkml/Datetime",
+      "description": "The combination of a date and time",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"datetime\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "exact_mappings": [
+        "schema:DateTime"
+      ],
+      "base": "XSDDateTime",
+      "uri": "http://www.w3.org/2001/XMLSchema#dateTime",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "date_or_datetime",
+      "definition_uri": "https://w3id.org/linkml/DateOrDatetime",
+      "description": "Either a date or a datetime",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"date_or_datetime\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "base": "str",
+      "uri": "https://w3id.org/linkml/DateOrDatetime",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "uriorcurie",
+      "definition_uri": "https://w3id.org/linkml/Uriorcurie",
+      "description": "a URI or a CURIE",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"uriorcurie\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "base": "URIorCURIE",
+      "uri": "http://www.w3.org/2001/XMLSchema#anyURI",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "curie",
+      "definition_uri": "https://w3id.org/linkml/Curie",
+      "conforms_to": "https://www.w3.org/TR/curie/",
+      "description": "a compact URI",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"curie\"."
+      ],
+      "comments": [
+        "in RDF serializations this MUST be expanded to a URI",
+        "in non-RDF serializations MAY be serialized as the compact representation"
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "base": "Curie",
+      "uri": "http://www.w3.org/2001/XMLSchema#string",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "uri",
+      "definition_uri": "https://w3id.org/linkml/Uri",
+      "conforms_to": "https://www.ietf.org/rfc/rfc3987.txt",
+      "description": "a complete URI",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"uri\"."
+      ],
+      "comments": [
+        "in RDF serializations a slot with range of uri is treated as a literal or type xsd:anyURI unless it is an identifier or a reference to an identifier, in which case it is translated directly to a node"
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "close_mappings": [
+        "schema:URL"
+      ],
+      "base": "URI",
+      "uri": "http://www.w3.org/2001/XMLSchema#anyURI",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "ncname",
+      "definition_uri": "https://w3id.org/linkml/Ncname",
+      "description": "Prefix part of CURIE",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"ncname\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "base": "NCName",
+      "uri": "http://www.w3.org/2001/XMLSchema#string",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "objectidentifier",
+      "definition_uri": "https://w3id.org/linkml/Objectidentifier",
+      "description": "A URI or CURIE that represents an object in the model.",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\"."
+      ],
+      "comments": [
+        "Used for inheritance and type checking"
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "base": "ElementIdentifier",
+      "uri": "http://www.w3.org/ns/shex#iri",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "nodeidentifier",
+      "definition_uri": "https://w3id.org/linkml/Nodeidentifier",
+      "description": "A URI, CURIE or BNODE that represents a node in a model.",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"nodeidentifier\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "base": "NodeIdentifier",
+      "uri": "http://www.w3.org/ns/shex#nonLiteral",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "jsonpointer",
+      "definition_uri": "https://w3id.org/linkml/Jsonpointer",
+      "conforms_to": "https://datatracker.ietf.org/doc/html/rfc6901",
+      "description": "A string encoding a JSON Pointer. The value of the string MUST conform to JSON Point syntax and SHOULD dereference to a valid object within the current instance document when encoded in tree form.",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"jsonpointer\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "base": "str",
+      "uri": "http://www.w3.org/2001/XMLSchema#string",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "jsonpath",
+      "definition_uri": "https://w3id.org/linkml/Jsonpath",
+      "conforms_to": "https://www.ietf.org/archive/id/draft-goessner-dispatch-jsonpath-00.html",
+      "description": "A string encoding a JSON Path. The value of the string MUST conform to JSON Point syntax and SHOULD dereference to zero or more valid objects within the current instance document when encoded in tree form.",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"jsonpath\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "base": "str",
+      "uri": "http://www.w3.org/2001/XMLSchema#string",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    },
+    {
+      "name": "sparqlpath",
+      "definition_uri": "https://w3id.org/linkml/Sparqlpath",
+      "conforms_to": "https://www.w3.org/TR/sparql11-query/#propertypaths",
+      "description": "A string encoding a SPARQL Property Path. The value of the string MUST conform to SPARQL syntax and SHOULD dereference to zero or more valid objects within the current instance document when encoded as RDF.",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"sparqlpath\"."
+      ],
+      "from_schema": "https://w3id.org/linkml/types",
+      "imported_from": "linkml:types",
+      "base": "str",
+      "uri": "http://www.w3.org/2001/XMLSchema#string",
+      "repr": "str",
+      "@type": "TypeDefinition"
+    }
+  ],
+  "slots": [
+    {
+      "name": "image_url",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/image_url",
+      "description": "An URL linking to the image",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/image_url",
+      "identifier": true,
+      "owner": "Image",
+      "domain_of": [
+        "Image"
+      ],
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "source_image_url",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/source_image_url",
+      "description": "A list of URLs linking to the images that were used as a source",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/source_image_url",
+      "multivalued": true,
+      "owner": "Image",
+      "domain_of": [
+        "Image"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "id",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/id",
+      "description": "The unique identifier for an entity",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/id",
+      "identifier": true,
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "name",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/name",
+      "description": "The name of an entity",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/name",
+      "owner": "NamedObject",
+      "domain_of": [
+        "NamedObject"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "description",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/description",
+      "description": "A description of an entity",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/description",
+      "owner": "NamedObject",
+      "domain_of": [
+        "NamedObject"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "channel",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/channel",
+      "description": "The channel number to which the measurements apply",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/channel",
+      "multivalued": true,
+      "owner": "ArgolightEKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues",
+        "ArgolightBIntensityKeyValues",
+        "ArgolightEKeyValues"
+      ],
+      "range": "integer",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "bit_depth",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/bit_depth",
+      "description": "Detector bit depth",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/bit_depth",
+      "owner": "ArgolightEInput",
+      "domain_of": [
+        "FieldIlluminationInput",
+        "ArgolightBInput",
+        "ArgolightEInput"
+      ],
+      "range": "integer",
+      "minimum_value": 1,
+      "maximum_value": 64,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "saturation_threshold",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/saturation_threshold",
+      "description": "Tolerated saturation threshold. If the amount of saturated pixels is above this threshold,  the image is considered as saturated and the analysis is not performed.",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/saturation_threshold",
+      "ifabsent": "float(0.01)",
+      "owner": "ArgolightEInput",
+      "domain_of": [
+        "FieldIlluminationInput",
+        "ArgolightBInput",
+        "ArgolightEInput"
+      ],
+      "range": "float",
+      "minimum_value": 0,
+      "maximum_value": 1,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "field_illumination_image",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/field_illumination_image",
+      "description": "Input parameter: homogeneity image provided as a numpy array in the order. While the analysis accepts multiple channels, the T and Z dimensions are expected to be 1.",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/field_illumination_image",
+      "owner": "FieldIlluminationInput",
+      "domain_of": [
+        "FieldIlluminationInput"
+      ],
+      "range": "ImageAsNumpy",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "center_threshold",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/center_threshold",
+      "description": "Input parameter: relative threshold for what is going to be considered as the intensity center of the image",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/center_threshold",
+      "ifabsent": "float(0.9)",
+      "owner": "FieldIlluminationInput",
+      "domain_of": [
+        "FieldIlluminationInput"
+      ],
+      "range": "float",
+      "required": true,
+      "minimum_value": 0,
+      "maximum_value": 1,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "corner_fraction",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/corner_fraction",
+      "description": "Input parameter: the proportion of the image to be considered as corner or center",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/corner_fraction",
+      "ifabsent": "float(0.1)",
+      "owner": "FieldIlluminationInput",
+      "domain_of": [
+        "FieldIlluminationInput"
+      ],
+      "range": "float",
+      "required": true,
+      "minimum_value": 0,
+      "maximum_value": 0,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "sigma",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/sigma",
+      "description": "Input parameter: the sigma for the smoothing gaussian filter to be applied prior to analysis",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/sigma",
+      "ifabsent": "float(2.0)",
+      "owner": "FieldIlluminationInput",
+      "domain_of": [
+        "FieldIlluminationInput"
+      ],
+      "range": "float",
+      "required": true,
+      "minimum_value": 0,
+      "maximum_value": 100,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "intensity_map_size",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/intensity_map_size",
+      "description": "Input parameter: the size of the output intensity map in pixels",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/intensity_map_size",
+      "ifabsent": "int(64)",
+      "owner": "FieldIlluminationInput",
+      "domain_of": [
+        "FieldIlluminationInput"
+      ],
+      "range": "integer",
+      "required": true,
+      "minimum_value": 5,
+      "maximum_value": 512,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "nb_pixels",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/nb_pixels",
+      "description": "The area occupied by the center of illumination region. In pixels",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/nb_pixels",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "integer",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "center_of_mass_x",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/center_of_mass_x",
+      "description": "The x coordinate of the center of mass of the center of illumination region. In pixels",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/center_of_mass_x",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "center_of_mass_y",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/center_of_mass_y",
+      "description": "The y coordinate of the center of mass of the center of illumination region. In pixels",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/center_of_mass_y",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "max_intensity",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/max_intensity",
+      "description": "The maximum intensity of the center of illumination",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/max_intensity",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "max_intensity_pos_x",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/max_intensity_pos_x",
+      "description": "The x coordinate of the maximum intensity of the center of illumination. In pixels",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/max_intensity_pos_x",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "max_intensity_pos_y",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/max_intensity_pos_y",
+      "description": "The y coordinate of the maximum intensity of the center of illumination. In pixels",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/max_intensity_pos_y",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "top_left_intensity_mean",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_left_intensity_mean",
+      "description": "The mean intensity of the top-left corner of the image",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_left_intensity_mean",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "top_left_intensity_ratio",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_left_intensity_ratio",
+      "description": "The mean intensity of the top-left corner of the image  divided by the maximum intensity of the center of illumination",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_left_intensity_ratio",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "top_center_intensity_mean",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_center_intensity_mean",
+      "description": "The mean intensity of the top-center of the image",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_center_intensity_mean",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "top_center_intensity_ratio",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_center_intensity_ratio",
+      "description": "The mean intensity of the top-center of the image  divided by the maximum intensity of the center of illumination",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_center_intensity_ratio",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "top_right_intensity_mean",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_right_intensity_mean",
+      "description": "The mean intensity of the top-right corner of the image",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_right_intensity_mean",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "top_right_intensity_ratio",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_right_intensity_ratio",
+      "description": "The mean intensity of the top-right corner of the image  divided by the maximum intensity of the center of illumination",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/top_right_intensity_ratio",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "middle_left_intensity_mean",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_left_intensity_mean",
+      "description": "The mean intensity of the middle-left of the image",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_left_intensity_mean",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "middle_left_intensity_ratio",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_left_intensity_ratio",
+      "description": "The mean intensity of the middle-left of the image  divided by the maximum intensity of the center of illumination",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_left_intensity_ratio",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "middle_center_intensity_mean",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_center_intensity_mean",
+      "description": "The mean intensity of the middle-center of the image",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_center_intensity_mean",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "middle_center_intensity_ratio",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_center_intensity_ratio",
+      "description": "The mean intensity of the middle-center of the image  divided by the maximum intensity of the center of illumination",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_center_intensity_ratio",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "middle_right_intensity_mean",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_right_intensity_mean",
+      "description": "The mean intensity of the middle-right of the image",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_right_intensity_mean",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "middle_right_intensity_ratio",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_right_intensity_ratio",
+      "description": "The mean intensity of the middle-right of the image  divided by the maximum intensity of the center of illumination",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/middle_right_intensity_ratio",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "bottom_left_intensity_mean",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_left_intensity_mean",
+      "description": "The mean intensity of the bottom-left of the image",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_left_intensity_mean",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "bottom_left_intensity_ratio",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_left_intensity_ratio",
+      "description": "The mean intensity of the bottom-left of the image  divided by the maximum intensity of the center of illumination",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_left_intensity_ratio",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "bottom_center_intensity_mean",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_center_intensity_mean",
+      "description": "The mean intensity of the bottom-center of the image",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_center_intensity_mean",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "bottom_center_intensity_ratio",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_center_intensity_ratio",
+      "description": "The mean intensity of the bottom-center of the image  divided by the maximum intensity of the center of illumination",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_center_intensity_ratio",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "bottom_right_intensity_mean",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_right_intensity_mean",
+      "description": "The mean intensity of the bottom-right of the image",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_right_intensity_mean",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "bottom_right_intensity_ratio",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_right_intensity_ratio",
+      "description": "The mean intensity of the bottom-right of the image  divided by the maximum intensity of the center of illumination",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/bottom_right_intensity_ratio",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "decile_0",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_0",
+      "description": "The 0th decile of the intensity distribution of the maximum intensity",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_0",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "decile_1",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_1",
+      "description": "The 1st decile of the intensity distribution of the maximum intensity",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_1",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "decile_2",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_2",
+      "description": "The 2nd decile of the intensity distribution of the maximum intensity",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_2",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "decile_3",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_3",
+      "description": "The 3rd decile of the intensity distribution of the maximum intensity",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_3",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "decile_4",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_4",
+      "description": "The 4th decile of the intensity distribution of the maximum intensity",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_4",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "decile_5",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_5",
+      "description": "The 5th decile of the intensity distribution of the maximum intensity",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_5",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "decile_6",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_6",
+      "description": "The 6th decile of the intensity distribution of the maximum intensity",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_6",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "decile_7",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_7",
+      "description": "The 7th decile of the intensity distribution of the maximum intensity",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_7",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "decile_8",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_8",
+      "description": "The 8th decile of the intensity distribution of the maximum intensity",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_8",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "decile_9",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_9",
+      "description": "The 9th decile of the intensity distribution of the maximum intensity",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/decile_9",
+      "multivalued": true,
+      "owner": "FieldIlluminationKeyValues",
+      "domain_of": [
+        "FieldIlluminationKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "argolight_b_image",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/argolight_b_image",
+      "description": "Input parameter: image of the argolight b pattern provided as a 5D numpy array in the order TZYXC",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/argolight_b_image",
+      "owner": "ArgolightBInput",
+      "domain_of": [
+        "ArgolightBInput"
+      ],
+      "range": "ImageAsNumpy",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "spots_distance",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/spots_distance",
+      "description": "Input parameter: distance between argolight spots",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/spots_distance",
+      "owner": "ArgolightBInput",
+      "domain_of": [
+        "ArgolightBInput"
+      ],
+      "range": "float",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "sigma_z",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/sigma_z",
+      "description": "Input parameter: smoothing factor for objects detection in the Z axis",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/sigma_z",
+      "ifabsent": "float(1.0)",
+      "owner": "ArgolightBInput",
+      "domain_of": [
+        "ArgolightBInput"
+      ],
+      "range": "float",
+      "required": true,
+      "minimum_value": 0,
+      "maximum_value": 5,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "sigma_y",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/sigma_y",
+      "description": "Input parameter: smoothing factor for objects detection in the Y axis",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/sigma_y",
+      "ifabsent": "float(3.0)",
+      "owner": "ArgolightBInput",
+      "domain_of": [
+        "ArgolightBInput"
+      ],
+      "range": "float",
+      "required": true,
+      "minimum_value": 0,
+      "maximum_value": 10,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "sigma_x",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/sigma_x",
+      "description": "Input parameter: smoothing factor for objects detection in the X axis",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/sigma_x",
+      "ifabsent": "float(3.0)",
+      "owner": "ArgolightBInput",
+      "domain_of": [
+        "ArgolightBInput"
+      ],
+      "range": "float",
+      "required": true,
+      "minimum_value": 0,
+      "maximum_value": 10,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "lower_threshold_correction_factors",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/lower_threshold_correction_factors",
+      "description": "Input parameter: correction factor for the lower thresholds.  Must be a tuple with len = nr of channels or a float if all equal",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/lower_threshold_correction_factors",
+      "multivalued": true,
+      "owner": "ArgolightBInput",
+      "domain_of": [
+        "ArgolightBInput"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "upper_threshold_correction_factors",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/upper_threshold_correction_factors",
+      "description": "Input parameter: correction factor for the upper thresholds. Must be a tuple with len = nr of channels or a float if all equal",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/upper_threshold_correction_factors",
+      "multivalued": true,
+      "owner": "ArgolightBInput",
+      "domain_of": [
+        "ArgolightBInput"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "remove_center_cross",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/remove_center_cross",
+      "description": "Input parameter: remove the center cross found in some Argolight patterns",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/remove_center_cross",
+      "ifabsent": "False",
+      "owner": "ArgolightBInput",
+      "domain_of": [
+        "ArgolightBInput"
+      ],
+      "range": "boolean",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "nr_of_spots",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/nr_of_spots",
+      "description": "Number of argolight spots detected for each channel",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/nr_of_spots",
+      "multivalued": true,
+      "owner": "ArgolightBIntensityKeyValues",
+      "domain_of": [
+        "ArgolightBIntensityKeyValues"
+      ],
+      "range": "integer",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "intensity_max_spot",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/intensity_max_spot",
+      "description": "Integrated intensity of the most intense spot for each channel",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/intensity_max_spot",
+      "multivalued": true,
+      "owner": "ArgolightBIntensityKeyValues",
+      "domain_of": [
+        "ArgolightBIntensityKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "intensity_max_spot_roi",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/intensity_max_spot_roi",
+      "description": "ROI number of the most intense spot for each channel",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/intensity_max_spot_roi",
+      "multivalued": true,
+      "owner": "ArgolightBIntensityKeyValues",
+      "domain_of": [
+        "ArgolightBIntensityKeyValues"
+      ],
+      "range": "integer",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "intensity_min_spot",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/intensity_min_spot",
+      "description": "Integrated intensity of the least intense spot for each channel",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/intensity_min_spot",
+      "multivalued": true,
+      "owner": "ArgolightBIntensityKeyValues",
+      "domain_of": [
+        "ArgolightBIntensityKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "intensity_min_spot_roi",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/intensity_min_spot_roi",
+      "description": "ROI number of the least intense spot for each channel",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/intensity_min_spot_roi",
+      "multivalued": true,
+      "owner": "ArgolightBIntensityKeyValues",
+      "domain_of": [
+        "ArgolightBIntensityKeyValues"
+      ],
+      "range": "integer",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "mean_intensity",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mean_intensity",
+      "description": "Mean of all spots integrated intensity for each channel",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mean_intensity",
+      "multivalued": true,
+      "owner": "ArgolightBIntensityKeyValues",
+      "domain_of": [
+        "ArgolightBIntensityKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "median_intensity",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/median_intensity",
+      "description": "Median of all spots integrated intensity for each channel",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/median_intensity",
+      "multivalued": true,
+      "owner": "ArgolightBIntensityKeyValues",
+      "domain_of": [
+        "ArgolightBIntensityKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "std_mean_intensity",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/std_mean_intensity",
+      "description": "Standard deviation of all spots integrated intensity for each channel",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/std_mean_intensity",
+      "multivalued": true,
+      "owner": "ArgolightBIntensityKeyValues",
+      "domain_of": [
+        "ArgolightBIntensityKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "mad_mean_intensity",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mad_mean_intensity",
+      "description": "Median absolute deviation of all spots integrated intensity for each channel",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mad_mean_intensity",
+      "multivalued": true,
+      "owner": "ArgolightBIntensityKeyValues",
+      "domain_of": [
+        "ArgolightBIntensityKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "min_max_intensity_ratio",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/min_max_intensity_ratio",
+      "description": "Ratio between the integrated intensities between the most intense and the least intense spots for each channel",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/min_max_intensity_ratio",
+      "multivalued": true,
+      "owner": "ArgolightBIntensityKeyValues",
+      "domain_of": [
+        "ArgolightBIntensityKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "channel_A",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/channel_A",
+      "description": "The first channel number to which the measurements apply",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "is_a": "channel",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/channel_A",
+      "multivalued": true,
+      "owner": "ArgolightBDistanceKeyValues",
+      "domain_of": [
+        "ArgolightBDistanceKeyValues"
+      ],
+      "range": "integer",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "channel_B",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/channel_B",
+      "description": "The second channel number to which the measurements apply",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "is_a": "channel",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/channel_B",
+      "multivalued": true,
+      "owner": "ArgolightBDistanceKeyValues",
+      "domain_of": [
+        "ArgolightBDistanceKeyValues"
+      ],
+      "range": "integer",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "mean_3d_dist",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mean_3d_dist",
+      "description": "Mean of the 3D distances between spots for each permutation of channel A and B",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mean_3d_dist",
+      "multivalued": true,
+      "owner": "ArgolightBDistanceKeyValues",
+      "domain_of": [
+        "ArgolightBDistanceKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "median_3d_dist",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/median_3d_dist",
+      "description": "Median of the 3D distances between spots for each permutation of channel A and B",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/median_3d_dist",
+      "multivalued": true,
+      "owner": "ArgolightBDistanceKeyValues",
+      "domain_of": [
+        "ArgolightBDistanceKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "std_3d_dist",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/std_3d_dist",
+      "description": "Standard deviation of the 3D distances between spots for each permutation of channel A and B",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/std_3d_dist",
+      "multivalued": true,
+      "owner": "ArgolightBDistanceKeyValues",
+      "domain_of": [
+        "ArgolightBDistanceKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "mad_3d_dist",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mad_3d_dist",
+      "description": "Median absolute deviation of the 3D distances between spots for each permutation of channel A and B",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mad_3d_dist",
+      "multivalued": true,
+      "owner": "ArgolightBDistanceKeyValues",
+      "domain_of": [
+        "ArgolightBDistanceKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "mean_z_dist",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mean_z_dist",
+      "description": "Mean of the Z distances between spots for each permutation of channel A and B",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mean_z_dist",
+      "multivalued": true,
+      "owner": "ArgolightBDistanceKeyValues",
+      "domain_of": [
+        "ArgolightBDistanceKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "median_z_dist",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/median_z_dist",
+      "description": "Median of the Z distances between spots for each permutation of channel A and B",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/median_z_dist",
+      "multivalued": true,
+      "owner": "ArgolightBDistanceKeyValues",
+      "domain_of": [
+        "ArgolightBDistanceKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "std_z_dist",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/std_z_dist",
+      "description": "Standard deviation of the Z distances between spots for each permutation of channel A and B",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/std_z_dist",
+      "multivalued": true,
+      "owner": "ArgolightBDistanceKeyValues",
+      "domain_of": [
+        "ArgolightBDistanceKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "mad_z_dist",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mad_z_dist",
+      "description": "Median absolute deviation of the Z distances between spots for each permutation of channel A and B",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/mad_z_dist",
+      "multivalued": true,
+      "owner": "ArgolightBDistanceKeyValues",
+      "domain_of": [
+        "ArgolightBDistanceKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "argolight_e_image",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/argolight_e_image",
+      "description": "Image of the argolight e pattern provided as a 5D numpy array in the order TZYXC",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/argolight_e_image",
+      "owner": "ArgolightEInput",
+      "domain_of": [
+        "ArgolightEInput"
+      ],
+      "range": "ImageAsNumpy",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "axis",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/axis",
+      "description": "Axis along which resolution is being measured. 1=Y, 2=X",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/axis",
+      "owner": "ArgolightEInput",
+      "domain_of": [
+        "ArgolightEInput"
+      ],
+      "range": "integer",
+      "required": true,
+      "minimum_value": 1,
+      "maximum_value": 2,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "measured_band",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/measured_band",
+      "description": "Fraction of the image across which intensity profiles are measured",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/measured_band",
+      "ifabsent": "float(0.4)",
+      "owner": "ArgolightEInput",
+      "domain_of": [
+        "ArgolightEInput"
+      ],
+      "range": "float",
+      "required": true,
+      "minimum_value": 0,
+      "maximum_value": 1,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "prominence_threshold",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/prominence_threshold",
+      "description": "Peak prominence used as a threshold to distinguish two peaks.  Defaults to the value defined by the Rayleigh criteria",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/prominence_threshold",
+      "ifabsent": "float(0.264)",
+      "owner": "ArgolightEInput",
+      "domain_of": [
+        "ArgolightEInput"
+      ],
+      "range": "float",
+      "required": true,
+      "minimum_value": 0,
+      "maximum_value": 0,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "focus_slice",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/focus_slice",
+      "description": "Z position at which focus has been measured",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/focus_slice",
+      "multivalued": true,
+      "owner": "ArgolightEKeyValues",
+      "domain_of": [
+        "ArgolightEKeyValues"
+      ],
+      "range": "integer",
+      "minimum_value": 0,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "rayleigh_resolution",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/rayleigh_resolution",
+      "description": "Rayleigh resolution measured",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/rayleigh_resolution",
+      "multivalued": true,
+      "owner": "ArgolightEKeyValues",
+      "domain_of": [
+        "ArgolightEKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "peak_position_A",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_position_A",
+      "description": "Position of first peak in the intensity profiles",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_position_A",
+      "multivalued": true,
+      "owner": "ArgolightEKeyValues",
+      "domain_of": [
+        "ArgolightEKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "peak_position_B",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_position_B",
+      "description": "Position of second peak in the intensity profiles",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_position_B",
+      "multivalued": true,
+      "owner": "ArgolightEKeyValues",
+      "domain_of": [
+        "ArgolightEKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "peak_height_A",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_height_A",
+      "description": "Height of first peak in the intensity profiles",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_height_A",
+      "multivalued": true,
+      "owner": "ArgolightEKeyValues",
+      "domain_of": [
+        "ArgolightEKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "peak_height_B",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_height_B",
+      "description": "Height of second peak in the intensity profiles",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_height_B",
+      "multivalued": true,
+      "owner": "ArgolightEKeyValues",
+      "domain_of": [
+        "ArgolightEKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "peak_prominence_A",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_prominence_A",
+      "description": "Prominence of first peak in the intensity profiles",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_prominence_A",
+      "multivalued": true,
+      "owner": "ArgolightEKeyValues",
+      "domain_of": [
+        "ArgolightEKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "peak_prominence_B",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_prominence_B",
+      "description": "Prominence of second peak in the intensity profiles",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peak_prominence_B",
+      "multivalued": true,
+      "owner": "ArgolightEKeyValues",
+      "domain_of": [
+        "ArgolightEKeyValues"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "sample__type",
+      "description": "The type of the sample",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/type",
+      "identifier": true,
+      "alias": "type",
+      "owner": "Sample",
+      "domain_of": [
+        "Sample"
+      ],
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "sample__protocol",
+      "description": "The protocol used to prepare the sample",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/protocol",
+      "alias": "protocol",
+      "owner": "Sample",
+      "domain_of": [
+        "Sample"
+      ],
+      "range": "Protocol",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "protocol__version",
+      "description": "The version of the protocol",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/version",
+      "alias": "version",
+      "owner": "Protocol",
+      "domain_of": [
+        "Protocol"
+      ],
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "protocol__authors",
+      "description": "The authors of the protocol",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/authors",
+      "multivalued": true,
+      "alias": "authors",
+      "owner": "Protocol",
+      "domain_of": [
+        "Protocol"
+      ],
+      "range": "Experimenter",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "protocol__url",
+      "description": "The URL where the protocol can be found",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/url",
+      "identifier": true,
+      "alias": "url",
+      "owner": "Protocol",
+      "domain_of": [
+        "Protocol"
+      ],
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "experimenter__name",
+      "description": "The name of the experimenter",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/name",
+      "alias": "name",
+      "owner": "Experimenter",
+      "domain_of": [
+        "Experimenter"
+      ],
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "experimenter__orcid",
+      "description": "The ORCID of the experimenter",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/orcid",
+      "identifier": true,
+      "alias": "orcid",
+      "owner": "Experimenter",
+      "domain_of": [
+        "Experimenter"
+      ],
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "metricsDataset__sample",
+      "description": "The sample that was imaged",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/sample",
+      "alias": "sample",
+      "owner": "MetricsDataset",
+      "domain_of": [
+        "MetricsDataset"
+      ],
+      "range": "Sample",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "metricsDataset__experimenter",
+      "description": "The experimenter that performed the imaging experiment",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/experimenter",
+      "multivalued": true,
+      "alias": "experimenter",
+      "owner": "MetricsDataset",
+      "domain_of": [
+        "MetricsDataset"
+      ],
+      "range": "Experimenter",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "metricsDataset__acquisition_date",
+      "description": "The date of the acquisition",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/acquisition_date",
+      "alias": "acquisition_date",
+      "owner": "MetricsDataset",
+      "domain_of": [
+        "MetricsDataset"
+      ],
+      "range": "date",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "metricsDataset__processed",
+      "description": "Has the dataset been processed by microscope-metrics",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/processed",
+      "ifabsent": "False",
+      "alias": "processed",
+      "owner": "MetricsDataset",
+      "domain_of": [
+        "MetricsDataset"
+      ],
+      "range": "boolean",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "metricsDataset__processing_date",
+      "description": "The date of the processing by microscope-metrics",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/processing_date",
+      "alias": "processing_date",
+      "owner": "MetricsDataset",
+      "domain_of": [
+        "MetricsDataset"
+      ],
+      "range": "date",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "metricsDataset__processing_log",
+      "description": "The log of the processing by microscope-metrics",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/processing_log",
+      "alias": "processing_log",
+      "owner": "MetricsDataset",
+      "domain_of": [
+        "MetricsDataset"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "metricsDataset__comment",
+      "description": "A human readable comment about the dataset",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/comment",
+      "multivalued": true,
+      "alias": "comment",
+      "owner": "MetricsDataset",
+      "domain_of": [
+        "MetricsDataset"
+      ],
+      "range": "Comment",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "imageAsNumpy__data",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/data",
+      "alias": "data",
+      "owner": "ImageAsNumpy",
+      "domain_of": [
+        "ImageAsNumpy"
+      ],
+      "range": "MetaObject",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "imageMask__y",
+      "implements": [
+        "linkml:axis1"
+      ],
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y",
+      "alias": "y",
+      "owner": "ImageMask",
+      "domain_of": [
+        "ImageMask"
+      ],
+      "range": "PixelSeries",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "imageMask__x",
+      "implements": [
+        "linkml:axis0"
+      ],
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x",
+      "alias": "x",
+      "owner": "ImageMask",
+      "domain_of": [
+        "ImageMask"
+      ],
+      "range": "PixelSeries",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "imageMask__data",
+      "implements": [
+        "linkml:elements"
+      ],
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/data",
+      "multivalued": true,
+      "alias": "data",
+      "owner": "ImageMask",
+      "domain_of": [
+        "ImageMask"
+      ],
+      "range": "boolean",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "image2D__y",
+      "implements": [
+        "linkml:axis0"
+      ],
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y",
+      "alias": "y",
+      "owner": "Image2D",
+      "domain_of": [
+        "Image2D"
+      ],
+      "range": "PixelSeries",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "image2D__x",
+      "implements": [
+        "linkml:axis1"
+      ],
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x",
+      "alias": "x",
+      "owner": "Image2D",
+      "domain_of": [
+        "Image2D"
+      ],
+      "range": "PixelSeries",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "image2D__data",
+      "implements": [
+        "linkml:elements"
+      ],
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/data",
+      "multivalued": true,
+      "alias": "data",
+      "owner": "Image2D",
+      "domain_of": [
+        "Image2D"
+      ],
+      "range": "float",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "image5D__t",
+      "implements": [
+        "linkml:axis0"
+      ],
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/t",
+      "alias": "t",
+      "owner": "Image5D",
+      "domain_of": [
+        "Image5D"
+      ],
+      "range": "TimeSeries",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "image5D__z",
+      "implements": [
+        "linkml:axis1"
+      ],
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/z",
+      "alias": "z",
+      "owner": "Image5D",
+      "domain_of": [
+        "Image5D"
+      ],
+      "range": "PixelSeries",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "image5D__y",
+      "implements": [
+        "linkml:axis2"
+      ],
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y",
+      "alias": "y",
+      "owner": "Image5D",
+      "domain_of": [
+        "Image5D"
+      ],
+      "range": "PixelSeries",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "image5D__x",
+      "implements": [
+        "linkml:axis3"
+      ],
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x",
+      "alias": "x",
+      "owner": "Image5D",
+      "domain_of": [
+        "Image5D"
+      ],
+      "range": "PixelSeries",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "image5D__c",
+      "implements": [
+        "linkml:axis4"
+      ],
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/c",
+      "alias": "c",
+      "owner": "Image5D",
+      "domain_of": [
+        "Image5D"
+      ],
+      "range": "ChannelSeries",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "image5D__data",
+      "implements": [
+        "linkml:elements"
+      ],
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/data",
+      "multivalued": true,
+      "alias": "data",
+      "owner": "Image5D",
+      "domain_of": [
+        "Image5D"
+      ],
+      "range": "float",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "pixelSeries__values",
+      "implements": [
+        "linkml:elements"
+      ],
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/values",
+      "multivalued": true,
+      "alias": "values",
+      "owner": "PixelSeries",
+      "domain_of": [
+        "PixelSeries"
+      ],
+      "range": "integer",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "channelSeries__values",
+      "implements": [
+        "linkml:elements"
+      ],
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/values",
+      "multivalued": true,
+      "alias": "values",
+      "owner": "ChannelSeries",
+      "domain_of": [
+        "ChannelSeries"
+      ],
+      "range": "integer",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "timeSeries__values",
+      "implements": [
+        "linkml:elements"
+      ],
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/values",
+      "multivalued": true,
+      "alias": "values",
+      "owner": "TimeSeries",
+      "domain_of": [
+        "TimeSeries"
+      ],
+      "range": "float",
+      "required": true,
+      "unit": {
+        "ucum_code": "s",
+        "@type": "UnitOfMeasure"
+      },
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "roi__label",
+      "description": "The label of the ROI",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/label",
+      "alias": "label",
+      "owner": "Roi",
+      "domain_of": [
+        "Roi"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "roi__description",
+      "description": "A description of the ROI",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/description",
+      "alias": "description",
+      "owner": "Roi",
+      "domain_of": [
+        "Roi"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "roi__image",
+      "description": "The image to which the ROI is applied",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/image",
+      "multivalued": true,
+      "alias": "image",
+      "owner": "Roi",
+      "domain_of": [
+        "Roi"
+      ],
+      "range": "Image",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "roi__shapes",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/shapes",
+      "multivalued": true,
+      "alias": "shapes",
+      "owner": "Roi",
+      "domain_of": [
+        "Roi"
+      ],
+      "range": "Shape",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "shape__label",
+      "description": "The label of the shape",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/label",
+      "alias": "label",
+      "owner": "Shape",
+      "domain_of": [
+        "Shape"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "shape__z",
+      "description": "The z coordinate of the shape",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/z",
+      "alias": "z",
+      "owner": "Shape",
+      "domain_of": [
+        "Shape"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "shape__c",
+      "description": "The c coordinate of the shape",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/c",
+      "alias": "c",
+      "owner": "Shape",
+      "domain_of": [
+        "Shape"
+      ],
+      "range": "integer",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "shape__t",
+      "description": "The t coordinate of the shape",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/t",
+      "alias": "t",
+      "owner": "Shape",
+      "domain_of": [
+        "Shape"
+      ],
+      "range": "integer",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "shape__fill_color",
+      "description": "The fill color of the shape",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/fill_color",
+      "alias": "fill_color",
+      "owner": "Shape",
+      "domain_of": [
+        "Shape"
+      ],
+      "range": "Color",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "shape__stroke_color",
+      "description": "The stroke color of the shape",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/stroke_color",
+      "alias": "stroke_color",
+      "owner": "Shape",
+      "domain_of": [
+        "Shape"
+      ],
+      "range": "Color",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "shape__stroke_width",
+      "description": "The stroke width of the shape",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/stroke_width",
+      "ifabsent": "int(1)",
+      "alias": "stroke_width",
+      "owner": "Shape",
+      "domain_of": [
+        "Shape"
+      ],
+      "range": "integer",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "point__y",
+      "description": "The y coordinate of the point",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y",
+      "alias": "y",
+      "owner": "Point",
+      "domain_of": [
+        "Point"
+      ],
+      "range": "float",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "point__x",
+      "description": "The x coordinate of the point",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x",
+      "alias": "x",
+      "owner": "Point",
+      "domain_of": [
+        "Point"
+      ],
+      "range": "float",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "line__x1",
+      "description": "The x coordinate of the first point of the line",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x1",
+      "alias": "x1",
+      "owner": "Line",
+      "domain_of": [
+        "Line"
+      ],
+      "range": "float",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "line__y1",
+      "description": "The y coordinate of the first point of the line",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y1",
+      "alias": "y1",
+      "owner": "Line",
+      "domain_of": [
+        "Line"
+      ],
+      "range": "float",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "line__x2",
+      "description": "The x coordinate of the second point of the line",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x2",
+      "alias": "x2",
+      "owner": "Line",
+      "domain_of": [
+        "Line"
+      ],
+      "range": "float",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "line__y2",
+      "description": "The y coordinate of the second point of the line",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y2",
+      "alias": "y2",
+      "owner": "Line",
+      "domain_of": [
+        "Line"
+      ],
+      "range": "float",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "rectangle__x",
+      "description": "The x coordinate of the top left corner of the rectangle",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x",
+      "alias": "x",
+      "owner": "Rectangle",
+      "domain_of": [
+        "Rectangle"
+      ],
+      "range": "float",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "rectangle__y",
+      "description": "The y coordinate of the top left corner of the rectangle",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y",
+      "alias": "y",
+      "owner": "Rectangle",
+      "domain_of": [
+        "Rectangle"
+      ],
+      "range": "float",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "rectangle__w",
+      "description": "The width of the rectangle",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/w",
+      "alias": "w",
+      "owner": "Rectangle",
+      "domain_of": [
+        "Rectangle"
+      ],
+      "range": "float",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "rectangle__h",
+      "description": "The height of the rectangle",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/h",
+      "alias": "h",
+      "owner": "Rectangle",
+      "domain_of": [
+        "Rectangle"
+      ],
+      "range": "float",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "ellipse__x",
+      "description": "The x coordinate of the bounding box of the ellipse",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x",
+      "alias": "x",
+      "owner": "Ellipse",
+      "domain_of": [
+        "Ellipse"
+      ],
+      "range": "float",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "ellipse__y",
+      "description": "The y coordinate of the bounding box of the ellipse",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y",
+      "alias": "y",
+      "owner": "Ellipse",
+      "domain_of": [
+        "Ellipse"
+      ],
+      "range": "float",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "ellipse__x_rad",
+      "description": "The x radius of the ellipse",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x_rad",
+      "alias": "x_rad",
+      "owner": "Ellipse",
+      "domain_of": [
+        "Ellipse"
+      ],
+      "range": "float",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "ellipse__y_rad",
+      "description": "The y radius of the ellipse",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y_rad",
+      "alias": "y_rad",
+      "owner": "Ellipse",
+      "domain_of": [
+        "Ellipse"
+      ],
+      "range": "float",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "polygon__vertexes",
+      "description": "A list of vertexes defining the polygon",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/vertexes",
+      "multivalued": true,
+      "alias": "vertexes",
+      "owner": "Polygon",
+      "domain_of": [
+        "Polygon"
+      ],
+      "range": "Vertex",
+      "required": true,
+      "inlined": true,
+      "inlined_as_list": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "polygon__is_open",
+      "description": "Is the polygon open. By default, it is closed (false)",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/is_open",
+      "ifabsent": "False",
+      "alias": "is_open",
+      "owner": "Polygon",
+      "domain_of": [
+        "Polygon"
+      ],
+      "range": "boolean",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "vertex__x",
+      "description": "The x coordinate of the vertex",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x",
+      "alias": "x",
+      "owner": "Vertex",
+      "domain_of": [
+        "Vertex"
+      ],
+      "range": "float",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "vertex__y",
+      "description": "The y coordinate of the vertex",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y",
+      "alias": "y",
+      "owner": "Vertex",
+      "domain_of": [
+        "Vertex"
+      ],
+      "range": "float",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "mask__y",
+      "description": "The y coordinate of the top left corner of the mask",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/y",
+      "ifabsent": "int(0)",
+      "alias": "y",
+      "owner": "Mask",
+      "domain_of": [
+        "Mask"
+      ],
+      "range": "integer",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "mask__x",
+      "description": "The x coordinate of the top left corner of the mask",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/x",
+      "ifabsent": "int(0)",
+      "alias": "x",
+      "owner": "Mask",
+      "domain_of": [
+        "Mask"
+      ],
+      "range": "integer",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "mask__mask",
+      "description": "The mask image",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/mask",
+      "alias": "mask",
+      "owner": "Mask",
+      "domain_of": [
+        "Mask"
+      ],
+      "range": "ImageMask",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "color__r",
+      "description": "The red value of the color",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/r",
+      "ifabsent": "int(128)",
+      "alias": "r",
+      "owner": "Color",
+      "domain_of": [
+        "Color"
+      ],
+      "range": "integer",
+      "required": true,
+      "minimum_value": 0,
+      "maximum_value": 255,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "color__g",
+      "description": "The green value of the color",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/g",
+      "ifabsent": "int(128)",
+      "alias": "g",
+      "owner": "Color",
+      "domain_of": [
+        "Color"
+      ],
+      "range": "integer",
+      "required": true,
+      "minimum_value": 0,
+      "maximum_value": 255,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "color__b",
+      "description": "The blue value of the color",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/b",
+      "ifabsent": "int(128)",
+      "alias": "b",
+      "owner": "Color",
+      "domain_of": [
+        "Color"
+      ],
+      "range": "integer",
+      "required": true,
+      "minimum_value": 0,
+      "maximum_value": 255,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "color__alpha",
+      "description": "The alpha value of the color (optional)",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/alpha",
+      "ifabsent": "int(255)",
+      "alias": "alpha",
+      "owner": "Color",
+      "domain_of": [
+        "Color"
+      ],
+      "range": "integer",
+      "minimum_value": 0,
+      "maximum_value": 255,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "tag__id",
+      "description": "The id of the tag",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/id",
+      "identifier": true,
+      "alias": "id",
+      "owner": "Tag",
+      "domain_of": [
+        "Tag"
+      ],
+      "range": "integer",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "tag__text",
+      "description": "The text of the tag",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/text",
+      "alias": "text",
+      "owner": "Tag",
+      "domain_of": [
+        "Tag"
+      ],
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "tag__description",
+      "description": "The description of the tag",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/description",
+      "alias": "description",
+      "owner": "Tag",
+      "domain_of": [
+        "Tag"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "comment__text",
+      "description": "The text of the comment",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/text",
+      "alias": "text",
+      "owner": "Comment",
+      "domain_of": [
+        "Comment"
+      ],
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "tableAsPandasDF__df",
+      "description": "A Pandas DataFrame object",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/df",
+      "alias": "df",
+      "owner": "TableAsPandasDF",
+      "domain_of": [
+        "TableAsPandasDF"
+      ],
+      "range": "MetaObject",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "tableAsDict__columns",
+      "description": "A list of the columns of the table",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/columns",
+      "multivalued": true,
+      "alias": "columns",
+      "owner": "TableAsDict",
+      "domain_of": [
+        "TableAsDict"
+      ],
+      "range": "Column",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "column__name",
+      "description": "The name of the column",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/name",
+      "identifier": true,
+      "alias": "name",
+      "owner": "Column",
+      "domain_of": [
+        "Column"
+      ],
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "column__values",
+      "description": "The values of the column",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/values",
+      "multivalued": true,
+      "alias": "values",
+      "owner": "Column",
+      "domain_of": [
+        "Column"
+      ],
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "fieldIlluminationDataset__input",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/input",
+      "alias": "input",
+      "owner": "FieldIlluminationDataset",
+      "domain_of": [
+        "FieldIlluminationDataset"
+      ],
+      "range": "FieldIlluminationInput",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "fieldIlluminationDataset__output",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/output",
+      "alias": "output",
+      "owner": "FieldIlluminationDataset",
+      "domain_of": [
+        "FieldIlluminationDataset"
+      ],
+      "range": "FieldIlluminationOutput",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "fieldIlluminationOutput__key_values",
+      "description": "Key-Value pairs containing the Key measurements for the field illumination analysis",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/key_values",
+      "alias": "key_values",
+      "owner": "FieldIlluminationOutput",
+      "domain_of": [
+        "FieldIlluminationOutput"
+      ],
+      "range": "FieldIlluminationKeyValues",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "fieldIlluminationOutput__intensity_profiles",
+      "description": "Intensity profiles for the field illumination analysis in the different directions",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/intensity_profiles",
+      "alias": "intensity_profiles",
+      "owner": "FieldIlluminationOutput",
+      "domain_of": [
+        "FieldIlluminationOutput"
+      ],
+      "range": "TableAsDict",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "fieldIlluminationOutput__intensity_map",
+      "description": "Intensity map of the field illumination",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/intensity_map",
+      "alias": "intensity_map",
+      "owner": "FieldIlluminationOutput",
+      "domain_of": [
+        "FieldIlluminationOutput"
+      ],
+      "range": "Image5D",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "fieldIlluminationOutput__profile_rois",
+      "description": "ROIs used to compute the intensity profiles",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/profile_rois",
+      "alias": "profile_rois",
+      "owner": "FieldIlluminationOutput",
+      "domain_of": [
+        "FieldIlluminationOutput"
+      ],
+      "range": "Roi",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "fieldIlluminationOutput__corner_rois",
+      "description": "ROIs used to compute the corner intensities",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/corner_rois",
+      "alias": "corner_rois",
+      "owner": "FieldIlluminationOutput",
+      "domain_of": [
+        "FieldIlluminationOutput"
+      ],
+      "range": "Roi",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "fieldIlluminationOutput__center_of_illumination",
+      "description": "Point ROIs marking the center of illumination",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/center_of_illumination",
+      "alias": "center_of_illumination",
+      "owner": "FieldIlluminationOutput",
+      "domain_of": [
+        "FieldIlluminationOutput"
+      ],
+      "range": "Roi",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "argolightBDataset__input",
+      "description": "An input element for the analysis",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/input",
+      "alias": "input",
+      "owner": "ArgolightBDataset",
+      "domain_of": [
+        "ArgolightBDataset"
+      ],
+      "range": "ArgolightBInput",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "argolightBDataset__output",
+      "description": "An output element from the analysis",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/output",
+      "alias": "output",
+      "owner": "ArgolightBDataset",
+      "domain_of": [
+        "ArgolightBDataset"
+      ],
+      "range": "ArgolightBOutput",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "argolightBOutput__spots_labels_image",
+      "description": "Labels image of the argolight segmented spots provided as a 5D numpy array in the order TZYXC. Image intensities correspond to ROI labels",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/spots_labels_image",
+      "alias": "spots_labels_image",
+      "owner": "ArgolightBOutput",
+      "domain_of": [
+        "ArgolightBOutput"
+      ],
+      "range": "ImageAsNumpy",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "argolightBOutput__spots_centroids",
+      "description": "Centroids of the argolight spots provided as a list of ROIs, one per channel",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/spots_centroids",
+      "multivalued": true,
+      "alias": "spots_centroids",
+      "owner": "ArgolightBOutput",
+      "domain_of": [
+        "ArgolightBOutput"
+      ],
+      "range": "Roi",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "argolightBOutput__intensity_measurements",
+      "description": "Key Intensity Measurements on Argolight spots",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/intensity_measurements",
+      "alias": "intensity_measurements",
+      "owner": "ArgolightBOutput",
+      "domain_of": [
+        "ArgolightBOutput"
+      ],
+      "range": "ArgolightBIntensityKeyValues",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "argolightBOutput__distance_measurements",
+      "description": "Key Distance Measurements on Argolight spots",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/distance_measurements",
+      "alias": "distance_measurements",
+      "owner": "ArgolightBOutput",
+      "domain_of": [
+        "ArgolightBOutput"
+      ],
+      "range": "ArgolightBDistanceKeyValues",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "argolightBOutput__spots_properties",
+      "description": "Table of properties of the argolight spots",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/spots_properties",
+      "alias": "spots_properties",
+      "owner": "ArgolightBOutput",
+      "domain_of": [
+        "ArgolightBOutput"
+      ],
+      "range": "TableAsDict",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "argolightBOutput__spots_distances",
+      "description": "Table of distances between argolight spots",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/spots_distances",
+      "alias": "spots_distances",
+      "owner": "ArgolightBOutput",
+      "domain_of": [
+        "ArgolightBOutput"
+      ],
+      "range": "TableAsDict",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "argolightEDataset__input",
+      "description": "An input element for the analysis",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/input",
+      "alias": "input",
+      "owner": "ArgolightEDataset",
+      "domain_of": [
+        "ArgolightEDataset"
+      ],
+      "range": "ArgolightEInput",
+      "required": true,
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "argolightEDataset__output",
+      "description": "An output element from the analysis",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/output",
+      "alias": "output",
+      "owner": "ArgolightEDataset",
+      "domain_of": [
+        "ArgolightEDataset"
+      ],
+      "range": "ArgolightEOutput",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "argolightEOutput__peaks_rois",
+      "description": "ROIs of the peaks found in the argolight images",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/peaks_rois",
+      "multivalued": true,
+      "alias": "peaks_rois",
+      "owner": "ArgolightEOutput",
+      "domain_of": [
+        "ArgolightEOutput"
+      ],
+      "range": "Roi",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "argolightEOutput__key_measurements",
+      "description": "Key Measurements on Argolight E images",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/key_measurements",
+      "alias": "key_measurements",
+      "owner": "ArgolightEOutput",
+      "domain_of": [
+        "ArgolightEOutput"
+      ],
+      "range": "ArgolightEKeyValues",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "argolightEOutput__intensity_profiles",
+      "description": "Intensity profiles of the argolight lines provided as tables. One table per channel",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/intensity_profiles",
+      "alias": "intensity_profiles",
+      "owner": "ArgolightEOutput",
+      "domain_of": [
+        "ArgolightEOutput"
+      ],
+      "range": "TableAsDict",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "FieldIlluminationInput_saturation_threshold",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/saturation_threshold",
+      "description": "Tolerated saturation threshold. If the amount of saturated pixels is above this threshold,  the image is considered as saturated and the analysis is not performed.",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "is_a": "saturation_threshold",
+      "domain": "FieldIlluminationInput",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/saturation_threshold",
+      "ifabsent": "float(0.01)",
+      "alias": "saturation_threshold",
+      "owner": "FieldIlluminationInput",
+      "domain_of": [
+        "FieldIlluminationInput"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "saturation_threshold",
+      "range": "float",
+      "required": true,
+      "minimum_value": 0,
+      "maximum_value": 1,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "ArgolightBInput_saturation_threshold",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/saturation_threshold",
+      "description": "Tolerated saturation threshold. If the amount of saturated pixels is above this threshold,  the image is considered as saturated and the analysis is not performed.",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "is_a": "saturation_threshold",
+      "domain": "ArgolightBInput",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/saturation_threshold",
+      "ifabsent": "float(0.01)",
+      "alias": "saturation_threshold",
+      "owner": "ArgolightBInput",
+      "domain_of": [
+        "ArgolightBInput"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "saturation_threshold",
+      "range": "float",
+      "required": true,
+      "minimum_value": 0,
+      "maximum_value": 1,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "ArgolightEInput_saturation_threshold",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/saturation_threshold",
+      "description": "Tolerated saturation threshold. If the amount of saturated pixels is above this threshold,  the image is considered as saturated and the analysis is not performed.",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "is_a": "saturation_threshold",
+      "domain": "ArgolightEInput",
+      "slot_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/saturation_threshold",
+      "ifabsent": "float(0.01)",
+      "alias": "saturation_threshold",
+      "owner": "ArgolightEInput",
+      "domain_of": [
+        "ArgolightEInput"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "saturation_threshold",
+      "range": "float",
+      "required": true,
+      "minimum_value": 0,
+      "maximum_value": 1,
+      "@type": "SlotDefinition"
+    }
+  ],
+  "classes": [
+    {
+      "name": "MetaObject",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetaObject",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "mappings": [
+        "linkml:Any"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/linkml/Any",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "NamedObject",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/NamedObject",
+      "description": "An object with a name and a description",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "abstract": true,
+      "slots": [
+        "name",
+        "description"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/NamedObject",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "MetricsObject",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsObject",
+      "description": "A base object for all microscope-metrics objects",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "is_a": "NamedObject",
+      "abstract": true,
+      "slots": [
+        "name",
+        "description"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsObject",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Sample",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Sample",
+      "description": "A sample is a standard physical object that is imaged by a microscope",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "is_a": "NamedObject",
+      "slots": [
+        "name",
+        "description",
+        "sample__type",
+        "sample__protocol"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "type",
+          "description": "The type of the sample",
+          "identifier": true,
+          "range": "string",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "protocol",
+          "description": "The protocol used to prepare the sample",
+          "range": "Protocol",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Sample",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Protocol",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Protocol",
+      "description": "Set of instructions for preparing and imaging a sample",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "is_a": "NamedObject",
+      "slots": [
+        "name",
+        "description",
+        "protocol__version",
+        "protocol__authors",
+        "protocol__url"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "version",
+          "description": "The version of the protocol",
+          "range": "string",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "authors",
+          "description": "The authors of the protocol",
+          "multivalued": true,
+          "range": "Experimenter",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "url",
+          "description": "The URL where the protocol can be found",
+          "identifier": true,
+          "range": "string",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Protocol",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Experimenter",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Experimenter",
+      "description": "The person that performed the experiment or developed the protocol",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slots": [
+        "experimenter__name",
+        "experimenter__orcid"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "name",
+          "description": "The name of the experimenter",
+          "range": "string",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "orcid",
+          "description": "The ORCID of the experimenter",
+          "identifier": true,
+          "range": "string",
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Experimenter",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "MetricsDataset",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsDataset",
+      "description": "A base object on which microscope-metrics runs the analysis",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "is_a": "NamedObject",
+      "slots": [
+        "name",
+        "description",
+        "metricsDataset__sample",
+        "metricsDataset__experimenter",
+        "metricsDataset__acquisition_date",
+        "metricsDataset__processed",
+        "metricsDataset__processing_date",
+        "metricsDataset__processing_log",
+        "metricsDataset__comment"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "sample",
+          "description": "The sample that was imaged",
+          "range": "Sample",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "experimenter",
+          "description": "The experimenter that performed the imaging experiment",
+          "multivalued": true,
+          "range": "Experimenter",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "acquisition_date",
+          "description": "The date of the acquisition",
+          "range": "date",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "processed",
+          "description": "Has the dataset been processed by microscope-metrics",
+          "ifabsent": "False",
+          "range": "boolean",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "processing_date",
+          "description": "The date of the processing by microscope-metrics",
+          "range": "date",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "processing_log",
+          "description": "The log of the processing by microscope-metrics",
+          "range": "string",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "comment",
+          "description": "A human readable comment about the dataset",
+          "multivalued": true,
+          "range": "Comment",
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsDataset",
+      "tree_root": true,
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "MetricsInput",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsInput",
+      "description": "An abstract class for analysis inputs",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "abstract": true,
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsInput",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "MetricsOutput",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsOutput",
+      "description": "An abstract class for analysis outputs",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "abstract": true,
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/MetricsOutput",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Image",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Image",
+      "description": "A base object for all microscope-metrics images",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "is_a": "MetricsObject",
+      "abstract": true,
+      "slots": [
+        "name",
+        "description",
+        "image_url",
+        "source_image_url"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Image",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "ImageAsNumpy",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ImageAsNumpy",
+      "description": "An image as a numpy array in TZYXC order",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "is_a": "Image",
+      "slots": [
+        "name",
+        "description",
+        "image_url",
+        "source_image_url",
+        "imageAsNumpy__data"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "data",
+          "range": "MetaObject",
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ImageAsNumpy",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "ImageInline",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ImageInline",
+      "description": "A base object for all microscope-metrics images that are stored as arrays in line",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "is_a": "Image",
+      "abstract": true,
+      "slots": [
+        "name",
+        "description",
+        "image_url",
+        "source_image_url"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ImageInline",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "ImageMask",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ImageMask",
+      "description": "A base object for all microscope-metrics masks",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "is_a": "ImageInline",
+      "slots": [
+        "name",
+        "description",
+        "image_url",
+        "source_image_url",
+        "imageMask__y",
+        "imageMask__x",
+        "imageMask__data"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "y",
+          "implements": [
+            "linkml:axis1"
+          ],
+          "range": "PixelSeries",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "x",
+          "implements": [
+            "linkml:axis0"
+          ],
+          "range": "PixelSeries",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "data",
+          "implements": [
+            "linkml:elements"
+          ],
+          "multivalued": true,
+          "range": "boolean",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ImageMask",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Image2D",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Image2D",
+      "implements": [
+        "linkml:TwoDimensionalArray",
+        "linkml:RowOrderedArray"
+      ],
+      "description": "A 2D image in YX order",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "is_a": "ImageInline",
+      "slots": [
+        "name",
+        "description",
+        "image_url",
+        "source_image_url",
+        "image2D__y",
+        "image2D__x",
+        "image2D__data"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "y",
+          "implements": [
+            "linkml:axis0"
+          ],
+          "range": "PixelSeries",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "x",
+          "implements": [
+            "linkml:axis1"
+          ],
+          "range": "PixelSeries",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "data",
+          "implements": [
+            "linkml:elements"
+          ],
+          "multivalued": true,
+          "range": "float",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Image2D",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Image5D",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Image5D",
+      "implements": [
+        "linkml:FiveDimensionalArray",
+        "linkml:RowOrderedArray"
+      ],
+      "description": "A 5D image in TZYXC order",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "is_a": "ImageInline",
+      "slots": [
+        "name",
+        "description",
+        "image_url",
+        "source_image_url",
+        "image5D__t",
+        "image5D__z",
+        "image5D__y",
+        "image5D__x",
+        "image5D__c",
+        "image5D__data"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "t",
+          "implements": [
+            "linkml:axis0"
+          ],
+          "range": "TimeSeries",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "z",
+          "implements": [
+            "linkml:axis1"
+          ],
+          "range": "PixelSeries",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "y",
+          "implements": [
+            "linkml:axis2"
+          ],
+          "range": "PixelSeries",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "x",
+          "implements": [
+            "linkml:axis3"
+          ],
+          "range": "PixelSeries",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "c",
+          "implements": [
+            "linkml:axis4"
+          ],
+          "range": "ChannelSeries",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "data",
+          "implements": [
+            "linkml:elements"
+          ],
+          "multivalued": true,
+          "range": "float",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Image5D",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "PixelSeries",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/PixelSeries",
+      "implements": [
+        "linkml:OneDimensionalSeries"
+      ],
+      "description": "A series whose values represent pixels or voxels or a single integer defining the shape of the dimension",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slots": [
+        "pixelSeries__values"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "values",
+          "implements": [
+            "linkml:elements"
+          ],
+          "multivalued": true,
+          "range": "integer",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/PixelSeries",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "ChannelSeries",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ChannelSeries",
+      "implements": [
+        "linkml:OneDimensionalSeries"
+      ],
+      "description": "A series whose values represent channel",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slots": [
+        "channelSeries__values"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "values",
+          "implements": [
+            "linkml:elements"
+          ],
+          "multivalued": true,
+          "range": "integer",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/ChannelSeries",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "TimeSeries",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/TimeSeries",
+      "implements": [
+        "linkml:OneDimensionalSeries"
+      ],
+      "description": "A series whose values represent time",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slots": [
+        "timeSeries__values"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "values",
+          "implements": [
+            "linkml:elements"
+          ],
+          "multivalued": true,
+          "range": "float",
+          "required": true,
+          "unit": {
+            "ucum_code": "s",
+            "@type": "UnitOfMeasure"
+          },
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/TimeSeries",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Roi",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Roi",
+      "description": "A ROI. Collection of shapes and an image to which they are applied",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slots": [
+        "roi__label",
+        "roi__description",
+        "roi__image",
+        "roi__shapes"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "label",
+          "description": "The label of the ROI",
+          "range": "string",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "description",
+          "description": "A description of the ROI",
+          "range": "string",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "image",
+          "description": "The image to which the ROI is applied",
+          "multivalued": true,
+          "range": "Image",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "shapes",
+          "multivalued": true,
+          "range": "Shape",
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Roi",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Shape",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Shape",
+      "description": "A shape",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "abstract": true,
+      "slots": [
+        "shape__label",
+        "shape__z",
+        "shape__c",
+        "shape__t",
+        "shape__fill_color",
+        "shape__stroke_color",
+        "shape__stroke_width"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "label",
+          "description": "The label of the shape",
+          "range": "string",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "z",
+          "description": "The z coordinate of the shape",
+          "range": "float",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "c",
+          "description": "The c coordinate of the shape",
+          "range": "integer",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "t",
+          "description": "The t coordinate of the shape",
+          "range": "integer",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "fill_color",
+          "description": "The fill color of the shape",
+          "range": "Color",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "stroke_color",
+          "description": "The stroke color of the shape",
+          "range": "Color",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "stroke_width",
+          "description": "The stroke width of the shape",
+          "ifabsent": "int(1)",
+          "range": "integer",
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Shape",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Point",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Point",
+      "description": "A point as defined by x and y coordinates",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "is_a": "Shape",
+      "slots": [
+        "shape__label",
+        "shape__z",
+        "shape__c",
+        "shape__t",
+        "shape__fill_color",
+        "shape__stroke_color",
+        "shape__stroke_width",
+        "point__y",
+        "point__x"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "y",
+          "description": "The y coordinate of the point",
+          "range": "float",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "x",
+          "description": "The x coordinate of the point",
+          "range": "float",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Point",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Line",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Line",
+      "description": "A line as defined by x1, y1, x2, y2 coordinates",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "is_a": "Shape",
+      "slots": [
+        "shape__label",
+        "shape__z",
+        "shape__c",
+        "shape__t",
+        "shape__fill_color",
+        "shape__stroke_color",
+        "shape__stroke_width",
+        "line__x1",
+        "line__y1",
+        "line__x2",
+        "line__y2"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "x1",
+          "description": "The x coordinate of the first point of the line",
+          "range": "float",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "y1",
+          "description": "The y coordinate of the first point of the line",
+          "range": "float",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "x2",
+          "description": "The x coordinate of the second point of the line",
+          "range": "float",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "y2",
+          "description": "The y coordinate of the second point of the line",
+          "range": "float",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Line",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Rectangle",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Rectangle",
+      "description": "A rectangle as defined by x, y coordinates and width, height",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "is_a": "Shape",
+      "slots": [
+        "shape__label",
+        "shape__z",
+        "shape__c",
+        "shape__t",
+        "shape__fill_color",
+        "shape__stroke_color",
+        "shape__stroke_width",
+        "rectangle__x",
+        "rectangle__y",
+        "rectangle__w",
+        "rectangle__h"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "x",
+          "description": "The x coordinate of the top left corner of the rectangle",
+          "range": "float",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "y",
+          "description": "The y coordinate of the top left corner of the rectangle",
+          "range": "float",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "w",
+          "description": "The width of the rectangle",
+          "range": "float",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "h",
+          "description": "The height of the rectangle",
+          "range": "float",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Rectangle",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Ellipse",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Ellipse",
+      "description": "An ellipse as defined by x, y coordinates and x and y radii",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "is_a": "Shape",
+      "slots": [
+        "shape__label",
+        "shape__z",
+        "shape__c",
+        "shape__t",
+        "shape__fill_color",
+        "shape__stroke_color",
+        "shape__stroke_width",
+        "ellipse__x",
+        "ellipse__y",
+        "ellipse__x_rad",
+        "ellipse__y_rad"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "x",
+          "description": "The x coordinate of the bounding box of the ellipse",
+          "range": "float",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "y",
+          "description": "The y coordinate of the bounding box of the ellipse",
+          "range": "float",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "x_rad",
+          "description": "The x radius of the ellipse",
+          "range": "float",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "y_rad",
+          "description": "The y radius of the ellipse",
+          "range": "float",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Ellipse",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Polygon",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Polygon",
+      "description": "A polygon as defined by a series of vertexes and a boolean to indicate if closed or not",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "is_a": "Shape",
+      "slots": [
+        "shape__label",
+        "shape__z",
+        "shape__c",
+        "shape__t",
+        "shape__fill_color",
+        "shape__stroke_color",
+        "shape__stroke_width",
+        "polygon__vertexes",
+        "polygon__is_open"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "vertexes",
+          "description": "A list of vertexes defining the polygon",
+          "multivalued": true,
+          "range": "Vertex",
+          "required": true,
+          "inlined": true,
+          "inlined_as_list": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "is_open",
+          "description": "Is the polygon open. By default, it is closed (false)",
+          "ifabsent": "False",
+          "range": "boolean",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Polygon",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Vertex",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Vertex",
+      "description": "A vertex as defined by x and y coordinates",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slots": [
+        "vertex__x",
+        "vertex__y"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "x",
+          "description": "The x coordinate of the vertex",
+          "range": "float",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "y",
+          "description": "The y coordinate of the vertex",
+          "range": "float",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Vertex",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Mask",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Mask",
+      "description": "A mask as defined by a boolean image",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "is_a": "Shape",
+      "slots": [
+        "shape__label",
+        "shape__z",
+        "shape__c",
+        "shape__t",
+        "shape__fill_color",
+        "shape__stroke_color",
+        "shape__stroke_width",
+        "mask__y",
+        "mask__x",
+        "mask__mask"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "y",
+          "description": "The y coordinate of the top left corner of the mask",
+          "ifabsent": "int(0)",
+          "range": "integer",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "x",
+          "description": "The x coordinate of the top left corner of the mask",
+          "ifabsent": "int(0)",
+          "range": "integer",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "mask",
+          "description": "The mask image",
+          "range": "ImageMask",
+          "inlined": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Mask",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Color",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Color",
+      "description": "A color as defined by RGB values and an optional alpha value",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slots": [
+        "color__r",
+        "color__g",
+        "color__b",
+        "color__alpha"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "r",
+          "description": "The red value of the color",
+          "ifabsent": "int(128)",
+          "range": "integer",
+          "required": true,
+          "minimum_value": 0,
+          "maximum_value": 255,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "g",
+          "description": "The green value of the color",
+          "ifabsent": "int(128)",
+          "range": "integer",
+          "required": true,
+          "minimum_value": 0,
+          "maximum_value": 255,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "b",
+          "description": "The blue value of the color",
+          "ifabsent": "int(128)",
+          "range": "integer",
+          "required": true,
+          "minimum_value": 0,
+          "maximum_value": 255,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "alpha",
+          "description": "The alpha value of the color (optional)",
+          "ifabsent": "int(255)",
+          "range": "integer",
+          "minimum_value": 0,
+          "maximum_value": 255,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Color",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "KeyValues",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/KeyValues",
+      "description": "A collection of key-value pairs",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "abstract": true,
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/KeyValues",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Tag",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Tag",
+      "description": "A tag",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "abstract": true,
+      "slots": [
+        "tag__id",
+        "tag__text",
+        "tag__description"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "id",
+          "description": "The id of the tag",
+          "identifier": true,
+          "range": "integer",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "text",
+          "description": "The text of the tag",
+          "range": "string",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "description",
+          "description": "The description of the tag",
+          "range": "string",
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Tag",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Comment",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Comment",
+      "description": "A comment",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slots": [
+        "comment__text"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "text",
+          "description": "The text of the comment",
+          "range": "string",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Comment",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Table",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Table",
+      "description": "A table",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "is_a": "MetricsObject",
+      "abstract": true,
+      "slots": [
+        "name",
+        "description"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Table",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "TableAsPandasDF",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/TableAsPandasDF",
+      "description": "A table as a Pandas DataFrame",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "is_a": "Table",
+      "slots": [
+        "name",
+        "description",
+        "tableAsPandasDF__df"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "df",
+          "description": "A Pandas DataFrame object",
+          "range": "MetaObject",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/TableAsPandasDF",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "TableAsDict",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/TableAsDict",
+      "description": "A table inlined in a metrics dataset",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "is_a": "Table",
+      "abstract": true,
+      "slots": [
+        "name",
+        "description",
+        "tableAsDict__columns"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "columns",
+          "description": "A list of the columns of the table",
+          "multivalued": true,
+          "range": "Column",
+          "required": true,
+          "inlined": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/TableAsDict",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Column",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Column",
+      "description": "A column",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema",
+      "slots": [
+        "column__name",
+        "column__values"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "name",
+          "description": "The name of the column",
+          "identifier": true,
+          "range": "string",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "values",
+          "description": "The values of the column",
+          "multivalued": true,
+          "range": "string",
+          "required": true,
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/Column",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "FieldIlluminationDataset",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/FieldIlluminationDataset",
+      "description": "A field illumination dataset",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "is_a": "MetricsDataset",
+      "slots": [
+        "name",
+        "description",
+        "metricsDataset__sample",
+        "metricsDataset__experimenter",
+        "metricsDataset__acquisition_date",
+        "metricsDataset__processed",
+        "metricsDataset__processing_date",
+        "metricsDataset__processing_log",
+        "metricsDataset__comment",
+        "fieldIlluminationDataset__input",
+        "fieldIlluminationDataset__output"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "input",
+          "range": "FieldIlluminationInput",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "output",
+          "range": "FieldIlluminationOutput",
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/FieldIlluminationDataset",
+      "rules": [
+        {
+          "preconditions": {
+            "slot_conditions": [
+              {
+                "name": "processed",
+                "equals_number": 1,
+                "@type": "SlotDefinition"
+              }
+            ],
+            "@type": "AnonymousClassExpression"
+          },
+          "postconditions": {
+            "slot_conditions": [
+              {
+                "name": "output",
+                "required": true,
+                "@type": "SlotDefinition"
+              }
+            ],
+            "@type": "AnonymousClassExpression"
+          },
+          "@type": "ClassRule"
+        }
+      ],
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "FieldIlluminationInput",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/FieldIlluminationInput",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "is_a": "MetricsInput",
+      "slots": [
+        "field_illumination_image",
+        "bit_depth",
+        "FieldIlluminationInput_saturation_threshold",
+        "center_threshold",
+        "corner_fraction",
+        "sigma",
+        "intensity_map_size"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/FieldIlluminationInput",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "FieldIlluminationOutput",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/FieldIlluminationOutput",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "is_a": "MetricsOutput",
+      "slots": [
+        "fieldIlluminationOutput__key_values",
+        "fieldIlluminationOutput__intensity_profiles",
+        "fieldIlluminationOutput__intensity_map",
+        "fieldIlluminationOutput__profile_rois",
+        "fieldIlluminationOutput__corner_rois",
+        "fieldIlluminationOutput__center_of_illumination"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "key_values",
+          "description": "Key-Value pairs containing the Key measurements for the field illumination analysis",
+          "range": "FieldIlluminationKeyValues",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "intensity_profiles",
+          "description": "Intensity profiles for the field illumination analysis in the different directions",
+          "range": "TableAsDict",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "intensity_map",
+          "description": "Intensity map of the field illumination",
+          "range": "Image5D",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "profile_rois",
+          "description": "ROIs used to compute the intensity profiles",
+          "range": "Roi",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "corner_rois",
+          "description": "ROIs used to compute the corner intensities",
+          "range": "Roi",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "center_of_illumination",
+          "description": "Point ROIs marking the center of illumination",
+          "range": "Roi",
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/FieldIlluminationOutput",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "FieldIlluminationKeyValues",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/FieldIlluminationKeyValues",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema",
+      "is_a": "KeyValues",
+      "slots": [
+        "channel",
+        "nb_pixels",
+        "center_of_mass_x",
+        "center_of_mass_y",
+        "max_intensity",
+        "max_intensity_pos_x",
+        "max_intensity_pos_y",
+        "top_left_intensity_mean",
+        "top_left_intensity_ratio",
+        "top_center_intensity_mean",
+        "top_center_intensity_ratio",
+        "top_right_intensity_mean",
+        "top_right_intensity_ratio",
+        "middle_left_intensity_mean",
+        "middle_left_intensity_ratio",
+        "middle_center_intensity_mean",
+        "middle_center_intensity_ratio",
+        "middle_right_intensity_mean",
+        "middle_right_intensity_ratio",
+        "bottom_left_intensity_mean",
+        "bottom_left_intensity_ratio",
+        "bottom_center_intensity_mean",
+        "bottom_center_intensity_ratio",
+        "bottom_right_intensity_mean",
+        "bottom_right_intensity_ratio",
+        "decile_0",
+        "decile_1",
+        "decile_2",
+        "decile_3",
+        "decile_4",
+        "decile_5",
+        "decile_6",
+        "decile_7",
+        "decile_8",
+        "decile_9"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/FieldIlluminationKeyValues",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "ArgolightBDataset",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightBDataset",
+      "description": "An Argolight sample pattern B dataset",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "is_a": "MetricsDataset",
+      "slots": [
+        "name",
+        "description",
+        "metricsDataset__sample",
+        "metricsDataset__experimenter",
+        "metricsDataset__acquisition_date",
+        "metricsDataset__processed",
+        "metricsDataset__processing_date",
+        "metricsDataset__processing_log",
+        "metricsDataset__comment",
+        "argolightBDataset__input",
+        "argolightBDataset__output"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "input",
+          "description": "An input element for the analysis",
+          "range": "ArgolightBInput",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "output",
+          "description": "An output element from the analysis",
+          "range": "ArgolightBOutput",
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightBDataset",
+      "rules": [
+        {
+          "preconditions": {
+            "slot_conditions": [
+              {
+                "name": "processed",
+                "equals_number": 1,
+                "@type": "SlotDefinition"
+              }
+            ],
+            "@type": "AnonymousClassExpression"
+          },
+          "postconditions": {
+            "slot_conditions": [
+              {
+                "name": "output",
+                "required": true,
+                "@type": "SlotDefinition"
+              }
+            ],
+            "@type": "AnonymousClassExpression"
+          },
+          "@type": "ClassRule"
+        }
+      ],
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "ArgolightBInput",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightBInput",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "is_a": "MetricsInput",
+      "slots": [
+        "argolight_b_image",
+        "bit_depth",
+        "ArgolightBInput_saturation_threshold",
+        "spots_distance",
+        "sigma_z",
+        "sigma_y",
+        "sigma_x",
+        "lower_threshold_correction_factors",
+        "upper_threshold_correction_factors",
+        "remove_center_cross"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightBInput",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "ArgolightBOutput",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightBOutput",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "is_a": "MetricsOutput",
+      "slots": [
+        "argolightBOutput__spots_labels_image",
+        "argolightBOutput__spots_centroids",
+        "argolightBOutput__intensity_measurements",
+        "argolightBOutput__distance_measurements",
+        "argolightBOutput__spots_properties",
+        "argolightBOutput__spots_distances"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "spots_labels_image",
+          "description": "Labels image of the argolight segmented spots provided as a 5D numpy array in the order TZYXC. Image intensities correspond to ROI labels",
+          "range": "ImageAsNumpy",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "spots_centroids",
+          "description": "Centroids of the argolight spots provided as a list of ROIs, one per channel",
+          "multivalued": true,
+          "range": "Roi",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "intensity_measurements",
+          "description": "Key Intensity Measurements on Argolight spots",
+          "range": "ArgolightBIntensityKeyValues",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "distance_measurements",
+          "description": "Key Distance Measurements on Argolight spots",
+          "range": "ArgolightBDistanceKeyValues",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "spots_properties",
+          "description": "Table of properties of the argolight spots",
+          "range": "TableAsDict",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "spots_distances",
+          "description": "Table of distances between argolight spots",
+          "range": "TableAsDict",
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightBOutput",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "ArgolightBIntensityKeyValues",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightBIntensityKeyValues",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "is_a": "KeyValues",
+      "slots": [
+        "channel",
+        "nr_of_spots",
+        "intensity_max_spot",
+        "intensity_max_spot_roi",
+        "intensity_min_spot",
+        "intensity_min_spot_roi",
+        "mean_intensity",
+        "median_intensity",
+        "std_mean_intensity",
+        "mad_mean_intensity",
+        "min_max_intensity_ratio"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightBIntensityKeyValues",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "ArgolightBDistanceKeyValues",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightBDistanceKeyValues",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "is_a": "KeyValues",
+      "slots": [
+        "channel_A",
+        "channel_B",
+        "mean_3d_dist",
+        "median_3d_dist",
+        "std_3d_dist",
+        "mad_3d_dist",
+        "mean_z_dist",
+        "median_z_dist",
+        "std_z_dist",
+        "mad_z_dist"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightBDistanceKeyValues",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "ArgolightEDataset",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightEDataset",
+      "description": "An Argolight sample pattern E dataset.\nIt contains resolution data on the axis indicated:\n- axis 1 = Y resolution = lines along X axis\n- axis 2 = X resolution = lines along Y axis",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "is_a": "MetricsDataset",
+      "slots": [
+        "name",
+        "description",
+        "metricsDataset__sample",
+        "metricsDataset__experimenter",
+        "metricsDataset__acquisition_date",
+        "metricsDataset__processed",
+        "metricsDataset__processing_date",
+        "metricsDataset__processing_log",
+        "metricsDataset__comment",
+        "argolightEDataset__input",
+        "argolightEDataset__output"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "input",
+          "description": "An input element for the analysis",
+          "range": "ArgolightEInput",
+          "required": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "output",
+          "description": "An output element from the analysis",
+          "range": "ArgolightEOutput",
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightEDataset",
+      "rules": [
+        {
+          "preconditions": {
+            "slot_conditions": [
+              {
+                "name": "processed",
+                "equals_number": 1,
+                "@type": "SlotDefinition"
+              }
+            ],
+            "@type": "AnonymousClassExpression"
+          },
+          "postconditions": {
+            "slot_conditions": [
+              {
+                "name": "output",
+                "required": true,
+                "@type": "SlotDefinition"
+              }
+            ],
+            "@type": "AnonymousClassExpression"
+          },
+          "@type": "ClassRule"
+        }
+      ],
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "ArgolightEInput",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightEInput",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "is_a": "MetricsInput",
+      "slots": [
+        "argolight_e_image",
+        "bit_depth",
+        "ArgolightEInput_saturation_threshold",
+        "axis",
+        "measured_band",
+        "prominence_threshold"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightEInput",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "ArgolightEOutput",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightEOutput",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "is_a": "MetricsOutput",
+      "slots": [
+        "argolightEOutput__peaks_rois",
+        "argolightEOutput__key_measurements",
+        "argolightEOutput__intensity_profiles"
+      ],
+      "slot_usage": {},
+      "attributes": [
+        {
+          "name": "peaks_rois",
+          "description": "ROIs of the peaks found in the argolight images",
+          "multivalued": true,
+          "range": "Roi",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "key_measurements",
+          "description": "Key Measurements on Argolight E images",
+          "range": "ArgolightEKeyValues",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "intensity_profiles",
+          "description": "Intensity profiles of the argolight lines provided as tables. One table per channel",
+          "range": "TableAsDict",
+          "@type": "SlotDefinition"
+        }
+      ],
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightEOutput",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "ArgolightEKeyValues",
+      "definition_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightEKeyValues",
+      "from_schema": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema",
+      "is_a": "KeyValues",
+      "slots": [
+        "channel",
+        "focus_slice",
+        "rayleigh_resolution",
+        "peak_position_A",
+        "peak_position_B",
+        "peak_height_A",
+        "peak_height_B",
+        "peak_prominence_A",
+        "peak_prominence_B"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/ArgolightEKeyValues",
+      "@type": "ClassDefinition"
+    }
+  ],
+  "metamodel_version": "1.7.0",
+  "source_file": "microscopemetrics_schema.yaml",
+  "source_file_date": "2023-09-07T15:00:09",
+  "source_file_size": 758,
+  "generation_date": "2023-09-07T16:24:15",
+  "@type": "SchemaDefinition",
+  "@context": [
+    "project/jsonld/microscopemetrics_schema.context.jsonld",
+    "https://w3id.org/linkml/types.context.jsonld",
+    "core_schema.context.jsonld",
+    "samples/field_illumination_schema.context.jsonld",
+    "samples/argolight_schema.context.jsonld",
+    {
+      "@base": "https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/"
+    }
+  ]
+}

@@ -1,0 +1,484 @@
+type ArgolightBDataset
+  {
+    name: String
+    description: String
+    sample: Sample
+    experimenter: [Experimenter]
+    acquisitionDate: Date
+    processed: Boolean!
+    processingDate: Date
+    processingLog: String
+    comment: [Comment]
+    input: ArgolightBInput!
+    output: ArgolightBOutput
+  }
+
+type ArgolightBDistanceKeyValues
+  {
+    channelA: [Integer]
+    channelB: [Integer]
+    mean3dDist: [Float]
+    median3dDist: [Float]
+    std3dDist: [Float]
+    mad3dDist: [Float]
+    meanZDist: [Float]
+    medianZDist: [Float]
+    stdZDist: [Float]
+    madZDist: [Float]
+  }
+
+type ArgolightBInput
+  {
+    argolightBImage: ImageAsNumpy!
+    bitDepth: Integer
+    saturationThreshold: Float!
+    spotsDistance: Float!
+    sigmaZ: Float!
+    sigmaY: Float!
+    sigmaX: Float!
+    lowerThresholdCorrectionFactors: [Float]
+    upperThresholdCorrectionFactors: [Float]
+    removeCenterCross: Boolean
+  }
+
+type ArgolightBIntensityKeyValues
+  {
+    channel: [Integer]
+    nrOfSpots: [Integer]
+    intensityMaxSpot: [Float]
+    intensityMaxSpotRoi: [Integer]
+    intensityMinSpot: [Float]
+    intensityMinSpotRoi: [Integer]
+    meanIntensity: [Float]
+    medianIntensity: [Float]
+    stdMeanIntensity: [Float]
+    madMeanIntensity: [Float]
+    minMaxIntensityRatio: [Float]
+  }
+
+type ArgolightBOutput
+  {
+    spotsLabelsImage: ImageAsNumpy
+    spotsCentroids: [Roi]
+    intensityMeasurements: ArgolightBIntensityKeyValues
+    distanceMeasurements: ArgolightBDistanceKeyValues
+    spotsProperties: TableAsDict
+    spotsDistances: TableAsDict
+  }
+
+type ArgolightEDataset
+  {
+    name: String
+    description: String
+    sample: Sample
+    experimenter: [Experimenter]
+    acquisitionDate: Date
+    processed: Boolean!
+    processingDate: Date
+    processingLog: String
+    comment: [Comment]
+    input: ArgolightEInput!
+    output: ArgolightEOutput
+  }
+
+type ArgolightEInput
+  {
+    argolightEImage: ImageAsNumpy!
+    bitDepth: Integer
+    saturationThreshold: Float!
+    axis: Integer!
+    measuredBand: Float!
+    prominenceThreshold: Float!
+  }
+
+type ArgolightEKeyValues
+  {
+    channel: [Integer]
+    focusSlice: [Integer]
+    rayleighResolution: [Float]
+    peakPositionA: [Float]
+    peakPositionB: [Float]
+    peakHeightA: [Float]
+    peakHeightB: [Float]
+    peakProminenceA: [Float]
+    peakProminenceB: [Float]
+  }
+
+type ArgolightEOutput
+  {
+    peaksRois: [Roi]
+    keyMeasurements: ArgolightEKeyValues
+    intensityProfiles: TableAsDict
+  }
+
+type ChannelSeries
+  {
+    values: [Integer]!
+  }
+
+type Color
+  {
+    r: Integer!
+    g: Integer!
+    b: Integer!
+    alpha: Integer
+  }
+
+type Column
+  {
+    name: String!
+    values: [String]!
+  }
+
+type Comment
+  {
+    text: String!
+  }
+
+type Ellipse
+  {
+    label: String
+    z: Float
+    c: Integer
+    t: Integer
+    fillColor: Color
+    strokeColor: Color
+    strokeWidth: Integer
+    x: Float!
+    y: Float!
+    xRad: Float!
+    yRad: Float!
+  }
+
+type Experimenter
+  {
+    name: String!
+    orcid: String!
+  }
+
+type FieldIlluminationDataset
+  {
+    name: String
+    description: String
+    sample: Sample
+    experimenter: [Experimenter]
+    acquisitionDate: Date
+    processed: Boolean!
+    processingDate: Date
+    processingLog: String
+    comment: [Comment]
+    input: FieldIlluminationInput!
+    output: FieldIlluminationOutput
+  }
+
+type FieldIlluminationInput
+  {
+    fieldIlluminationImage: ImageAsNumpy!
+    bitDepth: Integer
+    saturationThreshold: Float!
+    centerThreshold: Float!
+    cornerFraction: Float!
+    sigma: Float!
+    intensityMapSize: Integer!
+  }
+
+type FieldIlluminationKeyValues
+  {
+    channel: [Integer]
+    nbPixels: [Integer]
+    centerOfMassX: [Float]
+    centerOfMassY: [Float]
+    maxIntensity: [Float]
+    maxIntensityPosX: [Float]
+    maxIntensityPosY: [Float]
+    topLeftIntensityMean: [Float]
+    topLeftIntensityRatio: [Float]
+    topCenterIntensityMean: [Float]
+    topCenterIntensityRatio: [Float]
+    topRightIntensityMean: [Float]
+    topRightIntensityRatio: [Float]
+    middleLeftIntensityMean: [Float]
+    middleLeftIntensityRatio: [Float]
+    middleCenterIntensityMean: [Float]
+    middleCenterIntensityRatio: [Float]
+    middleRightIntensityMean: [Float]
+    middleRightIntensityRatio: [Float]
+    bottomLeftIntensityMean: [Float]
+    bottomLeftIntensityRatio: [Float]
+    bottomCenterIntensityMean: [Float]
+    bottomCenterIntensityRatio: [Float]
+    bottomRightIntensityMean: [Float]
+    bottomRightIntensityRatio: [Float]
+    decile0: [Float]
+    decile1: [Float]
+    decile2: [Float]
+    decile3: [Float]
+    decile4: [Float]
+    decile5: [Float]
+    decile6: [Float]
+    decile7: [Float]
+    decile8: [Float]
+    decile9: [Float]
+  }
+
+type FieldIlluminationOutput
+  {
+    keyValues: FieldIlluminationKeyValues
+    intensityProfiles: TableAsDict
+    intensityMap: Image5D
+    profileRois: Roi
+    cornerRois: Roi
+    centerOfIllumination: Roi
+  }
+
+interface Image
+  {
+    name: String
+    description: String
+    imageUrl: String!
+    sourceImageUrl: [String]
+  }
+
+type Image2D
+  {
+    name: String
+    description: String
+    imageUrl: String!
+    sourceImageUrl: [String]
+    y: PixelSeries!
+    x: PixelSeries!
+    data: [Float]!
+  }
+
+type Image5D
+  {
+    name: String
+    description: String
+    imageUrl: String!
+    sourceImageUrl: [String]
+    t: TimeSeries!
+    z: PixelSeries!
+    y: PixelSeries!
+    x: PixelSeries!
+    c: ChannelSeries!
+    data: [Float]!
+  }
+
+type ImageAsNumpy
+  {
+    name: String
+    description: String
+    imageUrl: String!
+    sourceImageUrl: [String]
+    data: MetaObject
+  }
+
+interface ImageInline
+  {
+    name: String
+    description: String
+    imageUrl: String!
+    sourceImageUrl: [String]
+  }
+
+type ImageMask
+  {
+    name: String
+    description: String
+    imageUrl: String!
+    sourceImageUrl: [String]
+    y: PixelSeries!
+    x: PixelSeries!
+    data: [Boolean]!
+  }
+
+interface KeyValues
+  {
+  }
+
+type Line
+  {
+    label: String
+    z: Float
+    c: Integer
+    t: Integer
+    fillColor: Color
+    strokeColor: Color
+    strokeWidth: Integer
+    x1: Float!
+    y1: Float!
+    x2: Float!
+    y2: Float!
+  }
+
+type Mask
+  {
+    label: String
+    z: Float
+    c: Integer
+    t: Integer
+    fillColor: Color
+    strokeColor: Color
+    strokeWidth: Integer
+    y: Integer!
+    x: Integer!
+    mask: ImageMask
+  }
+
+type MetaObject
+  {
+  }
+
+type MetricsDataset
+  {
+    name: String
+    description: String
+    sample: Sample
+    experimenter: [Experimenter]
+    acquisitionDate: Date
+    processed: Boolean!
+    processingDate: Date
+    processingLog: String
+    comment: [Comment]
+  }
+
+interface MetricsInput
+  {
+  }
+
+interface MetricsObject
+  {
+    name: String
+    description: String
+  }
+
+interface MetricsOutput
+  {
+  }
+
+interface NamedObject
+  {
+    name: String
+    description: String
+  }
+
+type PixelSeries
+  {
+    values: [Integer]!
+  }
+
+type Point
+  {
+    label: String
+    z: Float
+    c: Integer
+    t: Integer
+    fillColor: Color
+    strokeColor: Color
+    strokeWidth: Integer
+    y: Float!
+    x: Float!
+  }
+
+type Polygon
+  {
+    label: String
+    z: Float
+    c: Integer
+    t: Integer
+    fillColor: Color
+    strokeColor: Color
+    strokeWidth: Integer
+    vertexes: [Vertex]!
+    isOpen: Boolean!
+  }
+
+type Protocol
+  {
+    name: String
+    description: String
+    version: String!
+    authors: [Experimenter]
+    url: String!
+  }
+
+type Rectangle
+  {
+    label: String
+    z: Float
+    c: Integer
+    t: Integer
+    fillColor: Color
+    strokeColor: Color
+    strokeWidth: Integer
+    x: Float!
+    y: Float!
+    w: Float!
+    h: Float!
+  }
+
+type Roi
+  {
+    label: String
+    description: String
+    image: [Image]
+    shapes: [Shape]
+  }
+
+type Sample
+  {
+    name: String
+    description: String
+    type: String!
+    protocol: Protocol!
+  }
+
+interface Shape
+  {
+    label: String
+    z: Float
+    c: Integer
+    t: Integer
+    fillColor: Color
+    strokeColor: Color
+    strokeWidth: Integer
+  }
+
+interface Table
+  {
+    name: String
+    description: String
+  }
+
+interface TableAsDict
+  {
+    name: String
+    description: String
+    columns: [Column]!
+  }
+
+type TableAsPandasDF
+  {
+    name: String
+    description: String
+    df: MetaObject!
+  }
+
+interface Tag
+  {
+    id: Integer!
+    text: String!
+    description: String
+  }
+
+type TimeSeries
+  {
+    values: [Float]!
+  }
+
+type Vertex
+  {
+    x: Float!
+    y: Float!
+  }
+

@@ -1,0 +1,1724 @@
+@prefix linkml: <https://w3id.org/linkml/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Ellipse> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "An ellipse as defined by x, y coordinates and x and y radii" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Color> ;
+            sh:description "The stroke color of the shape" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 9 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:stroke_color> ],
+        [ sh:description "The x coordinate of the bounding box of the ellipse" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:x> ],
+        [ sh:description "The y coordinate of the bounding box of the ellipse" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:y> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The label of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:label> ],
+        [ sh:description "The z coordinate of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 5 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:z> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The t coordinate of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 7 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:t> ],
+        [ sh:description "The x radius of the ellipse" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:x_rad> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Color> ;
+            sh:description "The fill color of the shape" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 8 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:fill_color> ],
+        [ sh:description "The y radius of the ellipse" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:y_rad> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The c coordinate of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 6 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:c> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The stroke width of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 10 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:stroke_width> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Ellipse> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Image2D> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A 2D image in YX order" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "A list of URLs linking to the images that were used as a source" ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:source_image_url> ],
+        [ sh:datatype xsd:string ;
+            sh:description "A description of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 6 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:description> ],
+        [ sh:datatype xsd:string ;
+            sh:description "An URL linking to the image" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:image_url> ],
+        [ sh:minCount 1 ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:data> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:PixelSeries> ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:x> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:PixelSeries> ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:y> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The name of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 5 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:name> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Image2D> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:ImageInline> a sh:NodeShape ;
+    sh:closed false ;
+    sh:description "A base object for all microscope-metrics images that are stored as arrays in line" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "A list of URLs linking to the images that were used as a source" ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:source_image_url> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The name of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:name> ],
+        [ sh:datatype xsd:string ;
+            sh:description "An URL linking to the image" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:image_url> ],
+        [ sh:datatype xsd:string ;
+            sh:description "A description of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:description> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:ImageInline> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:KeyValues> a sh:NodeShape ;
+    sh:closed false ;
+    sh:description "A collection of key-value pairs" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:KeyValues> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Line> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A line as defined by x1, y1, x2, y2 coordinates" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The label of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:label> ],
+        [ sh:description "The y coordinate of the first point of the line" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:y1> ],
+        [ sh:description "The y coordinate of the second point of the line" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:y2> ],
+        [ sh:description "The x coordinate of the first point of the line" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:x1> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The t coordinate of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 7 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:t> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The c coordinate of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 6 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:c> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Color> ;
+            sh:description "The stroke color of the shape" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 9 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:stroke_color> ],
+        [ sh:description "The x coordinate of the second point of the line" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:x2> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Color> ;
+            sh:description "The fill color of the shape" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 8 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:fill_color> ],
+        [ sh:description "The z coordinate of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 5 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:z> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The stroke width of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 10 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:stroke_width> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Line> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Mask> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A mask as defined by a boolean image" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Color> ;
+            sh:description "The stroke color of the shape" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 8 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:stroke_color> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:ImageMask> ;
+            sh:description "The mask image" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:mask> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The y coordinate of the top left corner of the mask" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:y> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The label of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:label> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Color> ;
+            sh:description "The fill color of the shape" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 7 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:fill_color> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The c coordinate of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 5 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:c> ],
+        [ sh:description "The z coordinate of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:z> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The x coordinate of the top left corner of the mask" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:x> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The stroke width of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 9 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:stroke_width> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The t coordinate of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 6 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:t> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Mask> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:MetricsDataset> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A base object on which microscope-metrics runs the analysis" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:date ;
+            sh:description "The date of the processing by microscope-metrics" ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:processing_date> ],
+        [ sh:datatype xsd:date ;
+            sh:description "The date of the acquisition" ;
+            sh:maxCount 1 ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:acquisition_date> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The log of the processing by microscope-metrics" ;
+            sh:maxCount 1 ;
+            sh:order 5 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:processing_log> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Sample> ;
+            sh:description "The sample that was imaged" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:sample> ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Has the dataset been processed by microscope-metrics" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:processed> ],
+        [ sh:datatype xsd:string ;
+            sh:description "A description of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 8 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:description> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Comment> ;
+            sh:description "A human readable comment about the dataset" ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 6 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:comment> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Experimenter> ;
+            sh:description "The experimenter that performed the imaging experiment" ;
+            sh:nodeKind sh:IRI ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:experimenter> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The name of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 7 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:name> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:MetricsDataset> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:MetricsInput> a sh:NodeShape ;
+    sh:closed false ;
+    sh:description "An abstract class for analysis inputs" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:MetricsInput> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:MetricsObject> a sh:NodeShape ;
+    sh:closed false ;
+    sh:description "A base object for all microscope-metrics objects" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The name of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:name> ],
+        [ sh:datatype xsd:string ;
+            sh:description "A description of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:description> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:MetricsObject> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:MetricsOutput> a sh:NodeShape ;
+    sh:closed false ;
+    sh:description "An abstract class for analysis outputs" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:MetricsOutput> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:NamedObject> a sh:NodeShape ;
+    sh:closed false ;
+    sh:description "An object with a name and a description" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "A description of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:description> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The name of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:name> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:NamedObject> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Point> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A point as defined by x and y coordinates" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "The y coordinate of the point" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:y> ],
+        [ sh:description "The x coordinate of the point" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:x> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Color> ;
+            sh:description "The fill color of the shape" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 6 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:fill_color> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The c coordinate of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:c> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The t coordinate of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 5 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:t> ],
+        [ sh:description "The z coordinate of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:z> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Color> ;
+            sh:description "The stroke color of the shape" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 7 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:stroke_color> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The label of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:label> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The stroke width of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 8 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:stroke_width> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Point> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Polygon> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A polygon as defined by a series of vertexes and a boolean to indicate if closed or not" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:boolean ;
+            sh:description "Is the polygon open. By default, it is closed (false)" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:is_open> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The label of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:label> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The t coordinate of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 5 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:t> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Color> ;
+            sh:description "The fill color of the shape" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 6 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:fill_color> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Color> ;
+            sh:description "The stroke color of the shape" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 7 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:stroke_color> ],
+        [ sh:description "The z coordinate of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:z> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The stroke width of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 8 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:stroke_width> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The c coordinate of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:c> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Vertex> ;
+            sh:description "A list of vertexes defining the polygon" ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:vertexes> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Polygon> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Rectangle> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A rectangle as defined by x, y coordinates and width, height" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:integer ;
+            sh:description "The c coordinate of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 6 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:c> ],
+        [ sh:description "The z coordinate of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 5 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:z> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The t coordinate of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 7 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:t> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Color> ;
+            sh:description "The fill color of the shape" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 8 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:fill_color> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The label of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:label> ],
+        [ sh:description "The x coordinate of the top left corner of the rectangle" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:x> ],
+        [ sh:description "The width of the rectangle" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:w> ],
+        [ sh:description "The y coordinate of the top left corner of the rectangle" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:y> ],
+        [ sh:description "The height of the rectangle" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:h> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The stroke width of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 10 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:stroke_width> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Color> ;
+            sh:description "The stroke color of the shape" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 9 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:stroke_color> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Rectangle> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Table> a sh:NodeShape ;
+    sh:closed false ;
+    sh:description "A table" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The name of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:name> ],
+        [ sh:datatype xsd:string ;
+            sh:description "A description of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:description> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Table> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:TableAsPandasDF> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A table as a Pandas DataFrame" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The name of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:name> ],
+        [ sh:datatype xsd:string ;
+            sh:description "A description of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:description> ],
+        [ sh:class linkml:Any ;
+            sh:description "A Pandas DataFrame object" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:df> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:TableAsPandasDF> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Tag> a sh:NodeShape ;
+    sh:closed false ;
+    sh:description "A tag" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The text of the tag" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:text> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The id of the tag" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:id> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The description of the tag" ;
+            sh:maxCount 1 ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:description> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Tag> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightBDataset> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "An Argolight sample pattern B dataset" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightBOutput> ;
+            sh:description "An output element from the analysis" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:output> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Experimenter> ;
+            sh:description "The experimenter that performed the imaging experiment" ;
+            sh:nodeKind sh:IRI ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:experimenter> ],
+        [ sh:datatype xsd:date ;
+            sh:description "The date of the processing by microscope-metrics" ;
+            sh:maxCount 1 ;
+            sh:order 6 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:processing_date> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The name of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 9 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:name> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightBInput> ;
+            sh:description "An input element for the analysis" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:input> ],
+        [ sh:datatype xsd:date ;
+            sh:description "The date of the acquisition" ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:acquisition_date> ],
+        [ sh:datatype xsd:string ;
+            sh:description "A description of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 10 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:description> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The log of the processing by microscope-metrics" ;
+            sh:maxCount 1 ;
+            sh:order 7 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:processing_log> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Sample> ;
+            sh:description "The sample that was imaged" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:sample> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Comment> ;
+            sh:description "A human readable comment about the dataset" ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 8 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:comment> ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Has the dataset been processed by microscope-metrics" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 5 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:processed> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightBDataset> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightEDataset> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description """An Argolight sample pattern E dataset.
+It contains resolution data on the axis indicated:
+- axis 1 = Y resolution = lines along X axis
+- axis 2 = X resolution = lines along Y axis""" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Comment> ;
+            sh:description "A human readable comment about the dataset" ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 8 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:comment> ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Has the dataset been processed by microscope-metrics" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 5 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:processed> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The name of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 9 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:name> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The log of the processing by microscope-metrics" ;
+            sh:maxCount 1 ;
+            sh:order 7 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:processing_log> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightEOutput> ;
+            sh:description "An output element from the analysis" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:output> ],
+        [ sh:datatype xsd:date ;
+            sh:description "The date of the processing by microscope-metrics" ;
+            sh:maxCount 1 ;
+            sh:order 6 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:processing_date> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Experimenter> ;
+            sh:description "The experimenter that performed the imaging experiment" ;
+            sh:nodeKind sh:IRI ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:experimenter> ],
+        [ sh:datatype xsd:date ;
+            sh:description "The date of the acquisition" ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:acquisition_date> ],
+        [ sh:datatype xsd:string ;
+            sh:description "A description of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 10 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:description> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightEInput> ;
+            sh:description "An input element for the analysis" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:input> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Sample> ;
+            sh:description "The sample that was imaged" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:sample> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightEDataset> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:FieldIlluminationDataset> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A field illumination dataset" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The name of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 9 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:name> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The log of the processing by microscope-metrics" ;
+            sh:maxCount 1 ;
+            sh:order 7 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:processing_log> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Experimenter> ;
+            sh:description "The experimenter that performed the imaging experiment" ;
+            sh:nodeKind sh:IRI ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:experimenter> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Comment> ;
+            sh:description "A human readable comment about the dataset" ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 8 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:comment> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:FieldIlluminationInput> ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:input> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Sample> ;
+            sh:description "The sample that was imaged" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:sample> ],
+        [ sh:datatype xsd:date ;
+            sh:description "The date of the processing by microscope-metrics" ;
+            sh:maxCount 1 ;
+            sh:order 6 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:processing_date> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:FieldIlluminationOutput> ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:output> ],
+        [ sh:datatype xsd:date ;
+            sh:description "The date of the acquisition" ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:acquisition_date> ],
+        [ sh:datatype xsd:string ;
+            sh:description "A description of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 10 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:description> ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Has the dataset been processed by microscope-metrics" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 5 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:processed> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:FieldIlluminationDataset> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:ChannelSeries> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A series whose values represent channel" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:integer ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:values> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:ChannelSeries> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Column> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A column" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The name of the column" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:name> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The values of the column" ;
+            sh:minCount 1 ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:values> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Column> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Image> a sh:NodeShape ;
+    sh:closed false ;
+    sh:description "A base object for all microscope-metrics images" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The name of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:name> ],
+        [ sh:datatype xsd:string ;
+            sh:description "A list of URLs linking to the images that were used as a source" ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:source_image_url> ],
+        [ sh:datatype xsd:string ;
+            sh:description "An URL linking to the image" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:image_url> ],
+        [ sh:datatype xsd:string ;
+            sh:description "A description of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:description> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Image> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Image5D> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A 5D image in TZYXC order" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:TimeSeries> ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:t> ],
+        [ sh:minCount 1 ;
+            sh:order 5 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:data> ],
+        [ sh:datatype xsd:string ;
+            sh:description "An URL linking to the image" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 6 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:image_url> ],
+        [ sh:datatype xsd:string ;
+            sh:description "A list of URLs linking to the images that were used as a source" ;
+            sh:order 7 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:source_image_url> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The name of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 8 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:name> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:PixelSeries> ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:x> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:PixelSeries> ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:y> ],
+        [ sh:datatype xsd:string ;
+            sh:description "A description of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 9 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:description> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:ChannelSeries> ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:c> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:PixelSeries> ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:z> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Image5D> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:ImageMask> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A base object for all microscope-metrics masks" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "A description of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 6 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:description> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:PixelSeries> ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:y> ],
+        [ sh:datatype xsd:boolean ;
+            sh:minCount 1 ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:data> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The name of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 5 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:name> ],
+        [ sh:datatype xsd:string ;
+            sh:description "An URL linking to the image" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:image_url> ],
+        [ sh:datatype xsd:string ;
+            sh:description "A list of URLs linking to the images that were used as a source" ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:source_image_url> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:PixelSeries> ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:x> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:ImageMask> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Protocol> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "Set of instructions for preparing and imaging a sample" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The URL where the protocol can be found" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:url> ],
+        [ sh:datatype xsd:string ;
+            sh:description "A description of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:description> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The name of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:name> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Experimenter> ;
+            sh:description "The authors of the protocol" ;
+            sh:nodeKind sh:IRI ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:authors> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The version of the protocol" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:version> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Protocol> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Shape> a sh:NodeShape ;
+    sh:closed false ;
+    sh:description "A shape" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The label of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:label> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The t coordinate of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:t> ],
+        [ sh:description "The z coordinate of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:z> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Color> ;
+            sh:description "The fill color of the shape" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:fill_color> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Color> ;
+            sh:description "The stroke color of the shape" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 5 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:stroke_color> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The c coordinate of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:c> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The stroke width of the shape" ;
+            sh:maxCount 1 ;
+            sh:order 6 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:stroke_width> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Shape> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:TimeSeries> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A series whose values represent time" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:values> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:TimeSeries> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Vertex> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A vertex as defined by x and y coordinates" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "The y coordinate of the vertex" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:y> ],
+        [ sh:description "The x coordinate of the vertex" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:x> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Vertex> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightBDistanceKeyValues> a sh:NodeShape ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "Mean of the Z distances between spots for each permutation of channel A and B" ;
+            sh:order 6 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:mean_z_dist> ],
+        [ sh:description "Standard deviation of the Z distances between spots for each permutation of channel A and B" ;
+            sh:order 8 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:std_z_dist> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The first channel number to which the measurements apply" ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:channel_A> ],
+        [ sh:description "Median of the 3D distances between spots for each permutation of channel A and B" ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:median_3d_dist> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The second channel number to which the measurements apply" ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:channel_B> ],
+        [ sh:description "Median absolute deviation of the 3D distances between spots for each permutation of channel A and B" ;
+            sh:order 5 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:mad_3d_dist> ],
+        [ sh:description "Median absolute deviation of the Z distances between spots for each permutation of channel A and B" ;
+            sh:order 9 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:mad_z_dist> ],
+        [ sh:description "Mean of the 3D distances between spots for each permutation of channel A and B" ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:mean_3d_dist> ],
+        [ sh:description "Median of the Z distances between spots for each permutation of channel A and B" ;
+            sh:order 7 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:median_z_dist> ],
+        [ sh:description "Standard deviation of the 3D distances between spots for each permutation of channel A and B" ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:std_3d_dist> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightBDistanceKeyValues> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightBInput> a sh:NodeShape ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "Input parameter: smoothing factor for objects detection in the Y axis" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 10 ;
+            sh:minCount 1 ;
+            sh:minInclusive 0 ;
+            sh:order 5 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:sigma_y> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:ImageAsNumpy> ;
+            sh:description "Input parameter: image of the argolight b pattern provided as a 5D numpy array in the order TZYXC" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:argolight_b_image> ],
+        [ sh:description "Input parameter: smoothing factor for objects detection in the Z axis" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 5 ;
+            sh:minCount 1 ;
+            sh:minInclusive 0 ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:sigma_z> ],
+        [ sh:description "Input parameter: distance between argolight spots" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:spots_distance> ],
+        [ sh:description "Input parameter: correction factor for the lower thresholds.  Must be a tuple with len = nr of channels or a float if all equal" ;
+            sh:order 7 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:lower_threshold_correction_factors> ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Input parameter: remove the center cross found in some Argolight patterns" ;
+            sh:maxCount 1 ;
+            sh:order 9 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:remove_center_cross> ],
+        [ sh:description "Tolerated saturation threshold. If the amount of saturated pixels is above this threshold,  the image is considered as saturated and the analysis is not performed." ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 1 ;
+            sh:minCount 1 ;
+            sh:minInclusive 0 ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:saturation_threshold> ],
+        [ sh:description "Input parameter: correction factor for the upper thresholds. Must be a tuple with len = nr of channels or a float if all equal" ;
+            sh:order 8 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:upper_threshold_correction_factors> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Detector bit depth" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 64 ;
+            sh:minInclusive 1 ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:bit_depth> ],
+        [ sh:description "Input parameter: smoothing factor for objects detection in the X axis" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 10 ;
+            sh:minCount 1 ;
+            sh:minInclusive 0 ;
+            sh:order 6 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:sigma_x> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightBInput> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightBIntensityKeyValues> a sh:NodeShape ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:integer ;
+            sh:description "Number of argolight spots detected for each channel" ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:nr_of_spots> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The channel number to which the measurements apply" ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:channel> ],
+        [ sh:description "Integrated intensity of the most intense spot for each channel" ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:intensity_max_spot> ],
+        [ sh:description "Median absolute deviation of all spots integrated intensity for each channel" ;
+            sh:order 9 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:mad_mean_intensity> ],
+        [ sh:description "Mean of all spots integrated intensity for each channel" ;
+            sh:order 6 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:mean_intensity> ],
+        [ sh:description "Integrated intensity of the least intense spot for each channel" ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:intensity_min_spot> ],
+        [ sh:description "Ratio between the integrated intensities between the most intense and the least intense spots for each channel" ;
+            sh:order 10 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:min_max_intensity_ratio> ],
+        [ sh:description "Median of all spots integrated intensity for each channel" ;
+            sh:order 7 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:median_intensity> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "ROI number of the least intense spot for each channel" ;
+            sh:order 5 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:intensity_min_spot_roi> ],
+        [ sh:description "Standard deviation of all spots integrated intensity for each channel" ;
+            sh:order 8 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:std_mean_intensity> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "ROI number of the most intense spot for each channel" ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:intensity_max_spot_roi> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightBIntensityKeyValues> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightBOutput> a sh:NodeShape ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Roi> ;
+            sh:description "Centroids of the argolight spots provided as a list of ROIs, one per channel" ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:spots_centroids> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:TableAsDict> ;
+            sh:description "Table of distances between argolight spots" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 5 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:spots_distances> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightBIntensityKeyValues> ;
+            sh:description "Key Intensity Measurements on Argolight spots" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:intensity_measurements> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:TableAsDict> ;
+            sh:description "Table of properties of the argolight spots" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:spots_properties> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:ImageAsNumpy> ;
+            sh:description "Labels image of the argolight segmented spots provided as a 5D numpy array in the order TZYXC. Image intensities correspond to ROI labels" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:spots_labels_image> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightBDistanceKeyValues> ;
+            sh:description "Key Distance Measurements on Argolight spots" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:distance_measurements> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightBOutput> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightEInput> a sh:NodeShape ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:integer ;
+            sh:description "Detector bit depth" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 64 ;
+            sh:minInclusive 1 ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:bit_depth> ],
+        [ sh:description "Tolerated saturation threshold. If the amount of saturated pixels is above this threshold,  the image is considered as saturated and the analysis is not performed." ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 1 ;
+            sh:minCount 1 ;
+            sh:minInclusive 0 ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:saturation_threshold> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Axis along which resolution is being measured. 1=Y, 2=X" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 2 ;
+            sh:minCount 1 ;
+            sh:minInclusive 1 ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:axis> ],
+        [ sh:description "Peak prominence used as a threshold to distinguish two peaks.  Defaults to the value defined by the Rayleigh criteria" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 0 ;
+            sh:minCount 1 ;
+            sh:minInclusive 0 ;
+            sh:order 5 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:prominence_threshold> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:ImageAsNumpy> ;
+            sh:description "Image of the argolight e pattern provided as a 5D numpy array in the order TZYXC" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:argolight_e_image> ],
+        [ sh:description "Fraction of the image across which intensity profiles are measured" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 1 ;
+            sh:minCount 1 ;
+            sh:minInclusive 0 ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:measured_band> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightEInput> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightEKeyValues> a sh:NodeShape ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "Position of second peak in the intensity profiles" ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:peak_position_B> ],
+        [ sh:description "Position of first peak in the intensity profiles" ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:peak_position_A> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The channel number to which the measurements apply" ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:channel> ],
+        [ sh:description "Height of first peak in the intensity profiles" ;
+            sh:order 5 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:peak_height_A> ],
+        [ sh:description "Rayleigh resolution measured" ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:rayleigh_resolution> ],
+        [ sh:description "Prominence of second peak in the intensity profiles" ;
+            sh:order 8 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:peak_prominence_B> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Z position at which focus has been measured" ;
+            sh:minInclusive 0 ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:focus_slice> ],
+        [ sh:description "Height of second peak in the intensity profiles" ;
+            sh:order 6 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:peak_height_B> ],
+        [ sh:description "Prominence of first peak in the intensity profiles" ;
+            sh:order 7 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:peak_prominence_A> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightEKeyValues> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightEOutput> a sh:NodeShape ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:TableAsDict> ;
+            sh:description "Intensity profiles of the argolight lines provided as tables. One table per channel" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:intensity_profiles> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightEKeyValues> ;
+            sh:description "Key Measurements on Argolight E images" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:key_measurements> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Roi> ;
+            sh:description "ROIs of the peaks found in the argolight images" ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:peaks_rois> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/argolight_schema/:ArgolightEOutput> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:FieldIlluminationInput> a sh:NodeShape ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "Input parameter: the sigma for the smoothing gaussian filter to be applied prior to analysis" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 100 ;
+            sh:minCount 1 ;
+            sh:minInclusive 0 ;
+            sh:order 5 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:sigma> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Input parameter: the size of the output intensity map in pixels" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 512 ;
+            sh:minCount 1 ;
+            sh:minInclusive 5 ;
+            sh:order 6 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:intensity_map_size> ],
+        [ sh:description "Input parameter: the proportion of the image to be considered as corner or center" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 0 ;
+            sh:minCount 1 ;
+            sh:minInclusive 0 ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:corner_fraction> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Detector bit depth" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 64 ;
+            sh:minInclusive 1 ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:bit_depth> ],
+        [ sh:description "Input parameter: relative threshold for what is going to be considered as the intensity center of the image" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 1 ;
+            sh:minCount 1 ;
+            sh:minInclusive 0 ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:center_threshold> ],
+        [ sh:description "Tolerated saturation threshold. If the amount of saturated pixels is above this threshold,  the image is considered as saturated and the analysis is not performed." ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 1 ;
+            sh:minCount 1 ;
+            sh:minInclusive 0 ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:saturation_threshold> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:ImageAsNumpy> ;
+            sh:description "Input parameter: homogeneity image provided as a numpy array in the order. While the analysis accepts multiple channels, the T and Z dimensions are expected to be 1." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:field_illumination_image> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:FieldIlluminationInput> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:FieldIlluminationKeyValues> a sh:NodeShape ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "The mean intensity of the middle-right of the image  divided by the maximum intensity of the center of illumination" ;
+            sh:order 18 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:middle_right_intensity_ratio> ],
+        [ sh:description "The 9th decile of the intensity distribution of the maximum intensity" ;
+            sh:order 34 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:decile_9> ],
+        [ sh:description "The 3rd decile of the intensity distribution of the maximum intensity" ;
+            sh:order 28 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:decile_3> ],
+        [ sh:description "The y coordinate of the center of mass of the center of illumination region. In pixels" ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:center_of_mass_y> ],
+        [ sh:description "The mean intensity of the bottom-left of the image  divided by the maximum intensity of the center of illumination" ;
+            sh:order 20 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:bottom_left_intensity_ratio> ],
+        [ sh:description "The mean intensity of the bottom-left of the image" ;
+            sh:order 19 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:bottom_left_intensity_mean> ],
+        [ sh:description "The 4th decile of the intensity distribution of the maximum intensity" ;
+            sh:order 29 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:decile_4> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The area occupied by the center of illumination region. In pixels" ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:nb_pixels> ],
+        [ sh:description "The mean intensity of the top-center of the image  divided by the maximum intensity of the center of illumination" ;
+            sh:order 10 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:top_center_intensity_ratio> ],
+        [ sh:description "The 1st decile of the intensity distribution of the maximum intensity" ;
+            sh:order 26 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:decile_1> ],
+        [ sh:description "The mean intensity of the middle-center of the image" ;
+            sh:order 15 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:middle_center_intensity_mean> ],
+        [ sh:description "The 8th decile of the intensity distribution of the maximum intensity" ;
+            sh:order 33 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:decile_8> ],
+        [ sh:description "The mean intensity of the middle-left of the image" ;
+            sh:order 13 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:middle_left_intensity_mean> ],
+        [ sh:description "The x coordinate of the maximum intensity of the center of illumination. In pixels" ;
+            sh:order 5 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:max_intensity_pos_x> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The channel number to which the measurements apply" ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:channel> ],
+        [ sh:description "The mean intensity of the bottom-right of the image  divided by the maximum intensity of the center of illumination" ;
+            sh:order 24 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:bottom_right_intensity_ratio> ],
+        [ sh:description "The mean intensity of the top-left corner of the image" ;
+            sh:order 7 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:top_left_intensity_mean> ],
+        [ sh:description "The mean intensity of the top-left corner of the image  divided by the maximum intensity of the center of illumination" ;
+            sh:order 8 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:top_left_intensity_ratio> ],
+        [ sh:description "The 7th decile of the intensity distribution of the maximum intensity" ;
+            sh:order 32 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:decile_7> ],
+        [ sh:description "The 2nd decile of the intensity distribution of the maximum intensity" ;
+            sh:order 27 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:decile_2> ],
+        [ sh:description "The 5th decile of the intensity distribution of the maximum intensity" ;
+            sh:order 30 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:decile_5> ],
+        [ sh:description "The mean intensity of the top-right corner of the image" ;
+            sh:order 11 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:top_right_intensity_mean> ],
+        [ sh:description "The y coordinate of the maximum intensity of the center of illumination. In pixels" ;
+            sh:order 6 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:max_intensity_pos_y> ],
+        [ sh:description "The mean intensity of the bottom-center of the image  divided by the maximum intensity of the center of illumination" ;
+            sh:order 22 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:bottom_center_intensity_ratio> ],
+        [ sh:description "The mean intensity of the middle-center of the image  divided by the maximum intensity of the center of illumination" ;
+            sh:order 16 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:middle_center_intensity_ratio> ],
+        [ sh:description "The mean intensity of the middle-left of the image  divided by the maximum intensity of the center of illumination" ;
+            sh:order 14 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:middle_left_intensity_ratio> ],
+        [ sh:description "The mean intensity of the middle-right of the image" ;
+            sh:order 17 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:middle_right_intensity_mean> ],
+        [ sh:description "The x coordinate of the center of mass of the center of illumination region. In pixels" ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:center_of_mass_x> ],
+        [ sh:description "The 6th decile of the intensity distribution of the maximum intensity" ;
+            sh:order 31 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:decile_6> ],
+        [ sh:description "The mean intensity of the top-center of the image" ;
+            sh:order 9 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:top_center_intensity_mean> ],
+        [ sh:description "The mean intensity of the top-right corner of the image  divided by the maximum intensity of the center of illumination" ;
+            sh:order 12 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:top_right_intensity_ratio> ],
+        [ sh:description "The 0th decile of the intensity distribution of the maximum intensity" ;
+            sh:order 25 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:decile_0> ],
+        [ sh:description "The mean intensity of the bottom-right of the image" ;
+            sh:order 23 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:bottom_right_intensity_mean> ],
+        [ sh:description "The mean intensity of the bottom-center of the image" ;
+            sh:order 21 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:bottom_center_intensity_mean> ],
+        [ sh:description "The maximum intensity of the center of illumination" ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:max_intensity> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:FieldIlluminationKeyValues> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:FieldIlluminationOutput> a sh:NodeShape ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Roi> ;
+            sh:description "Point ROIs marking the center of illumination" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 5 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:center_of_illumination> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Image5D> ;
+            sh:description "Intensity map of the field illumination" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:intensity_map> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:FieldIlluminationKeyValues> ;
+            sh:description "Key-Value pairs containing the Key measurements for the field illumination analysis" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:key_values> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Roi> ;
+            sh:description "ROIs used to compute the intensity profiles" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:profile_rois> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:TableAsDict> ;
+            sh:description "Intensity profiles for the field illumination analysis in the different directions" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:intensity_profiles> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Roi> ;
+            sh:description "ROIs used to compute the corner intensities" ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:corner_rois> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/samples/field_illumination_schema/:FieldIlluminationOutput> .
+
+linkml:Any a sh:NodeShape ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:targetClass linkml:Any .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Comment> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A comment" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The text of the comment" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:text> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Comment> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:ImageAsNumpy> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "An image as a numpy array in TZYXC order" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "An URL linking to the image" ;
+            sh:maxCount 1 ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:image_url> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The name of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:name> ],
+        [ sh:datatype xsd:string ;
+            sh:description "A description of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:description> ],
+        [ sh:class linkml:Any ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:data> ],
+        [ sh:datatype xsd:string ;
+            sh:description "A list of URLs linking to the images that were used as a source" ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:source_image_url> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:ImageAsNumpy> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Sample> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A sample is a standard physical object that is imaged by a microscope" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Protocol> ;
+            sh:description "The protocol used to prepare the sample" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:protocol> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The type of the sample" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:type> ],
+        [ sh:datatype xsd:string ;
+            sh:description "A description of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:description> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The name of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:name> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Sample> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:TableAsDict> a sh:NodeShape ;
+    sh:closed false ;
+    sh:description "A table inlined in a metrics dataset" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The name of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:name> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Column> ;
+            sh:description "A list of the columns of the table" ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:columns> ],
+        [ sh:datatype xsd:string ;
+            sh:description "A description of an entity" ;
+            sh:maxCount 1 ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:description> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:TableAsDict> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Experimenter> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "The person that performed the experiment or developed the protocol" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The name of the experimenter" ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:name> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The ORCID of the experimenter" ;
+            sh:maxCount 1 ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:orcid> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Experimenter> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Roi> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A ROI. Collection of shapes and an image to which they are applied" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Shape> ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:shapes> ],
+        [ sh:class <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Image> ;
+            sh:description "The image to which the ROI is applied" ;
+            sh:nodeKind sh:IRI ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:image> ],
+        [ sh:datatype xsd:string ;
+            sh:description "A description of the ROI" ;
+            sh:maxCount 1 ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:description> ],
+        [ sh:datatype xsd:string ;
+            sh:description "The label of the ROI" ;
+            sh:maxCount 1 ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:label> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Roi> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:PixelSeries> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A series whose values represent pixels or voxels or a single integer defining the shape of the dimension" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:integer ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:values> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:PixelSeries> .
+
+<https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Color> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "A color as defined by RGB values and an optional alpha value" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:integer ;
+            sh:description "The red value of the color" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 255 ;
+            sh:minCount 1 ;
+            sh:minInclusive 0 ;
+            sh:order 0 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:r> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The green value of the color" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 255 ;
+            sh:minCount 1 ;
+            sh:minInclusive 0 ;
+            sh:order 1 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:g> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The alpha value of the color (optional)" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 255 ;
+            sh:minInclusive 0 ;
+            sh:order 3 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:alpha> ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The blue value of the color" ;
+            sh:maxCount 1 ;
+            sh:maxInclusive 255 ;
+            sh:minCount 1 ;
+            sh:minInclusive 0 ;
+            sh:order 2 ;
+            sh:path <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:b> ] ;
+    sh:targetClass <https://w3id.org/MontpellierRessourcesImagerie/microscopemetrics-schema/core_schema/:Color> .
+

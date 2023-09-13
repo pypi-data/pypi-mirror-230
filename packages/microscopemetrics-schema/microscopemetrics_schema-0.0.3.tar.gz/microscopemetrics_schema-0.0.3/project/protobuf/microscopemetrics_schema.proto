@@ -1,0 +1,402 @@
+// An Argolight sample pattern B dataset
+message ArgolightBDataset
+ {
+  string name = 0
+  string description = 0
+  sample sample = 0
+ repeated  experimenter experimenter = 0
+  date acquisitionDate = 0
+  boolean processed = 0
+  date processingDate = 0
+  string processingLog = 0
+ repeated  comment comment = 0
+  argolightBInput input = 0
+  argolightBOutput output = 0
+ }
+message ArgolightBDistanceKeyValues
+ {
+ repeated  integer channelA = 0
+ repeated  integer channelB = 0
+ repeated  float mean3dDist = 0
+ repeated  float median3dDist = 0
+ repeated  float std3dDist = 0
+ repeated  float mad3dDist = 0
+ repeated  float meanZDist = 0
+ repeated  float medianZDist = 0
+ repeated  float stdZDist = 0
+ repeated  float madZDist = 0
+ }
+message ArgolightBInput
+ {
+  imageAsNumpy argolightBImage = 0
+  integer bitDepth = 0
+  float saturationThreshold = 0
+  float spotsDistance = 0
+  float sigmaZ = 0
+  float sigmaY = 0
+  float sigmaX = 0
+ repeated  float lowerThresholdCorrectionFactors = 0
+ repeated  float upperThresholdCorrectionFactors = 0
+  boolean removeCenterCross = 0
+ }
+message ArgolightBIntensityKeyValues
+ {
+ repeated  integer channel = 0
+ repeated  integer nrOfSpots = 0
+ repeated  float intensityMaxSpot = 0
+ repeated  integer intensityMaxSpotRoi = 0
+ repeated  float intensityMinSpot = 0
+ repeated  integer intensityMinSpotRoi = 0
+ repeated  float meanIntensity = 0
+ repeated  float medianIntensity = 0
+ repeated  float stdMeanIntensity = 0
+ repeated  float madMeanIntensity = 0
+ repeated  float minMaxIntensityRatio = 0
+ }
+message ArgolightBOutput
+ {
+  imageAsNumpy spotsLabelsImage = 0
+ repeated  roi spotsCentroids = 0
+  argolightBIntensityKeyValues intensityMeasurements = 0
+  argolightBDistanceKeyValues distanceMeasurements = 0
+  tableAsDict spotsProperties = 0
+  tableAsDict spotsDistances = 0
+ }
+// An Argolight sample pattern E dataset.
+// It contains resolution data on the axis indicated:
+// - axis 1 = Y resolution = lines along X axis
+// - axis 2 = X resolution = lines along Y axis
+message ArgolightEDataset
+ {
+  string name = 0
+  string description = 0
+  sample sample = 0
+ repeated  experimenter experimenter = 0
+  date acquisitionDate = 0
+  boolean processed = 0
+  date processingDate = 0
+  string processingLog = 0
+ repeated  comment comment = 0
+  argolightEInput input = 0
+  argolightEOutput output = 0
+ }
+message ArgolightEInput
+ {
+  imageAsNumpy argolightEImage = 0
+  integer bitDepth = 0
+  float saturationThreshold = 0
+  integer axis = 0
+  float measuredBand = 0
+  float prominenceThreshold = 0
+ }
+message ArgolightEKeyValues
+ {
+ repeated  integer channel = 0
+ repeated  integer focusSlice = 0
+ repeated  float rayleighResolution = 0
+ repeated  float peakPositionA = 0
+ repeated  float peakPositionB = 0
+ repeated  float peakHeightA = 0
+ repeated  float peakHeightB = 0
+ repeated  float peakProminenceA = 0
+ repeated  float peakProminenceB = 0
+ }
+message ArgolightEOutput
+ {
+ repeated  roi peaksRois = 0
+  argolightEKeyValues keyMeasurements = 0
+  tableAsDict intensityProfiles = 0
+ }
+// A series whose values represent channel
+message ChannelSeries
+ {
+ repeated  integer values = 0
+ }
+// A color as defined by RGB values and an optional alpha value
+message Color
+ {
+  integer r = 0
+  integer g = 0
+  integer b = 0
+  integer alpha = 0
+ }
+// A column
+message Column
+ {
+  string name = 0
+ repeated  string values = 0
+ }
+// A comment
+message Comment
+ {
+  string text = 0
+ }
+// An ellipse as defined by x, y coordinates and x and y radii
+message Ellipse
+ {
+  string label = 0
+  float z = 0
+  integer c = 0
+  integer t = 0
+  color fillColor = 0
+  color strokeColor = 0
+  integer strokeWidth = 0
+  float x = 0
+  float y = 0
+  float xRad = 0
+  float yRad = 0
+ }
+// The person that performed the experiment or developed the protocol
+message Experimenter
+ {
+  string name = 0
+  string orcid = 0
+ }
+// A field illumination dataset
+message FieldIlluminationDataset
+ {
+  string name = 0
+  string description = 0
+  sample sample = 0
+ repeated  experimenter experimenter = 0
+  date acquisitionDate = 0
+  boolean processed = 0
+  date processingDate = 0
+  string processingLog = 0
+ repeated  comment comment = 0
+  fieldIlluminationInput input = 0
+  fieldIlluminationOutput output = 0
+ }
+message FieldIlluminationInput
+ {
+  imageAsNumpy fieldIlluminationImage = 0
+  integer bitDepth = 0
+  float saturationThreshold = 0
+  float centerThreshold = 0
+  float cornerFraction = 0
+  float sigma = 0
+  integer intensityMapSize = 0
+ }
+message FieldIlluminationKeyValues
+ {
+ repeated  integer channel = 0
+ repeated  integer nbPixels = 0
+ repeated  float centerOfMassX = 0
+ repeated  float centerOfMassY = 0
+ repeated  float maxIntensity = 0
+ repeated  float maxIntensityPosX = 0
+ repeated  float maxIntensityPosY = 0
+ repeated  float topLeftIntensityMean = 0
+ repeated  float topLeftIntensityRatio = 0
+ repeated  float topCenterIntensityMean = 0
+ repeated  float topCenterIntensityRatio = 0
+ repeated  float topRightIntensityMean = 0
+ repeated  float topRightIntensityRatio = 0
+ repeated  float middleLeftIntensityMean = 0
+ repeated  float middleLeftIntensityRatio = 0
+ repeated  float middleCenterIntensityMean = 0
+ repeated  float middleCenterIntensityRatio = 0
+ repeated  float middleRightIntensityMean = 0
+ repeated  float middleRightIntensityRatio = 0
+ repeated  float bottomLeftIntensityMean = 0
+ repeated  float bottomLeftIntensityRatio = 0
+ repeated  float bottomCenterIntensityMean = 0
+ repeated  float bottomCenterIntensityRatio = 0
+ repeated  float bottomRightIntensityMean = 0
+ repeated  float bottomRightIntensityRatio = 0
+ repeated  float decile0 = 0
+ repeated  float decile1 = 0
+ repeated  float decile2 = 0
+ repeated  float decile3 = 0
+ repeated  float decile4 = 0
+ repeated  float decile5 = 0
+ repeated  float decile6 = 0
+ repeated  float decile7 = 0
+ repeated  float decile8 = 0
+ repeated  float decile9 = 0
+ }
+message FieldIlluminationOutput
+ {
+  fieldIlluminationKeyValues keyValues = 0
+  tableAsDict intensityProfiles = 0
+  image5D intensityMap = 0
+  roi profileRois = 0
+  roi cornerRois = 0
+  roi centerOfIllumination = 0
+ }
+// A 2D image in YX order
+message Image2D
+ {
+  string name = 0
+  string description = 0
+  string imageUrl = 0
+ repeated  string sourceImageUrl = 0
+  pixelSeries y = 0
+  pixelSeries x = 0
+ repeated  float data = 0
+ }
+// A 5D image in TZYXC order
+message Image5D
+ {
+  string name = 0
+  string description = 0
+  string imageUrl = 0
+ repeated  string sourceImageUrl = 0
+  timeSeries t = 0
+  pixelSeries z = 0
+  pixelSeries y = 0
+  pixelSeries x = 0
+  channelSeries c = 0
+ repeated  float data = 0
+ }
+// An image as a numpy array in TZYXC order
+message ImageAsNumpy
+ {
+  string name = 0
+  string description = 0
+  string imageUrl = 0
+ repeated  string sourceImageUrl = 0
+  metaObject data = 0
+ }
+// A base object for all microscope-metrics masks
+message ImageMask
+ {
+  string name = 0
+  string description = 0
+  string imageUrl = 0
+ repeated  string sourceImageUrl = 0
+  pixelSeries y = 0
+  pixelSeries x = 0
+ repeated  boolean data = 0
+ }
+// A line as defined by x1, y1, x2, y2 coordinates
+message Line
+ {
+  string label = 0
+  float z = 0
+  integer c = 0
+  integer t = 0
+  color fillColor = 0
+  color strokeColor = 0
+  integer strokeWidth = 0
+  float x1 = 0
+  float y1 = 0
+  float x2 = 0
+  float y2 = 0
+ }
+// A mask as defined by a boolean image
+message Mask
+ {
+  string label = 0
+  float z = 0
+  integer c = 0
+  integer t = 0
+  color fillColor = 0
+  color strokeColor = 0
+  integer strokeWidth = 0
+  integer y = 0
+  integer x = 0
+  imageMask mask = 0
+ }
+// A base object on which microscope-metrics runs the analysis
+message MetricsDataset
+ {
+  string name = 0
+  string description = 0
+  sample sample = 0
+ repeated  experimenter experimenter = 0
+  date acquisitionDate = 0
+  boolean processed = 0
+  date processingDate = 0
+  string processingLog = 0
+ repeated  comment comment = 0
+ }
+// A series whose values represent pixels or voxels or a single integer defining the shape of the dimension
+message PixelSeries
+ {
+ repeated  integer values = 0
+ }
+// A point as defined by x and y coordinates
+message Point
+ {
+  string label = 0
+  float z = 0
+  integer c = 0
+  integer t = 0
+  color fillColor = 0
+  color strokeColor = 0
+  integer strokeWidth = 0
+  float y = 0
+  float x = 0
+ }
+// A polygon as defined by a series of vertexes and a boolean to indicate if closed or not
+message Polygon
+ {
+  string label = 0
+  float z = 0
+  integer c = 0
+  integer t = 0
+  color fillColor = 0
+  color strokeColor = 0
+  integer strokeWidth = 0
+ repeated  vertex vertexes = 0
+  boolean isOpen = 0
+ }
+// Set of instructions for preparing and imaging a sample
+message Protocol
+ {
+  string name = 0
+  string description = 0
+  string version = 0
+ repeated  experimenter authors = 0
+  string url = 0
+ }
+// A rectangle as defined by x, y coordinates and width, height
+message Rectangle
+ {
+  string label = 0
+  float z = 0
+  integer c = 0
+  integer t = 0
+  color fillColor = 0
+  color strokeColor = 0
+  integer strokeWidth = 0
+  float x = 0
+  float y = 0
+  float w = 0
+  float h = 0
+ }
+// A ROI. Collection of shapes and an image to which they are applied
+message Roi
+ {
+  string label = 0
+  string description = 0
+ repeated  image image = 0
+ repeated  shape shapes = 0
+ }
+// A sample is a standard physical object that is imaged by a microscope
+message Sample
+ {
+  string name = 0
+  string description = 0
+  string type = 0
+  protocol protocol = 0
+ }
+// A table as a Pandas DataFrame
+message TableAsPandasDF
+ {
+  string name = 0
+  string description = 0
+  metaObject df = 0
+ }
+// A series whose values represent time
+message TimeSeries
+ {
+ repeated  float values = 0
+ }
+// A vertex as defined by x and y coordinates
+message Vertex
+ {
+  float x = 0
+  float y = 0
+ }
