@@ -1,0 +1,69 @@
+Metadata-Version: 2.1
+Name: addcomments
+Version: 1.0.0
+Summary: add database table column comments
+Home-page: https://github.com/codeliuyang/django_mysql_comment
+Author: yangliu
+Author-email: codeliuyang@163.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+
+# django_database_colum_comment
+
+auto add comment for columns of MySQL or PostgreSQL
+
+the property ```verbose_name``` or ```help_text``` of the django model will be used as ```comment``` for columns
+
+## Database Supported
+
+- MySQL
+- PostgreSQL
+
+## How to use
+
+the model, you need to notice that the order verbose_name is at the first, then help_text
+```
+name = models.CharField(max_length=200, verbose_name="名称", blank=True, default=None)
+age = models.SmallIntegerField(help_text="年龄", blank=True, default=None)
+```
+
+then, install the package
+```
+pip install addcomments
+```
+
+in ```settings.py``` add app
+```
+INSTALLED_APPS += [
+    'addcomments',
+]
+```
+
+next, type command
+```
+python manage.py addcolumncomments
+```
+
+finally, the info will be printed, all the models created will be processed
+```
+## MySQL 
+-- FOR test_student.name 
+        ALTER TABLE test_student
+        MODIFY COLUMN `name` varchar(200) COLLATE utf8mb4_bin NOT NULL  COMMENT '名称'
+-- FOR test_student.age 
+        ALTER TABLE test_student
+        MODIFY COLUMN `age` smallint(6) NOT NULL  COMMENT '年龄'
+
+## PostgreSQL
+-- FOR test_student.name 
+        COMMENT ON COLUMN test_student.name IS '名称'
+-- FOR test_student.age 
+        COMMENT ON COLUMN test_student.age IS '年龄'
+
+```
+
+## If any bug
+you can fix by yourself or commit your issue here, I will fix it
