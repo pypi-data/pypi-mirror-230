@@ -1,0 +1,26 @@
+stages:
+    - code_quality
+    - test
+
+include:
+    -   remote: 'https://api.r2devops.io/job/r/gitlab/dorianturba/r2devops_catalog/r2_metadata/black@latest.yaml'
+    -   remote: 'https://api.r2devops.io/job/r/gitlab/dorianturba/r2devops_catalog/r2_metadata/ruff@latest.yaml'
+    -   remote: 'https://api.r2devops.io/job/r/gitlab/dorianturba/r2devops_catalog/r2_metadata/pytest@latest.yaml'
+    -   remote: 'https://api.r2devops.io/job/r/gitlab/dorianturba/r2devops_catalog/r2_metadata/flake8@latest.yaml'
+    -   remote: 'https://api.r2devops.io/job/r/gitlab/dorianturba/r2devops_catalog/r2_metadata/mypy@latest.yaml'
+
+variables:
+    PACKAGE_NAME: "requirements_compare"
+
+mypy:
+    variables:
+        PROJECT_PATH: "src"
+
+pytest:
+    variables:
+        PYTHON_SETUP: "pip install ${PROJECT_PATH}[TEST]"
+
+pytest_310:
+    extends: pytest
+    variables:
+        IMAGE_TAG: "3.10"

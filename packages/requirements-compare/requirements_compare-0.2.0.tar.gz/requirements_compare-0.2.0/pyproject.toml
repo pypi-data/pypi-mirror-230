@@ -1,0 +1,97 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "requirements_compare"
+version = "0.2.0"
+authors = [
+    { name = "Dorian Turba", email = "contact.r9qrp@8shield.net" },
+    { name = "Simon Desnoyers", email = "0d3s3n@gmail.com"},
+]
+description = "A CLI that generate a version changelog based on git history and local requirement file."
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Typing :: Typed",
+]
+dependencies = [
+    "typer[all]",
+]
+
+[project.urls]
+"Homepage" = "https://lab.frogg.it/swepy/OSOC/requirement-compare"
+"Bug Tracker" = "https://lab.frogg.it/swepy/OSOC/requirement-compare"
+
+[project.optional-dependencies]
+ALL = ["requirements_compare[QUALITY]", "requirements_compare[TEST]"]
+QUALITY = [
+    "black",
+    "flake8",
+    "mypy",
+    "isort",
+    "ruff",
+    "pre-commit",
+]
+TEST = [
+    "pytest",
+    "coverage",
+]
+
+[project.scripts]
+requirements_compare = "requirements_compare:app"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-rA -q"
+testpaths = [
+    "tests",
+]
+
+[tool.black]
+line-length = 88
+
+[tool.mypy]
+packages = "requirements_compare"
+python_version = 3.11
+disallow_untyped_defs = true
+ignore_missing_imports = true
+
+[tool.tox]
+legacy_tox_ini = """
+    [tox]
+    min_version = 4.0
+    env_list =
+        py{310,311,312}
+        black
+        flake8
+        mypy
+    isolated_build = true
+
+    [testenv]
+    deps = pytest
+    commands = pytest
+
+    [testenv:black]
+    deps = black
+    commands = black --check .
+
+    [testenv:flake8]
+    deps = flake8
+    commands = flake8
+
+    [testenv:mypy]
+    deps = mypy
+    commands = mypy src
+"""
+
+[tool.pymarkdown]
+strict-config = true
+plugins.line-length.line_length = 88
