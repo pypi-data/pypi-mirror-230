@@ -1,0 +1,148 @@
+<mujoco model="sk8o">
+    <compiler meshdir="." autolimits="true"/>
+    <!-- <option  timestep="0.005"/> -->
+    <default>
+        <geom rgba="0.25 0.25 0.25 1"/>
+        <joint damping="0.01"/>
+        <default class="upper_leg">
+            <geom rgba="0.25 0.25 0.25 1"/>
+            <joint ref="43.8" range="18 60"/>
+        </default>
+        <default class="lower_leg">
+            <geom rgba="0.188 0.541 0.698 1"/>
+            <joint stiffness="0.247" springref="-240" range="40 130" ref="92.4" damping="0.3" frictionloss="0.1"/>
+        </default>
+        <default class="leg_link">
+            <geom rgba="0.188 0.541 0.698 1"/>
+            <joint ref="100.5"/>
+        </default>
+        <default class="wheel">
+            <geom rgba="0.25 0.25 0.25 1" condim="6" friction="0.8 0.02 0.02"/>
+        </default>
+    </default>
+    <asset>
+        <mesh file="body.obj" name="body" scale="0.001 0.001 0.001"/>
+        <mesh file="body_black.stl" name="body_black" scale="0.001 0.001 0.001"/>
+        <mesh file="body_blue.stl" name="body_blue" scale="0.001 0.001 0.001"/>
+        <mesh file="upper_leg_R.stl" scale="0.001 0.001 0.001"/>
+        <mesh file="lower_leg_R.stl" scale="0.001 0.001 0.001"/>
+        <mesh file="upper_leg_R.stl" name="upper_leg_L" scale="0.001 0.001 -0.001"/>
+        <mesh file="lower_leg_R.stl" name="lower_leg_L" scale="0.001 0.001 -0.001"/>
+        <mesh file="wheel.stl" scale="0.001 0.001 0.001"/>
+        <mesh file="leg_link.stl" scale="0.001 0.001 0.001"/>
+        <mesh file="rim.stl" scale="0.001 0.001 0.001"/>
+        <mesh file="tire.stl" scale="0.001 0.001 0.001"/>
+    </asset>
+    <worldbody>
+        <camera name="tracker" mode="targetbody" target="body" pos="1 1 1"/>
+        <body name="body" pos="0 0 0.34" quat="9.98486611e-01 5.49787179e-02 7.44344778e-05 1.35003982e-03">
+            <!--            for testing -->
+            <!-- <body name="body" pos="0 0 0.34" euler="40 0 0"> -->
+            <!-- upside down -->
+            <!-- <body name="body" pos="0 0 0.34" euler="0 180 0"> -->
+            <!-- no rotation -->
+            <!-- <body name="body" pos="0 0 0.34" euler="0 0 0"> -->
+            <geom type="mesh" mesh="body_black" name="body"/>
+            <geom type="mesh" mesh="body_blue"   rgba="0.188 0.541 0.698 1" contype="0" conaffinity="0"/>
+            <camera name="front" mode="fixed" pos="0 -1.5 0" euler="90 0 0"/>
+            <camera name="side" mode="track" pos="-1.5 0 0" euler="90 -90 0"/>
+            <camera name="top" mode="track" pos="0 0 1.5" euler="0 0 180"/>
+            <camera name="follower" mode="track" pos="-0.3 1.5 0.5" euler="-70 0 180"/>
+
+            <!-- body movement DOF -->
+            <joint type="free" name="body_joint"/>
+            <!--            for testing -->
+            <!-- <joint type="slide" axis="0 0 1"  name="body_joint"/> -->
+            <!-- <joint type="slide" axis="0 1 0"/>
+            <joint type="hinge" axis="0 0 1"/> -->
+            <!-- end testing -->
+
+
+            <site name="imu" size="0.01" pos="0 -0.1 0.1" euler="90 180 0"/>
+            <site name="body_frame" size="0.01" pos="0 0 0"/>
+            <site name="loop_body_L" pos="0.0925 0.06571 0.06571"/>
+            <site name="loop_body_R" pos="-0.0925 0.06571 0.06571"/>
+            <inertial pos="0 0 0.1" mass="3" diaginertia="0.0118625 0.0118625 0.015625"/>
+            <!--            right side-->
+            <body name="upper_leg_R" childclass="upper_leg" pos="-0.0925 0 0" euler="46.2 -90 -90">
+                <inertial pos="0 -0.08 0" mass="0.2" diaginertia="0.0006040667 0.00001667 0.0005907"/>
+                <geom type="mesh" mesh="upper_leg_R" name="upper_leg_R" pos="0 0 0"/>
+                <joint name="hip_R" axis="0 0 1" pos="0 0 0" type="hinge"/>
+                <body name="lower_leg_R" childclass="lower_leg" pos="0 -0.188 0" euler="0 180 -92.4">
+                    <inertial pos="0 -0.05 0" mass="0.2" diaginertia="0.000975 0.00001667 0.00096167"/>
+                    <joint axis="0 0 -1" pos="0 0 0" type="hinge" name="knee_R"/>
+                    <geom type="mesh" mesh="lower_leg_R" name="lower_leg_R" pos="0 -0.190 -0.012"/>
+                    <body name="leg_link_R" pos="0 0.050 0" euler="0 0 79.5" childclass="leg_link">
+                        <inertial pos="0 0.0965 0" mass="0.1" diaginertia="0.0006358 0.00001667 0.00062248"/>
+                        <joint name="loop_R" pos="0 0 0" type="hinge" axis="0 0 -1"/>
+                        <geom type="mesh" mesh="leg_link" name="leg_link_R" pos="0 0 -0.0155"/>
+                    </body>
+                    <body name="wheel_R" pos="0 -0.190 0" euler="0 180 0" childclass="wheel">
+                        <inertial pos="0 0 0.0445" mass="0.3" diaginertia="0.00039 0.00039 0.000735"/>
+                        <joint name="wheel_joint_R" pos="0 0 0.02" axis="0 0 -1" type="hinge"/>
+                        <!--                        <geom type="mesh" mesh="wheel" pos="0 0 0.032"/>-->
+                        <geom type="mesh" name="wheel_R_rim" mesh="rim" pos="0 0 0.026" rgba="0.188 0.541 0.698 1"/>
+                        <geom type="mesh" name="wheel_R_tire" mesh="tire" pos="0 0 0.026" euler="0 0 0"/>
+                    </body>
+                </body>
+            </body>
+            <!--            left side-->
+            <body name="upper_leg_L" childclass="upper_leg" pos="0.0925 0 0" euler="46.2 -90 -90">
+                <inertial pos="0 -0.08 0" mass="0.2" diaginertia="0.0006040667 0.00001667 0.0005907"/>
+                <geom type="mesh" mesh="upper_leg_L" name="upper_leg_L" pos="0 0 0"/>
+                <joint name="hip_L" axis="0 0 1" pos="0 0 0" type="hinge"/>
+                <body name="lower_leg_L" childclass="lower_leg" pos="0 -0.188 0" euler="0 180 -92.4">
+                    <inertial pos="0 -0.05 0" mass="0.2" diaginertia="0.000975 0.00001667 0.00096167"/>
+                    <joint name="knee_L" axis="0 0 -1" pos="0 0 0"/>
+                    <geom type="mesh" mesh="lower_leg_L" name="lower_leg_L" pos="0 -0.190 0.012"/>
+                    <body name="leg_link_L" pos="0 0.050 0" euler="0 180 -79.5" childclass="leg_link">
+                        <inertial pos="0 0.0965 0" mass="0.1" diaginertia="0.0006358 0.00001667 0.00062248"/>
+                        <joint name="loop_L" pos="0 0 0" axis="0 0 1" type="hinge"/>
+                        <geom type="mesh" name="leg_link_L" mesh="leg_link" pos="0 0 -0.0155"/>
+                    </body>
+                    <body name="wheel_L" pos="0 -0.190 0" euler="0 0 0" childclass="wheel">
+                        <camera name="wheel_l" mode="track" pos="-0.3 0.3 1.5" euler="0 0 45"/>
+                        <inertial pos="0 0 0.0445" mass="0.3" diaginertia="0.00039 0.00039 0.000735"/>
+                        <joint name="wheel_joint_L" pos="0 0 0.02" type="hinge" axis="0 0 1"/>
+                        <geom type="mesh" name="wheel_L_rim" mesh="rim" pos="0 0 0.026" rgba="0.188 0.541 0.698 1"/>
+                        <geom type="mesh" name="wheel_L_tire" mesh="tire" pos="0 0 0.026" euler="0 0 0"/>
+                    </body>
+                </body>
+            </body>
+        </body>
+    </worldbody>
+    <equality>
+        <connect anchor="0 0.193 0" body1="leg_link_R" body2="body" name="eq_constraint_R"/>
+        <connect anchor="0 0.193 0" body1="leg_link_L" body2="body" name="eq_constraint_L"/>
+    </equality>
+    <contact>
+        <exclude body1="leg_link_R" body2="body"/>
+        <exclude body1="upper_leg_R" body2="body"/>
+        <exclude body1="leg_link_L" body2="body"/>
+        <exclude body1="upper_leg_L" body2="body"/>
+    </contact>
+    <actuator>
+        <motor name="hip_L" joint="hip_L" gear="16.5" ctrlrange="-1 1"/>
+        <motor name="hip_R" joint="hip_R" gear="16.5" ctrlrange="-1 1"/>
+        <motor name="wheel_L" joint="wheel_joint_L" gear="-1" ctrlrange="-1 1"/>
+        <motor name="wheel_R" joint="wheel_joint_R" gear="-1" ctrlrange="-1 1"/>
+    </actuator>
+    <sensor>
+        <gyro name="body_frame_gyro" noise="0" site="body_frame"/>
+        <framelinacc name="body_frame_linacc" objtype="body" objname="body"/>
+        <frameangacc name="body_frame_angacc" objtype="body" objname="body"/>
+        <framelinvel name="wheel_L_linvel" noise="0" objtype="geom" objname="wheel_L_rim"/>
+        <framelinvel name="wheel_R_linvel" noise="0" objtype="geom" objname="wheel_R_rim"/>
+        <gyro name="IMU_gyro" noise="0" site="imu"/>
+        <framequat name="body_orientation" noise="0"  objtype="body" objname="body"/>
+        <accelerometer name="IMU_acc" noise="0" site="imu"/>
+        <jointpos name="hip_L_pos" noise="0" joint="hip_L"/>
+        <jointpos name="hip_R_pos" noise="0" joint="hip_R"/>
+        <jointpos name="wheel_L_pos" noise="0" joint="wheel_joint_L"/>
+        <jointpos name="wheel_R_pos" noise="0" joint="wheel_joint_R"/>
+        <jointvel name="hip_L_vel" noise="0" joint="hip_L"/>
+        <jointvel name="hip_R_vel" noise="0" joint="hip_R"/>
+        <jointvel name="wheel_L_vel" noise="0" joint="wheel_joint_L"/>
+        <jointvel name="wheel_R_vel" noise="0" joint="wheel_joint_R"/>
+    </sensor>
+</mujoco>
