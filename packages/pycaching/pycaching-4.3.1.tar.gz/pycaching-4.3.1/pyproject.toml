@@ -1,0 +1,85 @@
+[build-system]
+requires = ["flit_core >= 3.4, <4.0"]
+build-backend = "flit_core.buildapi"
+
+
+[project]
+name = "pycaching"
+dynamic = ["version"]
+authors = [
+    { name = "Tomas Bedrich", email = "ja@tbedrich.cz" },
+]
+readme = "README.rst"
+classifiers = [
+    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+    "Programming Language :: Python :: 3",
+]
+description = "Geocaching.com site crawler. Provides tools for searching, fetching caches and geocoding."
+keywords = [
+    "geocaching",
+    "crawler",
+    "geocache",
+    "cache",
+    "search",
+    "geocode",
+    "travelbug",
+]
+
+# https://endoflife.date/python
+# TODO migrate to f-string as soon as we bump to 3.6
+requires-python = ">= 3.5"
+dependencies = [
+    "requests ~= 2.8",
+    "urllib3 ~= 1.26",  # due to https://github.com/betamaxpy/betamax/issues/200
+    "beautifulsoup4 ~= 4.9",
+    "geopy ~= 2.2.0",
+]
+
+
+[project.optional-dependencies]
+dev = [
+    "pytest ~= 6.2",
+    "pytest-cov ~= 3.0",
+    "betamax ~= 0.8",
+    "betamax-serializers ~= 0.2",
+    "black ~= 22.6.0",
+    "flake8 ~= 4.0",
+    "isort ~= 5.10"
+]
+
+
+[project.urls]
+Documentation = "https://pycaching.readthedocs.io/"
+Source = "https://github.com/tomasbedrich/pycaching"
+
+
+[tool.pytest.ini_options]
+testpaths = [
+    "test",
+    "tests_new",
+]
+filterwarnings = [
+    # FutureWarning: betamax_recorder and betamax_session currently don't include parameters in the cassette name. Use betamax_parametrized_recorder/_session to include parameters. This behavior will be the default in betamax 1.0
+    "ignore:.*betamax_recorder.*:FutureWarning",
+]
+addopts = "--strict-markers -r sxX --cov=pycaching --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=90"
+cache_dir = ".cache"
+
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "except requests.exceptions.ConnectionError",
+    "if __name__ == .__main__.:",
+]
+
+
+[tool.black]
+line-length = 120
+
+
+[tool.isort]
+profile = "black"
+line_length = 120
