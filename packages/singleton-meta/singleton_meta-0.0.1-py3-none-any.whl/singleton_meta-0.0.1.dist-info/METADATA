@@ -1,0 +1,80 @@
+Metadata-Version: 2.1
+Name: singleton-meta
+Version: 0.0.1
+Summary: create perfect singletons meta
+Home-page: https://github.com/centroid457/
+Author: Andrei Starichenko
+Author-email: centroid@mail.ru
+Project-URL: Source, https://github.com/centroid457/singleton_meta
+Keywords: singleton
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Operating System :: OS Independent
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: Natural Language :: English
+Classifier: Typing :: Typed
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# singleton_meta
+
+
+## Features
+
+1. perfect singleton (maybe thread safe!)
+
+
+## License
+
+See the [LICENSE](LICENSE) file for license rights and limitations (MIT).
+
+
+## Release history
+
+See the [HISTORY.md](HISTORY.md) file for release history.
+
+
+## Installation
+
+```commandline
+pip install singleton-meta
+```
+
+## Import
+
+```python
+from singleton_meta import *
+```
+
+
+## GUIDE
+
+See tests and source for other examples.
+
+
+### 1. Use simple nesting (common)
+
+```python
+from singleton_meta import *
+
+class MySingleton(Singleton):
+    pass
+
+class MySingleton2(Singleton):
+    pass
+```
+
+### 2. Use meta
+
+```python
+from singleton_meta import *
+
+class MySingleton(metaclass=SingletonMeta):
+    pass
+```
