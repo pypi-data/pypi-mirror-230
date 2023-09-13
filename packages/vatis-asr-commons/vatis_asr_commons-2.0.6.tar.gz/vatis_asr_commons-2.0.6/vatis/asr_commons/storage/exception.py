@@ -1,0 +1,2 @@
+class CacheFullException(Exception):
+    pass
