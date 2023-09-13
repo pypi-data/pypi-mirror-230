@@ -1,0 +1,30 @@
+[project]
+name = "ophyd-registry"
+version = "0.5"
+authors = [
+  { name="Mark Wolfman", email="wolfman@anl.gov" },
+]
+description = "A registry to keep track of, and retrieve, Ophyd objects."
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Development Status :: 3 - Alpha",
+    "Topic :: Scientific/Engineering",
+    "Topic :: System :: Hardware",
+]
+keywords = ["synchrotron", "xray", "bluesky"]
+dependencies = ["ophyd"]
+
+[project.optional-dependencies]
+
+dev = ["black", "pytest", "build", "twine", "flake8", "caproto", "ruff"]
+
+[project.urls]
+"Homepage" = "https://github.com/spc-group/ophyd-registry"
+"Bug Tracker" = "https://github.com/spc-group/ophyd-registry/issues"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
