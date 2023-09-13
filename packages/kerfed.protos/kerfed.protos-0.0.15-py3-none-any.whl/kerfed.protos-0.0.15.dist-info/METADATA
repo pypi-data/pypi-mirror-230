@@ -1,0 +1,35 @@
+Metadata-Version: 2.1
+Name: kerfed.protos
+Version: 0.0.15
+Summary: Built Python bindings for the Kerfed Proto messages.
+License: proprietary
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: grpcio
+Requires-Dist: protobuf
+Provides-Extra: tests
+Requires-Dist: pytest ; extra == 'tests'
+Requires-Dist: trimesh ; extra == 'tests'
+Provides-Extra: typed
+Requires-Dist: mypy ; extra == 'typed'
+Requires-Dist: grpc-stubs ; extra == 'typed'
+Requires-Dist: types-protobuf ; extra == 'typed'
+
+# kerfed.protos
+
+Countains protobuf 3 messages used to communicate and call Kerfed's gRPC API.
+
+
+# Quick Start
+
+```
+pip install kerfed.protos
+```
+
+
+## Build Instructions
+
+```
+# will use buf in a docker image to build Python, Go, and Node bindings.
+make eject
+```
