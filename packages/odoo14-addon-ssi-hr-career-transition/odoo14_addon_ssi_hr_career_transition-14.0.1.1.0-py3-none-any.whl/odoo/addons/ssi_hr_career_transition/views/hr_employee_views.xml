@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 OpenSynergy Indonesia
+     Copyright 2023 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="hr_employee_view_form" model="ir.ui.view">
+    <field name="name">hr.employee - Form</field>
+    <field name="model">hr.employee</field>
+    <field name="mode">extension</field>
+    <field name="inherit_id" ref="hr.view_employee_form" />
+    <field name="arch" type="xml">
+        <data>
+            <xpath expr="//notebook" position="inside">
+                <page name="career_transition" string="Career Transition">
+                    <group name="career_transition_1" col="2" colspan="4">
+                        <group name="career_transition_1_1" col="2" colspan="4">
+                            <field name="latest_career_transition_id" />
+                            <field name="join_career_transition_id" />
+                            <field name="terminate_career_transition_id" />
+                            <field name="permanent_career_transition_id" />
+                        </group>
+                        <group name="career_transition_1_2" col="2" colspan="4">
+                            <field name="manual_date_join" />
+                            <field name="manual_date_terminate" />
+                            <field name="manual_date_permanent" />
+                            <field name="manual_company_id" />
+                            <field name="manual_department_id" />
+                            <field name="manual_job_id" />
+                            <field name="manual_manager_id" />
+                            <field name="manual_employment_status_id" />
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </data>
+    </field>
+</record>
+</odoo>

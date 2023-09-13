@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 OpenSynergy Indonesia
+     Copyright 2023 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="employee_career_transition_view_tree" model="ir.ui.view">
+        <field name="name">employee_career_transition - Tree</field>
+        <field name="model">employee_career_transition</field>
+        <field name="mode">primary</field>
+        <field
+            name="inherit_id"
+            ref="ssi_transaction_mixin.mixin_transaction_view_tree"
+        />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="employee_id" widget="many2one_avatar_employee" />
+                    <field name="department_id" optional="hide" />
+                    <field
+                        name="manager_id"
+                        optional="hide"
+                        widget="many2one_avatar_employee"
+                    />
+                    <field name="job_id" optional="hide" />
+                    <field name="effective_date" />
+                    <field name="type_id" />
+                    <field name="archieve" />
+                    <field name="reason_id" />
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    <record id="employee_career_transition_view_search" model="ir.ui.view">
+        <field name="name">employee_career_transition - Search</field>
+        <field name="model">employee_career_transition</field>
+        <field
+            name="inherit_id"
+            ref="ssi_transaction_mixin.mixin_transaction_view_search"
+        />
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="employee_id" />
+                    <field name="type_id" />
+                    <field name="reason_id" />
+                    <field name="effective_date" />
+                </xpath>
+                <xpath expr="//group[@name='group_by']" position="inside">
+                    <filter
+                        name="grp_type"
+                        string="Type"
+                        context="{'group_by':'type_id'}"
+                    />
+                    <filter
+                        name="grp_effective_date"
+                        string="Effective Date"
+                        context="{'group_by':'effective_date'}"
+                    />
+                    <filter
+                        name="grp_employee"
+                        string="Employee"
+                        context="{'group_by':'employee_id'}"
+                    />
+                    <filter
+                        name="grp_reason"
+                        string="Reason"
+                        context="{'group_by':'reason_id'}"
+                    />
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    <record id="employee_career_transition_view_form" model="ir.ui.view">
+        <field name="name">employee_career_transition - Form</field>
+        <field name="model">employee_career_transition</field>
+        <field name="mode">primary</field>
+        <field
+            name="inherit_id"
+            ref="ssi_transaction_mixin.mixin_transaction_view_form"
+        />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="employee_id" widget="many2one_avatar_employee" />
+                    <field name="department_id" readonly="1" force_save="1" />
+                    <field
+                        name="manager_id"
+                        widget="many2one_avatar_employee"
+                        readonly="1"
+                        force_save="1"
+                    />
+                    <field name="job_id" readonly="1" force_save="1" />
+                </xpath>
+                <xpath expr="//group[@name='header_right']" position="inside">
+                    <field name="type_id" />
+                    <field
+                        name="reason_id"
+                        domain="[('id', 'in', allowed_reason_ids)]"
+                    />
+                    <field
+                        name="allowed_reason_ids"
+                        invisible="1"
+                        widget="many2many_tags"
+                    />
+                    <field name="effective_date" />
+                    <field name="archieve" />
+                    <field name="previous_history_id" force_save="1" />
+                </xpath>
+                <xpath expr="//page[1]" position="before">
+                    <page name="change_data" string="Career Transition Detail">
+                        <group name="change_data_1" colspan="4" col="3">
+                            <field
+                                name="previous_company_id"
+                                string="Company"
+                                readonly="1"
+                                force_save="1"
+                            />
+                            <field
+                                name="new_company_id"
+                                nolabel="1"
+                                attrs="{'readonly':[('change_company','=',False)], 'required':[('require_company','=',True)]}"
+                            />
+                            <field
+                                name="previous_department_id"
+                                string="Department"
+                                readonly="1"
+                                force_save="1"
+                            />
+                            <field
+                                name="new_department_id"
+                                nolabel="1"
+                                attrs="{'readonly':[('change_department','=',False)], 'required':[('require_department','=',True)]}"
+                            />
+                            <field
+                                name="previous_manager_id"
+                                string="Manager"
+                                readonly="1"
+                                force_save="1"
+                            />
+                            <field
+                                name="new_manager_id"
+                                nolabel="1"
+                                attrs="{'readonly':[('change_manager','=',False)], 'required':[('require_manager','=',True)]}"
+                            />
+                            <field
+                                name="previous_job_id"
+                                string="Job Position"
+                                readonly="1"
+                                force_save="1"
+                            />
+                            <field
+                                name="new_job_id"
+                                nolabel="1"
+                                attrs="{'readonly':[('change_job','=',False)], 'required':[('require_job','=',True)]}"
+                            />
+                            <field
+                                name="previous_employment_status_id"
+                                string="Employment Status"
+                                readonly="1"
+                                force_save="1"
+                            />
+                            <field
+                                name="new_employment_status_id"
+                                nolabel="1"
+                                attrs="{'readonly':[('change_employment_status','=',False)], 'required':[('require_employment_status','=',True)]}"
+                            />
+                        </group>
+                    </page>
+                    <page
+                        name="change_policy"
+                        string="Change Policy"
+                        groups="base.group_system"
+                    >
+                        <group name="change_policy_1" colspan="4" col="2">
+                            <group name="change_policy_1_1" colspan="1" col="2">
+                                <field name="change_company" />
+                                <field name="change_department" />
+                                <field name="change_job" />
+                                <field name="change_manager" />
+                                <field name="change_employment_status" />
+                            </group>
+                            <group name="change_policy_1_2" colspan="1" col="2">
+                                <field name="require_company" />
+                                <field name="require_department" />
+                                <field name="require_job" />
+                                <field name="require_manager" />
+                                <field name="require_employment_status" />
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    <record id="employee_career_transition_action" model="ir.actions.act_window">
+        <field name="name">Career Transition</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">employee_career_transition</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="employee_career_transition_menu"
+        name="Career Transition"
+        parent="ssi_hr.hr_career_management_menu"
+        action="employee_career_transition_action"
+        groups="employee_career_transition_viewer_group"
+        sequence="25"
+    />
+</odoo>
