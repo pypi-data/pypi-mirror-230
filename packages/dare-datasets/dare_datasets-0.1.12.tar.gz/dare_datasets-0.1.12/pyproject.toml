@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "dare-datasets"
+version = "0.1.12"
+description = "A quick and easy way to download datasets from the DARE lab."
+authors = ["MikeXydas <mikexydas@gmail.com>"]
+readme = "README.md"
+packages = [{include = "dare_datasets"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "^2.31.0"
+pandas = "^2.0.2"
+numpy = "^1.24.3"
+mo-sql-parsing = "5.58.21262"
+huggingface-hub = "^0.17.1"
+
+
+[tool.poetry.group.dev.dependencies]
+pylint = "^2.17.4"
+pytest = "^7.3.1"
+mkdocs = "^1.4.3"
+mkdocstrings = {extras = ["python"], version = "^0.21.2"}
+mkdocs-material = "^9.1.14"
+tox = "^4.5.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
