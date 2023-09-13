@@ -1,0 +1,123 @@
+Metadata-Version: 2.1
+Name: supervisor-shell-ui
+Version: 0.3.0
+Summary: A CLI alternative to the built-in web interface of Supervisor, offering a more convenient way to manage processes directly from the terminal.
+Author: Ciprian Mandache
+Author-email: psyb0t@51k.eu
+License: GPL-3.0
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: urllib3 ==1.26.16
+Requires-Dist: requests ==2.31.0
+Requires-Dist: requests-unixsocket ==0.3.0
+
+# supervisor-shell-ui
+
+[![supervisor-shell-ui](./assets/supervisor-shell-ui.png)](https://github.com/psyb0t/supervisor-shell-ui/blob/master/assets/supervisor-shell-ui.png)
+
+supervisor-shell-ui is a command-line interface (CLI) for managing processes using the Supervisor program. Supervisor is a client/server system that allows its users to monitor and control a number of processes on UNIX-like operating systems. This tool provides an alternative to the built-in web interface of Supervisor, offering a more convenient way to manage processes directly from the terminal.
+
+## Table of Contents
+
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+  - [Install from PyPI](#install-from-pypi)
+  - [Install from GitHub](#install-from-github)
+  - [Install from .tar.gz](#install-from-targz)
+- [Usage](#usage)
+  - [Keybindings](#keybindings)
+- [Important Notes](#important-notes)
+- [License](#license)
+
+## Features
+
+- View and manage processes controlled by Supervisor.
+- Start, stop, and restart processes.
+- View and clear process logs.
+- Navigate and interact with the interface using keyboard shortcuts.
+
+## Prerequisites
+
+- Python 3.6 or higher.
+- Supervisor program installed on your system.
+
+## Installation
+
+### Install from PyPI
+
+```bash
+pip install supervisor-shell-ui
+```
+
+### Install from GitHub
+
+You have two ways to install from GitHub.
+
+**First option: clone the repository**
+
+```bash
+git clone https://github.com/psyb0t/supervisor-shell-ui.git
+cd supervisor-shell-ui
+pip install .
+```
+
+**Second option: use pip to install directly from GitHub**
+
+```bash
+pip install git+https://github.com/psyb0t/supervisor-shell-ui.git#egg=supervisor-shell-ui
+```
+
+Both ways will achieve the same result, installing the supervisor-shell-ui package on your system. Choose the one that suits you best.
+
+### Install from .tar.gz
+
+First, download the `.tar.gz` file from the GitHub [releases page](https://github.com/psyb0t/supervisor-shell-ui/releases). Then extract it and navigate to the extracted directory:
+
+```bash
+tar -xvzf supervisor-shell-ui.tar.gz
+cd supervisor-shell-ui
+```
+
+Install using pip:
+
+```bash
+pip install .
+```
+
+Alternatively, you can also use the `setup.py` file:
+
+```bash
+python setup.py install
+```
+
+## Usage
+
+After installing, you can run the application with the following command:
+
+```bash
+supervisor-shell-ui
+```
+
+### Environment variables
+
+- **SUPERVISOR_SOCK_PATH**: Defines the location of the supervisor sock file. Default is `/tmp/supervisor.sock`. If you're not sure where the sock file is try looking in the `supervisord.conf` usually located at `/etc/supervisor/supervisord.conf`.
+
+### Keybindings
+
+- **Esc**: Exit Page
+- **Tab**: Switch Section
+- **Enter**: Execute
+- **Page Up/Down**: Scroll Table
+- **Left/Right Arrow**: Change Button
+- **Up/Down Arrow**: Change Process
+
+## Important Notes
+
+- This application is intended for use on UNIX-like operating systems.
+- The application requires that the Supervisor program is already installed and properly configured on your system.
+
+## License
+
+This project is licensed under the terms of the GPL-3.0 license.
