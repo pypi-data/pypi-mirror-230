@@ -1,0 +1,66 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% load mark %}
+
+{% block detail-style %}
+    <link rel="stylesheet" href="{% static 'blogs/css/blogs-style.css' %}">
+    <link rel="stylesheet" href="{% static 'blogs/css/detail-style.css' %}">
+    <link rel="stylesheet" href="{% static 'blogs/css/tomorrow-night-bright.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- コンテナ内　日付・記事詳細・サイドバー -->
+<div class="container">
+
+  <!-- BootStrapグリッドシステム -->
+  <div class="row">
+
+    <!-- メインバー -->
+    <div class="col-lg-8 col-sm-12 main-bar">
+
+      <!-- 看板 -->
+      <div class="jumbotron jumbotron-fluid">
+	<div class="container">
+	  {% if private_detail.category.thumbnail.bool %}
+	  <p><img class="d-flex ml-3" src="{{ private_detail.category.thumbnail.url }}" alt="Generic placeholder image"></p>
+	  {% endif %}
+	  <h2 class="display-5"><strong>{% block title %}非 - {{ private_detail.title }}{% endblock %}</strong></h2>
+	  <p class="lead">
+	  <strong class="text-black-50">投稿日 {{ private_detail.created_at }}</strong> >> <strong>更新日 {{ private_detail.updated_at }}</strong>
+	  </p>
+	</div>
+      </div>
+      <!-- 看板終 -->
+
+      {% if request.user.is_superuser %}
+      <a href="{% url 'blogs:edit_blog' private_detail.id %}">
+	<button type="button" class="btn btn-primary btn-sm">編集</button>
+      </a>
+      {% endif %}
+
+      <!-- 記事詳細 -->
+      <div class="blogs-markdown-style">
+	{{ private_detail.text | markdown_to_html | safe }}
+      </div>
+      <!-- 記事詳細終 -->
+
+      <hr>
+
+      <!-- ブログトップに戻るリンク -->
+      <a class="text-violet" href="{% url 'blogs:private_index' %}">非表示リスト一覧へ戻る</a>
+
+    </div>
+    <!-- メインバー終 -->
+
+    <!-- サイドバー -->
+    <div class="col-lg-4 col-sm-12 side-bar">
+    </div>
+    <!-- サイドバー終 -->
+
+  </div>
+  <!-- BootStrapのグリッドシステム END -->
+
+</div>
+
+{% endblock %}

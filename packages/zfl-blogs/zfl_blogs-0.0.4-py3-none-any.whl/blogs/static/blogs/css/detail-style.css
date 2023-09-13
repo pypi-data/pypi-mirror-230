@@ -1,0 +1,182 @@
+/* 詳細ページ内 */
+
+
+/* サイドバーの新着記事固定 blogs/new_article.html */
+.stick {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 10%;
+}
+
+/* マークダウンスタイル */
+
+/* pタグの行間を少し空ける */
+.blogs-markdown-style p {
+  padding: 1% 0%;
+}
+
+/* 目次（TOC）*/
+
+.blogs-markdown-style .toc .toctitle {
+  font-size: 20px; /* 目次の文字サイズ */
+  padding-left: 40%; /* 左側から５０％空けて真ん中にする */
+
+}
+
+.blogs-markdown-style .toc {
+  background-color: whitesmoke; /* 目次のバックカラーを変える */
+  border-radius: 20px;
+  padding: 3%; /* 目次自体に余白を空ける */
+  margin: 5%;
+}
+
+/* ulタグからolに変更 */
+.blogs-markdown-style .toc ul {
+  counter-reset: count 0;
+  list-style-type: none;
+}
+
+/* tocリストに番号付けする */
+.blogs-markdown-style .toc ul li:before {
+  counter-increment: count 1;
+  content: counters(count, "-") ". ";
+  font-size: 20px;
+}
+
+.blogs-markdown-style .toc ul li {
+  padding: 1%; /* 目次の各項目に余白を空ける */
+}
+
+.blogs-markdown-style .toc a {
+  color: gray;
+}
+
+/* h2（##）タグ */
+.blogs-markdown-style h2 {
+  padding: 0.5em;
+  color: gray;
+  background: whitesmoke;
+  border-left: solid 5px violet;
+  border-radius: 10px; /* 角を丸める */
+  margin-top: 8%;
+}
+
+/* h3（###）タグ */
+.blogs-markdown-style h3 {
+  padding: 0.5em;
+  color: gray;
+  border-left: solid 5px violet;
+  border-radius: 10px; /* 角を丸める */
+  margin-top: 8%;
+}
+
+/* テーブル */
+.blogs-markdown-style table {
+  width: 90%;
+  margin-top: 8%;
+  margin-bottom: 8%;
+  border-collapse: collapse;
+}
+
+.blogs-markdown-style table th, table td {
+  padding: 2%;
+  border: solid 3px gray;
+}
+
+.blogs-markdown-style table th {
+  background-color: whitesmoke;
+}
+
+/* 画像 */
+.blogs-markdown-style img {
+  width: 100%;
+  height: auto;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  box-shadow: 0 1px 8px #777;
+  border-radius: 10px; /* 角を丸める */
+}
+
+/* インラインコードのハイライト */
+.blogs-markdown-style .c-h {
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
+  padding-left: 1%;
+  padding-right: 1%;
+  background-color: black;
+  color: white;
+  border-radius: 5px; /* 角を丸める */
+}
+
+/* コードハイライト */
+.blogs-markdown-style pre {
+  margin-top: 5%;
+  margin-bottom: 5%;
+  border-radius: 10px;
+}
+
+/* admonitionの忠告 */
+
+.blogs-markdown-style .admonition {
+  padding: 3%;
+  margin: 5%;
+  border-radius: 20px; /* 角を丸める */
+}
+
+/* 忠告表示内の画像サイズ */
+.blogs-markdown-style .admonition img {
+  width: 90%;
+  height: 8%;
+}
+
+.blogs-markdown-style .overview {
+  border: dashed 2px black;
+}
+
+.blogs-markdown-style .attention {
+  padding: 3%;
+  background-color: lightpink;
+}
+
+.blogs-markdown-style .supplement {
+  background-color: lightgreen;
+}
+
+/* 目次の追随ボタンレイアウト */
+
+.toc-modal .modal-body .toc {
+  background-color: whitesmoke;
+  padding: 3%;
+}
+
+.toc-modal .modal-body .toc ul {
+  counter-reset: count 0;
+  list-style-type: none;
+}
+
+/* modalの透明度 */
+.toc-modal .modal-content {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+ 
+/* tocリストに番号付けする */
+.toc-modal .modal-body .toc ul li:before {
+  counter-increment: count 1;
+  content: counters(count, "-") ". ";
+  font-size: 20px;
+}
+
+.toc-modal .modal-body .toc ul li {
+  padding: 1%; /* 目次の各項目に余白を空ける */
+}
+
+.toc-modal .modal-body .toc a {
+  color: gray;
+}
+
+/* blogs/toc_display.html */
+#toc_display {
+  position: fixed;
+  right: 0;
+  bottom: 50%;
+}
