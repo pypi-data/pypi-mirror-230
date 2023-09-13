@@ -1,0 +1,128 @@
+[project]
+name = "aiopenapi3"
+description = "client and validator for OpenAPI3 3.0, OpenAPI 3.1, Swagger 2.0"
+authors = [
+    {name = "Markus Kötter", email = "commonism@users.noreply.github.com"},
+]
+dependencies = [
+    "PyYaml",
+    "pydantic",
+    "email-validator",
+    "yarl==1.8.1",
+    "httpx",
+    "more-itertools",
+    'typing_extensions; python_version<"3.9"',
+    'pathlib3x; python_version<"3.9"',
+    "jmespath",
+]
+requires-python = ">=3.8"
+readme = "README.md"
+license = {text = "BSD-3-Clause"}
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Web Environment",
+    "Framework :: AsyncIO",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Topic :: Internet",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+dynamic = ['version']
+
+[project.urls]
+Documentation = "https://aiopenapi3.readthedocs.io/"
+Repository = "https://github.com/commonism/aiopenapi3"
+
+[project.optional-dependencies]
+auth = [
+    "httpx-auth",
+]
+socks = [
+    "httpx-socks",
+]
+
+[project.scripts]
+aiopenapi3 = "aiopenapi3.cli:main"
+
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = [
+    "aiopenapi3",
+    "aiopenapi3.v20",
+    "aiopenapi3.v30",
+    "aiopenapi3.v31"
+]
+
+[tool.setuptools.dynamic]
+version = {attr = "aiopenapi3.version.__version__"}
+
+[tool.black]
+line-length = 120
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "error",
+    "ignore:_:UserWarning",
+    "ignore:unclosed <socket.socket fd=\\d+, family=AddressFamily.AF_UNIX, type=SocketKind.SOCK_DGRAM, proto=0, raddr=/run/systemd/journal/dev-log>:ResourceWarning",
+    "ignore:unclosed file <_io.FileIO name='/tmp/aiopenapi3-debug.log' mode='ab' closefd=True>:ResourceWarning",
+    "ignore:unclosed file <_io.TextIOWrapper name='/tmp/aiopenapi3-debug.log' mode='a' encoding='UTF-8'>:ResourceWarning",
+    "ignore:unclosed <ssl.SSLSocket:ResourceWarning",
+    "ignore:unclosed <socket.socket fd=:ResourceWarning",
+    "ignore:Ignoring Schema with additionalProperties and named properties:UserWarning",
+    "ignore:'flask.Markup' is deprecated and will be removed in Flask 2.4. Import 'markupsafe.Markup' instead.:DeprecationWarning"
+]
+asyncio_mode = "strict"
+
+log_cli = "yes"
+log_cli_level = "DEBUG"
+log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
+
+addopts = "--ignore-glob 'tests/my_*.py'"
+
+[tool.pdm.dev-dependencies]
+tests = [
+    "pytest",
+    "pytest-asyncio",
+    "pytest-httpx",
+    "pytest-cov",
+    "fastapi",
+    "fastapi-versioning",
+    "uvloop",
+    "flask",
+    "flask_wtf",
+    "wtforms",
+    "asgiref",
+    "trustme",
+    "nonecorn",
+    "bootstrap-flask",
+    "ijson",
+    "python-multipart>=0.0.6",
+]
+
+[tool.pdm]
+plugins = [
+    "pdm-autoexport"
+]
+
+[[tool.pdm.autoexport]]
+filename = "requirements.txt"
+groups = ["default"]
+without-hashes = "true"
