@@ -1,0 +1,2 @@
+import{W as c,I as d}from"./InteractiveImage-05b9d859.js";import"./index-d56f85a6.js";import"./Button-c64e4cb9.js";import"./BlockLabel-f9819ad7.js";import"./Image-c6dcc263.js";import"./utils-90f3612b.js";import"./IconButton-7f04808c.js";import"./ModifyUpload-b0ae1071.js";import"./Undo-6d1f2f78.js";import"./Upload-c860b4df.js";import"./UploadText-e598cd5a.js";export{c as Webcam,d as default};
+//# sourceMappingURL=index-604ab70b.js.map
