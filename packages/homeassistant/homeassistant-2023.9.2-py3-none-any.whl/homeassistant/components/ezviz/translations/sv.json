@@ -1,0 +1,101 @@
+{
+    "config": {
+        "abort": {
+            "already_configured_account": "Konto har redan konfigurerats",
+            "ezviz_cloud_account_missing": "Ezviz molnkonto saknas. V\u00e4nligen konfigurera om Ezviz molnkonto",
+            "reauth_successful": "\u00c5terautentisering lyckades",
+            "unknown": "Ov\u00e4ntat fel"
+        },
+        "error": {
+            "cannot_connect": "Kunde inte ansluta",
+            "invalid_auth": "Ogiltig autentisering",
+            "invalid_host": "Ogiltigt v\u00e4rdnamn eller IP-adress"
+        },
+        "flow_title": "{serial}",
+        "step": {
+            "confirm": {
+                "data": {
+                    "password": "L\u00f6senord",
+                    "username": "Anv\u00e4ndarnamn"
+                },
+                "description": "Ange RTSP-uppgifter f\u00f6r Ezviz-kamera {serial} med IP {ip_address}",
+                "title": "Uppt\u00e4ckte EZVIZ-kamera"
+            },
+            "reauth_confirm": {
+                "data": {
+                    "password": "L\u00f6senord",
+                    "username": "Anv\u00e4ndarnamn"
+                },
+                "title": "\u00c5terautenticera integration"
+            },
+            "user": {
+                "data": {
+                    "password": "L\u00f6senord",
+                    "url": "URL",
+                    "username": "Anv\u00e4ndarnamn"
+                },
+                "title": "Anslut till EZVIZ-molnet"
+            },
+            "user_custom_url": {
+                "data": {
+                    "password": "L\u00f6senord",
+                    "url": "URL",
+                    "username": "Anv\u00e4ndarnamn"
+                },
+                "description": "Ange din regions URL manuellt",
+                "title": "Anslut till anpassad EZVIZ URL"
+            }
+        }
+    },
+    "entity": {
+        "siren": {
+            "siren": {
+                "name": "Siren"
+            }
+        }
+    },
+    "issues": {
+        "service_depreciation_detection_sensibility": {
+            "description": "Ezviz Detection sensitivity tj\u00e4nsten \u00e4r f\u00f6r\u00e5ldrad och kommer att tas bort i Home Assistant 2023.12; V\u00e4nligen justera automatiseringar eller skripten som anv\u00e4nder tj\u00e4nsten och v\u00e4lj skicka nedan f\u00f6r att markera detta problem som l\u00f6st.",
+            "fix_flow": {
+                "step": {
+                    "confirm": {
+                        "description": "Ezviz Detection sensitivity service \u00e4r f\u00f6r\u00e5ldrad och kommer att tas bort i Home Assistant 2023.12.\nF\u00f6r att st\u00e4lla in k\u00e4nsligheten kan du ist\u00e4llet anv\u00e4nda tj\u00e4nsten `number.set_value` som riktar sig till enheten Detection sensitivity.\n\nTa bort den h\u00e4r tj\u00e4nsten fr\u00e5n dina automatiseringar och skript och v\u00e4lj **skicka** f\u00f6r att st\u00e4nga det h\u00e4r problemet.",
+                        "title": "Ezviz Detection sensitivity-tj\u00e4nsten h\u00e5ller p\u00e5 att tas bort"
+                    }
+                }
+            },
+            "title": "Ezviz Detection sensitivity-tj\u00e4nsten h\u00e5ller p\u00e5 att tas bort"
+        },
+        "service_depreciation_ptz": {
+            "fix_flow": {
+                "step": {
+                    "confirm": {
+                        "title": "EZVIZ PTZ tj\u00e4nst tas bort"
+                    }
+                }
+            },
+            "title": "EZVIZ PTZ tj\u00e4nst tas bort"
+        },
+        "service_depreciation_sound_alarm": {
+            "fix_flow": {
+                "step": {
+                    "confirm": {
+                        "title": "Ezviz Sound larmtj\u00e4nt tas bort"
+                    }
+                }
+            },
+            "title": "Ezviz Sound larmtj\u00e4nt tas bort"
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "data": {
+                    "ffmpeg_arguments": "Argument som skickas till ffmpeg f\u00f6r kameror",
+                    "timeout": "Timeout f\u00f6r beg\u00e4ran (sekunder)"
+                }
+            }
+        }
+    }
+}
