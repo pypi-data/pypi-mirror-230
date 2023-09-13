@@ -1,0 +1,136 @@
+Metadata-Version: 2.1
+Name: metalpy
+Version: 0.1.0
+Summary: Essential tools and libraries for SimPEG and related workflows.
+Author-email: yanang007 <yanang007@gmail.com>
+License: MIT License
+        
+        Copyright (c) 2022 - 2023, yanang007
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Classifier: License :: OSI Approved :: MIT License
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Provides-Extra: tests
+Requires-Dist: metalpy[complete]; extra == "tests"
+Requires-Dist: pytest; extra == "tests"
+Provides-Extra: docs
+Requires-Dist: sphinx; extra == "docs"
+Provides-Extra: pure
+Provides-Extra: utils
+Requires-Dist: numpy; extra == "utils"
+Requires-Dist: blosc2>=0.4.0; extra == "utils"
+Requires-Dist: cloudpickle; extra == "utils"
+Requires-Dist: tqdm; extra == "utils"
+Provides-Extra: mexin
+Provides-Extra: mepa
+Requires-Dist: loky; extra == "mepa"
+Requires-Dist: distributed; extra == "mepa"
+Requires-Dist: psutil; extra == "mepa"
+Provides-Extra: carto
+Requires-Dist: numpy; extra == "carto"
+Requires-Dist: pillow; extra == "carto"
+Requires-Dist: imageio; extra == "carto"
+Requires-Dist: requests; extra == "carto"
+Requires-Dist: pyproj; extra == "carto"
+Requires-Dist: rasterio; extra == "carto"
+Requires-Dist: affine; extra == "carto"
+Provides-Extra: aero
+Requires-Dist: piexif; extra == "aero"
+Provides-Extra: scab
+Requires-Dist: metalpy[mepa,mexin,utils]; extra == "scab"
+Requires-Dist: SimPEG>=0.18; extra == "scab"
+Requires-Dist: discretize; extra == "scab"
+Requires-Dist: numpy; extra == "scab"
+Requires-Dist: pandas; extra == "scab"
+Requires-Dist: scipy; extra == "scab"
+Requires-Dist: scikit-learn; extra == "scab"
+Requires-Dist: pyamg; extra == "scab"
+Requires-Dist: pyvista; extra == "scab"
+Requires-Dist: matplotlib; extra == "scab"
+Requires-Dist: colour; extra == "scab"
+Requires-Dist: taichi>=1.3.0; extra == "scab"
+Requires-Dist: properties; extra == "scab"
+Requires-Dist: pympler; extra == "scab"
+Requires-Dist: psutil; extra == "scab"
+Requires-Dist: blosc2>=0.4.0; extra == "scab"
+Requires-Dist: tqdm; extra == "scab"
+Provides-Extra: complete
+Requires-Dist: metalpy[carto,mepa,mexin,scab,utils]; extra == "complete"
+Provides-Extra: dev
+Requires-Dist: metalpy[complete,docs,tests]; extra == "dev"
+Requires-Dist: nox; extra == "dev"
+Requires-Dist: versioningit; extra == "dev"
+Requires-Dist: tomli; extra == "dev"
+Requires-Dist: build; extra == "dev"
+
+<h1 align="center">
+<img src="https://github.com/yanang007/metalpy/raw/main/branding/logo/metalpylogo.png" width="300" alt="METALpy">
+</h1>
+
+<div align="center">
+
+[简体中文](https://github.com/yanang007/metalpy/tree/main/README.zh_CN.md) | [English](https://github.com/yanang007/metalpy/tree/main/README.md)
+
+</div>
+
+-------------
+![PyPI](https://img.shields.io/pypi/v/metalpy)
+
+**METAL Essential Tools and Libraries (Python)** (**metalpy**),
+is a collection of common python tools and libraries for SimPEG and related workflows,
+which currently includes:
+1. **MEPA**: a general-purposed parallelization framework.
+2. [**Mexin**](https://github.com/yanang007/metalpy/tree/main/metalpy/mexin/README.md): a code injection framework for Python.
+3. [**SCAB**](https://github.com/yanang007/metalpy/tree/main/metalpy/scab/README.md): a collection of SimPEG related utilities and extensions.
+4. [**Carto**](https://github.com/yanang007/metalpy/tree/main/metalpy/carto/README.md): cartography related utilities, aiming to download tile maps and
+save/load GeoTIFF images.
+
+Installation
+------------
+Metalpy can be installed using _pip_:
+
+```console
+pip install "metalpy[complete]"
+```
+
+<details><summary><b>Notes on installing with pip</b></summary>
+<p>
+
+`metalpy` manages its dependencies separately, which means expected modules 
+should be specified in `pip` installation process.
+
+Supported commands are listed next:
+```console
+pip install "metalpy[complete]"    # Install all requirements
+pip install "metalpy[scab]"        # Install requirements for SCAB
+pip install "metalpy[carto]"       # Install requirements for Carto
+pip install "metalpy[scab, carto]" # Install requirements for SCAB and Carto
+pip install "metalpy[mepa]"        # Install requirements for MEPA
+pip install "metalpy[mexin]"       # Install requirements for Mexin
+pip install "metalpy[tests]"       # Install requirements for tests
+pip install "metalpy[docs]"        # Install requirements for doc generation
+pip install "metalpy[dev]"         # Install requirements for development
+```
+
+</p>
+</details>
