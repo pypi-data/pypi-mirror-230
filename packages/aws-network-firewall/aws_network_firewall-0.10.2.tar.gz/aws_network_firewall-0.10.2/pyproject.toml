@@ -1,0 +1,59 @@
+[tool.poetry]
+name = "aws-network-firewall"
+version = "0.10.2"
+description = ""
+authors = ["Joris Conijn <Joris.Conijn@xebia.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "aws_network_firewall"}]
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.3.0"
+radon = "^5.1.0"
+mypy = "^1.3.0"
+pytest = "^7.3.2"
+pytest-cov = "^4.1.0"
+types-pyyaml = "^6.0.12.11"
+
+[tool.semantic_release]
+version_variable = [
+    "aws_network_firewall/__init__.py:__version__",
+    "pyproject.toml:version"
+]
+branch = "main"
+upload_to_pypi = true
+upload_to_release = true
+build_command = "pip install poetry && poetry build"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+click = "^8.1.3"
+pyyaml = "^6.0"
+jinja2 = "^3.1.2"
+xenon = "^0.9.0"
+jsonschema = "^4.18.3"
+landingzone-organization = "^0.8.0"
+jsonschema2md = "^0.9.0"
+
+
+[tool.poetry.scripts]
+aws-network-firewall = "aws_network_firewall.cli:cli"
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.coverage.run]
+branch = true
+source = ["aws_network_firewall"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 98
+exclude_lines = [
+    "if __name__ == .__main__.:",
+    "raise NotImplementedError"
+]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

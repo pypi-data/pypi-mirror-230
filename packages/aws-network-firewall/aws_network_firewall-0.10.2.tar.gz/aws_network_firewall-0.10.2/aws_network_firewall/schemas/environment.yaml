@@ -1,0 +1,131 @@
+description: Schema for defining an environment
+type: object
+additionalProperties: False
+required:
+  - AccountId
+  - Name
+properties:
+  AccountId:
+    type: string
+  Name:
+    type: string
+  CidrRanges:
+    type: object
+    additionalProperties: False
+    properties:
+      ap-northeast-1:
+        type: string
+      ap-southeast-1:
+        type: string
+      eu-central-1:
+        type: string
+      eu-west-1:
+        type: string
+      sa-east-1:
+        type: string
+      ca-central-1:
+        type: string
+      us-east-1:
+        type: string
+      us-east-2:
+        type: string
+  SidRange:
+    type: string
+    pattern: "^[0-9]+-[0-9]+$"
+  Rules:
+    type: array
+    items:
+      $ref: "#/definitions/Rule"
+    examples:
+      - Name: Outbound Connectivity
+        Type: Egress
+        Description: Allow traffic to reach the outbound destinations
+        Sources:
+          - $ref: "#/definitions/Source"
+        Destinations:
+          - $ref: "#/definitions/Destination"
+
+definitions:
+  Rule:
+    type: object
+    additionalProperties: False
+    required:
+      - Name
+      - Type
+      - Region
+      - Description
+      - Sources
+      - Destinations
+    properties:
+      Name:
+        type: string
+      Type:
+        enum: [ "Egress", "Inspection" ]
+      Description:
+        type: string
+      Region:
+        type: string
+      Sources:
+        type: array
+        items:
+          $ref: "#/definitions/Source"
+      Destinations:
+        type: array
+        items:
+          $ref: "#/definitions/Destination"
+
+  Source:
+    type: object
+    additionalProperties: False
+    required:
+      - Description
+    properties:
+      Description:
+        type: string
+      Cidr:
+        type: string
+    examples:
+      - Description: Allow access from `10.0.0.0/8` to the defined destinations.
+        Cidr: 10.0.0.0/8
+      - Description: Allow access from `eu-central-1` to the defined destinations.
+        Region: eu-central-1
+
+  Destination:
+    type: object
+    additionalProperties: False
+    required:
+      - Description
+      - Protocol
+    anyOf:
+      - required: ["Endpoint", "Cidr"]
+      - required: ["Endpoint"]
+        not: { required: ["Cidr"] }
+      - required: ["Cidr"]
+        not: { required: ["Endpoint"] }
+#      Port is not required when Protocol is ICMP
+    properties:
+      Description:
+        type: string
+      Endpoint:
+        type: string
+      Cidr:
+        type: string
+      Region:
+        type: string
+      Protocol:
+        enum: [ "TCP", "TLS", "ICMP", "DNS" ]
+      Port:
+        type: integer
+      Message:
+        type: string
+      TLSVersions:
+        type: array
+        items:
+          enum: [ "tls1.2", "tls1.3" ]
+    examples:
+      - Description: Website of Xebia
+        Protocol: TLS
+        Endpoint: xebia.com
+        Region: eu-central-1
+        Port: 443
+
