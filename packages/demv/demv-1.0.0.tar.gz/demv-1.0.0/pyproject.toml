@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "demv"
+version = "1.0.0"
+description = "Debiaser for Multiple Variables, a model- and data- agnostic method to improve fairness in binary and multi-class classification tasks"
+readme = "README.md"
+authors = [{ name = "Giordano d'Aloisio", email = "giordano.daloisio@gmail.com" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: GNU Affero General Public License v3",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["bias", "fairness", "preprocessing", "classification", "multi class"]
+dependencies = [
+    "pandas",
+    "numpy",
+    "scikit-learn",
+]
+requires-python = ">=3.6.0"
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.urls]
+Homepage = "https://github.com/giordanoDaloisio/demv"
+
+[tool.setuptools]
+packages = ["demv"]
