@@ -1,0 +1,90 @@
+Metadata-Version: 2.1
+Name: mpu-servocontrol
+Version: 0.1.2
+Summary: beta version
+Home-page: UNKNOWN
+Author: Radu Alexandru
+Author-email: radual3xandru6@gmail.com
+License: MIT
+Platform: UNKNOWN
+Description-Content-Type: text/markdown
+Requires-Dist: smbus
+
+# MPU6050 Servocontrol (Raspberry Pi)
+A small library to control a servomotor via an mpu6050 accelerometer . 
+This library is based on the i2c connection and it is necessary to install the smbus module first. 
+In fact, it is made only for raspberry pi systems .  
+
+
+
+### Installation
+First get smbus
+```
+pip install smbus
+```
+
+Then install mpu-servocontrol
+```
+pip install mpu-servocontrol
+```
+
+### ServoControl class
+
+```
+ServoControl(servo_pin , i2c_port)
+```
+i2c_port=1 or 0 (depends of raspberry pi model)
+and for servo_pin pick a pin that have pwm
+
+
+Initialize mpu sensor
+```
+ServoControl.setup_mpu()
+```
+
+Pick an axis (x/y/z)
+This method returns data that has been read
+```
+ServoControl.read_data_x() / .read_data_y() / .read_data_z()
+```
+
+Start servocontrol 
+As argument put the data read from an axis
+```
+ServoControl.start_control(data)
+```
+
+Stop servocontrol 
+```
+ServoControl.stop_control()
+```
+
+
+### Get started
+This is an exemple
+
+```Python
+import RPi.GPIO as g
+from mpu_servocontrol.mainclass import ServoControl    #Import
+import time
+import sys
+
+
+g.setwarnings(False)
+g.setmode(g.BCM)
+
+sc = ServoControl(servo_pin=12 , i2c_port=1)        #Make an instance of ServoControl class
+sc.setup_mpu()                                      #Initialize mpu6050 accelerometer
+
+try:
+    while True:                                     #Main loop
+        data = sc.read_data_y()                     #Read data from y axis
+        sc.start_control(data=data)                 #Start
+        time.sleep(0.08)                            #Add a little delay
+except KeyboardInterrupt:
+    sc.stop_control()
+    g.cleanup()
+    sys.exit(0)                                     #Press ctrl+c to stop
+```
+
+
