@@ -1,0 +1,24 @@
+[build-system]
+requires = ["maturin>=0.14,<0.15"]
+build-backend = "maturin"
+
+[project]
+name = "rusty_capacitance_model_core"
+requires-python = ">=3.7"
+authors = [
+    {name = 'Barnaby van Straaten', email = 'barnaby.vanstraaten@kellogg.ox.ac.uk'}
+]
+classifiers = [
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+]
+
+[project.urls]
+Homepage = 'https://github.com/b-vanstraaten/rusty_capacitance_model_core'
+
+
+
+[tool.maturin]
+features = ["pyo3/extension-module"]
+
