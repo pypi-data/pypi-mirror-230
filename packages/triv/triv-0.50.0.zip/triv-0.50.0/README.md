@@ -1,0 +1,64 @@
+Triv
+=====
+
+### *A syntax for the web and more...*
+
+````
+[What]
+: Your documents, any documents,
+: as you like.
+
+[.Online.]
+
+[..Learn..]
+https://triv.co/docs
+
+[..Try..]
+https://triv.co/workshop
+
+[.Download.]
+: ```
+pip install triv
+```
+````
+
+#### 3v *- the command line*
+
+The downloadable `3v` command compiles a Triv document into your choice of markup.
+
+The Triv syntax is recommended for HTML and XML applications.
+
+#### Python
+
+PyPI hosts the first-choice way to compile with Triv:
+
+```
+pip install triv
+3v file.3v > file.xml
+```
+
+###### Other options include:
+
+1. [Web Workshop](https://www.triv.co/workshop)
+
+2. Any text editor, with the following lines at the start:
+
+        <script>"interpretive"</script>
+        <script src="https://www.triv.co/3v.js"></script>
+
+    Then, double-click to open in your browser!  *[(Limitations)](https://www.triv.co/docs/interpretive-limitations.html)*
+
+3. In a web page as a linked script
+
+   (view the source of the Web Workshop for an example)
+
+4. A Node.js translation of the `3v` command available with:
+
+        npm install triv-3v -g
+        3v file.3v > file.html
+
+    *Please note:* The Python implementation serves as the reference implementation for the project and is the first to receive updates and bugfixes.
+
+---
+
+License: BSD (3-clause);  Copyright ©2023 Triv Collective
