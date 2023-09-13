@@ -1,0 +1,34 @@
+import logging
+import warnings
+from threading import Thread
+
+
+def calculate_common_pool(thread_list):
+    warnings.warn("此方法已弃用，不推荐使用，切换到lesscode-utils包里", DeprecationWarning)
+    for j in thread_list:
+        j.start()
+    for t in thread_list:
+        t.join()
+    return [i.get_result() for i in thread_list]
+
+
+class MyThread(Thread):
+    warnings.warn("此方法已弃用，不推荐使用，切换到lesscode-utils包里", DeprecationWarning)
+
+    def __init__(self, target, args=(), kwargs=None):
+        super(MyThread, self).__init__()
+        if kwargs is None:
+            kwargs = {}
+        self.func = target
+        self.args = args
+        self._kwargs = kwargs
+
+    def run(self):
+        self.result = self.func(*self.args, **self._kwargs)
+
+    def get_result(self):
+        try:
+            return self.result
+        except:
+            logging.info("多线程执行报错")
+            return None
