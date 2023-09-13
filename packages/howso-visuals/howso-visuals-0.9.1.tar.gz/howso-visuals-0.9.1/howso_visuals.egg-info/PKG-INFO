@@ -1,0 +1,59 @@
+Metadata-Version: 2.1
+Name: howso-visuals
+Version: 0.9.1
+Summary: Visualization utilities for use with Howso Engine.
+License: Commercial
+Project-URL: homepage, https://howso.com
+Project-URL: documentation, https://docs.howso.com/
+Project-URL: repository, https://github.com/howsoai/howso-visuals-py
+Keywords: machine,learning,artificial,intelligence,data,visualization
+Classifier: Development Status :: 3 - Alpha
+Classifier: License :: Other/Proprietary License
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.8
+Description-Content-Type: text/x-rst
+License-File: LICENSE.txt
+Requires-Dist: seaborn~=0.12.0
+Requires-Dist: plotly
+Requires-Dist: scipy
+Provides-Extra: dev
+Requires-Dist: flake8; extra == "dev"
+Requires-Dist: howso-engine; extra == "dev"
+Requires-Dist: isort; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: yapf; extra == "dev"
+
+# Howso&trade; Visualization Utilities
+
+This repository contains several utility functions for plotting data that are both input to and output from
+[Howso Engine](https://github.com/howsoai/howso-engine). In particular, highlighting:
+
+- Model drift
+- Feature importances
+- Interpretable predictions
+- Entire datasets
+
+## Installation
+
+Simply install with pip:
+
+```.bash
+python -m pip install howso-visuals
+```
+
+Or, to install for development, clone this repository and install it editably:
+
+```.bash
+git clone github.com/howsoai/howso-visuals
+cd howso-visuals
+python -m pip install -e .[dev]
+```
+
+## License
+
+[License](LICENSE.txt)
+
+## Contributing
+
+[Contributing](CONTRIBUTING.md)
