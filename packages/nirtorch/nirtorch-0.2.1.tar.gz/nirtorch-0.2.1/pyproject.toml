@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools"]
+
+[project]
+name = "nirtorch"
+description = "Neuromorphic Intermediate Representation"
+authors = [
+  { name = "Steven Abreu", email = "s.abreu@rug.nl" },
+  { name = "Felix Bauer", email = "felix.bauer@synsen.ai" },
+  { name = "Jason Eshraghian", email = "jeshragh@ucsc.edu" },
+  { name = "Matthias Jobst", email = "matthias.jobst2@tu-dresden.de" },
+  { name = "Gregor Lenz", email = "mail@lenzgregor.com" },
+  { name = "Jens Egholm Pedersen", email = "jens@jepedersen.dk" },
+  { name = "Sadique Sheik", email = "sadique.sheik@synsense.ai" },
+]
+readme = "README.md"
+keywords = ["neuromorphic", "intermediate", "representation"]
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [ "torch", "nir" ]
+dynamic = ["version"] # Version number read from __init__.py
+
+[tool.setuptools.dynamic]
+version = {attr = "nirtorch.__version__"}
