@@ -1,0 +1,70 @@
+Metadata-Version: 2.1
+Name: indomain
+Version: 0.0.0
+Project-URL: Home, https://arcee.ai
+Author-email: Shamane Siri <shamane@arcee.ai>, Ben Epstein <ben@arcee.ai>
+License: Apache 2.0
+Requires-Python: >=3.10
+Requires-Dist: accelerate
+Requires-Dist: bitsandbytes
+Requires-Dist: datasets
+Requires-Dist: diffusers
+Requires-Dist: evaluate
+Requires-Dist: hnswlib
+Requires-Dist: peft
+Requires-Dist: pydantic
+Requires-Dist: torch
+Requires-Dist: torchvision
+Requires-Dist: tqdm
+Requires-Dist: transformers
+Provides-Extra: dev
+Requires-Dist: black; extra == 'dev'
+Requires-Dist: boto3-stubs; extra == 'dev'
+Requires-Dist: build; extra == 'dev'
+Requires-Dist: httpx; extra == 'dev'
+Requires-Dist: invoke; extra == 'dev'
+Requires-Dist: jupyter; extra == 'dev'
+Requires-Dist: mypy; extra == 'dev'
+Requires-Dist: packaging; extra == 'dev'
+Requires-Dist: pre-commit; extra == 'dev'
+Requires-Dist: pytest; extra == 'dev'
+Requires-Dist: pytest-cov; extra == 'dev'
+Requires-Dist: pytest-mock; extra == 'dev'
+Requires-Dist: pytest-timeout; extra == 'dev'
+Requires-Dist: python-dotenv; extra == 'dev'
+Requires-Dist: rich; extra == 'dev'
+Requires-Dist: ruff; extra == 'dev'
+Requires-Dist: types-cachetools; extra == 'dev'
+Requires-Dist: types-markdown; extra == 'dev'
+Requires-Dist: types-pyyaml; extra == 'dev'
+Requires-Dist: types-requests; extra == 'dev'
+Requires-Dist: types-tqdm; extra == 'dev'
+Description-Content-Type: text/markdown
+
+# Domain Adapted Language Modeling Toolkit
+
+This repository primarily contains code for fine-tuning a **fully differential** Retrieval Augmented Generation (RAG-end2end) architecture. For the first time in the literature, we modified the initial RAG-end2end model ([TACL paper](https://aclanthology.org/2023.tacl-1.1/), [HuggingFace implementation](https://github.com/huggingface/transformers/tree/main/examples/research_projects/rag-end2end-retriever)) to work with decoder-only language models like Llma, Falcon, or GPT. We also incorporated the **in-batch negative concept** alongside the RAG's marginalization to make the entire process **efficient**.
+
+- Inside the [Training](https://github.com/arcee-ai/DALM/tree/main/Training) folder, you'll find two codes to train the RAG-end2end and Retriever with contrastive learning.
+
+- All evaluations related to the Retriever and the Generator are located in the [Evaluation](https://github.com/arcee-ai/DALM/tree/main/Evaluation) folder.
+
+- Additionally, we have data processing codes and synthetic data generation code inside the [Datasets](https://github.com/arcee-ai/DALM/tree/main/Datasets) folder.
+
+# Project Setup
+Create your virtual environment and install. We suggest pyenv
+```shell
+python -m venv .venv && source .venv/bin/activate
+pip install invoke && pyenv rehash
+inv install
+```
+
+## Train Retriever Only
+
+## Train Retriever and Generator Jointly
+
+## Arcee Domain Pretrained Models - DPT (Coming Soon)
+
+* Arcee-DPT-PubMed-7b
+* Arcee-DPT-Patent-7b
+* Arcee-DPT-SEC-7b
