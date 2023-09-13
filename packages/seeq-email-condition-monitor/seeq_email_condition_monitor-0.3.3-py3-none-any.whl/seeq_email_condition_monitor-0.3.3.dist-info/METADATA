@@ -1,0 +1,71 @@
+Metadata-Version: 2.1
+Name: seeq-email-condition-monitor
+Version: 0.3.3
+Summary: Data Lab Notebook-based Email Condition Monitor Scheduling tool
+Home-page: 
+Author: Alberto Rivas
+Author-email: alberto.rivas@seeq.com
+License: Apache License 2.0
+Platform: Linux
+Platform: Windows
+Classifier: Programming Language :: Python :: 3.8
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: jsonschema (>=4.16.0)
+Requires-Dist: beautifulsoup4 (>=4.9.3)
+Requires-Dist: pytz (>=2022.4)
+
+**seeq-email-condition-monitor** is a Python project that hosts the **Condition Monitor Scheduler** Seeq Data Lab addon 
+to enable email notifications triggered by Seeq conditions. This add-on is only available for SaaS deployments of 
+Seeq >=R58.2
+
+----
+
+# User Installation Requirements (Seeq Data Lab)
+
+If you want to install the **Condition Monitor Scheduler** Seeq add-on, you will need:
+
+- Seeq Data Lab (>=R58.2)
+- Seeq administrator access
+- Seeq SaaS deployment (the Email service is not available for on-prem deployments)
+
+### Note for Seeq on-prem customers
+The email service that this add-on needs is not available for on-premise deployments. For on-premise deployments, an
+SMTP-only Email Notification Add-On is included within the SPy documentation that comes with every DataLab project.
+
+
+# User Installation (Seeq Data Lab)
+
+The latest build of the project can be found [here](https://pypi.org/project/seeq-email-condition-monitor/) as a wheel
+file. The file is published as a courtesy to the user, and it does not imply any obligation for support from the 
+publisher.
+
+1. Download the `Email Condition Monitor Installer.ipynb` file 
+from the [latest release](https://github.com/seeq12/seeq-email-addon/releases/latest) under the `Assets` menu.
+2. Create a **new** Seeq Data Lab project and upload the `Email Condition Monitor Installer.ipynb` file to the SDL 
+   project.
+3. Open the `Email Condition Monitor Installer.ipynb` notebook and follow the instructions in there. 
+
+----
+
+# Support
+
+Code related issues (e.g. bugs, feature requests) can be created in the
+[issue tracker](https://github.com/seeq12/seeq-email-addon/issues)
+
+Maintainer: Seeq
+
+----
+
+# Citation
+
+Please cite this work as:
+
+```shell
+seeq-email-addon
+Seeq Corporation, 2022
+https://github.com/seeq12/seeq-email-addon
+```
