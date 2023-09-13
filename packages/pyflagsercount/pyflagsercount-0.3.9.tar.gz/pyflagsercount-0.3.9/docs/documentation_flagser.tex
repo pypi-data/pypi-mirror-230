@@ -1,0 +1,230 @@
+\documentclass{amsart}
+\usepackage[margin=1.1in]{geometry}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage[]{amsmath}
+\usepackage{amsthm}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{exscale}
+\usepackage{textcomp}
+\usepackage[all,ps,tips,tpic]{xy}
+\usepackage{upgreek}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage[final,pdftex,colorlinks=false,pdfborder={0 0 0}]{hyperref}
+\usepackage{microtype}
+\usepackage{verbatim}
+\usepackage{soul}
+
+\theoremstyle{definition}
+\newtheorem*{example*}{Example}
+
+%spacing around left-right brackets
+\let\originalleft\left
+\let\originalright\right
+\renewcommand{\left}{\mathopen{}\mathclose\bgroup\originalleft}
+\renewcommand{\right}{\aftergroup\egroup\originalright}
+
+\begin{document}
+\title{Documentation: flagser-count}
+
+\author{Jason P. Smith}
+\address{University of Aberdeen, Aberdeen, United Kingdom}
+\email{jason.smith@abdn.ac.uk}
+
+\maketitle
+
+\noindent
+This is an adapted version of Daniel Lütgehetmann's \textsc{flagser-count} (available \href{https://github.com/luetge/flagser}{here}) for computing
+the number of directed cliques in a directed graph, or equivalently the simplex counts of the directed flag complex of the graph.
+The main differences from the original flagser-count are: all persistent homology code removed to reduce unnecesary memory usage,
+a compressed option where the graph is stored by flagser-count in sparse format,
+the ability to read in the graph in sparse format, the functionality to print the simplices in normal form or in a condensed memory efficient form,
+the functionality to print the number of directed cliques each vertex belongs to, and the ability to select which vertices to consider as source vertices of the clique.
+
+
+Important: the input graphs can not contain self-loops, i.e.\ edges that start and end in the same
+vertex.
+
+\section{Requirements}
+\noindent
+\textsc{flagser-count} requires a C++11 compiler (such as g++) and to install pyflagsercount the pybind11 package is required, available \href{https://github.com/pybind/pybind11}{here}.
+
+
+\section{Compiling the source code}
+\noindent
+To compile using g++: Open the command line, change into the \textsc{flagser} main directory and compile with:
+\vspace{1em}
+
+\begin{verbatim}g++ src/flagser-count.cpp -o flagser-count -std=c++11 -pthread -lz\end{verbatim}
+
+\section{Usage}
+\noindent
+After building \textsc{flagser-count} it can be run as follows:
+
+\vspace{1em}
+
+\begin{verbatim}./flagser-count [options]\end{verbatim}
+
+\vspace{1em}
+
+For example:
+
+\vspace{1em}
+
+\begin{verbatim}./flagser-count --in-format flagser --in ./test/a.flag --out a.out --threads 8\end{verbatim}
+
+\vspace{1em}
+
+\noindent
+The following \texttt{[options]} exist:
+
+\enlargethispage{\baselineskip}
+\begin{description}
+  \item [-{}-in-format \textit{format}] the input format, can be \emph{flagser}, \emph{edge-list}, \emph{csc} or \emph{coo}
+  \item [-{}-out \textit{filename}] the simplex counts and Euler characteristic to \textit{filename}, when omitted the results are printed to the terminal
+  \item [-{}-max-dim \textit{dim}] the maximal dimension to be computed
+  \item [-{}-print \textit{filename}] prints all the simplices to a text file where each line gives a simplex, a file called filename$i$.simplices is created for $i=0,...,number\_of\_threads-1$. When used with -{}-max-simplices only the maximal simplices are printed.
+  \item [-{}-binary \textit{filename}] prints all the simplices in a condensed binary format, a file called filename$i$.binary is created for $i=0,...,number\_of\_threads-1$. When used with -{}-max-simplices only the maximal simplices are printed.
+  \item [-{}-max-dim-print \textit{dim}] the maximum dimension to be printed (inclusive) when --print or --binary are also called
+  \item [-{}-min-dim-print \textit{dim}] the minimum dimension to be printed (inclusive) when --print or --binary are also called, by default set to 2
+  \item [-{}-size \textit{n}] the number of vertices in the graph, must be given for edge-list, csc and coo formats
+  \item [-{}-threads \textit{t}] the number of parallel threads to be used, if not specified $t=8$ is used
+  \item [-{}-containment \textit{filename}] prints the number of directed cliques each vertex belongs, where line $i$ in \textit{filename} corresponds to vertex $i$ with the number of cliques it belongs to given for each dimension. When used with -{}-max-simplices the number of maximal simplices each vertex belongs to is printed instead. It is recommended to also use --est-max-dim to speed up computation.
+  \item [-{}-edge-containment \textit{filename}] prints the number of directed cliques each edge belongs, where line $i$ in \textit{filename} is of the form ``$i$ $j$ : $c_0$ $c_1$ $\ldots$" where $c_k$ is the number of $k$ simplices which contain edge $(i,j)$. When used with -{}-max-simplices the number of maximal simplices each edge belongs to is printed instead. Requires -{}-edges to be given. It is recommended to also use --est-max-dim to speed up computation.
+  \item [-{}-edges m] the number of edges in the graph, only needed for edge-containment.
+  \item [-{}-vertices-todo \textit{filename}] select only certain vertices to be considered as source neurons of cliques, input a 32bit numpy array containing the vertices to be considered.
+  \item [-{}-max-simplices] also counts the number of maximal simplices, and when used with print, binary or containment it will print the maximal simplices or return the number of maximal simplices each vertex is contained in instead.
+  \item [-{}-est-max-dim] an estimated value for the maximum dimension, giving a good estimate will make the computations slightly faster (particular when using containment or edge-containment).
+  \item [-{}-compressed] Enabling this option stores the graph in sparse format, slower performance but significantly less memory required. The graph must be inputted in csr (or csc) format, it is then kept in that format for the computations
+  \item [-{}-transpose] transposes the graph
+  \item [-{}-progress] prints the progress of the computation, every time a vertex is finished being considered as a source it prints the current count of that thread and the vertex considered.
+
+\end{description}
+
+\vspace{1em}
+
+\section{Formats}
+\subsection{flagser}
+\noindent
+The \textit{flagser} format takes as input a flag file by including -{}-in \textit{filename}, which must have the following shape:
+
+\vspace{.5em}
+\begin{verbatim}
+dim 0:
+0 0 ... 0
+dim 1:
+first_vertex_id_of_edge_0 second_vertex_id_of_edge_0
+first_vertex_id_of_edge_1 second_vertex_id_of_edge_1
+...
+first_vertex_id_of_edge_m second_vertex_id_of_edge_m
+\end{verbatim}
+\vspace{.5em}
+
+\noindent
+The edges are oriented to point from the first vertex to the second vertex.
+
+\begin{example*}
+  The full directed graph on three vertices is described by the
+  following input file:
+
+  \vspace{.5em}
+  \begin{verbatim}
+  dim 0:
+  0.2 0.522 4.9
+  dim 1:
+  0 1
+  1 0
+  0 2
+  2 0
+  1 2
+  2 1
+  \end{verbatim}
+\end{example*}
+
+Note the number of vertices on line 1 of the flag file will be the number of vertices used, so -{}-size has no effect when used with flagser format.
+
+\subsection{edge-list}
+The \textit{edge-list} format takes as input a text file by including -{}-in \textit{filename}, where every line of the file has two integers separated by whitespace which represents an edge from the first integer to the second. This is equivalent to flagser format with the first three lines removed.
+
+\subsection{csc}
+Uses scipy csc format, also requires
+\begin{verbatim}--indices filename1 --indptr filename2\end{verbatim}
+where the two files are numpy arrays corresponding to the indices and indptr lists in scipy csc format.
+
+\subsection{csr}
+Uses scipy csr format, same input as csc.
+
+\subsection{coo}
+Uses scipy coo format, also requires
+\begin{verbatim}--row filename1 --col filename2\end{verbatim}
+ where the two files are numpy arrays corresponding to the row and column lists in scipy coo format, i.e two lists were (row[i],column[i]) is an edge of the graph, for all $i$.
+
+All inputted numpy arrays should be either uint32 or uint64. Flagser-count will automatically detect which is used. Inputting int32 or int64 is also acceptable. Any other inputted type will throw an error.
+\section{Binary output}
+When using the -{}-binary the simplices are printed in the following way: Each simplex is represented as a sequence of 64 bit integers. With each 64 bit integer representing 3 vertex id's stored in 21bit format. The simplices are ordered from right to left. If the leading bit is 0 this indicates the start of a new simplex. So if $b$ is the binary representation of a 64 bit int, then $b[0]$ indicates whether we start a new simplex, $b[43:64]$, $b[22:43]$ and $b[1:22]$ are the binary representations of the vertex id of the simplex, in that order. So in a 2 dimensional simplex $b[43:64]$ is the source and $b[1:22]$ is the sink and $b[0]=0$. See the included python script binary2simplex.py for code to extract the simplices. The number of vertices must be less than $2^{21}$
+
+The size (in bytes) required to print the simplices can be computed, when the simplex counts are known, using the following formula:
+$$ \sum_{i=2}^{d}C_i\left\lceil\frac{i}{3}\right\rceil8$$
+where $C_i$ is the number of simplices in dimension $i$. Assuming we don't print the vertices and edges, which is the default as these are already known.
+
+
+\section{progress}
+The -{}-progress flag returns the counts computed on each thread so far after consider each vertex.
+For example calling \begin{verbatim}
+./flagser-count --in-format coo --row ./test/C_row.npy --col ./test/C_col.npy --size 5 
+                --threads 2 --progress 
+\end{verbatim}
+Gives the output:
+\begin{verbatim}
+1 : thread 1 : 1 1  : 1/5
+3 : thread 1 : 2 4 3 1  : 2/5
+0 : thread 0 : 1 2 1  : 3/5
+2 : thread 0 : 2 2 1  : 4/5
+4 : thread 0 : 3 5 4 1  : 5/5
+\end{verbatim}
+where the first element is the gid of the vertex which has just finished computing, the second entry is the thread it was computed on, the third entry is the current count on that thread, and the final entry is the number of neighbours that have finished computing. 
+
+So to get the counts for which vertex 3 is the source you take the third entry of the line `3 : thread 1 : 2 4 3 1  : 2/5', which is 2 4 3 1, and subtract from it the counts for the last time before that thread 1 appears which is the line `1 : thread 1 : 1 1  : 1/5', thus the counts for vertex 3 as source are 1 3 3 1.
+
+
+\section{pyflagsercount}
+\textit{pyflagsercount} is a python wrapper (using pybind11) for flagser-count.
+To use \textit{pyflagsercount}, first ensure it is installed, then open python and load the package with:
+\begin{verbatim}from pyflagsercount import flagser_count\end{verbatim}
+Then simply call:
+\begin{verbatim}X=flagser_count(M)\end{verbatim}
+Where $M$ is the adjacency matrix of the graph to consider as a numpy array.
+
+The function flagser\_count returns a dictionary containing the Euler characteristic (X['euler']) and the cell counts (X['cell\_counts']), along with the maximal cell counts (X['max\_cell\_counts']) and containment counts (X['contain\_counts']), when the max\_simplices or containment option are called, respectively.
+
+All of the optional arguments can also be used with \textit{pyflagsercount} (except -{}-progress), by using them as input arguments in flagser\_count, for example to specify 10 threads call:
+\begin{verbatim}X=flagser_count(M,threads=10)\end{verbatim}
+Or to print the simplices to outfile call:
+\begin{verbatim}X=flagser_count(M,print=`outfile')\end{verbatim}
+
+To use compressed version use compressed=True. To return containment values use containment=True, the containment values will be returned in the dictionary and will not be printed to a file. 
+
+The option return\_simplices=True, is available and when used will return the simplices in the dictionary so can be accessed with X['simplices']. The output is separated by dimension, so X['simplices'][3] will be all simplices of dimension 3. Note that dimensions 0 and 1 are always empty as the vertices and edges are already known.
+
+The functions \textit{flagser\_count\_edges} and \textit{flagser\_count\_csr} are also available, the optional arguments for these are the same as flagser\_count. The required arguments are:
+\begin{verbatim}X=flagser_count_edges(number_of_vertices, list_of_edges)\end{verbatim}
+where the list of edges is a list of pairs with each pair representing an edge, and
+\begin{verbatim}X=flagser_count_csr(number_of_vertices, indices_address, indptr_address)\end{verbatim}
+where indices\_address is a string containing the destination of a numpy file which contains the indices of the matrix when stored as csr format, similarly for indptr\_address.
+
+\section{flagser-count-individ}
+A version of flagser that has a required input -{}-vertex v, and computes all simplices in the graph for which $v$ is the source. Will return the same value as calling flagser-count where vertices\_todo contains the single vertex v. However, this version will consider each neighbour of $v$ on a separate thread, whereas using flagser-count will use a single thread for the whole computation. This is useful when considering vertices with very high out degree. Accepts all the same flags as flagser-count listed above. 
+
+The -{}-progress flag will return something similar as that for flagser-count, except the first entry is the neighbour of $v$ that has finished computing.
+
+For example (without the linebreak): 
+\begin{verbatim}
+./flagser-count-individ --in-format coo --row ./test/C_row.npy --col ./test/C_col.npy
+--size 5 --threads 2 --vertex 3 --progress
+\end{verbatim}
+
+\end{document}
