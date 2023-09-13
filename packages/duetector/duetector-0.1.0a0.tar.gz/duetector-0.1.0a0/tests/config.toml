@@ -1,0 +1,73 @@
+# This is a auto generated config file for duetector🔍
+# You can modify this file to change duetector's behavior
+# For more information, please visit https://github.com/hitsz-ids/duetector
+
+# All config keys will be converted to lower case.
+# It's ok to use upper case or camel case for readability.
+
+[filter]
+disabled = false
+
+
+[filter.patternfilter]
+disabled = false
+enable_customize_exclude = true
+re_exclude_fname = [
+    "/proc",
+    "/sys",
+    "/lib",
+    "/dev",
+    "/run",
+    "/usr/lib",
+    "/etc/ld.so.cache",
+    "/re/*",
+]
+re_exclude_comm = []
+exclude_pid = []
+exclude_uid = [0]
+exclude_gid = [0]
+exclude_custom = ["ignore_custom"]
+re_exclude_gcustom = ["ignore_custom*"]
+
+[tracer]
+disabled = false
+
+[tracer.unametracer]
+disabled = false
+enable_cache = true
+
+[tracer.opentracer]
+disabled = false
+
+[collector]
+disabled = false
+
+[collector.dbcollector]
+disabled = false
+id = "unittest"
+
+[collector.dbcollector.db]
+table_prefix = "duetector_tracking"
+
+[collector.dbcollector.db.engine]
+url = "sqlite:///:memory:"
+
+[collector.dequecollector]
+disabled = true
+id = "unittest"
+maxlen = 1024
+
+[monitor.bcc]
+disabled = false
+auto_init = true
+
+[monitor.sh]
+disabled = false
+auto_init = true
+timeout = 5
+
+[db_analyzer.db]
+table_prefix = "duetector_tracking"
+
+[db_analyzer.db.engine]
+url = "sqlite:///:memory:"
