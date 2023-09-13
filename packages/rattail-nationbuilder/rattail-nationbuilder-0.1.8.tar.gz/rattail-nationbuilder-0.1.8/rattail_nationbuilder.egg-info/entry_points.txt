@@ -1,0 +1,8 @@
+[rattail.commands]
+import-nationbuilder = rattail_nationbuilder.commands:ImportNationBuilder
+
+[rattail.config.extensions]
+rattail_nationbuilder = rattail_nationbuilder.config:RattailNationBuilderExtension
+
+[rattail.importing]
+to_rattail.from_nationbuilder.import = rattail_nationbuilder.importing.nationbuilder:FromNationBuilderToRattail
