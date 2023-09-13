@@ -1,0 +1,152 @@
+\documentclass[a4paper,11pt,oneside]{book}
+
+\usepackage{times}
+\usepackage[a4paper,hmargin=1.2cm,top=1cm,bottom=2.5cm, includefoot=true, hcentering]{geometry}
+
+\setlength{\parindent}{0pt}
+
+\usepackage[french]{babel}
+\usepackage[french]{isodate}
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc} % fonts to encode unicode
+\usepackage{changepage}  % for local redefinition of margins
+\usepackage{tcolorbox}
+\usepackage{tabularx}
+
+\newif\ifbackground
+\backgroundtrue
+\newif\iflogo
+\logotrue
+\newif\ifcredits
+\creditsfalse
+\newif\ifsponsors
+\sponsorsfalse
+\newif\ifmessage
+\messagefalse
+\newif\ifpreface
+\prefacetrue
+\newif\ifcommittee
+\committeetrue
+\newif\ifinvited
+\invitedtrue
+
+\usepackage{xspace}
+\usepackage{url}
+\usepackage{tikz}
+
+\usepackage{ragged2e}
+
+\usepackage{pdfpages}
+\usepackage{pax}
+
+\usepackage[newparttoc]{titlesec}
+\titleformat{\part}[display]{\center\normalfont\huge\bfseries}
+            {\partname\ \thepart}{20pt}{\Huge} 
+
+\usepackage{etoolbox}
+\usepackage[colorlinks,
+            allcolors=blue!60!black,
+            breaklinks=true,
+           ]{hyperref}   % hyperlinked table of contents, etc.
+
+\newcounter{article}
+\newcounter{articlePage}[article]
+
+\def\oldsession{}
+\def\cursession{}
+
+\usepackage{pdftexcmds}
+
+\def\halid{hal-0001}
+\newcommand\HAL[1]{\ifstrempty{#1}{}{\textsc{hal}~: \href{https://hal.archives-ouvertes.fr/#1}{#1}}}
+
+\usepackage{fancyhdr}
+\newlength{\HeaderHeight}
+\newsavebox{\HeaderBox}
+\savebox{\HeaderBox}{%
+  \small
+  \slshape
+  \begin{tabular}{@{}p{\textwidth}}
+    BOOK-PLACEHOLDER\\
+    LOCATION-PLACEHOLDER, DATE-PLACEHOLDER
+  \end{tabular}}
+
+\settoheight{\HeaderHeight}{\usebox{\HeaderBox}}
+
+\setlength{\headheight}{\HeaderHeight}
+\setlength{\headheight}{61pt}
+
+\fancyhf{}
+\fancyhead[L]{%
+  \ifnumequal{\value{articlePage}}{1}{%
+    \numdef{\lastpage}{\thepage + \lastbutonepage}
+    {\usebox{\HeaderBox}}{}}%
+}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{%
+  \ifnumequal{\value{articlePage}}{1}{%
+    \numdef{\lastpage}{\thepage + \lastbutonepage}
+    {\small
+      \begin{tabular}{l}
+	TRACK-NAME-PLACEHOLDER, pages \thepage--\lastpage.\\%
+        \ifthenelse{\equal{\halid}{}}{}{\ifthenelse{\equal{HAL-PLACEHOLDER}{}}{}{HAL-PLACEHOLDER.\\}}  
+	 \includegraphics[height=10pt]{by.eps}
+        Cette {\oe}uvre est mise à disposition sous licence
+        \href{http://creativecommons.org/licenses/by/4.0/}{Attribution 4.0 International}.
+  \end{tabular}}}{\thepage}%
+}
+
+\pagestyle{plain}
+
+% Parameters: file name, title, authors, horizontal offset, vertical offset
+\newcommand{\paper}[7]{%
+\cleardoublepage
+
+\phantomsection
+\addcontentsline{toc}{chapter}{#2}%\hspace{-17pt}#2}
+\addtocontents{toc}{$\,$\textit{#3}\par}%\vspace{5pt}}
+
+\edef\oldsession{\cursession}
+
+\pdfximage{#1}% Read entire PDF
+\edef\totalpages{\the\pdflastximagepages}% Store number of pages
+\edef\lastbutonepage{\number\numexpr\totalpages-1}% Store last page - 1
+\refstepcounter{article}
+\def\halid{#6}
+\includepdf[pages=-,width=\textwidth,offset={#4 #5},pagecommand={\pagestyle{fancy}\refstepcounter{articlePage}}]{#1}
+\cleardoublepage}
+
+\newcommand{\goodpaper}[5]{\paper{#1}{#2}{#3}{-0mm}{-0mm}{#4}{#5}}
+
+%\draft
+
+\usepackage{lmodern}
+\ifpdf
+\usepackage{pdfcolmk}
+\fi
+%% check if using xelatex rather than pdflatex
+\ifxetex
+\usepackage{fontspec}
+\fi
+\usepackage{graphicx}
+%% drawing package
+\usepackage{tikz}
+%% for dingbats
+\usepackage{pifont}
+\providecommand{\HUGE}{\Huge}% if not using memoir
+\newlength{\drop}% for convenience
+\usepackage{bookmark}
+
+\begin{document}
+
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\pagestyle{fancy}
+
+\setcounter{page}{PAGE-PLACEHOLDER}
+
+\goodpaper{PAPER-PDF}{PAPER-TITLE}%
+{PAPER-AUTHORS}{}{}
+
+\end{document}

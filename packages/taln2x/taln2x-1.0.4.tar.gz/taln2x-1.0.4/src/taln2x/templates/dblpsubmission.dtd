@@ -1,0 +1,43 @@
+<!ELEMENT dblpsubmission (proceedings|journal)*>
+
+<!ELEMENT proceedings (key?,editor*,title,publisher?,year,isbn*,doi?,conf,series?,toc)>
+<!ELEMENT conf (acronym?,number?,location,date,url?,partof?)>
+<!ELEMENT series (key?,title,number?)>
+
+<!ELEMENT journal (key?,title,short?,publisher?,address?,issn*,url?,volume*)>
+<!ELEMENT volume (number,issue+)>
+<!ELEMENT issue (number?,month?,year,toc)>
+
+<!ELEMENT toc (section|subsection|subsubsection|subsubsubsection|text|publ)*>
+<!ELEMENT publ (author*,title,pages?,doi?,ee?)>
+
+<!ELEMENT acronym (#PCDATA)>
+<!ELEMENT address (#PCDATA)>
+<!ELEMENT author (#PCDATA)>
+<!ATTLIST author original CDATA #IMPLIED>
+<!ELEMENT date (#PCDATA)>
+<!ELEMENT doi (#PCDATA)>
+<!ATTLIST doi proxy CDATA "http://dx.doi.org">
+<!ELEMENT editor (#PCDATA)>
+<!ATTLIST editor original CDATA #IMPLIED>
+<!ELEMENT ee (#PCDATA)>
+<!ELEMENT isbn (#PCDATA)>
+<!ATTLIST isbn type CDATA #IMPLIED>
+<!ELEMENT issn (#PCDATA)>
+<!ATTLIST issn type CDATA #IMPLIED>
+<!ELEMENT key (#PCDATA)>
+<!ELEMENT location (#PCDATA)>
+<!ELEMENT month (#PCDATA)>
+<!ELEMENT number (#PCDATA)>
+<!ELEMENT pages (#PCDATA)>
+<!ELEMENT partof (#PCDATA)>
+<!ELEMENT publisher (#PCDATA)>
+<!ELEMENT section (#PCDATA)>
+<!ELEMENT short (#PCDATA)>
+<!ELEMENT subsection (#PCDATA)>
+<!ELEMENT subsubsection (#PCDATA)>
+<!ELEMENT subsubsubsection (#PCDATA)>
+<!ELEMENT text (#PCDATA)>
+<!ELEMENT title (#PCDATA)>
+<!ELEMENT url (#PCDATA)>
+<!ELEMENT year (#PCDATA)>

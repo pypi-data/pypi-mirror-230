@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=64.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "taln2x"
+description = "A command-line application to export (TALN-like) conference proceedings to various formats (namely pdf, hal, aclanthology, dblp)"
+readme = "README.md"
+authors = [{ name = "Yannick Parmentier", email = "yannick.parmentier@gmail.com" }]
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Operating System :: OS Independent",
+]
+keywords = ["taln", "atala", "paper", "publication", "open archive"]
+dependencies = [
+	     "click",
+	     "openpyxl",
+	     "nameparser",
+	     "langdetect",
+	     "pylatexenc",
+	     "unidecode",
+	     "pybtex",
+	     "pypdf",
+	     "pycountry",
+	     "xmlschema",
+	     "tqdm",
+	     "lxml",
+	     "beautifulsoup4",
+	     "country_list",
+	     "tomlkit",
+]
+dynamic = ["version"]
+
+[project.urls]
+"Homepage" = "https://gitlab.inria.fr/talnarchives/taln2x"
+"Bug Tracker" = "https://gitlab.inria.fr/talnarchives/taln2x/-/issues"
+
+[project.scripts]
+taln2x = "taln2x.__main__:main"
+
+[tool.setuptools.dynamic]
+version = {attr = "taln2x.__version__"}
