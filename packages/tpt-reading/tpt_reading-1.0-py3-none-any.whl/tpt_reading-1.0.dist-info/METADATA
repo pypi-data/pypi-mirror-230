@@ -1,0 +1,184 @@
+Metadata-Version: 2.1
+Name: tpt-reading
+Version: 1.0
+Summary: package for template files reading and completion
+Home-page: UNKNOWN
+Author: Marc MALBERT
+Author-email: eldrad-59@hotmail.fr
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+
+tpt_reading - package for template files reading and completion
+===============================================================
+
+This package is designed to read template files (with their dedicated format) and complete them 
+by reading the data from a HierarchicalNode instance.  
+The operattion is thus performed in three steps :
+* Read the template and store its structure
+* Read/generate the raw data used for completion in a HierarchicalNode instance
+* generate the completed template with the raw data inserted in the template.
+
+The template allows two special features :
+* If : Some data can be placed in the completed template according to a condition.
+* For : It is possible to loop over data and thus have several similar sections in the completed template
+completed according to the raw data.
+
+# Structure of the template
+## Concept of block
+The template is splitted into several block. You cannot have data outside of a block. To delimite blocks, 
+the template use tags between brackets. Similarly to html format, an end block tag startswith the [\ characters.  
+Ex :
+
+```
+[BLOC_HEADER]
+...
+[\BLOC_HEADER]
+```
+
+These are the two tags delimiting a "BLOC_HEADER" block, "BLOC_HEADER" is thus the name of the block.
+
+Block names are not completely free, we will have a look to special blocks later but for now assert that 
+block names can be either :
+* BLOC
+* BLOC_* (with * following the glob synthax)
+
+Of Course, you can nest (and should) nest blocks in one another :  
+Ex :
+```
+[BLOC_BOOK]
+[BLOC TITLE]
+...
+[\BLOC TITLE]
+[BLOC_CHAPTER]
+...
+[\BLOC_CHAPTER]
+[\BLOC_BOOK]
+```
+
+## Special blocks
+### Root
+The root block is mandatory, it respects the same tag logic as other blocks. Any template must start 
+(and end) with a root block.  
+Ex :
+```
+[ROOT]
+...
+[\ROOT]
+```
+
+### For
+This block is designed to loop over the data of the hierarchical structure of raw data.
+It is necessary for you to understand the structure of a HierarchicalNode to understand how the "For" 
+block works.
+
+HierarchicalNode define tree like structures splitted into categories : 
+Each node contains several categories and the child nodes are within the categories.  
+Ex :
+```
+HierarchicalNode : "Parent node"
+|
+|__> Category : "category 1"
+|    |
+|    |__> HierarchicalNode : "child node 1"
+|    |
+|    |__> HierarchicalNode : "child node 2"
+|
+|__> Category : "category 2"
+     |
+     |__> HierarchicalNode : "child node 3"
+     |
+     |__> HierarchicalNode : "child node 4"
+```
+
+When you complete a "For" block with a HierarchicalNode, you must tell in the block name on which category 
+it will loop. The content of the block will then be repeated and completed with the content of each child node 
+of the indicated category.  
+Ex :
+
+```
+[BLOC_FOR_BOOKS]
+...
+[\BLOC_FOR_BOOKS]
+```
+
+This delimits a "For" block that will loop over the "BOOKS" category of the HierarchicalNode used to complete it.
+
+### If
+This block is designed to check if the data you want are present in the HierarchicalNode. The syntax 
+is similar to the one of the block "For".
+
+```
+[BLOC_IF_BOOKS]
+...
+[\BLOC_IF_BOOKS]
+```
+
+The block will be completed only if the pointed category exists in the related HierarchicalNode. 
+Here for instance, the block will be completed if the "BOOKS" category exists.  
+
+It is a good practice to nest a "For" block within a "If" block to avoid errors during template completion.
+
+## Options of blocks
+Options can be added to blocks, you just have to put them in the tag just after the name. Ex :
+
+```
+[BLOC_FOR_BOOKS NO_JUMP NO_END_JUMP]
+...
+[\BLOC_FOR_BOOKS]
+```
+Here, the two options "NO_JUMP" and "NO_END_JUMP" are added to the block
+
+### NO_JUMP
+The "NO_JUMP" option prevents the "For" block from adding empty lines between each completed block.
+
+### NO_END_JUMP
+The "NO_END_JUMP" option prevents the blockfrom adding an empty line at the end of the block.
+
+## Data completion
+The role of a template is to be completed by raw data. You have to indicate within the text of your block 
+where the replacements must occur. 
+
+HierarchicalNode also contains data within a simple dictionnary. When a block is completed, the replacement 
+is performed thanks to these data dictionnary. Any text between '@' symbol defines a text to be replaced by the 
+matching data.  
+Remark : You also have access to the data of the parent nodes.
+
+Ex :
+```
+[BLOC_FOR_BOOKS]
+Title : @Title@
+[BLOC_FOR_CHAPTERS]
+@Title@ :
+Chapter @Chapter_number@
+@Chapter_name@
+[\BLOC_FOR_CHAPTERS]
+[\BLOC_FOR_BOOKS]
+```
+Here for instance the template will be completed with book titles, chapter numbers and chapter names. 
+As you can see, the "Title" data is used within the block "BLOC_FOR_CHAPTERS" illustrating the fact that 
+you can access data from parent node within sub blocks.
+
+# How to use the library
+Reading a template is very easy, you just have to instanciate a TptRootNode instance with the path 
+to the template file as argument
+
+```python
+from tpt_reading import TptRootNode
+
+root_node = TptRootNode(".../path_to_the_template_file")
+```
+
+Once you have loaded your template you can get the completed text with the "get_text" method, applied 
+to your raw data within a HierarchicalNode instance.
+
+```python
+text = root_node.get_text(hierarchical_node.get_data_dict(), hierarchical_node)
+```
+
+
+
