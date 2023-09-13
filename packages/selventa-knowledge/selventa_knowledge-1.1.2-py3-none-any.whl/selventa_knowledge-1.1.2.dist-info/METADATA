@@ -1,0 +1,94 @@
+Metadata-Version: 2.1
+Name: selventa-knowledge
+Version: 1.1.2
+Summary: Selventa Large and Small Corpora via PyBEL
+Home-page: https://github.com/cthoyt/selventa-knowledge
+Download-URL: https://github.com/cthoyt/selventa-knowledge/releases
+Author: Charles Tapley Hoyt
+Author-email: cthoyt@gmail.com
+Maintainer: Charles Tapley Hoyt
+Maintainer-email: cthoyt@gmail.com
+License: MIT
+Project-URL: Bug Tracker, https://github.com/cthoyt/selventa-knowledge/issues
+Project-URL: Source Code, https://github.com/cthoyt/selventa-knowledge
+Keywords: Biological Expression Language,BEL,Domain Specific Language,DSL,Systems biology,Networks biology,Drug repositioning
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: Operating System :: OS Independent
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Topic :: Scientific/Engineering :: Bio-Informatics
+Classifier: Topic :: Scientific/Engineering :: Chemistry
+Requires-Python: >=3.6
+License-File: LICENSE
+Requires-Dist: pybel
+
+Selventa Knowledge
+==================
+Updated versions of the Selventa Small and Large Corpus
+
+Licenses
+--------
+- Code in this repository is licensed under the MIT License
+- Both the Selvanta Small Corpus and Selventa Large Corpus are distributed under
+  the Creative Commons Attribution-Non-Commercial-ShareAlike 3.0 Unported
+  License.
+
+Installation
+------------
+``selventa_knowledge`` can be installed from `PyPI <https://pypi.org/project/selventa-knowledge>`_ with:
+
+.. code-block:: sh
+
+   $ pip install selventa-knowledge
+
+``selventa_knowledge`` can be installed from `GitHub <https://github.com/cthoyt/selventa-knowledge>`_ with:
+
+.. code-block:: sh
+
+   $ pip install git+https://github.com/cthoyt/selventa-knowledge.git
+
+Usage
+-----
+The combine graph can be loaded with:
+
+.. code-block:: python
+
+    >>> import selventa_knowledge
+    >>> graph = selventa_knowledge.get_graph()
+
+If you need granularity, you can load each graph in a dictionary where
+all of the names of the files creating each graph are the keys and the
+values are also BEL graphs with:
+
+.. code-block:: python
+
+    >>> import selventa_knowledge
+    >>> graphs = selventa_knowledge.get_graphs()
+
+The functions from each of the previous examples are simply
+exposing the bound functions from the BELRepository object,
+which can be accessed with:
+
+.. code-block:: python
+
+    >>> import selventa_knowledge
+    >>> repository = selventa_knowledge.repository
+
+If you want to use this knowledge with INDRA, there's a method:
+
+.. code-block:: python
+
+    >>> import selventa_knowledge
+    >>> statements = selventa_knowledge.repository.get_indra_statements()
+
+More BEL Content
+----------------
+See `A Listing of Publicly Available Content in the Biological Expression Language (BEL)
+<https://cthoyt.com/2020/04/30/public-bel-content.html>`_ on Charles Tapley Hoyt's blog
+for more BEL content.
