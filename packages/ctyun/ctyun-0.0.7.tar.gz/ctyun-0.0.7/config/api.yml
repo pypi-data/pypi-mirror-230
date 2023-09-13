@@ -1,0 +1,164 @@
+apis:
+    getVpcs:
+        method: GET
+        servicePath: /apiproxy/v3/getVpcs
+        headers:
+            - regionId
+
+    deleteVPC:
+        method: POST
+        servicePath: /apiproxy/v3/deleteVPC
+        headers:
+            - vpcId
+            - regionId
+
+    createVPC:
+        method: POST
+        servicePath: /apiproxy/v3/createVPC
+        headers:
+            - regionId
+            - name
+            - cidr
+
+    getSubnets:
+        method: GET
+        servicePath: /apiproxy/v3/getSubnets
+        headers:
+            - regionId
+
+    createSubnet:
+        method: POST
+        servicePath: /apiproxy/v3/createSubnet
+        headers:
+            - regionId
+
+    deleteSubnet:
+        method: POST
+        servicePath: /apiproxy/v3/deleteSubnet
+        headers:
+            - regionId
+            - vpcId
+            - subnetId
+
+    queryIps:
+        method: GET
+        servicePath: /apiproxy/v3/ondemand/queryIps
+        headers:
+            - regionId
+
+    queryNetworks:
+        method: GET
+        servicePath: /apiproxy/v3/queryNetworks
+        headers:
+            - regionId
+
+    queryNetworkDetail:
+        method: GET
+        servicePath: /apiproxy/v3/queryNetworkDetail
+        headers:
+            - networkId
+
+    queryNetworksByOrderId:
+        method: GET
+        servicePath: /apiproxy/v3/queryNetworksByOrderId
+        headers:
+            - orderId
+
+    queryVMs:
+        method: GET
+        servicePath: /apiproxy/v3/ondemand/queryVMs
+        headers:
+            - regionId
+
+    createVM:
+        method: POST
+        servicePath: /apiproxy/v3/ondemand/createVM
+        headers:
+            - regionId
+            - createVMInfo
+
+    deleteVM:
+        method: POST
+        servicePath: /apiproxy/v3/ondemand/deleteVM
+        headers:
+            - regionId
+            - vmId
+
+    getSecurityGroups:
+        method: GET
+        servicePath: /apiproxy/v3/getSecurityGroups
+        headers:
+            - regionId
+
+    createSecurityGroup:
+        method: POST
+        servicePath: /apiproxy/v3/createSecurityGroup
+        headers:
+            - regionId
+            - vpcId
+            - name
+
+    createSecurityGroupRule:
+        method: POST
+        servicePath: /apiproxy/v3/createSecurityGroupRule
+        headers:
+            - regionId
+            - jsonStr
+        body:
+            - jsonStr: regionId,sgName,portRangeMin,portRangeMax,direction,ethertype,protocol,remoteIpPrefix,remoteGroupId
+
+    deleteSecurityGroup:
+        method: POST
+        servicePath: /apiproxy/v3/deleteSecurityGroup
+        headers:
+            - regionId
+            - securityGroupId
+
+    getSecurityGroupRules:
+        method: GET
+        servicePath: /apiproxy/v3/getSecurityGroupRules
+        headers:
+            - regionId
+
+    queryVolumes:
+        method: GET
+        servicePath: /apiproxy/v3/ondemand/queryVolumes
+        headers:
+            - regionId
+
+
+    deleteVolume:
+        method: POST
+        servicePath: /apiproxy/v3/ondemand/deleteVolume
+        headers:
+            - regionId
+            - volumeId
+
+    createVolume:
+        method: POST
+        servicePath: /apiproxy/v3/ondemand/createVolume
+        headers:
+            - regionId
+            - createVolumeInfo
+
+    queryNetworkCards:
+        method: GET
+        servicePath: /apiproxy/v3/queryNetworkCards
+        headers:
+            - regionId
+            - vmId
+
+    getImages:
+        method: GET
+        servicePath: /apiproxy/v3/order/getImages
+        headers:
+            - regionId
+            - imageType
+
+    bindIp:
+        method: POST
+        servicePath: /apiproxy/v3/ondemand/bindIp
+        headers:
+            - regionId
+            - volumeId
+
