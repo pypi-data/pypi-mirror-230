@@ -1,0 +1,77 @@
+name: Build Wheels
+
+on:
+  push:
+    branches:
+    - master
+    tags:
+    - 'v[0-9].*'
+
+jobs:
+  build_wheels:
+    name: Build wheels on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-20.04, windows-2019, macos-11]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # Used to host cibuildwheel
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Build sdist
+        if: matrix.os == 'ubuntu-20.04'
+        run: |
+          pip install cython>=0.29.24 scikit-build==0.17.6
+          python setup.py sdist
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.15.0
+        env:
+          CIBW_SKIP: 'cp36-* pp* *-musllinux* *linux_i686'
+          CIBW_ENVIRONMENT: >
+            SETUPTOOLS_ENABLE_FEATURES=legacy-editable
+          CIBW_BEFORE_ALL_LINUX: >
+            ln -s /etc/ssl/certs/ca-bundle.crt /etc/ssl/certs/ca-certificates.crt &&
+            curl -fsSL https://github.com/moparisthebest/static-curl/releases/download/v7.81.0/curl-amd64 -o /usr/local/bin/curl &&
+            chmod +x /usr/local/bin/curl &&
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" &&
+            brew install flex bison
+          CIBW_ENVIRONMENT_LINUX: PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH"
+          CIBW_BEFORE_ALL_WINDOWS: >
+            pwsh -c "Invoke-WebRequest https://github.com/lexxmark/winflexbison/releases/download/v2.5.25/win_flex_bison-2.5.25.zip -OutFile win_flex_bison-2.5.25.zip &&
+            Expand-Archive win_flex_bison-2.5.25.zip tools"
+          CIBW_ENVIRONMENT_WINDOWS: PATH="$(cmd /c cd)\\tools;$PATH"
+          CIBW_BEFORE_ALL_MACOS: >
+            brew install flex bison
+          CIBW_ENVIRONMENT_MACOS: PATH="/usr/local/opt/flex/bin:/usr/local/opt/bison/bin:$PATH"
+          CIBW_ARCHS_MACOS: universal2
+        with:
+          output-dir: dist
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: dist/*
+
+  upload_release:
+    name: Upload release
+    needs: [build_wheels]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+
+    steps:
+    - uses: actions/download-artifact@v3
+      with:
+        name: artifact
+        path: dist
+
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        draft: true
+        files: dist/*

@@ -1,0 +1,37 @@
+name: Docs
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    - name: Set up Homebrew
+      id: set-up-homebrew
+      uses: Homebrew/actions/setup-homebrew@master
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip setuptools wheel
+        brew install flex bison
+    - name: Install
+      run: |
+        pip install -e .[dev]
+      env: 
+        SETUPTOOLS_ENABLE_FEATURES: legacy-editable
+    - name: Build documentation
+      run: |
+        make html
+      working-directory: ./docs
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs/_build/html
