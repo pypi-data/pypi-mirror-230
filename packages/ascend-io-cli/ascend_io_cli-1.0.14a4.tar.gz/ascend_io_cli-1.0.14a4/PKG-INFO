@@ -1,0 +1,73 @@
+Metadata-Version: 2.1
+Name: ascend-io-cli
+Version: 1.0.14a4
+Summary: The Ascend CLI
+Home-page: https://www.ascend.io
+License: Apache-2.0
+Keywords: ascend,pipeline,data,automation,platform
+Author: Ascend.io Engineering
+Author-email: support@ascend.io
+Maintainer: Ascend.io Engineering
+Maintainer-email: support@ascend.io
+Requires-Python: >=3.9,<4.0
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Dist: PyYAML (>=6.0,<7.0)
+Requires-Dist: ascend-io-sdk (==0.2.62a0)
+Requires-Dist: jsonpath-ng (>=1.5.3,<2.0.0)
+Requires-Dist: pipdeptree (>=2.12.0,<3.0.0)
+Requires-Dist: rich (>=12,<13)
+Requires-Dist: shellingham (==1.4.0)
+Requires-Dist: tabulate (>=0.9.0,<0.10.0)
+Requires-Dist: tomlkit (>=0.12.1,<0.13.0)
+Requires-Dist: typer[all] (>=0.7.0,<0.8.0)
+Project-URL: Ascend.io, https://www.ascend.io
+Project-URL: Ascend Developer Hub, https://developer.ascend.io
+Project-URL: Documentation, https://developer.ascend.io
+Description-Content-Type: text/x-rst
+
+=====================
+Ascend.io CLI
+=====================
+
+This package contains the `Ascend CLI <https://developer.ascend.io/docs/python-sdk>`_. The
+CLI is designed to make working with the Ascend.io platform simple and easy. This CLI
+wraps the `Ascend Python SDK <https://developer.ascend.io/docs/python-sdk>`_.
+
+Get help by passing ``--help`` into any command for a rundown of the syntax for each command.::
+
+ ascend --help
+
+Make sure you are running the most current version and see what version of the *ascend-io-sdk* and platform you are using::
+
+ ascend version
+
+The CLI can save default values for certain parameters. For example, to set a default hostname::
+
+ ascend config set hostname my-ascendhost.company.io
+
+Removing a default is as simple as::
+
+ ascend config unset hostname
+
+---------------
+Authentication
+---------------
+You will want to download your API key from the Ascend UI. `Here is some documentation <https://developer.ascend.io/docs/python-sdk#getting-started>`_
+that shows you how to get your key. Please keep your key secure!
+
+
+---------------
+Read the Docs
+---------------
+* `Ascend.io Python SDK Documentation <https://developer.ascend.io/docs/python-sdk>`_
+* `Ascend Developer Hub <https://developer.ascend.io>`_
+* `Ascend.io <https://www.ascend.io>`_
+
