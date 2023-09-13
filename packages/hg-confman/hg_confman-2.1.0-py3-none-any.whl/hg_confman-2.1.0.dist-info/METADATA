@@ -1,0 +1,187 @@
+Metadata-Version: 2.1
+Name: hg-confman
+Version: 2.1.0
+Summary: Configuration management tool
+Home-page: https://hg.sr.ht/~auc/confman
+Author: Aurélien Campéas
+Author-email: aurelien.campeas@pythonian.fr
+License: GPLv2+
+Keywords: hg mercurial
+Classifier: Development Status :: 6 - Mature
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Software Development :: Version Control
+Classifier: Topic :: Software Development :: Version Control :: Mercurial
+Description-Content-Type: text/markdown
+License-File: COPYING
+
+# Confman mercurial extension
+
+Confman provides simple means to specify and record *configuration
+histories*. The configurations that are entirely made of tags are
+called [baselines][baseline].
+
+[baseline]: http://en.wikipedia.org/wiki/Baseline_%28configuration_management%29
+
+The point of *baseline maintenance* is the ability to *reproduce
+deliverable states*.
+
+By also accepting arbitrary changesets, one can record the
+construction history of a baseline and exchange intermediate steps.
+
+Once you are done reading this overview, you might want to read the
+[tutorial][tuto].
+
+[tuto]: https://hg.sr.ht/~auc/confman/browse/TUTO.md
+
+## Requirements
+
+- mercurial
+- git (optional, for managed git repositories)
+- requests python library (optional, to use .tgz or .zip files as repositories)
+
+## Baseline definition
+
+A confman specification is all contained within the `.hgconf` file.
+
+Example `.hgconf` file with two managed repositories:
+
+    [yams]
+    pulluri = http://hg.logilab.org/yams
+    layout = yams
+    track = yams-version-0.34.0
+
+    [logilab.common]
+    pulluri = http://hg.logilab.org/logilab/common
+    layout = logilab/common
+    track = stable
+    hgrc.paths.review = ssh://hg.logilab.org/review/logilab/common
+
+The optional `track` attribute can point to a `branch name`, `tag name`,
+`changeset id` or a to a `revset`. This is how the baseline is declared.
+
+Updating the baseline (i.e. providing new values to the `track`
+attribute if present) can be performed automatically with the `hg
+cfbaseline` command.
+
+
+## Global settings (hgrc)
+
+The following option can be defined in the ``[confman]`` section:
+
+- ``hggit`` (default ``True``): If set to ``False``, the default behavior of
+  cfensureconf will be NOT to use hggit to clone git repositories.
+
+
+## Commands overview
+
+### Core commands
+
+
+    cfsummary     print a summary of the managed repositories
+
+    cfensure      clone, pull and update the managed repositories (according
+                  to their track value)
+
+    cfbaseline    update any track attribute with a tag (if possible)
+                  or a changeset id
+
+
+If the track attribute is missing or contains a branch name or a revset,
+`cfbaseline` does nothing.
+
+If the track attribute contains a branch name or a revset, `cfensure` will
+always pull.
+
+
+### Utility commands
+
+    cfbroadcast   send a shell command to any managed repository
+
+    cfpull        pull repositories
+
+    cfpush        push repositories up to their current track
+
+    cffiles       list tracked files of the managed repositories whose name
+                  in the working directory matches the given patterns
+
+
+## Chaining configurations
+
+An application configuration includes the entries of some of its
+dependencies, for instance a web framework.
+
+Rather than copy-and-pasting configuration entries in each app that
+depends on the framework, we can build a configuration for the
+framework and reuse it from the application's configurations.
+
+Hence we have `shareable` and `reusable` configurations.
+
+Let's do with a small example:
+
+    [conf.cubicweb]
+    pulluri = http://hg.logilab.org/grshells/grshell-cubicweb
+    layout = conf.cubicweb
+    track = cubicweb-3.19.2
+    expand.whitelist = cubicweb rql yams logilab-common logilab-database
+                       logilab-mtconverter logilab-common
+
+    [cube.timeseries]
+    pulluri = http://hg.logilab.org/cubes/timeseries
+    layout = cubes/timeseries
+    track = cubicweb-timeseries-version-1.10.1
+
+    [cube.weathermap]
+    pulluri = http://bitbucket.org/auc/weathermap
+    layout = cubes/weathermap
+    track = 0.2.0
+
+In this, we build a configuration for a weather forecasting app using:
+
+* the cubicweb configuration maintained by the CubicWeb maintainers,
+* the `timeseries` cube (a CubicWeb component or plugin),
+* the `weathermap` final component.
+
+The `expand=` or `expand.whitelist=<...>` or lastly
+`expand.blacklist=<...>` notations indicate a repository that contain
+a configuration and should be used by `confman` as such.
+
+It is also possible to use `expand.nested` to use the layout of the other project as
+the place to put the expanded elements. This can be combined with white and black list,
+`.nested` just needs to be put before them.
+
+Here's a real-life configuration tree:
+
+![conf pythonianfr](pythonianfrconf.png)
+
+## Tarball support
+
+Confman can manage a tarball (`.tar.gz` or `.tar.bz2`) as a managed repository.
+
+Note that only basic feature is supported for now: the tarball is downloaded and
+uncompressed automatically if the corresponding `layout` is missing.
+
+## Git support
+
+Confman has experimental git support. Top-level configurations must reside in a mercurial repository.
+
+## Guestrepo support
+
+The [guestrepo][guestrepo] mercurial extension was born at the same time as
+`confman` and both provide roughly the same basic services (though,
+e.g. `guestrepo` does not handle well recursive configurations).
+
+[guestrepo]: https://foss.heptapod.net/mercurial/hg-guestrepo
+
+`confman` can read and write `guestrepo` configuration repositories as
+well as its own.
+
+Additionally, it is possible to `expand` a `guestrepo` configuration,
+as examplified above (the cubicweb configuration is currently
+maintained with `guestrepo` and its file format).
+
+When working on a `guestrepo` configuration, it is possible to use the `hg
+cfbaseline --force-hgconf` command to generate a valid confman `.hgconf`
+file.
