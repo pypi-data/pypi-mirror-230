@@ -1,0 +1,21 @@
+{% extends "allianceauth/base.html" %}
+
+{% load i18n %}
+
+{% block page_title %}{% translate "Ship Replacement" %}{% endblock %}
+
+{% block content %}
+    <div class="aa-srp">
+        <div class="aa-srp-header">
+            {% block aasrp_header %}{% endblock %}
+        </div>
+
+        <div class="aa-srp-body">
+            {% block aasrp_body %}{% endblock %}
+        </div>
+
+        <div class="aa-srp-footer">
+            {% include "aasrp/partials/footer/app-translation-footer.html" %}
+        </div>
+    </div>
+{% endblock %}
