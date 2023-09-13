@@ -1,0 +1,21 @@
+{
+    "title": "Check file is there",
+    "description": "This is a test experiment",
+    "steady-state-hypothesis": {
+        "title": "Services are all available and healthy",
+        "probes": [
+            {
+                "name": "check-file-exists",
+                "type": "probe",
+                "tolerance": true,
+                "provider": {
+                    "type": "python",
+                    "module": "fixtures.force_failure",
+                    "func": "kaboom"
+                }
+            }
+        ]
+    },
+    "method": [
+    ]
+}
