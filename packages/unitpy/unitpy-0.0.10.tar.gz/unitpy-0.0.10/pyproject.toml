@@ -1,0 +1,19 @@
+[build-system]
+requires = [
+    "setuptools>=42",
+    "wheel"
+    ]
+build-backend = "setuptools.build_meta"
+
+
+[tool.pytest.ini_options]
+addopts = "--cov=unitpy --cov-report html"
+pythonpath = [
+  "src"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "def __str__",
+    "def __repr__"
+    ]
