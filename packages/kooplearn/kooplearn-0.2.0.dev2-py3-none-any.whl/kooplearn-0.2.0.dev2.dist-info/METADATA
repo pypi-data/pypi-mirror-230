@@ -1,0 +1,95 @@
+Metadata-Version: 2.1
+Name: kooplearn
+Version: 0.2.0.dev2
+Summary: A package to learn Koopman operators
+Project-URL: Homepage, https://github.com/CSML-IIT-UCL/kooplearn
+Author: Grégoire Pacreau
+Author-email: Pietro Novelli <pietronvll@gmail.com>, Bruno Belucci <bruno.belucci-teixeira@dauphine.eu>
+License-File: LICENSE
+Requires-Python: >=3.9
+Requires-Dist: numpy>=1.20.0
+Requires-Dist: scikit-learn
+Requires-Dist: scipy
+Requires-Dist: tqdm
+Provides-Extra: dev
+Requires-Dist: kooplearn[docs]; extra == 'dev'
+Requires-Dist: kooplearn[torch]; extra == 'dev'
+Requires-Dist: kooplearn[visualizer]; extra == 'dev'
+Requires-Dist: pytest; extra == 'dev'
+Provides-Extra: docs
+Requires-Dist: myst-nb; extra == 'docs'
+Requires-Dist: sphinx; extra == 'docs'
+Requires-Dist: sphinx-autobuild; extra == 'docs'
+Requires-Dist: sphinx-book-theme; extra == 'docs'
+Requires-Dist: sphinx-design; extra == 'docs'
+Requires-Dist: sphinxcontrib-bibtex; extra == 'docs'
+Provides-Extra: torch
+Requires-Dist: lightning; extra == 'torch'
+Requires-Dist: pandas; extra == 'torch'
+Requires-Dist: torch; extra == 'torch'
+Provides-Extra: visualizer
+Requires-Dist: dash; extra == 'visualizer'
+Requires-Dist: dash-iconify; extra == 'visualizer'
+Requires-Dist: dash-mantine-components; extra == 'visualizer'
+Requires-Dist: pandas; extra == 'visualizer'
+Requires-Dist: plotly; extra == 'visualizer'
+Description-Content-Type: text/markdown
+
+<p align = "left">
+  <img src="logo.svg" alt="SVG Image" style="width:50%;"/>
+</p>
+
+# `kooplearn`: Learn Koopman and transfer operators of Dynamical Systems
+
+`kooplearn` is a Python library designed for learning Koopman operators or transfer operators associated with dynamical systems. It provides an array of algorithms for model training and analysis, enabling users to perform forecasting, spectral decomposition, and modal decomposition based on the learned operator.
+
+Please note that `kooplearn` is currently under active development, and while we are continuously adding new features and improvements, some parts of the library might still be a work in progress.
+
+## Features
+
+- Implement different algorithms to learn Koopman or transfer operators for dynamical systems.
+- Perform forecasting using the learned operators.
+- Conduct spectral decomposition of the learned operator.
+- Perform modal decomposition for further analysis.
+  
+## Installation
+
+`kooplearn` can be locally installed in editable mode for easy development and experimentation. Follow the steps below to install `kooplearn` using pip:
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/CSML-IIT-UCL/kooplearn.git
+   ```
+2. Navigate to the library's directory:
+
+    ```bash
+    cd kooplearn
+    ```
+3. Install the library in editable mode using pip:
+
+    ```bash
+    pip install -e .
+    ```
+## Contributing
+
+We welcome contributions from the community! If you're interested in contributing to `kooplearn`, please follow these steps:
+
+1. Fork the repository on GitHub.
+2. Clone your forked repository to your local machine.
+3. Create a new branch for your feature or bug fix: `git checkout -b feature/your-feature-name` or `git checkout -b bugfix/issue-number`.
+4. Make your changes and commit them with descriptive commit messages.
+5. Push your changes to your forked repository.
+6. Create a pull request from your branch to the `main` branch of the original repository.
+7. Provide a clear title and description for your pull request, including any relevant information about the changes you've made.
+
+We appreciate your contributions and will review your pull request as soon as possible. Thank you for helping improve `kooplearn`!
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+We hope you find `kooplearn` useful for your dynamical systems analysis. If you encounter any issues or have suggestions for improvements, please don't hesitate to [raise an issue](https://github.com/CSML-IIT-UCL/kooplearn/issues). Happy coding!
+
