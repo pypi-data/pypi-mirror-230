@@ -1,0 +1,42 @@
+interactions:
+  - request:
+      body:
+        '{"variation": {"id": "ga4gh:VA.0wERl6sqiSnHXe44bfbd4c6zvqAZVjqp", "type":
+        "Allele", "location": {"id": "ga4gh:SL.OKUia3LZI-04cFnY1uSO0gEicgTz3suN", "type":
+        "SequenceLocation", "sequence_id": "ga4gh:SQ._0wi-qoDrvram155UmcSC-zA5ZK4fpLT",
+        "start": {"type": "Number", "value": 32331082}, "end": {"type": "Number", "value":
+        32331094}}, "state": {"type": "LiteralSequenceExpression", "sequence": "TTTTTTTTTTTTTT"}},
+        "namespace": "refseq"}'
+      headers:
+        Accept:
+          - "*/*"
+        Accept-Encoding:
+          - gzip, deflate
+        Connection:
+          - keep-alive
+        Content-Length:
+          - "432"
+        Content-Type:
+          - application/json; charset=utf-8
+        User-Agent:
+          - python-requests/2.29.0
+      method: POST
+      uri: https://normalize.cancervariants.org/variation/vrs_allele_to_hgvs
+    response:
+      body:
+        string: '{"query":{"variation":{"id":"ga4gh:VA.0wERl6sqiSnHXe44bfbd4c6zvqAZVjqp","type":"Allele","location":{"id":"ga4gh:SL.OKUia3LZI-04cFnY1uSO0gEicgTz3suN","type":"SequenceLocation","sequence_id":"ga4gh:SQ._0wi-qoDrvram155UmcSC-zA5ZK4fpLT","start":{"type":"Number","value":32331082},"end":{"type":"Number","value":32331094}},"state":{"type":"LiteralSequenceExpression","sequence":"TTTTTTTTTTTTTT"}},"namespace":"refseq"},"warnings":[],"service_meta_":{"version":"0.7.0-dev8","response_datetime":"2023-07-12T12:27:04.003950","name":"variation-normalizer","url":"https://github.com/cancervariants/variation-normalization"},"vrs_python_meta_":{"version":"0.9.0a1","name":"vrs-python","url":"https://github.com/ga4gh/vrs-python"},"variations":["NC_000013.11:g.32331093_32331094dup"]}'
+      headers:
+        Connection:
+          - keep-alive
+        Content-Length:
+          - "772"
+        Content-Type:
+          - application/json
+        Date:
+          - Wed, 12 Jul 2023 12:27:04 GMT
+        Server:
+          - nginx
+      status:
+        code: 200
+        message: OK
+version: 1
