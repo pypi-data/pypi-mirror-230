@@ -1,0 +1,15 @@
+[package]
+name = "qdx-py"
+version = "0.4.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "qdx_py"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = "0.18.1"
+# We use git to fetch deps so that it doesn't get included in the maturin source export
+qdx-common = { git = "ssh://git@github.com/talo/qdx-common.git", rev = "03090758156ef3dc7a0c4f0d9c4ad8403992fc3b", features = ["serde"], default-features = false  }
+serde_json = { version = "1.0.87" }
