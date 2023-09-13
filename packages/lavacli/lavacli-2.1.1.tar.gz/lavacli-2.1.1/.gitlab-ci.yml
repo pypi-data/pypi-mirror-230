@@ -1,0 +1,130 @@
+stages:
+- test
+- analyze
+- build
+- deploy
+
+########
+# Test #
+########
+.test: &test
+  stage: test
+  before_script:
+  - apt-get update -qq
+  - apt-get install --no-install-recommends -y make python3 python3-aiohttp python3-jinja2 python3-pytest python3-requests python3-ruamel.yaml python3-zmq python3-voluptuous
+  script:
+  - make test
+  artifacts:
+    reports:
+      junit:
+      - lavacli.xml
+
+test-debian-10:
+  <<: *test
+  image: debian:buster
+test-debian-11:
+  <<: *test
+  image: debian:bullseye
+test-debian-12:
+  <<: *test
+  image: debian:bookworm
+test-ubuntu-20.04:
+  <<: *test
+  image: ubuntu:20.04
+test-ubuntu-22.04:
+  <<: *test
+  image: ubuntu:22.04
+test-ubuntu-23.04:
+  <<: *test
+  image: ubuntu:23.04
+
+###########
+# Analyze #
+###########
+pylint:
+  stage: analyze
+  image: registry.gitlab.com/lava/ci-images/amd64/analyze
+  script:
+  - make pylint
+
+black:
+  stage: analyze
+  image: registry.gitlab.com/lava/ci-images/amd64/analyze
+  script:
+  - make black
+
+coverage:
+  stage: analyze
+  image: debian:bullseye
+  before_script:
+  - apt-get update -qq
+  - apt-get install --no-install-recommends -y make python3 python3-aiohttp python3-jinja2 python3-pytest python3-pytest-cov python3-requests python3-ruamel.yaml python3-zmq python3-voluptuous
+  coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
+  script:
+  - make coverage
+  #artifacts:
+  #  reports:
+  #    coverage_report:
+  #      coverage_format: cobertura
+  #      path: coverage.xml
+
+# static analysis with bandit
+include:
+  template: SAST.gitlab-ci.yml
+sast:
+  stage: analyze
+  variables:
+    DOCKER_DRIVER: overlay2
+    SAST_DEFAULT_ANALYZERS: "bandit"
+
+#########
+# Build #
+#########
+sdist:
+  stage: build
+  image: debian:bullseye
+  before_script:
+  - apt-get update -qq
+  - apt-get install --no-install-recommends -y python3 python3-pytest-runner python3-setuptools
+  script:
+  - python3 setup.py sdist
+
+doc:
+  stage: build
+  image: debian:bullseye
+  before_script:
+  - apt-get update -qq
+  - apt-get install --no-install-recommends -y make python3 python3-pytest-runner python3-setuptools python3-sphinx
+  script:
+  - make -C doc html
+  artifacts:
+    paths:
+    - doc/_build/html
+
+##########
+# Deploy #
+##########
+pages:
+  stage: deploy
+  only:
+    refs:
+      - tags
+  dependencies:
+    - doc
+  script:
+    - mv doc/_build/html public
+  artifacts:
+    paths:
+      - public
+
+publish-pages:
+  stage: deploy
+  only:
+    refs:
+      - tags
+  needs:
+    - pages
+  trigger: lava/lava-docs
+  variables:
+    PARENT_PROJECT_NAME: $CI_PROJECT_NAME
+    PARENT_PROJECT_REF: $CI_COMMIT_REF_NAME
