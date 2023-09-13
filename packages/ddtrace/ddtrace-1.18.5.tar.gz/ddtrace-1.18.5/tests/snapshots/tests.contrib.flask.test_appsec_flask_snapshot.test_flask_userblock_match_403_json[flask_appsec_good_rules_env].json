@@ -1,0 +1,247 @@
+[[
+  {
+    "name": "flask.request",
+    "service": "flask",
+    "resource": "GET /checkuser/<user_id>",
+    "trace_id": 0,
+    "span_id": 1,
+    "parent_id": 0,
+    "type": "web",
+    "error": 0,
+    "meta": {
+      "_dd.appsec.event_rules.version": "rules_good",
+      "_dd.appsec.json": "{\"triggers\":[\n  {\n    \"rule\": {\n      \"id\": \"blk-001-002\",\n      \"name\": \"Block User Addresses\",\n      \"on_match\": [\n        \"block\"\n      ],\n      \"tags\": {\n        \"category\": \"security_response\",\n        \"type\": \"block_user\"\n      }\n    },\n    \"rule_matches\": [\n      {\n        \"operator\": \"exact_match\",\n        \"operator_value\": \"\",\n        \"parameters\": [\n          {\n            \"address\": \"usr.id\",\n            \"highlight\": [\n              \"123456\"\n            ],\n            \"key_path\": [],\n            \"value\": \"123456\"\n          }\n        ]\n      }\n    ]\n  }\n]}",
+      "_dd.appsec.waf.version": "1.12.0",
+      "_dd.origin": "appsec",
+      "_dd.p.dm": "-4",
+      "_dd.runtime_family": "python",
+      "actor.ip": "127.0.0.1",
+      "appsec.blocked": "true",
+      "appsec.event": "true",
+      "component": "flask",
+      "flask.endpoint": "checkuser",
+      "flask.url_rule": "/checkuser/<user_id>",
+      "flask.version": "1.1.4",
+      "flask.view_args.user_id": "123456",
+      "http.client_ip": "127.0.0.1",
+      "http.method": "GET",
+      "http.request.headers.accept": "*/*",
+      "http.request.headers.accept-encoding": "gzip, deflate",
+      "http.request.headers.host": "0.0.0.0:8000",
+      "http.request.headers.user-agent": "python-requests/2.28.2",
+      "http.response.headers.content-length": "167",
+      "http.response.headers.content-type": "text/json",
+      "http.route": "/checkuser/<user_id>",
+      "http.status_code": "403",
+      "http.url": "http://0.0.0.0:8000/checkuser/123456",
+      "http.useragent": "python-requests/2.28.2",
+      "language": "python",
+      "network.client.ip": "127.0.0.1",
+      "runtime-id": "f5e47e4adaf44aec878fcf024e967aca",
+      "span.kind": "server",
+      "usr.id": "123456"
+    },
+    "metrics": {
+      "_dd.agent_psr": 1.0,
+      "_dd.appsec.enabled": 1.0,
+      "_dd.appsec.event_rules.error_count": 0,
+      "_dd.appsec.event_rules.loaded": 5,
+      "_dd.appsec.waf.duration": 79.90299999999999,
+      "_dd.appsec.waf.duration_ext": 452.7568817138672,
+      "_dd.measured": 1,
+      "_dd.top_level": 1,
+      "_dd.tracer_kr": 1.0,
+      "_sampling_priority_v1": 2,
+      "process_id": 48270
+    },
+    "duration": 7405340,
+    "start": 1691167052601994217
+  },
+     {
+       "name": "flask.application",
+       "service": "flask",
+       "resource": "GET /checkuser/<user_id>",
+       "trace_id": 0,
+       "span_id": 2,
+       "parent_id": 1,
+       "type": "",
+       "error": 0,
+       "meta": {
+         "_dd.p.dm": "-0",
+         "component": "flask",
+         "flask.endpoint": "checkuser",
+         "flask.url_rule": "/checkuser/<user_id>",
+         "flask.view_args.user_id": "123456",
+         "http.method": "GET",
+         "http.status_code": "403",
+         "http.useragent": "python-requests/2.28.2"
+       },
+       "duration": 5486100,
+       "start": 1691167052603182118
+     },
+        {
+          "name": "flask.try_trigger_before_first_request_functions",
+          "service": "flask",
+          "resource": "flask.try_trigger_before_first_request_functions",
+          "trace_id": 0,
+          "span_id": 4,
+          "parent_id": 2,
+          "type": "",
+          "error": 0,
+          "meta": {
+            "_dd.p.dm": "-0",
+            "component": "flask"
+          },
+          "duration": 41713,
+          "start": 1691167052603493086
+        },
+        {
+          "name": "flask.preprocess_request",
+          "service": "flask",
+          "resource": "flask.preprocess_request",
+          "trace_id": 0,
+          "span_id": 5,
+          "parent_id": 2,
+          "type": "",
+          "error": 0,
+          "meta": {
+            "_dd.p.dm": "-0",
+            "component": "flask"
+          },
+          "duration": 58366,
+          "start": 1691167052603718386
+        },
+        {
+          "name": "flask.dispatch_request",
+          "service": "flask",
+          "resource": "flask.dispatch_request",
+          "trace_id": 0,
+          "span_id": 6,
+          "parent_id": 2,
+          "type": "",
+          "error": 1,
+          "meta": {
+            "_dd.p.dm": "-0",
+            "component": "flask",
+            "error.message": "??? Unknown Error: None",
+            "error.stack": "Traceback (most recent call last):\n  File \"/root/project/ddtrace/contrib/flask/patch.py\", line 599, in _traced_request\n    return wrapped(*args, **kwargs)\n  File \"/root/project/.riot/venv_py3816_mock_pytest_pytest-mock_coverage_pytest-cov_opentracing_hypothesis6451_blinker_requests_flask~10_itsdangerous210_markupsafe20_werkzeug20/lib/python3.8/site-packages/flask/app.py\", line 1936, in dispatch_request\n    return self.view_functions[rule.endpoint](**req.view_args)\n  File \"/root/project/ddtrace/contrib/flask/wrappers.py\", line 42, in trace_func\n    return wrapped(*args, **kwargs)\n  File \"/root/project/tests/contrib/flask/app.py\", line 68, in checkuser\n    block_request_if_user_blocked(tracer, user_id)\n  File \"/root/project/ddtrace/appsec/trace_utils.py\", line 242, in block_request_if_user_blocked\n    _asm_request_context.block_request()\n  File \"/root/project/ddtrace/appsec/_asm_request_context.py\", line 284, in block_request\n    _callable()\n  File \"/root/project/ddtrace/contrib/flask/patch.py\", line 571, in _block_request_callable\n    abort(flask.Response(http_utils._get_blocked_template(ctype), content_type=ctype, status=403))\n  File \"/root/project/.riot/venv_py3816_mock_pytest_pytest-mock_coverage_pytest-cov_opentracing_hypothesis6451_blinker_requests_flask~10_itsdangerous210_markupsafe20_werkzeug20/lib/python3.8/site-packages/werkzeug/exceptions.py\", line 822, in abort\n    return _aborter(status, *args, **kwargs)\n  File \"/root/project/.riot/venv_py3816_mock_pytest_pytest-mock_coverage_pytest-cov_opentracing_hypothesis6451_blinker_requests_flask~10_itsdangerous210_markupsafe20_werkzeug20/lib/python3.8/site-packages/werkzeug/exceptions.py\", line 804, in __call__\n    raise HTTPException(response=code)\nwerkzeug.exceptions.HTTPException: ??? Unknown Error: None\n",
+            "error.type": "werkzeug.exceptions.HTTPException"
+          },
+          "duration": 3780784,
+          "start": 1691167052603883299
+        },
+           {
+             "name": "tests.contrib.flask.app.checkuser",
+             "service": "flask",
+             "resource": "/checkuser/<user_id>",
+             "trace_id": 0,
+             "span_id": 11,
+             "parent_id": 6,
+             "type": "",
+             "error": 1,
+             "meta": {
+               "_dd.p.dm": "-0",
+               "component": "flask",
+               "error.message": "??? Unknown Error: None",
+               "error.stack": "Traceback (most recent call last):\n  File \"/root/project/ddtrace/contrib/flask/wrappers.py\", line 42, in trace_func\n    return wrapped(*args, **kwargs)\n  File \"/root/project/tests/contrib/flask/app.py\", line 68, in checkuser\n    block_request_if_user_blocked(tracer, user_id)\n  File \"/root/project/ddtrace/appsec/trace_utils.py\", line 242, in block_request_if_user_blocked\n    _asm_request_context.block_request()\n  File \"/root/project/ddtrace/appsec/_asm_request_context.py\", line 284, in block_request\n    _callable()\n  File \"/root/project/ddtrace/contrib/flask/patch.py\", line 571, in _block_request_callable\n    abort(flask.Response(http_utils._get_blocked_template(ctype), content_type=ctype, status=403))\n  File \"/root/project/.riot/venv_py3816_mock_pytest_pytest-mock_coverage_pytest-cov_opentracing_hypothesis6451_blinker_requests_flask~10_itsdangerous210_markupsafe20_werkzeug20/lib/python3.8/site-packages/werkzeug/exceptions.py\", line 822, in abort\n    return _aborter(status, *args, **kwargs)\n  File \"/root/project/.riot/venv_py3816_mock_pytest_pytest-mock_coverage_pytest-cov_opentracing_hypothesis6451_blinker_requests_flask~10_itsdangerous210_markupsafe20_werkzeug20/lib/python3.8/site-packages/werkzeug/exceptions.py\", line 804, in __call__\n    raise HTTPException(response=code)\nwerkzeug.exceptions.HTTPException: ??? Unknown Error: None\n",
+               "error.type": "werkzeug.exceptions.HTTPException"
+             },
+             "duration": 2754483,
+             "start": 1691167052603968749
+           },
+        {
+          "name": "flask.handle_user_exception",
+          "service": "flask",
+          "resource": "flask.handle_user_exception",
+          "trace_id": 0,
+          "span_id": 7,
+          "parent_id": 2,
+          "type": "",
+          "error": 0,
+          "meta": {
+            "_dd.p.dm": "-4",
+            "component": "flask"
+          },
+          "duration": 145621,
+          "start": 1691167052607762819
+        },
+           {
+             "name": "flask.handle_http_exception",
+             "service": "flask",
+             "resource": "flask.handle_http_exception",
+             "trace_id": 0,
+             "span_id": 12,
+             "parent_id": 7,
+             "type": "",
+             "error": 0,
+             "meta": {
+               "_dd.p.dm": "-4",
+               "component": "flask"
+             },
+             "duration": 31667,
+             "start": 1691167052607850151
+           },
+        {
+          "name": "flask.process_response",
+          "service": "flask",
+          "resource": "flask.process_response",
+          "trace_id": 0,
+          "span_id": 8,
+          "parent_id": 2,
+          "type": "",
+          "error": 0,
+          "meta": {
+            "_dd.p.dm": "-4",
+            "component": "flask"
+          },
+          "duration": 44970,
+          "start": 1691167052608085244
+        },
+        {
+          "name": "flask.do_teardown_request",
+          "service": "flask",
+          "resource": "flask.do_teardown_request",
+          "trace_id": 0,
+          "span_id": 9,
+          "parent_id": 2,
+          "type": "",
+          "error": 0,
+          "meta": {
+            "_dd.p.dm": "-4",
+            "component": "flask"
+          },
+          "duration": 46724,
+          "start": 1691167052608464185
+        },
+        {
+          "name": "flask.do_teardown_appcontext",
+          "service": "flask",
+          "resource": "flask.do_teardown_appcontext",
+          "trace_id": 0,
+          "span_id": 10,
+          "parent_id": 2,
+          "type": "",
+          "error": 0,
+          "meta": {
+            "_dd.p.dm": "-4",
+            "component": "flask"
+          },
+          "duration": 35206,
+          "start": 1691167052608586769
+        },
+     {
+       "name": "flask.response",
+       "service": "flask",
+       "resource": "flask.response",
+       "trace_id": 0,
+       "span_id": 3,
+       "parent_id": 1,
+       "type": "",
+       "error": 0,
+       "meta": {
+         "_dd.p.dm": "-4",
+         "component": "flask"
+       },
+       "duration": 561202,
+       "start": 1691167052608800592
+     }]]

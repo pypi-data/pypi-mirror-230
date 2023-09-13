@@ -1,0 +1,153 @@
+[[
+  {
+    "name": "test-execute-instrumentation",
+    "service": "",
+    "resource": "test-execute-instrumentation",
+    "trace_id": 0,
+    "span_id": 1,
+    "parent_id": 0,
+    "type": "",
+    "error": 0,
+    "meta": {
+      "_dd.p.dm": "-0",
+      "language": "python",
+      "runtime-id": "a29bd63c3ed34a228f90f1913029129d"
+    },
+    "metrics": {
+      "_dd.agent_psr": 1.0,
+      "_dd.top_level": 1,
+      "_dd.tracer_kr": 1.0,
+      "_sampling_priority_v1": 1,
+      "process_id": 17751
+    },
+    "duration": 783065,
+    "start": 1691163325761842101
+  },
+     {
+       "name": "graphql.parse",
+       "service": "graphql",
+       "resource": "graphql.parse",
+       "trace_id": 0,
+       "span_id": 2,
+       "parent_id": 1,
+       "type": "graphql",
+       "error": 0,
+       "meta": {
+         "_dd.p.dm": "-0",
+         "component": "graphql",
+         "graphql.source": "query HELLO { hello }"
+       },
+       "metrics": {
+         "_dd.top_level": 1
+       },
+       "duration": 114685,
+       "start": 1691163325761938377
+     },
+     {
+       "name": "graphql.execute",
+       "service": "graphql",
+       "resource": "query HELLO { hello }",
+       "trace_id": 0,
+       "span_id": 3,
+       "parent_id": 1,
+       "type": "graphql",
+       "error": 0,
+       "meta": {
+         "_dd.p.dm": "-0",
+         "component": "graphql",
+         "graphql.operation.name": "HELLO",
+         "graphql.operation.type": "query",
+         "graphql.source": "query HELLO { hello }"
+       },
+       "metrics": {
+         "_dd.measured": 1,
+         "_dd.top_level": 1
+       },
+       "duration": 339439,
+       "start": 1691163325762104364
+     },
+        {
+          "name": "graphql.resolve",
+          "service": "graphql",
+          "resource": "hello",
+          "trace_id": 0,
+          "span_id": 5,
+          "parent_id": 3,
+          "type": "graphql",
+          "error": 0,
+          "meta": {
+            "_dd.p.dm": "-0",
+            "component": "graphql"
+          },
+          "duration": 54186,
+          "start": 1691163325762362666
+        },
+           {
+             "name": "test_middleware",
+             "service": "graphql",
+             "resource": "test_middleware",
+             "trace_id": 0,
+             "span_id": 7,
+             "parent_id": 5,
+             "type": "",
+             "error": 0,
+             "meta": {
+               "_dd.p.dm": "-0"
+             },
+             "duration": 15739,
+             "start": 1691163325762388033
+           },
+     {
+       "name": "graphql.execute",
+       "service": "graphql",
+       "resource": "query HELLO { hello }",
+       "trace_id": 0,
+       "span_id": 4,
+       "parent_id": 1,
+       "type": "graphql",
+       "error": 0,
+       "meta": {
+         "_dd.p.dm": "-0",
+         "component": "graphql",
+         "graphql.operation.name": "HELLO",
+         "graphql.operation.type": "query",
+         "graphql.source": "query HELLO { hello }"
+       },
+       "metrics": {
+         "_dd.measured": 1,
+         "_dd.top_level": 1
+       },
+       "duration": 128338,
+       "start": 1691163325762483446
+     },
+        {
+          "name": "graphql.resolve",
+          "service": "graphql",
+          "resource": "hello",
+          "trace_id": 0,
+          "span_id": 6,
+          "parent_id": 4,
+          "type": "graphql",
+          "error": 0,
+          "meta": {
+            "_dd.p.dm": "-0",
+            "component": "graphql"
+          },
+          "duration": 47735,
+          "start": 1691163325762543072
+        },
+           {
+             "name": "test_middleware",
+             "service": "graphql",
+             "resource": "test_middleware",
+             "trace_id": 0,
+             "span_id": 8,
+             "parent_id": 6,
+             "type": "",
+             "error": 0,
+             "meta": {
+               "_dd.p.dm": "-0"
+             },
+             "duration": 13919,
+             "start": 1691163325762565462
+           }]]
