@@ -1,0 +1,59 @@
+Metadata-Version: 2.1
+Name: smbios
+Version: 1.2.1
+Summary: Python library to read data from SMBIOS/DMI.
+Home-page: https://github.com/PerryWerneck/dmiget
+Author: Perry Werneck
+Author-email: perry.werneck@gmail.com
+License: UNKNOWN
+Platform: UNKNOWN
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+
+## About
+
+This library allow python applications an easy way to read data from system's SMBios without the need of dmidecode. 
+
+## Installation
+
+### PyPI
+
+```shell
+pip install smbios
+```
+
+### Linux packages
+
+You can get linux packages (RPM, Deb, arch) from Suse's [Open Build Service](https://software.opensuse.org/download.html?project=home%3APerryWerneck%3Audjat&package=dmiget)
+
+## Usage
+
+```python
+import smbios
+value = smbios.Value('chassis','serial')
+print(value)
+```
+
+```python
+import smbios
+value = smbios.Value('dmi:///chassis/serial')
+print(value)
+```
+
+```python
+import smbios
+value = smbios.memsize()
+print(value)
+print(int(value))
+```
+
+```python
+import smbios
+for node in smbios.nodes():
+	print(node)
+	for value in node.values():
+		print('	{}: {}'.format(value.description,value))
+```
+
+
