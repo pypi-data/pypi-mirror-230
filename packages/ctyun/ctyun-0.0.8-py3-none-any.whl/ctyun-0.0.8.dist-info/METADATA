@@ -1,0 +1,38 @@
+Metadata-Version: 2.1
+Name: ctyun
+Version: 0.0.8
+Summary: Python SDK for China Telecom Cloud(https://www.ctyun.cn)
+Home-page: https://github.com/xizhendu/ctyun
+Author: Xizhen Du
+Author-email: xizhendu@gmail.com
+Description-Content-Type: text/markdown
+Requires-Dist: PyYAML
+Requires-Dist: requests
+Requires-Dist: datetime
+
+
+
+### Summary
+
+This package is to quickly generate inventory report for your cloud resources located on https://www.ctyun.cn.
+
+
+### Credentials
+To get your correct accessKey and secretKey, You need contact your service manager.
+Credential file needs to be placed at '~/.ctyun/credential' as:
+```text
+
+[default]
+accesskey=your_own_access_key
+secretkey=your_own_secret_key
+
+```
+### Usage
+
+```python
+from ctyun import inventory
+_v = inventory(regionId='cn-bj1', api='getVpcs')
+_v.json
+
+```
+
