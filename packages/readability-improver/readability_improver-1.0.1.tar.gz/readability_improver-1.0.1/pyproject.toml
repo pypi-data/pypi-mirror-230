@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "readability_improver"
+version = "1.0.1"
+description = "Remove all your magic numbers and make your code 1000% more readable!"
+authors = ["Eric Udlis <udlis.eric@gmail.com>"]
+license = "lmao"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+num2words = "^0.5.12"
+
+[tool.poetry.dev-dependencies]
+
+[tool.poetry.scripts]
+make-more-readable = "readability_improver.readability_improver:main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
