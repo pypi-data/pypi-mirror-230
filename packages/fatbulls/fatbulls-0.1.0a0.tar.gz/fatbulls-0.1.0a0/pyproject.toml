@@ -1,0 +1,95 @@
+[tool.poetry]
+name = "fatbulls"
+version = "0.1.0-alpha"
+description = "FaithQuant BackTest Framework"
+authors = ["Jeffrey <wangjiangfeng@hcyjs.com>"]
+readme = "README.rst"
+keywords = ["faithquant", "fqdatac", "datavita", "fatbulls", "fatbull", "fqprism"]
+include = ["README.rst", "LICENSE", "CHANGELOG.rst"]
+packages = [
+    {include = "fatbulls"},
+    {include = "tests"}
+]
+
+[virtualenvs]
+in-project = false
+
+[[tool.poetry.source]]
+name = "aliyun"
+url = "https://mirrors.aliyun.com/pypi/simple/"
+priority = "primary"
+
+[[tool.poetry.source]]
+name = "TestPyPI"
+url = "https://test.pypi.org/simple/"
+
+[[tool.poetry.source]]
+name = "PyPI"
+# url = https://pypi.org/simple
+priority = "primary"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+rqalpha = "^5.2.0"
+requests = "^2.31.0"
+numpy = "^1.23.5"
+pandas = "^2.0"
+python-dateutil = "^2.5.3"
+six = "^1.10.0"
+logbook = "^1.0.0"
+click = "^8.1.6"
+jsonpickle = "^0.9.4"
+simplejson = "^3.10.0"
+dill = "^0.3.7"
+PyYAML = "^6.0.1"
+pycrypto = "^2.6.1"
+pycryptodomex = "^3.9.9"
+future = "^0.18.2"
+loguru = "^0.7.0"
+tabulate = "^0.9.0"
+h5py = "^3.9"
+duckdb = "^0.8.1"
+cython = "^3.0.0"
+line_profiler = ">=4.1.1"
+
+[tool.poetry.dev-dependencies]
+black = "^23.7.0"
+isort = "^5.10"
+autoflake = "^1.4"
+wemake-python-styleguide = "^0.16.1"
+mypy = "^0.971"
+flake8-fixme = "^1.1"
+pytest = "^7.1"
+pytest-cov = "^3.0"
+pytest-asyncio = "^0.19.0"
+pytest-env = "^0.6.2"
+pytest-xdist = "^2.4.0"
+httpx = "^0.23.0"
+asgi-lifespan = "^1.0.1"
+
+[tool.isort]
+profile = "black"
+src_paths = ["fatbulls", "tests"]
+combine_as_imports = true
+
+[tool.pytest.ini_options]
+testpaths = "tests"
+filterwarnings = "error"
+addopts = '''
+  --strict-markers
+  --tb=short
+  --cov=app
+  --cov=tests
+  --cov-branch
+  --cov-report=term-missing
+  --cov-report=html
+  --cov-report=xml
+  --no-cov-on-fail
+  --cov-fail-under=100
+  --numprocesses=auto
+  --asyncio-mode=auto
+'''
+
+[build-system]
+requires = ["poetry-core>=1.6.1 "]
+build-backend = "poetry.core.masonry.api"
