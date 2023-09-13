@@ -1,0 +1,67 @@
+
+# 白名单，设置可以直接在策略代码中指定哪些模块的配置项目
+# 不能删除，factor, portfolio为兼容rqalph格式的扩展
+whitelist: [base, extra, validator, mod, factor, portfolio]
+
+base:
+  data_bundle_path: /data/quant/rqalpha/bundle
+  rqdatac_uri: disabled
+  fqdatac_uri: fqdatac://access_key_id:access_key_secret@219.143.244.230:8390
+  start_date: 2015-06-01          # 回测起始日期
+  end_date: 2050-01-01            # 回测结束日期(如果是实盘，则忽略该配置)
+  run_type: b                     # 运行类型，`b` 为回测，`p` 为模拟交易, `r` 为实盘交易。
+  frequency: 1d                   # 目前支持 `1d` (日线回测) 和 `1m` (分钟线回测)，如果要进行分钟线，请注意是否拥有对应的数据源，目前开源版本是不提供对应的数据源的。
+  market: cn                      # 交易市场，如 cn 中国市场，hk 香港市场
+  accounts:
+    stock: 100000000              # 如果想设置使用某个账户，只需要增加对应的初始资金即可
+    future: 0                     # 期货账户初始资金
+mod:
+  sys_analyser:
+    benchmark: 000300.XSHG
+    enabled: true
+    plot: true                    # 是否在回测结束后绘制收益曲线图
+    record: true                  # 当不输出 csv/pickle/plot 等内容时，关闭该项可关闭策略运行过程中部分收集数据的逻辑，用以提升性能
+    plot_config:                  # 收益率曲线图设置
+      open_close_points: true    # 是否在收益图中展示买卖点
+      weekly_indicators: true    # 是否在收益图中展示周度指标和收益曲线
+  sys_simulation:
+    matching_type: vwap           #
+    price_limit: true            # 开启对于处于涨跌停状态的证券的撮合限制
+    slippage_model: PriceRatioSlippage
+    slippage: 0                   # 设置滑点值，对于 PriceRatioSlippage 表示价格的比例，对于 TickSizeSlippage 表示跳的数量
+    inactive_limit: true          # 开启对于当前 bar 无成交量的标的的撮合限制（仅在日和分钟回测下生效）
+    volume_limit: true            # 开启成交量限制: 1. 开启该限制意味着每个 bar 的累计成交量将不会超过该时间段内市场上总成交量的一定比值（volume_percent） 2. 开启该限制意味着每个 tick 的累计成交量将不会超过当前tick与上一个tick的市场总成交量之差的一定比值
+    volume_percent: 0.25          # 每个 bar/tick 可成交数量占市场总成交量的比值，在 volume_limit 开启时生效
+    management_fee: [("STOCK", 0.0001), ("FUTURE", 0.0001)]    # 账户每日计提的费用，需按照(账户类型，费率)的格式传入
+  sys_accounts:
+    stock_t1: true                        # 是否开启股票 T+1 限制
+    dividend_reinvestment: true           # 是否开启自动分红再投资
+    cash_return_by_stock_delisted: true   # 当持仓股票退市时，是否按照退市价格返还现金
+    auto_switch_order_value: false        # 股票下单因资金不足被拒时改为使用全部剩余资金下单
+  sys_transaction_cost:
+    cn_stock_min_commission: 5            # 股票最小手续费，单位元
+    stock_commission_multiplier: 1        # 佣金倍率，即在默认的手续费率基础上按该倍数进行调整，股票的默认佣金为万八，期货默认佣金因合约而异
+    tax_multiplier: 1                     # 印花倍率，即在默认的印花税基础上按该倍数进行调整，股票默认印花税为千分之一，单边收取
+  sys_risk:
+    validate_price: true                  # 开启对限价单价格合法性的检查
+    validate_is_trading: true             # 开启对标的可交易情况对检查
+    validate_cash: true                   # 开启对可用资金是否足够满足下单要求的检查
+    validate_self_trade: false            # 开启对存在自成交风险的检查
+extra:
+  log_level: info
+  locale: zh_Hans_CN
+  enable_profiler: false
+
+# 因子回测基本信息
+factor:
+  task_num: None
+  univ_name: cnall
+  fdays: 1
+  rettype: vwap30
+  base_factor_dirpath: /data/quant/factors
+  base_report_dirpath: /data/quant/report/factor_backtest
+  base_log_path:   /data/quant/fatbulls/logs
+
+# 组合回测基本信息
+portfolio:
+  base_report_path: /data/quant/report/portfolio_backtest
