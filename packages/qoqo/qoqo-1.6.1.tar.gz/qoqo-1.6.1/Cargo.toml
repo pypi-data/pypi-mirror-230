@@ -1,0 +1,59 @@
+[package]
+name = "qoqo"
+version = "1.6.1"
+authors = ["HQS Quantum Simulations <info@quantumsimulations.de>"]
+license = "Apache-2.0"
+homepage = "https://github.com/HQSquantumsimulations/qoqo"
+repository = "https://github.com/HQSquantumsimulations/qoqo"
+documentation = "https://docs.rs/qoqo/"
+readme = "README.md"
+edition = "2021"
+rust-version = "1.56"
+categories = ["science", "simulation","ffi"]
+description = "Quantum computing circuit toolkit. Python interface of roqoqo"
+include = ["src*", "build.rs", "qoqo*", "LICENSE", "README.md", "pyproject.toml"]
+resolver = "2"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+name = "qoqo"
+path = "src/lib.rs"
+doctest = false
+crate-type = ["cdylib", "rlib"]
+
+[dependencies.pyo3]
+version = "0.19"
+features = ["num-complex"]
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+ndarray = "0.15"
+num-complex = "0.4"
+thiserror = "1.0"
+qoqo_calculator = { version="1.1" }
+qoqo_calculator_pyo3 = {version="1.1", default-features=false}
+qoqo-macros = {version="1.6.1", path= "local_dependencies/qoqo-macros" }
+roqoqo = {version="1.6.1", path= "local_dependencies/roqoqo", features=["serialize", "overrotate"]}
+struqture = {version="1.3", optional = true}
+struqture-py = {version = "1.3", optional = true, default-features = false}
+numpy = "0.19"
+bincode = "1.3"
+serde_json = "1.0"
+schemars = "0.8"
+
+[build-dependencies]
+quote = "1.0"
+syn = { version = "2.0", features = ["full", "visit"] }
+proc-macro2 = "1.0"
+pyo3-build-config = "0.19"
+
+[package.metadata.docs.rs]
+no-default-features = true
+
+[features]
+extension-module = ["pyo3/extension-module", "circuitdag"]
+default = ["extension-module", "json_schema"]
+circuitdag = ["roqoqo/circuitdag"]
+json_schema = ["roqoqo/json_schema"]
+unstable_noise_models = ["struqture", "roqoqo/unstable_noise_models", "struqture-py"]
