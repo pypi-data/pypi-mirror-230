@@ -1,0 +1,10 @@
+- hosts: '{{ hosts_name }}'
+  tasks:
+    - name: clean nexus
+      shell: |
+        docker rm -f nexus
+        umount /tmp/nexus-data
+        rm -rf /tmp/nexus-data
+      delegate_to: localhost
+      run_once: true
+      when: ansible_user_uid == 0
