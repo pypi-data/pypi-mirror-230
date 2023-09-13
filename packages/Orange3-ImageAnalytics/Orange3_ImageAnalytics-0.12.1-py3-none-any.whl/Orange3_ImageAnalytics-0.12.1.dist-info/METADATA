@@ -1,0 +1,51 @@
+Metadata-Version: 2.1
+Name: Orange3-ImageAnalytics
+Version: 0.12.1
+Summary: Orange3 add-on for image data mining.
+Home-page: http://orange.biolab.si/download
+Author: Bioinformatics Laboratory, FRI UL
+Author-email: contact@orange.biolab.si
+License: GPL3+
+Keywords: orange3 add-on,orange3-imageanalytics
+Classifier: Development Status :: 1 - Planning
+Classifier: Intended Audience :: Education
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)
+Classifier: Programming Language :: Python :: 3 :: Only
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: AnyQt
+Requires-Dist: ndf (>=0.1.4)
+Requires-Dist: numpy (>=1.16)
+Requires-Dist: Orange3 (>=3.34.0)
+Requires-Dist: orange-canvas-core (>=0.1.28)
+Requires-Dist: orange-widget-base (>=4.20.0)
+Requires-Dist: pillow (>=6.2.0)
+Requires-Dist: pandas (<2.1)
+Requires-Dist: requests
+Requires-Dist: requests-cache
+Requires-Dist: scipy
+Provides-Extra: doc
+Requires-Dist: sphinx ; extra == 'doc'
+Requires-Dist: recommonmark ; extra == 'doc'
+Requires-Dist: sphinx-rtd-theme ; extra == 'doc'
+Provides-Extra: test
+Requires-Dist: coverage ; extra == 'test'
+
+Orange3 Image Analytics
+=======================
+
+Simplifies loading of images and through deep network-based embeddings
+enables their analysis. Embedding represents images with feature vectors,
+allowing the use of Orange's standard arsenal of widgets for
+clustering, classification or any other kind of
+feature-based analysis. Image Analytics also provides visualization
+widgets for images and allows saving them.
+See [documentation](http://orange3-imageanalytics.readthedocs.org/).
+
+Features
+--------
+#### Image analysis
+* load and save images
+* represent images with a vector of numbers
+* displays images in a similarity grid
