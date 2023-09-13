@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "aiogramarch"
+version = "1.1.6"
+description = "Managing aiogram projects"
+authors = ["BulatXam <Khamdbulat@yandex.ru>"]
+license = "MIT"
+readme = "README.md"
+exclude = [
+    "examples"
+]
+
+[tool.poetry.dependencies]
+python = ">=3.7"
+pydantic="==1.10.12"
+click=">=8.1.3"
+cookiecutter=">=2.1.1"
+aiogram=">=3.0.0b"
+loguru=">=0.6.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.1.2"
+
+[tool.poetry.scripts]
+aiogramarch = 'aiogramarch.cli.app:cli'
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
