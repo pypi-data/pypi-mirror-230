@@ -1,0 +1,111 @@
+Metadata-Version: 2.1
+Name: substrate-ai
+Version: 0.0.4
+Summary: Substrate AI package
+Author-email: SubstrateAI <support@substrateai.com>
+Project-URL: Homepage, https://docs.substrateai.com/
+Keywords: cloud,gpu,ml,ai
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: boto3 >=1.28.0
+Requires-Dist: docker >=6.1.0
+Requires-Dist: typer[all] >=0.9.0
+Requires-Dist: human-id >=0.2.0
+Requires-Dist: python-on-whales ==0.64.2
+Requires-Dist: yaspin ==3.0.0
+Requires-Dist: supabase ==1.0.4
+Requires-Dist: google-cloud-artifact-registry ==1.8.3
+Requires-Dist: google-cloud-container ==2.30.0
+Requires-Dist: envd ==0.3.40
+Provides-Extra: dev
+Requires-Dist: black ; extra == 'dev'
+Requires-Dist: bumpver ; extra == 'dev'
+Requires-Dist: isort ; extra == 'dev'
+Requires-Dist: pip-tools ; extra == 'dev'
+Requires-Dist: pytest ; extra == 'dev'
+
+# `substrate-ai`
+
+Substrate CLI
+
+**Usage**:
+
+```console
+$ substrate-ai [OPTIONS] COMMAND [ARGS]...
+```
+
+**Options**:
+
+* `--install-completion`: Install completion for the current shell.
+* `--show-completion`: Show completion for the current shell, to copy it or customize the installation.
+* `--help`: Show this message and exit.
+
+**Commands**:
+
+* `init`: Initialize the project folder to be able...
+* `login`: Login to the substrate platform
+* `logs`: Stream the logs of a job
+* `run`: Run the project on the substrate platform
+
+## `substrate-ai init`
+
+Initialize the project folder to be able to run with the substrate platform
+
+**Usage**:
+
+```console
+$ substrate-ai init
+```
+
+**Options**:
+
+* `--help`: Show this message and exit.
+
+## `substrate-ai login`
+
+Login to the substrate platform
+
+**Usage**:
+
+```console
+$ substrate-ai login
+```
+
+**Options**:
+
+* `--help`: Show this message and exit.
+
+## `substrate-ai logs`
+
+Stream the logs of a job
+
+**Usage**:
+
+```console
+$ substrate-ai logs JOB_NAME
+```
+
+**Arguments**:
+
+* `JOB_NAME`: [required]
+
+**Options**:
+
+* `--help`: Show this message and exit.
+
+## `substrate-ai run`
+
+Run the project on the substrate platform
+
+**Usage**:
+
+```console
+$ substrate-ai run
+```
+
+**Options**:
+
+* `--help`: Show this message and exit.
