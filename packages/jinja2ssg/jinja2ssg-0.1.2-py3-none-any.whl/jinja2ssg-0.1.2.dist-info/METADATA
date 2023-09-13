@@ -1,0 +1,50 @@
+Metadata-Version: 2.1
+Name: jinja2ssg
+Version: 0.1.2
+Summary: 
+License: MIT
+Author: Arjoonn Sharma
+Author-email: arjoonn@midpathsoftware.com
+Requires-Python: >=3.11,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: click (>=8.1.7,<9.0.0)
+Requires-Dist: jinja2 (>=3.1.2,<4.0.0)
+Requires-Dist: watchdog (>=3.0.0,<4.0.0)
+Description-Content-Type: text/markdown
+
+# Jinja2 SSG
+
+- The filesystem structure in `--src` is copied into `--dest`.
+- Files starting with `_` are skipped.
+
+```bash
+python3 -m pip install jinja2ssg
+python3 -m jinja2ssg --src src --dest publish build
+```
+
+# Example
+
+```
+site/src/
+├── _base.html
+├── donate
+│   ├── _banner.html
+│   ├── _content.html
+│   ├── _donateform.html
+│   ├── donate.js
+│   └── index.html
+├── _footer.html
+└── _nav.html
+```
+
+Results in a DEST structure like:
+
+```
+site/www/
+└── donate
+    ├── index.html
+    └── donate.js
+```
+
