@@ -1,0 +1,214 @@
+Metadata-Version: 2.1
+Name: django-admin-global-sidebar
+Version: 0.2.2
+Summary: Provides a configurable left navigation bar for Django's admin site.
+Author: Li HaoRan
+Author-email: lihaoran@zencore.cn
+Maintainer: Li HaoRan
+Maintainer-email: lihaoran@zencore.cn
+License: MIT
+Keywords: django admin extentions,django admin global admin
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# django-admin-global-sidebar
+
+## Description
+
+Provides a configurable left navigation bar for Django's admin site.
+
+## Features
+
+- Configurable left navigation bar.
+- Support two-level menus.
+- Support navigation bar folding.
+- Support menu item permission control.
+- Expand the primary menu and highligh the secondary menu automatically according to the current page path.
+- CSS-style icon display for menu items.
+
+## Previews
+
+### Two-level navigation
+
+![Two-level navigation preview](https://gitee.com/rRR0VrFP/django-admin-global-sidebar/raw/master/doc/images/preview.en.01.png)
+
+
+### Folded navigation
+
+![Folded navigation preview](https://gitee.com/rRR0VrFP/django-admin-global-sidebar/raw/master/doc/images/preview.en.02.png)
+
+
+## Install
+
+```shell
+pip install django-admin-global-sidebar
+```
+
+## Usage
+
+- Using `django-admin-global-sidebar` will disable Django's default left navigation bar, which shipped with version 3.x.
+- Add dependency packages to `INSTALLED_APPS` in file `pro/settings.py`.
+- Define `DJANGO_ADMIN_GLOBAL_SIDEBAR_MENUS` in file `pro/settings.py`. If `DJANGO_ADMIN_GLOBAL_SIDEBAR_MENUS` is not defined, no navigation bar will be displayed.
+
+**pro/settings.py**
+
+```python
+INSTALLED_APPS = [
+    ...
+    'django_static_fontawesome',
+    'django_static_jquery3',
+    'django_admin_global_sidebar',
+    ...
+]
+
+DJANGO_ADMIN_GLOBAL_SIDEBAR_MENUS = [
+    {
+        "title": "Home",
+        "icon": "fa fa-home",
+        "url": "/admin/",
+    },{
+        "title": "Manage Books",
+        "icon": "fa fa-book",
+        "children": [
+            {
+                "title": "Manage Categories",
+                "icon": "fas fa-list",
+                "model": "django_admin_global_sidebar_example.category",
+                "permissions": ["django_admin_global_sidebar_example.view_category"],
+            },{
+                "title": "Manage Books",
+                "icon": "fas fa-book",
+                "model": "django_admin_global_sidebar_example.book",
+                "permissions": ["django_admin_global_sidebar_example.view_book"],
+            }
+        ]
+    },{
+        "title": "Authenticate",
+        "icon": "fa fa-cogs",
+        "children": [
+            {
+                "title": "Manage Users",
+                "icon": "fas fa-user",
+                "model": "auth.user",
+                "permissions": ["auth.view_user",],
+            },
+            {
+                "title": "Manage Groups",
+                "icon": "fas fa-users",
+                "model": "auth.group",
+                "permissions": ["auth.view_group",],
+            }
+        ]
+    },
+]
+
+```
+
+## DJANGO_ADMIN_GLOBAL_SIDEBAR_MENUS
+
+- Two-level menus supported.
+- Menu item config options:
+    - `title` is the display title.
+    - `icon` is fontawesome class.
+    - `children` is sub-menu list settings.
+    - `url`, `model` or `view` will be used to calc the menu link. Only one option will be applied.
+        - `url` means a fixed link.
+        - `model` means model's changelist view.
+        - `view` means django's view name and the result link is calced with: revered(`view`).
+    - `permissions` is the permission array.
+        - Using `or` logic for permission elements.
+        - A permission element can be a permission-tag or permission-tags.
+        - Using `and` logic for permission-tags.
+    - `active_patterns` used to determine the active status of the menu item.
+        - Pattern will be used to test against the request.path.
+        - It can be a pattern string or pattern string list.
+        - Use `or` logic for patterns.
+
+
+## Advanced Usage
+
+### Define a navigation loading function and bind it to `DJANGO_ADMIN_GLOBAL_SIDEBAR_MENUS`
+
+You can set the `DJANGO_ADMIN_GLOBAL_SIDEBAR_MENUS` variable in file 'pro/settings.py' as a fixed menu list, you can also set the 'DJANGO_ADMIN_GLOBAL_SIDEBAR_MENUS' variable as the import path of the Menus-Loading-Function. For example, set `DJANGO_ADMIN_GLOBAL_SIDEBAR_MENUS="app.menus.get_ menus_ by_ user"`. Here the string "app. menus.get_menus_by_user" is the import path of the function, which can be loading through 'magic_import.import_from_string'. The menu loading function accepts the unique parameter 'request' and returns the menu list. The format of the returned menu list is the same as fixed menu list that assgined to the variable 'DJANGO_ADMIN_GLOBAL_SIDEBAR_MENUS'. For example, define the following functions in 'app/menus.py':
+
+```
+def get_menus_by_user(request):
+    user_type = get_user_type(request.user)
+    if user_type == MANAGER:
+         return [{
+             "title": "System Manage",
+             ...
+             "children": [{
+                 "title": "Account Manage",
+                 ...
+             },{
+                 "title": "Permission Manage",
+                 ...
+             }]
+         }]
+    elif user_type == READER:
+        return [{
+            "title": "Reader Center",
+            ...
+            "children": [{
+                "title": "Card Manage",
+                ...
+            }]
+        }]
+    else:
+        return []
+
+```
+
+The code above will display different menus according to current user type. If current user is a site administrator, then it will show Manager's menu list. If current user is a reader, then it will show Reader's menu list.
+
+### Load navigation from database
+
+The Menus-Loading-Function is called in the admin site rendering. At that time the database engine is already loaded, so you can access the database to fetch menus dynamiclly.
+
+### Navigation with i18n support
+
+When loading `pro/settings.py`, the i18n service is not ready, so that you can not use `ugettext_xxx` functions. If you want to add i18n support for menu items, you can set `DJANGO_ADMIN_GLOBAL_SIDEBAR_MENUS` to a Menus-Loading-Function importing path, in the loading function you you can use `ugettext_xxx` functions freely.
+
+## Releases
+
+
+### v0.1.0
+
+- First release.
+
+### v0.1.1
+
+- Fix popup problem.
+
+### v0.1.2
+
+- Depends on django-static-jquery3>=5.0.0.
+
+### v0.1.3
+
+- Add django_app_requires support.
+
+### v0.1.4
+
+- Force to disable nav-sidebar for Django3.2.
+- Fix global sidebar height in long page.
+
+### v0.2.0
+
+- Fix problem that the page will scroll when clicking on primary menu items.
+- You can set `DJANGO_ADMIN_GLOBAL_SIDEBAR_MENUS` to Menus-Loading-Function importing path.
+
+### v0.2.1
+
+- Fix sidebar height.
+
+### v0.2.2
+
+- Doc update.

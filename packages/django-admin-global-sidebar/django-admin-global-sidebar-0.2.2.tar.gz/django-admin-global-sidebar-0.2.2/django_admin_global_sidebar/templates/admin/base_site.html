@@ -1,0 +1,22 @@
+{% extends "admin/base_site.html" %}
+{% load static django_admin_global_sidebar %}
+
+{% block extrastyle %}
+    {{block.super}}
+    <link rel="stylesheet" type="text/css" href='{% static "fontawesome/css/all.min.css" %}'>
+    <link rel="stylesheet" type="text/css" href='{% static "django-admin-global-sidebar/css/django-admin-global-sidebar.css" %}'>
+    <script type="text/javascript" src='{% static "jquery/jquery.js" %}'></script>
+    <script type="text/javascript" src='{% static "jquery/plugins/jquery.cookie.js" %}'></script>
+    <script type="text/javascript" src='{% static "django-admin-global-sidebar/js/django-admin-global-sidebar.js" %}'></script>
+{% endblock %}
+
+{% block bodyclass %}{{block.super}} {%block django-admin-global-sidebar-body-classes %}{% django_admin_global_sidebar_body_classes request %}{% endblock %}{% endblock %}
+
+{% block footer %}
+    {{block.super}}
+    {% block django-admin-global-sidebar %}
+    {% if is_popup %}{% else %}
+    {% django_admin_global_sidebar request %}
+    {% endif %}
+    {% endblock %}
+{% endblock %}
