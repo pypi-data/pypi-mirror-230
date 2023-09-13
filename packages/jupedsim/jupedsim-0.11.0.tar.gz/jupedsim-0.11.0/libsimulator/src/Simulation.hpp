@@ -1,0 +1,88 @@
+// Copyright © 2012-2023 Forschungszentrum Jülich GmbH
+// SPDX-License-Identifier: LGPL-3.0-or-later
+#pragma once
+
+#include "AgentExitSystem.hpp"
+#include "GenericAgent.hpp"
+#include "Geometry.hpp"
+#include "Journey.hpp"
+#include "Logger.hpp"
+#include "NeighborhoodSearch.hpp"
+#include "OperationalDecisionSystem.hpp"
+#include "OperationalModel.hpp"
+#include "OperationalModelType.hpp"
+#include "Point.hpp"
+#include "Polygon.hpp"
+#include "SimulationClock.hpp"
+#include "SimulationError.hpp"
+#include "Stage.hpp"
+#include "StageDescription.hpp"
+#include "StrategicalDesicionSystem.hpp"
+#include "TacticalDecisionSystem.hpp"
+#include "TemplateHelper.hpp"
+#include "Tracing.hpp"
+#include "Visitor.hpp"
+
+#include <boost/iterator/zip_iterator.hpp>
+
+#include <chrono>
+#include <exception>
+#include <iterator>
+#include <memory>
+#include <stdexcept>
+#include <tuple>
+#include <unordered_map>
+#include <vector>
+
+class Simulation
+{
+    SimulationClock _clock;
+    StrategicalDecisionSystem _stategicalDecisionSystem{};
+    TacticalDecisionSystem _tacticalDecisionSystem{};
+    OperationalDecisionSystem _operationalDecisionSystem;
+    AgentExitSystem<GenericAgent> _agentExitSystem{};
+    NeighborhoodSearch<GenericAgent> _neighborhoodSearch{2.2};
+    std::unique_ptr<RoutingEngine> _routingEngine;
+    std::unique_ptr<CollisionGeometry> _geometry;
+    std::vector<GenericAgent> _agents;
+    std::vector<GenericAgent::ID> _removedAgentsInLastIteration;
+    std::unordered_map<Journey::ID, std::unique_ptr<Journey>> _journeys;
+    std::unordered_map<BaseStage::ID, std::unique_ptr<BaseStage>> _stages;
+    PerfStats _perfStats{};
+
+public:
+    Simulation(
+        std::unique_ptr<OperationalModel>&& operationalModel,
+        std::unique_ptr<CollisionGeometry>&& geometry,
+        std::unique_ptr<RoutingEngine>&& routingEngine,
+        double dT);
+    Simulation(const Simulation& other) = delete;
+    Simulation& operator=(const Simulation& other) = delete;
+    Simulation(Simulation&& other) = delete;
+    Simulation& operator=(Simulation&& other) = delete;
+    ~Simulation() = default;
+    const SimulationClock& Clock() const;
+    void SetTracing(bool on);
+    PerfStats GetLastStats() const;
+    void Iterate();
+    Journey::ID AddJourney(const std::vector<BaseStage::ID>& stages);
+    BaseStage::ID AddStage(const StageDescription stageDescription);
+    void RemoveAgent(GenericAgent::ID id);
+    const std::vector<GenericAgent::ID>& RemovedAgents() const;
+    size_t AgentCount() const;
+    double ElapsedTime() const;
+    double DT() const;
+    void SwitchAgentProfile(GenericAgent::ID agent_id, OperationalModel::ParametersID profile_id);
+    void SwitchAgentJourney(GenericAgent::ID agent_id, Journey::ID journey_id, size_t stage_idx);
+    uint64_t Iteration() const;
+    std::vector<GenericAgent::ID> AgentsInRange(Point p, double distance);
+    /// Returns IDs of all agents inside the defined polygon
+    /// @param polygon Required to be a simple convex polygon with CCW ordering.
+    std::vector<GenericAgent::ID> AgentsInPolygon(const std::vector<Point>& polygon);
+    GenericAgent::ID AddAgent(GenericAgent&& agent);
+    const GenericAgent& Agent(GenericAgent::ID id) const;
+    GenericAgent& Agent(GenericAgent::ID id);
+    const std::vector<GenericAgent>& Agents() const;
+    OperationalModelType ModelType() const;
+    StageProxy Stage(BaseStage::ID stageId) const;
+};
