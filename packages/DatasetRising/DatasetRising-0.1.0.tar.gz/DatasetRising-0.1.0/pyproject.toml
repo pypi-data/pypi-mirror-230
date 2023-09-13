@@ -1,0 +1,61 @@
+[project]
+name = 'DatasetRising'
+version = '0.1.0'
+description = 'Toolchain for creating and training Stable Diffusion models with custom datasets'
+readme = 'README.md'
+requires-python = '>=3.9.6,<3.11'
+license = { file = 'LICENSE.md' }
+dynamic = ['dependencies']
+
+keywords = ['training', 'crawler', 'machine-learning', 'imageboard', 'booru', 'danbooru', 'ml', 'dataset',
+    'dataset-generation', 'gelbooru', 'e621', 'imagebooru', 'finetuning', 'mlops', 'huggingface', 'mlops-workflow',
+    'stable-diffusion', 'huggingface-users', 'diffusers', 'sdxl']
+
+classifiers = [
+    'Development Status :: 5 - Production/Stable',
+    'Environment :: Console',
+    'Environment :: GPU',
+    'Environment :: GPU :: NVIDIA CUDA',
+    'Intended Audience :: Developers',
+    'License :: OSI Approved :: MIT License',
+    'Operating System :: MacOS',
+    'Operating System :: POSIX',
+    'Operating System :: POSIX :: Linux',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Topic :: Scientific/Engineering :: Artificial Intelligence',
+    'Topic :: Scientific/Engineering :: Image Processing'
+]
+
+[project.urls]
+'Homepage' = 'https://github.com/hearmeneigh/dataset-rising'
+'Bug Reports' = 'https://github.com/hearmeneigh/dataset-rising/issues'
+'Source' = 'https://github.com/hearmeneigh/dataset-rising'
+
+[project.scripts]
+'dr-up' = 'up.sh'
+'dr-down' = 'down.sh'
+'dr-uninstall' = 'uninstall.sh'
+'dr-crawl' = 'dataset_rising.crawl:main'
+'dr-append' = 'dataset_rising.database.append:main'
+'dr-gap' = 'dataset_rising.database.gap:main'
+'dr-import' = 'dataset_rising.database.import:main'
+'dr-pick' = 'dataset_rising.database.pick:main'
+'dr-preview' = 'dataset_rising.database.preview:main'
+'dr-build' = 'dataset_rising.dataset.build:main'
+'dr-train' = 'dataset_rising.train.train:main'
+'dr-convert-sd' = 'dataset_rising.train.convert_sd:main'
+'dr-convert-sdxl' = 'dataset_rising.train.convert_sdxl:main'
+'dr-wait' = 'util.wait.sh'
+
+[tools.setuptools]
+include-package-data = true
+
+[tool.setuptools.dynamic]
+dependencies = {file = ['requirements.txt']}
+
+[build-system]
+requires = ['setuptools>=43.0.0', 'wheel']
+build-backend = 'setuptools.build_meta'
+
