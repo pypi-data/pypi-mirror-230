@@ -1,0 +1,137 @@
+#  Deployment Pipeline
+#
+#  Developer notes:
+#    - An environment can only be defined in one step per pipeline
+#    - Each step is an independent run of the docker image (i.e. envs defined
+#       or file transformations are not kept)
+#    - Files can be shared between steps if they're defined as artifacts
+#    - We could build a custom image for faster deployments
+
+image: python:3.8.5
+
+clone:
+  depth: full
+  lfs: true
+
+definitions:
+  .set-environment-dev: &set-environment-dev |
+    export MODEL_ENV=dev
+    export SERVICE_NAME=prediction
+
+  .set-environment-test: &set-environment-test |
+    export MODEL_ENV=test
+    export SERVICE_NAME=prediction
+
+  .set-environment-prod: &set-environment-prod |
+    export MODEL_ENV=prod
+    export SERVICE_NAME=prediction
+
+  .install-mlops: &install-mlops |
+    git pull
+    bash -ex install.sh
+
+  steps:
+    - step: &deploy-dev-prediction-service
+        name: Deploy Prediction Service to Dev
+        deployment: dev-prediction
+        caches:
+          - pip
+        script:
+          - *install-mlops
+          - tag_model_version mlopsdemo
+          - deploy_prediction_service
+    - step: &deploy-test-package
+        name: Deploy Pre-release Package to PyPI
+        deployment: test-pypi
+        caches:
+          - pip
+        script:
+          - git pull
+          - bash -ex build.sh
+    - step: &run-tests-without-deploying
+        name: Run Tests Without Deploying
+        caches:
+          - pip
+        script:
+          - *set-environment-dev
+          - *install-mlops
+          - python bitbucket_pipeline_helpers/upload_dummy_artifacts.py
+          - TESTING_ONLY=True deploy_prediction_service
+          - python bitbucket_pipeline_helpers/remove_dummy_artifacts.py
+    - step: &unit-testing
+        name: Unit Testing
+        caches:
+          - pip
+        script:
+          - *set-environment-test
+          - pip install .[cdf]
+          - pip install coverage
+          - coverage run -m pytest test/ -v -ra
+          - coverage report
+    - step: &flake8-linting
+        name: Linting
+        caches:
+          - pip
+        script:
+          - pip install flake8
+          - flake8 .
+    - step: &mypy-type-checking
+        name: Type Checking
+        caches:
+          - pip
+        script:
+          - pip install mypy
+          - pip install pydantic
+          - pip install types-PyYAML types-requests
+          - mypy
+    - step: &security-scan-secrets
+        name: Security Scan for Secrets
+        script:
+          - pipe: atlassian/git-secrets-scan:0.5.1
+
+pipelines:
+  pull-requests:
+    "**": # Run for PRs on all branches
+      - parallel:
+          - step: *unit-testing
+          - step: *flake8-linting
+          - step: *mypy-type-checking
+          - step: *security-scan-secrets
+      - step: *deploy-test-package
+      - step: *run-tests-without-deploying
+      - step: *deploy-dev-prediction-service
+      - step:
+          name: Promote Artifacts to Test and Prod
+          script:
+            - *set-environment-dev
+            - *install-mlops
+            - python bitbucket_pipeline_helpers/upload_dummy_artifacts.py
+            - promote_artifacts mlopsdemo
+            - python bitbucket_pipeline_helpers/remove_dummy_artifacts.py
+            - *set-environment-test
+            - promote_artifacts mlopsdemo
+      - step:
+          <<: *deploy-dev-prediction-service
+          name: Deploy Prediction Service to Test
+          deployment: test-prediction
+      - step:
+          <<: *deploy-dev-prediction-service
+          name: Deploy Prediction Service to Prod
+          deployment: production-prediction
+
+
+  branches:
+    master: # Mirror to public repo and choose to manually deploy package, training and production services to prod
+      - step: *unit-testing
+      - step:
+          name: Mirror Latest Version to Public Repo
+          script:
+            - git remote add public git@bitbucket.org:akerbp/akerbp.mlops.git
+            - git pull
+            - git push public master
+      # TODO: Add a step for downloading the pre-release from PyPI and run all the above tests before deploying the stable release
+      - step:
+          <<: *deploy-test-package
+          name: Deploy Stable Version to PyPI
+          deployment: production-pypi
+          trigger: manual
