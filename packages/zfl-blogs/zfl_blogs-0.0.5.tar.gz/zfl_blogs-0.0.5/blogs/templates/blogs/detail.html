@@ -1,0 +1,75 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% load mark %}
+
+{% block detail-style %}
+<link rel="stylesheet" href="{% static 'blogs/css/blogs-style.css' %}">
+<link rel="stylesheet" href="{% static 'blogs/css/detail-style.css' %}">
+<link rel="stylesheet" href="{% static 'blogs/css/tomorrow-night-bright.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- コンテナ内　日付・記事詳細・サイドバー -->
+<div class="container">
+
+  <!-- BootStrapのグリッドシステム -->
+  <div class="row">
+
+    <!-- メインバー -->
+    <div class="col-lg-8 col-sm-12 main-bar">
+
+      <!-- 看板 -->
+      <div class="jumbotron jumbotron-fluid">
+	<div class="container">
+	  {% if blog.category.thumbnail.bool %}
+	  <img class="d-flex mr-3" src="{{ blog.category.thumbnail.url }}" alt="Generic placeholder image">
+	  {% endif %}
+	  <h2 class="display-5"><strong>{% block blogs %}{% block title %}{{ blog.title }}{% endblock %}{% endblock %}</strong></h2>
+	  <p class="lead">
+	  <strong class="text-black-50">投稿日 {{ blog.created_at }}</strong> >> <strong>更新日 {{ blog.updated_at }}</strong>
+	  </p>
+	</div>
+      </div>
+      <!-- 看板終 -->
+
+      <!-- 管理人だけ表示 -->
+      {% if request.user.is_superuser %}
+
+      <!-- 記事編集用ボタン -->
+      <a href="{% url 'blogs:edit_blog' blog.id %}">
+	<button type="button" class="btn btn-primary btn-sm">編集</button>
+      </a>
+
+      {% endif %}
+
+      <!-- 記事詳細 -->
+      <div class="blogs-markdown-style">
+	{{ blog.text | markdown_to_html }}
+      </div>
+      <!-- 記事詳細終 -->
+
+      <!-- 目次モーダルの追従ボタン -->
+      {% include 'blogs/toc_display.html' %}
+
+      <!-- ブログトップに戻るリンク -->
+      <a class="text-violet" href="{% url 'blogs:index' %}">一覧へ戻る</a>
+
+    </div>
+    <!-- メインバー終 -->
+
+    <!-- サイドバー -->
+    <div class="col-lg-4 col-sm-12 side-bar">
+
+      <!-- 新着記事リスト -->
+      {% include 'blogs/new_articls.html'%}
+
+    </div>
+    <!-- サイドバー終 -->
+
+  </div>
+  <!-- BootStrapのグリッドシステム終 -->
+
+</div>
+
+{% endblock %}
