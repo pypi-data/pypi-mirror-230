@@ -1,0 +1,69 @@
+Metadata-Version: 2.1
+Name: streamflow-postgresql
+Version: 0.0.6
+Summary: StreamFlow PostgreSQL plugin
+Author-email: Iacopo Colonnelli <iacopo.colonnelli@unito.it>
+License: LGPL-3.0-or-later
+Project-URL: Package, https://pypi.org/project/streamflow-postgresql
+Project-URL: Repository, https://github.com/alpha-unito/streamflow-postgresql
+Classifier: Development Status :: 3 - Alpha
+Classifier: License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: Operating System :: POSIX
+Classifier: Operating System :: MacOS
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: System :: Distributed Computing
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: asyncpg ==0.28.0
+Requires-Dist: streamflow ==0.2.0.dev9
+Provides-Extra: bandit
+Requires-Dist: bandit ==1.7.5 ; extra == 'bandit'
+Provides-Extra: lint
+Requires-Dist: black ==23.9.1 ; extra == 'lint'
+Requires-Dist: codespell ==2.2.5 ; extra == 'lint'
+Requires-Dist: flake8-bugbear ==23.7.10 ; extra == 'lint'
+Requires-Dist: pyupgrade ==3.10.1 ; extra == 'lint'
+Provides-Extra: test
+Requires-Dist: pytest ==7.4.2 ; extra == 'test'
+Requires-Dist: pytest-asyncio ==0.21.1 ; extra == 'test'
+Requires-Dist: pytest-cov ==4.1.0 ; extra == 'test'
+Requires-Dist: pytest-xdist ==3.3.1 ; extra == 'test'
+
+# PostgreSQL Plugin for StreamFlow
+
+## Installation
+
+Simply install the package directory from [PyPI](https://pypi.org/project/streamflow-postgresql/) using [pip](https://pip.pypa.io/en/stable/). StreamFlow will automatically recognise it as a plugin and load it at each workflow execution.
+
+```bash
+pip install streamflow-postgresql
+```
+
+If everything worked correctly, whenever a workflow execution start the following message should be printed in the log:
+
+```bash
+Successfully registered plugin streamflow_postgresql.plugin.PostgreSQLStreamFlowPlugin
+```
+
+## Usage
+
+This plugin registers a new `Database` component, which extends the StreamFlow `CachedDatabase` class. To declare it, put the following lines inside a `streamflow.yml` configuration file.
+
+```yaml
+database:
+  type: unito.postgresql
+  config:
+    dbname: <dbname>               # The name of the database to use
+    hostname: <hostname>           # The database hostname or IP address
+    password: <password>           # Password to use when connecting to the database
+    username: <username>           # Username to use when connecting to the database
+```
