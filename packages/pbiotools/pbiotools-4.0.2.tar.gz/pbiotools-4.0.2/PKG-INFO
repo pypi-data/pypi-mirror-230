@@ -1,0 +1,85 @@
+Metadata-Version: 2.1
+Name: pbiotools
+Version: 4.0.2
+Summary: Miscellaneous bioinformatics and other supporting utilities for Python 3
+Author: Brandon Malone
+Maintainer-email: Etienne Boileau <boileau@uni-heidelberg.de>
+License: MIT
+Project-URL: Github, https://github.com/dieterich-lab/pbiotools
+Project-URL: Issues, https://github.com/dieterich-lab/pbiotools/issues
+Keywords: bioinformatics,riboseq
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering :: Bio-Informatics
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Requires-Python: <3.11,>=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: biopython
+Requires-Dist: dask
+Requires-Dist: fastparquet
+Requires-Dist: joblib
+Requires-Dist: matplotlib
+Requires-Dist: matplotlib_venn
+Requires-Dist: mygene
+Requires-Dist: numpy
+Requires-Dist: openpyxl
+Requires-Dist: pandas
+Requires-Dist: pip
+Requires-Dist: pyensembl
+Requires-Dist: pysam
+Requires-Dist: pytest
+Requires-Dist: seaborn
+Requires-Dist: scikit-learn
+Requires-Dist: scipy
+Requires-Dist: tqdm
+Provides-Extra: tests
+Requires-Dist: pytest; extra == "tests"
+Requires-Dist: pytest-cov; extra == "tests"
+Provides-Extra: docs
+Requires-Dist: ipykernel; extra == "docs"
+Requires-Dist: matplotlib; extra == "docs"
+Requires-Dist: nbsphinx; extra == "docs"
+Requires-Dist: pandoc; extra == "docs"
+Requires-Dist: sphinx>=4.5.0; extra == "docs"
+Requires-Dist: sphinx_rtd_theme>=1.0.0; extra == "docs"
+
+# pbiotools [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/pbiotools/README.html) [![pypi releases](https://img.shields.io/pypi/v/pbiotools.svg)](https://pypi.org/project/pbiotools) [![CI](https://github.com/dieterich-lab/pbiotools/actions/workflows/ci.yml/badge.svg)](https://github.com/dieterich-lab/pbiotools/actions/workflows/ci.yml)
+
+The **pbiotools** package provides miscellaneous bioinformatics and other utilities for Python 3. It is required for the installation of [Rp-Bp](https://github.com/dieterich-lab/rp-bp).
+
+## Installation
+
+If required, set up the conda channels as described [here](https://bioconda.github.io/#usage), and install with
+
+```
+conda install pbiotools
+```
+
+The package is also available on [PyPI](https://pypi.org/project/pbiotools/).
+
+You can also get a container with **pbiotools** pre-installed
+
+```
+# docker or...
+docker pull quay.io/biocontainers/pbiotools:<tag>
+# ... singularity
+singularity pull pbiotools.sif docker://quay.io/biocontainers/pbiotools:<tag>
+```
+
+There is no _latest_ tag, you need to specify the version tag. See [pbiotools/tags](https://quay.io/repository/biocontainers/pbiotools?tab=tags) for valid values for `<tag>`.
+
+## Documentation
+
+There is currently limited [documentation](docs/usage-instructions.md).
+
+## How to report issues
+
+Bugs and issues should be reported in the [bug tracker](https://github.com/dieterich-lab/pbiotools/issues). Follow the instructions and guidelines given in the template.
