@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=64.0"] # editable install using setuptool available since v64.0.0
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hyclib"
+version = "0.1.23"
+description = "Commonly used tools across my own personal projects."
+readme = "README.md"
+requires-python = ">=3.9" # package developed with python v3.9.16
+license = {file = "LICENSE"}
+authors = [
+    {name = "Ho Yin Chau"},
+]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.9",
+]
+dependencies = [
+    'tomli',
+    'platformdirs',
+]
+
+[project.optional-dependencies]
+numerics = [
+    'numpy',
+    'scipy',
+    'statsmodels',
+]
+ml = [
+    'numpy',
+    'scipy',
+    'torch',
+    'statsmodels',
+]
+viz = [
+    'numpy',
+    'matplotlib',
+    'statsmodels',
+]
+data = [
+    'numpy',
+    'scipy',
+    'torch',
+    'statsmodels',
+    'pandas',
+    'tables', # optional dependency for pandas that is needed here
+    'h5py',
+    'mat73',
+    'tqdm',
+]
+
+[project.urls]
+repository = "https://github.com/hchau630/hyclib"
