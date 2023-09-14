@@ -1,0 +1,84 @@
+# OpenI PyPi
+
+> PYPI package for 启智AI协作平台。
+
+# 使用说明安装
+
+- 启智平台提供的Python工具包，使用户能在本地上传数据集。
+- 用户可以获取镜像内存放代码，数据集，模型，输出结果的路径
+- 可以使用公共函数实现数据集的拷贝，模型的上传等
+- 使用说明：
+  - 使用前请在平台个人设置中获取token：[点击跳转token获取界面](https://openi.pcl.ac.cn/user/settings/applications)
+  - 当前版本为了解决用户上传数据集的需求，建议在本地使用。后续版本将适配代码仓配置、隐藏token及云脑任务。
+
+## 安装
+
+*适配python3.6及以上版本*
+
+```bash
+pip3 install -U openi_test
+pip install openi-test==0.3.9 -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
+## 本地上传数据集示例
+
+**dataset.upload_file(file, username, repository, token, cluster = "NPU")**
+
+*上传本地单个文件到启智平台数据集，支持断点续传*
+
+- `file`        **str, 必填**：文件路径(包含文件名，支持linux与mac路径，也支持windows文件路径如d:\\xxx)
+- `username`    **str, 必填**：上传数据集所属项目owner用户名，可以是用户或组织
+- `repository`  **str, 必填**：数据集所属项目路径，此为仓库地址中的名字，更改过名称的项目需填写仓库地址中的路径
+- `token`       **str, 必填**：用户启智上获取的令牌token，并对该数据集有权限
+- `cluster`     **str, 选填, 默认"NPU"**：可填入GPU或NPU，上传至不同的存储集群
+
+```python
+
+
+from openi.dataset import upload_file
+upload_file(
+    file = "", # 必填，文件路径(包含文件名)
+    username = "", # 必填，数据集所属项目用户名
+    repository = "", # 必填，数据集所属项目名
+    token = "", #必填，用户启智上获取的令牌token，并对该项目数据集有权限
+  
+    cluster = "", # 选填，可填入GPU或NPU，不填写后台默认为NPU
+    app_url = "" #选填, 默认为平台地址，用户不用填写，开发测试用
+    file = "", 
+    username = "", 
+    repository = "", 
+    token = "", 
+    cluster = ""
+    )
+
+```
+
+界面
+
+## 云脑资源获取路径函数及示例：
+
+```
+#公共方法
+from openi.cloudbrain.path import (
+    download_dataset,
+    doenload_pretrain_model,
+    get_code_path,
+    get_dataset_path,
+    get_pretrain_model_path,
+    get_output_path,
+    upload_output
+)
+#使用方法：
+#注意在调试环境中，get_output_path获取到路径，只是提供建议路径用于保存文件，平台并不保存get_output_path下的文件，但在训练任务中会保存get_output_path路径下的文件
+down_load_dataset()
+doenload_pretrain_model()
+code_path = get_code_path()
+dataset_path = get_dataset_path()
+pretrain_model_path = get_pretrain_model_path()
+output_path = get_output_path()
+upload_output()
+
+
+```
+
+test
