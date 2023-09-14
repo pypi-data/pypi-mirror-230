@@ -1,0 +1,12 @@
+<nav>
+  <h3 class="visually-hidden">Breadcrumbs</h3>
+  <ul class="breadcrumbs">
+    {%- block breadcrumbs %}
+    <li>📓 <a href="{{ pathto(master_doc) }}" class="breadbcrumbs__home" title="Startseite">DOKUMENTATION</a></li>
+    {%- for doc in parents %}
+    <li class="breadcrumbs__item"><a href="{{ doc.link|e }}">{{ doc.title }}</a></li>
+    {%- endfor %}
+    <li class="breadcrumbs__item breadcrumbs__item--active">{{ title }}</li>
+    {%- endblock %}
+  </ul>
+</nav>

@@ -1,0 +1,7 @@
+{# static template, see https://www.sphinx-doc.org/en/master/development/theming.html#static-templates #}
+(() => {
+    const upDateText = '{{ last_updated }}';
+    const date = new Date(upDateText);
+    const iDate = new Intl.DateTimeFormat('de', { dateStyle: 'full' }).format(date)
+    document.querySelector('#builddate').innerText = iDate;
+})();

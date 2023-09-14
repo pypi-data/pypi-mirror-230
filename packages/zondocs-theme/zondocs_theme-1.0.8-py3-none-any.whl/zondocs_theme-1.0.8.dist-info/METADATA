@@ -1,0 +1,75 @@
+Metadata-Version: 2.1
+Name: zondocs-theme
+Version: 1.0.8
+Summary: Sphinx theme for ZEIT ONLINE docs
+Author-email: Nico Bruenjes <nico.bruenjes@zeit.de>
+Maintainer-email: Nico Bruenjes <nico.bruenjes@zeit.de>
+License: MIT
+Project-URL: Changes, https://github.com/ZeitOnline/zondocs_theme/blob/main/CHANGES.txt
+Project-URL: Source Code, https://github.com/zeitonline/zondocs_theme/
+Project-URL: Issue Tracker, https://github.com/zeitonline/zondocs_theme/issues/
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Framework :: Sphinx
+Classifier: Framework :: Sphinx :: Theme
+Requires-Python: >=3.7
+Description-Content-Type: text/x-rst
+License-File: LICENSE
+
+======================================
+New shiny Sphinx Theme for ZEIT ONLINE
+======================================
+
+Usage
+-----
+
+Install the package
+
+.. code-block:: text
+
+    $ pip install zondocs_theme
+
+Then set ``html_theme = 'zondocs_theme'`` in your Sphinx ``conf.py``.
+
+Features
+--------
+
+* Automatically uses the ZON logo.
+* Adds an "edit this page" link to the sidebar. To customize how this link is
+  created, you can set the following::
+
+    html_theme_options = {
+        'editme_link': (
+            'https://github.com/zeitonline/{project}/edit/master/{page}')
+    }
+
+  (This is the default value, it supports two variables, ``project`` is taken
+   directly from ``conf.py``, and ``page`` evaluates to
+   ``path/to/current/page.suffix``)
+
+
+Local testing
+-------------
+
+Run ``bin/build`` to build whl and use ``pip install zondocs_theme...whl`` to use it in your project.
+
+
+Release process
+---------------
+
+`pipenv` is needed to run the release process.
+
+Update the version in ``pyproject.toml``.
+
+For a `test <https://test.pypi.org/project/zondocs-theme/>`_ release run
+
+.. code-block:: text
+
+    $ bin/release test
+
+For a offical release run
+
+.. code-block:: text
+
+    $ bin/release prod
