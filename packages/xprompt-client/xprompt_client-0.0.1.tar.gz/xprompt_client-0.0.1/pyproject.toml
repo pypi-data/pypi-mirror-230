@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "xprompt-client"
+version = "0.0.1"
+description = ""
+authors = ["Yi Lu <yilu331@gmail.com>"]
+readme = "README.md"
+
+packages = [
+    {include = "xprompt"}
+]
+
+#[project.scripts]
+#hello-world = "client"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.31.0"
+typer = "^0.9.0"
+xprompt-common = "^0.1.0"
+llama-index = {version = "0.8.26.post1", optional = true}
+
+
+[tool.poetry.extras]
+llama-index = ["llama-index"]
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
