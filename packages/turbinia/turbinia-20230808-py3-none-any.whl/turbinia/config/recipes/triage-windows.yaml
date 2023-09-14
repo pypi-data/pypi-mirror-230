@@ -1,0 +1,48 @@
+# Triage recipe for quick initial response (specific to Windows).
+
+globals:
+  jobs_allowlist:
+    - FileSystemTimelineJob
+    - PlasoJob
+
+plaso_base:
+  task: "PlasoParserTask"
+
+  artifact_filters:
+    [
+      "BrowserCache",
+      "BrowserHistory",
+      "ChromeStorage",
+      "ChromePreferences",
+      "ChromiumBasedBrowsersExtensions",
+      "ChromiumBasedBrowsersExtensionActivitySQLiteDatabaseFile",
+      "FirefoxAddOns",
+      "MicrosoftAVQuarantine",
+      "NTFSLogFile",
+      "NTFSMFTFiles",
+      "WindowsActivitiesCacheDatabase",
+      "WindowsAMCacheHveFile",
+      "WindowsAppCompatCache",
+      "WindowsBITSQueueManagerDatabases",
+      "WindowsEventLogs",
+      "WindowsFirewallLogFile",
+      "WindowsGroupPolicyScripts",
+      "WindowsHostsFiles",
+      "WindowsMostRecentApplication",
+      "WindowsPersistenceMechanisms",
+      "WindowsPrefetchFiles",
+      "WindowsRecycleBin",
+      "WindowsScheduledTasks",
+      "WindowsSetupApiLogs",
+      "WindowsShellRunasCommand",
+      "WindowsStartupFolderModification",
+      "WindowsStartupFolders",
+      "WindowsSuperFetchFiles",
+      "WindowsTempDirectories",
+      "WindowsUserAccessLogging",
+      "WindowsUserJumpLists",
+      "WindowsUserRecentFiles",
+      "WindowsUserRegistryFilesAndTransactionLogs",
+      "WindowsSystemRegistryFilesAndTransactionLogsBackup",
+      "WindowsUserShellFolders",
+    ]

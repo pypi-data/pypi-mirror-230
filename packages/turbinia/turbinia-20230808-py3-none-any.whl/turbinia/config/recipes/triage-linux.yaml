@@ -1,0 +1,29 @@
+# Triage recipe for quick initial response (specific to Linux).
+
+globals:
+  jobs_allowlist:
+    - PlasoJob
+    - FileSystemTimelineJob
+    - YaraAnalysisJob
+
+plaso_base:
+  task: "PlasoParserTask"
+
+  artifact_filters:
+    [
+      "AllUsersShellHistory",
+      "ApacheAccessLogs",
+      "BrowserCache",
+      "BrowserHistory",
+      "ChromeStorage",
+      "LinuxAuditLogs",
+      "LinuxAuthLogs",
+      "LinuxCronLogs",
+      "LinuxKernelLogFiles",
+      "LinuxLastlogFile",
+      "LinuxMessagesLogFiles",
+      "LinuxScheduleFiles",
+      "LinuxSysLogFiles",
+      "LinuxUtmpFiles",
+      "LinuxWtmp",
+    ]

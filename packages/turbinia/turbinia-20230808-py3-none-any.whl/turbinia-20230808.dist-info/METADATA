@@ -1,0 +1,66 @@
+Metadata-Version: 2.1
+Name: turbinia
+Version: 20230808
+Summary: Automation and Scaling of Digital Forensics Tools
+Home-page: http://turbinia.plumbing/
+Maintainer: Turbinia development team
+Maintainer-email: turbinia-dev@googlegroups.com
+License: Apache License, Version 2.0
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+License-File: LICENSE
+License-File: AUTHORS
+Requires-Dist: celery >=5.2.2
+Requires-Dist: cryptography >3.8,>=2.0.2
+Requires-Dist: docker
+Requires-Dist: fakeredis >=1.8.1
+Requires-Dist: fastapi >=0.75.0
+Requires-Dist: filelock
+Requires-Dist: google-api-core <2.0.0dev
+Requires-Dist: google-api-python-client
+Requires-Dist: google-auth <2.0.0.dev0
+Requires-Dist: google-cloud-core <2.0dev
+Requires-Dist: google-cloud-datastore <=2.0.0
+Requires-Dist: google-cloud-error-reporting
+Requires-Dist: google-cloud-logging <3.0.0dev,>=2.0.0
+Requires-Dist: google-cloud-pubsub ==1.7.0
+Requires-Dist: google-cloud-storage <=2.2.1
+Requires-Dist: httpx
+Requires-Dist: pycryptodomex
+Requires-Dist: prometheus-client
+Requires-Dist: libcloudforensics ==20230601
+Requires-Dist: pandas
+Requires-Dist: protobuf <4.0.0dev,>=3.19.0
+Requires-Dist: proto-plus <2.0.0dev,>=1.22.0
+Requires-Dist: psq
+Requires-Dist: pyparsing <3
+Requires-Dist: pyyaml >=5.4.1
+Requires-Dist: pyOpenSSL
+Requires-Dist: python-multipart
+Requires-Dist: redis <4.2
+Requires-Dist: six >=1.15.0
+Requires-Dist: urllib3[secure]
+Requires-Dist: uvicorn >=0.17.6
+Requires-Dist: vine >=5.0.0
+Requires-Dist: PyJWT[crypto] <2
+Requires-Dist: idna ==2.10
+Requires-Dist: grpcio-status <1.49.0,>=1.33.2
+Provides-Extra: dev
+Requires-Dist: mock ; extra == 'dev'
+Requires-Dist: nose ; extra == 'dev'
+Requires-Dist: yapf ; extra == 'dev'
+Requires-Dist: celery ; extra == 'dev'
+Requires-Dist: coverage ; extra == 'dev'
+Provides-Extra: local
+Requires-Dist: celery ; extra == 'local'
+Requires-Dist: kombu ; extra == 'local'
+Requires-Dist: redis ; extra == 'local'
+Provides-Extra: worker
+Requires-Dist: docker-explorer >=20191104 ; extra == 'worker'
+Requires-Dist: impacket ; extra == 'worker'
+Requires-Dist: plaso >=20200430 ; extra == 'worker'
+Requires-Dist: pyhindsight >=20200607 ; extra == 'worker'
+
+Turbinia is an open-source framework for deploying, managing, and runningforensic workloads on cloud platforms. It is intended to automate running of common forensic processing tools (i.e. Plaso, TSK, strings, etc) to help with processing evidence in the Cloud, scaling the processing of large amounts of evidence, and decreasing response time by parallelizingprocessing where possible.
