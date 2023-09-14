@@ -1,0 +1,2 @@
+from inspectnn.Dataset.Dataset_cifar10 import Dataset_cifar10, load_percentage_images
+from inspectnn.Dataset.Dataset_mnist import Dataset_mnist

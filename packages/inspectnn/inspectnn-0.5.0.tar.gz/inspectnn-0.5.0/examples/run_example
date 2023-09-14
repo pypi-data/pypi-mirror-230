@@ -1,0 +1,118 @@
+#!python3
+import os, sys, click, imp
+from progressbar import ProgressBar
+from numba import cuda
+import numpy as np
+from tabulate import tabulate
+
+sys.path.insert(1, os.getcwd())
+
+from inspectnn.Dataset.Dataset_cifar10 import Dataset_cifar10, load_percentage_images
+from inspectnn.Dataset.Dataset_mnist import Dataset_mnist
+from inspectnn.Model.GenericModel_tflite import GenericModelTflite
+
+import seaborn as sns
+from matplotlib.colors import LogNorm
+import matplotlib.pyplot as plt
+
+def import_module(module_name):
+    # Fast path: see if the module has already been imported.
+    try:
+        return sys.modules[module_name]
+    except KeyError:
+        pass
+    # If any of the following calls raises an exception,
+    # there's a problem we can't handle -- let the caller handle it.
+    fp, pathname, description = imp.find_module(module_name)
+    try:
+        return imp.load_module(module_name, fp, pathname, description)    
+    finally:
+        # Since we may exit via an exception, close fp explicitly.
+        if fp:
+            fp.close()
+
+def print_table(name,table):
+    print(table)
+    with open(name, 'w') as outputfile:
+        outputfile.write(table)
+
+def load_multiplier(filename):
+    module_name = os.path.basename(filename)
+    name_class = os.path.splitext(module_name)[0]
+    name_import = os.path.splitext(filename)[0]
+    module_name = import_module(name_import)
+    variant_mul = getattr(module_name, name_class)
+    mult_class = variant_mul()
+    multiplier = cuda.to_device(np.array(mult_class.model,dtype=int))
+    return multiplier, name_class
+
+@click.command()
+@click.argument('network', type = click.Choice(["lenet","micronet", "minnet", "resnet20","resnet14","resnet8c", "resnet1"]),default='resnet1')
+@click.argument('approxmults', type=click.Path(exists=True, dir_okay=True),default='/home/filippo/Git/pyALS-lenet5-int8/EvoApproxLite/')
+@click.argument('approxmults_info', type=click.Path(exists=True, dir_okay=True),default='/home/filippo/Git/inspect-nn/examples/ApproxMul_info/EvoApproxLite_info.csv')
+@click.option('-n', "--nimages", type=int, default=100, help="Number of images")#lenet -136
+@click.option('-f', "--filter", type=str, default=None, help="Filter")
+@click.option('-ps', "--pop_size",type=click.IntRange(1, 1000), default=5, help="size of populations")
+@click.option('-ng', "--n_gen", type=click.IntRange(1, 1000), default=5, help="number of generations")
+@click.option('-s',"--savefilename", type=str, default='_Results',help="name of output results pymoo")
+@click.option('-nf', "--nimages_final", type=click.IntRange(1, 10000), default=500, help="Number of images of pareto test")
+@click.option('-ml', "--max_accuracy_loss", type=click.IntRange(0, 20), default=5, help="Number of max accuracy loss")
+@click.option('-d', "--use_dataset_reduced", type=bool, default=False, help="Crea un dataset ridotto basato sulla matrie di confusione")
+def run(network, approxmults,approxmults_info, nimages, filter, pop_size,n_gen,savefilename,nimages_final,max_accuracy_loss,use_dataset_reduced):
+    evaluate_all_multiply = False
+    
+    datasets = {
+        "lenet":        { "generator": Dataset_mnist,   "input-shape": [28,28,1], "tflite": "Lenet-quantized-same.tflite"},
+        "micronet":     { "generator": Dataset_cifar10, "input-shape": [32,32,3], "tflite": "MicroNet-quantized-same.tflite"},
+        "minnet":       { "generator": Dataset_cifar10, "input-shape": [32,32,3], "tflite": "MinNet-quantized.tflite"},
+        "resnet20":     { "generator": Dataset_cifar10, "input-shape": [32,32,3], "tflite": "ResNet20-quantized.tflite"},
+        "resnet14":     { "generator": Dataset_cifar10, "input-shape": [32,32,3], "tflite": "ResNet14-quantized.tflite"},
+        "resnet8c":     { "generator": Dataset_cifar10, "input-shape": [32,32,3], "tflite": "ResNet8-quantized-castom.tflite"},
+        "resnet1":      { "generator": Dataset_cifar10, "input-shape": [32,32,3], "tflite": "ResNet1-quantized.tflite"},
+    }
+
+    #TODO: aggiungere input-shape all' uscita del dataset
+    images_apx, labels_apx, images, labels = datasets[network]["generator"](nimages)
+    
+    model = GenericModelTflite(f"{os.path.dirname(__file__)}/tfmodels/{datasets[network]['tflite']}")
+    print('### inspectnn')
+
+    #print('TFlite;',100*model.evaluate_tflite(images, labels_apx,True),'%')
+    model.load_img_gpu(images_apx, labels_apx)
+    model.load_all_multiply(approxmults)
+    #model.load_multiply_info(approxmults_info)
+    
+    #print("Gradient:",model.net.evaluate_delta_gradient(images_apx[2],images_apx[3]))
+    confusion_matrix=model.net.evaluate_confusion_matrix(images_apx,labels_apx)
+
+    #print("Cofusion Matrix:",confusion_matrix)
+    
+    ax = sns.heatmap(confusion_matrix, linewidth=0.5,norm=LogNorm(), annot=True, linewidths=.5, fmt=".2f", cmap = "crest")
+
+    #TODO: far scegliere il colore della heatmap
+    plt.savefig(network+"_confusion_matrix.png")
+    accurasy_drop = 1 -np.diag(confusion_matrix) 
+    print(accurasy_drop)
+
+    #model.load_img_gpu(images_apx, labels_apx)
+    model.evaluate_baseline_accuracy(images_apx, labels_apx)
+
+    print(f"Baseline accuracy with {len(images_apx)} images of {network}: {model.baseline_accuracy} %")
+    model.net.print_time_statics()
+
+    #load_ApproxMult_info_from_csv(model.all_multiplier,approxmults_info)
+
+    #F2=np.array(F2)
+    print("Evaluate all")
+    results = model.evaluate_all(images_apx, labels_apx)
+    tab_all = tabulate(results, headers = ["Approximate multiplier","Power(mW)", "Accuracy (%)", "Accuracy loss (%)", "Elapsed Time (s)"])
+    #print(tabulate(results, headers = ["Approximate multiplier", "Accuracy (%)", "Accuracy loss (%)", "Elapsed Time (s)"]))
+    print_table(network+"_result_evalutate_all.txt",tab_all)
+
+
+    print("Done")
+
+if __name__ == '__main__':
+    #bot.sendMessage(chat_id,"Start inspectnn") #fallito
+    run()
+    
