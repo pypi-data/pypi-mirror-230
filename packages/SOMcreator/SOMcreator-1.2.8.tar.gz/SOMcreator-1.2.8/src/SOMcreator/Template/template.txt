@@ -1,0 +1,84 @@
+var None = null
+var id = desiteThis.ID()
+var isContainer = desiteAPI.getPropertyValue(id,'cpIsContainer','xs:boolean');
+var isComposite = desiteAPI.getPropertyValue(id,'cpIsComposite','xs:boolean');
+var objectName = desiteAPI.getPropertyValue(id,"ifcTypeObjectName","xs:string");
+var valueIfcType = desiteAPI.getPropertyValue(id,'ifcType','xs:string');
+var ident_pset = '{{ident_pset}}'
+var ident = '{{ident}}';
+var otyp_vorhanden = desiteAPI.getPropertyValue(id, ident_pset+ident, 'xs:string');
+
+if (isContainer == true && isComposite == false) {
+    desiteResult.setCheckState('ignored');
+    desiteResult.addMessage('Container was ignored.');
+}else{
+    var pset_dict = get_property_set_dict(id);
+    var checkfailed = 0;
+    var attrib_count =0;
+    {%for pset in psets %}
+
+    {%if pset.name ==constants.IGNORE_PSET%}
+    var propertySetName = '';
+    {%-else-%}
+    var propertySetName = '{{pset.name}}';
+if(check_property_set(pset_dict,propertySetName)) {
+    {%-endif-%}
+
+    {%-for attribute in pset.attributes%}
+    attrib_count+=1;
+    attributeName= '{{attribute.name}}';
+    returnFormat= '{{attribute.data_type}}';
+    existingData = pset_dict[propertySetName][attributeName]
+    {%if attribute.value_type == constants.LIST%}
+    var list = [
+    {%-for value in attribute.value%}
+    {%-if not loop.index==1%} ,'{{value}}'
+    {%-else-%}
+    '{{value}}'
+    {%-endif-%}
+    {%-endfor%}]
+    {%if attribute.value ==[]%}
+    checkfailed +=check_exist(attributeName, propertySetName, returnFormat, existingData)
+    {%else%}
+    checkfailed +=check_for_value(attributeName, propertySetName, returnFormat, list, existingData);
+    {%endif-%}
+    {%-elif attribute.value_type == constants.RANGE %}
+    range = {{attribute.value}};
+    checkfailed+= check_range(attributeName, propertySetName, returnFormat, range, existingData);
+    {%elif attribute.value_type == constants.FORMAT %}
+    format = [
+    {%-for value in attribute.value -%}
+    {%-if not loop.index==1-%} ,'{{value.replace('\\','\\\\')}}'
+    {%-else-%}
+    '{{value.replace('\\','\\\\')}}'
+    {%-endif-%}
+    {%-endfor-%}]
+    checkfailed +=check_format(attributeName, propertySetName, returnFormat, format, existingData);
+    {%-endif-%}
+    {%-endfor%}
+}else{
+    checkfailed+= {{ pset.attributes.__len__() }};
+}
+    {% endfor %}
+    var check_status = "Undefined"
+    if (checkfailed == 0) {
+    desiteResult.setCheckState('passed'); check_status = "Passed"
+    }
+
+
+    if (attrib_count == checkfailed) {
+    desiteResult.setCheckState('failed');
+    check_status = "Failed"
+    desiteResult.addMessage('Keine der geforderten Eigenschaften vorhanden!');
+    }
+
+    if (checkfailed < attrib_count && checkfailed != 0) {
+    desiteResult.setCheckState('warning');
+    check_status = "Warning";
+    }
+
+    desiteAPI.setPropertyValue( id , "Check_State" , "xs:string", check_status);
+    desiteAPI.setPropertyValue(id, "zu_pruefende_eigenschaften","xs:int",attrib_count);
+    desiteAPI.setPropertyValue(id, "fehlerhafte_eigenschaften","xs:int",checkfailed);
+
+}
