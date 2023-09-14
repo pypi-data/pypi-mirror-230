@@ -1,0 +1,14 @@
+class Choose(TaskBase):
+    prev1: Requires[int] = Req()
+    prev2: Requires[int] = Req()
+
+    def __init__(self, n: int, k: int):
+        if 0 < k < n:
+            self.prev1 = Choose(n - 1, k - 1)
+            self.prev2 = Choose(n - 1, k)
+        else:
+            self.prev1 = Const(0)
+            self.prev2 = Const(1)
+
+    def run_task(self) -> int:
+        return self.prev1 + self.prev2
