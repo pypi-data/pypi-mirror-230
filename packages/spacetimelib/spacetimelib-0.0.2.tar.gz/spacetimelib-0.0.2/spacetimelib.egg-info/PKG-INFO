@@ -1,0 +1,99 @@
+Metadata-Version: 2.1
+Name: spacetimelib
+Version: 0.0.2
+Summary: Special relativity physics library for Python
+Home-page: https://github.com/kurtamohler/spacetimelib
+Author: Kurt Mohler
+Author-email: Kurt Mohler <kurtamohler@gmail.com>
+License: MIT License
+        
+        Copyright (c) 2023 Kurt Mohler
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Homepage, https://github.com/kurtamohler/spacetimelib
+Project-URL: Bug Tracker, https://github.com/kurtamohler/spacetimelib/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy
+
+# SpacetimeLib
+
+SpacetimeLib is a special relativity physics library for Python.
+
+SpacetimeLib performs mathematical operations on events, velocities, and
+worldlines in N+1 Minkowski spacetime.
+
+You can calculate Lorentz transformations, time dilation, length contraction,
+and more.
+
+## Documentation and getting started
+
+The documentation for the latest `main` branch is found here:
+[https://kurtamohler.github.io/spacetimelib/](https://kurtamohler.github.io/spacetimelib/)
+
+The [Start Here - Twin Paradox
+tutorial](https://kurtamohler.github.io/spacetimelib/notebooks/Twin%20Paradox.html)
+page is a good starting point to see what SpacetimeLib can do.
+
+## Installation
+
+### Pip
+
+```bash
+pip install spacetimelib
+```
+
+### From source
+
+Install Miniconda:
+[instructions](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html)
+
+Clone SpacetimeLib the repository.
+
+```bash
+https://github.com/kurtamohler/spacetimelib.git && cd spacetimelib
+```
+
+Run the following to create and activate an environment with all dependencies.
+
+```bash
+conda env create -f environment.yaml -n spacetimelib && conda activate spacetimelib
+```
+
+Then install SpacetimeLib.
+
+```bash
+pip install -e .
+```
+
+## How to import SpacetimeLib
+
+To access SpacetimeLib, import it into your Python code:
+
+```python
+>>> import spacetimelib as st
+```
+
+Shorten the imported name to `st` for better code readability, but you can just
+use the unshortened name if you want.
