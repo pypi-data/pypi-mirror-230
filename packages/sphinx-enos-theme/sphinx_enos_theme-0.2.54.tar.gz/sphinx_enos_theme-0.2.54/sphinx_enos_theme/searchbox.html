@@ -1,0 +1,16 @@
+{%- if (language == 'en') or (language == 'en_us') or (language == 'en_US') or (language == 'EN_US') %}
+{%- set search_placeholder = 'Search this document' %}
+{%- else %}
+{%- set search_placeholder = '搜索此文档' %}
+{%- endif%}
+{%- if builder != 'singlehtml' %}
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="{{ pathto('search') }}" method="get">
+    <input class="search-input" type="text" name="q" placeholder="{{search_placeholder}}" />
+    <span class="icon-search"></span>
+    <span class="icon-wrong_small"></span>
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+{%- endif %}

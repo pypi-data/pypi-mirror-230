@@ -1,0 +1,25 @@
+<div class="enos-doc-side-scroll">
+    <div class="enos-doc-toc" data-spy="affix" role="navigation" aria-label="main navigation">
+        <h2 class="product-name">{{theme_product_name}}</h2>
+        <div class="enos-doc-search">
+            {% block sidebartitle %}
+                {% include "searchbox.html" %}
+            {% endblock %}
+        </div>
+        {% block menu %}
+            {% if 'singlehtml' not in builder %}
+            {% set global_toc = toctree(maxdepth=theme_navigation_depth|int,
+                                        collapse=theme_collapse_navigation|tobool,
+                                        includehidden=theme_includehidden|tobool,
+                                        titles_only=theme_titles_only|tobool) %}
+            {% endif %}
+            {% if global_toc %}
+            {{ global_toc }}
+            {% else %}
+            <!-- Local TOC -->
+            <div class="local-toc">{{ toc }}</div>
+            {% endif %}
+        {% endblock %}
+    </div>
+</div>
+<div class="banner"></div>
