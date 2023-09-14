@@ -1,0 +1,26 @@
+[project]
+name = "llm-sentence-transformers"
+version = "0.1.2"
+description = "Use sentence-transformers for embeddings with LLM"
+readme = "README.md"
+authors = [{name = "Simon Willison"}]
+license = {text = "Apache-2.0"}
+classifiers = [
+    "License :: OSI Approved :: Apache Software License"
+]
+dependencies = [
+    "llm>=0.9",
+    "sentence-transformers"
+]
+
+[project.urls]
+Homepage = "https://github.com/simonw/llm-sentence-transformers"
+Changelog = "https://github.com/simonw/llm-sentence-transformers/releases"
+Issues = "https://github.com/simonw/llm-sentence-transformers/issues"
+CI = "https://github.com/simonw/llm-sentence-transformers/actions"
+
+[project.entry-points.llm]
+sentence_transformers = "llm_sentence_transformers"
+
+[project.optional-dependencies]
+test = ["pytest"]
