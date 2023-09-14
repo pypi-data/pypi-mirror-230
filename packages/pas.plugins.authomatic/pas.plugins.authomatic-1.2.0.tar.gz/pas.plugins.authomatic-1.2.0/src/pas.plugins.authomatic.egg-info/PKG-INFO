@@ -1,0 +1,422 @@
+Metadata-Version: 2.1
+Name: pas.plugins.authomatic
+Version: 1.2.0
+Summary: Provides OAuth2/OpenID login for Plone using Authomatic.
+Home-page: https://github.com/collective/pas.plugins.authomatic
+Author: Jens Klein, Matthias Dollfuss, and Érico Andrei
+Author-email: dev@bluedynamics.com
+License: GPL
+Project-URL: Repository, https://github.com/collective/pas.plugins.authomatic/
+Project-URL: Changelog, https://github.com/collective/pas.plugins.authomatic/blob/main/CHANGELOG.md
+Project-URL: Issues, https://github.com/collective/pas.plugins.authomatic/issues
+Keywords: Python Plone PAS OAuth Authentication
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Plone :: 5.2
+Classifier: Framework :: Plone :: 6.0
+Classifier: Framework :: Plone :: Addon
+Classifier: Framework :: Plone
+Classifier: Framework :: Zope :: 5
+Classifier: Framework :: Zope
+Classifier: License :: OSI Approved :: GNU General Public License v2 (GPLv2)
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Provides-Extra: test
+License-File: LICENSE.txt
+
+
+<div align="center"><img alt="logo" src="https://raw.githubusercontent.com/collective/pas.plugins.authomatic/main/docs/authomatic.svg" width="70" /></div>
+
+<h1 align="center">OAuth2 / OpenId Authentication in Plone</h1>
+
+<div align="center">
+
+[![PyPI](https://img.shields.io/pypi/v/pas.plugins.authomatic)](https://pypi.org/project/pas.plugins.authomatic/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pas.plugins.authomatic)](https://pypi.org/project/pas.plugins.authomatic/)
+[![PyPI - Wheel](https://img.shields.io/pypi/wheel/pas.plugins.authomatic)](https://pypi.org/project/pas.plugins.authomatic/)
+[![PyPI - License](https://img.shields.io/pypi/l/pas.plugins.authomatic)](https://pypi.org/project/pas.plugins.authomatic/)
+[![PyPI - Status](https://img.shields.io/pypi/status/pas.plugins.authomatic)](https://pypi.org/project/pas.plugins.authomatic/)
+
+
+[![PyPI - Plone Versions](https://img.shields.io/pypi/frameworkversions/plone/pas.plugins.authomatic)](https://pypi.org/project/pas.plugins.authomatic/)
+
+[![Code analysis checks](https://github.com/collective/pas.plugins.authomatic/actions/workflows/code-analysis.yml/badge.svg)](https://github.com/collective/pas.plugins.authomatic/actions/workflows/code-analysis.yml)
+[![Tests](https://github.com/collective/pas.plugins.authomatic/actions/workflows/tests.yaml/badge.svg)](https://github.com/collective/pas.plugins.authomatic/actions/workflows/tests.yaml)
+![Code Style](https://img.shields.io/badge/Code%20Style-Black-000000)
+
+[![GitHub contributors](https://img.shields.io/github/contributors/collective/pas.plugins.authomatic)](https://github.com/collective/pas.plugins.authomatic)
+[![GitHub Repo stars](https://img.shields.io/github/stars/collective/pas.plugins.authomatic?style=social)](https://github.com/collective/pas.plugins.authomatic)
+
+</div>
+
+Features
+--------
+
+**pas.plugins.authomatic** provides OAuth2 and OpenID login capability for Plone sites by integrating the awesome [Authomatic](https://authomatic.github.io/authomatic/) package.
+
+```
+Authomatic is a framework agnostic library
+for Python web applications
+with a minimalistic but powerful interface
+which simplifies authentication of users
+by third party providers like Facebook or Twitter
+through standards like OAuth and OpenID.
+```
+*by author Peter Hudec on Authomatic website*
+
+
+Supported Providers
+-------------------
+
+Out of the box,  **pas.plugins.authomatic** supports the following providers
+
+*OAuth 1.0a*
+
+- Bitbucket
+- Flickr
+- Meetup
+- Plurk
+- Twitter
+- Tumblr
+- UbuntuOne
+- Vimeo
+- Xero
+- Xing
+- Yahoo
+
+*OAuth 2.0*
+
+- Amazon
+- Behance
+- Bitly
+- Cosm
+- DeviantART
+- Eventbrite
+- Facebook
+- Foursquare
+- GitHub
+- Google
+- LinkedIn
+- PayPal
+- Reddit
+- Viadeo
+- VK
+- WindowsLive
+- Yammer
+- Yandex
+
+*OpenID*
+
+- python-openid
+- Google App Engine based OpenID.
+
+
+Documentation
+-------------
+
+This package supports Plone sites using Volto or the Classic UI.
+
+For the Classic UI:
+
+- This package creates a view called `authomatic-handler` where you can login with different providers.
+- The view can be used as well to add an identity from a provider to an existing account.
+- The provider is choosen in the URL so if you call `/authomatic-handler/PROVIDER` you will use PROVIDER to login.
+
+For Volto:
+
+- Endpoint `@login` with GET: Returns list of authentication options
+- Endpoint `@login-authomatic` with GET: Provide information to start the OAuth process.
+- Endpoint `@login-authomatic` with POST: Handles OAuth login and returns a JSON web token (JWT).
+- For Volto sites you must also install [@plone-collective/volto-authomatic](https://github.com/collective/volto-authomatic).
+
+
+Configuration is, currently, done via Classic UI:
+
+- Plugin configuration is available in the Controlpanel `@@authomatic-controlpanel` (linked under users)
+- Example JSON configuration (first level key is the PROVIDER):
+
+```json
+{
+  "github": {
+    "display": {
+      "title": "Github",
+      "cssclasses": {
+          "button": "plone-btn plone-btn-default",
+          "icon": "glypicon glyphicon-github"
+      },
+      "as_form": false
+    },
+    "propertymap": {
+      "email": "email",
+      "link": "home_page",
+      "location": "location",
+      "name": "fullname"
+    },
+    "class_": "authomatic.providers.oauth2.GitHub",
+    "consumer_key": "5c4901d141e736f114a7",
+    "consumer_secret": "d4692ca3c0ab6cc1f8b28d3ccb1ea15b61e7ef5c",
+    "access_headers": {
+      "User-Agent": "Plone Authomatic Plugin"
+    }
+  },
+}
+```
+
+Installation
+------------
+
+Add **pas.plugins.authomatic** to the Plone installation using `pip`:
+
+```bash
+pip install pas.plugins.authomatic
+```
+or add it as a dependency on your package's `setup.py`
+
+```python
+    install_requires = [
+        "pas.plugins.authomatic",
+        "Products.CMFPlone",
+        "plone.restapi",
+        "setuptools",
+    ],
+```
+
+Start Plone and activate the plugin in the addons control-panel.
+
+Configuration
+-------------
+
+Using Classic UI, go to the `Authomatic` controlpanel.
+
+<img alt="Screenshot" src="https://raw.githubusercontent.com/collective/pas.plugins.authomatic/main/docs/plone-control-panel.png" width="300" />
+
+Configuration parameters for the different authorization are provided as JSON text in there. We use JSON because of its flexibility.
+
+<img alt="Screenshot" src="https://raw.githubusercontent.com/collective/pas.plugins.authomatic/main/docs/plugin-settings.png" width="300" />
+
+Details about the configuration of each provider can be found at [Authomatic provider section](https://authomatic.github.io/authomatic/reference/providers.html).
+
+There are some differences in configuration:
+
+- Value of `"class_"` has to be a string, which is then resolved as a dotted path.
+- Each provider can get an optional entry `display` with sub-enties such as:
+
+  - `title` which is used in the templates instead of the section name.
+  - `iconclasses` which is applied in the templates to an span.
+  - `buttonclasses` which is applied in the templates to the button.
+  - `as_form` (true/false) which renders a form for OpenId providers.
+
+- Each provider can get an optional entry `propertymap`.
+  It is a mapping from authomatic/provider user properties to plone user properties, like `"fullname": "name",`. Look at each providers documentation which properties are available.
+
+
+Source Code and Contributions
+-----------------------------
+
+If you want to help with the development (improvement, update, bug-fixing, ...) of `pas.plugins.authomatic` this is a great idea!
+
+- [Issue Tracker](https://github.com/collective/pas.plugins.authomatic/issues)
+- [Source Code](https://github.com/collective/pas.plugins.authomatic/)
+
+
+Please do larger changes on a branch and submit a Pull Request.
+
+Creator of **pas.plugins.authomatic** is Jens Klein.
+
+We appreciate any contribution and if a release is needed to be done on PyPI, please just contact one of us.
+
+Development
+-----------
+
+You need a working `python` environment (system, virtualenv, pyenv, etc) version 3.7 or superior.
+
+Then install the dependencies and a development instance using:
+
+```bash
+make build
+```
+
+To run tests for this package:
+
+```bash
+make test
+```
+
+By default we use the latest Plone version in the 6.x series.
+
+License
+-------
+
+The project is licensed under the GPLv2.
+
+
+# Changelog
+
+## 1.2.0 (2023-09-13)
+
+- Add Spanish translation. @macagua
+
+- Better handle values from identity data. @cekk
+
+- Add `username_userid` User ID factory. @ericof
+
+- Annotate transaction in POST calls to authenticate a user. @ericof
+
+
+## 1.1.2 (2023-03-15)
+
+- Support Python 3.11 for Plone 6. @ericof
+
+- Lint fixes @ericof
+
+
+## 1.1.1 (2022-10-14)
+
+- Upgrade plone/code-analysis-action to version 2. @ericof
+
+- Fix packaging issue related to CHANGELOG.md not being included in the source package. @ericof
+
+- Support Python 3.10 for Plone 6. @ericof
+
+
+## 1.1.0 (2022-10-10)
+
+- Add the plone.restapi adapter to show the controlpanel in Volto. @erral
+
+- Add possibility to redirect to `next_url` via provided cookie @avoinea
+
+
+## 1.0.0 (2022-07-25)
+
+- Use plone/plone-setup GitHub Action. @ericof
+
+- Add Brazilian Portuguese translation. @ericof
+
+- Use plone/code-analysis-action GitHub Action for code analysis. @ericof
+
+- Fix doChangeUser takes 2 positional arguments but 3 were given @avoinea
+
+## 1.0b2 (2021-08-18)
+
+- Fix tox setup, move CI from TravisCI to GitHub Actions. @jensens
+
+- Code Style Black, Isort, zpretty and Pyupgrade applied. @jensens
+
+- Add missing no-op methods for IUserManagement to plugin.
+  This fixes the tests. @jensens
+
+- Drop Python 2 support and so require Plone 5.2. @jensens
+
+- Include permissions from CMFCore to avoid ComponentLookupError. @bsuttor
+
+- Fixed ModuleNotFoundError: No module named 'App.class_init' on Zope 5. @bsuttor
+
+- Add french translation @mpeeters
+
+- PAS event notification IPrincipalCreatedEvent. @jensens
+
+- Python 3 and Plone 52 compatibility. @cekk
+
+- Fix #44: Fullfill strictly exact_match when enumerating users @allusa
+
+- Allow users deletion. @cekk
+
+- Drop Plone < 5.1.x compatibility. @cekk
+
+- Fix #54: Notification of PrincipalCreated event. @ericof
+
+- Closes #55: Support plone.restapi. @ericof
+
+## 1.0b1 (2017-11-20)
+
+- Slighly beautify login modal. @jensens
+
+- Fix #33" Page does not exist Control Settings. @jensens
+
+- Fix #31: Link is broken to JSON configuration documentation in help text. @jensens
+
+- Fix #28: After uninstall plone.external_login_url is still registered and the login broken. @jensens
+
+- Support for Plone 5.1 tested (worked, ust control-panel icon needed some tweak).
+  Buildout configuration for 5.1 added. @jensens
+
+- Install: Hide non-valid profiles at install form. @jensens
+
+- Additional checks to ensure to never have an empty/None key stored. @jensens
+
+- Fix #27: Update user data after login. @jensens
+
+- Fix filter users bug in enumerateUsers plugin where it was always returning
+  all the users. @sneridagh
+
+- fix typo and wording of login message @tkimnguyen
+
+
+## 1.0a7 (2016-02-15)
+
+- Workaround for None users. @sneridagh
+
+
+## 1.0a6 (2016-01-11)
+
+- Fix #21: When you logout and then login again, a new user is created. @jensens
+
+
+## 1.0a5 (2015-12-04)
+
+- Fix: #18 "Provider Login" option for "Generator for Plone User ID" seems
+  broken @jensens
+
+- Fix: Title indicates if an identity is added @jensens
+
+- Fix: Correct usage of plone.protect @jensens
+
+
+## 1.0a4 (2015-11-20)
+
+- Added german translation @jensens
+
+- Restored Plone 4 compatibility @keul
+
+- Added italian translation @keul
+
+- Proper uninstall @keul
+
+## 1.0a3 (2015-11-15)
+
+- Refactor authomatic-handler to enable adding identities. @jensens
+
+- Fix: use secret from settings as secret for Authomatic. @jensens
+
+- Renamed view ``authomatic-login`` to ``authomatic-handler``, because this
+  view will be used to add an identity too (url must be registered on provider
+  side sometimes and we want to do this only once). @jensens
+
+
+## 1.0a2 (2015-11-14)
+
+- Minimal validation of JSON. @jensens
+
+- Make the whole ``remember`` procedure a ``safeWrite`` if called from login
+  view. We can not pass a authenticator token here, because of redirects and
+  expected return urls . @jensens
+
+- Allow selection of user id generator strategy. @jensens
+
+- Allow multiple services for one user. This changes a lot behind the scenes. @jensens
+
+- Use authomatic.core.User attributes instead of raw provider data. closes [#9](https://github.com/collective/pas.plugins.authomatic/issues/9) @ericof
+
+
+## 1.0a1 (2015-10-28)
+
+- Initial release.
+
+

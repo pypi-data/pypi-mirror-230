@@ -1,0 +1,44 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    i18n_domain="pas.plugins.authomatic"
+    >
+
+  <genericsetup:registerProfile
+      name="default"
+      title="Authomatic PAS Plugin"
+      description="Authomatic: Login with OAuth/OpenID 3rd party auth providers using the pas.plugins.authomatic add-on."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/default"
+      post_handler=".setuphandlers.post_install"
+      />
+
+  <genericsetup:registerProfile
+      name="uninstall"
+      title="Authomatic PAS Plugin: uninstall"
+      description="Uninstalls the pas.plugins.authomatic add-on. This REMOVES ALL USERS managed by this plugin!"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/uninstall"
+      post_handler=".setuphandlers.post_uninstall"
+      />
+
+  <utility
+      factory=".setuphandlers.HiddenProfiles"
+      name="pas.plugins.authomatic"
+      />
+
+  <!-- Upgrades -->
+  <genericsetup:upgradeSteps
+      profile="pas.plugins.authomatic:default"
+      source="1"
+      destination="1000"
+      >
+    <genericsetup:upgradeDepends
+        title="Update Control Panel"
+        import_steps="controlpanel"
+        />
+  </genericsetup:upgradeSteps>
+
+</configure>
