@@ -1,0 +1,212 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pymarks"
+dynamic = ["version"]
+description = 'Simple tool to manage your bookmarks'
+readme = "README.md"
+requires-python = ">=3.7"
+license = { file = "LICENSE.txt" }
+keywords = []
+authors = [
+  { name = "haaag", email = "git.haaag@gmail.com" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+  "pyselector>=0.0.18",
+  "beautifulsoup4>=4.4.1",
+  "httpx",
+  "html5lib",
+]
+
+[project.urls]
+Documentation = "https://github.com/haaag/PyMarks#readme"
+Issues = "https://github.com/haaag/PyMarks/issues"
+Source = "https://github.com/haaag/PyMarks/"
+
+[project.scripts]
+pymarks = "pymarks.__main__:main"
+
+[tool.hatch.version]
+path = "pymarks/__about__.py"
+
+[tool.hatch.envs.default]
+dependencies = [
+  "coverage[toml]>=6.5",
+  "pytest",
+]
+[tool.hatch.envs.default.scripts]
+test = "pytest -vvvv {args:tests}"
+test-cov = "coverage run -m pytest {args:tests}"
+cov-report = [
+  "- coverage combine",
+  "coverage report",
+]
+cov = [
+  "test-cov",
+  "cov-report",
+]
+
+[tool.pytest.ini_options]
+log_cli = true
+log_cli_level = "INFO"
+log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
+
+[[tool.hatch.envs.all.matrix]]
+python = ["3.7", "3.8", "3.9", "3.10", "3.11"]
+
+[tool.hatch.envs.lint]
+detached = true
+dependencies = [
+  "black>=23.1.0",
+  "mypy>=1.0.0",
+  "ruff>=0.0.243",
+]
+[tool.hatch.envs.lint.scripts]
+typing = "mypy --install-types --non-interactive {args:pymarks tests}"
+style = [
+  "ruff {args:.}",
+  "black --check --diff {args:.}",
+]
+fmt = [
+  "black {args:.}",
+  "ruff --fix {args:.}",
+  "style",
+]
+all = [
+  "style",
+  "typing",
+]
+
+[tool.black]
+target-version = ["py37"]
+line-length = 79
+skip-string-normalization = true
+
+[tool.ruff]
+target-version = "py37"
+line-length = 79
+select = [
+  "A",
+  "ARG",
+  "B",
+  "C",
+  "DTZ",
+  "E",
+  "EM",
+  "F",
+  "FBT",
+  "I",
+  "ICN",
+  "ISC",
+  "N",
+  "PLC",
+  "PLE",
+  "PLR",
+  "PLW",
+  "Q",
+  "RUF",
+  "S",
+  "T",
+  "TID",
+  "UP",
+  "W",
+  "YTT",
+]
+extend-select = [
+    "B",    # (flake8-bugbear)
+    "BLE",  # (flake8-blind-except)
+    "C4",   # (flake8-comprehensions)
+    # "ERA",  # (eradicate)
+    "I",    # (isort)
+    "ICN",  # (flake8-import-conventions)
+    "INP",  # (flake8-no-pep420)
+    "ISC",  # (flake8-implicit-str-concat)
+    "N",    # (pep8-naming)
+    "NPY",  # (numpy-specific-rules)
+    "PGH",  # (pygrep-hooks)
+    "PIE",  # (flake8-pie)
+    "PTH",  # (flake8-use-pathlib)
+    "Q",    # (flake8-quotes)
+    "RET",  # (flake8-return)
+    "RSE",  # (flake8-raise)
+    "RUF",  # (ruff-specific-rules)
+    "S",    # (flake8-bandit)
+    "SIM",  # (flake8-simplify)
+    "T20",  # (flake8-print)
+    "TCH",  # (flake8-type-checking)
+    "TID",  # (flake8-tidy-imports)
+    "YTT",  # (flake8-2020)
+]
+ignore = [
+  # Allow non-abstract empty methods in abstract base classes
+  "B027",
+  # Allow boolean positional values in function calls, like `dict.get(... True)`
+  "FBT003",
+  # Ignore checks for possible passwords
+  "S105", "S106", "S107",
+  # Ignore complexity
+  "C901", "PLR0911", "PLR0912", "PLR0913", "PLR0915",
+]
+unfixable = [
+  # Don't touch unused imports
+  "F401",
+]
+
+[tool.ruff.isort]
+known-first-party = ["pymarks"]
+force-single-line = true
+order-by-type = true
+required-imports = ["from __future__ import annotations"]
+
+[tool.ruff.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+[tool.ruff.per-file-ignores]
+# Tests can use magic values, assertions, and relative imports
+"tests/**/*" = ["PLR2004", "S101", "TID252"]
+"pymarks/__main__.py" = ["T201"]
+"pymarks/__about__.py" = ["I002"]
+"pymarks/utils.py" = ["S603"]
+"pymarks/logger.py" = ["A003", "FBT001", "FBT002"]
+# Single-quote preferred
+"**/*" = ["Q000"]
+
+[tool.coverage.run]
+source_pkgs = ["pymarks", "tests"]
+branch = true
+parallel = true
+omit = [
+  "pymarks/__about__.py",
+]
+
+[tool.coverage.paths]
+pymarks = ["pymarks", "*/pymarks/pymarks"]
+tests = ["tests", "*/pymarks/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
+
+[tool.mypy]
+show_error_codes = true
+show_error_context = true
+show_column_numbers = true
+ignore_missing_imports = true
+no_strict_optional = false
