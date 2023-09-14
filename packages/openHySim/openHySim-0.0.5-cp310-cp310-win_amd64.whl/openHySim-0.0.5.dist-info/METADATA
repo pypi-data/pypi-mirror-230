@@ -1,0 +1,299 @@
+Metadata-Version: 2.1
+Name: openHySim
+Version: 0.0.5
+Summary: A package contains OpenSeesPy 3.5.1 and OpenFrescoPy 2.7.2 and personal subroutines
+Home-page: http://github.com/nealleehit/osfeo
+Author: Ning Li
+Author-email: Ning Li <neallee@tju.edu.cn>
+Project-URL: Homepage, https://github.com/nealleehit/osfeo
+Project-URL: Bug Tracker, https://github.com/nealleehit/osfeo/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: Microsoft :: Windows
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE.md
+Requires-Dist: numpy
+
+# openHySim Package
+
+## Purpose
+
+This is a package contains the OpenSeesPy 3.5.1 and OpenFrescoPy 2.7.2 (x64 bit version) together, and some additional personal subroutines (such as, ritz command for derive stiffness and mass matrix) and some features might happend in OpenSees and OpenFresco during past decade.
+
+In 2023, since the Matlab/Simulink 2021a is the last version surpport xpcTarget, we moved the SpeedGoat realtime machine into newer version of Matlab/Simulink Real-time OS using micro-core system now for real-time modules and additional features (such as the AI/ML/RL toolbox in simulink real-time machine). However, for hybrid testing, we found the OpenFrescoPy had not been developed or transitted into python intepreter throughly. This missing made this bundle of toolkits happend.
+
+We collected most recently published API files for hybrid testing (in Windows x64 environment), and improved OpenFrescoPy modules, finally, combined the two (OpenSeesPy and OpenFrescoPy) into one .pyd dynamic library.
+
+For students, who are not quite understand how to configure the hybrid testing environment, this toolkit will lower down the learning requirement.
+
+## Quick Tutorial
+
+```
+pip install openHySim
+from openHySim import *
+```
+
+OpenSeesPy commands those already implemented,
+
+```
+    uniaxialMaterial
+    testUniaxialMateria
+    setStrain
+    getStrain
+    getStress
+    getTangent
+    getDampTangent
+    wipe
+    model
+    node
+    fix
+    element
+    timeSeries
+    pattern
+		Linear, Rectangular, Path, Constant, Trig, Sine, Ramp
+    load
+    system
+    numberer
+    constraints
+    integrator
+    algorithm
+    analysis
+    analyze
+    test
+    section
+    fiber
+		fiber2d, fiber3d
+    patch
+    layer
+		layer2d
+    geomTransf
+    beamIntegration
+    loadConst
+    eleLoad
+    reactions
+    nodeReaction
+    eigen
+		ritz
+    modalProperties
+    responseSpectrumAnalysis
+    nDMaterial
+    block2D
+    block3D
+    rayleigh
+    wipeAnalysis
+    setTime
+    remove
+    mass
+    equalDOF
+    nodeEigenvector
+    getTime
+    setCreep
+    eleResponse
+    sp
+    fixX
+    fixY
+    fixZ
+    reset
+    initialize
+    getLoadFactor
+    build
+    printModel
+    printA
+    printB
+    printX
+    printGID
+    testNorm
+    testNorms
+    testIter
+    recorder
+    database
+    save
+    restore
+    eleForce
+    eleDynamicalForce
+    nodeUnbalance
+    nodeDisp
+    setNodeDisp
+    nodeVel
+    setNodeVel
+    nodeAccel
+    setNodeAccel
+    nodeResponse
+    nodeCoord
+    setNodeCoord
+    getPatterns
+    getFixedNodes
+    getFixedDOFs
+    getConstrainedNodes
+    getConstrainedDOFs
+    getRetainedNodes
+    getRetainedDOFs
+    updateElementDomain
+    getNDM
+    getNDF
+    eleNodes
+    eleType
+    nodeDOFs
+    nodeMass
+    nodePressure
+    setNodePressure
+    nodeBounds
+    start
+    stop
+    modalDamping
+    modalDampingQ
+    setElementRayleighDampingFactors
+    region
+    setPrecision
+    searchPeerNGA
+    domainChange
+    record
+    metaData
+    defaultUnits
+    stripXML
+    convertBinaryToText
+    convertTextToBinary
+    getEleTags
+    getCrdTransfTags
+    getNodeTags
+    getParamTags
+    getParamValue
+    sectionForce
+    sectionDeformation
+    sectionStiffness
+    sectionFlexibility
+    sectionLocation
+    sectionWeight
+    sectionTag
+    sectionDisplacement
+    cbdiDisplacement        
+    basicDeformation
+    basicForce
+    basicStiffness
+    InitialStateAnalysis
+    totalCPU
+    solveCPU
+    accelCPU
+    numFact
+    numIter
+    systemSize
+    version
+    pyversion
+    setMaxOpenFiles
+    limitCurve
+    imposedMotion
+    imposedSupportMotion
+    groundMotion
+    equalDOF_Mixed
+    rigidLink
+    rigidDiaphragm
+    ShallowFoundationGen
+    setElementRayleighFactors
+    mesh
+    remesh
+    parameter
+    addToParameter
+    updateParameter
+    setParameter
+    getPID
+    getNP
+    barrier
+    send
+    recv
+    Bcast
+    frictionModel
+    computeGradients
+    sensitivityAlgorithm
+    sensNodeDisp
+    sensNodeVel
+    sensNodeAccel
+    sensLambda
+    sensSectionForce
+    sensNodePressure
+    getNumElements
+    getEleClassTags
+    getEleLoadClassTags
+    getEleLoadTags
+    getEleLoadData
+    getNodeLoadTags
+    getNodeLoadData
+    randomVariable
+    getRVTags
+    getRVParamTag
+    getRVValue
+    getMean
+    getStdv
+    getPDF
+    getCDF
+    getInverseCDF
+    correlate
+    performanceFunction
+    gradPerformanceFunction
+    transformUtoX
+    wipeReliability
+    updateMaterialStage
+    sdfResponse
+    probabilityTransformation
+    startPoint
+    randomNumberGenerator
+    reliabilityConvergenceCheck
+    searchDirection
+    meritFunctionCheck
+    stepSizeRule
+    rootFinding            
+    functionEvaluator
+    gradientEvaluator
+    getNumThreads
+    setNumThreads
+    logFile
+    setStartNodeTag
+    hystereticBackbone
+    stiffnessDegradation
+    strengthDegradation
+    strengthControl
+    unloadingRule
+    partition
+    pressureConstraint
+    domainCommitTag
+    runFOSMAnalysis
+    findDesignPoint
+    runFORMAnalysis
+    getLSFTags
+    runImportanceSamplingAnalysis
+    IGA
+    NDTest
+    neesUpload
+    nodeRitzVector
+```
+
+OpenFrescoPy commands,
+```
+	expControlPoint,
+	expSignalFilter,
+	expControl, 
+	expSetup, 
+	expSite, 
+	expTangentStiff, 
+	expElement, 
+	expRecorder, 
+	recordExp, 
+	startLabServer, 
+	setupLabServer, 
+	stepLabServer, 
+	stopLabServer, 
+	startSimAppSiteServer, 
+	startSimAppElemServer, 
+	wipeExp, 
+	removeExp, 
+	version
+```
+
+## Requirements
+
+Win64OpenSSL-3 (currently, Win64OpenSSL-3.1.1.msi is used);
+Magicsplat Tcl 6.12 (currently, tcl-8.6.12-installer-1.12.1-x64.msi is used)
+
+
+## Additional Info
+contact: neallee@tju.edu.cn
