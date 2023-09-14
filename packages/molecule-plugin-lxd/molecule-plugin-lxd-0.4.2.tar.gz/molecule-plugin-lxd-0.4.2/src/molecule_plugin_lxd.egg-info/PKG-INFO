@@ -1,0 +1,57 @@
+Metadata-Version: 2.1
+Name: molecule-plugin-lxd
+Version: 0.4.2
+Summary: Molecule LXD Plugin
+Author-email: Philipp Dittert <philipp.dittert@gmail.com>
+Maintainer-email: Philipp Dittert <philipp.dittert@gmail.com>
+License: MIT
+Project-URL: homepage, https://github.com/phlpdtrt/molecule-plugin-lxd
+Project-URL: documentation, https://molecule.readthedocs.io/
+Project-URL: repository, https://github.com/phlpdtrt/molecule-plugin-lxd
+Project-URL: changelog, https://github.com/phlpdtrt/molecule-plugin-lxd/releases
+Keywords: ansible,testing,molecule,plugin
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Information Technology
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: MacOS
+Classifier: Operating System :: POSIX
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python
+Classifier: Topic :: System :: Systems Administration
+Classifier: Topic :: Software Development :: Quality Assurance
+Classifier: Topic :: Software Development :: Testing
+Classifier: Topic :: Utilities
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: molecule>=6.0.0a1
+Provides-Extra: test
+Requires-Dist: pytest-helpers-namespace>=2019.1.8; extra == "test"
+Requires-Dist: molecule[test]>=6.0.0a1; extra == "test"
+Provides-Extra: azure
+Provides-Extra: docker
+Requires-Dist: selinux; sys_platform == "linux2" and extra == "docker"
+Requires-Dist: selinux; sys_platform == "linux" and extra == "docker"
+Requires-Dist: docker>=4.3.1; extra == "docker"
+Requires-Dist: requests; extra == "docker"
+Provides-Extra: ec2
+Provides-Extra: gce
+Provides-Extra: podman
+Provides-Extra: selinux
+Requires-Dist: selinux; sys_platform == "linux2" and extra == "selinux"
+Requires-Dist: selinux; sys_platform == "linux" and extra == "selinux"
+Provides-Extra: vagrant
+Requires-Dist: python-vagrant; extra == "vagrant"
+
+[![tox](https://github.com/phlpdtrt/molecule-plugin-lxd/actions/workflows/tox.yml/badge.svg)](https://github.com/phlpdtrt/molecule-plugin-lxd/actions/workflows/tox.yml)
+
+# molecule-plugin-lxd
+
+This repository contains the lxd molecule plugin

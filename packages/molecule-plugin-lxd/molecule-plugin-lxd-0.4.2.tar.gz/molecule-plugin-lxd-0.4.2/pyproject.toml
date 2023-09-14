@@ -1,0 +1,131 @@
+[build-system]
+requires = [
+  "setuptools >= 64.0.0", # required by pyproject+setuptools_scm integration
+  "setuptools_scm[toml] >= 7.0.5", # required for "no-local-version" scheme
+
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+# https://peps.python.org/pep-0621/#readme
+requires-python = ">=3.9"
+dynamic = ["version"]
+name = "molecule-plugin-lxd"
+description = "Molecule LXD Plugin"
+readme = "README.md"
+authors = [{ "name" = "Philipp Dittert", "email" = "philipp.dittert@gmail.com" }]
+maintainers = [{ "name" = "Philipp Dittert", "email" = "philipp.dittert@gmail.com" }]
+license = { text = "MIT" }
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Information Technology",
+  "Intended Audience :: System Administrators",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: MacOS",
+  "Operating System :: POSIX",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python",
+  "Topic :: System :: Systems Administration",
+  "Topic :: Software Development :: Quality Assurance",
+  "Topic :: Software Development :: Testing",
+  "Topic :: Utilities",
+]
+keywords = ["ansible", "testing", "molecule", "plugin"]
+dependencies = [
+    # molecule plugins are not allowed to mention Ansible as a direct dependency
+    "molecule >= 6.0.0a1",
+]
+
+[project.urls]
+homepage = "https://github.com/phlpdtrt/molecule-plugin-lxd"
+documentation = "https://molecule.readthedocs.io/"
+repository = "https://github.com/phlpdtrt/molecule-plugin-lxd"
+changelog = "https://github.com/phlpdtrt/molecule-plugin-lxd/releases"
+
+[project.optional-dependencies]
+test = [
+    "pytest-helpers-namespace >= 2019.1.8",
+    "molecule[test] >= 6.0.0a1"
+]
+azure = []
+docker = [
+    # selinux python module is needed as least by ansible-docker modules
+    # and allows use of isolated (default) virtualenvs. It does not avoid need
+    # to install the system selinux libraries but it will provide a clear
+    # message when user has to do that.
+    'selinux; sys_platform=="linux2"',
+    'selinux; sys_platform=="linux"',
+    "docker >= 4.3.1",
+    "requests"  # also required by docker
+]
+ec2 = []
+gce = []
+podman = [
+]
+selinux = [
+    # selinux python module is needed as least by podman and docker on systems
+    # that do have selinux enabled and where code is running inside of an
+    # isolated (default) virtualenv. It does not avoid need to install the
+    # system selinux libraries but it will provide a clear message when user
+    # has to do that.
+    'selinux; sys_platform=="linux2"',
+    'selinux; sys_platform=="linux"',
+]
+vagrant = [
+    "python-vagrant",
+]
+
+[tool.ruff]
+ignore = [
+  "E501", # we use black
+  # we deliberately ignore these:
+  "EM102",
+  # temporary disabled until we either fix them or decide to ignore them:
+  "A001",
+  "ANN",
+  "ARG",
+  "B006",
+  "B028",
+  "BLE",
+  "C901",
+  "D",
+  "DTZ",
+  "FBT",
+  "INP",
+  "ISC",
+  "N",
+  "PERF203",
+  "PGH",
+  "PLR",
+  "PT",
+  "PTH",
+  "RET",
+  "S",
+  # not sure we'll open a bug for every TODO.
+  "TD003",
+  "FIX002",
+  "TRY",
+]
+select = ["ALL"]
+target-version = "py39"
+# Same as Black.
+line-length = 88
+
+[tool.ruff.flake8-pytest-style]
+parametrize-values-type = "tuple"
+
+[tool.ruff.isort]
+known-first-party = ["molecule_plugin_lxd"]
+
+[project.entry-points."molecule.driver"]
+lxd = "molecule_plugin_lxd.lxd.driver:LXD"
+
+[tool.setuptools_scm]
+local_scheme = "no-local-version"
+write_to = "src/molecule_plugin_lxd/_version.py"
