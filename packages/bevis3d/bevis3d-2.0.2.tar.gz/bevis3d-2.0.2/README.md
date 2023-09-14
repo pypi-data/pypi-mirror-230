@@ -1,0 +1,78 @@
+# BEVis3D
+这是一个基于web的3D可视化工具
+
+## 1.环境配置
+### Install environment
+```python
+pip install -r requirements.txt
+```
+## 2.数据准备
+1. 准备需要可视化的数据集，将数据集放在目录 ./data 下
+2. 数据集文件结构如下：
+```
+./data/dataset_dir/
+<dataset_dir>:
+    |___param
+        |___imu_to_vehicle_extrinsics.yaml
+        |___vehicle_to_flu_extrinsics.yaml
+    |___pandar_AT128
+        |___*****.pcd
+    |___bbox
+        |___*****.txt
+    |___velocity
+        |___**_velocity_flu.txt
+    |___andes_final
+    |___andes_final_lidar
+    |___andes_hmi
+    |___onsemi_obstacle
+    |___spherical_left_forward
+    |___spherical_right_forward
+    |___spherical_left_backward
+    |___spherical_right_backward
+    |___spherical_backward
+```
+
+## 3.运行代码
+
+1. 运行bevis3d
+
+```bash
+bash run_record.sh
+```
+
+参数介绍：
+```
+--bevis_dir 存储bevis3d的文件夹路径
+--bevis_name 当前场景的命名，最终输出的文件路径是<path_to_save_bevis3d>/<file_name_bevis3d>
+--data_dir 待可视化的数据集存储的路径
+--lidar_dir 待可视化的数据集的点云数据的存储路径，默认None
+--param_dir 待可视化的数据集的外参的存储路径，默认None
+--bbox_list 待可视化的数据集的3D BBox的存储路径的file name，默认None
+--vis_camera 是否要可视化相机bev图像，如果是则加入 --vis_camera
+--vis_lidar 是否要可视化点云图像
+--vis_bbox 是否要可视化3D目标检测框
+--vis_andes 是否要可视化andes图像
+```
+
+bevis3d输出文件存放在```<path_to_save_bevis3d>/<file_name_bevis3d>```下
+
+2. 运行web可视化 
+
+```bevis3d --vis_dir $path_to_vis_dir --host 0.0.0.0 --port 19090```
+
+在本地设备上运行 http://localhost:19090 即可打开可视化界面
+
+## Thanks
+ - This project references [Wis3D](https://github.com/zju3dv/Wis3D/tree/main/wis3d), and we are grateful for the outstanding work of the CAD team of Zhejiang University.
+
+
+## Citation
+```
+@article{sun2022onepose,
+    title={{OnePose}: One-Shot Object Pose Estimation without {CAD} Models},
+    author = {Sun, Jiaming and Wang, Zihao and Zhang, Siyu and He, Xingyi and Zhao, Hongcheng and Zhang, Guofeng and Zhou, Xiaowei},
+    journal={CVPR},
+    year={2022},
+}
+```
+
