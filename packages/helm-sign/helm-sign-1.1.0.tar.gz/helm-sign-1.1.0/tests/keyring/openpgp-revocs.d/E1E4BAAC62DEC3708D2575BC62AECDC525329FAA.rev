@@ -1,0 +1,37 @@
+This is a revocation certificate for the OpenPGP key:
+
+pub   rsa4096 2023-08-23 [S]
+      E1E4BAAC62DEC3708D2575BC62AECDC525329FAA
+uid          helm-sign Test Key (ONLY USED FOR AUTOMATED TESTING!) <key@helm-sign.local>
+
+A revocation certificate is a kind of "kill switch" to publicly
+declare that a key shall not anymore be used.  It is not possible
+to retract such a revocation certificate once it has been published.
+
+Use it to revoke this key in case of a compromise or loss of
+the secret key.  However, if the secret key is still accessible,
+it is better to generate a new revocation certificate and give
+a reason for the revocation.  For details see the description of
+of the gpg command "--generate-revocation" in the GnuPG manual.
+
+To avoid an accidental use of this file, a colon has been inserted
+before the 5 dashes below.  Remove this colon with a text editor
+before importing and publishing this revocation certificate.
+
+:-----BEGIN PGP PUBLIC KEY BLOCK-----
+Comment: This is a revocation certificate
+
+iQI2BCABCgAgFiEE4eS6rGLew3CNJXW8Yq7NxSUyn6oFAmTlrrgCHQAACgkQYq7N
+xSUyn6rwWw/+IzBllgSoSmiE0mnbBUcEmGvmARo5Nwtq4dbvzhpDqQwVmGTH98h9
+QfkW1DhRgQVf48t+gu1iM8aaQpIkMyJ0fxeR+g4hcWT41nAcJW+TLtn/0+G+gIfV
+prCjWQ+btASpqSwd2Nvd+s8+JApzXtLdnIvfxPGUFfjQhJAg/Iq1BksWd+CLgzvw
+N2+dEHB+SAcZ/WCkRxMpew3XRMBt+4WtQB3Oa6Hiwkqhv8vU1CPZvcz8CYzYNk3L
+4x0oCzNTLEcLvmJSh13iX6AglBdATM9XXyHvu3N2ts0IoPnX2rsHBBpkCkSi/4B2
+QCKaUYrKd5PSAXNmSYdYhYMeKzQejib7MIHpJ1miRcY99JtiQN3zOnTARiAWfn2j
+Ebfj0if1DW4Sg/nKheb7uei2bfZLVT7hmr1XkxhWaMM9IZtTQFfzrS63rKu55EI2
+vyEWVbapRNuCqfQ5tseJ+L38lHeW6iEUk94tNm24vUmJICrSYO/JhLiym9dAKa5V
+atneEg+ddB/TK9X/wduLFYDOSgkN76SRP3dkSKTmuZk8Mg4Znpc7cnnAf3+Fvm3b
+iQS/1xtQBbgh+xRI0PpzrgvW3H5YiMty2mCzBvYGWN8KqiSbkXkpbs2CH0CNtLkn
+rKDwHJ1EdSTwphGLvKVfBzLVozHbqa4hHy1qKDrKlmVbaK8napm6IRk=
+=a1Z8
+-----END PGP PUBLIC KEY BLOCK-----
