@@ -1,0 +1,88 @@
+Metadata-Version: 2.1
+Name: optzer
+Version: 0.2.9
+Summary: This program optimizes parameters in any external programs to any target propety.
+Author-email: Ryo KOBAYASHI <ryo.kbys@gmail.com>
+Maintainer-email: Ryo KOBAYASHI <ryo.kbys@gmail.com>
+License: The MIT License (MIT)
+        
+        Copyright (c) 2022 Ryo KOBAYASHI
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Homepage, https://github.com/ryokbys/optzer
+Project-URL: Documentation, http://ryokbys.web.nitech.ac.jp/contents/optzer_doc/
+Project-URL: Repository, https://github.com/ryokbys/optzer
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy
+Requires-Dist: docopt
+Requires-Dist: scipy
+Requires-Dist: multiprocess
+
+# What is optzer?
+
+*optzer* is a python package for parameter optimization that can be used for any external program and for any target value obtained with the external program.
+
+# Who made this?
+* [Ryo KOBAYASHI](http://ryokbys.web.nitech.ac.jp/index.html)
+* Associate Professor at Department of Physical Science and Engineering, Nagoya Institute of Technology.
+
+# Requirements and dependencies
+
+The *optzer* requires the following:
+
+- *python3*
+- *docopt*
+- *numpy*
+- *scipy*
+
+# Installation
+
+It can be installed via *pip* as,
+```bash
+pip install optzer
+```
+
+You can install as a develop mode installation as,
+```shell
+git clone https://github.com/ryo.kbys/optzer.git ./optzer
+cd optzer
+python setup.py sdist
+pip install -e .
+```
+
+If you can find `optzer` command in your system via `which optzer`, the installation should be successful.
+
+# Usage
+
+Please see [optzer documentation](http://ryokbys.web.nitech.ac.jp/contents/optzer_doc/) and examples included in this repository.
+
+# Questions and requests
+
+Please leave questions and requests on issues in the github repository page.
+
+# License
+
+This software is released under the MIT License, see the LICENSE.
+
+# Acknowlegements
+
+This software was developed at [Nagoya Institute of Technology](https://www.nitech.ac.jp/), and supported by JSPS KAKENHI Grand Numbers 21K04650, JP20H05290 and 22H04613 (Grant-in-Aid for Scientific Research on Innovative Areas *[Interface Ionics](https://interface-ionics.jp/)*).
