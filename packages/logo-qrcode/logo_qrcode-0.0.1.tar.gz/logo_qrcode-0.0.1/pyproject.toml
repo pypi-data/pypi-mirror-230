@@ -1,0 +1,31 @@
+
+
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
+[project]
+authors = [
+  {name = "Fan", email = "fan@example.com"},
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+dependencies = [
+  "qrcode",
+  "pillow",
+]
+description = "A simple library for generating QR codes with logo"
+name = "logo-qrcode"
+readme = "README.md"
+requires-python = ">=3.8"
+version = "0.0.1"
+
+[project.scripts]
+excel2x-cli = "logo-qrcode"
+
+[project.urls]
+"Bug Tracker" = "https://github.com/xxx/issues"
+"Homepage" = "https://github.com/xxx"
