@@ -1,0 +1,5 @@
+_B='MANUAL'
+_A='ON_REQUEST'
+from enum import Enum
+class SaveStrategy(Enum):'\n    There are four strategies that govern when state is stored:\n    - on request: on every request that potentially modifies backend state, we dump the service state\n    - on shutdown: when localstack shuts down, we dump the entire state\n    - scheduled: every X requests or N seconds, we dump the state\n    - manual: can be set to disable automatic saving, then the user needs to call /_localstack/state/<service>/save\n    ';ON_REQUEST=_A;ON_SHUTDOWN='ON_SHUTDOWN';SCHEDULED='SCHEDULED';MANUAL=_B
+class LoadStrategy(Enum):'\n    There are three strategies that govern when state is restored:\n    - on request: essentially lazy loading: when the service is\n    - on startup: when localstack starts up, we restore the entire state of all services that were previously saved\n    - manual: can be set to disable automatic loading, then the user needs to call /_localstack/state/<service>/load\n    ';ON_REQUEST=_A;ON_STARTUP='ON_STARTUP';MANUAL=_B
