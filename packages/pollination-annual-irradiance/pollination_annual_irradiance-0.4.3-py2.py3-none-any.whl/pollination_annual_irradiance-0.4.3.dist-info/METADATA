@@ -1,0 +1,41 @@
+Metadata-Version: 2.1
+Name: pollination-annual-irradiance
+Version: 0.4.3
+Summary: Annual irradiance recipe for Pollination.
+Home-page: https://github.com/pollination/annual-irradiance
+Author: ladybug-tools
+Author-email: info@ladybug.tools
+Maintainer: mostapha, ladybug-tools
+Maintainer-email: mostapha@ladybug.tools, info@ladybug.tools
+License: PolyForm Shield License 1.0.0, https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt
+Project-URL: icon, https://raw.githubusercontent.com/ladybug-tools/artwork/master/icons_components/honeybee/png/annualirrrecipe.png
+Project-URL: docker, https://hub.docker.com/r/ladybugtools/honeybee-radiance
+Keywords: honeybee,radiance,ladybug-tools,daylight,annual-irradiance
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pollination-honeybee-radiance (>=0.22.41)
+Requires-Dist: pollination-alias (>=0.11.8)
+Requires-Dist: pollination-path (>=0.3.2)
+Provides-Extra: viz
+Requires-Dist: pollination-honeybee-display (>=0.1.11) ; extra == 'viz'
+
+# Annual Irradiance
+
+Calculate solar irradiance (W/m2) and radiation (kWh/m2) at each time step provided by a wea file.
+
+The fundamental calculation of this recipe is the same as that of
+[Annual Daylight Enhanced](https://github.com/pollination/annual-daylight-enhanced) in that a detailed
+accounting of direct sun is computed at each time step. However, the recipe computes
+broadband solar irradiance in W/m2 instead of visible illuminance in lux.
+
+The detailed matrices of W/m2 at each time step are stored under `results/total`.
+Detailed matrices of just the direct component (W/m2) are output to `results/direct`.
+The following values are also recorded for each sensor point under the `metrics` folder:
+
+* `average_irradiance`: The average irradiance in W/m2 over the Wea time period
+* `peak_irradiance`: The highest irradiance value in W/m2 during the Wea time period
+* `cumulative_radiation`: The cumulative radiation in kWh/m2 over the Wea time period
+
+The `peak_irradiance` value is suitable for assessing the worst-case solar load
+on cooling design days or the highest radiant temperatures that occupants might
+experience in over the time period of the Wea.
