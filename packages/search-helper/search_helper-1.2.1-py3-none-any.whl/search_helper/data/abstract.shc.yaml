@@ -1,0 +1,64 @@
+#
+# Config file for search_helper, YAML format
+# All subtrees in this file except "Search URLs" are optional.
+#
+Application Title: Application name (displayed as window title)
+#
+# Program description. It is displayed in the upper half of the window
+# and should contain roughly the following:
+Description: |
+    This program can be used for a quick search over multiple URLs organized in different categories.
+    After entering the search term and clicking on the 'Start search(es)' button or hitting the <Return> key, search results will open in new browser windows or tabs.
+
+    The placeholder 'url_count_per_category' (in curly braces) was used to create the following list of categories with URL counts:
+    {url_count_per_category}
+#
+# URL definitions.
+Search URLs:
+    Simple search page:
+        URL: http://example.com/search/simple?query={search_term}
+    Single URL expecting an 8-digit number with leading zeros:
+        Number Format: '>08d'
+        URL: http://example.com/search/eight-digit-number?query={search_term}
+    Single URL expecting an uppercase identifier:
+        Preferred Browser: firefox
+        Search Term Must Match: '^[A-Z][A-Z0-9_]+$'
+        Regex Description: Uppercase letters, digits and undersores, beginning with a letter
+        URL: http://example.com/search/identifier?query={search_term}
+    Category with multiple URLs:
+        Preferred Browser: chrome
+        URLs:
+            Example 1: http://example.com/seach/area-1?query={search_term}
+            Example 2: http://example.com/seach/area-2?query={search_term}
+            Example 3: http://example.com/seach/area-3?query={search_term}
+#
+# Homepages are generally determined by discarding the whole path of the URL.
+# Exceptions are defined here.
+# Use the single URL name as the key for URLs from multiple-URL categories
+Deviant Homepages:
+    Single URL expecting an uppercase identifier: http://example.com/identifier-homepage/
+    Example 2: http://example.com/area-2-homepage/
+#
+# Program options
+Options:
+    #
+    # Display radiobuttons instead of checkboxes?
+    Mutually Exclusive Categories: false
+    #
+    # Register additional Browsers (if installed at that path)
+    Register Browsers:
+        chrome: C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+        firefox: C:\Program Files\Mozilla Firefox\firefox.exe
+    #
+    # Definition of key combinations for selecting multiple categories at once.
+    # Keys are identified as documented at
+    # <https://tkdocs.com/shipman/event-modifiers.html>,
+    # but without "KeyPress" (which is not necessary).
+    # NOTE: This option is void if 'Mutually Exclusive Categories' is set to true.
+    #       It would not make any sense when radiobuttons are displayed instead of checkboxes.
+    Special Select Keys:
+        Control-Shift-A:
+            Label: Simple and identifier search
+            Categories:
+            - Simple search page
+            - Single URL expecting an uppercase identifier
