@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "rippling-flux-dev-tools"
+version = "0.0.1"
+description = "Rippling Flux App development tools."
+authors = ["Rippling Apps <apps@rippling.com>"]
+readme = "README.md"
+packages = [{include="flux_dev_tools"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Flask = "^2.3.3"
+werkzeug = "^2.3.7"
+jsonpickle = "^3.0.2"
+rippling-flux-sdk = "^0.0.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
