@@ -1,0 +1,1 @@
+from metalattice._version import __version__
