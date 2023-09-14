@@ -1,0 +1,89 @@
+{#- -*- mode: sgml; tab-width: 1; indent-tabs-mode: nil -*-
+ #
+ # SPDX-License-Identifier: MIT
+-#}
+
+{%- import('macros/printDOP.xml.jinja2') as pdop %}
+{%- import('macros/printSpecialData.xml.jinja2') as psd %}
+
+{%- macro printParam(param) -%}
+{%- if param.semantic is not none %}
+{%-  set semattrib = " SEMANTIC=\""+param.semantic+"\"" -%}
+{%- else %}
+{%-  set semattrib = "" -%}
+{%- endif -%}
+{%- if param.parameter_type == "TABLE-KEY" and param.odx_id is not none  %}
+<PARAM {{semattrib}} ID="{{param.odx_id.local_id}}" xsi:type="{{param.parameter_type}}">
+{%- elif param.parameter_type == "SYSTEM" %}
+<PARAM SYSPARAM="{{param.sysparam}}" xsi:type="{{param.parameter_type}}">
+{%- else %}
+<PARAM {{semattrib}} xsi:type="{{param.parameter_type}}">
+{%- endif%}
+ <SHORT-NAME>{{param.short_name}}</SHORT-NAME>
+{%- if param.long_name %}
+ <LONG-NAME>{{param.long_name|e}}</LONG-NAME>
+{%- endif %}
+{%- if param.description %}
+ <DESC>{{param.description}}</DESC>
+{%- endif %}
+ {{- psd.printSpecialDataGroups(param.sdgs)|indent(1, first=True) }}
+{%- if param.byte_position is not none %}
+ <BYTE-POSITION>{{param.byte_position}}</BYTE-POSITION>
+{%- endif %}
+{%- if param.parameter_type == "MATCHING-REQUEST-PARAM" and param.request_byte_position is defined %}
+ <REQUEST-BYTE-POS>{{param.request_byte_position}}</REQUEST-BYTE-POS>
+{%- elif param.bit_position is not none %}
+ <BIT-POSITION>{{param.bit_position}}</BIT-POSITION>
+{%- endif %}
+{%- if param.byte_length is defined and param.byte_length is not none %}
+ <BYTE-LENGTH>{{param.byte_length}}</BYTE-LENGTH>
+{%- endif %}
+{%- if param.coded_value is defined %}
+ <CODED-VALUE>{{param.coded_value}}</CODED-VALUE>
+{%- elif param.physical_constant_value_raw is defined %}
+ <PHYS-CONSTANT-VALUE>{{param.physical_constant_value_raw}}</PHYS-CONSTANT-VALUE>
+{%- elif param.coded_values is defined %}
+ <CODED-VALUES>
+ {%- for coded_value in param.coded_values %}
+  <CODED-VALUE>{{coded_value}}</CODED-VALUE>
+ {%- endfor %}
+ </CODED-VALUES>
+{%- endif %}
+{%- if param.physical_default_value_raw %}
+ <PHYSICAL-DEFAULT-VALUE>{{param.physical_default_value_raw}}</PHYSICAL-DEFAULT-VALUE>
+{%- endif %}
+{%- if param.dop_ref %}
+ <DOP-REF ID-REF="{{param.dop_ref.ref_id}}"/>
+{%- elif param.dop_snref %}
+ <DOP-SNREF SN="{{param.dop_snref}}"/>
+{%- elif param.diag_coded_type is defined %}
+ {{pdop.printDiagCodedType(param.diag_coded_type)|indent(2)}}
+{%- elif param.parameter_type != "MATCHING-REQUEST-PARAM" %}
+ {%- if param.bit_length is defined and param.bit_length is not none %}
+  <BIT-LENGTH>{{param.bit_length}}</BIT-LENGTH>
+ {%- endif %}
+{%- endif %}
+{%- if param.parameter_type == "TABLE-KEY" %}
+ {%- if param.table_ref %}
+ <TABLE-REF ID-REF="{{param.table_ref.ref_id}}"/>
+ {%- endif %}
+ {%- if param.table_snref %}
+ <TABLE-SNREF SHORT-NAME="{{param.table_snref}}"/>
+ {%- endif %}
+ {%- if param.table_row_snref %}
+ <TABLE-ROW-SNREF SHORT-NAME="{{param.table_row_snref}}"/>
+ {%- endif %}
+ {%- if param.table_row_ref %}
+ <TABLE-ROW-REF ID-REF="{{param.table_row_ref.ref_id}}"/>
+ {%- endif %}
+{%- endif %}
+{%- if param.parameter_type == "TABLE-STRUCT" %}
+ {%- if param.table_key_ref %}
+ <TABLE-KEY-REF ID-REF="{{param.table_key_ref.ref_id}}"/>
+ {%- endif %}
+ {%- if param.table_key_snref %}
+ <TABLE-KEY-SNREF SHORT-NAME="{{param.table_ref}}"/>
+ {%- endif %}
+{%- endif %}
+</PARAM>
+{%- endmacro -%}
