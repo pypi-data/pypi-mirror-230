@@ -1,0 +1,87 @@
+Metadata-Version: 2.1
+Name: cdk-proxy-api-client
+Version: 0.5.1
+Summary: Conduktor Proxy API Client
+License: LICENSE
+Keywords: compose-x,conduktor,kafka,proxy
+Author: John "Preston" Mille
+Author-email: john@ews-network.net
+Requires-Python: >=3.8,<4.0
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: License :: Other/Proprietary License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Provides-Extra: cli
+Provides-Extra: tools
+Requires-Dist: compose-x-common (>=1.2,<2.0) ; extra == "tools" or extra == "cli"
+Requires-Dist: importlib-resources (>=5.12.0,<6.0.0) ; extra == "tools" or extra == "cli"
+Requires-Dist: jsonschema (>=4.17.3,<5.0.0) ; extra == "tools" or extra == "cli"
+Requires-Dist: pyjwt (>=2.8.0,<3.0.0)
+Requires-Dist: pyyaml (>=6.0,<7.0)
+Requires-Dist: requests (>=2.28.2,<3.0.0)
+Project-URL: Bug Tracker, https://github.com/JohnPreston/cdk-proxy-api-client/issues
+Project-URL: Source (GitHub), https://github.com/JohnPreston/cdk-proxy-api-client
+Project-URL: Source (CodeBerg), https://codeberg.org/JohnPreston/cdk-proxy-api-client
+Description-Content-Type: text/markdown
+
+# cdk-proxy-api-client
+
+API Client library to interact with Conduktor Gateway (version >=2,<3)
+
+
+## Getting started
+
+### CLI
+
+```bash
+cdk-cli -h
+usage: CDK Proxy CLI [-h] [--format OUTPUT_FORMAT] [--log-level LOGLEVEL] [--url URL] [--username USERNAME] [--password PASSWORD] [-c CONFIG_FILE] [-p PROFILE_NAME] {vclusters,interceptors,plugins} ...
+
+positional arguments:
+  {vclusters,interceptors,plugins}
+                        Resources to manage
+    vclusters           Manages vClusters
+    interceptors        Manage interceptors
+    plugins             Manage plugins
+
+options:
+  -h, --help            show this help message and exit
+  --format OUTPUT_FORMAT, --output-format OUTPUT_FORMAT
+                        output format
+  --log-level LOGLEVEL  Set loglevel
+  --url URL
+  --username USERNAME
+  --password PASSWORD
+  -c CONFIG_FILE, --config-file CONFIG_FILE
+                        Path to the profiles files
+  -p PROFILE_NAME, --profile-name PROFILE_NAME
+                        Name of the profile to use to make API Calls
+```
+
+#### Example config file
+
+Config files make it easy to switch between profiles. You can use AWS secrets manager currently to store the credentials
+securely and share the config file among teammates.
+
+```yaml
+# Conduktor GW CLI Config file
+nonprod:
+  Url: https://stg.kafka.domain.net:8888
+  Username: admin
+  Password: somethingsecret
+
+prod:
+  Url: https://kafka.prod.domain.net:8888
+  AWSSecretsManager:
+    SecretId: /conduktor/proxy/prod/apiuser
+    ProfileName: aws-prod
+
+```
+
