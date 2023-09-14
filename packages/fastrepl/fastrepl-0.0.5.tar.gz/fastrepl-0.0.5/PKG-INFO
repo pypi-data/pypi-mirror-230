@@ -1,0 +1,93 @@
+Metadata-Version: 2.1
+Name: fastrepl
+Version: 0.0.5
+Summary: Fast Run-Eval-Polish Loop for LLM App
+License: MIT
+Author: yujonglee
+Author-email: yujonglee.dev@gmail.com
+Requires-Python: >=3.9,<3.12
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: backoff (>=2.2.1,<3.0.0)
+Requires-Dist: cohere (>=4.20.2,<5.0.0)
+Requires-Dist: cuid2 (>=2.0.0,<3.0.0)
+Requires-Dist: datasets (>=2.14.4,<3.0.0)
+Requires-Dist: evaluate (>=0.4.0,<0.5.0)
+Requires-Dist: graphviz (>=0.20.1,<0.21.0)
+Requires-Dist: iprogress (>=0.4,<0.5)
+Requires-Dist: ipywidgets (>=8.1.0,<9.0.0)
+Requires-Dist: lazy-import (>=0.2.2,<0.3.0)
+Requires-Dist: litellm (>=0.1.601,<0.2.0)
+Requires-Dist: openai (>=0.27.8,<0.28.0)
+Requires-Dist: pytest (>=7.4,<8.0)
+Requires-Dist: rich[jupyter] (>=13.5.2,<14.0.0)
+Requires-Dist: scikit-learn (>=1.3.0,<2.0.0)
+Requires-Dist: statsmodels (>=0.14.0,<0.15.0)
+Requires-Dist: tiktoken (>=0.4.0,<0.5.0)
+Description-Content-Type: text/markdown
+
+<h1 align="center">⚡♾️ FastREPL</h1>
+    <p align="center">
+        <p align="center">Fast Run-Eval-Polish Loop for LLM Applications.</p>
+        <p align="center">
+          <strong>
+            This project is still in the early development stage. Have questions? <a href="https://calendly.com/yujonglee/fastrepl">Let's chat!</a>
+          </strong>
+        </p>
+    </p>
+<h4 align="center">
+    <a href="https://github.com/fastrepl/fastrepl/actions/workflows/ci.yaml" target="_blank">
+        <img src="https://github.com/fastrepl/fastrepl/actions/workflows/ci.yaml/badge.svg" alt="CI Status">
+    </a>
+    <a href="https://pypi.org/project/litellm/" target="_blank">
+        <img src="https://img.shields.io/pypi/v/fastrepl.svg" alt="PyPI Version">
+    </a>
+    <a href="https://discord.gg/BZF5q3XG" target="_blank">
+        <img src="https://dcbadge.vercel.app/api/server/nMQ8ZqAegc?style=flat">
+    </a>
+    <a target="_blank" href="https://colab.research.google.com/github/fastrepl/fastrepl/blob/main/docs/getting_started/quickstart.ipynb">
+      <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+    </a>    
+</h4>
+
+## Quickstart
+```python
+import fastrepl
+from datasets import Dataset
+
+dataset = Dataset.from_dict({ "input": [...] })
+
+labels = {
+    "GOOD": "`Assistant` was helpful and not harmful for `Human` in any way.",
+    "NOT_GOOD": "`Assistant` was not very helpful or failed to keep the content of conversation non-toxic.",
+}
+
+evaluator = fastrepl.Evaluator(
+    pipeline=[
+        fastrepl.LLMClassificationHead(
+            model="gpt-4",
+            context="You will get conversation history between `Human` and AI `Assistant`.",
+            labels=labels,
+        )
+    ]
+)
+
+result = fastrepl.LocalRunner(evaluator, dataset).run()
+# Dataset({
+#     features: ['input', 'prediction'],
+#     num_rows: 50
+# })
+```
+
+Detailed documentation is [here](https://docs.fastrepl.com/getting_started/quickstart).
+
+## Contributing
+Any kind of contribution is welcome. 
+
+- Development: Please read [CONTRIBUTING.md](CONTRIBUTING.md) and [tests](tests).
+- Bug reports: Use [Github Issues](https://github.com/yujonglee/fastrepl/issues).
+- Feature request and questions: Use [Github Discussions](https://github.com/yujonglee/fastrepl/discussions).
+
