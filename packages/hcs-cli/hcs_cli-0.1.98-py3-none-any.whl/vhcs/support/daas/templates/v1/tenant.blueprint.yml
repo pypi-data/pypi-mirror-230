@@ -1,0 +1,142 @@
+# 'default' is a group of variables that are calculated and referenced by multiple resources.
+# The default helps to deduplicate calculated variables, and 
+default:
+  name: tltenant-${deploymentId}
+  tags:
+    deployment: ${deploymentId}
+    managed-by: titan-lite
+
+# The provider section specifies provider-specific data. Normally this required to initialize
+# a provider.
+provider:
+  azure:
+    data: ${tenantPrep.provider}
+
+runtime:
+  tenantPrep:
+    impl: vhcs.support.daas.tenant_prep # Custom calculation of values
+    data: ${var} # Take the entire unchanged var as input
+
+  tenantSummary:
+    impl: vhcs.support.daas.tenant_summary # Custom calculation of values
+    data:
+      orgId: ${var.orgId}
+      edgeId: ${var.edgeId}
+      users: ${myAADUser}
+      entitlementId: ${myPoolGroup.name}
+      domainName: ${tenantPrep.orgIdpMap.idpTenantDomain}
+      stackUrl: ${profile.hcs.url}
+    after:
+    - myEntitlement
+
+resource:
+  myRg:
+    kind: azure/resource-group
+    data:
+      name: ${default.name}
+      parameters:
+        name: ${default.name}
+        location: ${tenantPrep.location}
+        tags: ${default.tags}
+
+  # myNsg:
+  #   kind: azure/nsg
+  #   data:
+  #     name: ${default.name}
+  #     resourceGroup: ${tenantPrep.vNet.resourceGroup}
+  #     parameters:
+  #       location: ${tenantPrep.location}
+  #       tags: ${default.tags}
+
+  mySubnet:
+    kind: azure/subnet
+    data:
+      name: ${default.name}
+      resourceGroup: ${tenantPrep.vNet.resourceGroup}
+      vNetName: ${tenantPrep.vNet.name}
+      parameters:
+        address_prefix: ${tenantPrep.cidr}
+        # network_security_group:
+        #   id: ${myNsg.id}
+
+  myAADGroup:
+    kind: azure/aad-group
+    data:
+      displayName: ${default.name}
+      mailNickname: ${default.name}
+      description:
+      parentGroup: ${var.desktop.userGroup}
+  
+  myAADUser:
+    kind: azure/aad-user
+    for: email in var.userEmails
+    data:
+      group: ${myAADGroup.id}
+      domainName: ${tenantPrep.orgIdpMap.domains[0]}
+
+  myTemplate:
+    kind: hcs/pool-template
+    data:
+      providerInstanceId: ${tenantPrep.provider.id}
+      uagDeploymentId: ${tenantPrep.template.uag_deployment_id}
+      edgeDeploymentId: ${tenantPrep.template.edge_deployment_id}
+      orgId: ${var.orgId}
+      name: ${default.name}
+      vmNamePattern: tl-${deploymentId}-
+      templateType: ${var.desktop.templateType}
+      applicationProperties:
+        azureActiveDirectoryJoined: 'true'
+      networks:
+      - kind: subnets
+        id: ${mySubnet.id}
+        data:
+          parent: ${mySubnet.id}
+          name: ${mySubnet.name}
+          availableIpAddresses: 250
+          cidr: ${tenantPrep.cidr}
+      imageReference:
+        streamId: ${var.desktop.streamId}
+        markerId: ${var.desktop.markerId}
+      licenseProvided: true
+      desktopAdminUsername: hcs-admin
+      desktopAdminPassword: ${tenantPrep.template.password}
+      diskEncryption:
+        enabled: false
+      sparePolicy:
+        limit: ${tenantPrep.template.total_vms}
+        max: ${tenantPrep.template.total_vms}
+        min: ${tenantPrep.template.total_vms}
+      sessionsPerVm: ${tenantPrep.template.sessions_per_vm}
+      vmLicenseType: WINDOWS_CLIENT
+      diskSizeInGB: 127
+      infrastructure:
+        vmSkus:
+        - ${tenantPrep.template.vm_sku}
+
+  myPoolGroup:
+    kind: hcs/pool-group
+    data:
+      orgId: ${var.orgId}
+      name: ${default.name}
+      type: DESKTOP
+      templateType: ${var.desktop.templateType}
+      connectionAffinity: NEAREST_SITE
+      scope: ALL_SITES
+      enableSSO: false
+      preferredClientType: HORIZON_CLIENT
+      protocols:
+      - name: BLAST
+        defaultProtocol: true
+      templates:
+      - id: ${myTemplate.id}
+
+  myEntitlement:
+    kind: hcs/entitlement
+    data:
+      orgId: ${var.orgId}
+      poolIds:
+      - ${myPoolGroup.id}
+      resourceDetails:
+      - poolId: ${myPoolGroup.id}
+      userIds: "${[for u in myAADUser: u.id]}"
+
