@@ -1,0 +1,63 @@
+Metadata-Version: 2.1
+Name: h2o-helium
+Version: 0.7.1
+Summary: Client library for H2O Helium
+Author-email: Prithvi Prabhu <prithvi.prabhu@gmail.com>
+Project-URL: Source, https://github.com/h2oai/helium
+Project-URL: Issues, https://github.com/h2oai/helium/issues
+Project-URL: Documentation, https://github.com/h2oai/helium/wiki
+Keywords: information-retrieval,LLM,large-language-models,question-answering,search,semantic-search,analytical-search,lexical-search,document-search,natural-language-querying
+Classifier: Development Status :: 4 - Beta
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: pydantic[dotenv] ~=1.10
+Requires-Dist: requests
+Requires-Dist: websockets
+Requires-Dist: pytest-xdist
+
+# H2O Helium Python Client
+
+## Install
+
+```bash
+pip install h2o-helium
+```
+
+## Usage
+
+```python
+from h2o_helium import Helium
+
+helium = Helium(address='https://helium.h2o.ai', api_key='sk-xxxxxx')
+
+# Create a new collection
+collection_id = helium.create_collection(name='Contracts', description='Paper clip supply contracts')
+
+# Upload documents
+with open('/path/to/dunder_mifflin.pdf', 'rb') as f:
+    dunder_mifflin = helium.upload('Dunder Mifflin.pdf', f)
+with open('/path/to/wernham_hogg.pdf', 'rb') as f:
+    initech = helium.upload('Wernham Hogg.pdf', f)
+
+# Ingest documents
+helium.ingest_uploads(collection_id, [dunder_mifflin, initech])
+
+# Create a chat session
+chat_session_id = helium.create_chat_session(collection_id)
+
+# Query the collection
+with helium.connect(chat_session_id) as session:
+    reply = session.query('How many paper clips were shipped to Scranton?', timeout=10)
+    print(reply.content)
+    
+    reply = session.query('Did David Brent co-sign the contract with Initech?', timeout=10)
+    print(reply.content)
+```
+
