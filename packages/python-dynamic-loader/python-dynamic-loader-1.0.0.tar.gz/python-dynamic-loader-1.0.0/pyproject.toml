@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "python-dynamic-loader"
+version = "1.0.0"
+authors = [
+  { name="David Harcombe", email="david.harcombe@gmail.com" },
+]
+description = "API for dynamically loading Python classes from Google Cloud Storage or Secret Manager."
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Operating System :: OS Independent",
+]
+license = {text = "Apache 2.0"}
+dependencies = [
+  "google-cloud-secret-manager>=2.8.0",
+  "google-cloud-storage>=2.9.0",
+]
+
+[tool.setuptools.packages.find]
+where = ['.']  # list of folders that contain the packages (["."] by default)
+include = ['dynamic']  # package names should match these glob patterns (["*"] by default)
+exclude = []  # exclude packages matching these glob patterns (empty by default)
+namespaces = false  # to disable scanning PEP 420 namespaces (true by default)
+
+# [project.urls]
+# "Homepage" = "TBC"
+# "Bug Tracker" = "TBC"
