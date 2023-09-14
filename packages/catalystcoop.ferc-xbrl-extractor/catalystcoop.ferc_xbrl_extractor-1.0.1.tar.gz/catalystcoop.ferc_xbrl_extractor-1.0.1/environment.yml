@@ -1,0 +1,13 @@
+name: ferc-xbrl-extractor
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  # Packages required for setting up the environment
+  - pip>=21.0,<24
+  - python>=3.10,<3.12
+  - setuptools>=66,<69
+
+  # XBRL parsing library
+  - pip:
+      - --editable ./[docs,tests,dev]
