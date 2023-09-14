@@ -1,0 +1,179 @@
+# Weekly tests to catch changes in upstream dependencies like pins
+# that break vetiver e.g. changes in pins could break either one or
+# both of:
+#   1. pypi release
+#   2. main branch version
+
+name: Weekly Tests
+
+on:
+  schedule:
+    - cron: "03 14 * * MON"
+  push:
+    branches: ['update-weekly']
+
+jobs:
+  vetiver_main_pins_main:
+    name: 'vetiver main, pins main'
+    if: github.repository == 'rstudio/vetiver-python'
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        # Minimum and Maximum supported versions
+        python-version: ['3.10']
+
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install '.[all]'
+          python -m pip install --upgrade git+https://github.com/rstudio/pins-python
+
+      - name: run Connect
+        run: |
+          docker-compose up --build -d
+          make dev
+        env:
+          RSC_LICENSE: ${{ secrets.RSC_LICENSE }}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Run tests
+        run: |
+          make test
+
+  vetiver_pypi_pins_main:
+    name: 'vetiver pypi, pins main'
+    if: github.repository == 'rstudio/vetiver-python'
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        # Minimum and Maximum supported versions
+        python-version: ['3.10']
+
+    steps:
+      - name: Get latest release with tag from GitHub API
+        id: latestrelease
+        run: |
+          echo "::set-output name=releasetag::$(curl -s https://api.github.com/repos/rstudio/vetiver-python/releases/latest | jq '.tag_name' | sed 's/\"//g')"
+
+      - name: Confirm Release Tag
+        run: |
+          echo ${{ steps.latestrelease.outputs.releasetag }}
+
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ steps.latestrelease.outputs.releasetag }}
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install .[dev]
+          python -m pip install --upgrade git+https://github.com/rstudio/pins-python
+
+      - name: run Connect
+        run: |
+          docker-compose up --build -d
+          make dev
+        env:
+          RSC_LICENSE: ${{ secrets.RSC_LICENSE }}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Run Tests
+        run: |
+          make test
+
+  vetiver_pypi_rsconnect_latest:
+    name: 'vetiver pypi, rsconnect latest'
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        # Minimum and Maximum supported versions
+        python-version: ['3.9']
+
+    steps:
+      - name: Get latest release with tag from GitHub API
+        id: latestrelease
+        run: |
+          echo "::set-output name=releasetag::$(curl -s https://api.github.com/repos/rstudio/vetiver-python/releases/latest | jq '.tag_name' | sed 's/\"//g')"
+
+      - name: Confirm Release Tag
+        run: |
+          echo ${{ steps.latestrelease.outputs.releasetag }}
+
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ steps.latestrelease.outputs.releasetag }}
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install .[dev]
+          python -m pip install --upgrade git+https://github.com/rstudio/rsconnect-python
+          pip freeze > requirements.txt
+
+      - name: run Connect
+        run: |
+          docker-compose up --build -d
+          make dev
+        env:
+          RSC_LICENSE: ${{ secrets.RSC_LICENSE }}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Run Tests
+        run: |
+          pytest -m 'rsc_test'
+
+  vetiver_latest_rsconnect_latest:
+    name: 'vetiver latest, rsconnect latest'
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        # Minimum and Maximum supported versions
+        python-version: ['3.9']
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install '.[all]'
+          python -m pip install --upgrade git+https://github.com/rstudio/rsconnect-python
+          pip freeze > requirements.txt
+
+      - name: run Connect
+        run: |
+          docker-compose up --build -d
+          make dev
+        env:
+          RSC_LICENSE: ${{ secrets.RSC_LICENSE }}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Run Tests
+        run: |
+          pytest -m 'rsc_test'
