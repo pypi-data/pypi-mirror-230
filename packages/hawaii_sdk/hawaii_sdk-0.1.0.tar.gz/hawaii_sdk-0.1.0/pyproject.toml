@@ -1,0 +1,93 @@
+[tool.poetry]
+name = "hawaii_sdk"
+version = "0.1.0"
+description = ""
+authors = ["Nikolaus Naredi-Rainer <nikolaus.naredi-rainer@zuehlke.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.9, <4.0"
+websockets = "^11.0.3"
+requests = "^2.31.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.1"
+pytest-mock = "^3.11.1"
+pylint = "^2.17.5"
+black = "^23.7.0"
+mypy = "^1.5.1"
+sphinx = "^7.2.5"
+mock = "^5.1.0"
+sphinx-rtd-theme = "^1.3.0"
+poethepoet = "^0.22.1"
+poetry-bumpversion = "^0.3.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+### TOOLS CONFIG ###
+[tool.poe.tasks]
+test = "poetry run python -m pytest -sxv"
+document = ".\\docs\\make.bat html"
+lint = "poetry run python -m pylint $(git ls-files '*.py')"
+type_check = "poetry run python -m mypy ."
+
+
+[tool.pytest.ini_options]
+markers = [
+    "hardware: mark test to require hardware"
+]
+
+
+[tool.pylint.main]
+load-plugins="my_pylint_extension"
+ignore = ["generated_code", "docs", "tests"]
+ignore-paths = '/tools/.*$'
+good-names= [
+        "i",
+        "j",
+        "ex",
+        "e",
+        "oe"
+]
+
+[tool.pylint.messages_control]
+disable = [
+        "duplicate-code",
+        "line-too-long",
+        "too-few-public-methods",
+        "missing-class-docstring",
+        "missing-module-docstring",
+        "missing-function-docstring",
+        "too-many-instance-attributes",
+        "too-many-arguments",
+        "too-many-public-methods",
+        "too-many-lines",
+        "W0511",  # ignores the strange "T o D o" errors from pylint
+        "E0401",
+        "bad-plugin-value",
+        "W0012",
+        "wrong-import-order",
+        "no-name-in-module",
+        "W0107",
+        "W4901"
+]
+[tool.pylint.typecheck]
+ignored-classes = "cx_Oracle"
+
+[tool.mypy]
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+exclude = ["generated_code", "venv", "site-packages", "tests", "docs", "old_python_examples"]
+show_error_codes = true
+disable_error_code = ["misc", "empty-body", "attr-defined"]
+
+[[tool.mypy.overrides]]
+module = ["tests.*"]
+disable_error_code = "union-attr"
+
+[[tool.mypy.overrides]]
+module = ["my.components.generated_code.*"]
+ignore_errors = true
