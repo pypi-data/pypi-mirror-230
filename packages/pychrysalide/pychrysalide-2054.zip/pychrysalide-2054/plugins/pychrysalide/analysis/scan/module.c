@@ -1,0 +1,122 @@
+
+/* Chrysalide - Outil d'analyse de fichiers binaires
+ * module.c - intégration du répertoire scan en tant que module
+ *
+ * Copyright (C) 2022 Cyrille Bagard
+ *
+ *  This file is part of Chrysalide.
+ *
+ *  Chrysalide is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Chrysalide is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+
+#include "module.h"
+
+
+#include <assert.h>
+
+
+#include "context.h"
+#include "core.h"
+#include "expr.h"
+#include "item.h"
+#include "options.h"
+#include "scanner.h"
+#include "space.h"
+#include "patterns/module.h"
+#include "../../helpers.h"
+
+
+
+/******************************************************************************
+*                                                                             *
+*  Paramètres  : super = module dont la définition est à compléter.           *
+*                                                                             *
+*  Description : Ajoute le module 'analysis.scan' à un module Python.         *
+*                                                                             *
+*  Retour      : Bilan de l'opération.                                        *
+*                                                                             *
+*  Remarques   : -                                                            *
+*                                                                             *
+******************************************************************************/
+
+bool add_analysis_scan_module(PyObject *super)
+{
+    bool result;                            /* Bilan à retourner           */
+    PyObject *module;                       /* Sous-module mis en place    */
+
+#define PYCHRYSALIDE_ANALYSIS_SCAN_MODULE_DOC                   \
+    "This module provide all the features useful for scanning"  \
+    " binary contents."
+
+    static PyModuleDef py_chrysalide_analysis_scan_module = {
+
+        .m_base = PyModuleDef_HEAD_INIT,
+
+        .m_name = "pychrysalide.analysis.scan",
+        .m_doc = PYCHRYSALIDE_ANALYSIS_SCAN_MODULE_DOC,
+
+        .m_size = -1,
+
+    };
+
+    module = build_python_module(super, &py_chrysalide_analysis_scan_module);
+
+    result = (module != NULL);
+
+    if (result) result = add_analysis_scan_patterns_module(module);
+
+    if (!result)
+        Py_XDECREF(module);
+
+    return result;
+
+}
+
+
+/******************************************************************************
+*                                                                             *
+*  Paramètres  : -                                                            *
+*                                                                             *
+*  Description : Intègre les objets du module 'analysis.scan'.                *
+*                                                                             *
+*  Retour      : Bilan de l'opération.                                        *
+*                                                                             *
+*  Remarques   : -                                                            *
+*                                                                             *
+******************************************************************************/
+
+bool populate_analysis_scan_module(void)
+{
+    bool result;                            /* Bilan à retourner           */
+
+    result = true;
+
+    if (result) result = ensure_python_content_scanner_is_registered();
+    if (result) result = ensure_python_scan_context_is_registered();
+    if (result) result = ensure_python_scan_expression_is_registered();
+    if (result) result = ensure_python_registered_item_is_registered();
+    if (result) result = ensure_python_scan_options_is_registered();
+    if (result) result = ensure_python_scan_namespace_is_registered();
+
+    if (result) result = populate_scan_module_with_core_methods();
+
+    if (result) result = populate_analysis_scan_patterns_module();
+
+    assert(result);
+
+    return result;
+
+}

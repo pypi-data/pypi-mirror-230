@@ -1,0 +1,12 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+includedir=@includedir@
+libdir=@libdir@
+
+Name: Chrysalide
+Description: Reverse Engineering Factory focused on embedded systems
+Version: r@PACKAGE_VERSION@
+URL: https://www.chrysalide.re/
+Requires: gtk+-3.0 libxml-2.0 libarchive sqlite3 libssl @pythondep@
+Cflags: -I${includedir}/chrysalide/core -I${includedir}/chrysalide
+Libs: -L${libdir} -L${libdir}/chrysalide-plugins -lchrysacore

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.21.0 -->
+<interface>
+  <requires lib="gtk+" version="3.20"/>
+  <object class="GtkOffscreenWindow">
+    <property name="can_focus">False</property>
+    <child>
+      <object class="GtkEventBox" id="box">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <signal name="button-press-event" handler="on_button_press_over_glance" swapped="no"/>
+        <signal name="button-release-event" handler="on_button_release_over_glance" swapped="no"/>
+        <signal name="motion-notify-event" handler="on_mouse_motion_over_glance" swapped="no"/>
+        <child>
+          <object class="GtkDrawingArea">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <signal name="draw" handler="redraw_glance_area" swapped="no"/>
+            <signal name="size-allocate" handler="on_glance_resize" swapped="no"/>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+  </object>
+</interface>

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.37.0 -->
+<interface>
+  <requires lib="gtk+" version="3.20"/>
+  <object class="GtkTreeStore" id="store">
+    <columns>
+      <!-- column-name symbol -->
+      <column type="GObject"/>
+      <!-- column-name icon -->
+      <column type="CairoSurface"/>
+      <!-- column-name name -->
+      <column type="gchararray"/>
+      <!-- column-name original -->
+      <column type="gchararray"/>
+      <!-- column-name address -->
+      <column type="gchararray"/>
+      <!-- column-name section -->
+      <column type="gchararray"/>
+      <!-- column-name expand -->
+      <column type="gboolean"/>
+      <!-- column-name matched -->
+      <column type="gboolean"/>
+      <!-- column-name match_points -->
+      <column type="guint"/>
+    </columns>
+  </object>
+  <object class="GtkTreeModelSort" id="sorter">
+    <property name="model">store</property>
+  </object>
+  <object class="GtkTreeModelFilter" id="filter">
+    <property name="child-model">sorter</property>
+  </object>
+  <object class="GtkImage" id="symbol_class_classic.png">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="resource">/org/chrysalide/gui/panels/../../../pixmaps/symbol_class_classic.png</property>
+  </object>
+  <object class="GtkImage" id="tbutton_collapse.png">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="resource">/org/chrysalide/gui/panels/../../../pixmaps/tbutton_collapse.png</property>
+  </object>
+  <object class="GtkImage" id="tbutton_expand.png">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="resource">/org/chrysalide/gui/panels/../../../pixmaps/tbutton_expand.png</property>
+  </object>
+  <object class="GtkImage" id="tbutton_list_view.png">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="resource">/org/chrysalide/gui/panels/../../../pixmaps/tbutton_list_view.png</property>
+  </object>
+  <object class="GtkImage" id="tbutton_tree_view.png">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="resource">/org/chrysalide/gui/panels/../../../pixmaps/tbutton_tree_view.png</property>
+  </object>
+  <object class="GtkOffscreenWindow">
+    <property name="can-focus">False</property>
+    <child>
+      <object class="GtkBox" id="box">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkToolbar">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <child>
+              <object class="GtkRadioToolButton" id="list_display">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="tooltip-text" translatable="yes">Show symbols using a list view</property>
+                <property name="use-underline">True</property>
+                <property name="icon-widget">tbutton_list_view.png</property>
+                <property name="active">True</property>
+                <property name="group">tree_display</property>
+                <signal name="toggled" handler="on_symbols_list_display_toggle" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkRadioToolButton" id="tree_display">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="tooltip-text" translatable="yes">Show symbols using a tree view</property>
+                <property name="use-underline">True</property>
+                <property name="icon-widget">tbutton_tree_view.png</property>
+                <signal name="toggled" handler="on_symbols_tree_display_toggle" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSeparatorToolItem">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolButton" id="collapse">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="tooltip-text" translatable="yes">Collapse all symbol nodes in the tree view</property>
+                <property name="use-underline">True</property>
+                <property name="icon-widget">tbutton_collapse.png</property>
+                <signal name="clicked" handler="reorganize_symbols_tree_view" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolButton" id="expand">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="tooltip-text" translatable="yes">Expand all symbol nodes in the tree view</property>
+                <property name="use-underline">True</property>
+                <property name="icon-widget">tbutton_expand.png</property>
+                <signal name="clicked" handler="reorganize_symbols_tree_view" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolButton" id="classes">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="tooltip-text" translatable="yes">Show all classes in the tree view</property>
+                <property name="use-underline">True</property>
+                <property name="icon-widget">symbol_class_classic.png</property>
+                <signal name="clicked" handler="reorganize_symbols_tree_view" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSeparatorToolItem">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolItem">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkSearchEntry">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="tooltip-text" translatable="yes">Filter symbols using POSIX extended regular expressions</property>
+                    <property name="primary-icon-name">edit-find-symbolic</property>
+                    <property name="primary-icon-activatable">False</property>
+                    <property name="primary-icon-sensitive">False</property>
+                    <signal name="focus-in-event" handler="track_focus_change_in_text_area" swapped="no"/>
+                    <signal name="focus-out-event" handler="track_focus_change_in_text_area" swapped="no"/>
+                    <signal name="search-changed" handler="on_symbols_filter_changed" swapped="no"/>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkStack" id="stack">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <child>
+              <object class="GtkScrolledWindow" id="content">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="shadow-type">in</property>
+                <child>
+                  <object class="GtkTreeView" id="treeview">
+                    <property name="name">treeview</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="model">filter</property>
+                    <property name="headers-visible">False</property>
+                    <property name="search-column">2</property>
+                    <child internal-child="selection">
+                      <object class="GtkTreeSelection">
+                        <signal name="changed" handler="on_symbols_selection_change" swapped="no"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="name">page0</property>
+                <property name="title" translatable="yes">page0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSpinner" id="mask">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="active">True</property>
+              </object>
+              <packing>
+                <property name="name">page1</property>
+                <property name="title" translatable="yes">page1</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

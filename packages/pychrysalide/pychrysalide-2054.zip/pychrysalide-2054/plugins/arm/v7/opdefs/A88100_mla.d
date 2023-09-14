@@ -1,0 +1,120 @@
+
+/* Chrysalide - Outil d'analyse de fichiers binaires
+ * ##FILE## - traduction d'instructions ARMv7
+ *
+ * Copyright (C) 2017 Cyrille Bagard
+ *
+ *  This file is part of Chrysalide.
+ *
+ *  Chrysalide is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Chrysalide is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Chrysalide.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+@title MLA
+
+@id 95
+
+@desc {
+
+	Multiply Accumulate multiplies two register values, and adds a third register value. The least significant 32 bits of the result are written to the destination register. These 32 bits do not depend on whether the source register values are considered to be signed values or unsigned values. In an ARM instruction, the condition flags can optionally be updated based on the result. Use of this option adversely affects performance on many processor implementations.
+
+}
+
+@encoding (T1) {
+
+	@word 1 1 1 1 1 0 1 1 0 0 0 0 Rn(4) Ra(4) Rd(4) 0 0 0 0 Rm(4)
+
+	@syntax {
+
+		@subid 307
+
+		@conv {
+
+			reg_D = Register(Rd)
+			reg_N = Register(Rn)
+			reg_M = Register(Rm)
+			reg_A = Register(Ra)
+
+		}
+
+		@asm mla reg_D reg_N reg_M reg_A
+
+	}
+
+}
+
+@encoding (A1) {
+
+	@word cond(4) 0 0 0 0 0 0 1 S(1) Rd(4) Ra(4) Rm(4) 1 0 0 1 Rn(4)
+
+	@syntax {
+
+		@subid 308
+
+		@assert {
+
+			S == 0
+
+		}
+
+		@conv {
+
+			reg_D = Register(Rd)
+			reg_N = Register(Rn)
+			reg_M = Register(Rm)
+			reg_A = Register(Ra)
+
+		}
+
+		@asm mla reg_D reg_N reg_M reg_A
+
+		@rules {
+
+			check g_arm_instruction_set_cond(cond)
+
+		}
+
+	}
+
+	@syntax {
+
+		@subid 309
+
+		@assert {
+
+			S == 1
+
+		}
+
+		@conv {
+
+			reg_D = Register(Rd)
+			reg_N = Register(Rn)
+			reg_M = Register(Rm)
+			reg_A = Register(Ra)
+
+		}
+
+		@asm mlas reg_D reg_N reg_M reg_A
+
+		@rules {
+
+			check g_arm_instruction_set_cond(cond)
+
+		}
+
+	}
+
+}
+

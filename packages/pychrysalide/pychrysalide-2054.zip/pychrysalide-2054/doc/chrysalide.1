@@ -1,0 +1,86 @@
+.TH chrysalide 1 "September 1 2018" "Version 1" "Chrysalide Manual Pages"
+
+.SH NAME
+Chrysalide - a reverse-engineering factory.
+
+.SH SYNOPSIS
+.B chrysalide
+[options] [filename] [filename...]
+
+.SH DESCRIPTION
+Chrysalide is a fast tool collection for binary analysis.
+
+It is written using the GTK+ toolkit and support several file formats and architectures.
+
+Python bindings are also available.
+
+.SH OPTIONS
+Chrysalide accepts the following options:
+
+.TP 8
+.B  \-h, \-\-help
+Show Chrysalide command\-line options.
+
+.TP 8
+.B  \-v, \-\-version
+Display the program version.
+
+.TP 8
+.B \-V, \-\-verbosity=level
+Set the log level (0 for all messages, 5 for none).
+
+.TP 8
+.B \-b, \-\-batch
+Exit after processing files.
+
+.TP 8
+.B \-s, \-\-save
+Save disassembly cache after analysis in batch mode (ignored in normal mode).
+
+.TP 8
+.B \-p, \-\-project=filename
+Open an existing project or create a new one.
+
+.SH FILES
+
+.TP 8
+.B $HOME/.config/chrysalide/cache/
+Location of cache created for processed binaries.
+
+.TP 8
+.B $HOME/.config/chrysalide/cdbs/
+Location of Chrysalide Databases storing the configuration of each loaded binaries.
+
+.TP 8
+.B $HOME/.config/chrysalide/id_rsa.priv
+.TQ 8
+.B $HOME/.config/chrysalide/id_rsa.pub
+.TQ 8
+.B $HOME/.config/chrysalide/clients/
+.TQ 8
+.B $HOME/.config/chrysalide/servers/
+Credentials used to share information about processed analysis.
+
+.SH ENVIRONMENT VARIABLES
+
+.TP 8
+.B CHRYSALIDE_PLUGINS_PATH
+A colon-separated list of directories to search for extra native plugins. The default directory will always be searched before browsing theses directories.
+
+The default directory depends on the installation configuration; it is \fIlibdir\fR/chrysalide-plugins, where \fIlibdir\fR is usually /usr/lib/.
+
+.SH FEATURE REQUESTS AND BUG REPORTS
+
+Any bugs found should be reported to the online bug-tracking system
+available at https://bugs.chrysalide.re/.
+
+New features should also be requested using the same system.
+
+Before reporting or requesting, please check the current list in order
+to avoid duplications.
+
+When reporting bugs, it is important to include a reliable way to
+reproduce the bugs.
+
+.SH AUTHORS
+Cyrille BAGARD

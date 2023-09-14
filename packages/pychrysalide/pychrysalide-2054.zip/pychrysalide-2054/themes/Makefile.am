@@ -1,0 +1,5 @@
+
+SUBDIRS = \
+	Adwaita \
+	Solarized \
+	emacs

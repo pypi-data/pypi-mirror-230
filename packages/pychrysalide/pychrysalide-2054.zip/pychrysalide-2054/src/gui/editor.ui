@@ -1,0 +1,883 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.37.0 -->
+<interface>
+  <requires lib="gtk+" version="3.24"/>
+  <object class="GtkAccelGroup" id="accelgroup"/>
+  <object class="GtkRecentFilter" id="recent_project_filter">
+    <mime-types>
+      <mime-type>application/chrysalide.project</mime-type>
+    </mime-types>
+  </object>
+  <object class="GtkWindow" id="window">
+    <property name="can-focus">False</property>
+    <property name="border-width">4</property>
+    <property name="title" translatable="yes">Chrysalide</property>
+    <property name="window-position">center</property>
+    <accel-groups>
+      <group name="accelgroup"/>
+    </accel-groups>
+    <signal name="delete-event" handler="on_delete_editor" swapped="no"/>
+    <signal name="destroy" handler="on_destroy_editor" swapped="no"/>
+    <signal name="key-press-event" handler="on_key_event" swapped="no"/>
+    <signal name="key-release-event" handler="on_key_event" swapped="no"/>
+    <signal name="window-state-event" handler="on_window_state_changed" swapped="no"/>
+    <child>
+      <object class="GtkBox" id="vbox">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkMenuBar" id="menubar">
+            <property name="can-focus">False</property>
+            <child>
+              <object class="GtkMenuItem" id="file">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">_File</property>
+                <property name="use-underline">True</property>
+                <child type="submenu">
+                  <object class="GtkMenu">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkMenuItem" id="file_new_project">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">New project</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_file_new_project" swapped="no"/>
+                        <signal name="can-activate-accel" handler="enable_accel_all_the_time" swapped="no"/>
+                        <accelerator key="n" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="file_sep_0">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="file_open_project">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Open project</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_file_open_project" swapped="no"/>
+                        <signal name="can-activate-accel" handler="enable_accel_all_the_time" swapped="no"/>
+                        <accelerator key="o" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="file_recent_projects">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Recent projects...</property>
+                        <property name="use-underline">True</property>
+                        <child type="submenu">
+                          <object class="GtkRecentChooserMenu">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="filter">recent_project_filter</property>
+                            <property name="limit">10</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="file_sep_1">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="file_save_project">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Save project</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_file_save_project" swapped="no"/>
+                        <signal name="can-activate-accel" handler="enable_accel_all_the_time" swapped="no"/>
+                        <accelerator key="s" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="file_save_project_as">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Save project as...</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_file_save_project_as" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="file_sep_2">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="file_quit">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Quit</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_file_quit" swapped="no"/>
+                        <signal name="can-activate-accel" handler="enable_accel_all_the_time" swapped="no"/>
+                        <accelerator key="q" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="edition">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">_Edition</property>
+                <property name="use-underline">True</property>
+                <child type="submenu">
+                  <object class="GtkMenu">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkMenuItem" id="edition_goto">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Go to address...</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_edition_goto" swapped="no"/>
+                        <signal name="can-activate-accel" handler="enable_accel_all_the_time" swapped="no"/>
+                        <accelerator key="g" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="edition_sep_0">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="edition_numeric">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Numeric operand</property>
+                        <property name="use-underline">True</property>
+                        <child type="submenu">
+                          <object class="GtkMenu">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <child>
+                              <object class="GtkMenuItem" id="edition_switch_hex">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">Hexadecimal</property>
+                                <property name="use-underline">True</property>
+                                <signal name="activate" handler="mcb_edition_switch_numeric_operand" swapped="no"/>
+                                <signal name="can-activate-accel" handler="enable_accel_with_care" swapped="no"/>
+                                <accelerator key="h" signal="activate"/>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkMenuItem" id="edition_switch_dec">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">Decimal</property>
+                                <property name="use-underline">True</property>
+                                <signal name="activate" handler="mcb_edition_switch_numeric_operand" swapped="no"/>
+                                <signal name="can-activate-accel" handler="enable_accel_with_care" swapped="no"/>
+                                <accelerator key="d" signal="activate"/>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkMenuItem" id="edition_switch_oct">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">Octal</property>
+                                <property name="use-underline">True</property>
+                                <signal name="activate" handler="mcb_edition_switch_numeric_operand" swapped="no"/>
+                                <signal name="can-activate-accel" handler="enable_accel_with_care" swapped="no"/>
+                                <accelerator key="o" signal="activate"/>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkMenuItem" id="edition_switch_bin">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">Binary</property>
+                                <property name="use-underline">True</property>
+                                <signal name="activate" handler="mcb_edition_switch_numeric_operand" swapped="no"/>
+                                <signal name="can-activate-accel" handler="enable_accel_with_care" swapped="no"/>
+                                <accelerator key="b" signal="activate"/>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkSeparatorMenuItem" id="edition_numeric_sep_0">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkMenuItem" id="edition_switch_def">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">Default</property>
+                                <property name="use-underline">True</property>
+                                <signal name="activate" handler="mcb_edition_switch_numeric_operand" swapped="no"/>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="edition_sep_1">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="edition_go_back">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Go back</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_edition_go_back" swapped="no"/>
+                        <signal name="can-activate-accel" handler="enable_accel_with_care" swapped="no"/>
+                        <accelerator key="Escape" signal="activate"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="edition_follow_ref">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Follow the reference</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_edition_follow_ref" swapped="no"/>
+                        <signal name="can-activate-accel" handler="enable_accel_with_care" swapped="no"/>
+                        <accelerator key="Return" signal="activate"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="edition_list_xrefs">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">List all references leading to...</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_edition_list_xrefs" swapped="no"/>
+                        <signal name="can-activate-accel" handler="enable_accel_with_care" swapped="no"/>
+                        <accelerator key="x" signal="activate"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="edition_sep_2">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="edition_bookmarks">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Bookmarks</property>
+                        <property name="use-underline">True</property>
+                        <child type="submenu">
+                          <object class="GtkMenu">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <child>
+                              <object class="GtkMenuItem" id="edition_bookmarks_toggle">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">Toggle at current location</property>
+                                <property name="use-underline">True</property>
+                                <signal name="activate" handler="mcb_edition_bookmarks_toggle" swapped="no"/>
+                                <signal name="can-activate-accel" handler="enable_accel_all_the_time" swapped="no"/>
+                                <accelerator key="d" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkMenuItem" id="edition_bookmarks_delete_all">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">Delete all bookmarks</property>
+                                <property name="use-underline">True</property>
+                                <signal name="activate" handler="mcb_edition_bookmarks_delete_all" swapped="no"/>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="edition_comment">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Comment</property>
+                        <property name="use-underline">True</property>
+                        <child type="submenu">
+                          <object class="GtkMenu">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <child>
+                              <object class="GtkMenuItem" id="edition_comment_enter">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">Enter a comment...</property>
+                                <property name="use-underline">True</property>
+                                <signal name="activate" handler="mcb_edition_comment_enter" swapped="no"/>
+                                <signal name="can-activate-accel" handler="enable_accel_with_care" swapped="no"/>
+                                <accelerator key="semicolon" signal="activate"/>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkMenuItem" id="edition_comment_enter_rep">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">Enter a repeatable comment...</property>
+                                <property name="use-underline">True</property>
+                                <signal name="activate" handler="mcb_edition_comment_enter_repeatable" swapped="no"/>
+                                <signal name="can-activate-accel" handler="enable_accel_with_care" swapped="no"/>
+                                <accelerator key="colon" signal="activate"/>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkMenuItem" id="edition_comment_enter_prev">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">Enter a comment in the previous line...</property>
+                                <property name="use-underline">True</property>
+                                <signal name="activate" handler="mcb_edition_comment_enter_previous" swapped="no"/>
+                                <signal name="can-activate-accel" handler="enable_accel_with_care" swapped="no"/>
+                                <accelerator key="Insert" signal="activate"/>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkMenuItem" id="edition_comment_enter_next">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">Enter a comment in the next line...</property>
+                                <property name="use-underline">True</property>
+                                <signal name="activate" handler="mcb_edition_comment_enter_next" swapped="no"/>
+                                <signal name="can-activate-accel" handler="enable_accel_all_the_time" swapped="no"/>
+                                <accelerator key="Insert" signal="activate" modifiers="GDK_SHIFT_MASK"/>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="view">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">_View</property>
+                <property name="use-underline">True</property>
+                <child type="submenu">
+                  <object class="GtkMenu">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkMenuItem" id="view_side_panels">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Side panels</property>
+                        <property name="use-underline">True</property>
+                        <signal name="select" handler="mcb_view_update_side_panels_list" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="view_sep_0">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="view_switch_to_next">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Switch to next</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_view_switch_to_next_support" swapped="no"/>
+                        <signal name="can-activate-accel" handler="enable_accel_with_care" swapped="no"/>
+                        <accelerator key="space" signal="activate"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="view_switch_to_prev">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Switch to previous</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_view_switch_to_prev_support" swapped="no"/>
+                        <signal name="can-activate-accel" handler="enable_accel_all_the_time" swapped="no"/>
+                        <accelerator key="space" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="view_sep_1">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="view_zoom_in">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Zoom in</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_view_zoom" swapped="no"/>
+                        <signal name="can-activate-accel" handler="enable_accel_all_the_time" swapped="no"/>
+                        <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="view_zoom_out">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Zoom out</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_view_zoom" swapped="no"/>
+                        <signal name="can-activate-accel" handler="enable_accel_all_the_time" swapped="no"/>
+                        <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="view_zoom_reset">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Reset zoom</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_view_zoom" swapped="no"/>
+                        <signal name="can-activate-accel" handler="enable_accel_all_the_time" swapped="no"/>
+                        <accelerator key="0" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="view_sep_2">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="view_sep_3">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkCheckMenuItem" id="view_full_screen">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Full screen</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_view_show_full_screen" swapped="no"/>
+                        <signal name="can-activate-accel" handler="enable_accel_all_the_time" swapped="no"/>
+                        <accelerator key="F11" signal="activate"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="project">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">_Project</property>
+                <property name="use-underline">True</property>
+                <child type="submenu">
+                  <object class="GtkMenu">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkMenuItem" id="project_add">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Add a binary...</property>
+                        <property name="use-underline">True</property>
+                        <child type="submenu">
+                          <object class="GtkMenu">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <child>
+                              <object class="GtkMenuItem" id="project_add_binary_file">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">File</property>
+                                <property name="use-underline">True</property>
+                                <signal name="activate" handler="mcb_project_add_binary_file" swapped="no"/>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="project_remove">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="tooltip-text" translatable="yes">Remove a binary</property>
+                        <property name="label" translatable="yes">Remove a binary</property>
+                        <property name="use-underline">True</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="binary">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">_Binary</property>
+                <property name="use-underline">True</property>
+                <child type="submenu">
+                  <object class="GtkMenu">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkMenuItem" id="binary_entry_points">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Entry points</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_binary_entry_points" swapped="no"/>
+                        <signal name="can-activate-accel" handler="enable_accel_all_the_time" swapped="no"/>
+                        <accelerator key="e" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="binary_sep_0">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="binary_attach_debugger">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Attach a debugger</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_binary_attach_debugger" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="binary_sep_1">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="binary_storage">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Storage</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_binary_storage" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="binary_snapshots">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Snapshots</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_binary_snapshots" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="binary_sep_2">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="binary_export">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Export</property>
+                        <property name="use-underline">True</property>
+                        <child type="submenu">
+                          <object class="GtkMenu">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <child>
+                              <object class="GtkMenuItem" id="binary_export_disass">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">Disassembly</property>
+                                <property name="use-underline">True</property>
+                                <signal name="activate" handler="mcb_binary_export_disass" swapped="no"/>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkMenuItem" id="binary_export_graph">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">Graph view</property>
+                                <property name="use-underline">True</property>
+                                <signal name="activate" handler="mcb_binary_export_graph" swapped="no"/>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="debug">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">_Debug</property>
+                <property name="use-underline">True</property>
+                <child type="submenu">
+                  <object class="GtkMenu">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkMenuItem" id="debug_continue">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">_Continue</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_debug_continue" swapped="no"/>
+                        <signal name="can-activate-accel" handler="enable_accel_all_the_time" swapped="no"/>
+                        <accelerator key="F9" signal="activate"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="debug_continue_to">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Continue to selection</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_debug_continue_to" swapped="no"/>
+                        <signal name="can-activate-accel" handler="enable_accel_all_the_time" swapped="no"/>
+                        <accelerator key="F9" signal="activate" modifiers="GDK_MOD1_MASK"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="debug_pause">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">_Pause</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_debug_pause" swapped="no"/>
+                        <signal name="can-activate-accel" handler="enable_accel_all_the_time" swapped="no"/>
+                        <accelerator key="F10" signal="activate"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="debug_restart">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">_Restart</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_debug_restart" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="debug_close">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Close</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_debug_close" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="debug_sep_0">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="debug_step_into">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Step into</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_debug_step_into" swapped="no"/>
+                        <signal name="can-activate-accel" handler="enable_accel_all_the_time" swapped="no"/>
+                        <accelerator key="F7" signal="activate"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="debug_step_over">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Step over</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_debug_step_over" swapped="no"/>
+                        <signal name="can-activate-accel" handler="enable_accel_all_the_time" swapped="no"/>
+                        <accelerator key="F7" signal="activate" modifiers="GDK_MOD1_MASK"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="debug_visit_blocks_into">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Visit basic blocks into</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_debug_visit_blocks_into" swapped="no"/>
+                        <signal name="can-activate-accel" handler="enable_accel_all_the_time" swapped="no"/>
+                        <accelerator key="F8" signal="activate"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="debug_visit_blocks_over">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Visit basic blocks over</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_debug_visit_blocks_over" swapped="no"/>
+                        <signal name="can-activate-accel" handler="enable_accel_all_the_time" swapped="no"/>
+                        <accelerator key="F8" signal="activate" modifiers="GDK_MOD1_MASK"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="debug_return">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Continue until return</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_debug_return" swapped="no"/>
+                        <signal name="can-activate-accel" handler="enable_accel_all_the_time" swapped="no"/>
+                        <accelerator key="F12" signal="activate"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="debug_sep_1">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="debug_options">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Debugging options...</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_debug_options" swapped="no"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="options">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">_Options</property>
+                <property name="use-underline">True</property>
+                <child type="submenu">
+                  <object class="GtkMenu">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkMenuItem" id="options_preferences">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">_Preferences</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_options_preferences" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="options_identity">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">_Identity</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_options_identity" swapped="no"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="help">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">_Help</property>
+                <property name="use-underline">True</property>
+                <child type="submenu">
+                  <object class="GtkMenu">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkMenuItem" id="help_website">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">_Website</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_help_website" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="help_python_api">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">_Python API documentation</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_help_python_api_documentation" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="help_bug_report">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">_Bug report</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_help_bug_report" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="help_sep_0">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="help_about">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">_About</property>
+                        <property name="use-underline">True</property>
+                        <signal name="activate" handler="mcb_help_about" swapped="no"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

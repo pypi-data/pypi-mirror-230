@@ -1,0 +1,38 @@
+#ifndef arm_def_tmp_h
+#define arm_def_tmp_h
+#define armv7_read_arm_instr_a8_vcvt_between_floating_point_and_fixed_point_advanced_simd(r) NULL
+#define armv7_read_arm_instr_a8_vcvt_between_floating_point_and_fixed_point_floating_point(r) NULL
+#define armv7_read_arm_instr_a8_vdup_scalar(r) NULL
+#define armv7_read_arm_instr_a8_vld1_single_element_to_one_lane(r) NULL
+#define armv7_read_arm_instr_a8_vld2_single_2_element_structure_to_one_lane(r) NULL
+#define armv7_read_arm_instr_a8_vld3_single_3_element_structure_to_one_lane(r) NULL
+#define armv7_read_arm_instr_a8_vld4_single_4_element_structure_to_one_lane(r) NULL
+#define armv7_read_arm_instr_a8_vldr(r) NULL
+#define armv7_read_arm_instr_a8_vmla_vmlal_vmls_vmlsl_by_scalar(r) NULL
+#define armv7_read_arm_instr_a8_vmov_arm_core_register_to_scalar(r) NULL
+#define armv7_read_arm_instr_a8_vmov_immediate(r) NULL
+#define armv7_read_arm_instr_a8_vmov_register(r) NULL
+#define armv7_read_arm_instr_a8_vmov_scalar_to_arm_core_register(r) NULL
+#define armv7_read_arm_instr_a8_vmul_vmull_by_scalar(r) NULL
+#define armv7_read_arm_instr_a8_vqdmlal_vqdmlsl(r) NULL
+#define armv7_read_arm_instr_a8_vqdmulh(r) NULL
+#define armv7_read_arm_instr_a8_vqdmull(r) NULL
+#define armv7_read_arm_instr_a8_vqrdmulh(r) NULL
+#define armv7_read_arm_instr_a8_vqrshrn_vqrshrun(r) NULL
+#define armv7_read_arm_instr_a8_vqshl_vqshlu_immediate(r) NULL
+#define armv7_read_arm_instr_a8_vqshrn_vqshrun(r) NULL
+#define armv7_read_arm_instr_a8_vrshr(r) NULL
+#define armv7_read_arm_instr_a8_vrshrn(r) NULL
+#define armv7_read_arm_instr_a8_vrsra(r) NULL
+#define armv7_read_arm_instr_a8_vshl_immediate(r) NULL
+#define armv7_read_arm_instr_a8_vshll(r) NULL
+#define armv7_read_arm_instr_a8_vshr(r) NULL
+#define armv7_read_arm_instr_a8_vshrn(r) NULL
+#define armv7_read_arm_instr_a8_vsli(r) NULL
+#define armv7_read_arm_instr_a8_vsra(r) NULL
+#define armv7_read_arm_instr_a8_vsri(r) NULL
+#define armv7_read_arm_instr_a8_vst1_single_element_from_one_lane(r) NULL
+#define armv7_read_arm_instr_a8_vst2_single_2_element_structure_from_one_lane(r) NULL
+#define armv7_read_arm_instr_a8_vst3_single_3_element_structure_from_one_lane(r) NULL
+#define armv7_read_arm_instr_a8_vst4_single_4_element_structure_from_one_lane(r) NULL
+#endif
