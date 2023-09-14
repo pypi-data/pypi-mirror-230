@@ -1,0 +1,619 @@
+\chapter{The [[cli.hr]] module and the [[hr]] subcommands}%
+\label{cli.signupsheets}
+%\chnote{%
+%  Part of this chapter was developed in collaboration with GitHub Copilot.
+%  It provided autocompletion of text and code that I intended to write (mostly
+%  even verbatim) anyway.
+%  However, the code is mostly a rewrite (generalisation) of proof-of-concept 
+%  code written by myself last year (2022).
+%}
+
+In this chapter we introduce the subommands found under [[nytid signupsheets]],
+it's the [[cli.signupsheets]] module.
+<<hr.py>>=
+import arrow
+import csv
+import datetime
+from enum import Enum
+import ics.icalendar
+import json
+import logging
+import pathlib
+import os
+import sys
+import typer
+from typing_extensions import Annotated
+
+from nytid.signup import hr
+from nytid.signup import sheets
+import operator
+
+from nytid.cli import courses as coursescli
+from nytid.cli.signupsheets import SIGNUPSHEET_URL_PATH
+from nytid import courses as courseutils
+from nytid import schedules as schedutils
+from nytid.signup import hr
+from nytid.signup import sheets
+
+<<imports>>
+<<constants>>
+
+cli = typer.Typer(name="hr",
+                  help="Manage sign-up sheets for teaching")
+
+<<helper functions>>
+<<argument and option definitions>>
+<<subcommands>>
+@
+
+
+\section{Default arguments for matching courses and users}
+
+The first argument we need is to identify a set of courses.
+For this we might also have to identify a set of registers.
+We'll use the argument and option defined in the [[cli.courses]] module.
+We'll default to all courses ([[.*]]) in the register of the [[mine]] command.
+<<argument for matching courses>>=
+course_regex: Annotated[str, coursescli.course_arg_regex]
+<<option for matching registers, default to mine>>=
+register: Annotated[str, coursescli.register_opt_regex] = coursescli.MINE
+@
+
+Then we can create a list of course--configuration pairs like this.
+<<set list [[courses]] to ((course, register), config)-pairs>>=
+registers = coursescli.registers_regex(register)
+courses = {}
+for course_reg in coursescli.courses_regex(course_regex, registers):
+  try:
+    courses[course_reg] = courseutils.get_course_config(*course_reg)
+  <<handle errors for accessing course data>>
+<<handle errors for accessing course data>>=
+except KeyError as err:
+  logging.warning(err)
+except PermissionError as err:
+  course, register = course_reg
+  logging.warning(f"You don't have access to {course} in {register}: {err}")
+@
+
+Now, if that list is empty, we have no courses, then we exit with a non-zero 
+return code.
+<<set list [[courses]] to ((course, register), config)-pairs>>=
+if not courses:
+  sys.exit(1)
+@
+
+We also need a username.
+We will default to the username of the logged in user.
+<<option for username to filter for>>=
+user: Annotated[str, username_opt] = default_username
+<<argument and option definitions>>=
+try:
+  default_username = os.environ["USER"]
+except KeyError:
+  default_username = None
+
+username_opt = typer.Option(help="Username to filter sign-up sheet for, "
+                                 "defaults to logged in user's username.")
+@
+
+
+\section{Looking up TA personal data}
+
+We want to get TA personal data from LADOK.
+Sometimes it's sufficient with data from Canvas, but the Canvas data is a
+prerequisite for the LADOK data.
+We'll do this by using the [[ladok3]] and [[canvaslms]] modules.
+We'll also use their [[CLI]] configs to get the credentials.
+So if the user has set up the [[ladok]] and [[canvaslms]] commands, 
+we can use the configs there.
+<<imports>>=
+import appdirs
+<<import and set up Canvas>>
+<<import and set up ladok3>>
+@
+
+\subsection{Setting up LADOK}
+
+We'll set up a [[ladok_session]] object that we can use to query LADOK.
+Thus, in other parts of the code, if this doesn't exist, we can't use LADOK.
+<<import and set up ladok3>>=
+try:
+  import ladok3
+  import ladok3.cli
+
+  dirs_ladok = appdirs.AppDirs("ladok",
+                               "dbosk@kth.se")                                   
+
+  LADOK_INST, LADOK_VARS = ladok3.cli.load_credentials(
+                              "f{dirs_ladok.user_config_dir}/config.json")
+
+  if LADOK_INST and LADOK_VARS:
+    ladok_session = ladok3.LadokSession(LADOK_INST,
+                                        LADOK_VARS)
+  else:
+    ladok_session = None
+    logging.warning("Can't load LADOK credentials, run `ladok login`")
+<<handle ladok setup errors>>
+@
+
+There are two errors that can occur here.
+The first is that we can't import the [[ladok3]] module.
+The second is that we can't load the credentials.
+In either case, we can't create the [[ladok_session]] object.
+<<handle ladok setup errors>>=
+except ImportError as err:
+  logging.warning(f"Can't import ladok3, not using LADOK data: {err}")
+  ladok_session = None
+except Exception as err:
+  logging.warning(f"Can't load LADOK credentials: {err}")
+  ladok_session = None
+@
+
+\subsection{Setting up Canvas}
+
+We also need to query user information from Canvas to find the LADOK ID.
+So we should also set up Canvas.
+Similarly to LADOK, we'll set up a [[canvas_session]] object.
+<<import and set up Canvas>>=
+try:
+  import canvasapi
+  import canvaslms.cli
+
+  dirs_canvas = appdirs.AppDirs("canvaslms",
+                                "dbosk@kth.se")                                   
+
+  canvaslms_config = canvaslms.cli.read_configuration(
+                        f"{dirs_canvas.user_config_dir}/config.json")
+
+  CANVAS_SERVER, CANVAS_TOKEN = canvaslms.cli.login.load_credentials(
+                                    canvaslms_config)
+
+  if CANVAS_SERVER and CANVAS_TOKEN:
+    canvas_session = canvasapi.Canvas(os.environ["CANVAS_SERVER"], 
+                                      os.environ["CANVAS_TOKEN"])
+  else:
+    canvas_session = None
+    logging.warning("Can't load Canvas credentials, run `canvaslms login`")
+<<handle canvas setup errors>>
+@
+
+The first error that can occur here is that we can't import any of the modules
+[[canvasapi]] or [[canvaslms]].
+Any other exception concerns the credentials.
+<<handle canvas setup errors>>=
+except ImportError as err:
+  logging.warning(f"Can't import Canvas: {err}")
+  canvas_session = None
+except Exception as err:
+  logging.warning(f"Can't load Canvas credentials: {err}")
+  canvas_session = None
+@
+
+\subsection{Looking up usernames in Canvas and LADOK}
+
+Now that we have a (hopefully) working [[canvas_session]] and 
+[[ladok_session]], we can look up a username in Canvas and then from that user
+object we can look up the LADOK data.
+To do this, we'll introduce two helper functions:
+One to look up the username in Canvas, to get a Canvas user object.
+Another to look up the LADOK ID from the Canvas user object.
+
+Canvas is super slow, so we'll cache the results.
+Then we can cache big searches.
+We'll create several helper functions that we cache.
+We'll start with listing courses.
+<<helper functions>>=
+@cachetools.cached(cache={})
+def get_canvas_courses(course_regex):
+  """
+  Returns a list of Canvas course objects matching the given course_regex.
+  """
+  <<filter out [[courses]] in Canvas from [[course_regex]]>>
+  return courses
+<<imports>>=
+import cachetools
+@
+
+Now we introduce the helper function to look up a usernames in Canvas.
+We'll cache this one as well.
+Then we can add a function to search for specific users that can get all
+users using this function and cache the result.
+<<helper functions>>=
+@cachetools.cached(cache={})
+def get_canvas_users(username_regex, course_regex):
+  """
+  Returns a list of Canvas user objects matching the given username_regex.
+  Searches for username_regex in the courses matching course_regex.
+  """
+  courses = get_canvas_courses(course_regex)
+  <<filter [[users]] by looking for [[username_regex]] in [[courses]]>>
+  return users
+@
+
+All the filtering we want to do has already been implemented in [[canvaslms]].
+So we can simply call the right library functions.
+<<filter out [[courses]] in Canvas from [[course_regex]]>>=
+courses = list(canvaslms.cli.courses.filter_courses(canvas_session,
+                                                    course_regex))
+<<filter [[users]] by looking for [[username_regex]] in [[courses]]>>=
+users = list(canvaslms.cli.users.filter_users(courses,
+                                              username_regex))
+@
+
+Now, to fully use these caches, we'll introduce another helper function.
+This one will take a username and return the Canvas user object.
+However, it will use the above function to cache all the users in the courses.
+This way, we don't have to maintain the cache anywhere else in the code.
+<<helper functions>>=
+def get_canvas_user(username, course_regex):
+  """
+  Takes a username and returns a Canvas user object.
+  Searches for username in the courses matching course_regex.
+  """
+  users = get_canvas_users(".*", course_regex)
+  <<filter out [[user]] among [[users]] by looking for [[username]], return it>>
+  raise ValueError(f"Can't find {username} in Canvas")
+@
+
+Now that we have a list of all users, we simply have to iterate to find the
+username.
+Sometimes the TAs accidentally add a space here and there, so we strip the
+username just to be sure.
+<<filter out [[user]] among [[users]] by looking for [[username]], return it>>=
+username = username.strip()
+for user in users:
+  if user.login_id.split("@")[0] == username or user.login_id == username:
+    return user
+@
+
+It's very straightforward to get a LADOK student object once we have the Canvas
+user object.
+We don't need to cache this function since LADOK already caches the results and
+is very fast.
+<<helper functions>>=
+def get_ladok_user(canvas_user):
+  """
+  Takes a Canvas user object and returns a LADOK student object.
+  """
+  try:
+    return ladok_session.get_student(canvas_user.integration_id)
+  except KeyError as err:
+    raise KeyError(f"can't look up {canvas_user} in LADOK: {err}")
+@
+
+
+\section{Staff booked on course}
+
+We want a list of the usernames of who is booked on the course.
+We'll simply read the sign-up sheet and extract all usernames.
+However, we'll add an option for detailed information that looks the username up
+in Canvas and LADOK to print more detailed information.
+<<subcommands>>=
+@cli.command()
+def users(<<argument for matching courses>>,
+          <<option for matching registers, default to mine>>,
+          <<option to output detailed user data>>):
+  """
+  Prints the list of all usernames booked on the course.
+  """
+  <<set list [[courses]] to ((course, register), config)-pairs>>
+
+  booked = []
+  for (course, register), config in courses.items():
+    <<add to [[booked]] from [[course]] in [[register]] using [[config]]>>
+
+  for user in hr.hours_per_TA(booked):
+    <<print detailed or non-detailed data about [[user]]>>
+@
+
+We'll return to
+[[<<set list [[courses]] to ((course, register), config)-pairs>>]] and
+[[<<add to [[booked]] from [[course]] in [[register]] using [[config]]>>]]
+later, in \cref{TeachingTime}.
+
+\subsection{Detailed user data}
+
+We want to have an option, that if specified it toggles that we output the
+user's name and other data in addition to only their username.
+<<option to output detailed user data>>=
+detailed: Annotated[bool, detailed_opt] = False
+<<argument and option definitions>>=
+detailed_opt = typer.Option(help="Output detailed user data.")
+<<print detailed or non-detailed data about [[user]]>>=
+<<set [[user_obj]] to most detailed version possible of [[user]]>>
+print(user_obj)
+<<print detailed or non-detailed data about [[user]], no newline>>=
+<<set [[user_obj]] to most detailed version possible of [[user]]>>
+print(user_obj, end="")
+<<set [[user_obj]] to most detailed version possible of [[user]]>>=
+user_obj = user
+
+if detailed:
+  try:
+    user_obj = get_canvas_user(user, course_regex)
+  except Exception as err:
+    logging.warning(f"Can't look up {user} in Canvas: {err}")
+  else:
+    try:
+      user_obj = get_ladok_user(user_obj)
+    except Exception as err:
+      logging.warning(f"Can't look up {user} ({user_obj}) in LADOK: {err}")
+      pass
+@
+
+
+\section{Teaching time totals for a course}\label{TeachingTime}
+
+We provide a command [[time]] that summarizes the time spent on the course.
+<<subcommands>>=
+@cli.command()
+def time(<<argument for matching courses>>,
+         <<option for matching registers, default to mine>>,
+         <<option to output detailed user data>>):
+  """
+  Summarizes the time spent on teaching the course(s).
+  """
+  <<set list [[courses]] to ((course, register), config)-pairs>>
+
+  booked = []
+  for (course, register), config in courses.items():
+    <<add to [[booked]] from [[course]] in [[register]] using [[config]]>>
+
+  <<print summary of [[booked]]>>
+@
+
+To add the bookings of a course to [[booked]], we simply get the URL of the 
+sign-up sheet and read the bookings.
+<<add to [[booked]] from [[course]] in [[register]] using [[config]]>>=
+url = config.get(SIGNUPSHEET_URL_PATH)
+<<convert [[url]] to Google Sheet CSV-export URL if necessary>>
+booked += sheets.read_signup_sheet_from_url(url)
+<<imports>>=
+from nytid.signup import sheets
+@
+
+If it's a Google Sheets sharing URL, we want to convert it to the export-CSV 
+URL.
+<<convert [[url]] to Google Sheet CSV-export URL if necessary>>=
+if "docs.google.com" in url:
+  url = sheets.google_sheet_to_csv_url(url)
+@
+
+Once we have [[booked]] we can start to compute summaries.
+<<print summary of [[booked]]>>=
+h_per_student = hr.hours_per_student(booked)
+
+for event, hours in h_per_student.items():
+    print(f"{event}: {to_hours(hours):.2f} h/student")
+
+print(f"Booked: {to_hours(hr.total_hours(booked)):.2f} h "
+        f"({to_hours(hr.max_hours(booked)):.2f} h)\n")
+
+print("# Amanuenser")
+
+amanuensis = hr.compute_amanuensis_data(booked)
+
+for user, data in amanuensis.items():
+    if not user:
+        continue
+    <<print detailed or non-detailed data about [[user]], no newline>>
+    print(f": {data[2]:.2f} h, "
+          f"{100*hr.compute_percentage(*data):.1f}%: "
+          f"{data[0].format('YYYY-MM-DD')}--{data[1].format('YYYY-MM-DD')}")
+
+print()
+print("# Hourly")
+
+for user, hours in hr.hours_per_TA(booked).items():
+  if not user or user in amanuensis:
+      continue
+  <<print detailed or non-detailed data about [[user]], no newline>>
+  print(f": {to_hours(hours):.2f} h")
+<<imports>>=
+from nytid.signup import utils
+from nytid.signup import hr
+<<helper functions>>=
+def to_hours(td):
+    return td.total_seconds()/60/60
+@
+
+
+\section{Amanuensis}
+
+We want the have a set of amanuensis commands that can generate employment info
+for an amanuensis.
+<<subcommands>>=
+amanuensis = typer.Typer(name="amanuensis",
+                         help="Manage amanuensis employment")
+cli.add_typer(amanuensis)
+@
+
+We also want to automatically store the sessions that are included in that 
+employment.
+This way we can easily calculate what has changed later to track 
+\enquote{\foreignlanguage{swedish}{mertid}}.
+<<subcommands>>=
+@amanuensis.command(name="create")
+def amanuens_cmd(<<option for TAs to filter for>>,
+                 <<default option for start date>>,
+                 <<default option for pushing dates forward>>,
+                 <<argument for matching courses>> = ".*",
+                 <<option for matching registers, default to mine>>):
+  """
+  Computes amanuensis data for a TA.
+  """
+  <<set list [[courses]] to ((course, register), config)-pairs>>
+
+  booked = []
+  for (course, register), config in courses.items():
+    <<add to [[booked]] from [[course]] in [[register]] using [[config]]>>
+
+  if start:
+    start = arrow.Arrow(start.year, start.month, start.day)
+    amanuensis = hr.compute_amanuensis_data(booked,
+                                            begin_date=start)
+  else:
+    amanuensis = hr.compute_amanuensis_data(booked)
+
+  <<amanuensis iteration variables>>
+  for user in amanuensis:
+    <<skip if [[user_regex]] doesn't match [[user]]>>
+    <<print amanuensis data for [[user]]>>
+@
+
+\subsection{Default arguments for user regex}
+
+We just set up an option defaulting to match anything.
+<<option for TAs to filter for>>=
+user_regex: Annotated[str, user_regex_opt] = ".*"
+<<argument and option definitions>>=
+user_regex_opt = typer.Option("--user",
+                              help="Regex to match TAs' usernames that "
+                                   "should be included.")
+@
+
+This allows us to do the check using regexes.
+We compile the regex since we're going to make several matches.
+<<amanuensis iteration variables>>=
+user_pattern = re.compile(user_regex)
+<<imports>>=
+import re
+<<skip if [[user_regex]] doesn't match [[user]]>>=
+if not user_pattern.match(user):
+  continue
+@
+
+\subsection{Default arguments for start date}
+
+We'd like to force the start date in some situations, for instance, we need a 
+later start date due to the TA not applying for the amanuensis position on 
+time.
+The option simply takes a date, it defaults to [[None]].
+<<default option for start date>>=
+start: Annotated[datetime.datetime, start_date_opt] = None
+<<argument and option definitions>>=
+start_date_opt = typer.Option(help="The start date",
+                              formats=["%Y-%m-%d"])
+@
+
+\subsection{Print the amanuensis data for a TA}
+
+We may want to print for several users.
+In that case, we want to separate the output with a newline.
+<<amanuensis iteration variables>>=
+first_print = True
+<<print amanuensis data for [[user]]>>=
+if first_print:
+  first_print = False
+else:
+  print("\n")
+
+data = amanuensis[user]
+
+<<print a summary of the hours for [[user]] in [[data]]>>
+
+<<filter out [[events]] for [[user]]>>
+<<print summary for each event type for [[user]]>>
+
+<<store [[events]] in CSV format>>
+@
+
+\subsubsection{Print a summary of the hours for a TA}
+
+[[data]] contains the start and end date as the first two elements.
+Then comes the hours.
+So we get them out to make the code more readable and to modify them.
+<<print a summary of the hours for [[user]] in [[data]]>>=
+start = data[0]
+end = data[1]
+hours = data[2]
+<<push [[start]] and [[end]] forward if necessary>>
+
+print(f"{user}: {hours:.2f} h, "
+      f"{round(100*hr.compute_percentage(*data))}%: "
+      f"{start.format('YYYY-MM-DD')}--{end.format('YYYY-MM-DD')}")
+@
+
+Sometimes the start date is too early, so we want to push it forward.
+This happens when the TA doesn't apply for the amanuensis position on time, or
+that we are too late in processing it.
+<<default option for pushing dates forward>>=
+push_start: Annotated[datetime.datetime, push_start_opt] = None
+<<argument and option definitions>>=
+push_start_opt = typer.Option(help="Push the dates so that it "
+                                   "starts at this date.",
+                              formats=["%Y-%m-%d"])
+<<push [[start]] and [[end]] forward if necessary>>=
+if push_start:
+  push_start = arrow.Arrow(push_start.year, push_start.month, push_start.day)
+  start, end = push_forward(start, end, push_start)
+<<helper functions>>=
+def push_forward(start, end, push_start):
+  """
+  Takes a start and end date and pushes them forward so that start becomes
+  push_start.
+  """
+  if push_start > start:
+    end += push_start - start
+    start = push_start
+
+  return start, end
+@
+
+\subsubsection{Keeping a record of bookings}
+
+We also want the events that the TA booked to keep a record of how the hours
+were computed, so that we can keep track of changes and how that should affect
+the contract.
+<<filter out [[events]] for [[user]]>>=
+events = sheets.filter_events_by_TA(user, booked)
+events = filter(lambda x: user in sheets.get_booked_TAs_from_csv(x)[0], booked)
+events = list(map(lambda x: x[0:len(sheets.SIGNUP_SHEET_HEADER)] + [user], 
+                  events))
+@
+
+Now we want to summarize the hours per event type.
+This helps us to get an overview of the changes.
+This also helps us to be compatible with the amanuensis spreadsheet used at the 
+department.
+<<print summary for each event type for [[user]]>>=
+for event, hours in hr.hours_per_event(events).items():
+    print(f"{event}: {to_hours(hours)}")
+@
+
+Finally, we also store them in CSV format so that we can easily extract them to 
+make computations later, if needed.
+We'll store the data in a file named after the TA and the current time.
+<<amanuensis iteration variables>>=
+path = pathlib.Path("./")
+<<set [[path]] to configured path for storing contracts>>
+<<store [[events]] in CSV format>>=
+filename = f"{user}.{datetime.datetime.now().isoformat()}.json"
+
+path.mkdir(parents=True, exist_ok=True)
+
+with open(path / filename, "w") as outfile:
+  json.dump({"user": user,
+             "start": start.isoformat(),
+             "push_start": push_start.isoformat(),
+             "end": end.isoformat(),
+             "events": events},
+            outfile,
+            indent=2)
+@
+
+\subsection{Configuring the path for storing contracts}
+
+We want to store the contracts that we generate somewhere.
+We'll let the user configure this location in the config.
+<<imports>>=
+import typerconf
+<<constants>>=
+AMANUENSIS_CONTRACT_PATH = "amanuensis.contract_path"
+<<set [[path]] to configured path for storing contracts>>=
+try:
+  path = pathlib.Path(typerconf.get(AMANUENSIS_CONTRACT_PATH))
+except KeyError as err:
+  logging.warning(f"Can't find {AMANUENSIS_CONTRACT_PATH} in config, "
+                  f"storing contract data in `{path}`. Set by running "
+                  f"`nytid config {AMANUENSIS_CONTRACT_PATH} -s <path>`.")
