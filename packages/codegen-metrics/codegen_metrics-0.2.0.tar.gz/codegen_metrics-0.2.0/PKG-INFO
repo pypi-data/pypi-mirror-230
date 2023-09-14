@@ -1,0 +1,60 @@
+Metadata-Version: 2.1
+Name: codegen-metrics
+Version: 0.2.0
+Summary: Package for computation of code generation metrics
+Home-page: https://github.com/JetBrains-Research/codegen-metrics-pip
+License: MIT
+Author: Egor Bogomolov
+Author-email: egor.bogomolov@jetbrains.com
+Requires-Python: >=3.9,<3.13
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: appdirs (>=1.4.4,<2.0.0)
+Requires-Dist: dpu-utils (>=0.6.1,<0.7.0)
+Requires-Dist: editdistance (>=0.6.2,<0.7.0)
+Requires-Dist: func-timeout (>=4.3.5,<5.0.0)
+Requires-Dist: gitpython (>=3.1.36,<4.0.0)
+Requires-Dist: networkx (>=3.1,<4.0)
+Requires-Dist: nltk (>=3.8.1,<4.0.0)
+Requires-Dist: rouge-score (>=0.1.2,<0.2.0)
+Requires-Dist: scipy (>=1.11.2,<2.0.0)
+Requires-Dist: tree-sitter (>=0.20.2,<0.21.0)
+Requires-Dist: typed-ast (>=1.5.5,<2.0.0)
+Description-Content-Type: text/markdown
+
+# Metrics for Code Generation 
+
+A library for running 
+
+## Installation
+
+To start using the library, install it via pip or use your favorite package manager:
+```
+pip install codegen-metrics
+```
+
+## Usage
+
+To start using the library, import a metric and pass to it the reference code and the generated one.
+
+**Please, notice!** You should call it as `metric(reference_code, generated_code)`, not the other way around! 
+
+```python
+from codegen_metrics import bleu, chrf, codebleu, meteor, rougel, ruby
+
+metrics = (bleu, chrf, codebleu, meteor, rougel, ruby)
+generated_code = "def hello():\n\tprint('Hello, world!')"
+reference_code = "def bye(name: str):\n\tprint(f'bye, {name}!')"
+
+for metric in metrics:
+    print(metric(reference_code, generated_code))
+```
+
+## Remarks
+
+1. Computation of RUBY involves comparison of graphs and takes a lot of time.
+2. On the initial run, the library will setup `tree-sitter` and `nltk` which may take some time. 
+
