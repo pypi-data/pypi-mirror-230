@@ -1,0 +1,33 @@
+Metadata-Version: 2.1
+Name: simple-aws-wrapper
+Version: 1.0.1
+Summary: Implementazione minimale per la gestione delle risorse in cloud di AWS
+Author-email: Andrea Trupia <andrea.trupia.96@gmail.com>
+Project-URL: Homepage, https://github.com/AndreaTrupia/simple_aws_wrapper
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# simple_aws_wrapper
+
+Example usage:<br>
+``
+from simple_aws_wrapper.AWS import S3
+``
+
+``
+s3 = S3("eu-west-1")
+``
+
+``
+message_content=b'Hello World!'
+``
+
+``
+s3.put_object(message_content, "my-bucket", "my-object-key")
+``
+
+
