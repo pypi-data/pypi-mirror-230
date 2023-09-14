@@ -1,0 +1,62 @@
+Metadata-Version: 2.1
+Name: ponder
+Version: 0.2.6
+Summary: Ponder - An extension to Modin that runs pandas and numpy in your database or data warehouse.
+Home-page: https://ponder.io
+Author: Ponder
+Author-email: support@ponder.io
+License: Other/Proprietary License
+Platform: UNKNOWN
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: cloudpickle ==2.0.0
+Requires-Dist: fsspec[http]
+Requires-Dist: modin >=0.23.0
+Requires-Dist: duckdb >=0.8
+Requires-Dist: numpy
+Requires-Dist: pandas
+Requires-Dist: pytz
+Requires-Dist: schedule
+Provides-Extra: all
+Requires-Dist: duckdb >=0.8 ; extra == 'all'
+Requires-Dist: snowflake-connector-python[pandas] >3.0.2 ; extra == 'all'
+Requires-Dist: google-cloud-bigquery >=3.8.0 ; extra == 'all'
+Requires-Dist: db-dtypes ; extra == 'all'
+Requires-Dist: polars[pyarrow] ; extra == 'all'
+Requires-Dist: psycopg[binary] >=3.1 ; extra == 'all'
+Requires-Dist: redshift-connector ; extra == 'all'
+Provides-Extra: bigquery
+Requires-Dist: google-cloud-bigquery >=3.8.0 ; extra == 'bigquery'
+Requires-Dist: db-dtypes ; extra == 'bigquery'
+Provides-Extra: duckdb
+Requires-Dist: duckdb >=0.8 ; extra == 'duckdb'
+Provides-Extra: mssql
+Requires-Dist: pymssql ; extra == 'mssql'
+Provides-Extra: polars
+Requires-Dist: polars[pyarrow] ; extra == 'polars'
+Provides-Extra: postgres
+Requires-Dist: psycopg[binary] >=3.1 ; extra == 'postgres'
+Provides-Extra: redshift
+Requires-Dist: redshift-connector ; extra == 'redshift'
+Provides-Extra: snowflake
+Requires-Dist: snowflake-connector-python[pandas] >3.0.2 ; extra == 'snowflake'
+
+<div align="center">
+  <img src="https://ponder.io/wp-content/uploads/2022/02/Ponder_LogoWordmark_H1_Color.png"><br>
+</div>
+
+
+# ponder:  the Python API to your data anywhere
+
+Ponder lets you run pandas workflows directly in your database, meaning that you get
+all the scalability and security benefits of your database, while still preserving the
+[ease-of-use](https://ponder.io/pandas-vs-sql-part-4-pandas-is-more-convenient) and
+[flexibility](https://ponder.io/pandas-vs-sql-part-3-pandas-is-more-flexible) of pandas.
+
+Ponder builds on top of the open source project
+[Modin](https://github.com/modin-project/modin), with added support for commercial data
+warehouses, tailored to the needs of production workloads in enterprise settings.
+
+Visit [app.ponder.io](https://app.ponder.io) to sign up.
+
