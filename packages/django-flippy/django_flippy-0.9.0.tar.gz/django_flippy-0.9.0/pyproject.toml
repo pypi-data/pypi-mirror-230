@@ -1,0 +1,43 @@
+[tool.poetry]
+name = "django-flippy"
+version = "0.9.0"
+description = "A Flipper Cloud (https://www.flippercloud.io/) package for Django apps."
+authors = ["Matt Cooper <vtbassmatt@gmail.com>"]
+readme = "README.md"
+homepage = "https://github.com/vtbassmatt/django-flippy"
+repository = "https://github.com/vtbassmatt/django-flippy.git"
+documentation = "https://vtbassmatt.github.io/django-flippy/"
+license = "MIT"
+packages = [{include = "flippy"}]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: Django",
+    "Framework :: Django :: 4.2",
+    "Intended Audience :: Developers",
+    "Topic :: Internet :: WWW/HTTP",
+]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^4.2.4"
+httpx = "^0.24.1"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+pytest-django = "^4.5.2"
+pdoc = "^14.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+markers = [
+    "flippercloud: live HTTP tests which require FLIPPER_CLOUD_TOKEN to be set",
+]
+# by default, don't run flippercloud tests
+addopts = "-m 'not flippercloud'"
+DJANGO_SETTINGS_MODULE = "tests.settings"
+django_find_project = false
+pythonpath = ". flippy"
