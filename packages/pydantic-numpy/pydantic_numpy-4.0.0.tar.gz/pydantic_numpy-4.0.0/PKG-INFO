@@ -1,0 +1,99 @@
+Metadata-Version: 2.1
+Name: pydantic-numpy
+Version: 4.0.0
+Summary: Pydantic Model integration of the NumPy array
+Home-page: https://github.com/caniko/pydantic-numpy
+License: BSD-4
+Keywords: pydantic,numpy,typing,validation
+Author: Can H. Tartanoglu
+Maintainer: Can H. Tartanoglu
+Maintainer-email: python@rotas.mozmail.com
+Requires-Python: >=3.9,<3.12
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: License :: Other/Proprietary License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Dist: compress-pickle[lz4]
+Requires-Dist: numpy (>=1.23.0)
+Requires-Dist: pydantic (>=2.0,<3.0)
+Requires-Dist: ruamel-yaml (>=0.17.21,<0.18.0)
+Requires-Dist: semver (>=3.0.1,<4.0.0)
+Description-Content-Type: text/markdown
+
+# pydantic-numpy
+
+Package that integrates NumPy Arrays into Pydantic!
+
+- `NumpyModel` make it possible to dump and load `np.ndarray` within model fields alongside other fields that are not instances of `np.ndarray`!
+- `pydantic_numpy.typing` provides many typings such as `NpNDArrayFp64`, `Np3DArrayFp64` (float64 that must be 3D)!
+
+## Usage
+
+For more examples see [test_ndarray.py](./tests/test_typing.py)
+
+```python
+import numpy as np
+
+import pydantic_numpy.typing as pnd
+from pydantic_numpy import np_array_pydantic_annotated_typing
+from pydantic_numpy.model import NumpyModel, MultiArrayNumpyFile
+
+
+class MyNumpyModel(NumpyModel):
+    any_array_dtype_and_dimension: pnd.NpNDArray
+
+    # Must be numpy float32 as dtype
+    k: np_array_pydantic_annotated_typing(data_type=np.float32)
+    shorthand_for_k: pnd.NpNDArrayFp32
+
+    must_be_1d_np_array: np_array_pydantic_annotated_typing(dimensions=1)
+
+
+class MyDemoModel(NumpyModel):
+    k: np_array_pydantic_annotated_typing(data_type=np.float32)
+
+
+# Instantiate from array
+cfg = MyDemoModel(k=[1, 2])
+# Instantiate from numpy file
+cfg = MyDemoModel(k="path_to/array.npy")
+# Instantiate from npz file with key
+cfg = MyDemoModel(k=MultiArrayNumpyFile(path="path_to/array.npz", key="k"))
+
+cfg.k   # np.ndarray[np.float32]
+
+cfg.dump("path_to_dump_dir", "object_id")
+cfg.load("path_to_dump_dir", "object_id")
+```
+
+`NumpyModel.load` requires the original model:
+```python
+MyNumpyModel.load(<path>)
+```
+Use `model_agnostic_load` when you have several models that may be the correct model:
+
+```python
+from pydantic_numpy.model import model_agnostic_load
+
+cfg.dump("path_to_dump_dir", "object_id")
+equals_cfg = model_agnostic_load("path_to_dump_dir", "object_id", models=[MyNumpyModel, MyDemoModel])
+```
+
+### Install
+```shell
+pip install pydantic-numpy
+```
+
+## Considerations
+You can install from [cheind's](https://github.com/cheind/pydantic-numpy) repository if you want Python `3.8` support, but this version only supports Pydantic V1 and will not work with V2.
+
+### Licensing notice
+As of version `3.0.0` the license has moved over to BSD-4. The versions prior are under the MIT license.
+
+### History
+The original idea originates from [this discussion](https://gist.github.com/danielhfrank/00e6b8556eed73fb4053450e602d2434), and forked from [cheind's](https://github.com/cheind/pydantic-numpy) repository.
+
