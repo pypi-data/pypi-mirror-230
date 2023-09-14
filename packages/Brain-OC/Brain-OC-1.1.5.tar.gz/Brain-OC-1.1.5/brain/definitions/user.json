@@ -1,0 +1,151 @@
+{
+	"__sql__": {
+		"auto_primary": "UUID()",
+		"changes": ["user"],
+		"create": [
+			"_created", "_updated", "email", "passwd", "locale",
+			"first_name", "last_name", "title", "suffix",
+			"phone_number", "phone_ext", "verified"
+		],
+		"db": "brain",
+		"host": "brain",
+		"indexes": {
+			"email": {"unique": null}
+		},
+		"primary": "_id",
+		"table": "brain_user",
+		"charset": "utf8mb4",
+		"collate": "utf8mb4_unicode_ci"
+	},
+
+	"__ui__": {
+		"create": ["email", "title", "first_name", "last_name",
+					"suffix", "phone_number", "phone_ext"],
+		"results": ["_id", "email", "title", "first_name", "last_name", "suffix"],
+		"search": ["_id", "email", "first_name", "last_name", "phone_number"],
+		"update": ["title", "first_name", "last_name", "suffix", "phone_number",
+					"phone_ext"]
+	},
+
+	"__name__": "Brain_User",
+
+	"_id": {
+		"__type__":"uuid",
+		"__optional__": true,
+		"__ui__": {
+			"title": "Unique ID"
+		}
+	},
+
+	"_created": {
+		"__type__":"timestamp",
+		"__optional__": true,
+		"__sql__": {
+			"opts": "default CURRENT_TIMESTAMP"
+		}
+	},
+
+	"_updated": {
+		"__type__":"timestamp",
+		"__optional__": true,
+		"__sql__": {
+			"opts": "default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP"
+		}
+	},
+
+	"email": {
+		"__type__":"string",
+		"__maximum__": 127,
+		"__ui__": {
+			"title": "E-Mail Address"
+		}
+	},
+
+	"passwd": {
+		"__type__":"string",
+		"__regex__":"^[0-9a-fA-F]{72}$",
+		"__sql__": "char(72)",
+		"__ui__": {
+			"regex": "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})",
+			"title": "Password",
+			"type": "password"
+		}
+	},
+
+	"locale": {
+		"__type__": "string",
+		"__regex__": "^[a-z]{2}-[A-Z]{2}$",
+		"__sql__": "char(5)",
+		"__ui__": {
+			"options": [["en-US", "U.S. English"]],
+			"title": "Language",
+			"type": "hidden"
+		}
+	},
+
+	"first_name": {
+		"__type__": "string",
+		"__minumum__": 1,
+		"__maximum__": 31,
+		"__ui__": {
+			"title": "Given Name"
+		}
+	},
+
+	"last_name": {
+		"__type__": "string",
+		"__minumum__": 2,
+		"__maximum__": 31,
+		"__ui__": {
+			"title": "Surname"
+		}
+	},
+
+	"title": {
+		"__type__": "string",
+		"__maximum__": 31,
+		"__optional__": true,
+		"__ui__": {
+			"title": "Title (e.g. Dr., Mrs., Miss, Lord, etc)"
+		}
+	},
+
+	"suffix": {
+		"__type__": "string",
+		"__maximum__": 31,
+		"__optional__": true,
+		"__ui__": {
+			"title": "Suffix (e.g. PhD, RN, Esq)"
+		}
+	},
+
+	"phone_number": {
+		"__type__": "string",
+		"__regex__": "^(\\+[\\d \\(\\)-]{10,30}|[\\d \\(\\)-]{10,31})$",
+		"__optional__": true,
+		"__ui__": {
+			"title": "Phone Number",
+			"type": "phone_number"
+		},
+		"__sql__": {
+			"type": "varchar(31)"
+		}
+	},
+
+	"phone_ext": {
+		"__type__": "string",
+		"__maximum__": 11,
+		"__optional__": true,
+		"__ui__": {
+			"title": "Extension"
+		}
+	},
+
+	"verified": {
+		"__type__": "bool",
+		"__optional__": true,
+		"__sql__": {
+			"opts": "default 0"
+		}
+	}
+}
