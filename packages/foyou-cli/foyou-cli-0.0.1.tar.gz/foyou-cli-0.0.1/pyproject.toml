@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "foyou-cli"
+authors = [
+    { name = "foyoux" },
+]
+description = "python package foyou-cli"
+keywords = ["foyou-cli"]
+readme = "PYPI.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+dynamic = ["version", "dependencies"]
+
+
+[project.urls]
+"Source" = "https://github.com/foyoux/foyou-cli"
+"Homepage" = "https://github.com/foyoux/foyou-cli"
+"Bug Tracker" = "https://github.com/foyoux/foyou-cli/issues"
+
+
+[project.scripts]
+foyou = "foyou_cli:main"
+
+
+[tool.setuptools]
+include-package-data = true
+
+
+[tool.setuptools.dynamic]
+version = { attr = "foyou_cli.__version__" }
+dependencies = { file = "requirements.txt" }
+
+
+[tool.setuptools.packages.find]
+where = ["src"]
+exclude = ["tests*"]
