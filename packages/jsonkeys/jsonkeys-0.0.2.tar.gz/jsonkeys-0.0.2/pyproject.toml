@@ -1,0 +1,27 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "jsonkeys"
+version = "0.0.2"
+authors = [
+  { name="Adriano Hernandez", email="adrianohernandez2000@gmail.com" },
+]
+description = "A small package to read JSON keys in a tree structure."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "click>=8.0.4, <9",
+]
+[project.urls]
+"Homepage" = "https://github.com/4gatepylon/jsonkeys"
+"Bug Tracker" = "https://github.com/4gatepylon/jsonkeys"
+
+[project.scripts]
+jsonkeys = "jsonkeys.jsonkeys:main"
