@@ -1,0 +1,138 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mustopt"
+authors = [ { name = "Dmitry Starov", email = "dmitry.staroff@gmail.com" } ]
+readme = "README.md"
+license = { file="LICENSE" }
+requires-python = ">=3.7"
+dynamic = [ "version", "description" ]
+
+[tool.hatch.version]
+path = "src/mustopt/__about__.py"
+
+[tool.hatch.envs.default]
+path = "venv"
+dependencies = [
+    "coverage[toml]>=6.5",
+    "pytest",
+    "pyhamcrest",
+]
+
+[tool.hatch.envs.default.scripts]
+test = "pytest {args:tests}"
+test-cov = "coverage run -m pytest {args:tests}"
+cov-report = [
+    "- coverage combine",
+    "coverage report",
+]
+cov = [
+    "test-cov",
+    "cov-report",
+]
+
+[tool.hatch.envs.lint]
+path = "venv-lint"
+detached = true
+dependencies = [
+    "black",
+    "isort",
+    "mypy",
+    "ruff",
+]
+[tool.hatch.envs.lint.scripts]
+style = [
+    "ruff {args:src/mustopt}",
+    "black --check --diff {args:src/mustopt}",
+]
+fmt = [
+    "isort {args:src/mustopt}",
+    "black {args:src/mustopt}",
+    "ruff --fix {args:src/mustopt}",
+    "style",
+]
+all = [
+    "style",
+]
+
+[tool.black]
+target-version = ["py37"]
+line-length = 120
+skip-string-normalization = true
+
+[tool.ruff]
+target-version = "py37"
+line-length = 120
+flake8-quotes = { inline-quotes = "single", docstring-quotes = "double", multiline-quotes = "single", avoid-escape = false }
+select = [
+    "A",
+    "ARG",
+    "B",
+    "C",
+    "DTZ",
+    "E",
+    "EM",
+    "F",
+    "FBT",
+    "I",
+    "ICN",
+    "ISC",
+    "N",
+    "PLC",
+    "PLE",
+    "PLR",
+    "PLW",
+    "Q",
+    "RUF",
+    "S",
+    "T",
+    "TID",
+    "UP",
+    "W",
+    "YTT",
+]
+
+[tool.ruff.isort]
+known-first-party = ["mustopt"]
+
+[tool.ruff.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+[tool.ruff.per-file-ignores]
+# Tests can use magic values, assertions, and relative imports
+"tests/**/*" = ["PLR2004", "S101", "TID252"]
+
+[tool.coverage.run]
+source_pkgs = ["mustopt"]
+branch = true
+parallel = true
+omit = [
+    "src/mustopt/__about__.py",
+]
+
+[tool.coverage.paths]
+mustopt = ["src/mustopt", "*/mustopt/src/mustopt"]
+tests = ["tests", "*/mustopt/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+    "/.*",
+    "/docs",
+    "/venv*",
+    "/Makefile",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mustopt"]
+
+[project.urls]
+Home = "https://github.com/MemberWave/MustOpt"
