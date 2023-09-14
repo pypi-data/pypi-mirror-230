@@ -1,0 +1,32 @@
+[project]
+name = "falcondale"
+version = "0.1.1"
+description = "Falcondale SDK"
+authors = [
+    { name = "Stafford Computing LLC", email = "info@staffordcomputing.com" },
+]
+dependencies = [
+    "requests>=2.31.0",
+    "pandas>=2.0.3",
+    "interruptingcow>=0.8",
+]
+requires-python = ">=3.9,<4"
+readme = "README.md"
+
+[project.license]
+text = "MIT"
+
+[project.urls]
+Homepage = "https://github.com/stafford-computing/falcondale-sdk"
+Documentation = "https://falcondale.readthedocs.io/"
+
+[build-system]
+requires = [
+    "pdm-backend",
+]
+build-backend = "pdm.backend"
+
+[tool.pdm.dev-dependencies]
+notebook = [
+    "ipykernel>=6.23.3",
+]
