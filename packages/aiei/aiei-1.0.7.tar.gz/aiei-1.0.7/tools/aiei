@@ -1,0 +1,60 @@
+#!/usr/bin/env python
+"""
+(c) ZL-2020.
+@author ZhaoLei
+@since 2020.11.09 12:27
+"""
+import os
+import sysconfig
+import argparse
+import shutil
+import re
+from datetime import datetime
+
+PATH_AIEI = f'{sysconfig.get_paths()["purelib"]}/aiei'
+parse = argparse.ArgumentParser()
+parse.add_argument('-u', '--upgrade', nargs='?', const=True, help='upgrade aiei without ops')
+parse.add_argument('-U', '--upgrade_full', nargs='?', const=True, help='upgrade aiei with ops (full version)')
+parse.add_argument('-v', '--verbose', nargs='?', const=True, help='show verbose messages')
+parse.add_argument('--url', type=str, default='aiei', help='upgrade from url')
+parse.add_argument('--copy', nargs='?', const=True, help='copy projs only with source code')
+parse.add_argument('--src', type=str, default='', help='projs dir')
+parse.add_argument('--dst', type=str, default='', help='projs dst')
+args = parse.parse_args()
+
+
+def upgrade():
+    if args.upgrade:
+        os.system('rm -rf /tmp/aiei; mkdir /tmp/aiei;'
+            f'cp -r {PATH_AIEI}/ops /tmp/aiei;'
+            f'AIEI=0 pip install {"-v" if args.verbose else ""} {args.url};'
+            f'cp -r /tmp/aiei/ops {PATH_AIEI};'
+            'rm -rf /tmp/aiei')
+    elif args.upgrade_full:
+        os.system(f'pip install {"-v" if args.verbose else ""} {args.url};')
+
+
+# aiei --copy --src det/zcenternet --dst det/bayesian_zcenternet
+def copy_proj():
+    def _ignore_copy_files(path, content):
+        to_ignore = []
+        print('zl', path, content)
+        for file_name in content:
+            if file_name in ['zlogs', '.git', '__pycache__', '.vscode', 'detectron2']:
+                to_ignore.append(file_name)
+            elif os.path.isfile(f'{path}/{file_name}'):
+                if re.search('.so|.jpg|.mp4', file_name) is not None:
+                    to_ignore.append(file_name)
+        return to_ignore
+
+    shutil.copytree(args.src, f'{args.dst}_{datetime.now().strftime("%Y%m%d_%H%M")}', ignore=_ignore_copy_files)
+
+
+if __name__ == "__main__":
+    print(args)
+    if args.upgrade or args.upgrade_full:
+        upgrade()
+    elif args.copy:
+        copy_proj()
+    else:
+        print('Hello AIEI.')
