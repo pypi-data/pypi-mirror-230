@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+[project]
+name = "refrot"
+version = "1.4.1"
+authors = [{name = "Craig Howard", email = "craig@seagrape.us"}]    
+description = "Verify website links"
+readme = {file = "README", content-type = "text/markdown"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+] 
+
+[project.urls]
+"Homepage" = "https://seagrape.us/refrot.html"
+
+[project.scripts]
+refrot = "refrot.__main__:main"
