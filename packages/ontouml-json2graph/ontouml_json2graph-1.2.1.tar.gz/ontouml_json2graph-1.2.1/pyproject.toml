@@ -1,0 +1,34 @@
+[tool.poetry]
+name = "ontouml-json2graph"
+version = "1.2.1"
+description = "OntoUML JSON2Graph Decoder"
+license = "Apache-2.0"
+authors = ["Pedro Paulo F. Barcelos <p.p.favatobarcelos@utwente.nl>"]
+readme = "README.md"
+homepage = "https://w3id.org/ontouml/json2graph"
+repository = "https://w3id.org/ontouml/json2graph"
+documentation = "https://w3id.org/ontouml/json2graph/docs"
+keywords = ["semantic-web", "knowledge-graph", "ontouml", "ontology-driven-development", "ontouml-schema", "ontouml-vocabulary", "ontouml-metamodel"]
+packages = [{ include = "json2graph" }]
+exclude = ["json2graph/tests"]
+
+[tool.poetry.urls]
+"PyPi Project" = "https://pypi.org/project/ontouml-json2graph/"
+
+[extras]
+conformsTo = "https://w3id.org/ontouml"
+conformsToBase = "https://w3id.org/ontouml#"
+conformsToVersion = "v1.1.0"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pyyaml = "^6.0.1"
+rdflib = "^7.0.0"
+validators = "^0.22.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
