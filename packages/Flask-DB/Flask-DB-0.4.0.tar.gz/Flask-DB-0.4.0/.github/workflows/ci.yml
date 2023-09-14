@@ -1,0 +1,60 @@
+name: "CI"
+
+on:
+  pull_request: {}
+  push:
+    branches:
+      - "master"
+
+jobs:
+  test:
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - uses: "actions/checkout@v2"
+
+      - name: "Set up Python 3.11"
+        uses: "actions/setup-python@v1"
+        with:
+          python-version: "3.11"
+
+      - name: "Lint extension"
+        run: |
+          pip3 install flake8
+          flake8 .
+
+      - name: "Install dependencies and local package"
+        run: |
+          pip3 install Flask==2.3.3 alembic==1.12.0
+          make install
+
+      - name: "Ensure everything works"
+        run: |
+          cd tests/example_app
+
+          rm -rf db/
+          rm alembic.ini
+          sed -i "s|db/seeds.py|a/b/c/seeds.py|g" example/app.py
+
+          flask db migrate -h
+          flask db init a/b/c
+
+          stat a/b/c/versions/.keep
+          stat a/b/c/__init__.py
+          stat a/b/c/script.py.mako
+          stat a/b/c/seeds.py
+          stat a/b/c/__init__.py
+
+          grep -q "script_location = a/b/c" alembic.ini
+          grep -q "example.app import create_app" a/b/c/env.py
+
+          echo "print('make this file produce output')" >> a/b/c/seeds.py
+          flask db reset --with-testdb > default_results
+          stat exampledb
+          stat exampledb_test
+          [ -s default_results ]
+
+          flask db migrate revision -m "cool"
+          flask db migrate
+        env:
+          FLASK_APP: "example.app"
