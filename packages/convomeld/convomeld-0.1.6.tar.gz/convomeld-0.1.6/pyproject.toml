@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "convomeld"
+version = "0.1.6"
+description = "Parse text scripts or chatbot message logs and merge conversation graphs (Convographs)"
+authors = [
+    "Ruslan Borysov <borysov.ruslan98@gmail.com>",
+    "Hobson Lane <hobson@tangibleai.com>",
+    "Vlad Snisar <vlad@tangibleai.com>",
+    "Cetin Czeckr <cetin@tangibleai.com>",
+]
+license = "AGPL-3.0-or-later"
+readme = "README.md"
+packages = [
+    {include="convomeld", from="src"},
+]
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+PyYAML = ">=6.0"
+openpyxl = "*"
+pandas = "*"
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=7.4.0"
+build = "*"
+pip = "*"
+wheel = "*"
+poetry = "*"
+virtualenv = "*"
+twine = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+convocat = "convomeld.convocat:main"
+convoparse = "convomeld.convoparse:main"
