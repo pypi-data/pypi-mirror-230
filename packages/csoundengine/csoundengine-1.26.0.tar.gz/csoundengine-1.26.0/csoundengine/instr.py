@@ -1,0 +1,1228 @@
+from __future__ import annotations
+from functools import cache
+from emlib import textlib, iterlib
+from dataclasses import dataclass
+import numpy as np
+import re
+import os
+
+from .config import config, logger
+from .errors import CsoundError
+from . import csoundlib
+from . import jupytertools
+from typing import Sequence
+import textwrap
+
+
+__all__ = (
+    'Instr',
+    'parseInlineArgs'
+)
+
+
+class Instr:
+    """
+    An Instr is a template used to schedule a concrete instrument
+    within a :class:`~csoundengine.session.Session` or a :class:`~csoundengine.offline.Renderer`.
+
+    .. note::
+
+        An Instr must be registered at the Session or the Renderer before it can be used.
+        See :meth:`csoundengine.instr.Instr.register` or :meth:`csoundengine.session.Session.defInstr`
+
+    Args:
+        name: the name of the instrument
+        body: the body of the instr (the text **between** 'instr' end 'endin')
+        args: if given, a dictionary defining default values for pfields
+        init: code to be initialized at the instr0 level
+        tabargs: An instrument can have an associated table to be able to pass
+            dynamic parameters which are specific to this note (for example,
+            an instrument could define a filter with a dynamic cutoff freq.)
+            *tabargs* is a dict of the form: {param_name: initial_value}.
+            The order of appearence will correspond to the index in the table
+        preschedCallback: a function ``f(synthid, args) -> args``, called before
+            a note is scheduled with
+            this instrument. Can be used to allocate a table or a dict and pass
+            the resulting index to the instrument as parg
+        freetable: if ``True``, the associated table is freed in csound when the note
+            is finished
+        doc: some documentation describing what this instr does
+        includes: a list of files which need to be included in order for this instr to work
+        aliases: if given, a dict mapping arg names to real argument names. It enables
+            to define named args for an instrument using any kind of name instead of
+            following csound names, or use any kind of name in an instr to avoid possible
+            collisions while exposing a nicer name to the outside as alias
+
+    Example
+    -------
+
+    .. code-block:: python
+
+        s = Engine().session()
+        Instr('sine', r'''
+            kfreq = p5
+            kamp = p6
+            a0 = oscili:a(kamp, kfreq)
+            outch 1, a0
+        ''').register(s)
+        synth = s.sched('sine', kfreq=440, kamp=0.1)
+        synth.stop()
+
+    One can create an Instr and register it at a session in one operation:
+
+    .. code-block:: python
+
+        s = Engine().session()
+        s.defInstr('sine', r'''
+            kfreq = p5
+            kamp = p6
+            a0 = oscili:a(kamp, kfreq)
+            outch 1, a0
+        ''')
+
+
+    **Default Values**
+
+    An Instr can define default values for any of its p-fields and define
+    aliases for its names:
+
+    .. code-block:: python
+
+        s = Engine().session()
+        s.defInstr('sine', r'''
+            kamp = p5
+            kfreq = p6
+            a0 = oscili:a(kamp, kfreq)
+            outch 1, a0
+        ''', args={'kamp': 0.1, 'kfreq': 1000}, aliases={'frequency': 'kfreq'}
+        )
+        # We schedule an event of sine, kamp will take the default (0.1)
+        synth = s.sched('sine', kfreq=440)
+        synth.set(frequency=450, delay=1)   # Use alias
+        synth.stop()
+
+    **Inline arguments**
+
+    An inline args declaration can set both pfield name and default value:
+
+    .. code-block:: python
+
+        s = Engine().session()
+        Instr('sine', r'''
+            |kamp=0.1, kfreq=1000|
+            a0 = oscili:a(kamp, kfreq)
+            outch 1, a0
+        ''').register(s)
+        synth = s.sched('sine', kfreq=440)
+        synth.stop()
+
+    The same can be achieved via an associated table:
+
+    .. code-block:: python
+
+        s = Engine().session()
+        Instr('sine', r'''
+            a0 = oscili:a(kamp, kfreq)
+            outch 1, a0
+        ''', tabargs=dict(amp=0.1, freq=1000
+        ).register(s)
+        synth = s.sched('sine', tabargs=dict(freq=440))
+        synth.stop()
+
+
+    An inline syntax exists also for tables:
+
+    .. code-block:: python
+
+        Intr('sine', r'''
+            {amp=0.1, freq=1000}
+            a0 = oscili:a(kamp, kfreq)
+            outch 1, a0
+        ''')
+
+
+    This will create a table and fill it will the given/default values,
+    and generate code to read from the table and free the table after
+    the event is done. Call :meth:`~csoundengine.instr.Instr.dump` to see
+    the generated code:
+
+    .. code-block:: python
+
+        i_params = p4
+        if ftexists(i_params) == 0 then
+            initerror sprintf("params table (%d) does not exist", i_params)
+        endif
+        i__paramslen = ftlen(i_params)
+        if i__paramslen < {maxidx} then
+            initerror sprintf("params table is too small (size: %d, needed: {maxidx})", i__paramslen)
+        endif
+        kamp tab 0, i_params
+        kfreq tab 1, i_params
+        a0 = oscili:a(kamp, kfreq)
+        outch 1, a0
+
+    **Offline rendering**
+
+    An Instr can also be used to define instruments for offline rendering (see
+    :class:`~csoundengine.offline.Renderer`)
+
+    .. code-block:: python
+
+        from csoundengine import *
+        renderer = Renderer(sr=44100, nchnls=2)
+
+        instrs = [
+            Instr('saw', r'''
+              kmidi = p5
+              outch 1, oscili:a(0.1, mtof:k(kmidi))
+            '''),
+            Instr('sine', r'''
+              |kamp=0.1, kmidi=60|
+              asig oscili kamp, mtof:k(kmidi)
+              asig *= linsegr:a(0, 0.1, 1, 0.1, 0)
+              outch 1, asig
+            ''')
+        ]
+
+        for instr in instrs:
+            instr.register(renderer)
+
+        score = [('saw', 0,   2, 60),
+                 ('sine', 1.5, 4, 67),
+                 ('saw', 1.5, 4, 67.1)]
+
+        events = [renderer.sched(ev[0], delay=ev[1], dur=ev[2], pargs=ev[3:])
+                  for ev in score]
+
+        # Offline events can be modified just like real-time events
+        renderer.automate(events[0], 'kmidi', pairs=[0, 60, 2, 59])
+        renderer.set(events[1], 3, 'kmidi', 67.2)
+        renderer.render("out.wav")
+
+    """
+
+    __slots__ = (
+        'body', 'name', 'args', 'init', 'id',
+        'tabargs', 'numchans', 'instrFreesParamTable', 'doc',
+        'pargsIndexToName', 'pargsNameToIndex', 'pargsIndexToDefaultValue',
+        'originalBody', 'includes',
+        '_tableDefaultValues', '_tableNameToIndex',
+        '_numpargs', '_recproc', '_check', '_preschedCallback',
+        'aliases', '_argToAlias'
+    )
+
+    def __init__(self,
+                 name: str,
+                 body: str,
+                 args: dict[str, float] | None = None,
+                 init: str = '',
+                 tabargs: dict[str, float] | None = None,
+                 numchans: int = 1,
+                 preschedCallback=None,
+                 freetable=True,
+                 doc: str = '',
+                 userPargsStart=5,
+                 includes: list[str] | None = None,
+                 aliases: dict[str, str] = None,
+                 ) -> None:
+
+        assert isinstance(name, str)
+
+        if errmsg := _checkInstr(body):
+            raise CsoundError(errmsg)
+
+        self.originalBody = body
+        "original body of the instr (prior to any code generation)"
+
+        self._tableDefaultValues: list[float] | None = None
+        self._tableNameToIndex: dict[str, int] | None = None
+
+        inlineargs = parseInlineArgs(body)
+
+        if inlineargs:
+            body = inlineargs.body
+            if inlineargs.delimiters == '||':
+                assert not args
+                args = inlineargs.args
+            else:
+                assert not tabargs
+                tabargs = inlineargs.args
+
+        if tabargs:
+            if any(name[0] not in 'ki' for name in tabargs.keys()):
+                raise ValueError("Named parameters must start with 'i' or 'k'")
+            self._tableNameToIndex = {paramname: idx for idx, paramname in
+                                      enumerate(tabargs.keys())}
+            defaultvals = list(tabargs.values())
+            minsize = config['associated_table_min_size']
+            if len(defaultvals) < minsize:
+                defaultvals += [0.] * (minsize - len(defaultvals))
+            self._tableDefaultValues = defaultvals
+            tabcode = _tabargsGenerateCode(tabargs, freetable=freetable)
+            body = textlib.joinPreservingIndentation((tabcode, body))
+            needsExitLabel = True
+        else:
+            freetable = False
+            needsExitLabel = False
+
+        if args:
+            pfields = _pfieldsMergeDeclaration(args, body, startidx=userPargsStart)
+            pargsIndexToName = {i: name for i, (name, default) in pfields.items()}
+            pargsDefaultValues = {i: default for i, (_, default) in pfields.items()}
+            body = _updatePfieldsCode(body, pargsIndexToName)
+        else:
+            parsed = csoundlib.instrParseBody(body)
+            pargsIndexToName = parsed.pfieldsIndexToName
+            pargsDefaultValues = parsed.pfieldsDefaults or {}
+
+        if needsExitLabel:
+            body = textlib.joinPreservingIndentation((body, "__exit:"))
+
+        self.tabargs = tabargs
+        "named table args"
+
+        self.name = name
+        "name of thisinstr"
+
+        self.body = body
+        "body of the instr"
+
+        self.args = args
+        """ A dict like ``{'ibus': 1, 'kfreq': 440}``, defining default values for
+        pfields. The mapping between pfield name and index is done by order, 
+        starting with p5"""
+
+        self.init = init if init else None
+        """code to be initialized at the instr0 level, excluding include files"""
+
+        self.includes: list[str] | None = includes
+
+        self.numchans = numchans
+        "number of audio outputs of this instr"
+
+        self.doc = doc
+        "description of this instr (optional)"
+
+        self.id: int = self._id()
+        "unique numeric id of this instr"
+
+        self.pargsIndexToName: dict[int, str] = pargsIndexToName
+        "a dict mapping parg index to its name"
+
+        self.pargsNameToIndex: dict[str, int] = {n: i for i, n in pargsIndexToName.items()}
+        "a dict mapping parg name to its index"
+
+        self.pargsIndexToDefaultValue: dict[int, float] = pargsDefaultValues
+        "a dict mapping parg index to its default value"
+
+        self.instrFreesParamTable = freetable
+        "does this instr frees its parameter table?"
+
+        self.aliases = aliases
+        """Maps alias argument names to their real argument names"""
+
+        self._argToAlias = {name: alias for alias, name in aliases.items()} if aliases else None
+
+        self._numpargs: int | None = None
+        self._recproc = None
+        self._check = config['check_pargs']
+        self._preschedCallback = preschedCallback
+
+    def _id(self) -> int:
+        argshash = hash(frozenset(self.args.items())) if self.args else 0
+        tabhash = hash(frozenset(self.tabargs.items())) if self.tabargs else 0
+        return hash((self.name, self.body, self.init, self.doc, self.numchans,
+                     argshash, tabhash))
+
+    def __hash__(self) -> int:
+        return self.id
+
+    def __eq__(self, other: Instr) -> bool:
+        if not isinstance(other, Instr):
+            return NotImplemented
+        return self.id == other.id
+
+    def __repr__(self) -> str:
+        parts = [self.name]
+        if s := self._pargsRepr():
+            parts.append(s)
+        if self.tabargs:
+            parts.append(f"tabargs={self.tabargs}")
+
+        return f"Instr({', '.join(parts)})"
+
+    def _pargsRepr(self) -> str:
+        pargs = self.pargsIndexToName
+        if not pargs:
+            return ""
+        if self.pargsIndexToDefaultValue:
+            parts = []
+            for i, pname in sorted(pargs.items()):
+                if i == 4:
+                    continue
+                if self.aliases and (alias := self._argToAlias.get(pname)) is not None:
+                    pname = f"{alias}({pname})"
+                parts.append(f"{pname}:{i}={self.pargsIndexToDefaultValue.get(i, 0):.6g}")
+            return ", ".join(parts)
+        else:
+            return ", ".join(
+                    f"{pname}:{i}" for i, pname in sorted(pargs.items()) if i != 4)
+
+    def _repr_html_(self) -> str:
+        style = jupytertools.defaultPalette
+        parts = [f'Instr <strong style="color:{style["name.color"]}">{self.name}</strong><br>']
+        _ = jupytertools.htmlSpan
+        if self.pargsIndexToName and len(self.pargsIndexToName) > 1:
+            indexes = list(self.pargsIndexToName.keys())
+            indexes.sort()
+            if 4 in indexes:
+                indexes.remove(4)
+            groups = iterlib.split_in_chunks(indexes, 5)
+            for group in groups:
+                htmls = []
+                for idx in group:
+                    pname = self.pargsIndexToName[idx]
+                    if self.aliases and (alias := self._argToAlias.get(pname)):
+                        pname = f'{alias}({pname})'
+                    # parg = _(f'p{idx}', fontsize='90%')
+                    parg = f'p{idx}'
+                    html = f"<b>{pname}</b>:{parg}=" \
+                           f"<code>{self.pargsIndexToDefaultValue.get(idx, 0):.6g}</code>"
+                    html = _(html, fontsize='90%')
+                    htmls.append(html)
+                line = "&nbsp&nbsp&nbsp&nbsp" + ", ".join(htmls) + "<br>"
+                parts.append(line)
+        if self.tabargs:
+            parts.append(f'&nbsp&nbsp&nbsp&nbsptabargs = <code>{self.tabargs}</code>')
+        if config['jupyter_instr_repr_show_code']:
+            parts.append('<hr style="width:38%;text-align:left;margin-left:0">')
+            htmlorc = _(csoundlib.highlightCsoundOrc(self.body), fontsize='90%')
+            parts.append(htmlorc)
+        return "\n".join(parts)
+
+    def paramMode(self) -> str | None:
+        """
+        Returns the dynamic parameter mode, or None
+
+        Returns one of 'parg', 'table' or None if this object does not
+        define any dynamic parameters
+        """
+        hasDynamicPargs = any(name.startswith('k') for name in self.pargsNameToIndex.keys())
+        return 'table' if self.hasParamTable() else 'parg' if hasDynamicPargs else None
+
+    def dump(self) -> str:
+        """
+        Returns a string with the generated code of this Instr
+        """
+        header = f"Instr(name='{self.name}')"
+        sections = ["", header]
+        pargsStr = self._pargsRepr()
+        if pargsStr:
+            sections.append(pargsStr)
+        if self.doc:
+            sections.append(f"> doc: {self.doc}")
+        if self.init:
+            sections.append("> init")
+            sections.append(str(self.init))
+        if self._tableDefaultValues:
+            sections.append("> table")
+            sections.append(f"    {self.tabargs}")
+        sections.append("> body")
+        sections.append(self.body)
+        return "\n".join(sections)
+
+    @cache
+    def dynamicParamKeys(self, includeRealNames=False) -> set[str]:
+        """
+        The set of all dynamic parameters accepted by this Instr
+
+        Args:
+            includeRealNames: if True and this instrument has defined aliases, include
+                the real parameters in the returned dict. Aliased parameters will be
+                included twice
+
+        Returns:
+            a set of the dynamic (modifiable) parameters accepted by this Instr
+        """
+        dynparams  = self.dynamicParams(includeRealNames=includeRealNames)
+        return set(dynparams.keys())
+
+    @cache
+    def dynamicParams(self, includeRealNames=False) -> dict[str, float]:
+        """
+        A dict with all dynamic parameters defined in this instr
+
+        Args:
+            includeRealNames: if True and this instrument has defined aliases, include
+                the real parameters in the returned dict. Aliased parameters will be
+                included twice
+
+        Returns:
+            a dict with all dynamic parameters and their default values
+        """
+        if self.paramMode() == 'parg':
+            d = {key: self.pargsIndexToDefaultValue.get(idx)
+                 for key, idx in self.pargsNameToIndex.items()
+                 if key.startswith('k')}
+            if self.aliases:
+                for alias, realname in self.aliases.items():
+                    if realname.startswith('k'):
+                        d[alias] = d[realname]
+                        if not includeRealNames:
+                            del d[realname]
+            return d
+
+    @cache
+    def namedParams(self, includeRealNames=False) -> dict[str, float]:
+        """
+        Returns named dynamic parameters and their defaults
+
+        This method is independent of the parameter mode used (whether a param table or
+        named pargs)
+
+        Args:
+            includeRealNames: if True and this instrument has defined aliases, include
+                the real parameters in the returned dict. Aliased parameters will be
+                included twice
+
+        Returns:
+            a dict of named dynamic parameters to this instr and their associated
+            default values
+        """
+        paramMode = self.paramMode()
+        if paramMode == 'table':
+            return self.tabargs
+        elif paramMode == 'parg':
+            d = {key: self.pargsIndexToDefaultValue.get(idx)
+                 for key, idx in self.pargsNameToIndex.items()}
+            if self.aliases:
+                for alias, realname in self.aliases.items():
+                    d[alias] = d[realname]
+                    if not includeRealNames:
+                        del d[realname]
+            return d
+        else:
+            raise ValueError(f"Param mode {self.paramMode()} not supported")
+
+    def register(self, renderer) -> Instr:
+        """
+        Register this Instr with a Session or an offline renderer. This is the
+        same as session.registerInstr(csoundinstr)
+
+        Args:
+            renderer: the name of a Session as str, the Session itself or
+                an offline Renderer
+
+        Returns:
+            self. This enables a declaration like: ``instr = Instr(...).register(session)``
+
+        Example
+        =======
+
+        .. code::
+
+            # Create an instrument and register it at a Session and
+            # at an offline Renderer
+            from csoundengine import *
+            session = Engine().session()
+            renderer = Renderer(sr=44100)
+
+            synth = Instr('synth', r'''
+                |kmidi=60|
+                outch 1, oscili:a(0.1, mtof:k(kmidi))
+            ''')
+
+            synth.register(session)
+            synth.register(renderer)
+        """
+        if isinstance(renderer, str):
+            from .engine import getEngine
+            e = getEngine(renderer)
+            if e is None:
+                raise KeyError(f"Engine {renderer} does not exists")
+            session = e.session()
+            session.registerInstr(self)
+        else:
+            renderer.registerInstr(self)
+        return self
+
+    def pargName(self, index: int, alias=True) -> str:
+        """
+        Given the pfield index, get the name, if given
+
+        Args:
+            index: the pfield index (starts with 1)
+            alias: if True, return the corresponding alias, if defined
+
+        Returns:
+            the corresponding pfield name, or an empty string if the
+            index is not used
+        """
+        name = self.pargsIndexToName.get(index)
+        if name is None:
+            logger.debug(f"Arg index {index} not used for instr {self.name}")
+            return ''
+        if alias and self.aliases and (name2 := self._argToAlias.get(name)):
+            return name2
+        return name
+
+    def pargIndex(self, name: str, default: int | None = None) -> int:
+        """
+        Helper function, returns the index corresponding to the given parg.
+
+        Args:
+            name: the index or the name of the p-field.
+            default: if the name is not known and *default* is not None, this
+                value is returned as the index to indicate that the parg was not
+                found (instead of raising an Exception)
+
+        Returns:
+            the index of the parg
+        """
+        assert isinstance(name, str)
+        if name.startswith('p') and name[1:].isdigit():
+            return int(name[1:])
+
+        if self.aliases and name in self.aliases:
+            name = self.aliases[name]
+        if (idx := self.pargsNameToIndex.get(name)) is not None:
+            return idx
+
+        # try with a k-
+        if name[0] != 'k':
+            idx = self.pargsNameToIndex.get('k' + name)
+            if idx:
+                return idx
+
+        if default is not None:
+            return default
+
+        errormsg = (f"parg {name} not known for instr '{self.name}'."
+                    f"Defined named pargs: {self.pargsNameToIndex.keys()}")
+        if self.aliases:
+            errormsg += f" Aliases: {self.aliases}"
+        raise KeyError(errormsg)
+
+    def pargsTranslate(self, 
+                       args: Sequence[float] = (), 
+                       kws: dict[str | int, float] | None = None
+                       ) -> list[float]:
+        """
+        Given pargs as values and keyword arguments, generate a list of
+        values which can be passed to sched, starting with p5
+        (p4 is reserved)
+
+        Args:
+            args: parg values, starting with p5
+            kws: named pargs (a name can also be 'p8' for example)
+
+        Returns:
+            a list of float values with 0 representing absent pargs
+
+        """
+        firstp = 4  # 4=p5
+        n2i = self.pargsNameToIndex
+        maxkwindex = max(n2i.values())
+        maxpargs = max(maxkwindex, len(args)-1)
+        pargs = [0.]*(maxpargs-firstp)
+        if self.pargsIndexToDefaultValue:
+            for i, v in self.pargsIndexToDefaultValue.items():
+                pargs[i-firstp-1] = v
+        if args:
+            pargs[:len(args)] = args
+        if kws:
+            for pname, value in kws.items():
+                idx = pname if isinstance(pname, int) else self.pargIndex(pname)
+                pargs[idx-5] = value
+        return pargs
+
+    def asOrc(self,
+              instrid,
+              sr: int | None = None,
+              ksmps: int | None = None,
+              nchnls=2,
+              a4: int | None = None) -> str:
+        """
+        Generate a csound orchestra with only this instrument defined
+
+        Args:
+            instrid: the id (instr number of name) used for this instrument
+            sr: samplerate
+            ksmps: ksmps
+            nchnls: number of channels
+            a4: freq of A4
+
+        Returns:
+            The generated csound orchestra
+        """
+        sr = sr or config['rec_sr']
+        ksmps = ksmps or config['ksmps']
+        a4 = a4 if a4 is not None else config['A4']
+        if self.init is None:
+            initstr = ""
+        else:
+            initstr = self.init
+        orc = f"""
+        sr = {sr}
+        ksmps = {ksmps}
+        nchnls = {nchnls}
+        0dbfs = 1.0
+        A4 = {a4}
+
+        {initstr}
+
+        instr {instrid}
+
+        {self.body}
+
+        endin
+
+        """
+        return orc
+
+    def _numargs(self) -> int:
+        if self._numpargs is None:
+            self._numpargs = csoundlib.instrParseBody(self.body).numPfields()
+        return self._numpargs
+
+    def _checkArgs(self, args) -> bool:
+        lenargs = 0 if args is None else len(args)
+        numargs = self._numargs()
+        ok = numargs == lenargs
+        if not ok:
+            msg = f"expected {numargs} args, got {lenargs}"
+            logger.error(msg)
+        return ok
+
+    def rec(self,
+            dur: float,
+            outfile: str | None = None,
+            args: list[float] | dict[str, float] | None = None,
+            sr: int | None = None,
+            ksmps: int | None = None,
+            encoding: str | None = None,
+            nchnls: int = 2,
+            wait=True,
+            a4: int | None = None,
+            delay=0.,
+            **kws
+            ) -> str:
+        """
+        Record this Instr for a given duration
+
+        Args:
+            dur: the duration of the recording
+            outfile: if given, the path to the generated output.
+                If not given, a temporary file will be generated.
+            args: the arguments passed to the instrument (if any),
+                beginning with p5 or a dict with named arguments
+            sr: the sample rate -> config['rec_sr']
+            ksmps: the number of samples per cycle -> config['rec_ksmps']
+            encoding: the sample encoding of the rendered file, given as
+                'pcmXX' or 'floatXX', where XX represent the bit-depth
+                ('pcm16', 'float32', etc). If no encoding is given a suitable default for
+                the sample format is chosen
+            nchnls: the number of channels of the generated output.
+            wait: if True, the function blocks until done, otherwise rendering
+                is asynchronous
+            a4: the frequency of A4 (see config['A4']
+            kws: any keyword will be interpreted as a named argument of this Instr
+            delay: when to schedule the instr
+
+        Returns:
+            the path of the generated soundfile
+
+        .. seealso:: :meth:`Instr.renderSamples`
+
+        Example
+        ~~~~~~~
+
+            >>> from csoundengine import *
+            >>> from sndfileio import *
+            >>> s = Engine().session()
+            >>> white = s.defInstr('white', r'''
+            ...   |igain=0.1|
+            ...   aout = gauss:a(1) * igain
+            ...   outch 1, aout
+            ... ''')
+            >>> samples, info = sndget(white.rec(2))
+            >>> info
+            samplerate : 44100
+            nframes    : 88192
+            channels   : 2
+            encoding   : float32
+            fileformat : wav
+            duration   : 2.000
+
+        """
+        from csoundengine.offline import Renderer
+        r = Renderer(sr=sr, nchnls=nchnls, ksmps=ksmps, a4=a4)
+        r.registerInstr(self)
+        r.sched(instrname=self.name,
+                delay=delay,
+                dur=dur,
+                args=args,
+                **kws)
+        sndfile, process = r.render(outfile, wait=wait, encoding=encoding)
+        return sndfile
+
+    def renderSamples(self,
+                      dur,
+                      args: list[float] | dict[str, float] | None = None,
+                      sr: int = 44100,
+                      ksmps: int | None = None,
+                      nchnls: int = 2,
+                      a4: int | None = None,
+                      delay=0.,
+                      **kws
+                      ) -> np.ndarray:
+        """
+        Record this instrument and return the generated samples
+
+        Args:
+            dur: the duration of the recording
+            args: the args passed to this instr
+            sr: the samplerate of the recording
+            ksmps: the samples per cycle used
+            nchnls: the number of channels
+            a4: the value of a4
+            delay: when to schedule this instr
+            kws: any keyword will be interpreted as a named argument of this Instr
+
+
+        Returns:
+            the generated samples as numpy array
+
+        .. seealso:: :meth:`Instr.rec`
+
+        Example
+        ~~~~~~~
+
+            >>> from csoundengine import *
+            >>> from sndfileio import *
+            >>> s = Engine().session()
+            >>> white = s.defInstr('white', r'''
+            ...  |igain=0.1|
+            ...  aout = gauss:a(1) * igain
+            ...  outch 1, aout
+            ... ''')
+            # Render two seconds of white noise
+            >>> samples = white.renderSamples(2)
+        """
+        sndfile = self.rec(dur=dur, args=args, sr=sr, ksmps=ksmps, nchnls=nchnls,
+                           wait=True, a4=a4, delay=delay, **kws)
+        if not os.path.exists(sndfile):
+            raise RuntimeError(f"Rendering error, could not find generated soundfile ('{sndfile}')")
+        import sndfileio
+        samples, sr = sndfileio.sndread(sndfile)
+        os.remove(sndfile)
+        return samples
+
+    def hasParamTable(self) -> bool:
+        """
+        Returns True if this instrument defines a parameters table
+        """
+        return self._tableDefaultValues is not None and len(self._tableDefaultValues) > 0
+
+    def paramTableParamIndex(self, param: str) -> int:
+        """
+        Returns the index of a parameter name
+
+        Returns -1 if the parameter was not found in the table definition
+        Raises RuntimeError if this Instr does not have a parameters table
+        """
+        if not self.hasParamTable():
+            raise RuntimeError(f"This instr ({self.name}) does not have a parameters table")
+        idx = self._tableNameToIndex.get(param)
+        if idx is None:
+            logger.warning(f"Parameter {param} not known for instr {self.name}."
+                           f" Known parameters: {self._tableNameToIndex.keys()}")
+            return -1
+        return idx
+
+    def overrideTable(self, d: dict[str, float] | None = None, **kws) -> list[float]:
+        """
+        Overrides default values in the params table
+        Returns the initial values
+
+        Args:
+            d: if given, a dictionary of the form {'argname': value}.
+                Alternatively key/value pairs can be passed as keywords
+            **kws: each key must match a named parameter as defined in
+                the tabargs attribute
+
+        Returns:
+            A list of floats holding the new initial values of the
+            parameters table
+
+        Example:
+            instr.overrideTable(param1=value1, param2=value2)
+
+        """
+        if self._tableDefaultValues is None:
+            raise ValueError("This instrument has no associated table")
+        if self._tableNameToIndex is None:
+            raise ValueError("This instrument has no table mapping, so"
+                             "named parameters can't be used")
+        if d is None and not kws:
+            return self._tableDefaultValues
+        out = self._tableDefaultValues.copy()
+        if d:
+            for key, value in d.items():
+                idx = self._tableNameToIndex[key]
+                out[idx] = value
+        if kws:
+            for key, value in kws.items():
+                idx = self._tableNameToIndex[key]
+                out[idx] = value
+        return out
+
+
+def _checkInstr(instr: str) -> str:
+    """
+    Returns an error message if the instrument is not well defined
+    """
+    lines = [line for line in (line.strip() for line in instr.splitlines()) if line]
+    errmsg = ""
+    if not lines:
+        return errmsg
+
+    if "instr" in lines[0] or "endin" in lines[-1]:
+        errmsg = ("instr should be the body of the instrument,"
+                  " without 'instr' and 'endin")
+    for i, line in enumerate(lines):
+        if re.search(r"\bp4\b", line):
+            errmsg = (f"The instr uses p4, but p4 is reserved for the parameters table. "
+                      f"Line {i}: {line}")
+            break
+    return errmsg
+
+
+@dataclass
+class Docstring:
+    shortdescr: str = ''
+    longdescr: str = ''
+    args: dict[str, str] | None = None
+
+
+def parseDocstring(text: str | list[str]) -> Docstring | None:
+    lines = text if isinstance(text, list) else text.splitlines()
+    doclines = []
+    for line in lines:
+        line = line.strip()
+        if not line:
+            if not doclines:
+                continue
+            else:
+                doclines.append('')
+        elif not line.startswith(';'):
+            break
+        line = line.lstrip(';')
+        doclines.append(line)
+    if not doclines:
+        return None
+    docs = '\n'.join(doclines)
+    import docstring_parser
+    parsed = docstring_parser.parse(docs)
+    if parsed.params:
+        args = {param.arg_name: param.description or '' for param in parsed.params}
+    else:
+        args = None
+    return Docstring(shortdescr=parsed.short_description or '',
+                     longdescr=parsed.long_description or '',
+                     args=args)
+
+
+@dataclass
+class InlineArgs:
+    delimiters: str
+    args: dict[str, float]
+    body: str
+    linenum: int
+
+    def __post_init__(self):
+        assert self.delimiters == '||' or self.delimiters == '{}'
+
+
+def parseInlineArgs(body: str | list[str]
+                    ) -> InlineArgs | None:
+    """
+    Parse an instr body with a possible args declaration (see below).
+
+    Args:
+        body: the body of the instrument as a string or as a list of lines
+
+    Returns:
+        an InlineArgs with fields
+
+        Where:
+
+        * delimiters: the string "||" or "{}", identifying the kind of inline declaration, or
+            the empty string if the body does not have any inline args
+        * fields: a dictionary mapping field name to default value
+        * body without declaration: the body of the instrument, as a string, without
+          the line declaring fields.
+
+    .. note::
+        this is not supported csound syntax, we added this ad-hoc syntax
+        extension to more easily declare named pfields. In the future a possible
+        solution might be an opcode:
+
+            kamp, kfreq, kcutoff pfields 4, 0.1, 440, 2000
+
+    Example
+    =======
+
+        >>> body = '''
+        ... |ichan, kamp=0.1, kfreq=440|
+        ... a0 oscili kamp, kfreq
+        ... outch ichan, a0
+        ... '''
+        >>> inlineargs = parseInlineArgs(body)
+        >>> inlineargs.delimiters
+        '||'
+        >>> args
+        {'ichan': 0, 'kamp': 0.1, 'kfreq': 440}
+        >>> print(bodyWithoutArgs)
+        a0 oscili kamp, kfreq
+        outch 1, a0
+    """
+    lines = body if isinstance(body, list) else body.splitlines()
+    delimiters, linenum = _detectInlineArgs(lines)
+    if not delimiters:
+        return None
+    assert linenum is not None
+    args = {}
+    line2 = lines[linenum].strip()
+    parts = line2[1:-1].split(",")
+    for part in parts:
+        if "=" in part:
+            varname, defaultval = part.split("=")
+            args[varname.strip()] = float(defaultval)
+        else:
+            args[part.strip()] = 0
+    bodyWithoutArgs = "\n".join(lines[linenum+1:])
+    return InlineArgs(delimiters, args=args, body=bodyWithoutArgs, linenum=linenum)
+
+
+def _tabargsGenerateCode(tabargs: dict, freetable=True) -> str:
+    lines: list[str] = []
+    idx = 0
+    maxidx = len(tabargs)
+    lines.append(fr'''
+    ; --- start generated table code
+    iparams_ = p4
+    if iparams_ == 0 || ftexists:i(iparams_) == 0 then
+        initerror sprintf("Params table (%d) does not exist (p1: %f)", iparams_, p1)
+        goto __exit
+    endif
+    iparamslen_ = ftlen(iparams_)
+    if iparamslen_ < {maxidx} then
+        initerror sprintf("params table too small (size: %d, needed: {maxidx})", iparamslen_)
+    endif''')
+
+    for key, value in tabargs.items():
+        if key[0] == 'k':
+            lines.append(f"{key} tab {idx}, iparams_")
+        elif key[0] == 'i':
+            lines.append(f"{key} tab_i {idx}, iparams_")
+        else:
+            raise ValueError(f"Named parameters should begin with k or i, got {key}")
+        idx += 1
+    if freetable:
+        lines.append("ftfree iparams_, 1")
+    lines.append("; --- end generated table code\n")
+    out = textlib.joinPreservingIndentation(lines)
+    out = textlib.stripLines(out)
+    return out
+
+
+def _pfieldsMergeDeclaration(args: dict[str, float],
+                             body: str,
+                             startidx=4
+                             ) -> dict[int, tuple[str, float]]:
+    """
+    Given a dictionary declaring pfields and their defaults,
+    merge these with the pfields declared in the body, returning
+    a dictionary of the form {pindex: (name, default value)}
+
+    Args:
+        args: a dict mapping pfield name to a default value. The index
+            is assigned in the order of appearence, starting with `startidx`
+        body: the body of the instrument (the part between instr/endin)
+        startidx: the start index for the pfields declared in `args`
+
+    Returns:
+        a dict mapping pfield index to a tuple (name, default value). pfields
+        without default receive a fallback value of 0.
+
+    Example
+    =======
+
+        >>> body = '''
+        ... ichan = p5
+        ... ifade, icutoff passign 6
+        ... '''
+        >>> _pfieldsMergeDeclaration(dict(kfreq=440, ichan=2), body)
+        {4: ('kfreq', 440),
+         5: ('ichan', 2),
+         6: ('ifade', 0),
+         7: ('icutoff', 0)}
+    """
+    # TODO: take pset into consideration for defaults
+    parsedbody = csoundlib.instrParseBody(body)
+    body_i2n = parsedbody.pfieldsIndexToName
+    args_i2n = {i: n for i, n in enumerate(args.keys(), start=startidx)}
+    allindexes = set(body_i2n.keys())
+    allindexes.update(args_i2n.keys())
+    pfields: dict[int, tuple[str, float]] = {}
+    for idx in allindexes:
+        body_n = body_i2n.get(idx)
+        args_n = args_i2n.get(idx)
+        if body_n and args_n:
+            raise SyntaxError(f"pfield conflict, p{idx} is defined both"
+                              f"in the body of the instrument (name: {body_n})"
+                              f"and as an argument (name: {args_n}")
+        if body_n:
+            pfields[idx] = (body_n, 0.)
+        else:
+            assert args_n is not None
+            pfields[idx] = (args_n, args[args_n])
+    return pfields
+
+
+def _updatePfieldsCode(body: str,
+                       idx2name: dict[int, str],
+                       placeDocstringOnTop=True
+                       ) -> str:
+    """
+    Generate pfield code
+
+    Args:
+        body: the body of the instrument
+        idx2name: a dict mapping pfield index to its name (as in iname = p5)
+        placeDocstringOnTop: if True, place the docstring on top, then the generated
+            pfield code and the rest of the code last
+
+    Returns:
+        the resulting csound code
+
+    Example
+    ~~~~~~~
+
+    Given a mapping ``{5: 'ifreq', 6: 'kamp'}`` and a body:
+
+    .. code::
+
+        ; Docstring
+        ; Args:
+        ;   ifreq: the frequency
+        ;   kamp: the ampltidue
+        asig oscili ifreq, kamp
+        outch 1, asig
+
+    Generates the following code (with ``placeDocstringOnTop=True``)
+
+    .. code::
+
+        ; Docstring
+        ; Args:
+        ;   ifreq: the frequency
+        ;   kamp: the ampltidue
+        ifreq = p5
+        kamp = p6
+        asig oscili ifreq, kamp
+        outch 1, asig
+
+
+    """
+    parsedCode = csoundlib.instrParseBody(body)
+    newPfieldCode = _pfieldsGenerateCode(idx2name)
+    if not placeDocstringOnTop:
+        parts = [newPfieldCode, " ", parsedCode.body]
+    else:
+        bodylines = parsedCode.body.splitlines()
+        docstringLocation = csoundlib.locateDocstring(bodylines)
+        if docstringLocation is None:
+            parts = [newPfieldCode, " "]
+            parts.extend(bodylines)
+        else:
+            start, end = docstringLocation
+            lines = bodylines
+            docstring = '\n'.join(lines[start:end])
+            rest = '\n'.join(lines[end:])
+            parts = [docstring, newPfieldCode, " ", rest]
+    out = textlib.joinPreservingIndentation(parts)
+    out = textwrap.dedent(out)
+    return out
+
+
+def _detectInlineArgs(lines: list[str]) -> tuple[str, int | None]:
+    """
+    Given a list of lines of an instrument's body, detect
+    if the instrument has inline args defined, and which kind
+
+    Inline args are defined in two ways:
+
+    * ``|ichan, kamp=0.5, kfreq=1000|``
+    * ``{ichan, kamp=0.5, kfreq=1000}``
+
+    Args:
+        lines: the body of the instrument split in lines
+
+    Returns:
+        a tuple (kind of delimiters, line number), where kind of
+        delimiters will be either "||" or "{}". If no inline args are found
+        the tuple ("", 0) is returned
+
+    """
+    for i, line in enumerate(lines):
+        line = line.strip()
+        if not line:
+            continue
+        if (line[0] == "|" and line[-1] == "|") or (line[0] == "{" and line[-1] == "}"):
+            return line[0]+line[-1], i
+        break
+    return "", None
+
+
+def _pfieldsGenerateCode(pfields: dict[int, str],
+                         strmethod='strget',
+                         unifyIndentation=True) -> str:
+    """
+    Generate code for the given pfields
+
+    Args:
+        pfields: a dict mapping p-index to name
+        strmethod: if 'strget', string pargs are implemented as 'Sfoo = strget(p4)',
+            otherwise just 'Sfoo = p4' is generated
+
+    Returns:
+        the generated code
+
+    Example
+    =======
+
+        >>> print(_pfieldsGenerateCode({4: 'ichan', 5: 'kfreq', '6': 'Sname'}))
+        ichan = p4
+        kfreq = p5
+        Sname = strget(p6)
+
+    """
+    pairs = list(pfields.items())
+    pairs.sort()
+    maxwidth = max(len(name) for name in pfields.values())
+    lines = []
+    for idx, name in pairs:
+        if unifyIndentation:
+            name = name.ljust(maxwidth)
+
+        if name[0] == 'S':
+            if strmethod == 'strget':
+                lines.append(f"{name} strget p{idx}")
+            else:
+                lines.append(f"{name} = p{idx}")
+        else:
+            lines.append(f"{name} = p{idx}")
+    return "\n".join(lines)
+
