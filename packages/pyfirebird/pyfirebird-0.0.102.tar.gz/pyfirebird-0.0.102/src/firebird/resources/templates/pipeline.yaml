@@ -1,0 +1,85 @@
+{% for generator_id in generator_ids %}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{k8s_state.generators[generator_id]}}
+  namespace: {{pipeline_namespace_name}}
+  labels:
+    app: firebird-stream-executor
+    role: generator
+    pipeline: {{pipeline_id}}
+    generator: {{generator_id}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: firebird-stream-executor
+      role: generator
+      pipeline: {{pipeline_id}}
+      generator: {{generator_id}}
+  template:
+    metadata:
+      labels:
+        app: firebird-stream-executor
+        role: generator
+        pipeline: {{pipeline_id}}
+        generator: {{generator_id}}
+    spec:
+      containers:
+      - name: {{k8s_state.generators[generator_id]}}
+        image: {{pipeline_image_name}}
+        command:
+          - python
+          - '-u'
+        args:
+          - /usr/local/lib/python3.11/site-packages/firebird/cmd_tools/executor.py
+          - '-pid'
+          - '{{pipeline_id}}'
+          - '-gid'
+          - '{{generator_id}}'
+        volumeMounts:
+          - name: {{k8s_state.generators[generator_id]}}
+            mountPath: /checkpoint
+  volumeClaimTemplates:
+    - metadata:
+        name: {{k8s_state.generators[generator_id]}}
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 20Mi
+{% endfor %}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{k8s_state.deployment_name}}
+  namespace: {{pipeline_namespace_name}}
+  labels:
+    app: firebird-stream-executor
+    role: puller
+    pipeline: {{pipeline_id}}
+spec:
+  replicas: {{replicas}}
+  selector:
+    matchLabels:
+      app: firebird-stream-executor
+      role: puller
+      pipeline: {{pipeline_id}}
+  template:
+    metadata:
+      labels:
+        app: firebird-stream-executor
+        role: puller
+        pipeline: {{pipeline_id}}
+    spec:
+      containers:
+      - name: {{k8s_state.deployment_name}}
+        image: {{pipeline_image_name}}
+        command:
+          - python
+          - '-u'
+        args:
+          - /usr/local/lib/python3.11/site-packages/firebird/cmd_tools/executor.py
+          - '-pid'
+          - '{{pipeline_id}}'
