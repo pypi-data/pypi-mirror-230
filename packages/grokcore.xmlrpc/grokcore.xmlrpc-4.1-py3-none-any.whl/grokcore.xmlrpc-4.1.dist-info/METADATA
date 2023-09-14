@@ -1,0 +1,106 @@
+Metadata-Version: 2.1
+Name: grokcore.xmlrpc
+Version: 4.1
+Summary: XML-RPC View Component for Grok.
+Home-page: https://github.com/zopefoundation/grokcore.json
+Author: Grok Team
+Author-email: zope-dev@zope.dev
+License: ZPL
+Platform: UNKNOWN
+Classifier: Development Status :: 7 - Inactive
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Zope :: 3
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Zope Public License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: Implementation
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Requires-Python: >= 3.7
+Requires-Dist: grokcore.component (>=2.5dev)
+Requires-Dist: grokcore.content
+Requires-Dist: grokcore.security
+Requires-Dist: grokcore.traverser
+Requires-Dist: grokcore.view
+Requires-Dist: martian
+Requires-Dist: setuptools
+Requires-Dist: zope.component
+Requires-Dist: zope.interface
+Requires-Dist: zope.publisher
+Provides-Extra: test
+Requires-Dist: grokcore.view[security_publication] ; extra == 'test'
+Requires-Dist: grokcore.view[test] ; extra == 'test'
+Requires-Dist: zope.app.appsetup ; extra == 'test'
+Requires-Dist: zope.app.wsgi[test] ; extra == 'test'
+Requires-Dist: zope.errorview ; extra == 'test'
+Requires-Dist: zope.testbrowser ; extra == 'test'
+Requires-Dist: zope.testing ; extra == 'test'
+
+.. caution::
+
+    This project is no longer maintained and the repository is to be archived.
+
+    If you want to work on it please open a ticket in
+    https://github.com/zopefoundation/meta/issues requesting its unarchival.
+
+===============
+grokcore.xmlrpc
+===============
+
+XML-RPC Views for Grok.
+
+This package provides base classes for XML-RPC Views for Grok.
+
+=======
+Changes
+=======
+
+4.1 (2023-09-13)
+================
+
+- Final release before taking the project out of maintenance and archiving the
+  repository. No features have changed.
+
+4.0 (2023-02-20)
+================
+
+- Drop support for Python 2.7, 3.4, 3.5, 3.6.
+
+- Add support for Python 3.7, 3.8, 3.9, 3.10, 3.11.
+
+3.0.0 (2018-01-10)
+==================
+
+- Python 3 compatibility.
+
+1.2.1 (2016-02-15)
+==================
+
+- Update tests.
+
+1.2 (2012-05-02)
+================
+
+- Use the component registration api in grokcore.component.
+
+1.1 (2011-01-20)
+================
+
+- Use zope.errorview for the functional tests. This lifts the dependency on
+  zope.app.http.
+
+1.0 (2011-01-03)
+================
+
+- Factor out form grok base package
+
+Download
+********
+
+
