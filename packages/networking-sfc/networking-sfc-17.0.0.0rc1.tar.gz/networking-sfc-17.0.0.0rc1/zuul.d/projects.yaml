@@ -1,0 +1,31 @@
+- project:
+    check:
+      jobs:
+        - networking-sfc-functional
+        - networking-sfc-tempest
+        - networking-sfc-tempest-multinode:
+            voting: false
+    gate:
+      jobs:
+        - networking-sfc-functional
+        - networking-sfc-tempest
+    periodic:
+      jobs:
+        - networking-sfc-tempest-periodic
+    periodic-weekly:
+      jobs:
+        - openstack-tox-py310:
+            required-projects:
+              - openstack/neutron
+        - openstack-tox-py310-with-oslo-master:
+            required-projects:
+              - openstack/neutron
+        - openstack-tox-py310-with-sqlalchemy-main-sfc
+        - networking-sfc-functional
+        - networking-sfc-tempest
+    experimental:
+      jobs:
+        - openstack-tox-py310-with-sqlalchemy-main-sfc
+        - openstack-tox-py310-with-oslo-master:
+            required-projects:
+              - openstack/neutron

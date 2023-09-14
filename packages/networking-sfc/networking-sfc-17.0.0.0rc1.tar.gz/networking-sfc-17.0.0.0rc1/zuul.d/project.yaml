@@ -1,0 +1,16 @@
+- project:
+    templates:
+      - openstack-python3-jobs-neutron
+      - publish-openstack-docs-pti
+      - check-requirements
+      - release-notes-jobs-python3
+    check:
+      jobs:
+        - openstack-tox-docs:
+            required-projects:
+              - openstack/neutron
+    gate:
+      jobs:
+        - openstack-tox-docs:
+            required-projects:
+              - openstack/neutron
