@@ -1,0 +1,83 @@
+<!--
+  ~   Copyright (C) Prolibre Sarl 2019 <Florian Alu> <alu@prolibre.com>
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License and any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+{% extends "nobinobi_child/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block breadcrumb %}
+	{{ block.super }}
+    <li class="breadcrumb-item">{% trans "Statistics" %}</li>
+    <li class="breadcrumb-item active">{{ title }}</li>
+{% endblock %}
+{% block content_title %}{{ title }}{% endblock %}
+{% block content_card_title %}{% trans "Week of" %} {{ day_list.0|date:"l j F Y" }} {% trans "at" %}
+	{{ day_list.4|date:"l j F Y" }}{% endblock %}
+{% block content_card_body %}
+	{% include "includes/messages.html" %}
+    <div class="btn-toolbar" style="justify-content: center;" role="toolbar" aria-label="nav_times">
+        <div class="btn-group" style="display: contents;" role="group" aria-label="nav_times">
+            <a type="button" class="btn btn-secondary"
+               href="{% url 'nobinobi_stats:attendance_calendar' date=month_before.date %}"><i
+                    class="fa fa-angle-double-left"></i></a>
+            <a type="button" class="btn btn-secondary"
+               href="{% url 'nobinobi_stats:attendance_calendar' date=week_before.date %}"><i
+                    class="fa fa-angle-left"></i></a>
+            <a type="button" class="btn btn-info"
+               href="{% url 'nobinobi_stats:attendance_calendar' date=date %}">{{ date|date:'SHORT_DATE_FORMAT' }}</a>
+            <a type="button" class="btn btn-secondary"
+               href="{% url 'nobinobi_stats:attendance_calendar' date=week_after.date %}"><i
+                    class="fa fa-angle-right"></i></a>
+            <a type="button" class="btn btn-secondary"
+               href="{% url 'nobinobi_stats:attendance_calendar' date=month_after.date %}"><i
+                    class="fa fa-angle-double-right"></i></a>
+        </div>
+    </div>
+    <table class="table table-bordered text-center">
+        <thead class="bg-dark-gradient">
+        <tr>
+            <th>{% trans "Classroom" %}</th>
+			{% for day in day_list %}
+                <th>{{ day|date:"l j F"|capfirst }}</th>
+			{% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+		{% for classroom in classroom_dict.values %}
+            <tr>
+                <td scope="row">{{ classroom.name }} ({{ classroom.capacity }})</td>
+				{% for day, value  in classroom.days.items %}
+                    <td>{{ value.total }} ({{ value.percentage }}%)</td>
+				{% endfor %}
+            </tr>
+		{% endfor %}
+        </tbody>
+        <tfoot>
+
+        <tr class="bg-dark-gradient">
+            <td scope="row">{{ total_dict.total.name }} <small>({{ total_dict.total.capacity }})</small></td>
+			{% for day, value in total_dict.total.days.items %}
+                <td>{{ value.total }} {% trans "is" %} ({{ value.percentage }}%)</td>
+			{% endfor %}
+        </tr>
+        </tfoot>
+    </table>
+
+{% endblock %}
+{% block content_card_footer %}
+
+{% endblock %}
