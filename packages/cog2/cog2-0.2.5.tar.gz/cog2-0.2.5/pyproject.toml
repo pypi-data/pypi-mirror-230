@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "cog2"
+version = "0.2.5"
+description = "This is the sdk for build a production ready docker container, to learn more please visit WizModel.com"
+authors = ["Vurtne Saerdna"]
+readme = "README.md"
+homepage = "https://www.wizmodel.com/"
+
+[tool.poetry.scripts]
+cog2 = "cog2.main:app"
+
+
+
+[tool.poetry.dependencies]
+python = "^3.9"
+typer = {extras = ["all"], version = "^0.9.0"}
+requests = "^2.31.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
