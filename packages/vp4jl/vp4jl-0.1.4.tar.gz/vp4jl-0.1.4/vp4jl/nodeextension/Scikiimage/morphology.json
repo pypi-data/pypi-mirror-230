@@ -1,0 +1,37 @@
+{
+  "enable": true,
+  "nodes": {
+    "disk": {
+      "type": "disk",
+      "category": "function",
+      "title": "disk",
+      "externalImports": "from skimage import morphology",
+      "sourceCode": "{{indent}}{{{outputs.1}}} =  threshold_multiotsu({{{inputs.1}}})\n{{indent}}{{{outputs.1}}} = {'value': {{{outputs.1}}}[0], 'dataType': 'numpy.ndarray', 'metadata': {'colorChannel': 'grayscale', 'channelOrder': 'channelFirst', 'isMiniBatched': True, 'intensityRange': '0-1', 'device': 'cpu'}}\n{{{outputs.0}}}",
+      "inputs": {
+        "execIn": {
+          "title": "execIn",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        },
+        "radius": {
+          "title": "radius",
+          "dataType": "integer"
+        }
+      },
+      "outputs": {
+        "execOut": {
+          "title": "execOut",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        },
+        "footprint": {
+          "title": "footprint",
+          "dataType": "numpy.ndarray",
+          "tooltip": "The footprint where elements of the neighborhood are 1 and 0 otherwise."
+        }
+      }
+    }
+  }
+}

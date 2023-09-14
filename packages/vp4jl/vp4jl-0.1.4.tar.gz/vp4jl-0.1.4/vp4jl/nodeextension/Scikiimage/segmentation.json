@@ -1,0 +1,126 @@
+{
+  "enable": true,
+  "nodes": {
+    "threshold_multiotsu": {
+      "type": "threshold_multiotsu",
+      "category": "function",
+      "title": "threshold_multiotsu",
+      "externalImports": "from skimage.filters import threshold_multiotsu",
+      "sourceCode": "{{indent}}{{{outputs.1}}} =  threshold_multiotsu({{{inputs.1}}})\n{{indent}}{{{outputs.1}}} = {'value': {{{outputs.1}}}[0], 'dataType': 'numpy.ndarray', 'metadata': {'colorChannel': 'grayscale', 'channelOrder': 'channelFirst', 'isMiniBatched': True, 'intensityRange': '0-1', 'device': 'cpu'}}\n{{{outputs.0}}}",
+      "inputs": {
+        "execIn": {
+          "title": "execIn",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        },
+        "image": {
+          "title": "image",
+          "dataType": "image",
+          "defaultValue": {
+            "dataType": "numpy.ndarray",
+            "metadata": [
+              {
+                "colorChannel": "grayscale",
+                "isMiniBatched": false,
+                "channelOrder": "none",
+                "intensityRange": "0-255"
+              }
+            ]
+          }
+        },
+        "classes": {
+          "title": "classes",
+          "dataType": "integer",
+          "defaultValue": 3
+        },
+        "nbins": {
+          "title": "nbins",
+          "dataType": "anyDataType",
+          "defaultValue": "none"
+        }
+      },
+      "outputs": {
+        "execOut": {
+          "title": "execOut",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        },
+        "thresh": {
+          "title": "thresh",
+          "dataType": "list",
+          "tooltip": "The threshold that applying multi-Otsu and generating some classes."
+        }
+      }
+    },
+    "watershed": {
+      "type": "watershed",
+      "category": "function",
+      "title": "watershed",
+      "tooltip": "The watershed is a classical algorithm used for segmentation,",
+      "externalImports": "from skimage.segmentation import watershed",
+      "sourceCode": "{{indent}}{{{outputs.1}}} =  watershed({{{-inputs.1}}},{{{inputs.2}}},{{{inputs.3}}})\n{{indent}}{{{outputs.1}}} = {'value': {{{outputs.1}}}[0], 'dataType': 'numpy.ndarray', 'metadata': {'colorChannel': 'grayscale', 'channelOrder': 'channelFirst', 'isMiniBatched': True, 'intensityRange': '0-1', 'device': 'cpu'}}\n{{{outputs.0}}}",
+      "inputs": {
+        "execIn": {
+          "title": "execIn",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        },
+        "image": {
+          "title": "image",
+          "dataType": "image",
+          "defaultValue": {
+            "dataType": "numpy.ndarray",
+            "metadata": [
+              {
+                "colorChannel": "grayscale",
+                "isMiniBatched": false,
+                "channelOrder": "none",
+                "intensityRange": "0-255"
+              }
+            ]
+          },
+          "tooltip": "Input image"
+        },
+        "markers": {
+          "title": "markers",
+          "dataType": "numpy.ndarray",
+          "defaultValue": "None",
+          "tooltip": "The desired number of markers, or an array marking the basins with the values to be assigned in the label matrix."
+        },
+        "mask": {
+          "title": "mask",
+          "dataType": "numpy.ndarray",
+          "defaultValue": "None",
+          "tooltip": "ndarray of bools or 0s and 1s"
+        }
+      },
+      "outputs": {
+        "execOut": {
+          "title": "execOut",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        },
+        "image": {
+          "title": "image",
+          "dataType": "image",
+          "defaultValue": {
+            "dataType": "numpy.ndarray",
+            "metadata": [
+              {
+                "colorChannel": "grayscale",
+                "isMiniBatched": false,
+                "channelOrder": "none",
+                "intensityRange": "0-255"
+              }
+            ]
+          },
+          "tooltip": "A labeled matrix of the same type and shape as markers"
+        }
+      }
+    }
+  }
+}

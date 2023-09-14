@@ -1,0 +1,165 @@
+{
+  "description": "Image read and write functions from torchvision.io",
+  "enable": true,
+  "nodes": {
+    "paths_to_images_in_folder": {
+      "type": "paths_to_images_in_folder",
+      "category": "function",
+      "title": "paths_to_images_in_folder",
+      "tooltip": "Returns a list of paths to images in a given folder.",
+      "externalImports": "from torchvision import io\nfrom torchvision.io import ImageReadMode",
+      "sourceCode": "{{indent}}{{{outputs.1}}} = io.read_image({{{inputs.1}}}, {{{inputs.2}}})\n{{indent}}{{{outputs.1}}} = {'value': {{{outputs.1}}}, 'dataType': 'torch.tensor', 'metadata': {'colorChannel': 'rgb', 'channelOrder': 'channelFirst', 'isMiniBatched': False, 'intensityRange': '0-255', 'device': 'cpu'}}\n{{{outputs.0}}}",
+      "inputs": {
+        "execIn": {
+          "title": "execIn",
+          "tooltip": "execIn",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        },
+        "path": {
+          "title": "path",
+          "dataType": "string",
+          "tooltip": "path(str) - path of the folder."
+        },
+        "format": {
+          "title": "format",
+          "dataType": "imageio.ImageFileFormat",
+          "default": "ImageFileFormat.JPG"
+        }
+      },
+      "outputs": {
+        "execOut": {
+          "title": "execOut",
+          "tooltip": "execOut",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        },
+        "paths": {
+          "title": "paths",
+          "dataType": "list",
+          "defaultValue": []
+        }
+      }
+    },
+    "read_image": {
+      "type": "read_image",
+      "category": "function",
+      "title": "read_image",
+      "tooltip": "Reads a JPEG or PNG image into a 3 dimensional RGB or grayscale Tensor. Optionally converts the image to the desired format. The values of the output tensor are uint8 in [0, 255].",
+      "externalImports": "from torchvision import io\nfrom torchvision.io import ImageReadMode",
+      "sourceCode": "{{indent}}{{{outputs.1}}} = io.read_image({{{inputs.1}}}, {{{inputs.2}}})\n{{indent}}{{{outputs.1}}} = {'value': {{{outputs.1}}}, 'dataType': 'torch.tensor', 'metadata': {'colorChannel': 'rgb', 'channelOrder': 'channelFirst', 'isMiniBatched': False, 'intensityRange': '0-255', 'device': 'cpu'}}\n{{{outputs.0}}}",
+      "inputs": {
+        "execIn": {
+          "title": "execIn",
+          "tooltip": "execIn",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        },
+        "path": {
+          "title": "path",
+          "dataType": "string",
+          "tooltip": "path(str) - path of the JPEG or PNG image."
+        },
+        "mode": {
+          "title": "mode",
+          "dataType": "imageio.ImageReadMode",
+          "default": "ImageReadMode.UNCHANGED",
+          "tooltip": "mode(ImageReadMode) - The read mode used for optionally converting the image. Default: ImageReadMode.UNCHANGED."
+        }
+      },
+      "outputs": {
+        "execOut": {
+          "title": "execOut",
+          "tooltip": "execOut",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        },
+        "image": {
+          "title": "image",
+          "dataType": "image",
+          "defaultValue": {
+            "dataType": "torch.tensor"
+          },
+          "tooltip": "{dataType: torch.tensor, value, layout: [chw], colorMode: [rgb, grayscale], intensityRange: 0-255' device: cpu}"
+        }
+      }
+    },
+    "write_image": {
+      "type": "write_image",
+      "category": "function",
+      "title": "write_image",
+      "externalImports": "from torchvision import io",
+      "functionName": "io.write_jpeg",
+      "inputs": {
+        "execIn": {
+          "title": "execIn",
+          "tooltip": "execIn",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        },
+        "image": {
+          "title": "image",
+          "dataType": "image",
+          "defaultValue": {
+            "dataType": "numpy.ndarray",
+            "metadata": [
+              {
+                "colorChannel": "rgb",
+                "isMiniBatched": false,
+                "channelOrder": "channelLast",
+                "intensityRange": "0-255"
+              }]
+          }
+        },
+        "filename": {
+          "title": "filename",
+          "dataType": "string",
+          "defaultValue": "",
+          "tooltip": "filename(str) - Path to save the image."
+        },
+        "format": {
+          "title": "format",
+          "dataType": "imageio.ImageFileFormat",
+          "default": "ImageFileFormat.JPEG"
+        }
+      },
+      "outputs": {
+        "execOut": {
+          "title": "execOut",
+          "tooltip": "execOut",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        }
+      }
+    }
+  },
+  "types": {
+    "ImageReadMode": {
+      "options": {
+        "UNCHANGED": "ImageReadMode.UNCHANGED",
+        "GRAY ": " ImageReadMode.GRAY",
+        "GRAY_ALPHA": "ImageReadMode.GRAY_ALPHA",
+        "RGB": "ImageReadMode.RGB",
+        "RGB_ALPHA": "ImageReadMode.RGB_ALPHA"
+      },
+      "default": "UNCHANGED",
+      "widget": "EnumSelect"
+    },
+     "ImageFileFormat": {
+      "options": {
+        "JPG": "ImageFileFormat.JPG",
+        "JPEG": "ImageFileFormat.JPEG",
+        "PNG ": "ImageFileFormat.PNG",
+        "TIFF": "ImageFileFormat.TIFF"
+      },
+      "default": "UNCHANGED",
+      "widget": "EnumSelect"
+    }
+  }
+}

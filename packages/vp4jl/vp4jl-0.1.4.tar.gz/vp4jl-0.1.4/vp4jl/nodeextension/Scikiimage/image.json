@@ -1,0 +1,39 @@
+{
+  "enable": true,
+  "nodes": {
+    "create_mask": {
+      "type": "create_mask",
+      "category": "function",
+      "title": "create_mask",
+      "externalImports": "from skimage import morphology",
+      "sourceCode": "{{indent}}{{{outputs.1}}} =  threshold_multiotsu({{{inputs.1}}})\n{{indent}}{{{outputs.1}}} = {'value': {{{outputs.1}}}[0], 'dataType': 'numpy.ndarray', 'metadata': {'colorChannel': 'grayscale', 'channelOrder': 'channelFirst', 'isMiniBatched': True, 'intensityRange': '0-1', 'device': 'cpu'}}\n{{{outputs.0}}}",
+      "inputs": {
+        "execIn": {
+          "title": "execIn",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        },
+        "coordinates": {
+          "title": "coordinates",
+          "dataType": "numpy.ndarray"
+        }
+      },
+      "outputs": {
+        "execOut": {
+          "title": "execOut",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        },
+        "image": {
+          "title": "image",
+          "dataType": "image",
+          "defaultValue": {
+            "dataType": "numpy.ndarray"
+          }
+        }
+      }
+    }
+  }
+}
