@@ -1,0 +1,7 @@
+<div {% include "django/forms/widgets/attrs.html" %}></div>
+{% with widget.vue_context.id|add:"_vue_context" as vue_context_id %}
+{{ widget|json_script:vue_context_id }}
+{% endwith %}
+<script>
+    setTimeout(function() { window.vueMount('{{ widget.vue_context.id }}') }, 100)
+</script>
