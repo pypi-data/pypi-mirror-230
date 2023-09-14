@@ -1,0 +1,63 @@
+Metadata-Version: 2.1
+Name: poetry-pyinvoke-plugin
+Version: 0.2.2
+Summary: A plugin for poetry that allows you to execute scripts defined in your tasks.py using pyinvoke. Inspired by poetry-exec-plugin.
+Home-page: https://github.com/neozenith/poetry-pyinvoke-plugin
+License: MIT
+Author: neozenith
+Requires-Python: >=3.7,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: invoke (>=2.2.0,<3.0.0)
+Requires-Dist: poetry (>=1.6.1,<2.0.0)
+Requires-Dist: simple-chalk (>=0.1.0,<0.2.0)
+Requires-Dist: toml (>=0.10.2,<0.11.0)
+Project-URL: Repository, https://github.com/neozenith/poetry-pyinvoke-plugin
+Description-Content-Type: text/markdown
+
+# poetry-pyinvoke-plugin
+
+A plugin for poetry that allows you to invoke commands in your `tasks.py` file delegating to `pyinvoke`.
+
+Heavily inspired by the work from `keattang` on the [poetry-exec-plugin](https://github.com/keattang/poetry-exec-plugin) project.
+
+## Installation
+
+Installation requires poetry 1.6.0+. To install this plugin run:
+
+```sh
+pip install poetry-pyinvoke-plugin
+# OR
+poetry self add poetry-pyinvoke-plugin
+```
+
+For other methods of installing plugins see the [poetry documentation](https://python-poetry.org/docs/master/plugins/#the-plugin-add-command).
+
+## Usage
+
+`tasks.py`
+```python
+from invoke import task
+
+@task
+def lint(c):
+  c.run("flake8")
+  c.run("black --check .")
+```
+
+Then:
+```sh
+poetry invoke lint
+# OR
+poetry inv lint
+```
+
+## Publishing
+
+To publish a new version create a release from `main` (after pull request).
+
