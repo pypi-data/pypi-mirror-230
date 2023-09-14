@@ -1,0 +1,383 @@
+Metadata-Version: 2.1
+Name: tradingenv
+Version: 0.1.0
+Summary: Backtest trading strategies or train reinforcement learning agents with and event-driven market simulator.
+Home-page: https://github.com/xaiassetmanagement/tradingenv
+Author: Federico Fontana
+Author-email: Federico Fontana <federico.fontana@xai-am.com>
+License: Apache License
+                                   Version 2.0, January 2004
+                                http://www.apache.org/licenses/
+        
+           TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+        
+           1. Definitions.
+        
+              "License" shall mean the terms and conditions for use, reproduction,
+              and distribution as defined by Sections 1 through 9 of this document.
+        
+              "Licensor" shall mean the copyright owner or entity authorized by
+              the copyright owner that is granting the License.
+        
+              "Legal Entity" shall mean the union of the acting entity and all
+              other entities that control, are controlled by, or are under common
+              control with that entity. For the purposes of this definition,
+              "control" means (i) the power, direct or indirect, to cause the
+              direction or management of such entity, whether by contract or
+              otherwise, or (ii) ownership of fifty percent (50%) or more of the
+              outstanding shares, or (iii) beneficial ownership of such entity.
+        
+              "You" (or "Your") shall mean an individual or Legal Entity
+              exercising permissions granted by this License.
+        
+              "Source" form shall mean the preferred form for making modifications,
+              including but not limited to software source code, documentation
+              source, and configuration files.
+        
+              "Object" form shall mean any form resulting from mechanical
+              transformation or translation of a Source form, including but
+              not limited to compiled object code, generated documentation,
+              and conversions to other media types.
+        
+              "Work" shall mean the work of authorship, whether in Source or
+              Object form, made available under the License, as indicated by a
+              copyright notice that is included in or attached to the work
+              (an example is provided in the Appendix below).
+        
+              "Derivative Works" shall mean any work, whether in Source or Object
+              form, that is based on (or derived from) the Work and for which the
+              editorial revisions, annotations, elaborations, or other modifications
+              represent, as a whole, an original work of authorship. For the purposes
+              of this License, Derivative Works shall not include works that remain
+              separable from, or merely link (or bind by name) to the interfaces of,
+              the Work and Derivative Works thereof.
+        
+              "Contribution" shall mean any work of authorship, including
+              the original version of the Work and any modifications or additions
+              to that Work or Derivative Works thereof, that is intentionally
+              submitted to Licensor for inclusion in the Work by the copyright owner
+              or by an individual or Legal Entity authorized to submit on behalf of
+              the copyright owner. For the purposes of this definition, "submitted"
+              means any form of electronic, verbal, or written communication sent
+              to the Licensor or its representatives, including but not limited to
+              communication on electronic mailing lists, source code control systems,
+              and issue tracking systems that are managed by, or on behalf of, the
+              Licensor for the purpose of discussing and improving the Work, but
+              excluding communication that is conspicuously marked or otherwise
+              designated in writing by the copyright owner as "Not a Contribution."
+        
+              "Contributor" shall mean Licensor and any individual or Legal Entity
+              on behalf of whom a Contribution has been received by Licensor and
+              subsequently incorporated within the Work.
+        
+           2. Grant of Copyright License. Subject to the terms and conditions of
+              this License, each Contributor hereby grants to You a perpetual,
+              worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+              copyright license to reproduce, prepare Derivative Works of,
+              publicly display, publicly perform, sublicense, and distribute the
+              Work and such Derivative Works in Source or Object form.
+        
+           3. Grant of Patent License. Subject to the terms and conditions of
+              this License, each Contributor hereby grants to You a perpetual,
+              worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+              (except as stated in this section) patent license to make, have made,
+              use, offer to sell, sell, import, and otherwise transfer the Work,
+              where such license applies only to those patent claims licensable
+              by such Contributor that are necessarily infringed by their
+              Contribution(s) alone or by combination of their Contribution(s)
+              with the Work to which such Contribution(s) was submitted. If You
+              institute patent litigation against any entity (including a
+              cross-claim or counterclaim in a lawsuit) alleging that the Work
+              or a Contribution incorporated within the Work constitutes direct
+              or contributory patent infringement, then any patent licenses
+              granted to You under this License for that Work shall terminate
+              as of the date such litigation is filed.
+        
+           4. Redistribution. You may reproduce and distribute copies of the
+              Work or Derivative Works thereof in any medium, with or without
+              modifications, and in Source or Object form, provided that You
+              meet the following conditions:
+        
+              (a) You must give any other recipients of the Work or
+                  Derivative Works a copy of this License; and
+        
+              (b) You must cause any modified files to carry prominent notices
+                  stating that You changed the files; and
+        
+              (c) You must retain, in the Source form of any Derivative Works
+                  that You distribute, all copyright, patent, trademark, and
+                  attribution notices from the Source form of the Work,
+                  excluding those notices that do not pertain to any part of
+                  the Derivative Works; and
+        
+              (d) If the Work includes a "NOTICE" text file as part of its
+                  distribution, then any Derivative Works that You distribute must
+                  include a readable copy of the attribution notices contained
+                  within such NOTICE file, excluding those notices that do not
+                  pertain to any part of the Derivative Works, in at least one
+                  of the following places: within a NOTICE text file distributed
+                  as part of the Derivative Works; within the Source form or
+                  documentation, if provided along with the Derivative Works; or,
+                  within a display generated by the Derivative Works, if and
+                  wherever such third-party notices normally appear. The contents
+                  of the NOTICE file are for informational purposes only and
+                  do not modify the License. You may add Your own attribution
+                  notices within Derivative Works that You distribute, alongside
+                  or as an addendum to the NOTICE text from the Work, provided
+                  that such additional attribution notices cannot be construed
+                  as modifying the License.
+        
+              You may add Your own copyright statement to Your modifications and
+              may provide additional or different license terms and conditions
+              for use, reproduction, or distribution of Your modifications, or
+              for any such Derivative Works as a whole, provided Your use,
+              reproduction, and distribution of the Work otherwise complies with
+              the conditions stated in this License.
+        
+           5. Submission of Contributions. Unless You explicitly state otherwise,
+              any Contribution intentionally submitted for inclusion in the Work
+              by You to the Licensor shall be under the terms and conditions of
+              this License, without any additional terms or conditions.
+              Notwithstanding the above, nothing herein shall supersede or modify
+              the terms of any separate license agreement you may have executed
+              with Licensor regarding such Contributions.
+        
+           6. Trademarks. This License does not grant permission to use the trade
+              names, trademarks, service marks, or product names of the Licensor,
+              except as required for reasonable and customary use in describing the
+              origin of the Work and reproducing the content of the NOTICE file.
+        
+           7. Disclaimer of Warranty. Unless required by applicable law or
+              agreed to in writing, Licensor provides the Work (and each
+              Contributor provides its Contributions) on an "AS IS" BASIS,
+              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+              implied, including, without limitation, any warranties or conditions
+              of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+              PARTICULAR PURPOSE. You are solely responsible for determining the
+              appropriateness of using or redistributing the Work and assume any
+              risks associated with Your exercise of permissions under this License.
+        
+           8. Limitation of Liability. In no event and under no legal theory,
+              whether in tort (including negligence), contract, or otherwise,
+              unless required by applicable law (such as deliberate and grossly
+              negligent acts) or agreed to in writing, shall any Contributor be
+              liable to You for damages, including any direct, indirect, special,
+              incidental, or consequential damages of any character arising as a
+              result of this License or out of the use or inability to use the
+              Work (including but not limited to damages for loss of goodwill,
+              work stoppage, computer failure or malfunction, or any and all
+              other commercial damages or losses), even if such Contributor
+              has been advised of the possibility of such damages.
+        
+           9. Accepting Warranty or Additional Liability. While redistributing
+              the Work or Derivative Works thereof, You may choose to offer,
+              and charge a fee for, acceptance of support, warranty, indemnity,
+              or other liability obligations and/or rights consistent with this
+              License. However, in accepting such obligations, You may act only
+              on Your own behalf and on Your sole responsibility, not on behalf
+              of any other Contributor, and only if You agree to indemnify,
+              defend, and hold each Contributor harmless for any liability
+              incurred by, or claims asserted against, such Contributor by reason
+              of your accepting any such warranty or additional liability.
+        
+           END OF TERMS AND CONDITIONS
+        
+           APPENDIX: How to apply the Apache License to your work.
+        
+              To apply the Apache License to your work, attach the following
+              boilerplate notice, with the fields enclosed by brackets "[]"
+              replaced with your own identifying information. (Don't include
+              the brackets!)  The text should be enclosed in the appropriate
+              comment syntax for the file format. We also recommend that a
+              file or class name and description of purpose be included on the
+              same "printed page" as the copyright notice for easier
+              identification within third-party archives.
+        
+           Copyright [yyyy] [name of copyright owner]
+        
+           Licensed under the Apache License, Version 2.0 (the "License");
+           you may not use this file except in compliance with the License.
+           You may obtain a copy of the License at
+        
+               http://www.apache.org/licenses/LICENSE-2.0
+        
+           Unless required by applicable law or agreed to in writing, software
+           distributed under the License is distributed on an "AS IS" BASIS,
+           WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+           See the License for the specific language governing permissions and
+           limitations under the License.
+Project-URL: Homepage, https://github.com/xaiassetmanagement/tradingenv
+Project-URL: Documentation, https://xaiassetmanagement.github.io/tradingenv
+Project-URL: Bug Tracker, https://github.com/xaiassetmanagement/tradingenv/issues
+Keywords: trading,investment,finance,backtest,reinforcement-learning,gym
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/x-rst
+License-File: LICENSE.txt
+Requires-Dist: exchange-calendars
+Requires-Dist: gym ==0.21
+Requires-Dist: numpy
+Requires-Dist: pandas
+Requires-Dist: plotly
+Requires-Dist: scikit-learn
+Requires-Dist: statsmodels
+Requires-Dist: tqdm
+Provides-Extra: extra
+Requires-Dist: yfinance ; extra == 'extra'
+Requires-Dist: pytest ; extra == 'extra'
+Requires-Dist: pytest-mock ; extra == 'extra'
+Requires-Dist: pytest-cov ; extra == 'extra'
+Requires-Dist: openpyxl ; extra == 'extra'
+Requires-Dist: jupyterlab ; extra == 'extra'
+Requires-Dist: nbconvert ; extra == 'extra'
+Requires-Dist: Sphinx ; extra == 'extra'
+
+Introduction
+============
+Backtest trading strategies or train reinforcement learning agents with
+:code:`tradingenv`, an event-driven market simulator that implements the
+OpenAI/gym protocol.
+
+
+Installation
+============
+tradingenv supports Python 3.7 or newer versions. The following command line
+will install the latest software version.
+
+.. code-block:: console
+
+    pip install tradingenv
+
+Notebooks, software tests and building the documentation require extra
+dependencies that can be installed with
+
+.. code-block:: console
+
+    pip install tradingenv[extra]
+
+
+Example - Reinforcement Learning
+================================
+The package is built upon the industry-standard gym_ and therefore can be used
+in conjunction with popular reinforcement learning frameworks including rllib_
+and stable-baselines3_.
+
+.. code-block:: python
+
+    from tradingenv import TradingEnv
+    from tradingenv.contracts import ETF
+    from tradingenv.spaces import BoxPortfolio
+    from tradingenv.state import IState
+    from tradingenv.rewards import RewardLogReturn
+    from tradingenv.broker.fees import BrokerFees
+    from tradingenv.policy import AbstractPolicy
+    import yfinance
+
+    # Load prices of SPY ETF and TLT ETF from Yahoo Finance as pandas.DataFrame.
+    prices = yfinance.Tickers(['SPY', 'TLT', 'TBIL']).history(period="12mo")['Close'].tz_localize(None)
+
+    # Specify contract type.
+    prices.columns = [ETF('SPY'), ETF('TLT'), ETF('TBIL')]
+
+    # Instance the trading environment.
+    env = TradingEnv(
+        action_space=BoxPortfolio([ETF('SPY'), ETF('TLT')], low=-1, high=+1, as_weights=True),
+        state=IState(),
+        reward=RewardLogReturn(),
+        prices=prices,
+        initial_cash=1_000_000,
+        latency=0,  # seconds
+        steps_delay=1,  # trades are implemented with a delay on one step
+        broker_fees=BrokerFees(
+            markup=0.005,  # 0.5% broker markup on deposit rate
+            proportional=0.0001,  # 0.01% fee of traded notional
+            fixed=1,  # $1 per trade
+        ),
+    )
+
+    # OpenAI/gym protocol. Run an episode in the environment.
+    # env can be passed to RL agents of ray/rllib or stable-baselines3.
+    obs = env.reset()
+    done = False
+    while not done:
+        action = env.action_space.sample()
+        obs, reward, done, info = env.step(action)
+
+
+Example - Backtesting
+=====================
+Thanks to the event-driven design, tradingenv is agnostic with
+respect to the type and time-frequency of the events. This means that you can
+run simulations either using irregularly sampled trade and quotes data, daily
+closing prices, monthly economic data or alternative data. Financial instruments
+supported include stocks, ETF and futures.
+
+.. code-block:: python
+
+    class Portfolio6040(AbstractPolicy):
+        """Implement logic of your investment strategy or RL agent here."""
+
+        def act(self, state):
+            """Invest 60% of the portfolio in SPY ETF and 40% in TLT ETF."""
+            return [0.6, 0.4]
+
+    # Run the backtest.
+    track_record = env.backtest(
+        policy=Portfolio6040(),
+        risk_free=prices['TBIL'],
+        benchmark=prices['SPY'],
+    )
+
+    # The track_record object stores the results of your backtest.
+    track_record.tearsheet()
+
+
+.. figure:: docs/source/images/tearsheet.png
+
+
+.. code-block:: python
+
+    track_record.fig_net_liquidation_value()
+
+
+.. figure:: docs/source/images/fig_net_liquidation_value.png
+
+
+
+Relevant projects
+=================
+- btgym_: is an OpenAI Gym-compatible environment for
+- backtrader_ backtesting/trading library, designed to provide gym-integrated framework for running reinforcement learning experiments in [close to] real world algorithmic trading environments.
+- gym_: A toolkit for developing and comparing reinforcement learning algorithms.
+- qlib_: Qlib provides a strong infrastructure to support quant research.
+- rllib_: open-source library for reinforcement learning.
+- stable-baselines3_: is a set of reliable implementations of reinforcement learning algorithms in PyTorch.
+
+
+Developers
+==========
+You are welcome to contribute features, examples and documentation or issues.
+
+You can run the software tests typing :code:`pytest` in the command line,
+assuming that the folder :code:`\tests` is in the current working directory.
+
+To refresh and build the documentation:
+
+.. code-block::
+
+   pytest tests/notebooks
+   sphinx-apidoc -f -o docs/source tradingenv
+   cd docs
+   make clean
+   make html
+
+
+.. Hyperlinks.
+.. _btgym: https://github.com/Kismuz/btgym
+.. _backtrader: https://github.com/backtrader/backtrader
+.. _gym: https://github.com/openai/gym
+.. _qlib: https://github.com/microsoft/qlib
+.. _rllib: https://docs.ray.io/en/latest/rllib/
+.. _stable-baselines3: https://github.com/hill-a/stable-baselines
