@@ -1,0 +1,57 @@
+Metadata-Version: 2.1
+Name: refrot
+Version: 1.4.1
+Summary: Verify website links
+Author-email: Craig Howard <craig@seagrape.us>
+Project-URL: Homepage, https://seagrape.us/refrot.html
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# Refrot
+
+A [Python] script to check a website for broken links, also known as link rot or
+reference rot.
+
+## How To Install It
+
+Install using:
+
+	pip3 install refrot
+
+## How To Use It
+
+By default refrot checks all internal links, no matter how many levels, and a
+single level of external links.
+
+    refrot <url>
+
+### Options
+
+    -h --help                   Show help.
+    -i --ignore-external-links  Ignore external hyperlinks.
+    -u --user-agent             Send custom user agent string.
+    -v --version                Show version number.
+
+### Output
+
+URLs with status codes other than OK (200) and Temporary Redirect (302) are
+displayed in the post-run summary.
+
+## Links
+
+- [Project page](https://seagrape.us/refrot.html)
+- [Release history](https://seagrape.us/refrot-history.html)
+
+## License
+
+[MIT license].
+
+## Contact Me
+
+Send bug reports and patches to <craig@seagrape.us>.
+
+[Python]: https://www.python.org
+[MIT license]: https://seagrape.us/MIT-license.html
