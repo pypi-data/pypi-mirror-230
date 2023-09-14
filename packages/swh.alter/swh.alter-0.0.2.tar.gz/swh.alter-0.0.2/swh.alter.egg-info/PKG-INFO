@@ -1,0 +1,44 @@
+Metadata-Version: 2.1
+Name: swh.alter
+Version: 0.0.2
+Summary: Software Heritage archive modification tools
+Home-page: https://gitlab.softwareheritage.org/swh/devel/swh-alter
+Author: Software Heritage developers
+Author-email: swh-devel@inria.fr
+Project-URL: Bug Reports, https://gitlab.softwareheritage.org/swh/devel/swh-alter/-/issues
+Project-URL: Funding, https://www.softwareheritage.org/donate
+Project-URL: Source, https://gitlab.softwareheritage.org/swh/devel/swh-alter
+Project-URL: Documentation, https://docs.softwareheritage.org/devel/swh-alter/
+Classifier: Programming Language :: Python :: 3
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Classifier: Operating System :: OS Independent
+Classifier: Development Status :: 3 - Alpha
+Requires-Python: >=3.7
+Description-Content-Type: text/x-rst
+License-File: LICENSE
+License-File: AUTHORS
+Requires-Dist: attrs
+Requires-Dist: click
+Requires-Dist: igraph
+Requires-Dist: pyyaml
+Requires-Dist: shamir-mnemonic
+Requires-Dist: typing_extensions
+Requires-Dist: swh.core[http]>=0.3
+Requires-Dist: swh.graph>=3.0
+Requires-Dist: swh.model
+Requires-Dist: swh.storage>=1.16
+Provides-Extra: testing
+Requires-Dist: pytest; extra == "testing"
+Requires-Dist: swh.core[testing]; extra == "testing"
+Requires-Dist: swh.graph[testing]; extra == "testing"
+Requires-Dist: swh.storage[testing]; extra == "testing"
+Requires-Dist: types-pyyaml; extra == "testing"
+
+Software Heritage - Archive altering facilities
+===============================================
+
+It happens for Software Heritage to record content that either should not
+have been archived or should no longer be archived. ``swh-alter`` holds
+the tools necessary to prune or make inaccessible content from Software
+Heritage archive.
