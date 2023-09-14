@@ -1,0 +1,32 @@
+# @package _global_
+
+# specify here default configuration
+# order of defaults determines the order in which configs override each other
+
+defaults:
+  - _self_
+  - hydra: default
+
+task: run
+
+ngc: 78
+img: nvidian/lpr-imagine/imaginaire_qsh:1.1
+name:
+nnode: 1
+ngpu: 8
+user:
+
+workdir:
+cmd:
+  - "sleep 1d"
+
+jupyter: True
+sleep: True
+
+ws:
+dataset:
+
+file: ngc_cus.yaml
+exec: ${debug}
+debug: True
+submit: False
