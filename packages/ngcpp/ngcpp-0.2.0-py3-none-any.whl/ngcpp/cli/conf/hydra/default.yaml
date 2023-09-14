@@ -1,0 +1,8 @@
+run:
+  dir: /tmp/ngcpp/{task}/${now:%Y-%m-%d}/${now:%H-%M-%S}
+hydra_logging:
+  disable_existing_loggers: true
+sweep:
+  dir: /tmp/ngcpp/{task}/multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
+job:
+  chdir: False
