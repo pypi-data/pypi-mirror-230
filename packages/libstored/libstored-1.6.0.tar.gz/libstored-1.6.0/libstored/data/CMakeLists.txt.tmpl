@@ -1,0 +1,23 @@
+{#
+# vim:filetype=cmake
+#
+# libstored, distributed debuggable data stores.
+# Copyright (C) 2020-2023  Jochem Rutgers
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+-#}
+
+cmake_minimum_required(VERSION 3.5)
+project({{libprefix}}libstored)
+cmake_policy(VERSION 3.5)
+
+set(PYTHON_EXECUTABLE "{{python_executable|escapebs}}")
+
+file(TO_CMAKE_PATH "{{libstored_dir|escapebs}}" LIBSTORED_SOURCE_DIR)
+list(APPEND CMAKE_MODULE_PATH ${LIBSTORED_SOURCE_DIR}/cmake)
+include(libstored)
+libstored_lib(TARGET {{libprefix}}libstored DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}
+	STORES{% for m in models %} {{m}}{% endfor %}
+)
