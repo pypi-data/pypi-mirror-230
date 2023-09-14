@@ -1,0 +1,111 @@
+#include "decompress.h"
+
+// private function declarations
+static size_t write_compressed_file_to_memory(const char *filename, FILE* fpmem);
+
+static size_t get_block_size(FILE* fp);
+
+static size_t get_file_size(FILE* fp);
+
+static size_t decompress_block(char* data, FILE* fp);
+
+// public functions
+
+const char *get_filename_ext(const char *filename)
+{
+  const char *dot = strrchr(filename, '.');
+  if(!dot || dot == filename) return "";
+  return dot + 1;
+}
+
+const char is_file_compressed(const char *filename)
+{
+  const char* extension = get_filename_ext(filename);
+  return (extension[1]=='c');
+}
+
+
+FILE* fopen_compressed_file(const char* filename){
+
+  size_t uncompressed_file_size;
+
+  FILE* fpmem;
+  
+  // We provide a large enough space, but using append mode, gives
+  // control to fmemopen to update the size of its internal buffer as
+  // it needs.
+  fpmem = fmemopen(NULL, MAX_IN_MEMORY_FILE_SIZE, "a+");
+  
+  uncompressed_file_size = write_compressed_file_to_memory(filename, fpmem);
+  printf("uncompressed file size: %d\n",uncompressed_file_size);
+  return fpmem;
+  
+}
+
+
+/* private functions */
+
+
+
+static size_t write_compressed_file_to_memory(const char *filename, FILE* fpmem)
+{
+    FILE* fp;
+    size_t decompressed_block_size;
+    size_t compressed_file_size;
+    size_t file_size = 0;
+    fp = fopen(filename, "rb");
+    if (fp==NULL){
+    }
+    else{
+        compressed_file_size = get_file_size(fp);
+        char data[CHUNKSIZE];
+        while(ftell(fp)<compressed_file_size){
+	  decompressed_block_size = decompress_block(data, fp);
+	  file_size+= decompressed_block_size;
+	  for(size_t i=0; i< decompressed_block_size; ++i){
+	    fwrite(&(data[i]), 1, 1, fpmem);
+	  }
+        }
+    }
+    fclose(fp);
+    rewind(fpmem);
+    return file_size;
+}
+
+
+static size_t get_block_size(FILE* fp){
+
+    uint16_t size=0;
+    uint8_t b[2];
+
+    fread(&b, sizeof(b), 1, fp);
+    size = (b[0]<<8) + b[1];
+    return size;
+}
+
+static size_t get_file_size(FILE* fp)
+{
+    size_t current_position = ftell(fp);
+    fseek(fp, 0, 2);
+    size_t file_size = ftell(fp);
+    fseek(fp, current_position, 0);
+    return file_size;
+}
+
+static size_t decompress_block(char* data, FILE* fp)
+{
+    size_t block_size, decompressed_size;
+    char* buffer;
+
+    block_size = get_block_size(fp);
+    buffer = (char*) malloc(sizeof(char)*block_size);
+    for(size_t i=0; i<block_size; ++i){
+        fread(&(buffer[i]), sizeof(char), 1, fp);
+     }
+    decompressed_size = LZ4_decompress_safe_partial (buffer, data, block_size, CHUNKSIZE, CHUNKSIZE);
+    free(buffer);
+    return decompressed_size;
+}
+
+
+
