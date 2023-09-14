@@ -1,0 +1,36 @@
+Metadata-Version: 2.1
+Name: pyElsHelp
+Version: 0.0.2
+Summary: This is the module for ELSCHOOL diary
+Home-page: https://github.com/theslothbear/Elschool-Help-Bot
+Author: the_sloth_bear
+Author-email: molnychess@yandex.ru
+License: UNKNOWN
+Project-URL: GitHub, https://github.com/theslothbear
+Keywords: pyElsHelp
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3.11
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+
+# pyElsHelp Library #
+
+## What is this? ##
+The module allows you to authenticate and get information from ELSCHOOL diary with your login and password
+
+## Quick Guide ##
+The module is based on the following structure:
+
+	from pyElsHelp import ElsUser
+
+	user = ElsUser(login='login', password='pass')
+
+	print(user.auth())
+	print(user.get_class())
+	print(user.get_marks(subject='math', period='1'))
+
+## Developer ##
+My GitHub profile [here](https://github.com/theslothbear)
+
