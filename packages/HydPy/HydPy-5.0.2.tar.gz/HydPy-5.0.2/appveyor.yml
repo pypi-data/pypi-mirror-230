@@ -1,0 +1,75 @@
+
+version: 5.0.2.{build}
+
+image: Visual Studio 2019
+
+environment:
+  PYPIPA:
+    secure: OYHmXK1t/zHOfA97P+RmCVDWG1ef8lyMQaNK/jmVAXk=
+  matrix:
+    - PYTHON: "C:\\Python38-x64"
+      make_exe: false
+      python_mode: false
+      cython_mode: true
+    - PYTHON: "C:\\Python39-x64"
+      make_exe: false
+      python_mode: true
+      cython_mode: false
+    - PYTHON: "C:\\Python310-x64"
+      make_exe: false
+      python_mode: false
+      cython_mode: true
+    - PYTHON: "C:\\Python311-x64"
+      make_exe: true
+      python_mode: false
+      cython_mode: false
+
+install:
+  - cinst nsis
+  - set PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
+  - python -m pip install --upgrade pip
+  - python -m pip install -r requirements.txt
+  - if %make_exe%==true python -m pip install pynsist
+  - if %make_exe%==true python -m pip install lastversion
+  - if %make_exe%==true python -m pip install regex
+  - python -m pip install twine
+
+build: off
+
+before_test:
+  - python prepare_build.py
+  - python -m build
+  - if %make_exe%==true python prepare_hydpy_installer.py
+  - if %make_exe%==true pynsist make_hydpy_installer.cfg
+
+test_script:
+  - if %make_exe%==false nox -s doctest -- --python-mode=%python_mode% --cython-mode=%cython_mode%
+  - if %make_exe%==true rename hydpy _hydpy
+  - if %make_exe%==true python call_installer.py
+  - if %make_exe%==true set PATH=C:/Users\appveyor\AppData\Local\Programs\HydPy\bin;%PATH%
+  - if %make_exe%==true C:/Users\appveyor\AppData\Local\Programs\HydPy\bin\hyd.py.exe run_doctests
+
+after_test:
+  - "echo [pypi] > %USERPROFILE%\\.pypirc"
+  - "echo username: tyralla >> %USERPROFILE%\\.pypirc"
+  - "echo password: %PYPIPA% >> %USERPROFILE%\\.pypirc"
+  - ps: if ($env:APPVEYOR_REPO_TAG -eq "true") { Invoke-Expression "twine upload --skip-existing dist/*"} else { write-output "No tag, no deploy"}
+    
+artifacts:
+  - name: Packages
+    path: dist\*
+  - name: Installer
+    path: build\nsis\HydPy*.exe
+  - name: XSDs
+    path: _hydpy\conf\*.xsd
+
+deploy:
+  description: 'This is a draft.'
+  provider: GitHub
+  auth_token:
+    secure: n6oPRXEu1EFeFsmJYY2qnyuEOsb6OuSXQ5kf6CacHvcFcKb6JWXqPYZBzk16ZCBn
+  artifact: Packages,Installer,XSDs
+  draft: true
+  prerelease: false
+  on:
+    APPVEYOR_REPO_TAG: true
