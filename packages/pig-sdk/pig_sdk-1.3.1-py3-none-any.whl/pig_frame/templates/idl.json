@@ -1,0 +1,44 @@
+{
+  "name": "{{test_case_name}}",
+  "owner": "{{creator}}",
+  "env_config_file": "dev.json",
+  "unique_report": false,
+  "steps":[
+    {
+      "type": "http_request",
+      "content": {
+        "method": "get",
+        "url": "https://postman-echo.com/get",
+        "desc": "Postman Echo",
+        "params": {
+          "foo1": "bar1",
+          "foo2": "bar2"
+        }
+      }
+    },
+    {
+      "type": "assert_structure",
+      "content": {
+        "name": "接口返回结构不发生变化",
+        "expected": {
+          "args": {
+            "foo1": "bar1",
+            "foo2": "bar2"
+          },
+          "headers": {
+            "x-forwarded-proto": "https",
+            "host": "postman-echo.com",
+            "accept": "*/*",
+            "accept-encoding": "gzip, deflate",
+            "cache-control": "no-cache",
+            "postman-token": "5c27cd7d-6b16-4e5a-a0ef-191c9a3a275f",
+            "user-agent": "PostmanRuntime/7.6.1",
+            "x-forwarded-port": "443"
+          },
+          "url": "https://postman-echo.com/get?foo1=bar1&foo2=bar2"
+        },
+        "actual": "response"
+      }
+    }
+  ]
+}

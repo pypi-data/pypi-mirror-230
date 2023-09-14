@@ -1,0 +1,448 @@
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/echarts/4.2.0-rc.2/echarts.min.js"></script>
+<!-- 引入样式 -->
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+<!-- 引入组件库 -->
+
+<style type="text/css">
+  body {
+    font-family: '宋体', '微软雅黑', sans-serif, Simsun;
+    width: 100%;
+  }
+  .page {
+    padding-left: 10%;
+    width: 80%;
+  }
+
+  [v-cloak]:not(body) {
+    display: none;
+  }
+
+  .el-table__row {
+    cursor: pointer;
+  }
+
+  .el-collapse-item__arrow {
+    color: deeppink;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .el-table .warning-row {
+    background: oldlace;
+  }
+
+  pre {
+    outline: 1px solid #ccc;
+    padding: 5px;
+    margin: 5px;
+    padding: 5px;
+    margin: 5px;
+    height: 420px;
+    overflow-y: auto;
+  }
+
+  /*字符串的样式*/
+  .string {
+    color: green;
+  }
+
+  /*数字的样式*/
+  .number {
+    color: darkorange;
+  }
+
+  /*布尔型数据的样式*/
+  .boolean {
+    color: blue;
+  }
+
+  /*null值的样式*/
+  .null {
+    color: rgb(131, 125, 131);
+  }
+
+  /*key值的样式*/
+  .key {
+    color: rgb(20, 11, 11);
+  }
+
+  .detail-title {
+    background-color: #ECF8FF;
+    padding: 6px;
+  }
+</style>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+{% raw %}
+<div id="app" class="page" v-cloak>
+    <div style="display: flex;justify-content: space-between;top: 20px;">
+        <h1>{{title}}</h1>
+        <el-popover placement="left" :width="page_width-400" trigger="hover">
+      <pre v-html="beautifyLog()"
+           :style="{height:page_height-300+'px',outline:0,whiteSpace:'pre-wrap',wordWrap: 'break-word'}"></pre>
+            <el-button slot="reference" size="mini" icon="el-icon-document"
+                       style="background-color:#282C34;height: 30px;margin-top: 30px; color: white;" round>
+                执行日志
+            </el-button>
+        </el-popover>
+    </div>
+    <el-row>
+        <el-col :span="11">
+            <div class="grid-content bg-purple">
+                <h3>概述</h3>
+                <p>测试时间: {{createTime}}</p>
+                <p>耗时: {{totalTime}} s</p>
+                <p>通过率: {{passrate}}%</p>
+                <p>通过: {{pass}} 条</p>
+                <p>失败: {{fail}} 条</p>
+                <p>共计: {{total}} 条</p>
+            </div>
+        </el-col>
+        <el-col :span="12">
+            <div class="grid-content bg-purple-light">
+                <div id="passrate" style="widows: 200px; height: 250px"></div>
+            </div>
+        </el-col>
+    </el-row>
+    <div>
+        <template>
+            <el-table :data="tableData" style="width: 100%" @row-click="showdetail" size="small" :border="true"
+                      :row-class-name="tableRowClassName">
+                <el-table-column prop="id" label="序号" width="100" sortable>
+                    <template slot-scope="scope">
+                        {{scope.row.id + 1}}
+                    </template>
+                </el-table-column>
+                <el-table-column prop="handle" label="测试场景" sortable>
+                </el-table-column>
+                <el-table-column prop="name" label="测试点" sortable> </el-table-column>
+                <el-table-column prop="description" label="接口描述" sortable>
+                </el-table-column>
+                <el-table-column prop="status_code" label="状态码" width="120" sortable>
+                    <template slot-scope="scope">
+                        <el-tag :type="scope.row.status !== 500 ? 'success' : 'danger'" disable-transitions>
+                            {{scope.row.status_code}}</el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="check_result" label="结果" width="120" sortable>
+                    <template slot-scope="scope">
+                        <el-tag :type="scope.row.check_result === '通过' ? 'success' : 'danger'" disable-transitions>
+                            {{scope.row.check_result}}</el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="use_time" label="耗时(ms)" width="130" sortable>
+                </el-table-column>
+            </el-table>
+        </template>
+    </div>
+    <p v-if="stop_reason != '' && stop_reason != null" style="padding-top: 10px;">本用例因 {{stop_reason}} 结束</p>
+
+    <el-drawer title="用例详情" :visible.sync="dialogVisible" size="70%">
+        <div style="margin: 10px 20px 30px 20px;">
+            <div style="font-size: 14px">
+                <el-row :gutter="8">
+                    <el-col :span="4" align="middle" class="detail-title">请求地址</el-col>
+                    <el-col :span="20">
+                        <el-tag type="success">{{detail.url}}</el-tag>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="8" style="margin-top: 10px">
+                    <el-col :span="4" align="middle" class="detail-title">接口描述</el-col>
+                    <el-col :span="8">
+                        <div style="padding: 6px">{{detail.description}}</div>
+                    </el-col>
+                    <el-col :span="4" align="middle" class="detail-title">验证点</el-col>
+                    <el-col :span="8">
+                        <div style="padding: 6px">{{detail.name}}</div>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="8" style="margin-top: 10px">
+                    <el-col :span="4" align="middle" class="detail-title">执行结果</el-col>
+                    <el-col :span="4" align="middle" class="detail-title">请求方式</el-col>
+                    <el-col :span="4" align="middle" class="detail-title">状态码</el-col>
+                    <el-col :span="4" align="middle" class="detail-title">执行耗时</el-col>
+                    <el-col :span="4" align="middle" class="detail-title">执行时间</el-col>
+                    <el-col :span="4" align="middle" class="detail-title">执行次数</el-col>
+
+                </el-row>
+                <el-row :gutter="8" style="margin-top: 10px">
+                    <el-col :span="4" align="middle">
+                        <el-link v-if="detail.check_result == '通过'" :underline="false" type="success">通过</el-link>
+                        <el-link v-else :underline="false" type="danger">失败</el-link>
+                    </el-col>
+                    <el-col :span="4" align="middle">{{detail.method}}</el-col>
+                    <el-col :span="4" align="middle">{{detail.status_code}}</el-col>
+                    <el-col :span="4" align="middle">{{detail.use_time}} ms</el-col>
+                    <el-col :span="4" align="middle">{{detail.response_time}}</el-col>
+                    <el-col :span="4" align="middle">{{detail.retry_times}}</el-col>
+                </el-row>
+            </div>
+
+            <el-collapse style="margin-top:12px">
+                <el-collapse-item>
+                    <template slot="title">
+                        <el-link :underline="false">请求参数</el-link>
+                    </template>
+                    <el-row :gutter="20">
+                        <el-col :span="12">
+                            <el-tabs>
+                                <el-tab-pane>
+                                    <span slot="label" style="color: #303133;"> 请求头</span>
+                                    <pre contenteditable="true" v-html="pretty_headers"
+                                         style="height: 200px;white-space:pre-wrap;word-wrap:break-word;"></pre>
+                                </el-tab-pane>
+                            </el-tabs>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-tabs v-model="showParamsTab()">
+                                <el-tab-pane label="params" name="params">
+                  <pre contenteditable="true" v-html="pretty_params.params" style="height: 200px"
+                       style="white-space:pre-wrap;word-wrap:break-word;"></pre>
+                                </el-tab-pane>
+                                <el-tab-pane label="data" name="data">
+                  <pre contenteditable="true" v-html="pretty_params.data" style="height: 200px"
+                       style="white-space:pre-wrap;word-wrap:break-word;"></pre>
+                                </el-tab-pane>
+                                <el-tab-pane label="json" name="json">
+                  <pre contenteditable="true" v-html="pretty_params.json" style="height: 200px"
+                       style="white-space:pre-wrap;word-wrap:break-word;"></pre>
+                                </el-tab-pane>
+                            </el-tabs>
+                        </el-col>
+                    </el-row>
+                </el-collapse-item>
+            </el-collapse>
+            <el-collapse>
+                <el-collapse-item>
+                    <template slot="title">
+                        <el-link :underline="false">响应参数</el-link>
+                    </template>
+                    <pre contenteditable="true" v-html="pretty_response"
+                         style="height: 200px;white-space:pre-wrap;word-wrap:break-word;"></pre>
+                </el-collapse-item>
+            </el-collapse>
+            <p>
+                <el-link :underline="false">比对方式</el-link>
+                <el-tag v-if="detail.check_type == 'structure'" type="warning" effect="plain">结构验证</el-tag>
+                <el-tag v-else-if="detail.check_type == 'contain'" type="warning" effect="plain">包含</el-tag>
+                <el-tag v-else-if="detail.check_type == 'not_contain'" type="warning" effect="plain">不包含</el-tag>
+                <el-tag v-else-if="detail.check_type == 'equal'" type="warning" effect="plain">相等</el-tag>
+                <el-tag v-else-if="detail.check_type == 'not_equal'" type="warning" effect="plain">不相等</el-tag>
+                <el-tag v-else-if="detail.check_type == 'expression'" type="warning" effect="plain">表达式</el-tag>
+                <el-tag v-else="detail.check_type == 'structure'" type="danger" effect="plain">未知</el-tag>
+                <el-tag type="primary" effect="plain">数据比对范围 {{detail.limit_keys}}</el-tag>
+                <el-tag type="primary" effect="plain">排除比对数据 {{detail.filter_keys}}</el-tag>
+            </p>
+            <el-row :gutter="20">
+                <el-col :span="12">
+                    <div class="grid-content bg-purple">
+                        <el-link type="success" :underline="false">期望值</el-link>
+                        <pre contenteditable="true" v-html="pretty_expect" ref="expectForm" @scroll="expectHandleScroll()"
+                             style="white-space:pre-wrap;word-wrap:break-word;"></pre>
+                    </div>
+                </el-col>
+                <el-col :span="12">
+                    <div class="grid-content bg-purple">
+                        <el-link :type="detail.check_result=='通过'?'success':'danger'" :underline="false">实际值：</el-link>
+                        <pre contenteditable="true" v-html="pretty_actual" ref="actualForm" @scroll="actualHandleScroll()"
+                             style="white-space:pre-wrap;word-wrap:break-word;"></pre>
+                    </div>
+                </el-col>
+            </el-row>
+            <el-divider></el-divider>
+            <el-link type="danger" :underline="false">数据比对差异</el-link>
+            <div v-if="detail.check_detail!== undefined && detail.check_detail!== null && detail.check_detail.length>0 ">
+                <div v-if="typeof detail.check_detail === 'object'">
+                    <el-tag type="danger" v-for="(item,index) in detail.check_detail" :key="index"
+                            style="margin-right: 10px;margin-top: 10px;">
+<!--                        {{item}}-->
+                        <label v-html="item"></label>
+                    </el-tag>
+                </div>
+                <div v-else>
+                    <p style="color: red;" v-html="detail.check_detail">
+<!--                        {{detail.check_detail}}-->
+                    </p>
+                </div>
+            </div>
+            <div v-else>
+                <el-tag type="success" style="margin-top: 10px;">恭喜！对比后未发现差异。</el-tag>
+            </div>
+        </div>
+    </el-drawer>
+</div>
+{% endraw %}
+
+<script>
+  var app = new Vue({
+    el: "#app",
+    data: {
+      tableData: [],
+      dialogVisible: false,
+      title: "测试报告",
+      detail: {},
+      result_description: {
+        false: "失败",
+        true: "通过",
+      },
+      type: false,
+      totalTime: "",
+      pass: "",
+      fail: "",
+      createTime: "",
+      passrate: "",
+      total: "",
+      stop_reason: "",
+      pretty_headers: "",
+      pretty_params: {
+        params: {},
+        data: {},
+        json: {},
+      },
+      page_width: document.documentElement.clientWidth,
+      page_height: document.documentElement.clientHeight,
+      pretty_expect: "",
+      pretty_actual: "",
+      pretty_response: "",
+      allData: {{alldataInstert}}
+    },
+    created: function () {
+      this.initData();
+    },
+    methods: {
+      initData() {
+        this.tableData = this.allData["tableData"];
+        this.title = this.allData["title"];
+        this.totalTime = this.allData["totalTime"];
+        this.pass = this.allData["pass"];
+        this.fail = this.allData["fail"];
+        this.createTime = this.allData["createTime"];
+        this.passrate = this.allData["passrate"];
+        this.total = this.allData["total"];
+        this.stop_reason = this.allData["stop_reason"];
+      },
+      showdetail(row, event, column) {
+        this.detail = this.tableData[row.id];
+        if (this.tableData[row.id]["actual"] === null) {
+          this.type = true;
+        } else {
+          this.type = false;
+        }
+        this.pretty_headers = this.jsonHighlight(this.detail.headers);
+        this.pretty_params.params = this.jsonHighlight(this.detail.params.params);
+        this.pretty_params.data = this.jsonHighlight(this.detail.params.data);
+        this.pretty_params.json = this.jsonHighlight(this.detail.params.json);
+        this.pretty_expect = this.jsonHighlight(this.detail.expect);
+        this.pretty_actual = this.jsonHighlight(this.detail.actual);
+        this.pretty_response = this.jsonHighlight(this.detail.response);
+        this.dialogVisible = true;
+      },
+
+      jsonHighlight(json) {
+        try {
+          if (typeof json != "string") {
+            json = JSON.stringify(json, undefined, 2);
+          }
+          json = json.replace(/&/g, "&").replace(/</g, "<").replace(/>/g, ">");
+          return json.replace(
+             /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+            function (match) {
+              var cls = "number";
+              if (/^"/.test(match)) {
+                if (/:$/.test(match)) {
+                  cls = "key";
+                } else {
+                  cls = "string";
+                }
+              } else if (/true|false/.test(match)) {
+                cls = "boolean";
+              } else if (/null/.test(match)) {
+                cls = "null";
+              }
+              return '<span class="' + cls + '">' + match + "</span>";
+            }
+          );
+        } catch (err) {
+          return json;
+        }
+      },
+      tableRowClassName({
+        row,
+        rowIndex
+      }) {
+        if (row.check_result !== "通过") {
+          return "warning-row";
+        }
+        return "";
+      },
+      // 左右滚动条滚动同步
+      expectHandleScroll() {
+        this.$refs.actualForm.scrollTop = this.$refs.expectForm.scrollTop;
+      },
+      actualHandleScroll() {
+        this.$refs.expectForm.scrollTop = this.$refs.actualForm.scrollTop;
+      },
+      showParamsTab() {
+        if (this.pretty_params.params !== "{}") {
+          return "params"
+        } else if (this.pretty_params.data !== "{}") {
+          return "data"
+        } else {
+          return "json"
+        }
+      },
+      beautifyLog() {
+        return this.allData.logs.replace(/ WARNING /g,
+            ' <strong><span style="color:#a68a14">WARNING</span></strong> ')
+          .replace(/ DEBUG /g, ' <strong><span style="color:#3993d4">DEBUG</span></strong> ')
+          .replace(/ INFO /g, ' <strong><span style="color:#5c962c">INFO</span></strong> ')
+          .replace(/ ERROR /g, ' <strong><span style="color:#d2443a">ERROR</span></strong> ');
+      }
+    },
+  });
+</script>
+<script>
+  window.onload = function () {
+    rate_pass();
+  };
+  window.onresize = function () {
+    myChart1.resize();
+  };
+  var pass = {{echart_pass}};
+  var fail = {{echart_fail}};
+  var myChart1 = "";
+
+  function rate_pass() {
+    var dom = document.getElementById("passrate");
+    myChart1 = echarts.init(dom);
+    var app = {};
+    option = null;
+    option = {
+      tooltip: {
+        trigger: "item",
+        formatter: "{a} <br/>{b} : {c} ({d}%)",
+      },
+      series: [{
+        name: "执行结果",
+        type: "pie",
+        radius: "80%",
+        center: ["40%", "50%"],
+        color: ["#3BA272", "#ED6666"],
+        data: [{
+            value: pass,
+            name: "通过",
+          },
+          {
+            value: fail,
+            name: "失败",
+          },
+        ],
+      }, ],
+    };
+    if (option && typeof option === "object") {
+      myChart1.setOption(option, true);
+    }
+  }
+</script>

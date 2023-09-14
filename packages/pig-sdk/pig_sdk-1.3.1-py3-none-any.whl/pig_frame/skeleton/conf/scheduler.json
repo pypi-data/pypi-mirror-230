@@ -1,0 +1,54 @@
+[
+    {
+        // 发件人邮箱地址，此字段不存在时测试报告会生成在本地，不会发送邮件
+//        "sender": "chengwenping2@newhope.cn",
+        // 发件人别名，一般是发件人的姓名或昵称
+        "senderAlias": "测试",
+        // 收件人邮箱地址，必传
+        "to": [
+            "chengwenping2@newhope.cn",
+        ],
+        // 抄送人邮箱地址
+        "cc": ["chengwenping2@newhope.cn"],
+        // 邮件主题
+        "subject": "任务执行报告",
+        // cron任务表达式，支持以下五位，minute, hour, day of month, month, day of week
+        "cron": "0 0/1 * * *",
+        // 启动定时任务立即执行一次
+        "run_on_start": true,
+        "testcases": [
+            // file_path:测试用例相对路径（相对testcases），例如/testcases/demo1.py这里就写：demo1.py，/testcases/product/idl_demo.py，就写product/idl_demo.py
+            // env_config_file:环境配置文件相对路径（相对于conf/），例如/conf/uat.json就写uat.json，/conf/product/test.json就写product/test.json
+            // 额外的自定义参数，可以通过"kwargs"传入，没有可以不写
+            {
+                "file_path": "测试物料/demo1.py",
+                "env_config_file": "uat.json",
+                "kwargs": {
+                    "ypsh": 123465
+                }
+            }
+        ]
+    },
+    {
+        // 发件人邮箱地址，此字段不存在时测试报告会生成在本地，不会发送邮件
+//        "sender": "chengwenping2@newhope.cn",
+        // 发件人别名，一般是发件人的姓名或昵称
+        "senderAlias": "demo",
+        // 收件人邮箱地址，必传
+        "to": [
+            "chengwenping2@newhope.cn",
+        ],
+        // 抄送人邮箱地址
+        "cc": [],
+        // 邮件主题
+        "subject": "任务执行报告之二 ",
+        // cron任务表达式，支持以下五位，分 时 日 月 周
+        "cron": "0/1 * * * *",
+        "testcases": [
+            {
+                "file_path": "demo2.py",
+                "env_config_file": "uat.json"
+            }
+        ]
+    }
+]

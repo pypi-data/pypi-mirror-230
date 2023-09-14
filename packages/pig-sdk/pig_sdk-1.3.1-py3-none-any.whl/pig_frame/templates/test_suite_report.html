@@ -1,0 +1,122 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<style type="text/css">
+  body {
+    font-family: '宋体', '微软雅黑', sans-serif, Simsun;
+    width: 100%;
+  }
+
+  .mail-content {
+    padding: 0 15px;
+  }
+
+  .mail-content h1,
+  .mail-content h2,
+  .mail-content h3,
+  .mail-content h4,
+  .mail-content h5,
+  .mail-content p,
+  .mail-content pre,
+  .mail-content table {
+    margin: 10px 0;
+    line-height: 1.5;
+  }
+
+  .mail-content table {
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+  }
+
+  .mail-content table td,
+  .mail-content table th {
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    padding: 5px 10px;
+  }
+
+  .mail-content table th {
+    border-bottom: 1px solid #ccc;
+    text-align: left;
+    background: rgb(48, 176, 143);
+    color: white;
+  }
+
+  .mail-content a:link {
+    text-decoration: none;
+    color: #2d8cf0;
+    cursor: pointer
+  }
+</style>
+<body>
+<div class="mail-content">
+    <h3>执行概况</h3>
+    <p>场景总计：{{ total_scene }} 个</p>
+    <p>用例总计：{{ total_case }} 个，通过：{{ pass_case }} 个，
+        {%- if fail_case > 0 -%}
+        <label style="color:red">失败：{{ fail_case }} 个</label>
+        {%- else -%}
+        <label>失败：{{ fail_case }} 个</label>
+        {% endif %} ，通过率：{{ rate }}%</p>
+    <p>执行时间：{{ start_time }} 至 {{ end_time }}（执行耗时：{{use_time}} s ） </p>
+    {% if fail_case > 0 %}
+        <h3>失败场景（共计{{fail_scene}}个）</h3>
+        <table border="0" width="100%" cellpadding="0" cellspacing="0">
+            <tbody>
+            <tr>
+                <th>测试场景</th>
+                <th>负责人</th>
+                <th>执行耗时（s）</th>
+                <th>执行时间</th>
+                <th>通过用例</th>
+                <th>失败用例</th>
+                <th>通过率(通过用例数)</th>
+            </tr>
+            {% for item in cases %}
+                {% if item.fail_case > 0 -%}
+                <tr style="color:red">
+<!--                    <td><a style="color:red" href="{{ item.report_path }}" target="_blank">{{ item.case_name }}</a></td>-->
+                    <td>{{item.case_name}}</td>
+                    <td>{{item.creator}}</td>
+                    <td>{{item.use_time}}</td>
+                    <td>{{item.start_time}}<br/>{{item.end_time}}</td>
+                    <td>{{item.pass_case}}</td>
+                    <td>{{item.fail_case}}</td>
+                    <td>{{item.rate}}%</td>
+                </tr>
+                {%- endif -%}
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    <h3>场景明细（共计{{total_scene}}个）</h3>
+    <table border="0" width="100%" cellpadding="0" cellspacing="0">
+        <tbody>
+        <tr>
+            <th>测试场景</th>
+            <th>负责人</th>
+            <th>执行耗时（s）</th>
+            <th>执行时间</th>
+            <th>通过用例</th>
+            <th>失败用例</th>
+            <th>通过率(通过用例数)</th>
+        </tr>
+        {% for item in cases %}
+        <tr {% if item.fail_case > 0 -%} style="color:red" {%- endif -%}>
+<!--            <td><a {% if item.fail_case > 0 -%}style="color:red" {% endif -%} href="{{ item.report_path }}" target="_blank">{{ item.case_name }}</a></td>-->
+            <td {% if item.fail_case > 0 -%} style="color:red" {% endif -%} >{{item.case_name}}</td>
+            <td>{{item.creator}}</td>
+            <td>{{item.use_time}}</td>
+            <td>{{item.start_time}}<br/>{{item.end_time}}</td>
+            <td>{{item.pass_case}}</td>
+            <td>{{item.fail_case}}</td>
+            <td>{{item.rate}}%</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
