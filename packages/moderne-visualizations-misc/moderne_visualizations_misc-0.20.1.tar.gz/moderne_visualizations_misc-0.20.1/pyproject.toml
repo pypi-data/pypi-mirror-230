@@ -1,0 +1,45 @@
+# @see https://packaging.python.org/en/latest/specifications/declaring-project-metadata/
+[project]
+name = "moderne_visualizations_misc"
+version = "0.20.1"
+description = "Miscellaneous visualizations for the Moderne platform"
+authors = [
+    { name = "Jonathan Schneider", email = "jonathan@moderne.io" },
+    { name = "Kyle Scully", email = "kyle@moderne.io" }
+]
+license = { text = "Apache-2.0" }
+dependencies = [
+    "pandas==2.0.3",
+    "ipython==8.13.0",
+    "code-data-science==1.1.8",
+    "graphviz==0.20.1",
+    "plotly==5.14.1",
+    "matplotlib==3.7.1",
+    "nbformat==5.9.0",
+    "typing-extensions",
+]
+
+[project.optional-dependencies]
+dev = ["poethepoet", "nbqa", "black", "nb_mypy"]
+ci = ["poethepoet", "python-semantic-release", "papermill"]
+
+[project.urls]
+"Homepage" = "https://github.com/moderneinc/visualizations-misc"
+
+[tool.setuptools.packages.find]
+include = [
+    "moderne_visualizations_misc",
+    "moderne_visualizaitons_misc/specs",
+    "moderne_visualizaitons_misc/images",
+    "moderne_visualizaitons_misc/resources"
+]
+exclude = ["samples", "scripts"]
+
+[tool.poe.tasks]
+check-types = "nbqa mypy --ignore-missing-imports ./moderne_visualizations_misc"
+format = "nbqa black ./moderne_visualizations_misc"
+check-options = "python3 scripts/check_options.py"
+check-sentence-casing = "python3 scripts/check_sentence_casing.py"
+
+[tool.semantic_release]
+version_toml = ["pyproject.toml:project.version"]
