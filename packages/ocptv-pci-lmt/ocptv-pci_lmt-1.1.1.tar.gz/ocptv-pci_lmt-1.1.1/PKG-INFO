@@ -1,0 +1,81 @@
+Metadata-Version: 2.1
+Name: ocptv-pci_lmt
+Version: 1.1.1
+Summary: PCI Lane Margining Tool
+Author-email: OCP Test & Validation <ocp-test-validation@OCP-All.groups.io>
+License: MIT License
+        
+        Copyright (c) 2023 Open Compute Project
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Homepage, https://github.com/opencomputeproject/ocp-diag-pci_lmt
+Project-URL: Bug reports, https://github.com/opencomputeproject/ocp-diag-pci_lmt/issues
+Project-URL: Source, https://github.com/opencomputeproject/ocp-diag-pci_lmt
+Keywords: ocp,ocptv,pci,pcie,lmt
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Topic :: System :: Hardware
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Provides-Extra: dev
+Requires-Dist: black; extra == "dev"
+Requires-Dist: bumpver; extra == "dev"
+Requires-Dist: isort; extra == "dev"
+Requires-Dist: pylint; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Requires-Dist: build; extra == "dev"
+Requires-Dist: twine; extra == "dev"
+
+# PCIe Lane Margining Tool (LMT)
+LMT is a standard PCIE margining measurement added by PCI-SIG in the PCIe 4.0 specification.
+This is required mainly to overcome the challenges in delivering a reliable 16GT/s solution.
+Lane Margining enables system designers to measure the available margin in a standardized manner.
+
+# Key Benefits
+- Works in a production platform without any test equipment
+- Provides a way to measure actual margin when running prod traffic
+- Provides visibility to the details of the defect:
+    - exactly which wires/pins are bad
+    - exactly how ‘bad’ each wire pair (vs a nominal system
+- Avoids excessive part swaps triggered by multiple repair actions
+- Provides a reliable way to check if source defect is fixed after repairs
+
+This project is part of [ocp-diag-core](https://github.com/opencomputeproject/ocp-diag-core) and exists under the same [MIT License Agreement](https://github.com/opencomputeproject/ocp-diag-pci_lmt/LICENSE).
+
+# Command Syntax
+
+```
+$ pci_lmt -h
+usage: pci_lmt.par [-h] [-c CONFIG_FILE] [-e ERROR_COUNT_LIMIT] [-d DWELL_TIME] [-a ANNOTATION] [-o OUTPUT] [-v] config_file
+
+Runs Lane Margining Test on PCIe devices.
+
+  CONFIG_FILE        Path to the local configuration file (in JSON format). Overrides `platform` flag.
+
+options:
+  -h, --help            show this help message and exit
+  -e ERROR_COUNT_LIMIT  Maximum errors allowed before terminating the test. Default: 63
+  -d DWELL_TIME         Amount of time (in seconds) to wait before making BER measurements. Default: 5
+  -a ANNOTATION         Annotation string to be prefix'd for LMT results. Default: <empty>
+  -o OUTPUT             Output format. Supported formats: scribe, json. Default: json
+  -v                    Verbosity level. Use '-v' for INFO and '-vv' for DEBUG. Default: 0
+```
