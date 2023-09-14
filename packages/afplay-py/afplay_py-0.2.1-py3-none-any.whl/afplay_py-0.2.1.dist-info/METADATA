@@ -1,0 +1,116 @@
+Metadata-Version: 2.1
+Name: afplay-py
+Version: 0.2.1
+Summary: A wrapper around macOS afplay
+Home-page: https://github.com/unparalleled-js/afplay-py
+Author: Juliya Smith <juliya@juliyasmith.com>
+Author-email: juliya@juliyasmith.com
+License: Apache-2.0
+Keywords: afplay,macos
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Operating System :: MacOS
+Classifier: Operating System :: POSIX
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Requires-Python: >=3.9,<4
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Provides-Extra: dev
+Requires-Dist: pytest >=7.0 ; extra == 'dev'
+Requires-Dist: pytest-mock <4,>=3.10.0 ; extra == 'dev'
+Requires-Dist: black >=23.3.0 ; extra == 'dev'
+Requires-Dist: mypy <2,>=1.0 ; extra == 'dev'
+Requires-Dist: types-requests ; extra == 'dev'
+Requires-Dist: types-setuptools ; extra == 'dev'
+Requires-Dist: flake8 >=5.0.4 ; extra == 'dev'
+Requires-Dist: isort >=5.10.1 ; extra == 'dev'
+Requires-Dist: mdformat >=0.7.16 ; extra == 'dev'
+Requires-Dist: mdformat-gfm >=0.3.5 ; extra == 'dev'
+Requires-Dist: mdformat-frontmatter >=0.4.1 ; extra == 'dev'
+Requires-Dist: Sphinx <4,>=3.4.3 ; extra == 'dev'
+Requires-Dist: sphinx-rtd-theme <1,>=0.1.9 ; extra == 'dev'
+Requires-Dist: towncrier <20,>=19.2.0 ; extra == 'dev'
+Requires-Dist: setuptools ; extra == 'dev'
+Requires-Dist: setuptools-scm ; extra == 'dev'
+Requires-Dist: wheel ; extra == 'dev'
+Requires-Dist: twine ==3.8 ; extra == 'dev'
+Requires-Dist: python-vlc <4,>=3.0.18121 ; extra == 'dev'
+Provides-Extra: doc
+Requires-Dist: Sphinx <4,>=3.4.3 ; extra == 'doc'
+Requires-Dist: sphinx-rtd-theme <1,>=0.1.9 ; extra == 'doc'
+Requires-Dist: towncrier <20,>=19.2.0 ; extra == 'doc'
+Provides-Extra: lint
+Requires-Dist: black >=23.3.0 ; extra == 'lint'
+Requires-Dist: mypy <2,>=1.0 ; extra == 'lint'
+Requires-Dist: types-requests ; extra == 'lint'
+Requires-Dist: types-setuptools ; extra == 'lint'
+Requires-Dist: flake8 >=5.0.4 ; extra == 'lint'
+Requires-Dist: isort >=5.10.1 ; extra == 'lint'
+Requires-Dist: mdformat >=0.7.16 ; extra == 'lint'
+Requires-Dist: mdformat-gfm >=0.3.5 ; extra == 'lint'
+Requires-Dist: mdformat-frontmatter >=0.4.1 ; extra == 'lint'
+Provides-Extra: release
+Requires-Dist: setuptools ; extra == 'release'
+Requires-Dist: setuptools-scm ; extra == 'release'
+Requires-Dist: wheel ; extra == 'release'
+Requires-Dist: twine ==3.8 ; extra == 'release'
+Provides-Extra: test
+Requires-Dist: pytest >=7.0 ; extra == 'test'
+Requires-Dist: pytest-mock <4,>=3.10.0 ; extra == 'test'
+Provides-Extra: vlc
+Requires-Dist: python-vlc <4,>=3.0.18121 ; extra == 'vlc'
+
+# afplay-py
+
+A python wrapper and better CLI for the macOS tool `afplay` (audio-file player).
+
+## Installation
+
+From pip:
+
+```shell
+pip install afplay-py
+```
+
+From source (from the root project directory):
+
+```shell
+pip install .
+```
+
+## Quick Usage
+
+### CLI
+
+Play an audio file using the CLI:
+
+```sh
+afplay-py ~/path/to/file.mp3
+```
+
+**NOTE**: The intent is for this CLI to not have some of the problems the regular tool does.
+
+### Python
+
+Play an audio file using Python:
+
+```python
+from afplay import afplay
+
+afplay("path/to/file.mp3", volume=2, time=100, leaks=True)
+```
+
+Check if `afplay` is installed:
+
+```python
+from afplay import is_installed
+
+print(is_installed())
+```
+
+
