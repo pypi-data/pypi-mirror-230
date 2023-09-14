@@ -1,0 +1,70 @@
+Metadata-Version: 2.1
+Name: opentelemetry-instrument-anthropic
+Version: 0.0.2
+Summary: Instruments Anthropic client for OpenTelemetry
+Author: Frank Chen
+Author-email: frxchen@gmail.com
+Requires-Python: >=3.7.1,<4.0
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Provides-Extra: instruments
+Requires-Dist: anthropic (==0.3.8) ; extra == "instruments"
+Requires-Dist: opentelemetry-api (>=1.18.0,<1.19.0)
+Requires-Dist: opentelemetry-instrumentation (==0.39b)
+Requires-Dist: opentelemetry-semantic-conventions (>=0.39b0,<1.0)
+Requires-Dist: opentelemetry-test-utils (>=0.39b0,<1.0)
+Requires-Dist: wrapt (>=1.15.0,<2.0.0)
+Description-Content-Type: text/markdown
+
+# opentelemetry-instrument-anthropic-py
+
+Autoinstrumentation for Anthropic's client library.
+
+Project site: https://github.com/fxchen/opentelemetry-instrument-anthropic-py
+
+# Usage
+
+**Installaion**
+
+```
+poetry add opentelemetry-instrument-anthropic
+poetry run opentelemetry-bootstrap -a install
+poetry run opentelemetry-instrument python your_app.py
+```
+
+**Using auto instrumentation agent**
+
+```
+poetry add opentelemetry-instrument-anthropic
+poetry run opentelemetry-bootstrap -a install
+poetry run opentelemetry-instrument python your_app.py
+```
+
+**Manually**
+
+```
+from anthropic import Anthropic, HUMAN_PROMPT, AI_PROMPT
+from opentelemetry.instrumentation.anthropic import AnthropicInstrumentor
+
+AnthropicInstrumentor().instrument()
+
+client = Anthropic()
+client.completions.create(
+    prompt=f"{HUMAN_PROMPT}\nHello world\n{AI_PROMPT}",
+    )
+```
+
+## 🔗 Example [chat.py](./example)
+
+In this folder there's a readme on how to:
+
+- Execute a chat completion against Anthropic
+- Send traces to your console or your OLTP provider!
+
+# Acknowledgments
+
+Thank you very much to [Phillip Carter](https://github.com/cartermp) and instrumentation by the OpenTelemetry Community! This instrumentation was heavily inspired by conversation and this [OpenAI library](https://github.com/cartermp/opentelemetry-instrument-openai-py/tree/main).
+
