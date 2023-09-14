@@ -1,0 +1,38 @@
+[project]
+name = "trustML"
+version = "2.6.2"
+authors = [
+  { name="Martí Manzano", email="marti.manzano@upc.edu" },
+]
+description = "Trust for Machine Learning"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+dependencies = ["scikit-learn==0.24.1","pandas==1.2.4","adversarial-robustness-toolbox==1.8.0","numpy==1.19.5",
+"scikit-lego==0.6.8","aix360==0.1.0","uq360==0.1.1","anytree==2.8.0","requests-oauthlib==1.3.0","pyyaml==5.4.1",
+"lime==0.2.0.1","requests==2.25.1","tensorflow==2.6.0","scipy==1.6.2"]
+
+[project.urls]
+"Homepage" = "https://github.com/martimanzano/trustML"
+"Bug Tracker" = "https://github.com/martimanzano/trustML/issues"
+"Wiki" = "https://github.com/martimanzano/trustML/wiki"
+"API Documentation" = "https://martimanzano.github.io/trustML"
+
+[project.optional-dependencies]
+doc = ["pdoc3", "matplotlib==3.6.3", "dill==0.3.4"]
+
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.sdist]
+exclude = [
+"demos",
+"docs",
+"contributing"
+]

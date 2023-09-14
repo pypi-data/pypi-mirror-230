@@ -1,0 +1,68 @@
+### TrustML CONFIGURATION TEMPLATE ### 
+metrics:
+    - AccuracySKL
+    - PrecisionSKL:
+        multiclass_average: "binary" # binary for binary classification
+    - RecallSKL:
+        multiclass_average: "binary" # binary for binary classification
+    - F1SKL:
+        multiclass_average: "binary" # binary for binary classification
+    - ROCSKL:
+        multiclass_average: "macro" # macro for binary classification
+    - PPercentageSKL:
+        protected_attributes: [list,of,sensible,attributes]
+        positive_class: *privileged_class*
+    - EqualOpportunitySKL:
+        protected_attributes: [list,of,sensible,attributes]
+        positive_class: *privileged_class*
+    - VerifiedErrorSKLTree
+    - AverageBoundSKLTree
+    - FaithfulnessLIMESKL:
+        explainer_path: "path/to/a/lime_explainer/"
+    - MonotonicityLIMESKL:
+        explainer_path: "path/to/a/lime_explainer/"
+    -ExplanationsAccuracyTED:
+        explainer_path: "path/to/a/ted_explainer/"
+        explanations_path: "path/to/a/explanations/dataset"
+    - InvertedExpectedCalibrationSKL
+    - InvertedBrierSKL
+assessment_method: # NOTE: THE FIRST ASSESSMENT METHOD UNDER THIS NODE IS THE ONE THAT WILL BE USED
+    BayesianNetwork:
+        bn_path: "path/to/the/DNE/BayesianNetwork.dne"
+        api_url: http://localhost:8080/api/ssi/assessment # SSI-Assessment service endpoint
+        id_trust_node: Trust # Name of the BN Node to assess. E.g., Trust
+        intervals_input_nodes:
+            - AccuracySKL: [0.33, 0.66]
+            - PrecisionSKL: [0.4, 0.8]
+            - RecallSKL: [0.5, 0.7]
+            - F1SKL: [0.33, 0.66]
+            - ROCSKL: [0.45, 0.8]
+            - PPercentageSKL: [0.33, 0.66]
+            - EqualOpportunitySKL: [0.5, 0.8]
+            - VerifiedErrorSKLTree: [0.33, 0.66]
+            - AverageBoundSKLTree: [0.45, 0.8]
+            - FaithfulnessLIMESKL: [0.5, 0.7]
+            - MonotonicityLIMESKL: [0.45, 0.8]
+            - ExplanationsAccuracyTED: [0.33, 0.66]
+            - InvertedBrierSKL: [0.33, 0.66]
+            - InvertedExpectedCalibrationSKL: [0.5, 0.7]
+    WeightedAverage: # WEIGHTS AT EACH LEVEL OF THE HIERARCHY MUST ADD UP TO 1
+        performance-0.3:
+            AccuracySKL: 0.2
+            PrecisionSKL: 0.2
+            RecallSKL: 0.2
+            F1SKL: 0.2
+            ROCSKL: 0.2
+        fairness-0.1:             
+            PPercentageSKL: 0.5
+            EqualOpportunitySKL: 0.5
+        robustness-0.1:              
+            AverageBoundSKLTree: 0.6
+            VerifiedErrorSKLTree: 0.4            
+        explainability-0.35:                
+            MonotonicityLIMESKL: 0.4
+            FaithfulnessLIMESKL: 0.4
+            ExplanationsAccuracyTED: 0.2 
+        uncertainty-0.15:                  
+            InvertedBrierSKL: 0.6
+            InvertedExpectedCalibrationSKL: 0.4

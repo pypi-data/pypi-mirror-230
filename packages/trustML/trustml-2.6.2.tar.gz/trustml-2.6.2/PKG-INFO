@@ -1,0 +1,46 @@
+Metadata-Version: 2.1
+Name: trustML
+Version: 2.6.2
+Summary: Trust for Machine Learning
+Author-email: Martí Manzano <marti.manzano@upc.edu>
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Dist: scikit-learn==0.24.1
+Requires-Dist: pandas==1.2.4
+Requires-Dist: adversarial-robustness-toolbox==1.8.0
+Requires-Dist: numpy==1.19.5
+Requires-Dist: scikit-lego==0.6.8
+Requires-Dist: aix360==0.1.0
+Requires-Dist: uq360==0.1.1
+Requires-Dist: anytree==2.8.0
+Requires-Dist: requests-oauthlib==1.3.0
+Requires-Dist: pyyaml==5.4.1
+Requires-Dist: lime==0.2.0.1
+Requires-Dist: requests==2.25.1
+Requires-Dist: tensorflow==2.6.0
+Requires-Dist: scipy==1.6.2
+Requires-Dist: pdoc3 ; extra == "doc"
+Requires-Dist: matplotlib==3.6.3 ; extra == "doc"
+Requires-Dist: dill==0.3.4 ; extra == "doc"
+Project-URL: API Documentation, https://martimanzano.github.io/trustML
+Project-URL: Bug Tracker, https://github.com/martimanzano/trustML/issues
+Project-URL: Homepage, https://github.com/martimanzano/trustML
+Project-URL: Wiki, https://github.com/martimanzano/trustML/wiki
+Provides-Extra: doc
+
+<p align="center"><img src="https://github-production-user-asset-6210df.s3.amazonaws.com/7520973/249193988-89f07b66-f8b9-4df7-97ba-500f0cbebaab.png"></p>
+
+_TrustML_ is a modular and extensible package to support the definition, assessment and monitoring of custom-built trustworthiness indicators for AI models. _TrustML_ allows data scientists to define trustworthiness indicators by selecting a set of metrics from a catalog of trustworthy-related metrics and grouping them into higher-level metric aggregations.
+
+_TrustML_ also provides different assessment methods to compute and monitor the indicators previously defined. _TrustML_ enables and supports the development of trustworthy AI models, aiming to provide assistance not only during their construction phase, but also in production environments, as a mechanism to continuously monitor such trust and enable mitigation activities when required.
+
+The package makes use of existing packages meant to compute each of the included trustworthiness metrics, check the requirements.txt file in the root of the source code repository for details.
+
+The API documentation is available on https://martimanzano.github.io/TrustML/.
+The wiki with tutorials on the package's usage and extension is available on https://github.com/martimanzano/TrustML/wiki/Home/.
+
+The _TrustML_ package is free software distributed under the Apache License 2.0. If you are interested in participating in this project, please use the [GitHub repository](https://github.com/martimanzano/TrustML); and review the [Contributing page](https://github.com/martimanzano/trustML/blob/modular/CONTRIBUTING.md), the [Code of Conduct](https://github.com/martimanzano/trustML/blob/modular/CODE_OF_CONDUCT.md) and the specific [Contributing articles](https://github.com/martimanzano/trustML/tree/modular/contributing) all contributions are welcomed.
+
