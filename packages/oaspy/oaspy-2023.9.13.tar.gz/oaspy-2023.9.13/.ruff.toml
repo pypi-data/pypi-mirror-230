@@ -1,0 +1,83 @@
+# select = ["ALL"]
+select = ["C","E","F","W","B","C4","A","ISC"]
+line-length = 120
+target-version = "py310"
+# show-source = true
+show-fixes = true
+
+# https://beta.ruff.rs/docs/rules/
+ignore =[
+  "I", # isort related, let isort handle these.
+  "ANN", # Type hints related, let mypy handle these.
+  # "ANN204", # Missing return type annotation for special method {name}
+  # "ANN205", # Missing return type annotation for special method {name}
+  # "ANN401",	# Dynamically typed expressions (typing.Any) are disallowed in {name}
+  "D", # pydocstyle/Docstrings
+  # "W605", # Invalid escape sequence: \{char}
+  "T201", # print found
+  "ERA001",	# Found commented-out code"
+  "BLE001", # Do not catch blind exception: {name}
+  "COM812",	# Trailing comma missing
+  # "UP",	# pyupgrade
+  "UP007",	# Use X | Y for type annotations (Optional typing)
+  "UP009", # UTF-8 encoding declaration is unnecessary
+  "UP030", # Use implicit references for positional format fields
+  "UP038",	# Use X | Y in {} call instead of (X, Y)
+  # "C901",  # too complex
+  "E501",  # line too long, handled by black
+  "B008",  # do not perform function calls in argument defaults
+  "EM101", # Exception must not use a string literal, assign to variable first
+  "EM102", # Exception must not use an f-string literal, assign to variable first
+  "RET504", # Unnecessary variable assignment before return statement
+  "TRY003", # Avoid specifying long messages outside the exception class
+  "SIM102", # Use a single if statement instead of nested if statements
+  "SIM108", # Use ternary operator {contents} instead of if-else-block
+]
+
+exclude = [
+  ".bzr",
+  ".direnv",
+  ".eggs",
+  ".git",
+  ".hg",
+  ".mypy_cache",
+  ".nox",
+  ".pants.d",
+  ".ruff_cache",
+  ".svn",
+  ".tox",
+  ".venv",
+  "__pypackages__",
+  "_build",
+  "buck-out",
+  "build",
+  "dist",
+  "test",
+  "node_modules",
+  ".idea",
+  ".vscode",
+  "venv",
+  ".env",
+  "env",
+]
+
+[pydocstyle]
+# Use Google-style docstrings.
+convention = "google"
+
+[flake8-annotations]
+mypy-init-return = true
+
+[flake8-quotes]
+docstring-quotes = "double"
+
+[mccabe]
+max-complexity = 12
+
+[pylint]
+max-args = 5
+max-branches = 12
+max-returns = 10
+
+[isort]
+known-third-party = ["fastapi", "pydantic", "starlette"]
