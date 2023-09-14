@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "django-auth-cli-CERTIC"
+version = "0.1.4"
+description = "Outils CLI pour gestion des utilisateurs dans Django"
+authors = ["Mickaël Desfrênes <mickael.desfrenes@unicaen.fr>"]
+license = "Cecill"
+packages = [
+    { include = "authcli"},
+]
+homepage = "https://www.certic.unicaen.fr"
+repository = "https://git.unicaen.fr/certic/django-auth-cli-tools"
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+Django = ">=4"
+
+[tool.poetry.dev-dependencies]
+black = "^23.3.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
