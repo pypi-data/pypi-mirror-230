@@ -1,0 +1,8 @@
+[alembic]
+migrations = utils_flask_sqla.migrations:versions
+
+[flask.commands]
+db = utils_flask_sqla.commands:db_cli
+
+[pytest11]
+sqla = utils_flask_sqla.tests.plugin
