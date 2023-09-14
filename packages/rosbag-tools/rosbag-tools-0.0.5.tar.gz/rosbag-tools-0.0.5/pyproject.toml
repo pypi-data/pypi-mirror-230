@@ -1,0 +1,48 @@
+[build-system]
+requires = ["flit"]
+build-backend = "flit.buildapi"
+
+[project]
+name = "rosbag-tools"
+authors = [{ name = "damienlarocque", email = "phicoltan@gmail.com" }]
+license = { file = "LICENSE" }
+requires-python = ">=3.9"
+dependencies = ["click", "pyyaml", "rosbags", "tqdm"]
+readme = "README.md"
+classifiers = [
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+dynamic = ["version", "description"]
+
+[project.optional-dependencies]
+plot = ["matplotlib"]
+dev = ["black", "pylint", "bump2version"]
+
+[project.urls]
+Homepage = "https://github.com/IamPhytan/rosbag-tools"
+"Repository on GitHub" = "https://github.com/IamPhytan/rosbag-tools"
+"Repository on GitLab" = "https://gitlab.com/damienlarocque/rosbag-tools"
+
+[project.scripts]
+rosbag-tools = "rosbag_tools.__main__:cli_main"
+
+[tool.isort]
+profile = "black"
+
+[tool.black]
+line-length = 90
+
+[tool.pylint]
+[tool.pylint.messages_control]
+disable = "C0330, C0326"
+
+[tool.pylint.format]
+max-line-length = "90"
