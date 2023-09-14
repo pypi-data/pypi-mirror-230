@@ -1,0 +1,30 @@
+[tool.isort]
+profile = "black"
+filter_files = true
+
+[tool.flake8]
+exclude = ["venv"]
+# Ignore missing type annotation on **kwargs: ANN003
+# Ignore missing type annotation for self: ANN101
+# Ignore missing type annotation for cls: ANN102
+# Ignore missing type annotation for special methods (i.e. __init__): ANN204
+# Disable import order errors: AZ100
+# Ignore missing docstrings in __init__: D107
+# Ignore line too long errors: E501. Flake8 flags comments and docstrings, while black doesn't. Let black handle line length.
+# Conflicts with W504 and no longer conforms to PEP8: W503
+extend-ignore = ["ANN003", "ANN101", "ANN102", "ANN204", "AZ100", "D107", "E501", "I900", "W503"]
+literal-inline-quotes = "double"
+literal-multiline-quotes = "double"
+known-modules=":[noko_client],python-dateutil:[dateutil]"
+per-file-ignores = ["noko_client/schemas/*.py:U100,N805,ANN003"]
+
+[tool.pylint."MESSAGES CONTROL"]
+max-args = 6
+fail-under = 9
+min-public-methods = 1
+# Same logic as flake8. Black will handle line length.
+disable = "line-too-long"
+
+[tool.mypy]
+ignore_missing_imports = true
+explicit_package_bases = true
