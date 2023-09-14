@@ -1,0 +1,68 @@
+[project]
+name = "soundevent"
+version = "0.6.3"
+description = "soundevent is an open-source Python package for the computational biocoustic community, providing standardized tools for sound event analysis and data management."
+authors = [
+    { name = "Santiago Martinez", email = "santiago.balvanera.20@ucl.ac.uk" },
+]
+dependencies = [
+    "pydantic>=2.0",
+    "shapely>=2.0.1",
+    "scipy>=1.6.1",
+    "xarray>=0.20.2",
+    "matplotlib>=3.5.3",
+    "cython>=0.29.36",
+    "pysoundfile>=0.9.0.post1",
+]
+requires-python = ">=3.8"
+readme = "README.md"
+
+[project.license]
+text = "MIT"
+
+[build-system]
+requires = [
+    "pdm-backend",
+]
+build-backend = "pdm.backend"
+
+[tool.black]
+line-length = 79
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+include = [
+    "src",
+    "tests",
+]
+verboseOutput = true
+useLibraryCodeForTypes = true
+
+[tool.pydocstyle]
+convention = "numpy"
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "coverage>=7.2.7",
+    "black>=23.3.0",
+    "mypy>=1.4.1",
+    "pytest-coverage>=0.0",
+    "mkdocs>=1.2.4",
+    "importlib-metadata>=4.3",
+    "ruff>=0.0.276",
+    "mkdocs-material>=9.1.18",
+    "isort>=5.11.5",
+    "mkdocstrings[python]>=0.22.0",
+    "tox>=4.6.3",
+    "hypothesis>=6.79.4",
+    "mkdocs-gallery>=0.7.8",
+    "memory-profiler>=0.61.0",
+]
