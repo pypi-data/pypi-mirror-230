@@ -1,0 +1,57 @@
+Metadata-Version: 2.1
+Name: fastapi_request_helper
+Version: 0.0.3
+Summary: FastAPI Request Helper
+Project-URL: Homepage, https://github.com/megatron-global/fastapi-request-helper
+Project-URL: Bug Tracker, https://github.com/megatron-global/fastapi-request-helper/issues
+Author-email: Dzung Nguyen <dung@megatron-solutions.com>
+License-File: LICENSE
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+
+# FastAPI Request helper
+
+## How to use
+
+1. Set a variable
+
+```python
+
+# user_service.py
+from fastapi import FastAPI
+from fastapi_global_variable import GlobalVariable
+
+app = FastAPI(title="Application")
+
+GlobalVariable.set('app', app)
+```
+
+2. Use variable
+
+```python
+from fastapi_global_variable import GlobalVariable
+
+print(GlobalVariable.get_or_fail('app'))
+print(GlobalVariable.get('app'))
+```
+
+## How to test in testpypi
+
+1. Increase the version in `pyproject.toml`
+2. Run command
+
+```bash
+$ . ./build_and_test.sh
+```
+
+## How to publish new version
+
+1. Increase the version in `pyproject.toml`
+2. Run command
+
+```bash
+$ . ./build_and_publish.sh
+```
