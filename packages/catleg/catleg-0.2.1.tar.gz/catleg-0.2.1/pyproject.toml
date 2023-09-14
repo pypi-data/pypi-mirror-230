@@ -1,0 +1,57 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "_version.py"
+
+[project]
+name = "catleg"
+description = "A library of helper tools for catala programming in the context of French legislative texts."
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+  "aiometer",
+  "dynaconf",
+  "httpx",
+  "markdownify",  # convert pre-formatted HTML from Legifrance to markdown for skeletons
+  "markdown-it-py[plugins]",
+  "mdformat>=0.7.16",
+  "more-itertools",
+  "typer[all]",
+  "typing-extensions"
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+dev = [
+  "hatch",
+  "mypy",
+  "myst-parser",
+  "pre-commit",
+  "pytest",
+  "ruff",
+  "sphinx",
+  "sphinx-rtd-theme",
+  "tox",
+  "typer-cli"
+]
+
+[project.scripts]
+catleg = "catleg.catleg:main"
+
+[project.urls]
+"Homepage" = "https://github.com/CatalaLang/catleg/"
+"Bug Tracker" = "https://github.com/CatalaLang/catleg/issues"
+
+[tool.ruff]
+select = ["E", "F", "T100", "UP"]
