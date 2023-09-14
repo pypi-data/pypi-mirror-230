@@ -1,0 +1,13 @@
+[localstack.hooks.on_infra_ready]
+do_run_state_load_all = localstack_persistence.snapshot.__plugins__:do_run_state_load_all
+
+[localstack.hooks.on_infra_start]
+register_pickle_patches_runtime = localstack_persistence.pickling.__plugins__:register_pickle_patches_runtime
+register_public_cloudpods_endpoints = localstack_persistence.pods.__plugins__:register_public_cloudpods_endpoints
+register_reset_state_resource = localstack_persistence.reset.__plugins__:register_reset_state_resource
+register_state_load_strategy = localstack_persistence.snapshot.__plugins__:register_state_load_strategy
+register_state_resource = localstack_persistence.snapshot.__plugins__:register_state_resource
+register_state_save_strategy = localstack_persistence.snapshot.__plugins__:register_state_save_strategy
+
+[localstack.hooks.prepare_host]
+register_pickle_patches_host = localstack_persistence.pickling.__plugins__:register_pickle_patches_host
