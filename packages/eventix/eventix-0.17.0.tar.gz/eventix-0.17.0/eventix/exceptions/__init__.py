@@ -1,0 +1,61 @@
+from typing import Any, Dict, Optional
+
+from pydantic_db_backend_common.exceptions import AlreadyExists, NotFound, RevisionConflict
+from webexception.webexception import WebException
+
+
+class TaskNotUnique(WebException):
+    status_code = 409
+
+    def __init__(self, uid: str) -> None:
+        super().__init__(
+            f"Task with uid '{uid}' already exists and task unique is not activated for overwriting.",
+            uid=uid
+        )
+
+
+class NoTaskFound(WebException):
+    status_code = 204
+
+    def __init__(self, namespace: str) -> None:
+        super().__init__(
+            f"No task for namespace {namespace}",
+            namespace=namespace
+        )
+
+
+class NoTaskFoundForUniqueKey(WebException):
+    status_code = 204
+
+    def __init__(self, unique_key: str) -> None:
+        super().__init__(
+            f"No task for unique_key {unique_key}",
+        )
+        self.unique_id = unique_key
+
+
+class TaskNotRegistered(WebException):
+    status_code = 404
+
+    def __init__(self, task: str) -> None:
+        super().__init__(
+            f"Task '{task}' not registered.",
+            task=task
+        )
+
+
+class EventixHTTPException(WebException):
+    def __init__(
+        self,
+        status_code: int,
+        detail: Any = None,
+        headers: Optional[Dict[str, str]] = None,
+    ) -> None:
+        super().__init__(status_code=status_code, detail=detail, headers=headers)
+
+
+backend_exceptions = [
+    AlreadyExists,
+    NotFound,
+    RevisionConflict
+]

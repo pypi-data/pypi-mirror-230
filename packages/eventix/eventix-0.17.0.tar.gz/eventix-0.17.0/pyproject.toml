@@ -1,0 +1,55 @@
+[tool.poetry]
+name = "eventix"
+version = "0.17.0"
+description = ""
+authors = ["Marco Bartel <bsimpson888@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+python-dotenv = "^0.15.0"
+pydash = "*"
+requests = "^2.31.0"
+toml = "^0.10.2"
+webexception = "^1.0.2"
+pydantic-db-backend = {version = "^0.10.0", extras = ["couchdb"]}
+fastapi = "^0.99.1"
+uvicorn = "^0.22.0"
+croniter = "^1.4.1"
+supervisor = "^4.2.5"
+psutil = "^5.9.5"
+pydantic-db-backend-common = "^1.1.0"
+
+[tool.poetry.extras]
+server=[
+    "fastapi",
+    "uvicorn",
+    "pydantic-db-backend",
+    "psutil",
+    "supervisor",
+    "toml",
+]
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.3.1"
+httpx = "^0.24.1"
+freezegun = "^1.2.2"
+coverage = "^7.2.7"
+pytest-mock = "^3.11.1"
+semantic-version = "^2.10.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q -s -v"
+testpaths = [
+    "tests",
+]
+log_cli = true
+log_cli_level = "DEBUG"
+#log_cli_level = "INFO"
+log_cli_format = "[%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
+#log_cli_format = "[%(name)s][%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
