@@ -1,0 +1,67 @@
+import requests
+from cryptography import x509
+from cryptography.x509.extensions import ExtensionNotFound
+from cryptography.x509.oid import ExtensionOID
+
+from . import Error, ExtensionMissing, Revoked, cert_from_pem
+
+
+class CrlFetchFailure(Error):
+    pass
+
+
+class CrlLoadError(Error):
+    pass
+
+
+def check_revoked(cert_pem: str):
+    cert = cert_from_pem(cert_pem)
+    check_revoked_crypto_cert(cert)
+
+
+def check_revoked_crypto_cert(cert: x509.Certificate):
+    ext = cert.extensions
+    try:
+        crl_ex = ext.get_extension_for_oid(
+            ExtensionOID.CRL_DISTRIBUTION_POINTS,
+        )
+
+        for dist_point in crl_ex.value:
+            for full_name in dist_point.full_name:
+                crl_url = full_name.value
+
+                crl = _get_crl_from_url(crl_url)
+
+                r = crl.get_revoked_certificate_by_serial_number(
+                    cert.serial_number,
+                )
+                if r is not None:
+                    err = (
+                        f"Certificate with serial: {cert.serial_number} "
+                        f"is revoked since: {r.revocation_date}"
+                    )
+                    raise Revoked(err)
+    except ExtensionNotFound:
+        raise ExtensionMissing()
+
+
+def _get_crl_from_url(crl_url):
+    ret = requests.get(crl_url)
+
+    if ret.status_code != 200:
+        raise CrlFetchFailure
+
+    crl_data = ret.content
+    return _crl_data_to_crypto(crl_data)
+
+
+def _crl_data_to_crypto(crl_data):
+    try:
+        return x509.load_der_x509_crl(crl_data)
+    except (TypeError, ValueError):
+        pass
+
+    try:
+        return x509.load_pem_x509_crl(crl_data)
+    except TypeError as e:
+        raise CrlLoadError(e) from None
