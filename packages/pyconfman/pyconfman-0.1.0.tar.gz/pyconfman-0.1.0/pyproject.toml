@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "pyconfman"
+version = "0.1.0"
+description = "Manage multiple and hierarchical configurations"
+authors = ["Giuseppe Di Bona <giusedb@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pyyaml = "^6.0.1"
+click = "^8.1.7"
+
+[tool.poetry.group.dev.dependencies]
+pylint = "^2.17.5"
+pytest = "^7.4.2"
+coverage = "^7.3.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
