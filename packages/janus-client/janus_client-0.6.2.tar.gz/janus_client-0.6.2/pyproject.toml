@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "janus-client"
+version = "0.6.2"
+description = "Janus WebRTC gateway Python async client."
+authors = ["Joseph Lim <josephlim_94@hotmail.co.uk>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "janus_client"}]
+repository = "https://github.com/josephlim94/janus_gst_client_py"
+classifiers = [
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+
+[tool.poetry.dependencies]
+python = ">=3.7,<3.11"
+websockets = "^11.0.3"
+aiortc = "^1.5.0"
+aiohttp = "^3.8.5"
+
+
+[tool.poetry.group.dev.dependencies]
+coverage = "^7.2.7"
+sphinx = "^5.3.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
