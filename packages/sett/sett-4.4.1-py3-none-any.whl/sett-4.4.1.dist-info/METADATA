@@ -1,0 +1,83 @@
+Metadata-Version: 2.1
+Name: sett
+Version: 4.4.1
+Summary: Secure Encryption and Transfer Tool
+Home-page: https://gitlab.com/biomedit/sett
+Author: Robin Engler, Jarosław Surkont, Gerhard Bräunlich, Kevin Sayers, Christian Ribeaud, François Martin, Simone Guzzi, Swen Vermeul
+Author-email: robin.engler@sib.swiss, jaroslaw.surkont@unibas.ch, gerhard.braeunlich@id.ethz.ch, sayerskt@gmail.com, christian.ribeaud@karakun.com, francois.martin@karakun.com, simone.guzzi@sib.swiss, swen@ethz.ch
+License: GPL3v3
+Project-URL: Documentation, https://sett.rtfd.io/en/stable
+Project-URL: Source, https://gitlab.com/biomedit/sett
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: PySide6 <6.5.0,>=6.4.0
+Requires-Dist: gpg-lite <0.13.0,>=0.12.3
+Requires-Dist: libbiomedit <0.7.0,>=0.6.2
+Requires-Dist: paramiko >=2.12.0
+Requires-Dist: sett-rs <0.7.0,>=0.6.0
+Requires-Dist: minio >=7.1.12
+Requires-Dist: darkdetect >=0.7.1
+Requires-Dist: colorama >=0.4.5 ; platform_system == "Windows"
+Provides-Extra: benchmark
+Requires-Dist: pandas ; extra == 'benchmark'
+Requires-Dist: matplotlib ; extra == 'benchmark'
+Requires-Dist: seaborn ; extra == 'benchmark'
+Provides-Extra: dev
+Requires-Dist: pylint ==2.17.1 ; extra == 'dev'
+Requires-Dist: mypy ==1.1.1 ; extra == 'dev'
+Requires-Dist: black ==23.1.0 ; extra == 'dev'
+Requires-Dist: pytest ==7.2.1 ; extra == 'dev'
+Requires-Dist: pytest-factoryboy ==2.5.1 ; extra == 'dev'
+Requires-Dist: bandit ==1.7.5 ; extra == 'dev'
+Requires-Dist: types-pkg-resources ; extra == 'dev'
+Requires-Dist: types-paramiko ; extra == 'dev'
+Requires-Dist: pandas-stubs ; extra == 'dev'
+Provides-Extra: legacy
+Requires-Dist: PySide2 >=5.15.2.1 ; extra == 'legacy'
+Provides-Extra: socks
+Requires-Dist: PySocks ; extra == 'socks'
+
+[![pipeline status](https://gitlab.com/biomedit/sett/badges/main/pipeline.svg)](https://gitlab.com/biomedit/sett/-/commits/main)
+[![coverage report](https://gitlab.com/biomedit/sett/badges/main/coverage.svg)](https://gitlab.com/biomedit/sett/-/commits/main)
+[![documentation status](https://readthedocs.org/projects/sett/badge/)](https://sett.readthedocs.io/)
+[![license](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![python version](https://img.shields.io/pypi/pyversions/sett.svg?logo=python&logoColor=white)](https://pypi.org/project/sett)
+[![latest version](https://img.shields.io/pypi/v/sett.svg)](https://pypi.org/project/sett)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
+# SETT - Secure Encryption and Transfer Tool
+
+_sett_ enables packaging, encryption, and transfer of data to pre-configured
+locations.
+
+## Documentation
+
+Detailed documentation as well as a quick-start guide can be found in the
+[sett documentation](https://sett.readthedocs.io/en/stable).
+
+For the latest, non-stable, version of the docs, see
+[here](https://sett.readthedocs.io/en/latest).
+
+`sett` is also available as a **docker container** (command line interface
+only). For details, see [this README](docker/README.md).
+
+### Documentation quick-links
+
+- [Requirements and installation](https://sett.readthedocs.io/en/stable/installation.html).
+- [Quick-start guide](https://sett.readthedocs.io/en/stable/quick_start.html).
+- [Creating and managing GnuPG keys with sett](https://sett.readthedocs.io/en/stable/key_management.html).
+- [Using sett to encrypt, transfer and decrypt data](https://sett.readthedocs.io/en/stable/usage.html)
+
+## Unit tests coverage
+
+Please note that a number of gui-specific files are excluded from the unit
+tests coverage. The detailed list of excluded files can be found in
+[`pyproject.toml`](pyproject.toml), under the `[tool.coverage.run]` section.
