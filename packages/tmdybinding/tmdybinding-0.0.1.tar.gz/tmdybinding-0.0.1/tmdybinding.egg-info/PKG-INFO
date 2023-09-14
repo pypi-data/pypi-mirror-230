@@ -1,0 +1,51 @@
+Metadata-Version: 2.1
+Name: tmdybinding
+Version: 0.0.1
+Summary: Tight-binding lattices for TMDs for the Pybinding-package, Documentation: http://bertjorissen.github.io/tmdybinding (c) 2022-2023
+Author-email: Bert Jorissen <info@bertjorissen.be>
+License: comming soon
+Project-URL: repository, https://github.com/BertJorissen/tmdybinding
+Project-URL: documentation, https://bertjorissen.github.io/tmdybinding
+Project-URL: changelog, https://github.com/BertJorissen/tmdybinding/blob/master/changelog.md
+Keywords: pybinding,tight-binding,solid-state physics,physics,cmt,quantum,graphene,TMD,KPM,CPGF
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering :: Physics
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE.md
+Requires-Dist: numpy>=1.12
+Requires-Dist: pytest>=5.0
+Requires-Dist: pybinding>=0.9
+
+# TMDybinding
+<img src=https://github.com/BertJorissen/kite/blob/master/docs/assets/images/logo.png?raw=true width="100">
+
+**TMDybinding** is an open-source Python module for [Pybinding].
+
+## Capabilities
+
+* generate accurate lattices for most used TB models for TMDs
+* easily add hopping
+* automatic generation of lattice cell with 90-degree corners
+* automatic inclusion of SOC terms
+* automatic generation of hopping terms taking into account the symmetry of the orbital
+* label all the different obrital contributions
+* fully compatible with [pybinding] and [KITE]
+
+## Installation
+
+That's easy, just run
+``` 
+pip install tmdybinding
+```
+
+
+[pybinding]: https://pybinding.site
+[KITE]: https://quantum-kite.com
