@@ -1,0 +1,34 @@
+<tal:i18n i18n:domain="collective.bluesky">
+  <metal:block use-macro="context/@@ploneform-macros/titlelessform">
+    <metal:block fill-slot="formtop">
+      <p i18n:translate="description-contentrules-blueskysub">
+        Contents in the text field may be replaced with "$&#123;&#125;" variables from the table on the bottom of this form.
+      </p>
+    </metal:block>
+  </metal:block>
+  <div>
+    <h2 i18n:translate="title_contentrules_blueskysub">Substitutions</h2>
+    <table class="listing">
+      <thead>
+        <tr>
+          <th i18n:translate="category-contentrules-blueskysub">Category</th>
+          <th i18n:translate="variable-contentrules-blueskysub">Variable</th>
+          <th i18n:translate="substitution-contentrules-blueskysub">Substitution</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tal:block tal:define="
+                     sublist here/@@stringinterp_info/substitutionList;
+                   "
+                   tal:repeat="category sublist"
+        >
+          <tr tal:repeat="item python:category['items']">
+            <td tal:content="category/category">All Content</td>
+            <td>${<span tal:replace="item/id">url</span>}</td>
+            <td tal:content="item/description">URL</td>
+          </tr>
+        </tal:block>
+      </tbody>
+    </table>
+  </div>
+</tal:i18n>
