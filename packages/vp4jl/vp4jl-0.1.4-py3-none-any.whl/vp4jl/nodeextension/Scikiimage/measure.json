@@ -1,0 +1,142 @@
+{
+  "enable": true,
+  "nodes": {
+    "label": {
+      "type": "label",
+      "category": "function",
+      "title": "label",
+      "tooltip": "Label connected regions of an integer array.",
+      "externalImports": "from skimage import measure",
+      "sourceCode": "{{indent}}{{{outputs.1}}} =  measure.label({{{inputs.1}}})\n{{indent}}{{{outputs.1}}} = {'value': {{{outputs.1}}}[0], 'dataType': 'numpy.ndarray', 'metadata': {'colorChannel': 'grayscale', 'channelOrder': 'channelFirst', 'isMiniBatched': True, 'intensityRange': '0-1', 'device': 'cpu'}}\n{{{outputs.0}}}",
+      "inputs": {
+        "execIn": {
+          "title": "execIn",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        },
+        "image": {
+          "title": "image",
+          "dataType": "image",
+          "defaultValue": {
+            "dataType": "numpy.ndarray",
+            "metadata": [
+              {
+                "colorChannel": "grayscale",
+                "isMiniBatched": false,
+                "channelOrder": "none",
+                "intensityRange": "0-255"
+              }
+            ]
+          },
+          "tooltip": "Image to label."
+        },
+        "background": {
+          "title": "background",
+          "dataType": "anyDataType",
+          "defaultValue": "None"
+        },
+    "return_num": {
+          "title": "return_num",
+          "dataType": "anyDataType",
+          "defaultValue": "None"
+        },        "connectivity": {
+          "title": "connectivity",
+          "dataType": "anyDataType",
+          "defaultValue": "None"
+        }
+      },
+      "outputs": {
+        "execOut": {
+          "title": "execOut",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        },
+        "labels": {
+          "title": "labels",
+          "dataType": "numpy.ndarray",
+          "defaultValue": "None",
+          "tooltip": "Labeled array, where all connected regions are assigned the same integer value."
+        },
+        "connectivity": {
+          "title": "connectivity",
+          "dataType": "integer"
+          }
+      }
+    },
+    "distance_transform_edt": {
+      "type": "distance_transform_edt",
+      "category": "function",
+      "title": "distance_transform_edt",
+      "tooltip": "Exact Euclidean distance transform.",
+      "externalImports": "from scipy.ndimage import distance_transform_edt",
+      "sourceCode": "{{indent}}{{{outputs.1}}} =  measure.label({{{inputs.1}}})\n{{indent}}{{{outputs.1}}} = {'value': {{{outputs.1}}}[0], 'dataType': 'numpy.ndarray', 'metadata': {'colorChannel': 'grayscale', 'channelOrder': 'channelFirst', 'isMiniBatched': True, 'intensityRange': '0-1', 'device': 'cpu'}}\n{{{outputs.0}}}",
+      "inputs": {
+        "execIn": {
+          "title": "execIn",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        },
+        "image": {
+          "title": "image",
+          "dataType": "image",
+          "defaultValue": {
+            "dataType": "numpy.ndarray",
+            "metadata": [
+              {
+                "colorChannel": "grayscale",
+                "isMiniBatched": false,
+                "channelOrder": "none",
+                "intensityRange": "0-255"
+              }
+            ]
+          }
+        },
+        "sampling": {
+          "title": "sampling",
+          "dataType": "anyDataType",
+          "defaultValue": "None"
+        },
+        "return_distances": {
+          "title": "return_distances",
+          "dataType": "boolean",
+          "defaultValue": true
+        },        
+        "return_indices": {
+        "title": "return_indices",
+        "dataType": "boolean",
+          "defaultValue": false
+        },        
+        "distances": {
+          "title": "distances",
+          "dataType": "anyDataType",
+          "defaultValue": "None"
+        },        "indices": {
+          "title": "indices",
+          "dataType": "anyDataType",
+          "defaultValue": "None"
+        }
+      },
+      "outputs": {
+        "execOut": {
+          "title": "execOut",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        },
+        "labels": {
+          "title": "labels",
+          "dataType": "numpy.ndarray",
+          "defaultValue": "None",
+          "tooltip": "Labeled array, where all connected regions are assigned the same integer value."
+        },
+        "connectivity": {
+          "title": "connectivity",
+          "dataType": "integer"
+          }
+      }
+    }
+  }
+}

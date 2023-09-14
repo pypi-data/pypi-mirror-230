@@ -1,0 +1,41 @@
+{
+  "enable": true,
+  "nodes": {
+    "peak_local_max": {
+      "type": "peak_local_max",
+      "category": "function",
+      "title": "peak_local_max",
+      "externalImports": "from skimage.peak_local_max import peak_local_max",
+      "sourceCode": "{{indent}}{{{outputs.1}}} =  peak_local_max({{{inputs.1}}})\n{{indent}}{{{outputs.1}}} = {'value': {{{outputs.1}}}[0], 'dataType': 'numpy.ndarray', 'metadata': {'colorChannel': 'grayscale', 'channelOrder': 'channelFirst', 'isMiniBatched': True, 'intensityRange': '0-1', 'device': 'cpu'}}\n{{{outputs.0}}}",
+      "inputs": {
+        "execIn": {
+          "title": "execIn",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        },
+        "ndarray": {
+          "title": "ndarray",
+          "dataType": "numpy.ndarray"
+        },  
+        "min_distance": {
+          "title": "min_distance",
+          "dataType": "anyDataType",
+          "defaultValue": "None"
+        }
+      },
+      "outputs": {
+        "execOut": {
+          "title": "execOut",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        },
+        "peaks": {
+          "title": "peaks",
+          "dataType": "numpy.ndarray"
+        }
+      }
+    }
+  }
+}

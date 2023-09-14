@@ -1,0 +1,76 @@
+{
+  "enable": true,
+  "nodes": {
+    "equalizeAdapthist": {
+      "type": "equalizeAdapthist",
+      "category": "function",
+      "title": "equalize adapthist",
+      "tooltip": "Contrast Limited Adaptive Histogram Equalization (CLAHE).",
+      "externalImports": "from skimage import exposure",
+      "sourceCode": "{{indent}}{{{outputs.1}}} = exposure.equalize_adapthist({{{inputs.1}}}, {{{inputs.2}}})\n{{indent}}{{{outputs.1}}} = {'value': {{{outputs.1}}}, 'dataType': 'numpy.ndarray', 'metadata': {'colorChannel': 'grayscale', 'channelOrder': 'none', 'isMiniBatched': False, 'intensityRange': '0-255', 'device': 'cpu'}}\n{{{outputs.0}}}",
+      "inputs": {
+        "execIn": {
+          "title": "execIn",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        },
+        "image": {
+          "title": "image",
+          "dataType": "image",
+          "defaultValue": {
+            "dataType": "numpy.ndarray",
+            "metadata": [
+              {
+                "colorChannel": "rgb",
+                "isMiniBatched": false,
+                "channelOrder": "channelLast",
+                "intensityRange": "0-255"
+              },
+              {
+                "colorChannel": "grayscale",
+                "isMiniBatched": false,
+                "channelOrder": "none",
+                "intensityRange": "0-255"
+              }
+            ]
+          }
+        }, 
+        "kernel_size": {
+          "title": "kernel_size",
+          "dataType": "anyDataType",
+          "defaultValue": "None",
+          "tooltip": "int or array_like, optional, Clipping limit, Defines the shape of contextual regions used in the algorithm."
+        },
+        "clip_limit": {
+          "title": "clip_limit",
+          "dataType": "anyDataType",
+          "defaultValue": "None",
+          "tooltip": "float, optional, Clipping limit, normalized between 0 and 1 (higher values give more contrast)."
+        },
+         "nbins": {
+          "title": "nbins",
+          "dataType": "anyDataType",
+            "defaultValue": "None",
+          "tooltip": "int, optional, Number of gray bins for histogram ('data range')."
+        }
+      },
+      "outputs": {
+        "execOut": {
+          "title": "execOut",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        },
+        "image": {
+          "title": "image",
+          "dataType": "image",
+          "defaultValue": {
+            "dataType": "numpy.ndarray"
+          },
+          "tooltip": "Equalized image with float64 dtype."
+        }
+      }
+    }
+  }
+}

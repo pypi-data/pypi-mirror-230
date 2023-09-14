@@ -1,0 +1,95 @@
+{
+  "enable": true,
+  "nodes": {
+    "mean": {
+      "type": "mean",
+      "category": "function",
+      "title": "mean",
+      "tooltip": "Return local mean of an image.",
+      "externalImports": "from skimage.filters import rank",
+      "sourceCode": "{{indent}}{{{outputs.1}}} = rank.mean({{{inputs.1}}},{{{inputs.2}}},{{{inputs.3}}},{{{inputs.4}}},{{{inputs.5}}},{{{inputs.6}}},{{{inputs.7}}})\n{{indent}}{{{outputs.1}}} = {'value': {{{outputs.1}}}[0], 'dataType': 'numpy.ndarray', 'metadata': {'colorChannel': 'grayscale', 'channelOrder': 'channelFirst', 'isMiniBatched': True, 'intensityRange': '0-1', 'device': 'cpu'}}\n{{{outputs.0}}}",
+      "inputs": {
+        "execIn": {
+          "title": "execIn",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        },
+        "image": {
+          "title": "image",
+          "dataType": "image",
+          "defaultValue": {
+            "dataType": "numpy.ndarray",
+            "metadata": [
+              {
+                "colorChannel": "rgb",
+                "isMiniBatched": true,
+                "channelOrder": "channelFirst",
+                "intensityRange": "0-255"
+              },
+               {
+                "colorChannel": "grayscale",
+                "isMiniBatched": false,
+                "channelOrder": "none",
+                "intensityRange": "0-255"
+              }
+            ]
+          },
+          "tooltip": "Input image."
+        },
+        "footprint": {
+          "title": "footprint",
+          "dataType": "numpy.ndarray",
+          "defaultValue": "None",
+          "tooltip": "The neighborhood expressed as a 2-D array of 1's and 0's"
+        },
+        "out": {
+          "title": "out",
+          "dataType": "numpy.ndarray",
+          "defaultValue": "None",
+          "tooltip": "If None, a new array is allocated."
+        },
+        "mask": {
+          "title": "mask",
+          "dataType": "numpy.ndarray",
+          "defaultValue": "None",
+          "tooltip": "Mask array that defines (>0) area of the image included in the local neighborhood. If None, the complete image is used (default)."
+        },
+        "shift_x": {
+          "title": "shift_x",
+          "dataType": "integer",
+          "defaultValue": 0,
+          "tooltip": "Offset added to the footprint center point. Shift is bounded to the footprint sizes (center must be inside the given footprint)."
+        },
+        "shift_y": {
+          "title": "shift_y",
+          "dataType": "integer",
+          "defaultValue": 0,
+          "tooltip": "Offset added to the footprint center point. Shift is bounded to the footprint sizes (center must be inside the given footprint)."
+        },
+        "shift_z": {
+          "title": "shift_z",
+          "dataType": "integer",
+          "defaultValue": 0,
+          "tooltip": "Offset added to the footprint center point. Shift is bounded to the footprint sizes (center must be inside the given footprint)."
+        }
+      },
+      "outputs": {
+        "execOut": {
+          "title": "execOut",
+          "dataType": "exec",
+          "showWidget": false,
+          "showTitle": false
+        },
+        "image": {
+          "title": "image",
+          "dataType": "image",
+          "defaultValue": {
+            "dataType": "numpy.ndarray"
+          },
+          "tooltip": "Output image."
+        }
+      }
+    }
+  }
+}
