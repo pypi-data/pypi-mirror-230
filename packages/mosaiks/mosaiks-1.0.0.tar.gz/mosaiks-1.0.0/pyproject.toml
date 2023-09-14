@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "mosaiks"
+description = "Use the MOSAIKS algorithm to create features from satellite imagery"
+readme = "README.md"
+requires-python = ">=3.9"
+keywords = ["satellite", "mosaiks", "geospatial"]
+authors = [
+    {name = "IDinsight"}
+]
+dynamic = ["version", "dependencies"]
+
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+version = {attr = "mosaiks.__version__"}
+
+
+[tool.setuptools.packages.find]
+include = ["mosaiks*"]
+exclude = ["tests*"]
