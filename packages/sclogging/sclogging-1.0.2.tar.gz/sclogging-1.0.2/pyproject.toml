@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68.2.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sclogging"
+dynamic = ["version"]
+description = "A Python module (with the help of coloredlogs) to add color to logs."
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "dynaconf>=3.2.2",
+    "colorama>=0.4.5",
+    "coloredlogs>=15.0.1",
+    "PyInputPlus>=0.2.12",
+    "setuptools>=68.2.2",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/sshimek42/sclogging"
+"Documentation" = "https://sclogging.readthedocs.io/"
+
+[tool.setuptools.dynamic]
+version = {attr = "sclogging.VERSION"}
