@@ -1,0 +1,29 @@
+[build-system]
+# 是生成包所需的包的列表
+requires = ["hatchling"]
+# 是前端将用于的 Python 对象的名称 执行构建。
+build-backend = "hatchling.build"
+
+[project]
+name = "qiangl"
+version = "0.0.3"
+authors = [
+  { name="QIANGL", email="893379029@qq.com"},
+]
+description = "test!"
+readme = "README.md"
+license = { file="LICENSE" }
+requires-python = ">=3.7"
+# classifiers为索引和点提供一些额外的元数据 关于您的包裹
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+        "loguru",
+    ]
+
+[project.urls]
+# 允许您列出任意数量的额外链接以在 PyPI 上显示
+"Homepage" = "https://github.com/893379029/qiangl"
