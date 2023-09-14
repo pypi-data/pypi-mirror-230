@@ -1,0 +1,61 @@
+[project]
+name = "svg-ultralight"
+version = "0.20.0"
+description = "a sensible way to create svg files with Python"
+authors = [{ name = "Shay Hill", email = "shay_public@hotmail.com" }]
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = ["lxml", "pillow", "paragraphs"]
+
+[project.optional-dependencies]
+dev = ["types-lxml", "pytest", "commitizen", "pre-commit", "tox"]
+
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+
+[tool.pytest.ini_options]
+addopts = "--doctest-modules"
+
+
+[tool.tox]
+legacy_tox_ini = """
+    [tox]
+    env_list = py{39,311,310}
+
+    [testenv]
+    deps = pytest
+    commands = pytest tests
+"""
+
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.20.0"
+tag_format = "$version"
+version_files = ["pyproject.toml:^version"]
+annotated_tag = true
+major_version_zero = true
+
+
+[tool.pyright]
+include = ["src"]
+exclude = ["**/__pycache__.py"]
+
+pythonVersion = "3.9"
+pythonPlatform = "Any"
+
+typeCheckingMode = "strict"
+reportShadowedImports = true
+reportCallInDefaultInitializer = true
+reportImplicitStringConcatenation = true
+# reportMissingSuperCall = true
+reportPropertyTypeMismatch = true
+reportUninitializedInstanceVariable = true
+reportUnnecessaryTypeIgnoreComment = true
+reportUnusedCallResult = true
+
+venvPath = "."
+venv = "./venv"
