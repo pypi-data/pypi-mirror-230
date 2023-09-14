@@ -1,0 +1,26 @@
+from .model import S2FOS
+
+LABELS = [
+    "Art",
+    "Biology",
+    "Business",
+    "Chemistry",
+    "Computer science",
+    "Economics",
+    "Education",
+    "Engineering",
+    "Environmental science",
+    "Geography",
+    "Geology",
+    "History",
+    "Law",
+    "Linguistics",
+    "Materials science",
+    "Mathematics",
+    "Medicine",
+    "Philosophy",
+    "Physics",
+    "Political science",
+    "Psychology",
+    "Sociology",
+]
