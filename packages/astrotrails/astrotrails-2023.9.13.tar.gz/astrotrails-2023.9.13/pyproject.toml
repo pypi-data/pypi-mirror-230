@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "astrotrails"
+version = "2023.09.13"
+authors = [
+    {name = "Theo Gatsios", email = "theogat@protonmail.com"},
+]
+description = "Tool to generate startrails images by stacking consecutive images of nightsky in jpeg format. Also, astrotrails can create a timelapse video."
+readme = "README.md"
+requires-python = ">=3.7"
+keywords = ["astrophotography", "startrails", "astrotrails"]
+license = {file = "LICENSE.txt"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "numpy",
+    "Pillow",
+    "progress",
+    "ffmpeg",
+    "customtkinter",
+    "ttkthemes"
+]
+
+[project.scripts]
+astrotrails = "astrotrails.command_line:main"
+astrotrails-gui = "astrotrails.astrogui:App"
+
+# ... other project metadata fields as specified in:
+#     https://packaging.python.org/en/latest/specifications/declaring-project-metadata/
