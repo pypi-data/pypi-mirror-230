@@ -1,0 +1,9 @@
+# udev rules file for CP210x device to be programmable py
+# cp210x-program
+
+SUBSYSTEM!="usb", GOTO="cp210x-programming_rules_end"
+
+ATTR{idVendor}=="10c4", ATTR{idProduct}=="ea60", MODE="0664", GROUP="plugdev"
+ATTR{idVendor}=="10c4", ATTR{idProduct}=="ea61", MODE="0664", GROUP="plugdev"
+
+LABEL="cp210x-programming_rules_end"
