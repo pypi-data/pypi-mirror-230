@@ -1,0 +1,28 @@
+Metadata-Version: 2.1
+Name: url-local
+Version: 0.0.28
+Home-page: https://github.com/circles-zone/url-local-python-package
+Author: Circles
+Author-email: info@circles.life
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: Other/Proprietary License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+Requires-Dist: python-dotenv>=1.0.0
+Requires-Dist: pytest>=7.4.1
+Requires-Dist: database-without-orm-local>=0.0.79
+Requires-Dist: logger-local>=0.0.59
+Requires-Dist: queue-local>=0.0.13
+
+# Usage:
+
+`pip install url-local`
+
+```python
+from url_local.url_circlez import UrlCirclez
+
+UrlCirclez.endpoint_url(BrandName.CIRCLEZ.value, EnvironmentName.PLAY1.value,
+                        ComponentName.GENDER_DETECTION.value, EntityName.GENDER_DETECTION.value, 1,
+                        ActionName.ANALYZE_FACIAL_IMAGE.value)
+# >>> "https://353sstqmj5.execute-api.us-east-1.amazonaws.com/play1/api/v1/gender-detection/analyzeFacialImage"
+```
