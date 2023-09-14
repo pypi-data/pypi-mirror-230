@@ -1,0 +1,47 @@
+Copyright © 2023 Quantum Intelligence Research Group
+
+Source code available at: https://github.com/Advanced-Research-Centre/YAQQ
+
+Contact: https://www.linkedin.com/in/sarkararitra/
+
+YAQQ: Yet Another Quantum Quantizer - Design Space Exploration of Quantum Gate Sets using Novelty Search
+
+The YAQQ (Yaqq Another Quantum Quantizer) is an agent that searches for novel quantum gate sets. Given a gate set, it can find a complementary gate that performs better for a particular set of unitary transformations than the original gate set. It is possible theoretically because (a) there are an infinite number of ways of creating universal quantum computing gate sets - the ubiquity of quantum universality, (b) for each discrete gate set, there are certain quantum states that are easy to express, but many other quantum states which are exponentially costly - universal distribution for quantum automata. The cost, or the performance of a gate set, considers the fidelity when the gate set is used to decompose the target set of quantum transformations and the circuit complexity of the decomposition.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+### Install:
+
+```
+pip install --upgrade yaqq
+```
+
+### Usage:
+
+```
+import yaqq
+yaqq.run()
+```
+
+### Citation:
+If you find the repository useful, please consider citing:
+
+```
+@misc{YAQQ,
+  author={Sarkar, Aritra and Kundu, Akash},
+  title={YAQQ: Yet Another Quantum Quantizer},
+  howpublished={\url{[https://github.com/Advanced-Research-Centre/YAQQ](https://github.com/Advanced-Research-Centre/YAQQ)}},
+  year={2023}
+}
+```
