@@ -1,0 +1,14 @@
+# 安装build
+py -m pip install --upgrade build
+# 安装上传工具
+py -m pip install --upgrade twine
+
+
+# 打包
+py -m build
+# 上传
+py -m twine upload dist/*
+
+# 使用
+import qiangl.logger
+import qiangl.example.example.add_one
