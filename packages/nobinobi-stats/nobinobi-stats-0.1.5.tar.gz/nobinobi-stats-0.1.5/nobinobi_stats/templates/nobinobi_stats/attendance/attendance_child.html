@@ -1,0 +1,150 @@
+<!--
+  ~   Copyright (C) Prolibre Sarl 2019 <Florian Alu> <alu@prolibre.com>
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License and any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+{% extends "nobinobi_child/base.html" %}
+{% load i18n template_filters %}
+
+{% block title %}{{ child.full_name }} / {{ from_date }} - {{ end_date }} / {{ title }}{% endblock %}
+{% block breadcrumb %}
+    {{ block.super }}
+    <li class="breadcrumb-item active">{{ title }}</li>
+{% endblock %}
+{% block content_title %}{{ title }}{% endblock %}
+{% block content_card_title %}{{ child.full_name }} | {{ from_date|date:"SHORT_DATE_FORMAT" }} -
+    {{ end_date|date:"SHORT_DATE_FORMAT" }}{% endblock %}
+{% block content_card_body %}
+    {% include "includes/messages.html" %}
+
+    <div class="card">
+        <div class="card-header bg-dark-gradient">
+            {% trans "Periods" %}
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">{% trans "Planned (subscription)" %}</h4>
+            <p class="card-text">
+            <table class="table table-bordered">
+                <tbody>
+                {% for table in dict_table.values %}
+                    {% for period_type, period in table.items %}
+                        {% if period_type == "period" %}
+                            {% for planned_type, planned in period.planned.items %}
+                                {% if planned_type != "total" %}
+                                    <tr>
+                                        <td scope="row" width="33%">{{ planned.name }}</td>
+                                        <td width="33%">{{ planned.total|stringformat:"d" }}</td>
+                                        <td width="33%">{{ period|get_item:"present"|get_item:planned_type|get_item:"total"|stringformat:"d" }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                </tbody>
+            </table>
+            </p>
+        </div>
+        {#    <div class="card-body">#}
+        {#      <h4 class="card-title">{% trans "Present" %}</h4>#}
+        {#      <p class="card-text">#}
+        {#      <table class="table table-bordered">#}
+        {#        <tbody>#}
+        {#        {% for period in dict_table.values %}#}
+        {#          {% for period_title, period_id in period.period.present.items %}#}
+        {#            {% if period_title != "total" %}#}
+        {#              <tr>#}
+        {#                <td scope="row" width="33%">{{ period_id.name }}</td>#}
+        {#                <td width="66%">{{ period_id.total }}</td>#}
+        {#              </tr>#}
+        {#            {% endif %}#}
+        {#          {% endfor %}#}
+        {#        {% endfor %}#}
+        {#        </tbody>#}
+        {#      </table>#}
+        {#      </p>#}
+        {#    </div>#}
+        <div class="card-footer bg-dark-gradient">
+            {% for period in dict_table.values %}
+                {% trans "Attendance percentage" %}:
+                <span class="badge badge-info">{{ period.period.percentage }} %</span>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-dark-gradient">
+            {% trans "Absences" %}
+        </div>
+        <div class="card-body">
+            {#      <h4 class="card-title">{% trans "(subscription)" %}</h4>#}
+            <p class="card-text">
+            <table class="table table-bordered">
+                <tbody>
+                {% for period in dict_table.values %}
+                    {% for absence in period.absence.values %}
+                        {% for absence_group, value in absence.items %}
+                            <tr>
+                                <td scope="row" width="33%">{{ absence_group|capfirst }}</td>
+                                <td width="33%">{{ value.total|stringformat:"d" }}</td>
+                                <td>{{ value.percentage }} %</td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+                </tbody>
+            </table>
+            </p>
+        </div>
+        <div class="card-footer bg-dark-gradient">
+            {% for period in dict_table.values %}
+                {% trans "Total" %}: <span class="badge badge-info">{{ period.absence.total }} {% trans "or" %} ({{ period.absence.percentage }}%)</span>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-dark-gradient">
+            {% trans "Troubleshooting" %}
+        </div>
+        <div class="card-body">
+            {#      <h4 class="card-title">{% trans "(subscription)" %}</h4>#}
+            <p class="card-text">
+            <table class="table table-bordered">
+                <tbody>
+                {% for period in dict_table.values %}
+                    {% for period_title, period_id in period.period.troubleshooting.items %}
+                        {% if period_title != "total" %}
+                            <tr>
+                                <td scope="row" width="33%">{{ period_id.name }}</td>
+                                <td width="66%">{{ period_id.total|stringformat:"d" }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                </tbody>
+            </table>
+            </p>
+        </div>
+        <div class="card-footer bg-dark-gradient">
+            {% for period in dict_table.values %}
+                {% trans "Total" %}: <span class="badge badge-info">{{ period.period.troubleshooting.total }} {% trans "or" %} ({{ period.period.troubleshooting.percentage }}%)</span>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+{% block content_card_footer %}
+
+{% endblock %}
