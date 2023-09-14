@@ -1,0 +1,44 @@
+[build-system]
+requires = [ "setuptools>=40.8.0", "wheel", "pybind11>=2.10.1", "toml",]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cudagrad"
+version = "0.0.44"
+description = "A small tensor-valued autograd engine"
+readme = "README.md"
+license = {text = "MIT License"}
+requires-python = ">=3.7"
+classifiers = [ "Programming Language :: Python :: 3", "Operating System :: OS Independent",]
+
+[[project.authors]]
+name = "Ryan Moore"
+email = "ryanm.inbox@gmail.com"
+
+[project.urls]
+Homepage = "https://github.com/yrom1/cudagrad"
+"Bug Tracker" = "https://github.com/yrom1/cudagrad/issues"
+
+[tool.pytest.ini_options]
+addopts = [ "--import-mode=importlib",]
+
+[tool.isort]
+skip_glob = ["**/examples/*", "**/examples*", "**/googletest/*", "**/googletest*"]
+
+[tool.mypy]
+pretty = true
+ignore_missing_imports = true
+exclude = "(googletest)|(examples)"
+
+[tool.black]
+exclude = '''
+(
+  /(
+      \.git
+    | \.env
+    | \.venv
+    | examples
+    | googletest
+  )/
+)
+'''
