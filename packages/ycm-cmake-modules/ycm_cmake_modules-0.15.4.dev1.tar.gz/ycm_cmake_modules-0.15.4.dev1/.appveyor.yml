@@ -1,0 +1,40 @@
+version: 0.13.100.{build}
+
+init:
+  - cmd: git config --global core.autocrlf true
+  - cmd: dir C:\projects
+  - cmd: cmake --version
+  - cmd: msbuild /version
+
+clone_folder: C:\projects\ycm
+
+platform:
+  - Win32
+  - x64
+
+configuration:
+  - Release
+
+branches:
+  except:
+    - gh-pages
+    - travis
+
+before_build:
+  - cmd: md C:\projects\ycm\build
+  - cmd: cd C:\projects\ycm\build
+  - cmd: if "%platform%"=="Win32" cmake -G"Visual Studio 12" -DCMAKE_INSTALL_PREFIX:PATH=C:\projects\ycm\install -DCPACK_GENERATOR:STRING=WIX -DYCM_MAINTAINER_MODE=ON ..
+  - cmd: if "%platform%"=="x64" cmake -G"Visual Studio 12 Win64" -DCMAKE_INSTALL_PREFIX:PATH=C:\projects\ycm\install -DCPACK_GENERATOR:STRING=WIX -DYCM_MAINTAINER_MODE=ON ..
+
+build:
+  project: C:\projects\ycm\build\YCM.sln
+
+after_build:
+  - cmd: cmake --build C:\projects\ycm\build --target INSTALL --config %CONFIGURATION%
+#  - cmd: cmake --build C:\projects\ycm\build --target PACKAGE --config %CONFIGURATION%
+
+test_script:
+  - cmd: ctest -VV -C %CONFIGURATION%
+
+#artifacts:
+#  - path: 'build\*.msi'
