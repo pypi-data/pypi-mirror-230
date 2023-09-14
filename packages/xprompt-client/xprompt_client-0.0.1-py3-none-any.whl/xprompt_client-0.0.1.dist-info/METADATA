@@ -1,0 +1,37 @@
+Metadata-Version: 2.1
+Name: xprompt-client
+Version: 0.0.1
+Summary: 
+Author: Yi Lu
+Author-email: yilu331@gmail.com
+Requires-Python: >=3.10,<4.0
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Provides-Extra: llama-index
+Requires-Dist: llama-index (==0.8.26.post1) ; extra == "llama-index"
+Requires-Dist: requests (>=2.31.0,<3.0.0)
+Requires-Dist: typer (>=0.9.0,<0.10.0)
+Requires-Dist: xprompt-common (>=0.1.0,<0.2.0)
+Description-Content-Type: text/markdown
+
+# XPrompt client
+
+client for XPrompt
+
+
+## Example
+```
+import xprmopt
+api_key_response = xprompt.login(user_email='..', password='..')
+
+xprompt.api_key = api_key_response['access_token']
+xprompt.openai_api_key = ""
+
+
+prompt = """tell me a joke"""
+
+r = xprompt.OpenAIChatCompletion.create(model="gpt-3.5-turbo", messages=[{"role": "user", "content": prompt}], temperature=0)
+print(r)
+```
+
