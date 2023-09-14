@@ -1,0 +1,72 @@
+Metadata-Version: 2.1
+Name: libipld
+Version: 1.0.0
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Information Technology
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Rust
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Software Development
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Software Development :: Pre-processors
+License-File: LICENSE
+Summary: Python binding to the Rust IPLD library
+Keywords: library,lib,ipld,cid,multibase,multihash,dag,cbor,json,pb,dag-cbor,dag-json,dag-pb
+Author: Ilya (Marshal) <ilya@marshal.dev>
+Author-email: Ilya (Marshal) <ilya@marshal.dev>
+License: MIT
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown; charset=UTF-8; variant=GFM
+Project-URL: Homepage, https://github.com/MarshalX/python-libipld
+Project-URL: Tracker, https://github.com/MarshalX/python-libipld/issues
+Project-URL: Author, https://github.com/MarshalX
+
+## Python IPLD
+
+> This project aims to speed up [The AT Protocol SDK](https://github.com/MarshalX/atproto) by using Rust for the heavy lifting. Only atproto related parts are implemented first.
+
+Code snippet:
+```python
+import libipld
+
+# Decode a CID
+print(libipld.decode_cid('bafyreig7jbijxpn4lfhvnvyuwf5u5jyhd7begxwyiqe7ingwxycjdqjjoa'))
+# Output: {'hash': {'size': 32, 'code': 18, 'digest': b'\xdfHP\x9b\xbd\xbcYOV\xd7\x14\xb1{N\xa7\x07\x1f\xc2C^\xd8D\t\xf44\xd6\xbe\x04\x91\xc1)p'}, 'version': 1, 'codec': 113}
+
+# Decode a DAG CBOR
+print(libipld.decode_dag_cbor(b'\xa2aa\x0cabfhello!\x82\x00\x01'))
+# Output: {'a': 12, 'b': 'hello!'}
+```
+
+### Features
+
+- Decode DAG CBOR (`decode_cid(str) -> dict`)
+- Decode CID (`decode_dag_cbor(bytes) -> dict`, `decode_dag_cbor_multi(bytes) -> list[dict]`)
+- Decode CAR (`decode_car(bytes) -> tuple[dict, dict[str, dict]]`). Returns a header and blocks mapped by CID. 
+
+## Installing
+
+You can install or upgrade `libipld` via
+
+```bash
+pip3 install -U libipld
+```
+
+### Contributing
+
+Contributions of all sizes are welcome.
+
+### License
+
+MIT
+
