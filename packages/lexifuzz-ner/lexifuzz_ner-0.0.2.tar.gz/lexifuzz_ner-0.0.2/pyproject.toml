@@ -1,0 +1,23 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "lexifuzz-ner"
+version = "0.0.2"
+authors = ["Hanif Yuli Abdillah P <hanifabd23@gmail.com>"]
+description = "Python package for detecting entities in text based on a dictionary and fuzzy similarity"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[tool.poetry.dependencies]
+python = ">=3.7"
+thefuzz = "0.20.0"
+nltk = "3.8.1"
+
+[tool.poetry.dev-dependencies]
