@@ -1,0 +1,25 @@
+[package]
+name = "ast-grep-config"
+description = "Search and Rewrite code at large scale using precise AST pattern"
+keywords = ["ast", "pattern", "codemod", "search", "rewrite"]
+
+authors= ["Herrington Darkholme <2883231+HerringtonDarkholme@users.noreply.github.com>"]
+edition= "2021"
+license= "MIT"
+repository= "https://github.com/ast-grep/ast-grep"
+rust-version= "1.63"
+version= "0.12.1"
+
+[features]
+default = ["regex"]
+
+[dependencies]
+ast-grep-core.path = "../ast-grep-core"
+
+anyhow = "1.0"
+globset = "0.4.13"
+serde_yaml = "0.9.25"
+bit-set = { version = "0.5.3" }
+regex = { version = "1.9.5" , optional = true }
+serde = { version = "1.0", features = ["derive"] }
+thiserror = "1.0.48"

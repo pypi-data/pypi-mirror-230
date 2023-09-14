@@ -1,0 +1,51 @@
+[package]
+name = "ast-grep"
+description = "Search and Rewrite code at large scale using precise AST pattern"
+keywords = ["ast", "pattern", "codemod", "search", "rewrite"]
+categories = ["command-line-utilities", "development-tools", "parsing"]
+default-run = "sg"
+# use relative path because maturin does not recognize
+readme = "../../README.md"
+license-file = "../../LICENSE"
+
+version= "0.12.1"
+authors= ["Herrington Darkholme <2883231+HerringtonDarkholme@users.noreply.github.com>"]
+edition= "2021"
+# license.workspace = true
+documentation= "https://ast-grep.github.io/guide/introduction.html"
+homepage= "https://ast-grep.github.io/"
+repository= "https://github.com/ast-grep/ast-grep"
+rust-version= "1.63"
+
+[[bin]]
+name = "sg"
+path = "src/main.rs"
+
+[[bin]]
+name = "ast-grep"
+path = "src/bin/ast-grep.rs"
+
+[dependencies]
+ast-grep-core.path = "../../local_dependencies/ast-grep-core"
+ast-grep-config.path = "../../local_dependencies/ast-grep-config"
+ast-grep-dynamic.path = "../../local_dependencies/ast-grep-dynamic"
+ast-grep-language.path = "../../local_dependencies/ast-grep-language"
+ast-grep-lsp.path = "../../local_dependencies/ast-grep-lsp"
+
+ansi_term = "0.12"
+anyhow = "1.0"
+atty = "0.2.14"
+clap = { version = "4.4.2", features = ["derive"] }
+codespan-reporting = "0.11.1"
+crossterm = "0.27.0"
+inquire = "0.6.2"
+num_cpus = "1.16.0"
+serde_json = "1.0.106"
+serde_yaml = "0.9.25"
+similar = { version = "2.2.1", features = ["inline"] }
+tokio = { version = "1", features = ["rt-multi-thread", "io-std"] }
+clap_complete = "4.4.1"
+ignore = { version = "0.4.20" }
+regex = { version = "1.9.5" }
+bit-set = { version = "0.5.3" }
+serde = { version = "1.0", features = ["derive"] }

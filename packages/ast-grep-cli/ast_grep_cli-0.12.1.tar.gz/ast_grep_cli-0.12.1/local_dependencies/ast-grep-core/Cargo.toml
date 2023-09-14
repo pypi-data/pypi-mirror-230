@@ -1,0 +1,23 @@
+[package]
+name = "ast-grep-core"
+description = "Search and Rewrite code at large scale using precise AST pattern"
+keywords = ["ast", "pattern", "codemod", "search", "rewrite"]
+categories = ["command-line-utilities", "development-tools", "parsing"]
+
+authors= ["Herrington Darkholme <2883231+HerringtonDarkholme@users.noreply.github.com>"]
+documentation= "https://ast-grep.github.io/guide/introduction.html"
+edition= "2021"
+homepage= "https://ast-grep.github.io/"
+license= "MIT"
+repository= "https://github.com/ast-grep/ast-grep"
+rust-version= "1.63"
+version= "0.12.1"
+
+[dependencies]
+bit-set = { version = "0.5.3" }
+regex = { version = "1.9.5" , optional = true }
+thiserror = "1.0.48"
+tree-sitter = { version = "0.9.2", package = "tree-sitter-facade-sg" }
+
+[features]
+default = ["regex"]

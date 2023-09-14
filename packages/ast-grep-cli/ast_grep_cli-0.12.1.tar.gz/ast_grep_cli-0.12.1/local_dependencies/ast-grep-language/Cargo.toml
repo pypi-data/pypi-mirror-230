@@ -1,0 +1,60 @@
+[package]
+name = "ast-grep-language"
+description = "Search and Rewrite code at large scale using precise AST pattern"
+keywords = ["ast", "pattern", "codemod", "search", "rewrite"]
+
+authors= ["Herrington Darkholme <2883231+HerringtonDarkholme@users.noreply.github.com>"]
+edition= "2021"
+license= "MIT"
+repository= "https://github.com/ast-grep/ast-grep"
+rust-version= "1.63"
+version= "0.12.1"
+
+[dependencies]
+ast-grep-core.path = "../ast-grep-core"
+
+tree-sitter-c = { version = "0.20.6", optional = true }
+tree-sitter-cpp = { version = "0.20.3", optional = true }
+tree-sitter-c-sharp = { version = "0.20.0", package = "ast-grep-tree-sitter-c-sharp", optional = true }
+tree-sitter-css = { version = "0.19.0", optional = true }
+tree-sitter-dart= { version = "0.0.3", optional = true }
+tree-sitter-go = { version = "0.19.1", optional = true }
+tree-sitter-html = { version = "0.19.0", optional = true }
+tree-sitter-java = { version = "0.20.0", optional = true }
+tree-sitter-javascript = { version = "0.20.1", optional = true }
+tree-sitter-json = { version = "0.19.0", optional = true }
+tree-sitter-kotlin = { version = "0.2.11", optional = true }
+tree-sitter-lua = { version = "0.0.19", optional = true }
+tree-sitter-python = { version = "0.20.3", optional = true }
+tree-sitter-ruby = { version = "0.20.0", optional = true }
+tree-sitter-rust = { version = "0.20.4", optional = true }
+tree-sitter-scala = { version = "0.20.2", optional = true }
+tree-sitter-swift = { version = "0.3.6", optional = true }
+tree-sitter-thrift = { version = "0.5.0", optional = true }
+tree-sitter-typescript= { version = "0.20.2", optional = true }
+ignore = { version = "0.4.20" }
+serde = { version = "1.0", features = ["derive"] }
+
+[features]
+builtin-parser = [
+  "tree-sitter-c",
+  "tree-sitter-cpp",
+  "tree-sitter-c-sharp",
+  "tree-sitter-css",
+  "tree-sitter-dart",
+  "tree-sitter-go",
+  "tree-sitter-html",
+  "tree-sitter-java",
+  "tree-sitter-javascript",
+  "tree-sitter-json",
+  "tree-sitter-kotlin",
+  "tree-sitter-lua",
+  "tree-sitter-python",
+  "tree-sitter-ruby",
+  "tree-sitter-rust",
+  "tree-sitter-scala",
+  "tree-sitter-swift",
+  "tree-sitter-thrift",
+  "tree-sitter-typescript",
+]
+default = ["builtin-parser"]
