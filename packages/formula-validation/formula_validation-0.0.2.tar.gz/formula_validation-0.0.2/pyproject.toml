@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=61.0", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "formula_validation"
+version = "0.0.2"
+description = "Package to represent formulas with adducts and process ms data from it. "
+
+authors = [
+    {name = "Alberto Gil de la Fuente", email = "alberto.gilf@gmail.com"},
+]
+maintainers = [
+    {name = "Alberto Gil de la Fuente", email = "alberto.gilf@gmail.com"},
+]
+[tool.poetry]
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers=[
+    'Development Status :: 3 - Alpha',
+    'Intended Audience :: Science/Research',
+    'License :: OSI Approved :: GPL-3.0-only',  
+    'Operating System :: POSIX :: Linux',
+    'Programming Language :: Python :: 3.10',
+]
+keywords = ["ms", "chemistry"]
+license = {file = "LICENSE"}
+
+dependencies = [
+    "urllib3",
+    "rpy2",
+]
+
+[project.urls]
+Homepage = "https://github.com/Wang-Bioinformatics-Lab/formula_validation"
+Repository = "https://github.com/Wang-Bioinformatics-Lab/formula_validation"
+Documentation = "https://github.com/Wang-Bioinformatics-Lab/formula_validation/blob/main/README.md"
+
+
