@@ -1,0 +1,136 @@
+"""Module to use rocm-docs-core as a theme."""
+
+from typing import Any, Dict
+
+import sys
+from pathlib import Path
+
+import sphinx.util.logging
+from pydata_sphinx_theme.utils import (  # type: ignore[import]
+    config_provided_by_user,
+    get_theme_options_dict,
+)
+from sphinx.application import Sphinx
+
+from rocm_docs import util
+
+if sys.version_info < (3, 9):
+    # importlib.resources either doesn't exist or lacks the files()
+    # function, so use the PyPI version:
+    import importlib_resources
+else:
+    # importlib.resources has files(), so use that:
+    import importlib.resources as importlib_resources
+
+logger = sphinx.util.logging.getLogger(__name__)
+
+
+def _copy_theme_util_pages(app: Sphinx) -> None:
+    """Copy over common utility pages before generating docs."""
+    pkg = importlib_resources.files("rocm_docs")
+    util.copy_from_package(app, pkg / "data/util_pages", "data/util_pages", ".")
+
+
+def _update_repo_opts(
+    srcdir: str, url: str, branch: str, theme_opts: Dict[str, Any]
+) -> None:
+    default_branch_options = {
+        "use_edit_page_button": False,
+        "repository_url": url,
+        "repository_branch": branch,
+        "path_to_docs": util.get_path_to_docs(srcdir),
+    }
+    for key, val in default_branch_options.items():
+        theme_opts.setdefault(key, val)
+
+
+def _update_banner(
+    flavor: str, version_type: util.VersionType, theme_opts: Dict[str, Any]
+) -> None:
+    if flavor != "rocm":
+        return
+
+    if version_type == util.VersionType.LATEST_RELEASE:
+        return
+
+    announcement_info: str
+    if version_type == util.VersionType.RELEASE_CANDIDATE:
+        announcement_info = "This page contains changes for a test release of ROCm. Read the <a href='https://rocm.docs.amd.com/en/latest/'>latest Linux release of ROCm documentation</a> for your production environments."
+    elif version_type == util.VersionType.OLD_RELEASE:
+        announcement_info = "This is an old version of ROCm documentation. Read the <a href='https://rocm.docs.amd.com/en/latest/'>latest ROCm release documentation</a> to stay informed of all our developments."
+    elif version_type == util.VersionType.DEVELOPMENT:
+        announcement_info = "This page contains proposed changes for a future release of ROCm. Read the <a href='https://rocm.docs.amd.com/en/latest/'>latest Linux release of ROCm documentation</a> for your production environments."
+
+    theme_opts.setdefault("announcement", announcement_info)
+
+
+def _update_theme_options(app: Sphinx) -> None:
+    url, branch = util.get_branch(app.srcdir)
+    theme_opts = get_theme_options_dict(app)
+    _update_repo_opts(app.srcdir, url, branch, theme_opts)
+
+    supported_flavors = ["rocm", "local"]
+    flavor = theme_opts.get("flavor", "rocm")
+    if flavor not in supported_flavors:
+        logger.error(
+            f'Unsupported theme flavor "{flavor}", must be one of: {supported_flavors}.\n'
+            "Using flavor={supported_flavors[0]}"
+        )
+        flavor = supported_flavors[0]
+        theme_opts["flavor"] = flavor
+
+    theme_opts.setdefault(
+        "article_header_start",
+        ["components/toggle-primary-sidebar.html", "breadcrumbs.html"],
+    )
+
+    if hasattr(app.config, "projects_version_type"):
+        _update_banner(flavor, app.config.projects_version_type, theme_opts)
+
+    # Default the download, edit, and fullscreen buttons to off
+    for button in ["download", "edit_page", "fullscreen"]:
+        theme_opts.setdefault(f"use_{button}_button", False)
+
+    if theme_opts.get("link_main_doc", True):
+        theme_opts.setdefault("navbar_center", []).insert(
+            0, "components/left-side-menu"
+        )
+
+    default_config_opts = {
+        "html_show_sphinx": False,
+        "html_favicon": "https://www.amd.com/themes/custom/amd/favicon.ico",
+    }
+    for key, default in default_config_opts.items():
+        if not config_provided_by_user(app, key):
+            setattr(app.config, key, default)
+
+
+def setup(app: Sphinx) -> Dict[str, Any]:
+    """Set up the module as a Sphinx extension."""
+    app.add_js_file(
+        "https://download.amd.com/js/analytics/analyticsinit.js",
+        priority=999_999,
+        loading_method="async",
+    )
+    app.add_js_file("code_word_breaks.js", loading_method="async")
+    app.add_js_file("renameVersionLinks.js", loading_method="async")
+    app.add_js_file("rdcMisc.js", loading_method="async")
+    app.add_js_file("theme_mode_captions.js", loading_method="async")
+    here = Path(__file__).parent.resolve()
+    theme_path = here / "rocm_docs_theme"
+    app.add_html_theme("rocm_docs_theme", str(theme_path))
+    for css in [
+        "custom.css",
+        "rocm_header.css",
+        "rocm_footer.css",
+        "fonts.css",
+    ]:
+        app.add_css_file(css)
+
+    app.connect("builder-inited", _copy_theme_util_pages, priority=400)
+    app.connect("builder-inited", _update_theme_options)
+
+    return {
+        "parallel_read_safe": True,
+        "parallel_write_safe": True,
+    }
