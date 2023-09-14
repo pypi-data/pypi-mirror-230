@@ -1,0 +1,49 @@
+Metadata-Version: 2.1
+Name: assetic-mapinfo
+Version: 1.3.0.1
+Summary: Assetic MapInfo Integration API
+Home-page: http://www.assetic.com
+Author-email: developer@assetic.com
+Keywords: Assetic MapInfo Integration APIs
+Description-Content-Type: text/x-rst
+License-File: LICENSE.txt
+Requires-Dist: assetic (>=2023.16.1.3)
+Requires-Dist: pandas (>=0.12.0)
+Requires-Dist: six
+Requires-Dist: typing
+
+Assetic MapInfo integration SDK
+===============================
+This package provides tools that can be used to assist with integration
+between Assetic and MapInfo.
+The tools may be included in the MapInfo python add-in, or in scripts run
+outside of the MapInfo desktop environment.
+
+**Changelog**
+
+** Release 1.3.0.1**
+    *   Added boolean parameter for creation of Functional Location when checking for it's existence during asset association
+
+** Release 1.3.0.0**
+    *   Added support for Component and Dimension 'upsert' where the Component and or Dimension is created as part of
+        the Asset update if the Component/Dimension does not already exist.
+        Requires assetic SDK 2023.16.1.2 minimum, and configuration setting to enable
+
+** Release 1.2.0.2**
+    *   Added functionality to bulk update asset spatial data
+    *   Fixed bug with bulk update having incorrect parameters
+    *   Fixed create assets issue where the skip defaults XML config was applied
+
+** Release 1.2.0.1**
+    *   Improve capture of unhandled exceptions
+
+** Release 1.0.2.0**
+    *   Improve functionality/logging
+    *   Utilises shared functionality of base assetic python sdk
+
+**Release 1.0.0.5**
+    * Include Mapinfo libraries.  If not in a MapInfo environment these
+      libraries will initiated by empty
+
+**Release 1.0.0.0**
+    * First Release
