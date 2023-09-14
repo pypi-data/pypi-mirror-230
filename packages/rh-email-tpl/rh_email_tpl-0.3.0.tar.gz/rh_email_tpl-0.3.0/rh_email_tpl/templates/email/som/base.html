@@ -1,0 +1,20 @@
+{% extends 'email/som/empty.html' %}
+{% load email_components %}
+
+{% block emailbody %}
+    {% emailheader %}{% endemailheader %}
+    {% block content %}{% endblock %}
+    {% emailfooter %}{% endemailfooter %}
+    {% block unsubscribe %}
+      {% if email_unsubscribe %}
+          {% emaillinebreak %}{% endemaillinebreak %}
+          {% emailparagraph %}
+              {% emailcolor color="#878787" %}
+                  {% emailsmall %}
+                      {{ email_unsubscribe.text }} {% emaillink placeholder=email_unsubscribe.url_name %}{{ email_unsubscribe.url }}{% endemaillink %}
+                  {% endemailsmall %}
+              {% endemailcolor %}
+          {% endemailparagraph %}
+      {% endif %}
+    {% endblock %}
+{% endblock %}

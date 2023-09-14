@@ -1,0 +1,52 @@
+Metadata-Version: 2.1
+Name: rh_email_tpl
+Version: 0.3.0
+Summary: Internal RegioHelden tool for building styled html emails
+Home-page: 
+Download-URL: 
+Author: RegioHelden <entwicklung@regiohelden.de>
+Author-email: entwicklung@regiohelden.de
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Web Environment
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Software Development
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: System :: Monitoring
+Description-Content-Type: text/markdown
+Requires-Dist: Django>=4.2
+Requires-Dist: premailer>=3.10.0
+
+# RegioHelden Email template
+
+`rh_email_tpl` is a django app used to render RegioHelden styled HTML emails. It provides also multiple Django
+templatetags used as helpers for building HTML emails.
+
+This project is meant to be used internally by RegioHelden organisation, as it has the company styles and logos.
+
+## Installation
+
+Simply run:
+```
+pip install rh_email_tpl
+```
+
+And add `rh_email_tpl` to your django `INSTALLED_APPS`. I.e.: in `settings.py` add:
+```
+INSTALLED_APPS = [
+  ...
+  "rh_email_tpl",
+  ...
+]
+```
+
+## Making a new release
+
+[bumpversion](https://github.com/peritus/bumpversion) is used to manage releases.
+
+Add your changes to the [CHANGELOG](./CHANGELOG.md) and run `bumpversion <major|minor|patch>`, then push your change.
+That is enough for the new release, once the MR was merged the new release will be published.

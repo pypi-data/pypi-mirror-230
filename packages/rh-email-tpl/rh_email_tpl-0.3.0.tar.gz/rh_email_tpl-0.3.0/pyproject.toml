@@ -1,0 +1,194 @@
+# -------------------------------------------
+# Managed by modulesync - DO NOT EDIT
+# -------------------------------------------
+
+# -------------------------------------------
+# black formatter
+# https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#command-line-options
+# -------------------------------------------
+
+[tool.black]
+line-length = 88
+include = '\.pyi?$'
+exclude = '''
+/(
+  \.venv
+  | migrations
+)/
+'''
+
+[tool.djlint]
+indent = 4
+blank_line_after_tag = "load,extends"
+profile = "django"
+max_line_length = 88
+max_attribute_length = 10
+
+# -------------------------------------------
+# mypy (and plugins) - static typing support for VSCode
+# https://mypy.readthedocs.io/en/stable/config_file.html
+# https://github.com/typeddjango/django-stubs
+# https://github.com/typeddjango/djangorestframework-stubs
+# -------------------------------------------
+
+[tool.mypy]
+plugins = [
+  "mypy_django_plugin.main",
+  "mypy_drf_plugin.main",
+]
+
+[tool.django-stubs]
+django_settings_module = "rh_email_tpl.settings"
+
+# -------------------------------------------
+# pylint
+# https://pylint.pycqa.org/en/latest/user_guide/configuration/all-options.html
+# -------------------------------------------
+
+[tool.pylint.main]
+ignore = [
+  ".cache",
+  "migrations",
+]
+load-plugins = [
+  "pylint_gitlab",
+  "pylint_django",
+  "pylint.extensions.no_self_use",
+]
+django-settings-module = "rh_email_tpl.settings"
+
+[tool.pylint.messages_control]
+# see http://pylint.pycqa.org/en/latest/technical_reference/features.html
+
+disable = [
+  "invalid-name",                       # C0103 https://pylint.pycqa.org/en/latest/user_guide/messages/convention/invalid-name.html
+  "missing-module-docstring",           # C0114 https://pylint.pycqa.org/en/latest/user_guide/messages/convention/missing-module-docstring.html
+  "missing-class-docstring",            # C0115 https://pylint.pycqa.org/en/latest/user_guide/messages/convention/missing-class-docstring.html
+  "missing-function-docstring",         # C0116 https://pylint.pycqa.org/en/latest/user_guide/messages/convention/missing-function-docstring.html
+  "line-too-long",                      # C0301 https://pylint.pycqa.org/en/latest/user_guide/messages/convention/line-too-long.html?highlight=C0301
+  "too-many-lines",                     # C0302 https://pylint.pycqa.org/en/latest/user_guide/messages/convention/too-many-lines.html
+  "wrong-import-order",                 # C0411 https://pylint.pycqa.org/en/latest/user_guide/messages/convention/wrong-import-order.html
+  "import-outside-toplevel",            # C0415 https://pylint.pycqa.org/en/latest/user_guide/messages/convention/import-outside-toplevel.html
+  "use-implicit-booleaness-not-len",    # C1802 https://pylint.pycqa.org/en/latest/user_guide/messages/convention/use-implicit-booleaness-not-len.html
+  "no-member",                          # E1101 https://pylint.pycqa.org/en/latest/user_guide/messages/error/no-member.html
+  "locally-disabled",                   # I0011 https://pylint.pycqa.org/en/latest/user_guide/messages/information/locally-disabled.html
+  "no-self-use",                        # R6301 https://pylint.pycqa.org/en/latest/user_guide/messages/refactor/no-self-use.html
+  "duplicate-code",                     # R0801 https://pylint.pycqa.org/en/latest/user_guide/messages/refactor/duplicate-code.html
+  "too-many-ancestors",                 # R0901 https://pylint.pycqa.org/en/latest/user_guide/messages/refactor/too-many-ancestors.html
+  "no-else-return",                     # R1705 https://pylint.pycqa.org/en/latest/user_guide/messages/refactor/no-else-return.html
+  "protected-access",                   # W0212 https://pylint.pycqa.org/en/latest/user_guide/messages/warning/protected-access.html
+  "unused-variable",                    # W0612 https://pylint.pycqa.org/en/latest/user_guide/messages/warning/unused-variable.html
+  "unused-argument",                    # W0613 https://pylint.pycqa.org/en/latest/user_guide/messages/warning/unused-argument.html
+  "unused-wildcard-import",             # W0614 https://pylint.pycqa.org/en/latest/user_guide/messages/warning/unused-wildcard-import.html
+  "bare-except",                        # W0702 https://pylint.pycqa.org/en/latest/user_guide/messages/warning/bare-except.html
+  "keyword-arg-before-vararg",          # W1113 https://pylint.pycqa.org/en/latest/user_guide/messages/warning/keyword-arg-before-vararg.html
+]
+
+[tool.pylint.reports]
+output-format = "colorized"
+
+[tool.pylint.basic]
+no-docstring-rgx = "__.*__|_.*"
+class-rgx = "[A-Z_][a-zA-Z0-9_]+$"
+function-rgx = "[a-zA_][a-zA-Z0-9_]{2,70}$"
+method-rgx = "[a-z_][a-zA-Z0-9_]{2,70}$"
+const-rgx = "(([A-Z_][A-Z0-9_]*)|([a-z_][a-z0-9_]*)|(__.*__)|register|urlpatterns)$"
+good-names = "_,i,j,k,v,e,qs,pk,setUp,tearDown"
+variable-rgx = "[a-z_][a-z0-9_]{1,40}$"
+argument-rgx = "[a-z_][a-z0-9_]{1,30}$"
+inlinevar-rgx = "[A-Za-z_][A-Za-z0-9_]*$"
+
+[tool.pylint.typecheck]
+# List of members which are set dynamically and missed by pylint inference
+# system, and so shouldn't trigger E0201 when accessed.
+# https://pylint.pycqa.org/en/latest/user_guide/configuration/all-options.html#generated-members
+generated-members = [
+  "objects",
+  "DoesNotExist",
+  "id",
+  "pk",
+  "_meta",
+  "base_fields",
+  "context",
+]
+
+[tool.pylint.variables]
+dummy-variables-rgx = "_|dummy"
+
+[tool.pylint.similarities]
+min-similarity-lines = 6
+
+[tool.pylint.format]
+max-line-length = 88
+
+[tool.pylint.design]
+max-branches = 16
+max-args = 10
+max-parents = 15
+max-attributes = 10
+min-public-methods = 0
+max-public-methods = 50
+
+[tool.ruff]
+exclude = [
+    ".git",
+    "__pycache",
+    "migrations",
+    "src",
+    "docs",
+    "rh_django_shared",
+]
+line-length = 88
+# See https://github.com/charliermarsh/ruff#supported-rules
+# for all supported rules
+select = [
+    "A",
+    "B",
+    "BLE",
+    "C",
+    "C4",
+    "C90",
+    "COM",
+    "DJ",
+    "DTZ",
+    "E",
+    "ERA",
+    "F",
+    "G",
+    "I",
+    "ICN",
+    "INP",
+    "N",
+    "PIE",
+    "PGH",
+    "PL",
+    "PTH",
+    "RET",
+    "RSE",
+    "RUF",
+    "S",
+    "SIM",
+    "T20",
+    "UP",
+    "W",
+    "YTT",
+]
+ignore = [
+    "N802",     # Function name `{name}` should be lowercase
+    "N803",     # Argument name `{name}` should be lowercase
+    "N806",     # Variable `{name}` in function should be lowercase
+    "N815",     # Variable `{name}` in class scope should not be mixedCase
+    "N818",     # Exception name `{name}` should be named with an Error suffix
+    "A003",     # Class attribute `{name}` is shadowing a python builtin
+    "S101",     # Use of `assert` detected
+    "UP007",    # Use `X | Y` for type annotations
+    "S105",     # Possible hardcoded password: "{}"
+    "PLR0913",  # Too many arguments to function call ({c_args}/{max_args})
+    "RUF012",   # Mutable class attributes should be annotated with `typing.ClassVar`
+]
+
+[tool.ruff.mccabe]
+max-complexity = 16
+
+[tool.isort]
+profile = "black"
