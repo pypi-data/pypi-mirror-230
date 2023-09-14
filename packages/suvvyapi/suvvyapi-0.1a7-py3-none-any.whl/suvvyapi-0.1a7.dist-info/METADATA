@@ -1,0 +1,76 @@
+Metadata-Version: 2.1
+Name: suvvyapi
+Version: 0.1a7
+Summary: A Python API wrapper for Suvvy AI API
+Home-page: https://github.com/barabum0/suvvyapi
+Author: Roman Poltorabatko
+Author-email: barabum@duck.com
+License: MIT
+Project-URL: Bug Tracker, https://github.com/barabum0/suvvyapi/issues
+Project-URL: Source Code, https://github.com/barabum0/suvvyapi
+Project-URL: Suvvy AI, https://suvvy.ai
+Keywords: python,api,wrapper,chatgpt,suvvy,ai,suvvyai
+Platform: any
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: httpx ~=0.24.1
+Requires-Dist: pydantic
+Requires-Dist: devtools
+
+# An async API wrapper for Suvvy AI
+#### built on top of httpx and pydantic :)
+[![Supported Python versions](https://img.shields.io/pypi/pyversions/suvvyapi.svg?style=flat-square&logo=python&logoColor=FFE873)](https://pypi.org/project/suvvyapi)
+[![PyPI version](https://img.shields.io/pypi/v/suvvyapi.svg?style=flat-square&logo=pypi&logoColor=FFE873)](https://pypi.org/project/suvvyapi)
+[![PyPI downloads](https://img.shields.io/pypi/dm/suvvyapi.svg?style=flat-square)](https://pypi.org/project/suvvyapi)
+
+[![Suvvy AI](https://img.shields.io/badge/suvvy.ai-best%20AI%20website-blue?style=flat-square)](https://suvvy.ai)
+[![Static Badge](https://img.shields.io/badge/OpenAI-ChatGPT-blue?style=flat-square&logo=openai)](https://openai.com/chatgpt)
+
+## Installation
+```shell
+pip install -U suvvyapi 
+```
+
+## Synchronous Usage
+```python
+from suvvyapi import SuvvyAPIWrapper, Message
+
+suvvy = SuvvyAPIWrapper("YOUR_TOKEN")
+# You can get your token at https://home.suvvy.ai/
+
+response = suvvy.predict(Message(text="Say hello to Python!"), "random_id")
+# 'Hello!'
+```
+
+## Asynchronous Usage
+
+```python
+import asyncio
+from suvvyapi import AsyncSuvvyAPIWrapper, Message
+
+suvvy = AsyncSuvvyAPIWrapper("YOUR_TOKEN")
+# You can get your token at https://home.suvvy.ai/
+
+async def main():
+    response = await suvvy.predict(Message(text="Say hello to Python!"), "random_id")
+    # 'Hello!'
+
+asyncio.run(main())
+```
+
+### Building from sources
+```shell
+git clone https://github.com/barabum0/suvvyapi
+cd suvvyapi
+pip install -r requirements.txt
+python -m build
+```
