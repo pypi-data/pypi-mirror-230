@@ -1,0 +1,14 @@
+<div class="form-group {{class}}">
+    <label for="{{field.full_name}}">{{field.label}}</label>
+    <input id="{{field.full_name}}"
+           name="{{field.full_name}}"
+           class="form-control"
+           type="text"
+           value="{{field.value_as_str}}"
+           {% if tabindex %} tabindex="{{tabindex}}"{% endif %}
+           {% if field.disabled %}disabled{% endif %}
+           {% if field.autocomplete %}autocomplete="{{field.autocomplete}}"{% endif %}/>
+    {% for error in field.errors %}
+    <div class="red">{{ error }}</div>
+    {% endfor %}
+</div>

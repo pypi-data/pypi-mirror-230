@@ -1,0 +1,38 @@
+{% extends base %}
+
+{% block script %}
+    $('#form').submit(function(e) {
+        e.preventDefault(); // don't submit multiple times
+        this.submit(); // use the native submit method of the form element
+        $('#action').val(''); // blank the input
+    });
+{% endblock %}
+
+{% block title %}
+{% if title %}
+<title>{{title}}</title>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+{% include "components/banners.html" %}
+
+<form method="post" id="form">
+    {% csrf_token %}
+    <input type="hidden" id="action" name="action"/>
+    <input type="hidden" id="sort" name="sort" value="{{table.sort}}"/>
+    {% for key, value in table.params.items %}
+    <input type="hidden" id="{{key}}" name="{{key}}" value="{{value}}"/>
+    {% endfor %}
+    <input type="hidden" name="path" value=":/{{table.path}}"/>
+    {% include "components/table.html" with table=table pagination=pagination %}
+</form>
+
+<br/>
+
+{% if table.upload %}
+  {% include "components/upload.html" with name="upload" %}
+{% endif %}
+
+{% endblock %}

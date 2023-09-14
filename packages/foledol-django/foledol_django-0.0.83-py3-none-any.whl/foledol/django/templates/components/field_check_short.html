@@ -1,0 +1,13 @@
+<div class="form-group">
+    <div class="col-sm-4">&nbsp;</div>
+    <div class="col-sm-8">
+        <div class="checkbox" style="margin: 2px;">
+            <label>
+                <input id="{{field.full_name}}"
+                       name="{{field.full_name}}"
+                       type="checkbox" {% if field.value %}checked{% endif %} {% if field.disabled %}disabled{% endif %}/>
+                {{field.label}}
+            </label>
+        </div>
+    </div>
+</div>
