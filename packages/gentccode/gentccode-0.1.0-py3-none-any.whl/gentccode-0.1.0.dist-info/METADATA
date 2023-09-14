@@ -1,0 +1,26 @@
+Metadata-Version: 2.1
+Name: gentccode
+Version: 0.1.0
+Summary: generate test case code
+Author: Lei Su
+Author-email: lei.susl@shopee.com
+Requires-Python: >=3.11,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: click (>=8.1.7,<9.0.0)
+Requires-Dist: http-content-parser (>=0.0.10,<0.0.11)
+Requires-Dist: pyyaml (>=6.0,<7.0)
+Description-Content-Type: text/markdown
+
+## 简介
+gtc(generate test case) 是一个把http请求转换为测试代码的工具
+
+## 用法
+```bash
+gtc -t curl curl.txt
+gtc -t postman postman.json
+gtc -t swagger2 swagger.json
+```
+
