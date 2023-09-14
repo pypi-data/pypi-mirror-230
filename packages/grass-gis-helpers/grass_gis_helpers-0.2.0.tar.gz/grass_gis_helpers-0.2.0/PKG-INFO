@@ -1,0 +1,51 @@
+Metadata-Version: 2.1
+Name: grass_gis_helpers
+Version: 0.2.0
+Summary: This library provides functions which can be used for developing GRASS GIS addons.
+Author-email: Anika Weinmann <weinmann@mundialis.de>
+Maintainer-email: "mundialis GmbH & Co. KG" <info@mundialis.de>
+Project-URL: Homepage, https://github.com/mundialis/grass-gis-helpers
+Project-URL: Bug Tracker, https://github.com/mundialis/grass-gis-helpers/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# mundialis GRASS GIS helper library
+
+This library provides functions which can be used for developing GRASS GIS addons and which are used by [mundialis](https://www.mundialis.de/).
+
+The library usage needs to be in a GRASS GIS session, so that the the module `grass` can be imported.
+
+## Installation
+
+```bash
+pip install grass-gis-helpers
+```
+
+## Small example
+
+Small example how the library can be used inside a GRASS GIS session:
+
+```python3
+from grass_gis_helpers import general
+general.set_nprocs(2)
+```
+
+## DEV setup
+
+pip-tools is required for DEV setup:
+
+```bash
+# only once
+pip3 install pip-tools
+```
+
+then install grass-gis-helpers from the local repository:
+
+```bash
+pip3 install -e .
+
+```
