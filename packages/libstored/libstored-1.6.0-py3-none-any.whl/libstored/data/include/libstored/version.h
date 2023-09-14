@@ -1,0 +1,41 @@
+#ifndef LIBSTORED_VERSION_H
+#define LIBSTORED_VERSION_H
+/*
+ * libstored, distributed debuggable data stores.
+ * Copyright (C) 2020-2023  Jochem Rutgers
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
+#include <libstored/util.h>
+
+// clang-format off
+#define STORED_VERSION_MAJOR  1
+#define STORED_VERSION_MINOR  6
+#define STORED_VERSION_PATCH  0
+#define STORED_VERSION_SUFFIX ""
+
+#define STORED_VERSION                             \
+	STORED_STRINGIFY(STORED_VERSION_MAJOR)     \
+	"." STORED_STRINGIFY(STORED_VERSION_MINOR) \
+	"." STORED_STRINGIFY(STORED_VERSION_PATCH) \
+	    STORED_VERSION_SUFFIX
+
+#define STORED_VERSION_NUM \
+	(STORED_VERSION_MAJOR * 10000L + STORED_VERSION_MINOR * 100L + STORED_VERSION_PATCH)
+// clang-format on
+
+#ifdef __cplusplus
+namespace stored {
+/*!
+ * \brief Returns the version of libstored.
+ */
+constexpr char const* version() noexcept
+{
+	return STORED_VERSION;
+}
+} // namespace stored
+#endif // __cplusplus
+#endif // LIBSTORED_VERSION_H

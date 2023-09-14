@@ -1,0 +1,20 @@
+{#
+libstored, distributed debuggable data stores.
+Copyright (C) 2020-2023  Jochem Rutgers
+
+This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this
+file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+-#}
+Name,C,Type,Init,Offset / function,AXI,Size
+{% for o in store.objects -%}
+{{o.name|csvstring}},{{o.cname}},
+{%-    if o is function -%}
+({{o.type}}{% if o is blob %}:{{o.size}}{% endif %}),{{o.f}},,
+{%    else -%}
+{{o.type}}{% if o is blob %}:{{o.size}}{% endif %},
+{%- if o.init == None %}0{% else %}{{o.init}}{% endif %},{{o.offset}},
+{%- if o.axi != None %}{{o.axi}}{% endif %},{{o.size}},
+{%   endif -%}
+{%- endfor -%}
