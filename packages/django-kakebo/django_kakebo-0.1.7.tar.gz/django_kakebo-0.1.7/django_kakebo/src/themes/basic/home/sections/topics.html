@@ -1,0 +1,182 @@
+{% load i18n %}
+{% load static %}
+<section class="explore-section section-padding" id="section_1">
+
+	<div class="container">
+
+		<div class="col-12 text-center">
+			<h2 class="mb-4">
+				{% trans 'Learn about Kakebo' %}
+			</h2>
+		</div>
+
+	</div>
+
+	<div class="container-fluid">
+		<div class="row">
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item" role="presentation">
+					<button class="nav-link active" id="first-step-tab" data-bs-toggle="tab"
+							data-bs-target="#first-step-tab-pane" type="button" role="tab"
+							aria-controls="first-step-tab-pane" aria-selected="true">
+						{% trans 'First steps' %}
+					</button>
+				</li>
+
+				<li class="nav-item" role="presentation">
+					<button class="nav-link" id="type-cost-tab" data-bs-toggle="tab"
+							data-bs-target="#type-cost-tab-pane" type="button" role="tab"
+							aria-controls="type-cost-tab-pane" aria-selected="false">
+						{% trans 'Types of costs' %}
+					</button>
+				</li>
+
+			</ul>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+
+			<div class="col-12">
+				<div class="tab-content" id="myTabContent">
+
+					<div class="tab-pane fade show active" id="first-step-tab-pane" role="tabpanel"
+						 aria-labelledby="first-step-tab" tabindex="0">
+						<div class="row">
+							<div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+								<div class="custom-block bg-white shadow-lg">
+									<a href="topics-detail.html">
+										<div class="d-flex">
+											<div>
+												<h5 class="mb-2">
+													{% trans 'Monthly budget' %}
+												</h5>
+												<p class="mb-0">
+													{% trans 'Set your monthly budget' %}
+													<br><br><br><br>
+												</p>
+											</div>
+										</div>
+										<img src="{% static 'basic/assets/imgs/sample.png' %}"
+											 class="custom-block-image img-fluid">
+									</a>
+								</div>
+							</div>
+
+							<div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+								<div class="custom-block bg-white shadow-lg">
+									<a href="topics-detail.html">
+										<div class="d-flex">
+											<div>
+												<h5 class="mb-2">
+													{% trans 'Weekly expenses' %}
+												</h5>
+												<p class="mb-0">
+													{% blocktrans %}
+													Every day update all your expenses or at least two days a week
+													(in the evening, before going to bed)
+													{% endblocktrans %}
+												</p>
+											</div>
+										</div>
+										<img src="{% static 'basic/assets/imgs/sample.png' %}"
+											 class="custom-block-image img-fluid">
+									</a>
+								</div>
+							</div>
+
+							<div class="col-lg-4 col-md-6 col-12">
+								<div class="custom-block bg-white shadow-lg">
+									<a href="topics-detail.html">
+										<div class="d-flex">
+											<div>
+												<h5 class="mb-2">
+													{% trans 'Budget at the end of the month' %}
+												</h5>
+												<p class="mb-0">
+													{% trans 'At the end of the month write your periodic budget' %}
+													<br><br><br>
+												</p>
+											</div>
+										</div>
+										<img src="{% static 'basic/assets/imgs/sample.png' %}"
+											 class="custom-block-image img-fluid">
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="tab-pane fade" id="type-cost-tab-pane" role="tabpanel"
+						 aria-labelledby="type-cost-tab" tabindex="0">
+						<div class="row">
+							<div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
+								<div class="custom-block bg-white shadow-lg">
+									<a href="topics-detail.html">
+										<div class="d-flex">
+											<div>
+												<h5 class="mb-2">
+													{% trans 'Basic necessities' %}
+												</h5>
+											</div>
+										</div>
+										<img src="{% static 'basic/assets/imgs/sample.png' %}"
+											 class="custom-block-image img-fluid">
+									</a>
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
+								<div class="custom-block bg-white shadow-lg">
+									<a href="topics-detail.html">
+										<div class="d-flex">
+											<div>
+												<h5 class="mb-2">
+													{% trans 'Optional' %}
+												</h5>
+											</div>
+										</div>
+										<img src="{% static 'basic/assets/imgs/sample.png' %}"
+											 class="custom-block-image img-fluid">
+									</a>
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
+								<div class="custom-block bg-white shadow-lg">
+									<a href="topics-detail.html">
+										<div class="d-flex">
+											<div>
+												<h5 class="mb-2">
+													{% trans 'Culture and leisure' %}
+												</h5>
+											</div>
+										</div>
+										<img src="{% static 'basic/assets/imgs/sample.png' %}"
+											 class="custom-block-image img-fluid">
+									</a>
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
+								<div class="custom-block bg-white shadow-lg">
+									<a href="topics-detail.html">
+										<div class="d-flex">
+											<div>
+												<h5 class="mb-2">
+													{% trans 'Extras and unexpected' %}
+												</h5>
+											</div>
+										</div>
+										<img src="{% static 'basic/assets/imgs/sample.png' %}"
+											 class="custom-block-image img-fluid">
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</section>

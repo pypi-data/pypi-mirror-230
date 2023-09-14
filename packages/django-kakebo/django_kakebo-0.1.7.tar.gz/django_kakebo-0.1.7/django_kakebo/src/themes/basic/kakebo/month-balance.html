@@ -1,0 +1,247 @@
+{% extends "../core/setup.html" %}
+{% load i18n %}
+{% load static %}
+{% load render_balance %}
+
+{% block style %}
+<link href="{% static 'basic/assets/css/c_style.css' %}" rel="stylesheet">
+<link href="{% static 'basic/assets/css/kakebo-style.css' %}" rel="stylesheet">
+<link href="{% static 'basic/assets/css/calendar.css' %}" rel="stylesheet">
+{% endblock style %}
+
+{% block content %}
+<section class="section-padding">
+	<form method="POST">{% csrf_token %}
+		<div class="container-fluid mt-5">
+			<div class="row">
+
+				{% if obj_conclusion %}
+				<div class="col-12 my-5 text-center">
+					{% if obj_conclusion == 'yes' %}
+					<h4>
+						{% trans 'Congratulations! Treat yourself to a small reward, but be careful not to undo your efforts.' %}
+						<br>
+						{% trans 'Choose something that can give you real gratification while spending little.' %}
+						<br>
+						{% trans 'See our FAQs for some ideas' %}
+					</h4>
+					{% elif obj_conclusion == 'almost' or obj_conclusion == 'no' %}
+					<h4>
+						{% trans 'Damn...' %} <i class="bi bi-emoji-frown h1 text-primary"></i>
+						<br>
+						{% trans "What didn't work?" %}
+						<br>
+						{% trans 'What could you do to improve your month?' %}
+					</h4>
+					<div class="w-25 mb-3 pt-3 m-auto">
+						{{ form.answer_3 }}
+					</div>
+					<button type="submit" class="btn btn-primary w-25">
+						{% trans 'Send reply' %}
+					</button>
+					{% endif %}
+				</div>
+				{% endif %}
+
+				<div class="col-12 col-lg-6 px-5">
+
+					<div class="container-fluid">
+						<div class="row">
+							{% for color in list_colors %}
+							<div class="col-12 col-lg-6 my-3">
+								{% render_total_weeks key_kakebo color %}
+							</div>
+							{% endfor %}
+						</div>
+					</div>
+
+				</div>
+				<div class="col-12 col-lg-6 px-5">
+
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-12 my-3">
+								<table class="w-100">
+									<thead>
+									<tr>
+										<th colspan="2">
+											<p class="bg-blue-basic py-2 ps-3 text-white">
+												utilities
+											</p>
+										</th>
+									</tr>
+									</thead>
+									<tbody>
+
+									{% for utility in list_utilities %}
+									<tr>
+										<td class="bx-blue-basic px-15">
+											<p class="mb-2">
+												{% trans utility.0 %}
+											</p>
+										</td>
+										<td class="px-15">
+											<p class="bb-dashed-blue-basic mb-2 text-end">
+												<input name="{{ utility.0 }}" id="id_{{ utility.0 }}"
+													   type="number" step="any" min="0" value="{{ utility.1 }}"
+													   class="text-basic-roow text-end" {{ disabled }}>
+											</p>
+										</td>
+									</tr>
+									{% endfor %}
+
+									<tr>
+										<td class="bg-blue-basic bx-blue-basic px-15">
+											<p class="mt-2 mb-1 text-white">
+												{% trans 'total' %}
+											</p>
+										</td>
+										<td class="px-15">
+											<p class="bb-dashed-blue-basic mb-2 text-end">
+												€ {{ tot_utilities }}
+											</p>
+										</td>
+									</tr>
+
+									</tbody>
+								</table>
+
+								<p class="my-4 px-3">
+									{% blocktrans %}
+									Enter below the items you think are most sensitive (eg bar, fuel, etc.),
+									if there are among the expenses you have entered the main categories
+									{% endblocktrans %}
+								</p>
+
+								<div class="container-fluid">
+									<div class="row">
+										<div class="col-12 col-lg-6">
+											{% render_cost_relevant key_kakebo 1 len_week disabled %}
+										</div>
+										<div class="col-12 col-lg-6">
+											{% render_cost_relevant key_kakebo 2 len_week disabled %}
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="col-12 my-5 px-5">
+
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-12 col-lg-4 px-5">
+
+								<div class="mb-3">
+									<label for="form-answer_1" class="form-label">
+										{% blocktrans %}
+										Comparing the totals of all tables: which expenditure items affected
+										the most this month? Did you expect this?
+										{% endblocktrans %}
+									</label>
+									{{ form.answer_1 }}
+								</div>
+								<div class="mb-3">
+									<label for="form-answer_2" class="form-label">
+										{% trans 'Are there any exits that can be cut?' %}
+									</label>
+									{{ form.answer_2 }}
+								</div>
+
+							</div>
+							<div class="col-12 col-lg-4">
+
+								<table class="w-100">
+									{% render_month_cost key_kakebo len_week %}
+								</table>
+
+							</div>
+							<div class="col-12 col-lg-4">
+
+								<div class="container-fluid">
+									<div class="row">
+										<div class="col-12 col-lg-6">
+											<p class="text-end">
+												<i class="bi bi-wallet h3 pe-3 text-lightseagreen"></i>
+												{% trans 'How much money did you have available?' %}
+											</p>
+										</div>
+										<div class="col-12 col-lg-6">
+											<p class="bb-dashed-lightseagreen text-center">
+												€ {{ tot_available }}
+											</p>
+										</div>
+										<div class="col-12 col-lg-6">
+											<p class="text-end">
+												<i class="bi bi-cash-coin h3 pe-3 text-lightseagreen"></i>
+												{% trans 'How much did you spend?' %}
+											</p>
+										</div>
+										<div class="col-12 col-lg-6">
+											<p class="bb-dashed-lightseagreen text-center">
+												€ {{ tot_costs }}
+											</p>
+										</div>
+										<div class="col-12 col-lg-6">
+											<p class="text-end">
+												<i class="bi bi-piggy-bank h3 pe-3 text-lightseagreen"></i>
+												{% trans 'How much did you save?' %}
+											</p>
+										</div>
+										<div class="col-12 col-lg-6">
+											<p class="bb-dashed-lightseagreen text-center">
+												€ {{ diff_available_costs }}
+											</p>
+										</div>
+										<div class="col-12 my-5">
+											<button type="submit" class="btn btn-primary w-100">
+												{% trans 'Save changes' %}
+											</button>
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			{% if not obj_conclusion %}
+			<div class="row">
+				<div class="col-12">
+					<div class="container">
+						<div class="row">
+							<div class="col-12 text-center my-4">
+								<h5>
+									Hai raggiunto i tuoi obiettivi?
+								</h5>
+							</div>
+							<div class="row px-3">
+								<div class="col-4 text-center">
+									{% render_answer_smile 0 %}
+								</div>
+								<div class="col-4 text-center">
+									{% render_answer_smile 1 %}
+								</div>
+								<div class="col-4 text-center">
+									{% render_answer_smile 2 %}
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endif %}
+
+		</div>
+	</form>
+</section>
+{% endblock content %}
