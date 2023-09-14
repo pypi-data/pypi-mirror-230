@@ -1,0 +1,24 @@
+[tool.ruff]
+exclude = [".git", "__pycache__"]
+ignore = ["E501"]
+select = ["E", "F", "T1", "W", "I"]
+
+[tool.ruff.isort]
+known-first-party = ["arkindex", "arkindex_common", "arkindex_worker"]
+known-third-party = [
+    "PIL",
+    "apistar",
+    "gitlab",
+    "gnupg",
+    "peewee",
+    "playhouse",
+    "pytest",
+    "requests",
+    "responses",
+    "setuptools",
+    "sh",
+    "shapely",
+    "tenacity",
+    "yaml",
+    "zstandard",
+]
