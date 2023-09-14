@@ -1,0 +1,66 @@
+Metadata-Version: 2.1
+Name: RDMC
+Version: 0.1.0
+Summary: A light-weight software package with expertise in handling Reaction Data and Molecular (including transitions states) Conformers.
+Home-page: https://github.com/xiaoruiDong/RDMC
+Author: Xiaorui Dong, Lagnajit Pattanaik, Shih-Cheng Li, Kevin Spiekermann, Hao-Wei Pang, and William H. Green
+Author-email: xiaorui@mit.com
+License: MIT License
+Keywords: chemistry,RDKit,molecule,conformer,reaction,cheminformatics
+Platform: Any.
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Scientific/Engineering :: Chemistry
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE.md
+Requires-Dist: numpy
+Requires-Dist: scipy
+Requires-Dist: pandas
+Requires-Dist: rdkit >=2021.03.1
+Requires-Dist: openbabel-wheel >=3.1.1
+Requires-Dist: networkx
+Requires-Dist: py3Dmol
+Requires-Dist: ase
+Requires-Dist: matplotlib
+Requires-Dist: cclib
+Requires-Dist: ipywidgets
+
+![RDMC Logo](docs/source/_static/RDMC_icon.svg)
+# Reaction Data and Molecular Conformer
+
+[![Documentation](https://github.com/xiaoruiDong/RDMC/actions/workflows/build_docs.yaml/badge.svg)](https://xiaoruidong.github.io/RDMC/)
+[![CI](https://github.com/xiaoruiDong/RDMC/actions/workflows/ci.yaml/badge.svg)](https://github.com/xiaoruiDong/RDMC/actions/workflows/ci.yaml)
+[![codecov](https://codecov.io/gh/xiaoruiDong/RDMC/graph/badge.svg?token=5LT5A35783)](https://codecov.io/gh/xiaoruiDong/RDMC)
+[![Anaconda Cloud](https://img.shields.io/conda/v/xiaoruidong/rdmc)](https://anaconda.org/xiaoruidong/rdmc)
+[![PyPI](https://img.shields.io/pypi/v/rdmc)](https://pypi.org/project/rdmc/)
+[![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
+
+A light-weight software package with expertise in handling Reaction Data and Molecular (including transitions states) Conformers.
+
+The package can be easily installed with conda or mamba
+
+```
+conda install -c xiaoruidong rdmc
+```
+
+For detailed APIs, please check the [documentation](https://xiaoruidong.github.io/RDMC/).
+
+## Demos
+Feel free to check demos in the `ipython/`, some of them are also available on the Google Colab:
+- [Generate Atom Map for Reactions](https://colab.research.google.com/drive/19opX3Sr4R24o9n8f1o4LMSqlVIwN83xk?usp=sharing)
+- [Handle molecule from/to XYZ](https://colab.research.google.com/drive/1QbmdvUMQqByPBDQVW7xTlp2rXg9EJ2_J?usp=sharing)
+- [Parse QM Results](https://colab.research.google.com/drive/1JnTzETOGE3R3Q_foOLsnFgeN883J36dl?usp=sharing)
+
+## Requirements
+* python
+* numpy
+* scipy
+* rdkit
+* openbabel
+* py3dmol
+* ase
+* networkx
+* matplotlib
+* cclib
