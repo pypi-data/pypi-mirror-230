@@ -1,0 +1,64 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "reptor"
+version = "0.4"
+authors = [
+  { name="Richard Schwabe" },
+  { name="Aron Molnar", email="aron@syslifters.com" }
+]
+maintainers = [
+  {name = 'Syslifters', email = 'hello@syslifters.com'}
+]
+description = "reptor allows you automating pentest reporting with SysReptor."
+readme = "README.md"
+license = {file = 'LICENSE'}
+dependencies = [
+  'asgiref >= 3.7.1',
+  'certifi >= 2023.5.7',
+  'charset-normalizer >= 3.0.0',
+  'Django >= 4.2',
+  'idna >= 3.0',
+  'markdown-it-py >= 3.0.0',
+  'mdurl >= 0.1.0',
+  'Pygments >= 2.15.0',
+  'PyYAML >= 6.0',
+  'requests >= 2.30.0',
+  'rich >= 13.4.2',
+  'sqlparse >= 0.4.3',
+  'termcolor >= 2.3.0',
+  'urllib3 >= 2.0.2',
+  'xmltodict >= 0.13.0',
+  'toml >= 0.10.0',
+]
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.optional-dependencies]
+translate = ['deepl >= 1.15.0']
+ghostwriter = ['gql[aiohttp] >= 3.4.1',]
+dev = ['pytest >= 7.4.0',]
+all = ['reptor[translate,ghostwriter,dev]']
+
+[project.scripts]
+reptor = 'reptor.__main__:run'
+
+[project.urls]
+"Homepage" = "https://github.com/Syslifters/reptor/blob/main/README.md"
+"Documentation" = "https://github.com/Syslifters/reptor/blob/main/README.md"
+"Bug Tracker" = "https://github.com/Syslifters/reptor/issues"
+"Source" = "https://github.com/syslifters/reptor"
+
+[tool.setuptools.package-data]
+"*" = ["**/*.md"]
