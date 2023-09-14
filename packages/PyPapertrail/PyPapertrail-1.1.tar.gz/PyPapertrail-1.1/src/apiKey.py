@@ -1,0 +1,1 @@
+API_KEY: str = "MIUAWuISx7Dr1vhDfLU"
