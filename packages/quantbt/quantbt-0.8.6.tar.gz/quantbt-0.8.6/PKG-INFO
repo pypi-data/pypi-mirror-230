@@ -1,0 +1,50 @@
+Metadata-Version: 2.1
+Name: quantbt
+Version: 0.8.6
+Summary: 
+Author: Alpha
+Author-email: piotr@piotryordanov.com
+Requires-Python: >=3.9,<4.0
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Provides-Extra: dev-tools
+Provides-Extra: mkdocs
+Provides-Extra: tools
+Requires-Dist: importlib-resources (>=6.0.1,<7.0.0) ; extra == "tools"
+Requires-Dist: ipython (>=8.14.0,<9.0.0) ; extra == "dev-tools"
+Requires-Dist: matplotlib (>=3.7.1,<4.0.0)
+Requires-Dist: mkdocs (>=1.5.2,<2.0.0) ; extra == "mkdocs"
+Requires-Dist: mkdocs-glightbox (>=0.3.4,<0.4.0) ; extra == "mkdocs"
+Requires-Dist: mkdocs-material (>=9.2.8,<10.0.0) ; extra == "mkdocs"
+Requires-Dist: mplfinance (>=0.12.9b7,<0.13.0)
+Requires-Dist: numba (>=0.57.0,<0.58.0)
+Requires-Dist: numpy (>=1.24.3,<2.0.0)
+Requires-Dist: pandas (>=2.0.1,<3.0.0)
+Requires-Dist: pandas-ta (>=0.3.14b0,<0.4.0) ; extra == "dev-tools"
+Requires-Dist: prettytable (>=3.8.0,<4.0.0)
+Requires-Dist: pyarrow (>=13.0.0,<14.0.0)
+Requires-Dist: pyright (>=1.1.320,<2.0.0) ; extra == "tools"
+Requires-Dist: pytest (>=7.4.0,<8.0.0) ; extra == "tools"
+Requires-Dist: pytest-watcher (>=0.3.4,<0.4.0) ; extra == "tools"
+Requires-Dist: python-binance (>=1.0.17,<2.0.0) ; extra == "dev-tools"
+Requires-Dist: quantstats (>=0.0.59,<0.0.60) ; extra == "dev-tools"
+Requires-Dist: seaborn[stats] (>=0.12.2,<0.13.0) ; extra == "dev-tools"
+Requires-Dist: ta-lib (>=0.4.26,<0.5.0)
+Requires-Dist: tqdm (>=4.65.0,<5.0.0)
+Description-Content-Type: text/markdown
+
+A hyper efficient backtesting engine with traders and quant researchers in mind.
+
+It uses `numba`.
+
+
+## Installation
+
+You need to have [poetry](https://python-poetry.org/) installed on your system. Then run the following
+```bash
+poetry install
+poetry install --all-extras
+```
+
