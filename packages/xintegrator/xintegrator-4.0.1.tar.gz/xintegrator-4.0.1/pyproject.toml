@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "xintegrator"
+version = "4.0.1"
+description = "xintegrator is a Python wrapper for integrating with the X (formerly Twitter) api"
+authors = ["Niklas Alexander Shern <nshern@protonmail.com>"]
+readme = "README.md"
+packages = [{include = "xintegrator"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+requests = "^2.31.0"
+pandas = "^2.0.3"
+plotly = "^5.16.1"
+streamlit = "^1.26.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+bpython = "^0.24"
+mypy = "^1.5.1"
+pytest-cov = "^4.1.0"
+beautifulsoup4 = "^4.12.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
