@@ -1,0 +1,32 @@
+[package]
+name = "struqture"
+version = "1.5.0"
+authors = ["HQS Quantum Simulations <info@quantumsimulations.de>"]
+edition = "2021"
+rust-version = "1.57"
+categories = ["science", "simulation"]
+description = "HQS tool for representing operators, Hamiltonians and open systems."
+license = "Apache-2.0"
+include = ["Cargo.toml", "src*", "LICENSE", "../README.md"]
+readme = "../README.md"
+
+[lib]
+name = "struqture"
+path = "src/lib.rs"
+doctest = false
+
+[dependencies]
+qoqo_calculator = {version="1.1", default-features=false}
+serde = { version = "1.0", features=["derive"]}
+num-complex = { version = "0.4"}
+thiserror = "1.0"
+test-case = "3.1"
+itertools = "0.11"
+ndarray = {version="0.15"}
+tinyvec = {version="1.6", features=["alloc", "serde"]}
+schemars ={version="0.8.12", optional=true}
+
+
+[features]
+default = ["json_schema"]
+json_schema = ["schemars", "qoqo_calculator/json_schema"]
