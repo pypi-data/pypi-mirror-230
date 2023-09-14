@@ -1,0 +1,50 @@
+
+
+[tool.poetry]
+authors = ["Fan <fan@example.com>"]
+description = ""
+name = "excel2x"
+readme = "README.md"
+version = "0.0.3"
+
+[tool.virtualenvs]
+create = true
+
+[tool.poetry.dependencies]
+colorama = "^0.4.6"
+openpyxl = "^3.1.2"
+pyinstaller = "^5.13.2"
+python = ">=3.7,<3.13"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core"]
+
+# [build-system]
+# build-backend = "hatchling.build"
+# requires = ["hatchling"]
+
+[project]
+authors = [
+  {name = "Fan", email = "fan@example.com"},
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+dependencies = [
+  "openpyxl",
+]
+description = "A excel convert package"
+name = "excel2x"
+readme = "README.md"
+requires-python = ">=3.8"
+version = "0.0.3"
+
+[project.scripts]
+excel2x-cli = "excel2x.cli:main()"
+
+[project.urls]
+"Bug Tracker" = "https://github.com/xxx/issues"
+"Homepage" = "https://github.com/xxx"
