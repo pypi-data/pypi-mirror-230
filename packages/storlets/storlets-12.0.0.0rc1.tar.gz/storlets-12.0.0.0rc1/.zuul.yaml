@@ -1,0 +1,23 @@
+- project:
+    templates:
+      - openstack-python3-jobs
+      - publish-openstack-docs-pti
+      - release-notes-jobs-python3
+    check:
+      jobs:
+        - storlets-functional
+    gate:
+      jobs:
+        - storlets-functional
+
+- job:
+    name: storlets-functional
+    pre-run: playbooks/storlets-functional/pre.yaml
+    run: playbooks/storlets-functional/run.yaml
+    post-run: playbooks/storlets-functional/post.yaml
+    nodeset: ubuntu-jammy
+    timeout: 2400
+    irrelevant-files:
+      - ^(api-ref|doc|releasenotes)/.*$
+      - ^(.gitreview|.mailmap|AUTHORS|CHANGELOG)$
+      - ^tests/unit/.*$
