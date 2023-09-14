@@ -1,0 +1,5 @@
+from amazon_sagemaker_jupyter_scheduler.scheduler import SageMakerStudioLabScheduler
+from amazon_sagemaker_jupyter_scheduler.environments import SagemakerEnvironmentManager
+
+c.SchedulerApp.scheduler_class = SageMakerStudioLabScheduler
+c.SchedulerApp.environment_manager_class = SagemakerEnvironmentManager
