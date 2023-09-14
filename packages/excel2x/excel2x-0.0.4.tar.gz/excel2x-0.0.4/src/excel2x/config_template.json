@@ -1,0 +1,82 @@
+{
+    "name": "project_name",
+    "root_dir": ".",
+    "config_dir": "config/",
+    "temp_dir": "config_lua/",
+    "output_dir": "../project_name/Assets/Game/Data/Config/",
+    "groups": {
+        "Constant": ["lua_data_list"],
+        "Game": ["lua_data_list"],
+        "Language": ["lua_data_map_language", "lua_data_column"]
+    },
+    "option_template": {
+        "lua_data_list": {
+            "data_type": "lua",
+            "suffix": ".lua.txt",
+            "style": "list",
+            "format_indent": 4,
+            "format_depth": 1,
+            "schema": "lua",
+            "desc": "生成 *.lua.txt 文件\n样式为 list [data1, data2, ...]\nSchema 放在文件内\n拷贝到 {output_dir} 文件夹中"
+        },
+        "lua_data_map": {
+            "data_type": "lua",
+            "suffix": ".lua.txt",
+            "style": "map",
+            "format_indent": 4,
+            "format_depth": 1,
+            "schema": "lua",
+            "desc": "生成 *.lua.txt 文件\n样式为 map {key1: data1, key2:data2}\nSchema 放在文件内\n拷贝到 {output_dir} 文件夹中"
+        },
+        "lua_data_map_language": {
+            "data_type": "lua",
+            "suffix": ".lua.txt",
+            "style": "map",
+            "format_indent": 4,
+            "format_depth": 4,
+            "schema": "lua",
+            "temp_dir": "config_lua_map/",
+            "output_dir": "../project_name/Assets/Editor/",
+            "desc": "生成 *.lua.txt 文件\n样式为 map {key1: data1, key2:data2}\nSchema 放在文件内\n拷贝到 {output_dir} 文件夹中"
+        },
+        "lua_data_column": {
+            "data_type": "lua",
+            "suffix": ".lua.txt",
+            "style": "column",
+            "format_indent": 4,
+            "format_depth": 1,
+            "schema": "none",
+            "desc": "生成 file_name_{key}.lua.txt 文件\n样式为 column 列数据的列表 []，一般用于拆分多语言文件\n不要数据 Schema\n拷贝到 {output_dir} 文件夹中"
+        },
+        "json_data_list": {
+            "data_type": "json",
+            "suffix": ".json",
+            "style": "list",
+            "format_indent": 4,
+            "format_depth": 1,
+            "schema": ".mts",
+            "temp_dir": "config_json/",
+            "desc": "生成 *.json 文件\n样式为 list [data1, data2, ...]\nSchema 放在 @types 文件夹内\n拷贝到 {output_dir} 文件夹中"
+        },
+        "json_data_map": {
+            "data_type": "json",
+            "suffix": ".json",
+            "style": "map",
+            "format_indent": 4,
+            "format_depth": 1,
+            "schema": ".mts",
+            "temp_dir": "config_json/",
+            "desc": "生成 *.json 文件\n样式为 map {key1: data1, key2:data2}\nSchema 放在 @types 文件夹内\n拷贝到 {output_dir} 文件夹中"
+        },
+        "json_data_column": {
+            "data_type": "json",
+            "suffix": ".json",
+            "style": "column",
+            "format_indent": 0,
+            "format_depth": 1,
+            "schema": "none",
+            "temp_dir": "config_json/",
+            "desc": "生成 file_name_{key}.json 文件\n样式为 column 列数据的列表 []，一般用于拆分多语言文件\n不要数据 Schema\n拷贝到 {output_dir} 文件夹中"
+        }
+    }
+}
