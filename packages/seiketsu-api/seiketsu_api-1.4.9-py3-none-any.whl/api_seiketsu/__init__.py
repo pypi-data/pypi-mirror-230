@@ -1,0 +1,1 @@
+from .api_seiketsu import ApiSeiketsu
