@@ -1,0 +1,47 @@
+Metadata-Version: 2.1
+Name: doppler-sdk
+Version: 1.1.2
+Author-email: Example Author <author@example.com>
+License: SEE LICENSE IN LICENSE
+Project-URL: Homepage, https://github.com/pypa/sampleproject
+Project-URL: Bug Tracker, https://github.com/pypa/sampleproject/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Requires-Dist: requests==2.31.0
+Requires-Dist: http-exceptions==0.2.10
+Requires-Dist: pytest==7.1.2
+Requires-Dist: responses==0.21.0
+
+# doppler-sdk
+
+Doppler's SDK provides convenient access to the Doppler API from applications written in Python.
+
+- API version: 3
+- SDK version: 1.0.0
+
+## Installation
+
+```sh
+pip install --upgrade doppler-sdk
+```
+
+## Usage
+
+```python
+from pprint import pprint
+from dopplersdk import DopplerSDK
+
+doppler = DopplerSDK()
+doppler.set_bearer_token("dp.xx.yyy")
+
+results = doppler.projects.list()
+
+pprint(vars(results))
+```
+
+## Reference Docs
+
+[A list of all services and service methods](./src/dopplersdk/services/README.MD)
