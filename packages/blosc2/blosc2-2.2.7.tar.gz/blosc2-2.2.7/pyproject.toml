@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools", "scikit-build", "cython<3", "cmake", "ninja", "oldest-supported-numpy"]
+
+[project]
+name = "blosc2"
+description = "Python wrapper for the C-Blosc2 library"
+readme = "README.rst"
+authors = [{name = "Blosc Development Team", email = "blosc@blosc.org"}]
+maintainers = [{ name = "Blosc Development Team", email = "blosc@blosc.org"}]
+license = {text = "BSD-3-Clause"}
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: Unix",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+requires-python = ">=3.8, <4"
+dynamic = ["version", "dependencies"]
+
+[project.urls]
+homepage = "https://github.com/Blosc/python-blosc2"
+documentation = "https://www.blosc.org/python-blosc2/python-blosc2.html"
+
+[tool.cibuildwheel]
+skip = "cp36-* cp37-* pp37-* *-manylinux_i686 *_ppc64le *_s390x *-musllinux*"
+
+[tool.black]
+line-length = 109
+
+[tool.ruff]
+line-length = 109
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
