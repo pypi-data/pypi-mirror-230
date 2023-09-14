@@ -1,0 +1,22 @@
+
+<html tal:omit-tag=""
+      xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="ideabox.policy">
+<tal:comment tal:replace="nothing">
+    A lot of javascript relies on classes and structure to be present. Before
+    changing anything, please check that twothumbs.js isn't expecting it.
+</tal:comment>
+
+<div tal:omit-tag="" i18n:translate="">
+    <span i18n:name="login" tal:omit-tag="">
+        <a class="link-overlay"
+           tal:attributes="href string:${context/portal_url}/login_form?came_from=${request/HTTP_REFERER}"
+           i18n:translate="">Log in to rate</a>
+    </span>
+    <a i18n:name="close-link" i18n:attributes="title" title="Close" class="close-link" style="display:block;" href="#">&nbsp;</a>
+</div>
+</html>
