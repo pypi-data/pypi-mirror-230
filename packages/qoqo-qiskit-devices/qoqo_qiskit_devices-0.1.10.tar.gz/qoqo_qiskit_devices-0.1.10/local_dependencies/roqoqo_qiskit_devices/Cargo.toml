@@ -1,0 +1,26 @@
+[package]
+name = "roqoqo_qiskit_devices"
+version = "0.1.10"
+authors = ["HQS Quantum Simulations <info@quantumsimulations.de>"]
+license = "Apache-2.0"
+edition = "2021"
+categories = ["science", "simulation"]
+readme = "README.md"
+repository = "https://github.com/HQSquantumsimulations/qoqo_qiskit"
+description = "IBM's Qiskit devices interface for roqoqo rust quantum computing toolkit"
+include = ["src*", "LICENSE", "README.md"]
+resolver = "2"
+
+[lib]
+name = "roqoqo_qiskit_devices"
+path = "src/lib.rs"
+doctest = false
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+roqoqo = {version = "1.6", features = ["unstable_qoqo_devices"]}
+ndarray = "0.15"
+
+serde = {version = "1.0", features = ["derive"]}
+serde_json = "1.0"
