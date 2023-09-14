@@ -1,0 +1,63 @@
+[project]
+name = "visuallm"
+version = "0.3.0"
+authors = [
+  { name="Frantisek Trebuna (gortibaldik)", email="ferotre@gmail.com" },
+]
+description = "Visualization tool for various generation tasks on Language Models. "
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "Flask>=2.3.1",
+    "Flask-Cors>=3.0.10"
+]
+
+[project.optional-dependencies]
+huggingface=["transformers", "datasets"]
+
+[project.urls]
+"Homepage" = "https://github.com/gortibaldik/visuallm"
+"Bug Tracker" = "https://github.com/gortibaldik/visuallm/issues"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.package-dir]
+visuallm = "visuallm"
+
+[tool.isort]
+profile = "black"
+
+[tool.bumpver]
+current_version = "0.3.0"
+version_pattern = "MAJOR.MINOR.PATCH"
+commit_message = "bump version {old_version} -> {new_version}"
+commit = true
+tag = true
+push = true
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = [
+    'current_version = "{version}"',
+    'version = "{version}"'
+]
+"README.md" = [
+    "VERSION: `{version}`",
+]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q -s"
+testpaths = [
+    "tests"
+]
+pythonpath = "."
