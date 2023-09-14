@@ -1,0 +1,50 @@
+Metadata-Version: 2.1
+Name: tinyrml
+Version: 0.1.1
+Summary: Implementation of a subset of R2RML
+Home-page: https://gitlab.com/somanyaircraft/tinyrml
+Author-email: ora@somanyaircraft.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# Tiny RML
+
+The package `tinyrml` is an implementation of a subset of RML/[R2RML](https://www.w3.org/TR/r2rml/) with some helpful extended features. It is intended to be used as a Python package/library, and accepts Python *iterables* (of `dict`s) as input. It has the following limitations:
+
+  + Mappings cannot specify their sources (tables or SQL queries). Data sources are assigned externally when data is mapped.
+  + None of the join-related features are supported. Only a single data source can be mapped at a time.
+
+The package supports the following extensions to R2RML (note that a special namespace `rre:` is reserved for extensions):
+
+  + A `dict` key whose value is a Python list is expanded as multiple values/rows.
+  + Object maps accept the property `rre:expandAsList`; if true, the value (which is assumed to be a string) is split (using `re.split`) with commas and semicolons acting as separators, and expanded as multiple values/rows. This makes it possible to (say) have a comma-separated list in your CSV file, read the file using [`csv.DictReader`](https://docs.python.org/3/library/csv.html?highlight=dictreader#csv.DictReader), and expand the list as separate values. Splitting and expansion happens only if `rr:template` has a value in the object map.
+  + Term maps accept the property `rre:expression`, the value of which is a string containing a Python expression. During the mapping process, this expression is evaluated with dict keys ("column names") as variables in the expression.
+
+Tiny RML was originally part of [`rdfhelpers`](https://gitlab.com/somanyaircraft/rdfhelpers), but is now split off as its own project. It has no dependencies to `rdfhelpers`.
+
+## Installation
+
+Tiny RML can be installed from PyPI:
+
+```commandline
+pip install tinyrml
+```
+
+## Usage
+
+Tiny RML exposes the class `Mapper` which is the basic implementation of the mapping functionality. Instances of `Mapper` represent individual mappings (i.e., specific mapping definitions). The class constructor takes the following parameters:
+
+  + `mapping`: a graph (an `rdflib.Graph`) containing the mapping, or a path to a file which, when parsed, yields the mapping graph. This is a required (positional) parameter, the rest are optional.
+ + `triples_map_uri=`, when provided (as a `URIRef`), identifies the actual triples map to be used. This is useful when the mapping graph contains several mappings.
+ + `ignore_field_keys=` is a set of names of keys/fields that are ignored when determining the likely candidate for a key in a template. It defaults to an empty set.
+ + `empty_string_is_none=`, when `True` (the default), makes the mapper treat empty strings as missing values.
+ + `allow_expressions=`, when `True` (the default), lets the mapper use Python expressions embedded in the mapping graph.
+ + `global_bindings=`, when provided, is passed to the `eval()` function (as the parameter `globals=`; see [Python documentation](https://docs.python.org/3/library/functions.html?highlight=eval#eval)) when embedded Python expressions are evaluated. If not provided, "global globals" (default global bindings) are used.
+
+The method `Mapper.process(self, rows, result_graph=)` invokes a mapper. The parameter `rows` is an iterable of `dict`s used as the "rows" to be mapped; dictionary keys take the role of column names. If provided, `result_graph=` is a graph where results are added; otherwise a new graph is created. Regardless, the result graph is returned.
+
+The package exposes `RR` and `RRE` as the namespaces for R2RML and the Tiny RML extensions, respectively. By convention, we use the prefixes `rr:` and `rre:` for these.
