@@ -1,0 +1,40 @@
+[tool.poetry]
+name = "shields-io-gui"
+version = "23.8.1"
+description = "Shields.io GUI"
+authors = ["Tadeusz Miszczyk <42252259+8tm@users.noreply.github.com>"]
+homepage = "http://github.com/8tm/shields-io-gui"
+documentation = "https://test.pypi.org/project/shields-io-gui"
+repository = "http://github.com/8tm/shields-io-gui"
+readme = "README.md"
+
+
+classifiers = [
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3 :: Only",
+    "Operating System :: Unix",
+]
+
+
+[tool.poetry.dependencies]
+python = '^3.8'
+
+# Base libraries:
+PyQt5 = '^5.15.9'
+PyQtWebEngine = '^5.15.6'
+requests = '^2.31.0'
+PyAutoGUI = '^0.9.54'
+
+
+[tool.poetry.scripts]
+shields-io-gui = 'shields_io_gui.main:main'
+
+
+[build-system]
+requires = ["poetry-core>=1.2.0"]
+build-backend = "poetry.core.masonry.api"
