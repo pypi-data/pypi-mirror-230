@@ -1,0 +1,18 @@
+﻿
+<!-- 良くアクセスされている記事 -->
+{% if populars %}
+<div>
+  <div class="alert alert-danger" role="alert">
+    <strong>人気記事 Top 10</strong>
+  </div>
+  <ol>
+    {% for popular in populars %}
+    <li>
+      <a href="{{ popular.path }}">
+	<h6>{{ popular.title }}</h6><hr>
+      </a>
+    </li>
+    {% endfor %}
+  </ol>
+</div>
+{% endif %}
