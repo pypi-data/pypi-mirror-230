@@ -1,0 +1,37 @@
+Metadata-Version: 2.1
+Name: tft-artemis
+Version: 0.0.63
+Summary: Artemis is a machine provisioning service. Its goal is to provision a machine - using a set of preconfigured providers as backends - which would satisfy the given hardware and software requirements.
+License: Apache-2.0
+Author: Milos Prchlik
+Author-email: mprchlik@redhat.com
+Requires-Python: >=3.9.0,<3.10.0
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Provides-Extra: full
+Requires-Dist: Pint (==0.18)
+Requires-Dist: alembic (==1.8.1)
+Requires-Dist: awscli (>=1.27.24,<2.0.0) ; extra == "full"
+Requires-Dist: azure-cli ; extra == "full"
+Requires-Dist: beaker-client ; extra == "full"
+Requires-Dist: click
+Requires-Dist: dramatiq[rabbitmq] (==1.13.0)
+Requires-Dist: gluetool
+Requires-Dist: gunicorn
+Requires-Dist: jinja2-ansible-filters
+Requires-Dist: jq
+Requires-Dist: jsonschema
+Requires-Dist: molten
+Requires-Dist: periodiq
+Requires-Dist: prometheus-client (>=0.12.0,<0.13.0)
+Requires-Dist: psycopg2
+Requires-Dist: pyinstrument
+Requires-Dist: python-openstackclient ; extra == "full"
+Requires-Dist: redis
+Requires-Dist: sentry-sdk
+Requires-Dist: setuptools
+Requires-Dist: sqlalchemy (>=1.4,<1.4.23)
+Requires-Dist: sqlalchemy-utils[encrypted]
+Requires-Dist: stackprinter
+Requires-Dist: typing-extensions

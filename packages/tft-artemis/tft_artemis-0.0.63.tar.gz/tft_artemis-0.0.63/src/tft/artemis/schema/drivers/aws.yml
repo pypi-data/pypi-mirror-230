@@ -1,0 +1,124 @@
+$schema: http://json-schema.org/draft-07/schema#
+description: AWS driver schema
+
+type: object
+
+properties:
+
+  access-key-id:
+    type: string
+
+  availability-zone:
+    type: string
+
+  capabilities:
+    type: object
+
+  command:
+    type: string
+
+  cost:
+    type: object
+
+  custom-flavors:
+    type: array
+
+  default-instance-type:
+    type: string
+
+  use-default-flavor-when-no-suitable:
+    type: boolean
+    default: true
+
+  default-root-disk-size:
+    type: integer
+
+  default-region:
+    type: string
+
+  expose-instance-tags-in-metadata:
+    type: boolean
+    default: false
+
+  flavor-regex:
+    type: string
+
+  image-filters:
+    type: array
+    items:
+      type: object
+      properties:
+        name-wildcard:
+          type: string
+
+        name-regex:
+          type: string
+
+        creation-date-regex:
+          type: string
+
+        owner:
+          type: string
+
+        max-age:
+          type: integer
+
+  master-key-name:
+    type: string
+
+  image-owners:
+    type: array
+    items:
+      type: string
+
+  patch-flavors:
+    type: array
+
+  patch-images:
+    type: array
+
+  post-install-script:
+    type: string
+
+  resources:
+    type: object
+
+  secret-access-key:
+    type: string
+
+  security-group:
+    type: string
+
+  spot-price-bid-percentage:
+    type: integer
+
+  subnet-id:
+    type: string
+
+  use-only-when-addressed:
+    type: boolean
+
+  use-spot-request:
+    type: boolean
+
+  use-public-ip:
+    type: boolean
+    default: false
+
+  ssh-options:
+    type: array
+    items:
+      type: string
+
+additionalProperties: false
+
+required:
+- access-key-id
+- availability-zone
+- command
+- default-instance-type
+- default-region
+- master-key-name
+- secret-access-key
+- security-group
+- subnet-id
