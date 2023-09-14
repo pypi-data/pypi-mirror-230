@@ -1,0 +1,11 @@
+<div class="{{class}}">
+    <div class="checkbox" style="margin-top: 22px">
+        <label>
+            <input id="{{field.full_name}}"
+                   name="{{field.full_name}}"
+                   {% if tabindex %} tabindex="{{tabindex}}"{% endif %}
+                   type="checkbox" {% if field.value %}checked{% endif %} {% if field.disabled %}disabled{% endif %}/>
+            {{field.label}}
+        </label>
+    </div>
+</div>

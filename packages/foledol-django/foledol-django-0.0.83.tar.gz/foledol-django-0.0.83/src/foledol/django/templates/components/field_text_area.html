@@ -1,0 +1,14 @@
+<div class="{{class}}">
+    <div class="form-group">
+        <label for="{{field.full_name}}">{{field.label}}</label>
+        <textarea id="{{field.full_name}}"
+            name="{{field.full_name}}"
+            class="form-control"
+            type="text" rows="3"
+            {% if field.disabled %}disabled{% endif %}
+            {% if field.autocomplete %}autocomplete="{{field.autocomplete}}"{% endif %}>{{field.value_as_str}}</textarea>
+        {% for error in field.errors %}
+        <div class="red">{{ error }}</div>
+        {% endfor %}
+    </div>
+</div>
