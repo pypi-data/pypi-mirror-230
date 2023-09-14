@@ -1,0 +1,93 @@
+## rqalpha-mod-faithquant扩展
+> rqalpha-mod-faithquant为faithquant量化团队针对开源rqalpha拓展的用于日志采集、添加自定义数据源等工具。
+
+## 依赖的python包
+> 作为rqalpha的扩展插件，主要依赖rqalpha主框架，当前最新版本为5.2.0
+1. rqalpha >= 5.2.0 
+2. Logbook >= 1.6.0
+
+## 如何安装
+> 需要先安装rqalpha， 然后安装扩展mod
+1. 安装rqalpha
+    参考rqalpha官方文档安装。[安装指南](https://rqalpha.readthedocs.io/zh_CN/latest/intro/install.html#intro-install)
+2. 验证rqalpha
+    ```python
+    import rqalpha 
+    
+    print(rqalpha.__version__)
+    # 5.2.0
+    ```
+3. 安装模块
+    ```bash
+    pip install rqalpha-mod-faithquant -i https://pypi.python.org/simple
+    ```
+4. 查看rqalpha当前模块
+    ```bash
+    (base) [wangjiangfeng@cnbj-haiyu-ml01-fintech ~]$ rqalpha mod list
+    +----------------------+----------+
+    | name                 | status   |
+    |----------------------+----------|
+    | sys_accounts         | enabled  |
+    | sys_simulation       | enabled  |
+    | sys_progress         | enabled  |
+    | sys_risk             | enabled  |
+    | sys_analyser         | enabled  |
+    | sys_scheduler        | enabled  |
+    | sys_transaction_cost | enabled  |
+    +----------------------+----------+
+    ```
+5. 激活或禁用mod
+   ```bash
+    # 启用
+    rqalpha mod enable faithquant
+    # 关闭
+    rqalpha mod disable faithquant
+   ```
+6. 查看是否激活
+    ```bash
+    (base) [wangjiangfeng@cnbj-haiyu-ml01-fintech ~]$ rqalpha mod list
+    +----------------------+----------+
+    | name                 | status   |
+    |----------------------+----------|
+    | sys_accounts         | enabled  |
+    | sys_simulation       | enabled  |
+    | sys_progress         | enabled  |
+    | sys_risk             | enabled  |
+    | sys_analyser         | enabled  |
+    | sys_scheduler        | enabled  |
+    | sys_transaction_cost | enabled  |
+    | faithquant           | enabled  |    #新激活的
+    +----------------------+----------+
+    ```
+   在mod列表中出现faithquant为enable之后说明安装成功。
+
+## 模块相关配置
+
+```python
+    __config__ = {
+        "mod_name": "rqalpha_mod_extend_faithquant",
+        "save_backtest_log": True
+    }
+ ```
+
+save_backtest_log = True  采集回测日志
+
+save_backtest_log = False 不采集回测日志
+
+回测日志目录存放在：{base_report_path}/{task_num}/logs/rqalpha_backtest.log
+
+参数说明：
+* base_report_path: 设置的报告路径
+* task_num: 回测任务任务号
+
+## 打包上传
+```bash
+cd rqalpha-mod-faithquant
+poetry update
+poetry build
+poetry publish -u {用户名} -p {密码}
+```
+
+## 联系我们
+
+Jeffrey: solardata@qq.com

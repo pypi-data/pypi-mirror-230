@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "rqalpha-mod-faithquant"
+version = "0.1.0-dev"
+description = "RQAlpha Mod FaithQuant"
+authors = ["Jeffrey <wangjiangfeng@hcyjs.com>"]
+readme = "README.md"
+keywords = ["faithquant", "fqdatac", "datavita", "fatbulls", "fatbull", "fqprism"]
+include = ["README.md"]
+packages = [
+    {include = "rqalpha_mod_faithquant"}
+]
+
+[[tool.poetry.source]]
+name = "aliyun"
+url = "https://mirrors.aliyun.com/pypi/simple/"
+priority = "primary"
+
+
+[[tool.poetry.source]]
+name = "PyPI"
+priority = "primary"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+rqalpha = "^5.2"
+
+
+[build-system]
+requires = ["poetry-core>=1.6.1 "]
+build-backend = "poetry.core.masonry.api"
