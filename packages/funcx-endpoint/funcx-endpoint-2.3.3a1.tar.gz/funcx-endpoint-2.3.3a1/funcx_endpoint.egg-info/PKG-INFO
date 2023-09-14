@@ -1,0 +1,34 @@
+Metadata-Version: 2.1
+Name: funcx-endpoint
+Version: 2.3.3a1
+Summary: funcX: High Performance Function Serving for Science
+Home-page: https://github.com/funcx-faas/funcx
+Author: Globus Compute Team
+Author-email: support@globus.org
+License: Apache License, Version 2.0
+Project-URL: Changelog, https://globus-compute.readthedocs.io/en/latest/changelog.html
+Project-URL: Upgrade to Globus Compute, https://globus-compute.readthedocs.io/en/latest/funcx_upgrade.html
+Keywords: funcX,FaaS,Function Serving
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Scientific/Engineering
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: globus-compute-endpoint==2.3.3a1
+
+# Deprecation Warning
+
+This package is deprecated, and currently just wraps the [Globus Compute Endpoint](https://pypi.org/project/globus-compute-endpoint/) package with funcX names. See [here](https://globus-compute.readthedocs.io/en/latest/funcx_upgrade.html) for instructions on how to upgrade.
+
+# funcX Endpoint
+
+[funcX](https://globus-compute.readthedocs.io/en/latest/) is a distributed Function as a Service (FaaS) platform that enables flexible, scalable, and high performance remote function execution. Unlike centralized FaaS platforms, funcX allows users to execute functions on heterogeneous remote computers, from laptops to campus clusters, clouds, and supercomputers.
+
+This package provides the [funcX Endpoint](https://globus-compute.readthedocs.io/en/latest/endpoints.html) agent — the software which receives user-submitted tasks (functions + arguments) and manages their execution on target machines — in addition to command line tools for managing funcX endpoints.
+
+To submit functions for execution on funcX endpoints, use the companion [funcX SDK](https://pypi.org/project/funcx/) package.
