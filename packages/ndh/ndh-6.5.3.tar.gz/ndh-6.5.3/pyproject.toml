@@ -1,0 +1,55 @@
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+
+[tool.coverage.run]
+omit = ["*/apps.py", "*/migrations/*", "*/wsgi.py"]
+source = ["ndh"]
+
+[tool.isort]
+known_django = "django"
+profile = "black"
+sections = "FUTURE,STDLIB,DJANGO,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
+
+[tool.poetry]
+authors = ["Guilhem Saurel <guilhem.saurel@laas.fr>"]
+description = "Nim's Django Helpers"
+documentation = "https://ndh.readthedocs.io/"
+homepage = "https://github.com/nim65s/ndh"
+license = "BSD-2-Clause"
+name = "ndh"
+readme = "README.md"
+repository = "https://github.com/nim65s/ndh.git"
+version = "6.5.3"
+
+[tool.poetry.dependencies]
+django-autoslug = "^1.9.9"
+django-bootstrap5 = "^23.3"
+python = "^3.10"
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+Sphinx = "^7.2.0"
+black = "^23.7.0"
+coverage = {extras = ["toml"], version = "^7.3.0"}
+ipython = "^8.14.0"
+isort = "^5.12.0"
+myst-parser = "^2.0.0"
+pre-commit = "^3.3.3"
+ruff = "^0.0.284"
+safety = {allow-prereleases = true, version = "^2.4.0b1"}
+
+[tool.poetry.urls]
+changelog = "https://github.com/nim65s/ndh/blob/master/CHANGELOG.md"
+
+[tool.ruff]
+allowed-confusables = [" "]
+extend-exclude = ["migrations"]
+extend-ignore = ["D203", "D213", "RUF012"]
+extend-select = ["A", "B", "C", "COM", "D", "DJ", "EM", "EXE", "G", "N", "PTH", "RET", "RUF", "UP", "W", "YTT"]
+target-version = "py310"
+
+[tool.tomlsort]
+all = true
