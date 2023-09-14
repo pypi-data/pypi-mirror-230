@@ -1,0 +1,790 @@
+Metadata-Version: 2.1
+Name: zerocap-api-new-test
+Version: 0.1.31
+Summary: zerocap_api
+Home-page: https://zerocap.com/
+Author: zerocap
+Author-email: jiayu.gao@eigen.capital
+License: MIT
+Platform: all
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: requests
+Requires-Dist: websockets (>=11.0.3)
+
+
+# zerocap-api-new-test 
+
+# <a href="#testapi">Jump restapi</a>
+# <a href="#test">Jump websocket</a>
+
+
+
+```
+
+Introduction
+
+Websocket sdk dependency
+pip install websocket>=0.2.1
+pip install websocket-client>=1.6.1
+
+sdk install
+pip install zerocap-api-new-test 
+
+
+
+```
+
+
+
+# <a id='testapi' href='https://dma-uat-api.defi.wiki/v2/redoc'>restapi </a>
+
+
+```
+from zerocap_api_new_test import ZerocapRestClient
+import uuid
+import time
+
+# API key and secret are required, please contact zerocap to register.
+
+api_key = "***" 
+api_secret = "***"
+client = ZerocapRestClient(api_key, api_secret, envion='uat')
+
+```
+
+#### 1. Create an order
+<!--post https://dma-uat-api.defi.wiki/v2/orders/create_order-->
+
+```
+
+result = client.create_order(
+                    symbol='USDT/AUD', 
+                    side='buy', 
+                    type='limit', 
+                    amount='100', 
+                    price='1000', 
+                    coinroutes_customer_id=5
+                    )
+
+```
+
+
+Request parameters:
+
+| Parameter         | required  | data type | describe          | Value range  |
+|-------------------|-----------|-----------|-------------------|--------------|
+| symbol            | true      | string    | Instrument        | USDT/AUD     |
+| side              | true      | string    | Side              | buy sell     |
+| type              | true      | string    | Type              | limit        |
+| amount            | true      | string    | Quantity          |              |
+| price             | true      | string    | Price             |              |
+| coinroutes_customer_id        | false      | int    | coinroutes_customer_id       |              |
+| client_order_id   | false     | string    | client_order_id   |              |
+
+
+Request parameters: examples (cannot be used directly, you need to replace your own parameters)
+
+```
+headers = {
+    'api-key': 'coinroutes',
+    'signature': '2585311b823982b325b266e132cd8cdf88d190ca61706dda5a67d421b23005df',
+    'Content-Type': 'application/json',
+}
+
+data = 
+{
+    "symbol": "USDT/AUD",
+    "side": "buy",
+    "type": "limit",
+    "amount": "1000",
+    "price": "1000",
+    "coinroutes_customer_id": 5,
+}
+
+
+```
+
+Response data:
+
+| Parameter          | required | data type | describe        | Value range |
+|--------------------|----------|-----------|-----------------|-------------|
+| id                 | true     | string    | Transaction ID  |             |
+| timestamp          | true     | long      | Time            |             |
+| lastTradeTimestamp | true     | long      | Time            |             |
+| status             | true     | string    | Status          |             |
+| type               | true     | string    | Type            |             |
+| timeInForce        | true     | string    | timeInForce     |             |
+| side               | true     | string    | Side            |             |
+| price              | true     | float     | Price           |             |
+| average            | true     | float     | average         |             |
+| amount             | true     | float     | Quantity        |             |
+| filled             | true     | float     | filled          |             |
+| remaining          | true     | float     | remaining       |             |
+| cost               | true     | float     | cost            |             |
+| fee                | true     | float     | fee      |             |
+| error_message      | true     | string    | error_message          |             |
+| trades             | true     | string    | trades          |             |
+| client_order_id    | true     | string    | client_order_id          |             |
+
+
+Response example:
+
+```
+
+{
+	"id": "d8dabfbd-e541-4262-b6c2-9f841ef220f6",
+	"timestamp": 1692346145000,
+	"last_trade_timestamp": 1692346145000,
+	"status": "closed",
+	"symbol": "USDT/AUD",
+	"type": "limit",
+	"time_in_force": "FOK",
+	"side": "sell",
+	"price": 1,
+	"average": 1.48249,
+	"amount": 500,
+	"filled": 500,
+	"remaining": 0,
+	"cost": 741.245,
+	"fee": 0,
+	"error_message": "",
+	"client_order_id": "",
+	"trades": [
+		{
+			"id": "e86fcf94-88e6-46d8-8cc6-e06891eab6cf",
+			"timestamp": 1692346145000,
+			"symbol": "USDT/AUD",
+			"order": "d8dabfbd-e541-4262-b6c2-9f841ef220f6",
+			"type": "limit",
+			"side": "sell",
+			"taker_or_maker": "taker",
+			"price": 1.48249,
+			"amount": 500,
+			"cost": 741.245,
+			"order_from": "coinroutes",
+			"fee": 0,
+			"counterparty": "Wu Han"
+		}
+	]
+}
+
+```
+
+
+
+
+#### 2. Fetch specific orders
+<!--post https://dma-uat-api.defi.wiki/v2/orders/fetch_order-->
+```
+result = client.fetch_order(id='')
+```
+
+Request parameters:
+
+
+| Parameter       | required | data type | describe       | Value range  |
+|-----------------|----------|-----------|----------------|--------------|
+| id              | true     | string    | Transaction ID |              |
+
+Request parameters: examples (cannot be used directly, you need to replace your own parameters)
+
+```
+headers = {
+    'api-key': 'coinroutes',
+    'signature': '2585311b823982b325b266e132cd8cdf88d190ca61706dda5a67d421b23005df',
+    'Content-Type': 'application/json',
+}
+
+data = 
+{
+    "id": "d8dabfbd-e541-4262-b6c2-9f841ef220f6"
+}
+
+
+```
+
+Response data:
+
+
+| Parameter          | required | data type | describe        | Value range |
+|--------------------|----------|-----------|-----------------|-------------|
+| id                 | true     | string      | Transaction ID  |             |
+| timestamp          | true     | long    | Time            |             |
+| lastTradeTimestamp | true     | long      | Time            |             |
+| status             | true     | string    | Status          |             |
+| type               | true     | string    | Type            |             |
+| timeInForce        | true     | string    | timeInForce     |             |
+| side               | true     | string    | Side            |             |
+| price              | true     | float    | Price           |             |
+| average            | true     | float    | average         |             |
+| amount             | true     | float    | Quantity        |             |
+| filled             | true     | float    | filled          |             |
+| remaining          | true     | float    | remaining       |             |
+| cost               | true     | float    | cost            |             |
+| fee                | true     | float    | fee      |             |
+| error_message      | true     | string    | error_message      |             |
+| trades             | true     | string    | trades          |             |
+| client_order_id    | true     | string    | client_order_id          |             |
+
+Response example:
+
+```
+
+{
+	"id": "d8dabfbd-e541-4262-b6c2-9f841ef220f6",
+	"timestamp": 1692346145000,
+	"last_trade_timestamp": 1692346145000,
+	"status": "closed",
+	"symbol": "USDT/AUD",
+	"type": "limit",
+	"time_in_force": "FOK",
+	"side": "sell",
+	"price": 1,
+	"average": 1.48249,
+	"amount": 500,
+	"filled": 500,
+	"remaining": 0,
+	"cost": 741.245,
+	"fee": 0,
+	"error_message": "",
+	"trades": [
+		{
+			"id": "e86fcf94-88e6-46d8-8cc6-e06891eab6cf",
+			"timestamp": 1692346145000,
+			"symbol": "USDT/AUD",
+			"order": "d8dabfbd-e541-4262-b6c2-9f841ef220f6",
+			"type": "limit",
+			"side": "sell",
+			"taker_or_maker": "taker",
+			"price": 1,
+			"amount": 500,
+			"cost": 741.245,
+			"order_from": "coinroutes",
+			"fee": 0,
+			"counterparty": "Wu Han"
+		}
+	]
+}
+
+```
+
+
+#### 3. Batch fetch order
+<!--post https://dma-uat-api.defi.wiki/v2/orders/fetch_orders-->
+
+```
+result = client.fetch_orders(symbol='USDT/AUD', end_datetime=int(time.time() * 1000),
+                             start_datetime=int(time.time() * 1000 - 10*86400*1000),
+                             limit=10)
+```
+
+
+
+Request parameters:
+
+| Parameter      | required | data type | describe                                             | Value range |
+|----------------|----------|-----------|------------------------------------------------------|-------------|
+| symbol         | false     | string    | symbol                                               |             |
+| start_datetime | false     | string    | start_datetime                                       |             |
+| end_datetime   | false     | string    | end_datetime                                         |             |
+| page           | false     | string    | page                                                 |             |
+| limit          | false     | string    | limit                                                |             |
+| ids            | false     | string    | Transaction ids(null character string or id1,id2...) |             |
+| status         | false     | string    | status                                               |             |
+| sort_order     | false     | string    | sort_order                                           |             |
+| order_type     | false     | string    | order_type                                           |             |
+| side           | false     | string    | side                                                 |             |
+
+
+Request parameters: examples (cannot be used directly, you need to replace your own parameters)
+
+```
+headers = {
+    'api-key': 'coinroutes',
+    'signature': '2585311b823982b325b266e132cd8cdf88d190ca61706dda5a67d421b23005df',
+    'Content-Type': 'application/json',
+}
+
+data = 
+{
+    "symbol": "USDT/AUD",
+    "start_datetime": 0,
+    "end_datetime": 0,
+    "page": 0,
+    "limit": 0,
+    "ids": "",
+    "status": "",
+    "sort_order": "",
+    "order_type": "",
+    "side": ""
+}
+
+```
+
+Response data:
+
+
+
+| Parameter            | required | data type    | describe             | Value range |
+|----------------------|----------|--------------|----------------------|-------------|
+| id                   | true     | string       | Transaction ID       |             |
+| timestamp            | true     | long       | timestamp            |             |
+| last_trade_timestamp | true     | long       | last_trade_timestamp |             |
+| status               | true     | string       | status               |             |
+| symbol               | true     | string       | symbol               |             |
+| type                 | true     | string       | type                 |             |
+| time_in_force        | true     | string       | time_in_force        |             |
+| side                 | true     | string       | side                 |             |
+| price                | true     | float       | price                |             |
+| average              | true     | float       | average              |             |
+| amount               | true     | float       | amount               |             |
+| filled               | true     | float       | filled               |             |
+| remaining            | true     | float       | remaining            |             |
+| cost                 | true     | float       | cost                 |             |
+| fee                  | true     | float       | fee                  |             |
+| error_message       | true     | string       | fee                  |             |
+| trades               | true     | list         | trades               |             |
+| total                | true     | int       | total                |             |
+| page                 | true     | int       | page                 |             |
+| client_order_id    | true     | string    | client_order_id          |             |
+
+
+Response example:
+
+```
+
+{
+	"order_list": [
+		{
+			"id": "e1af8ae0-3247-4755-87ad-f683fed3aff5",
+			"timestamp": 1690797504000,
+			"last_trade_timestamp": 1690797504000,
+			"status": "closed",
+			"symbol": "USDT/AUD",
+			"type": "market",
+			"time_in_force": "FOK",
+			"side": "buy",
+			"price": 21.1,
+			"average": 2.98442,
+			"amount": 101,
+			"filled": 101,
+			"remaining": 0,
+			"cost": 301.426,
+			"fee": 0,
+			"error_message": "",
+			"client_order_id": "",
+			"trades": [
+				{
+					"id": "e1b3329c-4fc3-455a-82ed-ab5497b286cc",
+					"timestamp": 1690797504000,
+					"symbol": "USDT/AUD",
+					"order": "e1af8ae0-3247-4755-87ad-f683fed3aff5",
+					"type": "market",
+					"side": "buy",
+					"taker_or_maker": "taker",
+					"price": 21.1,
+					"amount": 101,
+					"cost": 301.426,
+					"order_from": "coinroutes",
+					"fee": 0,
+					"counterparty": "zeal anonymous"
+				}
+			]
+		}
+	],
+	"status": "success",
+	"total": 14087,
+	"page": 1
+}
+
+```
+
+
+
+## <span id='test'>websocket</span>
+
+```
+import hmac
+import hashlib
+from zerocap_api_new_test import ZerocapWebsocketClient
+
+# API key and secret are required, please contact zerocap to register.
+
+api_key = "***" 
+api_secret = "***"
+websocket = ZerocapWebsocketClient(api_key, api_secret, envion='uat')
+
+# Create Ws Connection
+
+websocket_connect = websocket.create_connection()
+connect_result = websocket.recv(websocket_connect)
+print(connect_result)
+
+
+signature = hmac.new(api_secret.encode("utf-8"), api_key.encode("utf-8"), hashlib.sha256).hexdigest()
+
+```
+
+Response example:
+
+```
+{
+    "type": "message",
+    "message":"Successfully connected."
+}
+
+{
+    "type": "error",
+    "error_code": "401",
+    "error_message":"Unauthorized"
+}
+
+```
+
+
+
+#### 1. Subscribe to Market data
+
+
+```
+
+websocket.send({"type": 'price', "symbol": "USDT/AUD"})
+while True:
+    # Get messages
+    message = websocket.recv(websocket_connect)
+    print(f"Receiving message from server: \n{message}")
+
+```
+
+
+Request parameters:
+
+| Parameter | required | data type | describe            | Value range |
+|-----------|----------|-----------|---------------------|-------------|
+| type      | true     | str       | Subscription type   | price       |
+| symbol    | true     | str       | Transaction pairs   | USDT/AUD    |
+
+
+Request parameters: examples (cannot be used directly, you need to replace your own parameters)
+
+```
+header={"api-key": api_key, "signature": signature}
+
+wss://dma-uat-ws.defi.wiki/v2
+
+```
+
+
+Response data:
+
+
+| Parameter         | required | data type  | describe      | Value range           |
+|-------------------|----------|------------|---------------|-----------------------|
+| type              | true     | str        | type          | price, message, error |
+| data              | false    | json       | data          |                       |
+| data['timestamp'] | true     | str        | time          |                       |
+| data['symbol']    | true     | str        | symbol        |                       |
+| data['exchange']  | true     | str        | exchange      |                       |
+| data['bids']      | true     | list       | bids          |                       |
+| data['asks']      | true     | list       | asks          |                       |
+| message           | false    | str        | description   |                       |
+| error_code        | false    | str        | error code    |                       |
+| error_message     | false    | str        | error message |                       |
+
+Response example:
+
+```
+{
+    "type": "error",
+    "error_code": "400",
+    "error_message":"invalid message"
+}
+
+{
+    "type": "message",
+    "message":"price Subscription successful."
+}
+
+{
+
+    "type": "message",
+    "message": "pong"
+}
+
+{
+    "type": "price",
+    "data": {
+        'timestamp': 1692340935.4283478,
+        'symbol': 'USDT/AUD',
+        'exchange': 'zerocap',
+        'bids': [
+            [1.47386, 5000.0],
+            [1.47238, 10000.0],
+            [1.4709, 20000.0],
+            [1.46941, 30000.0]
+        ],
+        'asks': [
+            [1.57236, 5000.0],
+            [1.57392, 10000.0],
+            [1.57548, 20000.0],
+            [1.57705, 30000.0]
+        ]
+    }
+}
+
+{
+    "type": "message",
+    "message":"Price stream unavailable."
+}
+
+
+
+```
+
+#### 2.  Subscribe Order updates or transaction records
+
+
+```
+
+websocket.send({"type": 'order'})
+while True:
+    # Get  messages
+    message = websocket.recv(websocket_connect)
+    
+    print(f"Receiving message from server: \n{message}")
+
+```
+
+
+Request parameters:
+
+
+| Parameter | required | data type | describe        | Value range |
+|-----------|----------|-----------|-----------------|-------------|
+| type      | true     | str       | Subscribed type | order       |
+
+
+Request parameters: examples (cannot be used directly, you need to replace your own parameters)
+
+```
+header={"api-key": api_key, "signature": signature}
+
+wss://dma-uat-ws.defi.wiki/v2
+
+```
+
+
+order Response data:
+
+
+| Parameter                    | required  | data type | describe             | Value range           |
+|------------------------------|-----------|-----------|----------------------|-----------------------|
+| type                         | true      | str       | type                 | order, message, error |
+| data                         | false     | json      | data                 |                       |
+| data['id']                   | true      | str       | id                   |                       |
+| data['timestamp']            | true      | str       | timestamp            |                       |
+| data['last_trade_timestamp'] | true      | str       | last_trade_timestamp |                       |
+| data['status']               | true      | str       | status               |                       |
+| data['symbol']               | true      | str       | symbol               |                       |
+| data['type']                 | true      | str       | type                 |                       |
+| data['time_in_force']        | true      | str       | time_in_force        |                       |
+| data['side']                 | true      | str       | side                 |                       |
+| data['price']                | true      | float     | price                |                       |
+| data['average']              | true      | float     | average              |                       |
+| data['amount']               | true      | float     | amount               |                       |
+| data['filled']               | true      | float     | filled               |                       |
+| data['remaining']            | true      | str       | remaining            |                       |
+| data['cost']                 | true      | float     | cost                 |                       |
+| data['error_message']        | true      | str       | error_message        |                       |
+| data['fee']                  | true      | str       | fee                  |                       |
+| data['trades']               | true      | list      | trades               |                       |
+| message                      | false     | str       | description          |                       |
+| error_code                   | false     | str       | error code           |                       |
+| error_message                | false     | str       | error message        |                       |
+
+
+Response example:
+
+```
+
+{
+    "type": "error",
+    "error_code": "400",
+    "error_message":"invalid message"
+}
+
+{
+    "type": "message",
+    "message":"order Subscription successful."
+}
+
+{
+    "type": "message",
+    "message": "pong"
+}
+
+{
+"type":"order",
+"data":{
+    "id":"f7fc4e4f-c099-4b18-a231-f032adc8ae87",
+    "timestamp":1692354083000,
+    "last_trade_timestamp":1692354083000,
+    "status":"open",
+    "symbol":"USDT/AUD",
+    "type":"limit",
+    "time_in_force":"FOK",
+    "side":"buy",
+    "price":3,
+    "average":0,
+    "amount":3,
+    "filled":0,
+    "remaining":3,
+    "cost":9,
+    "error_message":"",
+    "fee":"0",
+    "trades":[]
+    }
+}
+
+{
+"type":"order",
+"data":{
+    "id":"f7fc4e4f-c099-4b18-a231-f032adc8ae87",
+    "timestamp":1692354083000,
+    "last_trade_timestamp":1692354083000,
+    "status":"closed",
+    "symbol":"USDT/AUD",
+    "type":"limit",
+    "time_in_force":"FOK",
+    "side":"buy",
+    "price":3,
+    "average":1.474899,
+    "amount":3",
+    "filled":3,
+    "remaining":0,
+    "cost":9,
+    "error_message":"",
+    "fee":"0",
+    "trades":[{
+        "id":"fa9cbef5-54ce-4a3a-8115-3db8af1f1617",
+        "timestamp":1692354083000,
+        "symbol":"USDT/AUD",
+        "order":"f7fc4e4f-c099-4b18-a231-f032adc8ae87",
+        "type":"limit",
+        "side":"buy",
+        "taker_or_maker":"taker",
+        "price":1.474899,
+        "amount":3,
+        "cost":4.424,
+        "order_from":"coinroutes",
+        "counterparty":"Wu Han",
+        "fee":"0"
+        }]
+    }
+}
+
+
+```
+
+#### 3.  Subscribe transaction records
+
+
+```
+
+websocket.send({"type": 'trade'})
+while True:
+    # Get  messages
+    message = websocket.recv(websocket_connect)
+    
+    print(f"Receiving message from server: \n{message}")
+
+```
+header={"api-key": api_key, "signature": signature}
+
+
+Request parameters:
+
+
+| Parameter | required | data type | describe        | Value range |
+|-----------|----------|-----------|-----------------|-------------|
+| type      | true     | str       | Subscribed type | trade       |
+
+
+Request parameters: examples (cannot be used directly, you need to replace your own parameters)
+
+```
+header={"api-key": api_key, "signature": signature}
+
+wss://dma-uat-ws.defi.wiki/v2
+
+```
+
+Transaction Record Response data:
+
+
+| Parameter             | required | data type   | describe           | Value range          |
+|-----------------------|----------|-------------|--------------------|----------------------|
+| type                  | true     | str         | type               | trade,message, error |
+| data                  | false    | json        | data               |                      |
+| data['id']            | true     | str         | id                 |                      |
+| data['timestamp']     | true     | str         | timestamp          |                      |
+| data['datetime']      | true     | str         | datetime           |                      |
+| data['symbol']        | true     | str         | symbol             |                      |
+| data['order']         | true     | str         | order              |                      |
+| data['type']          | true     | str         | type               |                      |
+| data['side']          | true     | str         | side               |                      |
+| data['takerOrMaker']  | true     | str         | takerOrMaker       |                      |
+| data['price']         | true     | float       | price              |                      |
+| data['amount']        | true     | float       | amount             |                      |
+| data['cost']          | true     | float       | cost               |                      |
+| data['orderFrom']     | true     | str         | orderFrom          |                      |
+| message               | false    | str         | description        |                      |
+| error_code            | false    | str         | error code         |                      |
+| error_message         | false    | str         | error message      |                      |
+
+
+Response example:
+
+```
+
+{
+    "type": "error",
+    "error_code": "400",
+    "error_message":"invalid message"
+}
+
+{
+    "type": "message",
+    "message":"trade Subscription successful."
+}
+
+{
+
+    "type": "message",
+    "message": "pong"
+}
+
+{
+"type":"trade",
+"data":{
+    "id":"fa9cbef5-54ce-4a3a-8115-3db8af1f1617",
+    "timestamp":"1692354083000",
+    "symbol":"USDT/AUD",
+    "order":"f7fc4e4f-c099-4b18-a231-f032adc8ae87",
+    "type":"limit",
+    "side":"buy",
+    "takerOrMaker":"taker",
+    "price":1.474899,
+    "amount":3,
+    "cost":4.424,
+    "orderFrom":"coinroutes",
+    "counterparty":"Wu Han"
+    }
+}
+
+```
