@@ -1,0 +1,19 @@
+[package]
+name = "image-ops"
+version = "0.0.0"
+
+authors= ["chaiNNer team"]
+edition= "2021"
+license= "MIT OR Apache-2.0"
+rust-version= "1.66"
+
+[dependencies]
+zhang_hilbert = "0.1.1"
+rstar = "0.11.0"
+ahash = "0.8.3"
+image-core.path = "../image-core"
+glam = { version = "0.24.0" }
+
+[[bench]]
+name = "my_benchmark"
+harness = false
