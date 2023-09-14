@@ -1,0 +1,44 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="collective.bluesky"
+    >
+
+  <include package="plone.app.contentrules" />
+  <include package="plone.contentrules" />
+  <include
+      package="plone.contentrules"
+      file="meta.zcml"
+      />
+
+  <!-- Bluesky action definition -->
+  <adapter factory=".bluesky.BlueskyActionExecutor" />
+
+  <browser:page
+      name="plone.actions.Bluesky"
+      for="plone.app.contentrules.browser.interfaces.IRuleActionAdding"
+      class=".bluesky.BlueskyAddFormView"
+      permission="plone.app.contentrules.ManageContentRules"
+      />
+
+  <browser:page
+      name="edit"
+      for=".bluesky.IBlueskyAction"
+      class=".bluesky.BlueskyEditFormView"
+      permission="plone.app.contentrules.ManageContentRules"
+      />
+
+  <plone:ruleAction
+      name="plone.actions.Bluesky"
+      title="Post a status to Bluesky"
+      description="Using a Bluesky account, post a new status."
+      for="*"
+      event="*"
+      schema=".bluesky.IBlueskyAction"
+      factory=".bluesky.BlueskyAction"
+      addview="plone.actions.Bluesky"
+      editview="edit"
+      />
+
+</configure>
