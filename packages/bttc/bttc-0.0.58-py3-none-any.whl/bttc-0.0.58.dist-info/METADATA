@@ -1,0 +1,73 @@
+Metadata-Version: 2.1
+Name: bttc
+Version: 0.0.58
+Summary: A package to provide common utilities for BT testing.
+Home-page: https://github.com/johnklee/bt_test_common
+Author: John Lee/Yuan Long Luo
+Author-email: puremonkey2007@gmail.com
+License: MIT License
+Classifier: Development Status :: 1 - Planning
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: PyYAML (==6.0.1)
+Requires-Dist: mobly (>=1.12.2)
+Requires-Dist: numpy
+Requires-Dist: portpicker (==1.5.2)
+Requires-Dist: psutil (==5.9.5)
+Requires-Dist: six (==1.16.0)
+
+## Common utilities used in BT testing
+This package is used to hold common utilities for BT testing.
+
+## Steps to upload package in PIP
+1. Edit `setup.py` and `bttc/__init__.py` to have expected version information.
+2. Dump package into gz file:
+```
+# Confirm to have latest version info
+$ grep 'version' setup.py
+    version='0.0.2'
+
+# Dump the package into gz file
+$ python setup.py sdist
+...
+
+# Check the exported gz file
+$ ls -hl dist/bttc-0.0.2.tar.gz
+```
+
+3. Upload the generated gz file:
+```
+$ twine upload dist/bttc-0.0.2.tar.gz
+...
+View at:
+https://pypi.org/project/bttc/0.0.2/
+```
+Ps. For this step to work, make sure you have edit `~/.pypirc` to have correct
+credentials
+
+## Steps to run unit test
+Execute below command to do unit test:
+```
+$ make test
+```
+
+## Steps to run link
+Execute below command to do lint check:
+```
+$ make lint
+```
+
+## Release info
+* Release v0.0.53
+    - Support iPerf facade.
+* Release v0.0.56
+    - Support module `wifi_utils` for common WiFi operations (#22).
+* Release v0.0.57
+    - Support profile AVRCP (#30)
