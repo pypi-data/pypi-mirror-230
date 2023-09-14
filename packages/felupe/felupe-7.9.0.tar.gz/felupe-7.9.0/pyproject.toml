@@ -1,0 +1,88 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.isort]
+profile = "black"
+
+[project]
+name = "felupe"
+description = "Finite Element Analysis"
+readme = "README.md"
+authors = [
+  {name = "Andreas Dutzler"},
+  {email = "a.dutzler@gmail.com"},
+  
+]
+requires-python = ">=3.8"
+license = {file = "LICENSE"}
+keywords = [
+  "computational-mechanics",
+  "fea",
+  "fem",
+  "finite-elements",
+  "finite-elements-analysis",
+  "finite-elements-methods",
+  "hyperelasticity",
+  "partial-differential-equations",
+  "pde",
+  "python", 
+  "scientific-computing",
+  "solid-mechanics-codes",
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Programming Language :: Python",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Scientific/Engineering",
+  "Topic :: Scientific/Engineering :: Mathematics",
+  "Topic :: Utilities"
+]
+dynamic = ["version"]
+
+dependencies = [
+  "numpy",
+  "scipy",
+  "tensortrax",
+]
+
+[project.optional-dependencies]
+docs = [
+    "furo",
+    "sphinx-autoapi",
+    "sphinx-inline-tabs",
+    "sphinx-copybutton",
+    "myst-nb",
+    "panel",
+]
+test = [
+    "h5py",
+    "matplotlib",
+    "meshio",
+    "tensortrax",
+]
+all = [
+    "einsumt",
+    "h5py",
+    "matplotlib",
+    "meshio",
+    "tensortrax",
+    "pyvista",
+    "tqdm",
+]
+
+[tool.setuptools.dynamic]
+version = {attr = "felupe.__about__.__version__"}
+
+[project.urls]
+Homepage = "https://felupe.readthedocs.io/en/latest"
+Code = "https://github.com/adtzlr/felupe"
+Issues = "https://github.com/adtzlr/felupe/issues"
