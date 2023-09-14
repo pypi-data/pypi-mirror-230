@@ -1,0 +1,124 @@
+[tool.poetry]
+name = "newrelic-sb-sdk"
+version = "0.14.0"
+description = "New Relic SDK to interact with Nerdgraph API."
+authors = [
+  "SoftButterfly Development Team <dev@softbutterfly.io>",
+  "zodiacfireworks <martin.vuelta@gmail.com>"
+]
+license = "MIT License"
+readme = "README.md"
+homepage = "https://gitlab.com/softbutterfly/open-source/newrelic-sb-sdk"
+repository = "https://gitlab.com/softbutterfly/open-source/newrelic-sb-sdk"
+documentation = "https://softbutterfly.gitlab.io/open-source/newrelic-sb-sdk/"
+keywords = [
+  "Softbutterfly",
+  "New Relic",
+  "SDK",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Intended Audience :: System Administrators",
+  "Intended Audience :: Information Technology",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: English",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Software Development",
+  "Topic :: Software Development :: Libraries",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: System",
+  "Topic :: System :: Monitoring",
+  "Topic :: System :: Networking :: Monitoring",
+]
+packages = [
+    { include = "newrelic_sb_sdk", from = "src" },
+]
+include = [
+  "LICENSE.txt",
+  "CHANGELOG.md",
+]
+
+[tool.poetry.urls]
+"Download" = "https://gitlab.com/softbutterfly/open-source/newrelic-sb-sdk/-/archive/v0.14.0/newrelic-sb-sdk-v0.14.0.tar.gz"
+"Bug Tracker" = "https://gitlab.com/softbutterfly/open-source/newrelic-sb-sdk/-/issues"
+
+
+[tool.poetry.dependencies]
+python = ">=3.8.1,<4.0.0"
+python-dotenv = "<2.0.0"
+requests = "<3.0.0"
+sgqlc = "<17.0.0"
+
+[tool.poetry.group.dev.dependencies]
+autopep8 = "^2.0.2"
+bandit = "^1.7.5"
+black = "^23.3.0"
+coverage = "^7.2.7"
+deepdiff = {extras = ["optimize"], version = "^6.3.1"}
+flake8 = "^6.0.0"
+flake8-black = "^0.3.6"
+importnb = "^2023.1.7"
+isort = "^5.12.0"
+jupyter-book = "^0.15.1"
+jupyterlab = "^4.0.5"
+mypy = "^1.3.0"
+nbdev = "^2.3.12"
+nbmake = "^1.4.1"
+nbqa = {extras = ["toolchain"], version = "^1.7.0"}
+pre-commit = "^3.3.2"
+pycodestyle = "^2.10.0"
+pydocstyle = "^6.3.0"
+pylint = "^2.17.4"
+pytest = "^7.3.1"
+pytest-cov = "^4.1.0"
+tbump = "^6.10.0"
+tox = "^4.5.2"
+types-requests = "^2.31.0.1"
+
+[tool.black]
+target_version = ['py311']
+include = '\.pyi?$'
+exclude = '''
+/(\.git/
+  |\.eggs
+  |\.hg
+  |__pycache__
+  |\.cache
+  |\.ipynb_checkpoints
+  |\.mypy_cache
+  |\.pytest_cache
+  |\.tox
+  |\.venv
+  |_build
+  |buck-out
+  |build
+  |dist
+  |legacy
+)/
+'''
+
+[tool.pytest.ini_options]
+testpaths = "tests"
+python_files = [
+  "**/test_*.py",
+]
+filterwarnings =[
+  "ignore::DeprecationWarning",
+  "ignore::PendingDeprecationWarning"
+]
+addopts = [
+  "--cov=newrelic_sb_sdk",
+  "--cov-report=xml:cobertura.xml",
+  "--cov-report=term",
+  "--import-mode=importlib",
+  "--junitxml=report.xml",
+  "--nbmake",
+]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
