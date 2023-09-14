@@ -1,0 +1,46 @@
+#
+# Config file for search_helper, YAML format
+# All subtrees in this file except "Search URLs" are optional.
+#
+Application Title: Debian Search Helper
+#
+# Program description. It is displayed in the upper half of the window
+# and should contain roughly the following:
+Description: |
+    This program can be used for a quick search on web pages of the Debian project.
+    After entering the search term and clicking on the 'Start search(es)' button or hitting the <Return> key, search results will open in new browser windows or tabs.
+#
+# URL definitions.
+Search URLs:
+    Bugs:
+        URL: https://bugs.debian.org/{search_term}
+    Developer information:
+        URL: https://tracker.debian.org/{search_term}
+    Packages:
+        URL: https://packages.debian.org/{search_term}
+#
+# No deviant homepages.
+#
+# Program options
+Options:
+    #
+    # Display radiobuttons instead of checkboxes?
+    Mutually Exclusive Categories: false
+    #
+    # Register a non-standard browser for test purposes
+    # Register Browsers:
+    #     my test browser: /usr/bin/chromium
+    #
+    # Definition of key combinations for selecting multiple categories at once.
+    # Keys are identified as documented at
+    # <https://tkdocs.com/shipman/event-modifiers.html>,
+    # but without "KeyPress" (which is not necessary).
+    # NOTE: This option is void if 'Mutually Exclusive Categories' is set to true.
+    #       It would not make any sense when radiobuttons are displayed instead of checkboxes.
+    Special Select Keys:
+        Control-Shift-A:
+            Label: all categories
+            Categories:
+            - Bugs
+            - Developer information
+            - Packages
