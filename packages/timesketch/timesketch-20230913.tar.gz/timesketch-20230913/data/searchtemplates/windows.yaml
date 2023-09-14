@@ -1,0 +1,60 @@
+- display_name: PsExec client execution
+  description: Execution of PsExec to run a command on a remote system.
+  author: Timesketch Project
+  date: '2023-02-13'
+  id: 807c0c52-6031-4a3a-be94-c565ecdcd0f2
+  parameters: []
+  query_dsl: {}
+  query_filter: {}
+  query_string: 'data_type:"windows:prefetch:execution" AND psexec\.exe*'
+  references: []
+  tags: ['windows']
+
+- display_name: PsExec service installation
+  description: Installation of PsExec as a service.
+  author: Timesketch Project
+  date: '2023-02-13'
+  id: 8b71e18b-648b-4174-af5c-fe74796eec4a
+  parameters: []
+  query_dsl: {}
+  query_filter: {}
+  query_string: 'data_type:"windows:evtx:record" AND event_identifier:7045 AND *psexesvc*'
+  references: []
+  tags: ['windows']
+
+- display_name: Remote Desktop Logon events
+  description: Logon using the RDP protocol.
+  author: Timesketch Project
+  date: '2023-06-02'
+  id: 08b0384b-92d8-46bb-b260-f87676afcf64
+  parameters: []
+  query_dsl: {}
+  query_filter: {}
+  query_string: 'data_type:"windows:evtx:record" AND event_identifier:4624 AND xml_string:"/LogonType\"\>10/"'
+  references: []
+  tags: ['windows']
+
+- display_name: Map Network share with net.exe
+  description: Execution of net.exe to map a network share using prefetch artifact.
+  author: Timesketch Project
+  date: '2023-06-02'
+  id: da73490f-0219-4c51-820d-3b527074cec2
+  parameters: []
+  query_dsl: {}
+  query_filter: {}
+  query_string: 'data_type:"windows:prefetch:execution" AND net\.exe*'
+  references: []
+  tags: ['windows']
+
+- display_name: Execution of scheduled task
+  description: Execution of at.exe or schtasks.exe to schedule a task.
+  author: Timesketch Project
+  date: '2023-06-02'
+  id: 2da1737e-002b-4bec-9350-cc28842a31ec
+  parameters: []
+  query_dsl: {}
+  query_filter: {}
+  query_string: 'data_type:"windows:prefetch:execution" AND (at\.exe* OR schtasks\.exe)'
+  references: []
+  tags: ['windows']
+
