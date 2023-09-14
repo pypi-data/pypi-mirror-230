@@ -1,0 +1,56 @@
+Metadata-Version: 2.1
+Name: rpmdeplint
+Version: 1.6
+Summary: Rpmdeplint is a tool to find errors in RPM packages in the context of their dependency graph.
+Project-URL: Homepage, https://github.com/fedora-ci/rpmdeplint
+Project-URL: Documentation, https://fedora-ci.github.io/rpmdeplint
+Author: Red Hat
+License-Expression: GPL-2.0-or-later
+License-File: COPYING
+Keywords: dependency,linter,rpm
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Topic :: Software Development
+Classifier: Topic :: Utilities
+Requires-Python: >=3.9
+Requires-Dist: requests
+Requires-Dist: rpm
+Provides-Extra: dev
+Requires-Dist: pre-commit; extra == 'dev'
+Requires-Dist: rpmdeplint[tests]; extra == 'dev'
+Provides-Extra: docs
+Requires-Dist: sphinx; extra == 'docs'
+Provides-Extra: tests
+Requires-Dist: pytest; extra == 'tests'
+Requires-Dist: rpmfluff; extra == 'tests'
+Description-Content-Type: text/markdown
+
+# rpmdeplint
+
+Rpmdeplint is a tool to find errors in RPM packages in the context of their
+dependency graph.
+
+## Requirements
+
+- Python 3.9
+
+## External Dependencies
+
+In order to run the tool, the following pre-requisites need to be installed:
+
+- [rpm](http://rpm.org)
+- [librepo](https://github.com/rpm-software-management/librepo)
+- [libsolv](https://github.com/openSUSE/libsolv)
+
+For development and tests:
+
+- [sphinx](https://www.sphinx-doc.org)
+- [rpmfluff](https://pagure.io/rpmfluff)
+
+## Documentation
+
+- https://fedora-ci.github.io/rpmdeplint
