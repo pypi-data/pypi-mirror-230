@@ -1,0 +1,81 @@
+[tool.poetry]
+name = "hikari-atsume"
+packages = [
+    { include="atsume" },
+]
+version = "0.4.1"
+description = "An opinionated, Django-like Discord bot framework for Hikari, Tanjun, and Ormar"
+authors = ["Peter DeVita <mewtwo2643@yahoo.com>"]
+readme = "Readme.md"
+license = "MIT"
+homepage = "https://github.com/pmdevita/hikari-atsume"
+repository = "https://github.com/pmdevita/hikari-atsume"
+documentation = "https://pmdevita.github.io/hikari-atsume/"
+keywords = ["hikari", "discord", "ormar", "tanjun", "framework"]
+classifiers = [
+    "Topic :: Internet",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+    "Framework :: AsyncIO",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Communications :: Chat",
+    "Typing :: Typed"
+]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.12"
+hikari = "^2.0.0.dev120"
+click = ">=8.1.6"
+hikari-tanjun = "^2.15.0,<2.17.0"
+aiohttp = "^3.8.5"
+ormar = "^0.12.2"
+alembic = "^1.11.1"
+asyncpg = { version = "^0.28.0", optional = true }
+psycopg2-binary = { version = "^2.9.6", optional = true }
+aiopg = { version = "^1.4.0", optional = true }
+aiomysql = { version = "^0.2.0", optional = true }
+pymysql = { version = "^1.1.0", optional = true }
+aiosqlite = { version = "^0.19.0", optional = true }
+hupper = "^1.12"
+ciso8601 = { version = ">=2.3,<3.0", optional = true }
+orjson = { version = ">=3.9,<4.0", optional = true }
+aiodns = { version = "^3.0.0", optional = true }
+brotli = { version = "^1.0.9", optional = true }
+uvloop = { version = "^0.17.0", optional = true, markers = "sys_platform == 'darwin' or sys_platform == 'linux'" }
+
+
+[tool.poetry.group.dev.dependencies]
+myst-parser = "^2.0.0"
+sphinx-autodoc2 = "^0.4.2"
+sphinx-autoapi = "^2.1.1"
+sphinxcontrib-asyncio = "^0.3.0"
+mypy = "^1.4.1"
+black = "^23.7.0"
+pre-commit = "^3.3.3"
+nox = "^2023.4.22"
+nox-poetry = "^1.0.3"
+sqlalchemy-stubs = "^0.4"
+sphinx = "^7.0.1"
+sphinx-reload = "^0.2.0"
+furo = "^2023.07.26"
+
+[tool.poetry.extras]
+postgresql = ["asyncpg", "psycopg2-binary"]
+postgres = ["asyncpg", "psycopg2-binary"]
+aiopg = ["aiopg", "psycopg2-binary"]
+mysql = ["aiomysql", "PyMySQL"]
+mariadb = ["aiomysql", "PyMySQL"]
+sqlite = ["aiosqlite"]
+mypy = ["sqlalchemy-stubs"]
+speedups = ["ciso8601", "orjson", "aiodns", "brotli", "uvloop"]
+
+[tool.poetry.scripts]
+atsume = "atsume.cli.project:cli"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.towncrier]
+package = "hikari-atsume"
+package_dir = "atsume"
+filename = "CHANGELOG.md"
