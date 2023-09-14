@@ -1,0 +1,99 @@
+Metadata-Version: 2.1
+Name: assetic-qgis
+Version: 2.1.0.1
+Summary: Assetic QGis Integration API
+Home-page: http://www.assetic.com
+Author-email: developer@assetic.com
+Keywords: Assetic QGis Integration APIs
+Description-Content-Type: text/x-rst
+License-File: LICENSE.txt
+Requires-Dist: assetic (>=2023.16.1.3)
+Requires-Dist: PyQt5
+
+**Description** 
+
+`assetic-qgis` is a library to allow interoperability between Assetic Cloud services and
+QGIS.
+
+**Installation (recommended)**
+
+To install `assetic-qgis` run:
+    `pip install assetic-qgis`
+
+**Manual Installation**
+
+Can be installed manually but dependencies will also require installing
+Can optionally use a zip file available from Assetic if pip cannot be used
+
+**Instructions for use**
+Introduction to QGIS, Quickstart documentation, etc. can be found on the Assetic
+Knowledge Base (login required):
+
+https://assetic.zendesk.com/hc/en-us/articles/360001933756-QGIS-Integration-Introduction
+
+**Reporting issues**
+
+Log issues via Assetic Support
+
+
+**Changelog**
+
+**Release 2.1.0.1**
+    *   Added boolean parameter for creation of Functional Location when checking for it's existence during asset association
+
+**Release 2.1.0.0**
+    *   Added support for Component and Dimension 'upsert' where the Component and or Dimension is created as part of
+        the Asset update if the Component/Dimension does not already exist.
+        Requires assetic SDK 2023.16.1.2 minimum, and configuration setting to enable
+    *   Where invalid polygon orientation provided for multipolyon the orientation will be corrected
+        where possible
+
+**Release 2.0.1.8**
+    *   Fixed an issue when committing changes to a layer where editing mode was disabled and only partial Assetic IDs
+        were written back.
+    *   Fixed an issue with bulk updates using the Data Exchange was not properly handling QGIS specific types (e.g QDate)
+
+**Release 2.0.1.7**
+    *   Fixed issue where feature fields with 'falsy' numeric values were treated as null and not included in API payloads
+    *   Fixed an issue with the handling of empty layer fields mapped to asset address
+
+**Release 2.0.1.6**
+    *   Option to Buffer update of layer with Assetic ID on asset creation (default option) or apply feature updates directly (set using use_buffered_edit=False)
+
+**Release 2.0.1.5**
+    *   Improve functional location config
+    *   Improve reporting of unhandled exceptions
+
+**Release 2.0.1.4**
+    *   Fixed bug that was preventing dimension info being explictly added to each
+        QGIS row
+    *   Partial asset creation now being correctly reported to logger
+    *   Queries now working correctly when creating/updating functional locations
+        from layer
+    *   Removed QGIS specific geometry fields from base python-sdk in to qgis package
+
+**Release 2.0.1.3**
+    *   Fixes for initialisation crash in some circumstances where logging failed
+
+**Release 2.0.1.2**
+    *   Added functionality to bulk update assets via data-exchange
+    *   Updated assetic dependency
+
+**Release 2.0.1.1**
+    *   Updated required version of assetic package after discovering bug
+
+**Release 2.0.1.0**
+    *   Fixed issue where features of type Point and MultiPoint where not
+        being created in Assetic Cloud
+
+**Release 2.0.0.1**
+    *   Updated read me with some nicer formatting + extra information
+
+**Release 2.0.0.0**
+    *   Supports create and update by selection in QGIS GUI
+    *   Uses consolidated Assetic SDK functionality, sharing code with other GIS repositories
+
+**Release 1.0.0.0**
+    *	Initial Build
+
+
