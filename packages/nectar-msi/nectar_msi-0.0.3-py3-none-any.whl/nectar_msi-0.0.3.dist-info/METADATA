@@ -1,0 +1,49 @@
+Metadata-Version: 2.1
+Name: nectar-msi
+Version: 0.0.3
+Summary: NECTAR_MSI (NoisE CorrecTion AlgoRithm) a python package for noise determination and correction in MSI.
+Home-page: https://gitlab.npl.co.uk/nice-msi/nectar
+Author: Ariadna Gonzalez-Fernandez
+Author-email: ariadna.gonzalez@npl.co.uk
+License: GNU Lesser General Public License v3.0
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+License-File: LICENSE
+Requires-Dist: numpy
+Requires-Dist: matplotlib
+Requires-Dist: pyimzml
+Requires-Dist: h5py
+Requires-Dist: scipy
+Requires-Dist: pandas
+Requires-Dist: scikit-learn
+Requires-Dist: tqdm
+Provides-Extra: dev
+Requires-Dist: pre-commit ; extra == 'dev'
+Requires-Dist: tox ; extra == 'dev'
+Requires-Dist: sphinx ; extra == 'dev'
+Requires-Dist: sphinx-rtd-theme ; extra == 'dev'
+Requires-Dist: jupyter ; extra == 'dev'
+
+# NECTAR_MSI: NoisE CorrecTion AlgoRithm for mass-spectrometry-imaging
+
+NECTAR is a Python package for noise correction and noise determination in mass-spectrometry-imaging (MSI) data. 
+This package is explained in detail in: (reference to the paper) and it is shown here for transparency purposes. 
+Please cite this paper (citation) if you use this package.
+
+The folder "example data" contains the mean spectrum of the tissue area correspondent to the MALDI data analised in the paper. This spectrum can be used to test some of the features described on the paper. Due to the big size of the MSI data, the .imzML file could be provided under request to the authors. 
+
+You can use your own .imzML file to obtain a de-noised list of peaks of interest. The script can be run from the Jupyter notebook provided, or from the main.py file.
+
+# Installation
+pip install nectar-msi
+
+# License
+nectar is free software licensed under the GNU Public License (v3).
+
+# Aknowledgments
+This work was supported by Cancer Research UK [C58393/A24034] and the UK’s National Measurement System programs.
+
+
