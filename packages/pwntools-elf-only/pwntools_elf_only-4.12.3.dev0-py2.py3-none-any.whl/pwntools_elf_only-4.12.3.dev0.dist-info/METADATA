@@ -1,0 +1,60 @@
+Metadata-Version: 2.1
+Name: pwntools-elf-only
+Version: 4.12.3.dev0
+Summary: Pwntools CTF framework and exploit development library.
+Author-email: "Gallopsled et al." <pwntools-users@googlegroups.com>
+License: Mostly MIT, some GPL/BSD, see LICENSE-pwntools.txt
+Project-URL: homepage, https://github.com/orgua/pwntools-elfonly
+Keywords: pwntools,exploit,ctf,capture,the,flag,binary,wargame,overflow,stack,heap,defcon
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Security
+Classifier: Topic :: Software Development :: Assemblers
+Classifier: Topic :: Software Development :: Debuggers
+Classifier: Topic :: Software Development :: Disassemblers
+Classifier: Topic :: Software Development :: Embedded Systems
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: System :: System Shells
+Classifier: Topic :: Utilities
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE-pwntools.txt
+Requires-Dist: pyelftools >=0.2.4
+Requires-Dist: requests >=2.0
+Requires-Dist: pygments >=2.0
+Requires-Dist: python-dateutil
+Requires-Dist: packaging
+Requires-Dist: psutil >=3.3.0
+Requires-Dist: intervaltree >=3.0
+Requires-Dist: sortedcontainers
+Requires-Dist: six >=1.12.0
+Requires-Dist: rpyc
+Requires-Dist: colored-traceback
+Requires-Dist: unix-ar
+
+# pwntools - CTF toolkit
+
+[![PyPI](https://img.shields.io/pypi/v/pwntools-elf-only?style=flat)](https://pypi.org/project/pwntools-elf-only/)
+
+## Fork of the Main-Project with
+ 
+- reduced dependencies for windows & 32-bit ARM Linux distros
+- only focussed on ELF-features (other parts get removed or altered when causing trouble)
+
+## How to publish at pypi
+
+- increment .version and setup.py -> 4.12.#dev
+- push to dev
+
+## Changes
+
+- make compatible with newest pyelftools v0.30
+- remove dependencies: mako, ropgadget, pyserial, pip, zstandard, pathlib2, paramiko, capstone, pysocks, unicorn
+- clean readme.md, pyproject.toml and .github-directory
