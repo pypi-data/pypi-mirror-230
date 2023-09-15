@@ -1,0 +1,54 @@
+Metadata-Version: 2.1
+Name: qmatch
+Version: 0.12
+Summary: Some astronomical matching functions.
+Home-page: https://gitee.com/drjiezheng/qmatch
+Author: Dr Jie Zheng
+Author-email: jiezheng@nao.cas.cn
+License: MIT
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Topic :: Scientific/Engineering :: Physics
+Classifier: Topic :: Scientific/Engineering :: Astronomy
+Requires: numpy
+Requires: scipy
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# Quick Match
+
+This is a package with some 2-d match functions used in astronomy work.
+
+By Dr Jie Zheng and Dr Lin-qiao Jiang, from 2019
+
+Upload at Sep 2023
+
+## match
+
+A fast 2-d match function, with a time complexity of O(nlogn+mlogm).
+
+## findneighbor
+
+The main part of the match function. Been picked out so other program can call it.
+
+## match2d
+
+A simple 2-d match function, but has time and space complexity of O(m*n). It works well when m or n is small.
+
+## offset1d
+
+A function find out offset of each dimension. For 2-d image align, can be used twice for x and y.
+
+## make_tri
+
+Making triangles by given points. As a preparation step of triangle matching in an astrometric process.
+
+## match_triangle
+
+Match triangles from stars (point sources) of two images.
+
+
