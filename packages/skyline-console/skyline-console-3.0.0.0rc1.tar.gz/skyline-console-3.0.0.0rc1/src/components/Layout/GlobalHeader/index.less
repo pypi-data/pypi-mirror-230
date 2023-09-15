@@ -1,0 +1,189 @@
+@import '~styles/variables';
+
+.menu {
+  :global(.anticon) {
+    margin-right: 8px;
+  }
+
+  :global(.ant-dropdown-menu-item) {
+    min-width: 245px;
+  }
+
+  .no-hover {
+    overflow: hidden;
+
+    &:hover {
+      background-color: #fff;
+    }
+  }
+
+  .name-item {
+    padding: 0 12px;
+    line-height: 40px;
+
+    .user-label {
+      margin-right: 8px;
+      font-weight: 'bold';
+    }
+
+    span {
+      line-height: 40px;
+    }
+  }
+
+  .menu-item {
+    line-height: 30px;
+  }
+}
+
+.no-padding-top {
+  padding-top: 0;
+}
+
+.logout {
+  float: right;
+  line-height: 40px;
+}
+
+.right {
+  position: absolute;
+  top: 0;
+  right: 31px;
+  line-height: @header-height;
+
+  .action {
+    display: inline-block;
+  }
+}
+
+.project-menu {
+  :global(.ant-dropdown-menu) {
+    width: 170px;
+  }
+
+  :global {
+    .ant-dropdown-menu-item:hover,
+    .ant-dropdown-menu-submenu-title:hover {
+      cursor: pointer;
+    }
+
+    .ant-dropdown-menu-item-disabled,
+    .ant-dropdown-menu-submenu-title-disabled {
+      cursor: pointer;
+    }
+  }
+
+  .title {
+    cursor: auto;
+
+    &:hover {
+      background-color: #fff;
+    }
+  }
+}
+
+.project {
+  float: left;
+  font-size: 14px;
+  line-height: @header-height;
+  cursor: pointer;
+
+  :global {
+    .ant-divider {
+      margin-right: 24px;
+      margin-left: 24px;
+      background-color: #d2d2d2;
+    }
+
+    .ant-btn-link {
+      position: absolute;
+      min-width: 280px;
+      min-height: @header-height;
+    }
+  }
+}
+
+.header {
+  position: relative;
+  z-index: 200;
+  flex-grow: 1;
+  height: 100%;
+  padding-left: 0;
+  overflow: hidden;
+  color: @title-color;
+  background-color: #fff;
+  box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 9%);
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  color: #bfbfbf;
+  border: none;
+  box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 9%);
+}
+
+.domain {
+  font-size: 14px;
+}
+
+.links {
+  display: inline-block;
+  margin-right: 20px;
+
+  :global {
+    .ant-divider {
+      margin-right: 24px;
+      margin-left: 24px;
+      background-color: #d2d2d2;
+    }
+  }
+
+  .link {
+    color: @title-color;
+
+    &:hover {
+      color: @primary-color;
+    }
+  }
+
+  .active {
+    color: @primary-color;
+  }
+}
+
+.password-btn {
+  max-width: 100px;
+
+  span {
+    max-width: 80px;
+  }
+}
+
+.single-link {
+  margin-right: 5px;
+  color: @primary-color;
+}
+
+.token {
+  pre {
+    padding: 0.4em 0.6em;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    background: hsla(0%, 0%, 58.8%, 10%);
+    border: 1px solid hsla(0%, 0%, 39.2%, 20%);
+    border-radius: 3px;
+  }
+}
+
+.logo {
+  float: left;
+  width: 190px;
+  height: @header-height;
+  line-height: @header-height;
+  text-align: center;
+
+  img {
+    height: 30px;
+  }
+}

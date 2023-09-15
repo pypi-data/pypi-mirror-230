@@ -1,0 +1,798 @@
+CHANGES
+=======
+
+3.0.0.0rc1
+----------
+
+* feat: add detail info to action in detail tab
+* admin-menu.jsx updated
+* feat: add action props to ModalAction component
+* feat: update ActionButton component
+* feat: update Confirm component
+* feat: update Action component
+* fix: fix table height
+* fix: remove reboot e2e case
+* fix: fix the magic input
+* fix: update delete tip for instance soft delete
+* refactor: update render tabs components
+* feat: support custom locale language
+* refactor: refactor create ironic
+* refactor: refactor create instance
+* feat: support custom option col
+* fix: fix the domain description
+* Add Masakari UI to Skyline-Console
+* fix: fix table header buttons style
+* fix: update policy for project roles
+* fix: fix the hints of allocation pool
+* fix: add gaps for magic input tags
+* refactor: update magic input value
+* fix: update magic input component style
+* fix: remove useless config in e2e config
+* fix: fix cirros version in e2e config
+* fix: fix virtual resources data display
+* feat: Update i18n Korean translation
+* feat: add jwt expire check
+* feat: update layout styles
+* feat: support domain name fuzzy search
+* fix: fix the error message
+* fix: update create metadata
+* fix: fix edit fip
+* feat: add domain link in projects page
+* fix: fix the virtual resource in administrator
+* feat: update request
+* feat: optimize configuration reading
+* feat: update color variables
+* feat: update the cirros version
+* Fix Conflict Object Storage Key Name
+* fix: fix MagicInput component
+* feat: set default os\_type
+* fix: update the time display
+* fix: optimize the Transfer
+* fix: fix the menu title
+* fix: better display cluster health status
+* fix: fix the port type display
+* fix: Do not remove if the listener has an SNI certificate installed
+* fix: fix close the error message
+* fix: fix click link in the modal-button
+* feat: support clear all selected data for select-table
+* feat: optimize the clicking event in the select-table
+* fix: fix the pool data
+* Add admin state up switch
+* Add Designate (DNS) UI to Skyline-Console
+* feat: update zh-cn to zh-hans
+* feat: update the Korean i18n
+* feat: support Korean i18n
+* fix: Fix the label of node count in magnum cluster
+* docs: Remove invalid README.rst
+* Update master for stable/2023.1
+* fix: fix the network IP availability showing
+
+2.0.0.0rc1
+----------
+
+* feature: Support attach network and detach network for zun container
+* fix: add default value and tip when create zun container
+* fix: fix the rebuild container and ports of zun
+* fix: fix the zun-ui
+* fix: fix the resize of magnum cluster
+* feature: Support upgrade cluster and show quota info when resize cluster
+* fix: Modify label names to make them consistent
+* fix keypair showing in magnum service
+* fix: fix the error of compute service state
+* feat: add attributes to the ModalAction
+* feat: support textarea in the KeyValueInput component
+* fix: fix the title of zun container
+* fix: fix the magnum template detail info
+* feature: support ip address, ports and networks in list and detail
+* feature: support search filters and fix image in zun ui
+* feature: support some new params and fix some issues of zun ui
+* fix: fix the download data
+* fix deleting and detail info showing of cluster
+* fix: eliminate whitespace in passenv values
+* fix: seprate clusters and templates by different project
+* fix: fix the project column
+* fix: fix the magnum quotai and other infos
+* fix: reset the subnet list when create cluster instance
+* fix: fix the delete operation of cluster instance
+* fix: fix the getValue of yaml
+* feat: support custom render in the TabDetail component
+* fix: fix the magnum service
+* feature: Add listener input event for instance-volume component
+* fix: add disabledRemoveFunc prop in AddSelect component
+* fix the validator of cluster name and labels
+* fix: add disableEditKeys prop in AddSelect component
+* fix: support name validator and fix placeholder of magnum service
+* fix: Support search filter for cluster and template
+* fix: Improve quota in magnum service
+* feat: support component in the table header
+* feature: Support quota in magnum service
+* fix: add middleComponent prop in KeyValueInput component
+* fix: fix health\_status in magnum cluster
+* fix: Move the keypair to node spec when create cluster instance
+* Fix keypair in magnum
+* fix: fix the instance-volume in form items
+* Fix: fix the image store in magnum node spec
+* fix: Fix the store path in magnum and required name in zun container
+* fix: Fix quick creating keypair in creating instance
+* fix: fix the router path and logs in zun container
+* feature: Support quick creating keypair in Magnum service
+* fix: add confirm resize/migrate button in the administrator
+* feat: add success and error status in Status component
+* feature: Support magnum in administrator platform
+* fix: fix the i18n of the status of vpn ipsec connection
+* feature: Add translation for monitor center
+* feat: update the click area of links in the global navigation
+* Fix the state and default value when create cluster instance
+* Fix the cluster and template of magnum
+* feat: support search in the global navigation
+* feat: update menu in the layout
+* feat: add global navigation
+* feature: Optimization of Magnum
+* feat: add props in BaseForm
+* Remove unicode literal from code
+* Remove unicode literal from code
+* feature: Support custom button for the upload
+* Fix : Update labels , filters , keypairs at Magnum Service
+* fix: When the storage backends usage is 0 displayed error as '-'
+* fix: The scale of the x-axis is not updated in time
+* chore: Replace https with http as default
+* fix: Calculate quota based on the data disk of the selected instance snapshot
+* fix: No data disk is displayed on the ConfirmStep
+* fix: Not show the data disk when creating vm by Instance snapshot
+* feat: Support download file progress and abort download
+* fix: fix the row auto selected when click the copy button edge
+* fix: update the qos policy column in the floating ip list page
+* fix: update the project name display in the rebuild instance action
+* fix: fix the download data in the all networks tab
+* fix: update the id/name column of listener members
+* fix: update the click area of the id link
+* fix: fix the row auto selected when copy id
+* feat: Support for custom prometheus requests
+* fix: set the default language is Engilsh
+* fix: Fix the unit transform in prometheus monitor
+* feat: remove id link in the name column in the role list page
+* feat: update id render to support number format
+* fix: fix the category options in the flavor list page
+* docs: add the release note
+* feat: update name column in the keypair list page
+* feat: display the id/name column in the table in a unified style
+* docs: Change the launchpad url for skyline-console
+* feat: support id/name in non-bold form
+* feat: update the generic projectRender
+* feat: update project id/name column display
+* feat: update the generic idNameColumn
+* feat: update id/name column display
+* Hide the certificate info in administrator platform
+* fix: modify padding of security groups on instance detail english page
+* fix: add Specify Physical Node label of manually specify when create instance
+* feat: update e2e zuul tasks
+* feat: support flavor to add cpu/memory search filters
+* Fix edit member of lb listener
+* fix: add vm state check for modify instance tags
+* Fix the name of Bare Metal Nodes
+* fix: security groups style is error on instance detail english page
+* fix: fix the pagination in the vpns pages
+* fix: set the type required when create vpn endpoint group
+* fix: fix select static router
+* fix associate floating IP in the port list if allowed
+* Fix Edit Qos Policy
+* fix the QoS policy list
+* fix: edit image's min disk
+* fix: remove tags filter in the instance list page
+* fix: Fix the disable property of check-box-group
+* fix: Change the unit to 'TiB,GiB....'
+* fix: validate error when clear input-name
+* fix: fix octavia request headers
+* fix: The loading cannot be canceled
+* fix: create instance by given image/instance snapshot
+* fix: fix fetch subnets
+* fix: set AZ required when create aggregate
+* fix: Fix the unit when upload file
+* fix: fix edit image
+* Update master for stable/zed
+
+1.0.0.0rc1
+----------
+
+* feat: update dist for rc1 release
+* fix:update volume snapshot columns in the volume detail page
+* fix: fix the error messages for required fields in forms
+* fix: support port filter Octavia ports
+* fix: fix fetch fip data
+* docs: remove skyline settings file
+* docs: Fix pdf doc name
+* docs: Add rc1 release notes
+* docs: update development guide
+* docs: add development guide
+* fix: fix the pagination in the certificate list page
+* docs: Change md file to rst file
+* fix: fix the project id info for volume backups
+* fix: fix the id value in the download data
+* fix: fix time in the download csv
+* fix: fix ports filter by device onwer fip
+* fix: fix project id download data
+* fix: fix the modal action disappear
+* fix: Fix search filters
+* fix: Adjust form items status as required
+* fix: Adjust form items as required
+* fix: remove the heat page in the administrator
+* fix: Fix attachments in volume list and tag in instance list
+* docs: fix source install guide
+* fix: Fix download data if use unit
+* docs: Add source install guide
+* fix: fix download data for port forwardings
+* fix: Fix download data if use valueMap
+* docs: Update user dashboard guide
+* fix: update port forwarding filters by front-end
+* refactor: optimize the rendering of data with unit
+* docs: Update console page and administrator page
+* refactor: remove useless code about backup point
+* feat: show back-end storage pools of manila
+* fix: adjust the paging and sorting modes of the port forwarding page
+* fix: remove page size change in the port forwarding popover
+* docs: Add console page and administrator page
+* docs: Add admin and user guide
+* fix: support capacity expansion of volume when instance is locked
+* feat: show volume list in volume snapshot detail
+* docs: Add install and Update settings
+* fix: fix remove subnet dns and host routes
+* fix: optimize the display of subnet information
+* feat: support delete in capsules detail
+* fix: fix cinder services data
+* fix: floating IP list page removes sorting based on qos policy
+* fix: fix heat menu in administrator
+* refactor: optimize the rendering of data with map values
+* docs: Add configuration and Update contributor
+* docs: Add contributor introduction
+* fix: fix port/port\_range required check when create/edit port forwarding
+* fix: fix volume download data
+* fix: first data fetch when the page has initial filter conditions
+* fix: fix the worker-json error in browser console
+* fix: fix the delete permission of volume snapshot
+* fix: allowClear property is set to false when select is required
+* fix: fix the linkage between search items and quick search
+* feat: support subnet detail page
+* fix: fix the formRef error in browser console
+* fix: fix the abort of upload
+* feat: support snapshot info in the volume detail page
+* refactor: update the List component prop
+* feat: support edit port forwarding with port range
+* feat: support web SSO login
+* refactor: render project info by func
+* fix: fix ephemeral when create flavor
+* fix: displayed when no data in the volume size field on the instance detail page
+* fix: Update the package version
+* fix: add the unit GiB to the capacity on the volume detail page
+* fix: fix the public policy check when create/edit share
+* refactor: remove the basic role display from the overview page
+* feat: support fuzzy query port when create port forwarding
+* fix: fix code editor and edit image
+* feat: use the port list page to instead of the virutal adapter
+* fix: update some data in zun detail
+* feat: Support create port forwarding with internal/external port range
+* feat: support zun services
+* fix: update the style of tips in the form
+* feat: support cascade delete volume
+* fix: fix the data showing if not matched
+* feat: support trove resize volume
+* refactor: Optimize the method of obtaining port based on device owners
+* refactor: Update Label component to support floating ip's icon
+* feat: support quota when create trove instance
+* fix: remove Chinese in the svgs/comments
+* fix: fix the quota chart
+* fix: fix the add value of zun quota
+* feat: support trove quota
+* fix: Fix the display of the row actions when the volume status is being created
+* fix: status field is required when edit volume status
+* fix: fix the networks,ports and security groups
+* fix: update 'gigabytes' to 'capacity' in the titile
+* feat: add magnum/trove to the zuul config
+* fix: fix the stats api request for zun container
+* fix: fix async tip for some operations
+* feat: show logs of a zun container
+* feat: update volume action menu
+* fix: fix the server group member label in quota
+* chore: import lodash on demand
+* fix: fix the action collection of zun container
+* feat: show action logs of a zun container
+* fix: fix the backup size quota check when create backup
+* fix: fix the size quota check when create volume
+* fix: fix lang local storage after logout
+* feat: update administrator overview page
+* feat: show stats of a zun container
+* fix: fix the limit value when fetch api in the list page
+* fix: fix the add value of quota in zun containers
+* feat: Add doc base frame
+* fix: fix the plural form of the menu words && tab title words
+* fix: fix instance quota check when create instance
+* fix: fix the filtered data is inconsistent with the refreshed data
+* fix: fix the quota info
+* fix: fix getColumns and searchFilters in trove instance
+* fix: fix ports quota check when create virtual adapter
+* feat: support reboot action in trove instance
+* fix: update some database names
+* fix: update volume snaphost/backup display
+* fix: update Ring component for long text display
+* feat: support trove instance in administrator platform
+* docs: Change little doc bugs
+* test: add share type e2e case
+* fix: fix trove instance create
+* fix: fix the trove instance store
+* fix: fix the heat tab in the system info
+* feat: add protocal in the port forwarding display in the floating ip list
+* refactor: optimize the way to fetch the list of volumes mounted on the instance
+* feat: support stop action in trove instance
+* fix: fix the initially volume type when create volume
+* fix: fix the policy of database which belong a instance
+* fix: support the same port if different protocol
+* feat: support restart for trove instance
+
+1.0.0.0b2
+---------
+
+* feat: support server group quota check when create instance
+* feat: add the packaged front-end code
+* docs: Change md file to rst file
+* feat: support edit for trove instance
+* fix: fix the detail info of zun container
+* feat: support instance snapshot create instance
+* fix: Fix error word spelling
+* fix: fix the policy of image
+* feat: support quota info when instance snapshot create volume
+* fix: update user's scope system role check
+* feat: support quota in zun container creating
+* feat: support quota info when instance create snapshot
+* fix: hide network qos menu when the service is disabled
+* fix: disable associate action when fip has port forwardings
+* fix: fix the table height in qos policy list
+* fix: show qos\_policy name in floating ip list
+* fix: fix associate fip with port forwarding
+* feat: support zun quota in manage project quota and overview
+* fix: add ip tip for NFS/CIFS share create access rule
+* feat: update Popover component
+* fix: fix port forwarding display in fip list page
+* feat: support fixed ip filter in port-form-item
+* fix: fix getNameRender in table list
+* feat: support create instance in server group list page
+* refactor: refactor skyline:xxx policies
+* fix: remove license check
+* fix: fix create zun container
+* feat: detach instance snapshot list page
+* fix: fix bootable volume action notice
+* fix: fix some resource items to select-table
+* feat: support create key pair when create instance
+* fix: fix imageRef for boot-from-volume instance
+* fix: remove resize online action
+* feat: support quota info && check when resize instance
+* fix: fix some parmas when create magnum template
+* feat: update instance lock icon && info
+* feat: support cpu && mem quota info when create instance
+* fix: fix FormAction footer style
+* fix: fix policy map and others
+* fix: fix ip showing and users database access
+* feat: support quota info when create share
+* fix: fix timer in InfoButton component
+* feat: add alias policy introduction
+* feat: support quota info when clone volume
+* fix: fix policy for all modules
+* feat: support quota info when extend volume
+* refactor: refactor create volume
+* feat: support quota info when image create volume
+* feat: support quota info when backup create volume
+* feat: support quota info when snapshot create volume
+* feat: support backup quota info when volume create backup
+* fix: fix multi role select in transfer component
+* feat: support backup quota info when create backup
+* fix: fix cinder snapshot quota in overview page
+* feat: support quota info when volume create snapshot
+* perf: optimize cold start speed, fix hot module reload
+* fix: fix cluster
+* feat: support quota info when create key pair
+* fix: fix key pair used count in console overview page
+* feat: support quota info when create fip
+* feat: support quota info when create virtual adapter
+* feat: support quota info when create subnet
+* fix: fix cluster template
+* feat: support show quota info when create network
+* feat: support quota info when create security group rule
+* feat: support quota info when create security group
+* feat: support show quota info when create router
+* feat: Show quota info when create server group
+* feat: update role detail page
+* fix: fix less-loader options and styles
+* feat: update quota display
+* fix: fix overview page style when no-cinder
+* fix: Fix the root disk in flavor
+* fix: fix application credential api fetch
+* feat: Support compute hosts for zun
+* fix: Fix certificate and magnum
+* fix: Fix user group list in project detail page
+* fix: fix project manage user group
+* fix: fix user api fetch in user center overview page
+* feat: add user group info for domain page
+* feat: Support more functions for zun containers
+* fix: fix listener info in certificate
+* fix: Update user create form style
+* feat: Add quota info when create volume
+* fix: certificate expired change
+* test: Add zun e2e test
+* feat: Support auto close/expend quota info when create instance
+* feat: Add error message when create instance quota exceeded
+* feat: Add volume quota when create instance
+* refactor: Refactor user
+* fix: i18n and validator for zun
+* refactor: Refactor project
+* fix: Fix virtual resource about compute
+* refactor: Refactor user group
+* feat: Support domain actions
+* fix: Fix row hide in base table
+* feat: Support role actions
+* fix: Zun container operate adjust
+* [Animbus]fix: Fix danger button style in batch actions
+* fix: Fix database in user & e2e
+* fix: Fix copyable and delete lb
+* refactor: Refactor danger from buttonType to isDanger
+* feat: Add quota info in create instance page
+* fix: Fix last week's monitor data
+* fix: Hide menu when endpoint not exist
+* fix: Zun code adjustment
+* fix: Fix create/delete certificate && menu
+* fix: Fix topology e2e
+* feat: Update certificate
+* fix: Add unit to memory quota
+* fix: fix GB unit in database
+* fix: Fix update ironic node traits
+* fix: fix image required when create ironic
+* fix: Fix certificate
+* feat: Update certificate
+* chore: Remove poetry
+* fix: Fix GB/MB unit to GiB/MiB
+* Add Zun UI to Skyline-Console
+* feat: Update trove database
+* fix: Fix capacity unit in create share form
+* fix: Fix monitor data
+* fix: Fix Typo - Append closing parenthesis
+* feat: Function optimization in certificate
+* Add Magnum UI to Skyline-Console
+* fix: fix delete of secrets and trove
+* fix: Fix download share group type
+* chore: Change the pre for devstack
+* feature: Add commit-id
+* fix: Fix share api && create share network
+* feat: Support more protocals for loadbalance
+* fix: Decorator style for refactored components
+* feat: Update share actions && fetch
+* feat: Support force-delete && reset-status share istance
+* fix: Optimize the directory structure of the resources folder
+* fix: Optimize the directory structure of the resources folder
+* feat: Support manila share server
+* fix: display port\_range in security group rule in instacne detail
+* feat: Support update share quota && reset status
+* feat: Support extend share
+* feat: Support manila share
+* feat: Add releatenotes
+* feat: add renderExtraLink function to support extra link show
+* fix: add i18n and fix datastore of trove
+* fix: remove extra IPv6-ICMP in create security group rule
+* fix: fix component definition of trove
+* feat: Support manila share group
+* fix: fix download floating IP all data error
+* feat: Support manila share network
+* refactor: Refactor popover resource component
+* fix: remove @ alias when import file
+* fix: Show importing status when creating image using url link
+* fix: fix route map and component definition
+* fix: Fix create share group type
+* feat: Support manila instance page
+* fix: fix token storage after login
+* feat: Support manila share group type page
+* feat: Support manila share type page
+* feat: There are more 'more' parameters passed when creating a user
+* feat: The condition for judging the bare metal instance removes the trait: CUSTOM\_GOLD is required
+* feat: Support for creating image using file link
+* fix: fix token storage after switch project
+* refactor: update error handle in request
+* fix: Change the policy name
+* fix: Fix role list and monitor data and others
+* fix: Modify UserGroups and User definition
+* fix: Remove batch delete port forwarding
+* fix: Fix database and tag
+* fix: Fix source port/port range
+* fix: Fix error of cinder endpoint
+* Add Trove UI to Skyline
+* fix: Fix tags column and validator tips
+* fix: Refresh data when database change in monitor
+* feat: remove useless codes of snat
+* feat: Add tags to nova service and so on
+* fix: Clear local storage when logout
+* feat: support network qos policy actions in console
+* fix: Support no-cinder
+* fix: add json format check when editting setting config
+* feat: add floating ip tab in qos policy detail page
+* fix: the host name should show service.host instead of hypervisor\_hostname, pages involved are as follows:
+* fix: Fix the e2e job
+* fix: Fix the user manager & group manager
+* fix: hide project\_id when modifies metadata
+* fix: set default expires day of keystone\_token
+* fix: Fix the user manager & group manager
+* refactor: Update style
+* fix: Fix the encryption provider format
+* fix: Fix the style of AddSelect component
+* fix: fix routerId of router port page
+* fix: Fix the Qos policy data in the list
+* fix: Fix the router port & security group
+* fix: Fix the mtu when create network
+* fix: Fix the gateway\_ip when create network
+* fix: Fix the status list of volume
+* fix: Fix the search filters
+* fix: update .gitreview
+* fix: Fix word spell
+* feature: update to support configuration
+* docs: Update README doc file
+* fix: Fix for fip's binding resource that not belong to current project
+* refact: Refactoring generation of the link of network and security group when creating instance
+* refact: Refact Monitor page
+* feat: Optimize simple-form component
+* feat: Support the use of ports when creating an instance
+* fix: Fix the create member disappear when status is changing
+* Add copyright for python files
+* feat: Publish skyline-console to opendev tarballs
+* feat: Support ceph rgw swift
+* fix: Fix the create listener disappear when status is changing
+* fix: Fix the validate message for some fields with empty value
+* fix: Remove useless package
+* fix: Fix the value of the name column in the network list which use the simple table
+* fix: Add tip for ipv6 subnet
+* feat: Update flavor detail page
+* fix: Fix qos policy jump in fip list page
+* feat: Support flavor mem page size prop
+* fix: The default remote ip prefix is ::/0 if ethertype is IPv6
+* fix: fix for lb members subnet id params
+* fix: Fix e2e i18n
+* fix: The default remote ip prefix is ::/0 if ethertype is IPv6
+* fix: Fix for monitor page
+* fix: Fix for compute node status & "observable" big array data
+* test: Fix flavor case
+* chore: Restore e2e tasks in gate
+* test: Add swift e2e
+* fix: Hide download btn in swift container page
+* fix: Fix for create lb members
+* fix: Fix delete swift folder
+* fix: Fix menu click range
+* fix: fix i18n
+* fix: Remove pfw tab from fip detail page
+* fix: Fix selection style in header table
+* feature: Add other service monitor page
+* fix: Fix table header style
+* feature: Add openstack service monitor page
+* feature: Add storage cluster monitor page
+* feature: Add physical node monitor
+* feature: Add monitor overview
+* test: Add Cypress retry times
+* feat: Add swift
+* chore: Update zuul task
+* fix: Fix baremetal set boot device
+* feature: Add prometheus base component
+* fix: Fix environment with no pfw
+* fix: Fix create ipv6 subnet with ipv6\_address\_mode
+* fix: Show VGPU info if architecture is heterogeneous\_computing
+* fix: Add volume quota check when create instance
+* refactor: Remove useless func getUrl
+* fix: Fix link jump
+* fix: Fix for edit user with null phone
+* feat: Make phone number input international & change library related
+* refactor: Refactor path jump
+* fix: Fix bug in store/neutron/port.js
+* feat: Make ipProtocol can be entered by user
+* Add irrelevant-files for skyline-console
+* fix: Fix the convert shell code to base64 errors
+* fix: Fixed the platform entrance not switching when switching projects
+* feat: Add volume bootable action
+* fix: Fix volume tag judgement logic
+* fix: Fix edit subnet allocation pools
+* feat: Support devstack integrated e2e tests
+* Fix error on single-CPU machine
+* fix: Add tips for application credential roles
+* test: Fix waiting time after delete instance
+* test: Fix instance attach interface && delete instance
+* test: Fix click select input in table
+* fix: Change vpn tunnel to ipsec site connection
+* fix: Fix the permission of QosPolicy
+* test: Fix click table select input force
+* fix: Fix for network topology
+* fix: Fix create flavor
+* test: Update e2e case
+* fix: Add ipxe, fake boot interface when create bare metal
+* test: Fix e2e case
+* fix: Fix for status check of migrate & live migrate
+* feat: add confirm & revert resize action
+* test: Update e2e test according to service enabled
+* test: Update instance e2e
+* fix: Fix flavor show for which ram < 1 GB
+* fix: Just show session expired error when 401
+* refactor: Remove -f of poetry build command
+* test: Update image e2e case
+* fix: move project\_id filter at the end of filters
+* test: Update e2e case
+* fix: Fix the export format of createIronic in images actions
+* feature: add backup status show
+* fix: Update e2e
+* fix: Fix the permission of createIronic
+* fix: Fix compression-webpack-plugin resolved in yarn.lock
+* fix: Fix the system classsification of image
+* feat: Add build sdist
+* fix: Fix batch delete backups
+* fix: In order to better control the display of the menu item name
+* fix: Remove fetching fip in port list page
+* fix: Fix menu items name is too long
+* refactor: Refactor manage project quota
+* refactor: Refactor project detail quota codes
+* refactor: Refactor console overview codes
+* feat: Refactor admin overview codes
+* feat: Refactor rebuild instance
+* feat: Refactor network list page
+* fix: Fix delete shelved instance
+* fix: Fix for credential download & show
+* fix: Remove useless actions
+* fix: Refactor create instance
+* refactor: Refactor QoS Policy code
+* fix: remove port\_security\_enabled in edit port
+* fix: Fix volume restore tip
+* fix: Update instance check for attach/detach volume
+* feat: Refactor project list page
+* fix: Remove useless component && update path && update image
+* fix: Fix for phone number validate
+* feat: Update user avatar
+* feat: Add administrator link in header in user center page
+* fix: Hide vCPUs & ram in hypervisor
+* feat: Update download file name in detail page
+* feat: Update datas to data
+* fix: Fix loading for ConfirmAction component
+* fix: Fix redirect to pre page after login
+* fix: Fix volume type quota of project in administrator
+* fix: Update instance delete
+* fix: Update Table component && update stack codes
+* fix: Show the image which has no usage\_type
+* fix: Fix column in volume backup
+* fix: Fix action log popup with debounce
+* fix: Fix extend volume with large volume size
+* fix: Update component && validate
+* feat: Add application credential
+* fix: Remove useless api codes
+* fix: Remove price codes && update stores
+* feat: Add error card for instance with 'fault'
+* fix: Fix import circle
+* fix: Update link generate for security group rule
+* fix: Fix unit test case
+* fix: Fix locked instance extend volume notify twice time
+* fix: Fix cannot create network with ipv6 and other issues
+* fix: remove interface number check of detach action
+* fix: Fix for vpn resource download
+* fix: Fix stack template && filter
+* fix: Close batch action modal when error
+* fix: Fix lb download
+* fix: Fix manage port security group
+* fix: Fix port download column
+* fix: Fix edit subnet params
+* fix: Fix volume columns
+* fix: Fix create user in domain detail page
+* fix: Fix magic input css
+* fix: Fix spelling & remove link
+* fix: Fix for select table init & LB listener download
+* fix: Fix for magic input with boolean option show & etc
+* feature: Add allocation pools validate rules
+* fix: Fix project detail policy
+* fix: Fix floating ip detail when router is not private
+* fix: Fix extend volume when instance is locked
+* fix: Fix table height with hint
+* fix: Fix TimeFilter style
+* feat: Add tree select form item
+* fix: Fix models & eslint
+* fix: Fix ip-distributer initial value
+* feat: Add user-center page
+* fix: Fix for port manage security groups & delete
+* fix: Fix i18n of ip\_address when create allowed address pair
+* fix: Fix port download
+* fix: Update List component to support init filter
+* fix: Fix change volume type result hint
+* fix: Fix download csv
+* fix: Fix for create image from volume
+* fix: Fix create user in domain list
+* fix: Fix user columns
+* fix: fix edit unique project name & etc
+* fix: Fix 'enabled' when edit project
+* fix: Fix for lb status render
+* fix: Fix for project tag filter & switch project
+* fix: Fix for project download
+* feat: Add tip for vcpus when creating flavor
+* feat: Add filter for fip port forwarding & fix download
+* fix: Check status of instance when attaching port
+* fix: Fix for security groups
+* fix: Fix for getGBValue return
+* fix: Fix for refresh and then delete allowed-address-pair
+* fix: Fix for create & edit fip port forwarding
+* fix: Fix for checkPolicy function change
+* fix: Fix for updateDefaultValue & add display params
+* fix: Fix for null/undefined column
+* fix: Fix for newtork config show
+* fix: Make port's fixed\_ip not required
+* fix: Fix edit port qos policy & fip
+* feat: Update import && export
+* fix: Support multi add networks/routers to neutron agent
+* fix: Fix tip for manage metadata
+* fix: Fix download file name
+* fix: Fix inspect error message
+* fix: Add filter status in volume
+* fix: Check file type when create image
+* fix: Fix create instance error hint
+* fix: Support cancel upload && show progress
+* fix: Fix for network download & vpn tunnel create css
+* feat: Add cidr in subnet-select-options & subnet details in column
+* fix: Fix for docs link address
+* fix: Fix auto resize
+* fix: Fix delete image error display
+* fix: Fix locked value in instance download csv etc
+* fix: Fix batch actions
+* fix: Support download 1W data when total count is more
+* feat: Action log in instance
+* feat: Update console && administrator to link
+* fix: Fix ip name of topology to match the route list
+* feature: Update instance batch action error hint
+* fix: Fix auto refresh in volume detail
+* fix: Fix show qos name in volume type list page
+* fix: Fix select table loading in form
+* docs: Add doc link in README
+* fix: Fix columns and download file
+* fix: Fix callback after action submit
+* fix: Add error status for volume and polyfill allSettled
+* fix: Fix the prompts when form submit
+* fix: Fix filter search error in admin page
+* fix: Fix refresh data in detail page after finishing action
+* fix: Fix backup from vpn detail
+* fix: Fix styles in Form & renderBadge & external network
+* fix: Fix notify with promise reject
+* fix: Fix disabled user hint when login
+* feature: Add ZUUL JOBs
+* fix: Update volume type hint when create volume by snapshot
+* fix: Fix action hint without name
+* fix: Fix display currectly after jumping from the error page
+* fix: Fix unique name when create/edit volume type
+* fix: Fix the configured memory in detail page
+* fix: Fix copy volume id in backup detail page && error hint
+* feat: Support network port\_security\_enabled
+* fix: Fix the prompts in batch deletion
+* fix: Fix attach & detach iso volume permission
+* fix: Fix snapshot revert for volume
+* feat: Add float ip address column
+* fix: Fix route name to get better format
+* feat: Support client module
+* feat: Restore volume use snapshot
+* fix: Fix pass props from layout
+* fix: Fix white screen problem
+* feat: Add cache setting for table list
+* fix: Fix the user's real name field to real\_name
+* fix: Fix for 5xx error & errorWithDetail params
+* fix: Fix getSinceTime when param is null/undefined
+* feat: Add roles column in projcet detail user list
+* docs: Update en test docs
+* fix: Fix the stack log is not showed completely
+* feature: Support tips at top in StepForm component
+* fix: Fix redirect to overview page
+* fix: Fix manage metadata
+* fix: Fix some style
+* fix: Fix the return information of quota exceeded is not clear
+* fix: Fix system\_reader role operation permission bug
+* fix: Fix securityGroup Rule creating
+* fix: Fix hint in List
+* fix:Fix special name in flavor metadata
+* docs: Add en readme
+* style: Move static\_path into skyline\_console
+* docs: Add en test docs
+* docs: Add en docs
+* docs: Add English documents
+* docs: Add Chinese documents
+* fix: Fix folder name
+* Fix README
+* feat: Add initial code of skyline-console
+* Add Zuul support for new repository
+* Added .gitreview
