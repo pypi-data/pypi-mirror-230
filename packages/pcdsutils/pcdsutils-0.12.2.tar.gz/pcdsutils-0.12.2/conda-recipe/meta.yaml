@@ -1,0 +1,45 @@
+{% set package_name = "pcdsutils" %}
+{% set import_name = "pcdsutils" %}
+{% set version = load_file_regex(load_file=os.path.join(import_name, "_version.py"), regex_pattern=".*version = '(\S+)'").group(1) %}
+
+package:
+  name: {{ package_name }}
+  version: {{ version }}
+
+source:
+  path: ..
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+  - python >=3.9
+  - setuptools_scm
+  - pip
+  run:
+  - python >=3.9
+  - prettytable
+  - pypandoc
+  - pyyaml
+  - qtpyinheritance
+  - requests
+
+test:
+  imports:
+  - pcdsutils
+  - pcdsutils.qt
+  requires:
+  - line_profiler<4
+  - ophyd
+  - pyqt=5
+  - pytest >=6.2.0
+  - pytest-qt
+  - qtpy
+
+about:
+  home: https://github.com/pcdshub/pcdsutils
+  license: SLAC Open License
+  summary: PCDS Python Utilities
