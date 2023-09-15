@@ -1,0 +1,59 @@
+Metadata-Version: 2.1
+Name: django-mptt-simple-listfilters
+Version: 0.1.1
+Summary: Provides simple filters based on django-mptt's TreeRelatedFieldListFilter, e.g. ListFilterIgnoreLeafNodes and ListFilterLimitDepth.
+Author: Qian ShuCong
+Author-email: qianshucong@zencore.cn
+Maintainer: Qian ShuCong
+Maintainer-email: qianshucong@zencore.cn
+License: MIT
+Keywords: django admin extentions,django mptt simple listfilters
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Description-Content-Type: text/markdown
+Requires-Dist: django
+Requires-Dist: django-mptt
+
+# django-mptt-simple-listfilters
+
+Provides simple filters based on django-mptt's TreeRelatedFieldListFilter, e.g. ListFilterIgnoreLeafNodes and ListFilterLimitDepth.
+
+## Install
+
+```shell
+pip install django-mptt-simple-listfilters
+```
+
+## Provide List Filters
+
+- ListFilterIgnoreLeafNodes
+
+    Ignore all leaf nodes.
+
+- ListFilterLimitDepth
+
+    Only show roots in the filter list. You can create your own filter inherit from ListFilterLimitDepth and reset the max_depth value.
+
+- ListFilterLimitDepth2
+- ListFilterLimitDepth3
+- ListFilterLimitDepth4
+
+    These are shortcuts for ListFilterLimitDepth, and reset the max_depth value to 2, 3 and 4.
+
+## Usage
+
+Use as TreeRelatedFieldListFilter.
+
+## Releases
+
+### v0.1.1
+
+- First release.
+
+### v0.1.2
+
+- Doc update.
