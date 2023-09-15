@@ -1,0 +1,1 @@
+from pyinspectx.inspector import Inspector
