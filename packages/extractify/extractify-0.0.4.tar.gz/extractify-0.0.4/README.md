@@ -1,0 +1,60 @@
+# Extractify
+
+Extractify is a command-line tool for converting documents in various formats (.pdf, .doc, .docx, .xlsx, .txt) to plain text. The tool works with **both local directories and S3 buckets.** For local directories, the tool creates a 'txt' subdirectory within the specified input directory and saves the plain text files with the same filenames but with a .txt extension. For S3 buckets, it saves the plain text files in a 'txt' folder under the specified prefix.
+
+## Installation
+
+Install Extractify using pip:
+
+```bash
+pip install extractify
+```
+
+## Usage
+
+### Locally
+To use Extractify **with a local directory**, run the following command:
+
+```bash
+extractify <input_dir>
+```
+
+(Replace `<input_dir>` with the path to the directory containing the documents you want to convert.)
+
+### In S3
+To use Extractify **with an S3 bucket**, run the following command:
+
+```bash
+extractify s3://bucket-name/prefix
+```
+
+Replace `bucket-name` and `prefix` with the appropriate values for your S3 bucket.
+
+### Omit PDF files from the process
+To omit PDF file formats, add the `--omit-pdf` flag:
+
+```bash
+extractify <input_dir or s3_bucket_address> --omit-pdf
+```
+
+### Output
+Extractify will create a 'txt' subdirectory within the input directory and save the plain text files there.
+
+## Supported Formats
+Extractify currently supports the following document formats:
+
+  - `.pdf`
+  - `.doc`
+  - `.docx`
+  - `.xlsx`
+  - `.txt`
+
+## Dependencies
+Extractify requires the following Python libraries:
+
+
+  - `tika`
+  - `openpyxl`
+  - `argparse`
+  - `tqdm`
+  - `boto3`
