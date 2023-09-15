@@ -1,0 +1,63 @@
+Metadata-Version: 2.1
+Name: wise-utils
+Version: 1.0.3
+Home-page: https://gitee.com/duquan1995/wise-utils.git
+Author: wise-python
+Author-email: duke.du@uifox.com.cn
+Project-URL: Bug Tracker, https://github.com/pypa/sampleproject/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >3
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: yagmail>=0.15.277
+Requires-Dist: requests>=2.25.1
+Requires-Dist: urllib3>=1.26.7
+Requires-Dist: selenium>=4.1.0
+Requires-Dist: redis
+Requires-Dist: PyMySQL>=1.0.2
+Requires-Dist: nacos-sdk-python>=0.1.6
+Requires-Dist: better-exceptions>=0.3.3
+Requires-Dist: loguru>=0.6.0
+Requires-Dist: PyVirtualDisplay>=2.2
+Requires-Dist: undetected_chromedriver~=3.1.5
+Requires-Dist: webdriver_manager~=3.5.4
+
+# 小工具
+
+- common
+    - exceptions: 异常处理
+    - ftp: FTP上传下载
+    - logger: 日志打印
+    - mail: 邮件发送
+    - retry_decorator: 重试装饰器
+    - setqueue: 去重队列，有序去重队列
+- db
+    - mysql
+    - redis
+- spider 爬虫基类
+    - basespider
+    - selenium_spider
+
+### 0.3.6
+  ```
+  由于新版将会弃用直接传executable_path，更新了 
+  service = Service(executable_path=executable_path)
+  browser = webdriver.Chrome(service=service, options=chrome_options)
+  ```
+
+
+```shell
+# 安装
+pip install -i https://pypi.org/simple/ wise-utils
+
+- mac 打包
+  python3 -m build
+  python3 -m twine upload --repository testpypi dist/*
+  python3 -m twine upload --repository pypi dist/*
+- win 打包
+  python setup.py sdist
+  python setup.py install
+  twine upload dist/*
+```
