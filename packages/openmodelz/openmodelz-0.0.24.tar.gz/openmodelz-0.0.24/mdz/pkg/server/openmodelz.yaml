@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: openmodelz
+  labels:
+    name: openmodelz
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: openmodelz
+  namespace: kube-system
+spec:
+  chart: openmodelz
+  repo: https://tensorchord.github.io/openmodelz-charts
+  targetNamespace: openmodelz
+  version: {{.Version}}
+  set:
+  valuesContent: |-
+    fullnameOverride: openmodelz
+    agent:
+      ingress:
+        enabled: true
+        ipToDomain: {{.IpToDomain}}
+        domain: "{{.Domain}}"
