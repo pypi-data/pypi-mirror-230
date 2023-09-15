@@ -1,0 +1,157 @@
+{% extends "nobinobi_daily_follow_up/base.html" %}
+{% load i18n static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block extrastyle %}
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/DataTables/datatables.min.css' %}"/>
+    <style>
+        .modal-backdrop {
+            z-index: auto;
+        }
+
+    </style>
+{% endblock %}
+
+{% block content_title_block %}
+    <h1>{{ title }}</h1>
+{% endblock %}
+
+{% block breadcrumb %}
+	{{ block.super }}
+    <li class="breadcrumb-item active">{{ title }}</li>
+{% endblock %}
+
+
+{% block content_card %}
+    <div class="card-body">
+		{% if perms.nobinobi_daily_follow_up.add_earlytroubleshooting %}
+            <div class="btn-toolbar" role="toolbar" aria-label="">
+                <div class="btn-group" role="group" aria-label="">
+                    <button type="button" class="btn btn-info earlytroubleshooting-create">{% trans "Add" %}</button>
+                </div>
+            </div>
+		{% endif %}
+        <table id="earlytroubleshootings_datatables" class="display table" style="width:100%">
+            <thead>
+            <tr>
+                <th>{% trans "Child" %}</th>
+                <th>{% trans "Date" %}</th>
+                <th>{% trans "Periods" %}</th>
+                <th>{% trans "Actions" %}</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+
+	<!-- modal instanstiation -->
+	{% include "includes/modal.html" %}
+{% endblock %}
+
+{% block importextrajs %}
+    <script src="{% static 'js/moment-with-locales.min.js' %}"></script>
+    <script src="{% static 'vendor/DataTables/datatables.min.js' %}"></script>
+    <script src="{% static 'js/jquery.bootstrap.modal.forms.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/vendor/bootstrap-datetimepicker.min.js' %}"></script>
+	{#  <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>#}
+
+    <script>
+        function docReady(fn) {
+            // see if DOM is already available
+            if (document.readyState === "complete" || document.readyState === "interactive") {
+                // call on next available tick
+                setTimeout(fn, 1);
+            } else {
+                document.addEventListener("DOMContentLoaded", fn);
+            }
+        }
+
+        let table = null;
+        $(document).ready(function () {
+            {#jQuery.noConflict();#}
+            table = $('#earlytroubleshootings_datatables').DataTable({
+                "language": {
+                    "url": "{% static 'vendor/DataTables/DataTables-1.10.18/i18n/French.json' %}"
+                },
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    {#url: "{% url 'nobinobi_daily_follow_up:api-presence-list' %}?format=datatables",#}
+                    url: "{% url 'nobinobi_daily_follow_up:api-earlytroubleshooting-list' %}?format=datatables",
+                },
+                "columns": [
+                    {data: "child"},
+                    {data: "date"},
+                    {data: "periods"},
+                    {
+                        data: null,
+                        render: function (row, index, datatable) {
+                            return '<div class="btn-group">' +
+                                '{% if perms.nobinobi_daily_follow_up.view_earlytroubleshooting %}' +
+                                    '<button data-id="{% url "nobinobi_daily_follow_up:EarlyTroubleshooting_detail" pk=123 %}" class="earlytroubleshooting-detail btn btn-info"><i class="fa fa-eye"></i></button>'.replace(123, row.id)
+                                    +
+                                    '{% endif %}' +
+                                '{% if perms.nobinobi_daily_follow_up.change_earlytroubleshooting %}' +
+                                    '<button data-id="{% url "nobinobi_daily_follow_up:EarlyTroubleshooting_update" pk=123 %}" class="earlytroubleshooting-update btn btn-primary"><i class="fa fa-edit"></i></button>'.replace(123, row.id)
+                                    +
+                                    '{% endif %}' +
+                                '{% if perms.nobinobi_daily_follow_up.delete_earlytroubleshooting %}' +
+                                    '<button data-id="{% url "nobinobi_daily_follow_up:EarlyTroubleshooting_delete" pk=123 %}" class="earlytroubleshooting-delete btn btn-danger"><i class="fa fa-times"></i></button>'.replace(123, row.id)
+                                    +
+                                    '{% endif %}' +
+                                '</div>';
+                        },
+                    },
+                ],
+                "columnDefs": [{
+                    "targets": -1,
+                    "searchable": false,
+                    "orderable": false,
+                }],
+                dom: 'Bfrtip',
+                buttons: [
+                    'copyHtml5',
+                    'print',
+                    'csvHtml5',
+                    'pdfHtml5',
+                ],
+                responsive: true,
+                {#"searchCols": [#}
+                {#  {"search": 'in_progress'},#}
+                {#],#}
+            });
+            table.on('draw', function () {
+                create_event_button();
+            });
+            table.on('responsive-display', function (e, datatable, row, showHide, update) {
+                create_event_button();
+            });
+        });
+
+        function create_event_button() {
+            // Update earlytroubleshooting buttons
+            $(".earlytroubleshooting-update").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+
+            // Read earlytroubleshooting buttons
+            $(".earlytroubleshooting-detail").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+
+            // Delete earlytroubleshooting buttons
+            $(".earlytroubleshooting-delete").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+        }
+
+        docReady(function () {
+            {% if perms.nobinobi_daily_follow_up.add_earlytroubleshooting %}
+                $(".earlytroubleshooting-create").modalForm({formURL: "{% url 'nobinobi_daily_follow_up:EarlyTroubleshooting_create' %}"});
+            {% else %}
+                console.log("{% trans "Your permission is insufficient." %}");
+            {% endif %}
+        });
+    </script>
+
+{% endblock %}

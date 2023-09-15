@@ -1,0 +1,858 @@
+<!--
+  ~   Copyright (C) Prolibre Sarl 2019 <Florian Alu> <alu@prolibre.com>
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License and any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+{% extends "nobinobi_daily_follow_up/base.html" %}
+{% load i18n static %}
+{% load notifications_tags %}
+{% load notifications_custom_tags %}
+
+{% block title %}{{ title }} - {{ classroom }} - {{ now }}{% endblock %}
+
+{% block extrastyle %}
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/DataTables/datatables.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/nobinobi_daily_follow_up.css' %}"/>
+    <style>
+        .img-container {
+        {#width: 150px;#}{#height: 225px;#} position: relative;
+            display: inline-block;
+        {#margin: 10px 5px 5px;#}
+        }
+
+        .img-text {
+            text-align: center;
+            bottom: 2%;
+            left: 0;
+            right: 0;
+            height: 30px;
+            position: absolute;
+            background-color: white;
+            opacity: 0.85;
+            display: block;
+        }
+
+        .border-gray {
+            border-color: #adb5bd !important;
+        }
+
+        .btn-group-xs > .btn, .btn-xs {
+            padding: .25rem .4rem;
+            font-size: .875rem;
+            line-height: .5;
+            border-radius: .2rem;
+        }
+
+        .select2 {
+            width: 100% !important;
+        }
+    </style>
+
+
+{% endblock %}
+
+
+{% block content_title_block %}
+    <h1>{{ title }} - {{ classroom.name }} -
+        <small>{{ now }}</small>
+    </h1>
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ block.super }}
+    <li class="breadcrumb-item active">{{ title }}</li>
+{% endblock %}
+
+
+{% block content_card %}
+    {% include "includes/messages.html" %}
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row justify-content-center">
+
+                    {% for child in child_in_classroom %}
+                        <div class="col-md-2 mt-2">
+                            <div
+                                class="img-container p-1
+                                    {% if child.id in children.troubleshooting %}
+                                    border-info
+                                    {% elif child.id in children.present %}
+                                    border-success
+                                    {% elif child.id in children.missing %}
+                                    border-danger
+                                    {% elif child.id in children.expected %}
+                                    border-gray
+                                    {% elif child.id in children.leave %}
+                                    border-dark
+                                    {% else %}
+                                    border
+                                    {% endif %}
+                                " style="border: 7px solid; border-radius:3px;">
+                                <div class="img-text">
+                                    <h5>{{ child.usual_name }}{% if display_age_group_in_presence %}
+                                        <small>({{ child.age_group.name.0 }})</small>{% endif %} <a
+                                        href="{% url 'nobinobi_child:Child_detail' pk=child.pk %}"><i
+                                        class="far fa-eye"></i></a></h5>
+                                </div>
+                                {% spaceless %}
+                                    <a class="presence-create"
+                                        {% if child in children.present %}
+                                       onclick="filtering_datatable(this);"
+                                        {% endif %}
+                                       data-child-pk="{{ child.pk }}"
+                                       data-usual-name="{{ child.usual_name }}"
+                                       data-id="{% url 'nobinobi_daily_follow_up:Presence_create' pk=classroom.pk child_pk=child.pk %}"
+                                        {% if child.id in children.present %}
+                                       data-status="1"
+                                        {% elif child.id in children.missing %}
+                                       data-status="2"
+                                        {% elif child.id in children.expected %}
+                                       data-status="3"
+                                        {% elif child.id in children.leave %}
+                                       data-status="4"
+                                        {% else %}
+                                       data-status="0"
+                                        {% endif %}>
+                                        {% if child.picture and child.picture.url %}
+                                            <img src="{{ child.picture.url }}" class="img-fluid img-rounded"
+                                                 alt="{{ child.full_name }}">
+                                        {% else %}
+                                            <img
+                                                {% if child.gender == "boy" %}
+                                                    src="{% static "img/avatar/default-avatar-boy.png" %}"
+                                                {% elif child.gender == "girl" %}
+                                                    src="{% static "img/avatar/default-avatar-girl.png" %}"
+                                                {% else %}
+                                                    src="{% static "img/avatar/default-avatar-other.png" %}"
+                                                {% endif %}
+                                                    class="img-fluid img-rounded" alt="{{ child.full_name }}">
+                                        {% endif %}
+                                    </a>
+                                {% endspaceless %}
+
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-3  pl-0 py-3  mx-auto text-center">
+                <div class=" bg-success py-3 ">
+                    {% trans "Present" %} : {{ status_children.present }}
+                </div>
+            </div>
+            <div class="col-md-3 px-2 py-3 mx-auto text-center">
+                <div class=" bg-gray py-3 ">
+                    {% trans "Expected" %} : {{ status_children.expected }}
+                </div>
+            </div>
+            <div class="col-md-3 px-2 py-3 mx-auto text-center">
+                <div class="bg-info py-3  ">
+                    {% trans "Troubleshooting" %} : {{ status_children.troubleshooting }}
+                </div>
+            </div>
+            <div class="col-md-3 pr-0 py-3 mx-auto text-center">
+                <div class=" bg-danger py-3  ">
+                    {% trans "Missing" %} : {{ status_children.missing }}
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="btn-toolbar" role="toolbar" aria-label="">
+            <div class="btn-group" role="group" aria-label="">
+                {% if perms.nobinobi_daily_follow_up.add_presence %}
+                    <button type="button"
+                            class="btn btn-info presence-create-global">{% trans "Add presence" %}</button>
+                {% endif %}
+                {% if perms.nobinobi_child.add_absence %}
+                    <button type="button" class="btn btn-info absence-create">{% trans "Add absence" %}</button>
+                {% endif %}
+
+            </div>
+        </div>
+        <table id="child_datatables" class="display table mt-1 table-bordered table-condensed" style="width:100%">
+            <thead>
+            <tr>
+                {#                <th>{% trans "Classroom" %}</th>#}
+                <th>{% trans "Birth date" %}</th>
+                <th>{% trans "Child" %}</th>
+                <th>{% trans "Reception" %}</th>
+                <th>{% trans "Meals" %}</th>
+                <th>{% trans "Naps" %}</th>
+                <th>{% trans "Cares" %}</th>
+                <th>{% trans "Activities" %}</th>
+                <th>{% trans "Medications" %}</th>
+                <th>{% trans "Notes" %}</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <!-- modal instanstiation -->
+
+    {% include "includes/modal.html" %}
+{% endblock %}
+
+{% block importextrajs %}
+    <script src="{% static 'vendor/DataTables/datatables.min.js' %}"></script>
+    <script>
+        function docReady(fn) {
+            // see if DOM is already available
+            if (document.readyState === "complete" || document.readyState === "interactive") {
+                // call on next available tick
+                setTimeout(fn, 1);
+            } else {
+                document.addEventListener("DOMContentLoaded", fn);
+
+            }
+        }
+
+        let table = null;
+        $(document).ready(function () {
+            table = $('#child_datatables').DataTable({
+                "language": {
+                    "url": "{% static 'vendor/DataTables/DataTables-1.10.18/i18n/French.json' %}"
+                },
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    {#url: "{% url 'nobinobi_daily_follow_up:api-presence-list' %}?format=datatables",#}
+                    {% if classroom.mode == "creche" %}
+                        {#                    {% if classroom.mode == classroom.OPERATION_MODE.creche %}#}
+                        url: "{% url 'nobinobi_daily_follow_up:api-presence-presence-by-classroom' date=now classroom_id=classroom.id %}?format=datatables",
+                    {% else %}
+                        url: "{% url 'nobinobi_daily_follow_up:api-presence-by-classroom-kindergarten' date=now classroom_id=classroom.id %}?format=datatables",
+                    {% endif %}
+                },
+                "columns": [
+                    {#{data: "child.classroom.id", searchablevisible: false},#}
+                    {
+                        data: "child.birth_date",
+                        visible: false
+                    },
+                    {
+                        data: "child",
+                        name: "child__first_name, child__last_name, child__usual_name",
+                        render: function (row, index, datatable) {
+                            let departure_time = "-";
+                            let intermediate_departure_time = "-";
+                            let intermediate_arrival_time = "-";
+                            let text = "<p>";
+                            text += row.usual_name + "{% if display_age_group_in_presence %}<small>("
+                                + row.age_group.name  +
+                                ")</small>{% endif %} ";
+                            if (datatable.dailyfollowup.important || datatable.child.childspecificneed) {
+                                text += "<i class='fas fa-exclamation-triangle'></i> ";
+                            }
+                            if (row.birth_date) {
+                                let birth_date = moment(row.birth_date, 'YYYY-MM-DD');
+                                let today_date = moment();
+                                if (birth_date.date() === today_date.date() && (birth_date.month() === today_date.month())) {
+                                    text += "<i class=\"fas fa-birthday-cake\"></i> ";
+                                }
+                            }
+                            if (datatable.intermediate_departure_time == null || datatable.intermediate_arrival_time == null) {
+                                {% if perms.nobinobi_daily_follow_up.change_presence %}
+                                    text += '<button data-id="{% url "nobinobi_daily_follow_up:Presence_intermediate_departure" pk=123 presence_pk="000" %}" style="padding: 1px 5px;font-size: 12px;line-height: 1.5;" class="presence-intermediate-departure btn btn-primary btn-xs">{% trans 'Intermediate departure' %}</button>'.replace(123, row.classroom.id).replace("000", datatable.pk);
+                                {% endif %}
+                            }
+                            if (datatable.intermediate_departure_time != null) {
+                                intermediate_departure_time = datatable.intermediate_departure_time;
+                            }
+                            if (datatable.intermediate_arrival_time != null) {
+                                intermediate_arrival_time = datatable.intermediate_arrival_time;
+                            }
+                            if (datatable.departure_time == null) {
+                                {% if perms.nobinobi_daily_follow_up.change_presence %}
+                                    text += '<button data-id="{% url "nobinobi_daily_follow_up:Presence_departure" pk=123 presence_pk="000" %}" style="padding: 1px 5px;font-size: 12px;line-height: 1.5;" class="presence-departure btn btn-primary btn-xs">{% trans 'Departure' %}</button>'.replace(123, row.classroom.id).replace("000", datatable.pk);
+                                {% endif %}
+                            } else {
+                                departure_time = datatable.departure_time;
+                            }
+                            text += "</p>";
+                            text += "<p>";
+                            text += "{% trans "Arrival time" %}: " + datatable.arrival_time + "</br>" + "{% trans "Departure time" %}: " + departure_time;
+                            text += "</p>";
+                            if (datatable.intermediate_departure_time != null || datatable.intermediate_arrival_time != null) {
+                                text += "<p>";
+                                text += "{% trans "Intermediate departure time" %}: " + intermediate_departure_time + "</br>" + "{% trans "Intermediate arrival time" %}: " + intermediate_arrival_time;
+                                text += "</p>";
+                            }
+                            return text;
+                        }
+                    },
+                    {# RECEPTION #}
+                    {
+                        data: "dailyfollowup.reception",
+                        orderable: false,
+                        searchable: false,
+                        render: function (row, index, datatable) {
+                            let text = "<p>";
+                            if (row.wake_up_time) {
+                                text += "{% trans 'Wake up time' %}: " + row.wake_up_time + "<br/>";
+                            }
+                            if (row.sleep) {
+                                if (row.sleep === "very_good") {
+                                    text += "{% trans 'Sleep' %}: <img width=20 height=20 src='{% static 'img/smiley/miao.png' %}'><br/>";
+                                } else if (row.sleep === "good") {
+                                    text += "{% trans 'Sleep' %}: <img width=20 height=20 src='{% static 'img/smiley/smile.png' %}'><br/>";
+                                } else {
+                                    text += "{% trans 'Sleep' %}: <img width=20 height=20 src='{% static 'img/smiley/spook.png' %}'><br/>";
+                                }
+                            }
+                            if (row.condition) {
+                                if (row.condition === "very_good") {
+                                    text += "{% trans 'Condition' %}: <img width=20 height=20 src='{% static 'img/smiley/miao.png' %}'><br/>";
+                                } else if (row.condition === "good") {
+                                    text += "{% trans 'Condition' %}: <img width=20 height=20 src='{% static 'img/smiley/smile.png' %}'><br/>";
+                                } else {
+                                    text += "{% trans 'Condition' %}: <img width=20 height=20 src='{% static 'img/smiley/spook.png' %}'><br/>";
+                                }
+                            }
+                            if (row.fever !== "no") {
+                                text += "{% trans 'Fever' %}: " + row.fever + "<br/>";
+                            }
+                            if (row.sick !== "no") {
+                                text += "{% trans 'Sick' %}: " + row.sick + "<br/>";
+                            }
+                            if (row.breakfast) {
+                                if (row.breakfast === "very_good") {
+                                    text += "{% trans 'Breakfast' %}: <img width=20 height=20 src='{% static 'img/smiley/miao.png' %}'><br/>";
+                                } else if (row.breakfast === "good") {
+                                    text += "{% trans 'Breakfast' %}: <img width=20 height=20 src='{% static 'img/smiley/smile.png' %}'><br/>";
+                                } else {
+                                    text += "{% trans 'Breakfast' %}: <img width=20 height=20 src='{% static 'img/smiley/nothing.png' %}'><br/>";
+                                }
+                            }
+                            if (row.breakfast_time) {
+                                text += "{% trans 'Breakfast time' %}: " + row.breakfast_time + "<br/>";
+                            }
+                            if (row.comment) {
+                                text += "{% trans 'Comment' %}: " + row.comment + "<br/>";
+                            }
+                            text += '</p>';
+
+                            {# CRUD #}
+                            text += '<div class="btn-group-xs btn-xs">';
+                            {% if perms.nobinobi_daily_follow_up.change_reception %}
+                                text += '<button data-id="{% url "nobinobi_daily_follow_up:Reception_update" pk=123 %}" class="reception-update btn btn-primary"><i class="fa fa-edit"></i></button>'.replace(123, row.pk);
+                            {% endif %}
+                            text += '</div>';
+                            return text;
+                        }
+                    },
+                    {# MEALS #}
+                    {
+                        data: "dailyfollowup.mealdailyfollowup",
+                        orderable: false,
+                        searchable: false,
+                        render: function (row, index, datatable) {
+                            let text = "<p>";
+                            if (row.snack_time) {
+                                text += "{% trans 'Snack time' %}: " + row.snack_time + "<br/>";
+                            }
+                            if (row.snack_quality) {
+                                if (row.snack_quality === "very_good") {
+                                    text += "{% trans 'Snack quality' %}: <img width=20 height=20 src='{% static 'img/smiley/miao.png' %}'><br/>";
+                                } else if (row.snack_quality === "good") {
+                                    text += "{% trans 'Snack quality' %}: <img width=20 height=20 src='{% static 'img/smiley/smile.png' %}'><br/>";
+                                } else {
+                                    text += "{% trans 'Snack quality' %}: <img width=20 height=20 src='{% static 'img/smiley/nothing.png' %}'><br/>";
+                                }
+                            }
+                            if (row.snack_meals && row.snack_meals.length > 0) {
+                                text += "{% trans 'Snack meals' %}: <br/>";
+                                for (let i = 0; i < row.snack_meals.length; i++) {
+                                    text += "<img width=20 height=20 src='" + row.snack_meals[i].image + "'>" + row.snack_meals[i].name + "<br/>";
+                                }
+                            }
+                            if (row.lunch_time) {
+                                text += "{% trans 'Snack time' %}: " + row.lunch_time + "<br/>";
+                            }
+                            if (row.lunch_quality) {
+                                if (row.lunch_quality === "very_good") {
+                                    text += "{% trans 'Lunch quality' %}: <img width=20 height=20 src='{% static 'img/smiley/miao.png' %}'><br/>";
+                                } else if (row.lunch_quality === "good") {
+                                    text += "{% trans 'Lunch quality' %}: <img width=20 height=20 src='{% static 'img/smiley/smile.png' %}'><br/>";
+                                } else {
+                                    text += "{% trans 'Lunch quality' %}: <img width=20 height=20 src='{% static 'img/smiley/nothing.png' %}'><br/>";
+                                }
+                            }
+                            if (row.lunch_meals && row.lunch_meals.length > 0) {
+                                text += "{% trans 'Lunch meals' %}: <br/>";
+                                for (let i = 0; i < row.lunch_meals.length; i++) {
+                                    text += "<img width=20 height=20 src='" + row.lunch_meals[i].image + "'>" + row.lunch_meals[i].name + "<br/>";
+                                }
+                            }
+                            if (row.afternoon_snack_time) {
+                                text += "{% trans 'Afternoon snack time' %}: " + row.afternoon_snack_time + "<br/>";
+                            }
+                            if (row.afternoon_snack_quality) {
+                                if (row.afternoon_snack_quality === "very_good") {
+                                    text += "{% trans 'Afternoon snack quality' %}: <img width=20 height=20 src='{% static 'img/smiley/miao.png' %}'><br/>";
+                                } else if (row.afternoon_snack_quality === "good") {
+                                    text += "{% trans 'Afternoon snack quality' %}: <img width=20 height=20 src='{% static 'img/smiley/smile.png' %}'><br/>";
+                                } else {
+                                    text += "{% trans 'Afternoon snack quality' %}: <img width=20 height=20 src='{% static 'img/smiley/nothing.png' %}'><br/>";
+                                }
+                            }
+                            if (row.afternoon_snack_meals && row.afternoon_snack_meals.length > 0) {
+                                text += "{% trans 'Afternoon snack meals' %}: <br/>";
+                                for (let i = 0; i < row.afternoon_snack_meals.length; i++) {
+                                    text += "<img width=20 height=20 src='" + row.afternoon_snack_meals[i].image + "'>" + row.afternoon_snack_meals[i].name + "<br/>";
+                                }
+                            }
+                            if (row.comment) {
+                                text += "{% trans 'Comment' %} : " + row.comment + "<br/>";
+                            }
+                            text += "</p>";
+                            {# CRUD #}
+                            text += '<div class="btn-group-xs btn-xs">';
+                            {% if perms.nobinobi_daily_follow_up.change_mealdailyfollowup %}
+                                text += '<button data-id="{% url "nobinobi_daily_follow_up:MealDailyFollowUp_update" pk=123 %}" class="mealdailyfollowup-update btn btn-primary"><i class="fa fa-edit"></i></button>'.replace(123, row.pk);
+                            {% endif %}
+                            text += '</div>';
+                            return text;
+                        }
+                    },
+                    {# NAPS #}
+                    {
+                        data: "dailyfollowup",
+                        orderable: false,
+                        searchable: false,
+                        render: function (row, index, datatable) {
+                            let text = "<p>";
+                            if (row.nap_set && row.nap_set.length > 0) {
+                                for (let i = 0; i < row.nap_set.length; i++) {
+                                    let start_times = moment(row.nap_set[i].start_time, "HH:mm:ss");
+                                    let now = moment();
+                                    let end_time = "";
+                                    let end_times = "";
+                                    let bed = "";
+                                    let s = "{% trans "No end time" %}";
+                                    if (row.nap_set[i].end_time) {
+                                        end_time = row.nap_set[i].end_time;
+                                        end_times = moment(row.nap_set[i].end_time, "HH:mm:ss");
+                                        let ms = end_times.diff(start_times);
+                                        let d = moment.duration(ms);
+                                        s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm");
+                                    }
+                                    if (start_times <= now) {
+                                        console.log("st <= now");
+                                        if (end_times) {
+                                            console.log("has et");
+
+                                            if (end_times >= now) {
+                                                console.log("et >= now");
+
+                                                bed = "<i class='fas fa-bed'></i>";
+                                            }
+                                        } else {
+                                            console.log("else");
+
+                                            bed = "<i class='fas fa-bed'></i>";
+                                        }
+                                    }
+                                    text += "{% trans 'Nap' %} " + (i + 1) + ": " + bed + " " + row.nap_set[i].start_time + " - " + end_time + " (" + s + ")";
+                                    text += '<div class="btn-group-xs btn-xs">';
+                                    {% if perms.nobinobi_daily_follow_up.change_nap %}
+                                        text += '<button data-id="{% url "nobinobi_daily_follow_up:Nap_update" pk=123 %}" class="nap-update btn btn-secondary btn-group-xs btn-xs "><i class="fa fa-edit"></i></button>'.replace(123, row.nap_set[i].pk);
+                                    {% endif %}
+                                    {% if perms.nobinobi_daily_follow_up.delete_nap %}
+                                        text += '<button data-id="{% url "nobinobi_daily_follow_up:Nap_delete" pk=123 %}" class="nap-delete btn btn-danger"><i class="fa fa-times"></i></button>'.replace(123, row.nap_set[i].pk);
+                                    {% endif %}
+                                    text += '</div>';
+                                }
+                            }
+                            text += "</p>";
+                            {# CRUD #}
+                            text += '<div class="btn-group-xs btn-xs">';
+                            {% if perms.nobinobi_daily_follow_up.add_nap %}
+                                text += '<button data-id="{% url "nobinobi_daily_follow_up:Nap_create" daily_follow_up=123 %}" class="nap-create btn btn-primary"><i class="fa fa-plus"></i></button>'.replace(123, row.pk);
+                            {% endif %}
+                            text += '</div>';
+                            return text;
+                        }
+                    },
+                    {# CARES #}
+                    {
+                        data: "dailyfollowup",
+                        orderable: false,
+                        searchable: false,
+                        render: function (row, index, datatable) {
+                            let text = "<p>";
+                            {#if (row.snack_time) {#}
+                            {#  text += "{% trans 'Snack time' %}: " + row.snack_time + "<br/>";#}
+                            if (row.diaperchange_set && row.diaperchange_set.length > 0) {
+                                for (let i = 0; i < row.diaperchange_set.length; i++) {
+                                    text += "{% trans 'Diaper change' %} " + (i + 1) + ": " + row.diaperchange_set[i].hour;
+                                    if (row.diaperchange_set[i].feces === "feces") {
+                                        text += " (<img width=20 height=20 src='{% static 'img/smiley/caca.png' %}'>)<br/>";
+                                    } else {
+                                        text += " (<img width=20 height=20 src='{% static 'img/smiley/nothing.png' %}'>)<br/>";
+                                    }
+                                    text += '<div class="btn-group-xs btn-xs">';
+                                    {% if perms.nobinobi_daily_follow_up.change_diaperchange %}
+                                        text += '<button data-id="{% url "nobinobi_daily_follow_up:DiaperChange_update" pk=123 %}" class="diaperchange-update btn btn-secondary btn-group-xs btn-xs "><i class="fa fa-edit"></i></button>'.replace(123, row.diaperchange_set[i].pk);
+                                    {% endif %}
+                                    {% if perms.nobinobi_daily_follow_up.delete_diaperchange %}
+                                        text += '<button data-id="{% url "nobinobi_daily_follow_up:DiaperChange_delete" pk=123 %}" class="diaperchange-delete btn btn-danger"><i class="fa fa-times"></i></button>'.replace(123, row.diaperchange_set[i].pk);
+                                    {% endif %}
+                                    text += '</div>';
+                                }
+                            }
+                            if (row.lotiondailyfollowup_set && row.lotiondailyfollowup_set.length > 0) {
+                                for (let i = 0; i < row.lotiondailyfollowup_set.length; i++) {
+                                    text += "{% trans 'Lotion' %} " + (i + 1) + ": " + row.lotiondailyfollowup_set[i].lotion.name + "<br/>";
+                                    if (row.lotiondailyfollowup_set[i].comment) {
+                                        text += "{% trans 'Comment' %} : " + row.lotiondailyfollowup_set[i].comment + "<br/>";
+                                    }
+                                    text += '<div class="btn-group-xs btn-xs">';
+                                    {% if perms.nobinobi_daily_follow_up.change_lotiondailyfollowup %}
+                                        text += '<button data-id="{% url "nobinobi_daily_follow_up:LotionDailyFollowUp_update" pk=123 %}" class="lotiondailyfollowup-update btn btn-secondary btn-group-xs btn-xs "><i class="fa fa-edit"></i></button>'.replace(123, row.lotiondailyfollowup_set[i].pk);
+                                    {% endif %}
+                                    {% if perms.nobinobi_daily_follow_up.delete_lotiondailyfollowup %}
+                                        text += '<button data-id="{% url "nobinobi_daily_follow_up:LotionDailyFollowUp_delete" pk=123 %}" class="lotiondailyfollowup-delete btn btn-danger"><i class="fa fa-times"></i></button>'.replace(123, row.lotiondailyfollowup_set[i].pk);
+                                    {% endif %}
+                                    text += '</div>';
+                                }
+                            }
+                            text += "</p>";
+                            {# CRUD #}
+                            text += '<div class="btn-group-xs btn-xs">';
+                            {% if perms.nobinobi_daily_follow_up.add_diaperchange %}
+                                text += '<button data-id="{% url "nobinobi_daily_follow_up:DiaperChange_create" daily_follow_up=123 %}" class="diaperchange-create btn btn-primary"><i class="fa fa-plus"></i> {% trans "Diaper change" %}</button>'.replace(123, row.pk);
+                            {% endif %}
+                            {% if perms.nobinobi_daily_follow_up.add_lotiondailyfollowup %}
+                                text += '<button data-id="{% url "nobinobi_daily_follow_up:LotionDailyFollowUp_create" daily_follow_up=123 %}" class="lotiondailyfollowup-create btn btn-primary"><i class="fa fa-plus"></i> {% trans "Lotion" %}</button>'.replace(123, row.pk);
+                            {% endif %}
+                            {#              {% if perms.nobinobi_child.delete_absence %}#}
+                            {#                text += '<button data-id="{% url "nobinobi_child:Absence_delete" pk=123 %}" class="absence-delete btn btn-danger"><i class="fa fa-times"></i></button>'.replace(123, row.id);#}
+                            {#              {% endif %}#}
+                            text += '</div>';
+                            return text;
+                        }
+                    },
+
+                    {# ACTIVITIES #}
+                    {
+                        data: "dailyfollowup",
+                        orderable: false,
+                        searchable: false,
+                        render:
+
+                            function (row, index, datatable) {
+                                let text = "<p>";
+                                {#if (row.snack_time) {#}
+                                {#  text += "{% trans 'Snack time' %}: " + row.snack_time + "<br/>";#}
+                                if (row.activity_set && row.activity_set.length > 0) {
+                                    for (let i = 0; i < row.activity_set.length; i++) {
+                                        text += "{% trans 'Activity' %} " + (i + 1) + ": " + row.activity_set[i].type_activity.name + "(" + row.activity_set[i].type_activity.group.name + ")<br/>";
+                                        if (row.activity_set[i].comment) {
+                                            text += "{% trans 'Comment' %} " + (i + 1) + ": " + row.activity_set[i].comment + "<br/>";
+                                        }
+                                        text += '<div class="btn-group-xs btn-xs">';
+                                        {% if perms.nobinobi_daily_follow_up.change_activity %}
+                                            text += '<button data-id="{% url "nobinobi_daily_follow_up:Activity_update" pk=123 %}" class="activity-update btn btn-secondary btn-group-xs btn-xs "><i class="fa fa-edit"></i></button>'.replace(123, row.activity_set[i].pk);
+                                        {% endif %}
+                                        {% if perms.nobinobi_daily_follow_up.delete_activity %}
+                                            text += '<button data-id="{% url "nobinobi_daily_follow_up:Activity_delete" pk=123 %}" class="activity-delete btn btn-danger"><i class="fa fa-times"></i></button>'.replace(123, row.activity_set[i].pk);
+                                        {% endif %}
+                                        text += '</div>';
+                                    }
+                                }
+                                text += "</p>";
+                                {# CRUD #}
+                                text += '<div class="btn-group-xs btn-xs">';
+                                {% if perms.nobinobi_daily_follow_up.add_activity %}
+                                    text += '<button data-id="{% url "nobinobi_daily_follow_up:Activity_create" daily_follow_up=123 %}" class="activity-create btn btn-primary"><i class="fa fa-plus"></i></button>'.replace(123, row.pk);
+                                {% endif %}                {#              {% if perms.nobinobi_child.delete_absence %}#}
+                                {#                text += '<button data-id="{% url "nobinobi_child:Absence_delete" pk=123 %}" class="absence-delete btn btn-danger"><i class="fa fa-times"></i></button>'.replace(123, row.id);#}
+                                {#              {% endif %}#}
+                                text += '</div>';
+                                return text;
+                            }
+                    }
+                    ,
+                    {# MEDICATIONS #}
+                    {
+                        data: "dailyfollowup",
+                        orderable: false,
+                        searchable: false,
+                        render: function (row, index, datatable) {
+                            let text = "<p>";
+                            {#if (row.snack_time) {#}
+                            {#  text += "{% trans 'Snack time' %}: " + row.snack_time + "<br/>";#}
+                            if (row.dailyfollowuptomedication_set && row.dailyfollowuptomedication_set.length > 0) {
+                                {#console.log(row.dailyfollowuptomedication_set);#}
+                                for (let i = 0; i < row.dailyfollowuptomedication_set.length; i++) {
+                                    text += "{% trans 'Medication' %} " + (i + 1) + ": " + row.dailyfollowuptomedication_set[i].medication.type_medication.name + " (<a href='" + row.dailyfollowuptomedication_set[i].medication.attachment + "' target='_blank'><i class='fas fa-file-pdf'></i></a>)";
+                                    text += "<p>";
+                                    if (row.dailyfollowuptomedication_set[i].medication.givemedication_set && row.dailyfollowuptomedication_set[i].medication.givemedication_set.length > 0) {
+                                        for (let x = 0; x < row.dailyfollowuptomedication_set[i].medication.givemedication_set.length; x++) {
+                                            if (row.dailyfollowuptomedication_set[i].medication.givemedication_set[x].date === moment().format("YYYY-MM-DD")) {
+                                                text += '<div class="btn-group-xs btn-xs">';
+                                                text += '<p>' + row.dailyfollowuptomedication_set[i].medication.givemedication_set[x].give_hour + ' - ' + row.dailyfollowuptomedication_set[i].medication.givemedication_set[x].given_hour + '</p>';
+                                                text += '<button data-id="{% url "nobinobi_daily_follow_up:GiveMedication_update" pk=123 %}" class="give-medication-update btn btn-secondary btn-group-xs btn-xs "><i class="fa fa-edit"></i></button>'.replace(123, row.dailyfollowuptomedication_set[i].medication.givemedication_set[x].pk);
+                                                text += '<button data-id="{% url "nobinobi_daily_follow_up:GiveMedication_delete" pk=123 %}" class="give-medication-delete btn btn-danger"><i class="fa fa-times"></i></button>'.replace(123, row.dailyfollowuptomedication_set[i].medication.givemedication_set[x].pk);
+                                                text += '</div>';
+                                            }
+                                        }
+                                    }
+                                    text += '<button data-id="{% url "nobinobi_daily_follow_up:GiveMedication_create" medication=123 %}" class="give-medication-create btn btn-secondary btn-group-xs btn-xs "><i class="fa fa-clock"></i> {% trans "Add hour" %}</button>'.replace(123, row.dailyfollowuptomedication_set[i].medication.pk);
+                                    text += "</p>";
+
+                                    if (row.dailyfollowuptomedication_set[i].medication.comment) {
+                                        text += "{% trans 'Comment' %} " + (i + 1) + ": " + row.dailyfollowuptomedication_set[i].medication.comment + "<br/>";
+                                    }
+                                    text += '<div class="btn-group-xs btn-xs">';
+                                    {% if perms.nobinobi_daily_follow_up.change_medication %}
+                                        text += '<button data-id="{% url "nobinobi_daily_follow_up:Medication_update" pk=123 daily_follow_up=999 classroom_id=classroom.id child="00000000-0000-0000-0000-000000000001" %}" class="medication-update btn btn-secondary btn-group-xs btn-xs "><i class="fa fa-edit"></i></button>'.replace(123, row.dailyfollowuptomedication_set[i].medication.pk).replace(999, row.dailyfollowuptomedication_set[i].daily_follow_up).replace("00000000-0000-0000-0000-000000000001", datatable.child.id);
+                                    {% endif %}
+                                    {% if perms.nobinobi_daily_follow_up.delete_medication %}
+                                        text += '<button data-id="{% url "nobinobi_daily_follow_up:Medication_delete" pk=123 daily_follow_up=999 classroom_id=classroom.id child="00000000-0000-0000-0000-000000000001" %}" class="medication-delete btn btn-danger"><i class="fa fa-times"></i></button>'.replace(123, row.dailyfollowuptomedication_set[i].medication.pk).replace(999, row.dailyfollowuptomedication_set[i].daily_follow_up).replace("00000000-0000-0000-0000-000000000001", datatable.child.id);
+                                    {% endif %}
+                                    text += '</div>';
+                                    text += '<hr>';
+                                }
+                            }
+                            text += "</p>";
+                            {# CRUD #}
+                            text += '<div class="btn-group-xs btn-xs">';
+                            {% if perms.nobinobi_daily_follow_up.add_medication %}
+                                text += '<button data-id="{% url "nobinobi_daily_follow_up:Medication_create" daily_follow_up=123 classroom_id=classroom.id child="00000000-0000-0000-0000-000000000001" %}" class="medication-create btn btn-primary"><i class="fa fa-plus"></i></button>'.replace(123, row.pk).replace("00000000-0000-0000-0000-000000000001", datatable.child.id);
+                            {% endif %}
+                            text += '</div>';
+                            return text;
+                        }
+                    },
+                    {# DAILY #}
+                    {
+                        data: "dailyfollowup",
+                        orderable: false,
+                        searchable: false,
+                        render: function (row, index, datatable) {
+                            let text = "<p>";
+                            if (row.comment) {
+                                text += "{% trans 'Comment' %}: " + row.comment + "<br/>";
+                            }
+                            text += "</p>";
+                            {# CRUD #}
+                            text += '<div class="btn-group-xs btn-xs">';
+                            {% if perms.nobinobi_daily_follow_up.change_dailyfollowup %}
+                                text += '<button data-id="{% url "nobinobi_daily_follow_up:DailyFollowUp_update" pk=123 %}" class="dailyfollowup-update btn btn-primary"><i class="fa fa-edit"></i></button>'.replace(123, row.pk);
+                            {% endif %}
+                            text += '</div>';
+                            return text;
+                        }
+                    },
+
+                ],
+                dom: 'Bfrtip',
+                buttons:
+                    [
+                        {#'copyHtml5',#}
+                        'print',
+                        'csvHtml5',
+                        'pdfHtml5',
+                        {
+                            text: 'Reset',
+
+                            action: function (e, dt, node, config) {
+                                // Redraw table (and reset main search filter)
+                                dt.columns().search('');
+                                dt.draw();
+                            },
+                        },
+                    ],
+                responsive:
+                    true,
+                {#"searchCols": [#}
+                {#  {"search": 'in_progress'},#}
+                {#],#}
+
+            });
+            table.on('draw', function () {
+                create_event_button();
+            });
+            table.on('responsive-display', function (e, datatable, row, showHide, update) {
+                create_event_button();
+            });
+            {#filter sur la classroom#}
+            {#table.columns(0).search('{{ classroom.pk }}').draw();#}
+            {% if presence_day_sorting == "usual_name" %}
+                table.order([1, "asc"]).draw();
+            {% elif presence_day_sorting == "birth_date" %}
+                table.order([0, "desc"]).draw();
+            {% endif %}
+
+        });
+
+        function create_child() {
+            console.log("create child btn");
+            $(".presence-create").each(function (i, btn) {
+                if (btn.dataset.status === "3") {
+                    {% if perms.nobinobi_daily_follow_up.add_presence %}
+                        $(btn).modalForm({formURL: btn.dataset.id});
+                    {% else %}
+                        console.log("{% trans "Your permission is insufficient." %}");
+                    {% endif %}
+                }
+            });
+        }
+
+        function filtering_datatable(child) {
+            table.columns().search('');
+            let rel = child.dataset.usualName;
+            if (rel) {
+                table.columns(1).search(rel).draw();
+            } else {
+                table.draw();
+            }
+            {#table.columns(0).search(child.dataset.usualName).draw();#}
+        }
+
+        function create_event_button() {
+            // Update reception buttons
+            $(".reception-update").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+            // Update mealdailyfollowup buttons
+            $(".mealdailyfollowup-update").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+
+
+            // Create mealdailyfollowup button
+            $(".nap-create").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+            // Update mealdailyfollowup buttons
+            $(".nap-update").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+            // Delete nap buttons
+            $(".nap-delete").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+
+            // Create diaperchange button
+            $(".diaperchange-create").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+            // Update diaperchange buttons
+            $(".diaperchange-update").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+            // Delete diaperchange buttons
+            $(".diaperchange-delete").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+
+            // Create lotiondailyfollowup button
+            $(".lotiondailyfollowup-create").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+            // Update lotiondailyfollowup buttons
+            $(".lotiondailyfollowup-update").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+            // Delete lotiondailyfollowup buttons
+            $(".lotiondailyfollowup-delete").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+            // Create activity button
+            $(".activity-create").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+            // Update activity buttons
+            $(".activity-update").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+            // Delete activity buttons
+            $(".activity-delete").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+
+            // Update medication buttons
+            $(".dailyfollowup-update").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+            // Update medication buttons
+            $(".presence-departure").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+            // Delete absence buttons
+            $(".absence-delete").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+
+            // create medication buttons
+            $(".medication-create").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+            // update medication buttons
+            $(".medication-update").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+            // delete medication buttons
+            $(".medication-delete").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+            // Delete absence buttons
+            $(".give-medication-delete").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });               // Delete absence buttons
+            $(".give-medication-update").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+            // Delete absence buttons
+            $(".give-medication-create").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+
+
+            // Update medication buttons
+            $(".dailyfollowup-update").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+            // Update medication buttons
+            $(".presence-departure").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+            $(".presence-intermediate-departure").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+            // Delete absence buttons
+            $(".absence-delete").each(function () {
+                $(this).modalForm({formURL: $(this).data('id')});
+            });
+        }
+
+        docReady(function () {
+            create_child();
+            $(".absence-create").modalForm({
+                formURL: "{% url 'nobinobi_child:Absence_create' %}?classroom={{ classroom.id }}"
+            });
+            $(".presence-create-global").modalForm({
+                formURL: "{% url 'nobinobi_daily_follow_up:Presence_create' pk=classroom.pk %}"
+            });
+
+        });
+
+    </script>
+{% endblock %}
+

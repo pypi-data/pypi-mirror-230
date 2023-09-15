@@ -1,0 +1,95 @@
+{% extends "nobinobi_child/base.html" %}
+{% load i18n static %}
+{% load notifications_tags %}
+{% load notifications_custom_tags %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/nobinobi_daily_follow_up.css' %}"/>
+
+{% endblock %}
+
+{% block notification_menu %}
+    <!-- modal instanstiation -->
+    {% dfu_live_unread as dfu_live %}
+    {% if dfu_live > 0 %}
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
+        <!-- Example single danger button -->
+        <div class="btn-group">
+            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false"><span
+                class="badge badge-pill badge-light">{% dfu_live_notify_badge %}</span> {% trans "Medication Alerts" %}
+                <span class="sr-only">{% trans "unread messages" %}</span>
+            </button>
+            {% live_notify_list_bootstrap list_class="dropdown-menu live_notify_list" %}
+        </div>
+    {% endif %}
+    {% include "includes/modal.html" %}
+
+{% endblock %}
+{% block footerjs %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'js/moment-with-locales.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/eonasdan-bootstrap-datetimepicker@4.17.49/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/monim67/django-bootstrap-datepicker-plus@5.0.2/src/bootstrap_datepicker_plus/static/bootstrap_datepicker_plus/js/datepicker-widget.js"></script>
+    <script src="{% static 'js/jquery.bootstrap.modal.forms.min.js' %}"></script>
+    <script src="{% static 'js/notifications/notify.js' %}" type="text/javascript"></script>
+    <script>
+        function fill_notification_lists(data) {
+            var menus = document.getElementsByClassName(notify_menu_class);
+            if (menus) {
+                var messages = data.all_list.map(function (item) {
+                    var message = "";
+                    // if(typeof item.actor !== 'undefined'){
+                    //     message = item.actor;
+                    // }
+                    if (typeof item.timestamp !== 'undefined') {
+                        message = message + " " + moment(item.timestamp).locale("fr").format('LT') + " | ";
+                    }
+                    if (typeof item.verb !== 'undefined') {
+                        message = message + " " + item.verb + " - ";
+                    }
+                    if (typeof item.description !== 'undefined') {
+                        message = message + " " + item.description;
+                    }
+                    return '<li class="dropdown-item">' + message + " " +
+                        '<div class="btn-group" role="group" aria-label="Medication">\n' +
+                        '  <button type="button" class="give-medication-to-child btn btn-sm btn-success" data-id="{% url 'nobinobi_daily_follow_up:GiveMedication_update' pk=123 %}">{% trans "Give" %}</button>\n'.replace(123, item.actor_object_id) +
+                        '  <button type="button" class="give-medication-to-child-later btn btn-sm btn-danger" data-id="{% url 'nobinobi_daily_follow_up:GiveMedication_delay' pk=123 %}">{% trans "Delay" %}</button>\n'.replace(123, item.actor_object_id) +
+                        '</div>' +
+                        '</li>';
+                }).join('');
+
+                for (var i = 0; i < menus.length; i++) {
+                    menus[i].innerHTML = messages;
+                }
+                $(".give-medication-to-child").each(function () {
+                    console.log("register gm");
+                    $(this).modalForm({formURL: $(this).data('id')});
+                });
+                $(".give-medication-to-child-later").each(function () {
+                    console.log($(this));
+                    $(this).modalForm({formURL: $(this).data('id')});
+                });
+            }
+        }
+
+
+        function check_notif_popup(data) {
+            var badges = document.getElementsByClassName("live_notify_badge");
+            if (badges) {
+                let nbr = parseInt(badges[0].innerHTML);
+                if (nbr >= 1) {
+                    Swal.fire({
+                        title: '{% trans "Medication to give" %}!',
+                        text: '{% trans "There are medicines to give to children" %} !',
+                        type: 'info',
+                        confirmButtonText: "{% trans "Ok" %}"
+                    });
+                }
+            }
+        }
+    </script>
+    {% dfu_register_notify_callbacks refresh_period=60 callbacks='fill_notification_lists,fill_notification_badge,check_notif_popup' %}
+{% endblock %}

@@ -1,0 +1,13 @@
+{% load static %}
+
+{% if widget.wrap_label %}
+    <label{% if widget.attrs.id %} for="{{ widget.attrs.id }}"{% endif %}>
+        <img width="75px" height="75px" src="{% static "img/smiley" %}/{{ widget.label }}"
+             alt="{{ widget.name }}">
+		{% include "django/forms/widgets/input.html" %}
+
+    </label>
+{% else %}
+	{% include "django/forms/widgets/input.html" %}
+{% endif %}
+

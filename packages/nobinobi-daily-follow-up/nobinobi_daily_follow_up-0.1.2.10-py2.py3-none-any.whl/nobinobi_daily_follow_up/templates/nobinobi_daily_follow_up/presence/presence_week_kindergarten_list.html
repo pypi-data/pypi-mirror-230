@@ -1,0 +1,337 @@
+<!--
+  ~   Copyright (C) Prolibre Sarl 2019 <Florian Alu> <alu@prolibre.com>
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License and any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+{% extends "nobinobi_daily_follow_up/base.html" %}
+{% load i18n static crispy_forms_tags %}
+
+{% block title %}{{ title }} - {{ classroom }} - {{ now }}{% endblock %}
+
+{% block extrastyle %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/nobinobi_daily_follow_up.css' %}"/>
+{% endblock %}
+
+{% block content_title_block %}
+    <h1>{{ title }}
+        <small>({{ classroom }})</small>
+    </h1>
+    <h2>{{ now|date:"SHORT_DATE_FORMAT" }}</h2>
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ block.super }}
+    <li class="breadcrumb-item active">{{ title }}</li>
+{% endblock %}
+
+{% block content_card %}
+    <div class="card-body">
+        {% include "includes/messages.html" %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="btn-toolbar" style="justify-content: center;" role="toolbar" aria-label="nav_times">
+                    <div class="btn-group" style="display: contents;" role="group" aria-label="nav_times">
+                        <a type="button" class="btn btn-secondary"
+                           href="{% url 'nobinobi_daily_follow_up:presence_week_kindergarten_list' classroom_id=classroom.id date=month_before.date %}"><i
+                                class="fa fa-angle-double-left"></i></a>
+                        <a type="button" class="btn btn-secondary"
+                           href="{% url 'nobinobi_daily_follow_up:presence_week_kindergarten_list' classroom_id=classroom.id date=week_before.date %}"><i
+                                class="fa fa-angle-left"></i></a>
+                        <a type="button" class="btn btn-info"
+                           href="{% url 'nobinobi_daily_follow_up:presence_week_kindergarten_list' classroom_id=classroom.id date=today.date %}">{{ now|date:'SHORT_DATE_FORMAT' }}</a>
+                        <a type="button" class="btn btn-secondary"
+                           href="{% url 'nobinobi_daily_follow_up:presence_week_kindergarten_list' classroom_id=classroom.id date=week_after.date %}"><i
+                                class="fa fa-angle-right"></i></a>
+                        <a type="button" class="btn btn-secondary"
+                           href="{% url 'nobinobi_daily_follow_up:presence_week_kindergarten_list' classroom_id=classroom.id date=month_after.date %}"><i
+                                class="fa fa-angle-double-right"></i></a>
+                    </div>
+                </div>
+
+                <table class="table table-responsive table-bordered text-center" width="100%">
+                    <thead class="bg-dark-gradient">
+                    <tr>
+                        {% for day in dict_table.values %}
+                            <th class="{% if day.datetime.date == today.date %}bg-info{% endif %}"
+                                colspan="{{ day.periods.morning|length }}"
+                                width="20%">{{ day.datetime|date:"SHORT_DATE_FORMAT" }}</th>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        {% for day in dict_table.values %}
+                            {% for type, order in day.periods.items %}
+                                {% if type == "morning" %}
+                                    {% for period in order.values %}
+                                        <th class="{% if day.datetime.date == today.date %}bg-info{% endif %}">{{ period.name }}</th>
+                                    {% endfor %}
+                                {% elif type == "day" %}
+                                    <th>&nbsp;</th>
+                                {% endif %}
+                            {% empty %}
+                                <th>&nbsp;</th>
+                            {% endfor %}
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for child, day in dict_table_child.items %}
+                        {% if day.type.morning %}
+                            <tr>
+                                {% for day_value in day.days.values %}
+                                    {% for type, period in day_value.periods.items %}
+                                        {% if type == "morning" %}
+                                            {% for per in period.values %}
+                                                {% if per.dayoff %}
+                                                    <td class="bg-dark-gradient">{% trans "Day off" %}</td>
+                                                {% elif per.holiday %}
+                                                    <td class="bg-dark-gradient">{% trans "Holiday" %}</td>
+                                                {% elif per.closure %}
+                                                    <td class="bg-dark-gradient">{% trans "Closure" %}</td>
+                                                {% elif not per.status %}
+                                                    <td class="bg-dark-gradient">&nbsp;</td>
+                                                {% else %}
+                                                    <td class="{% if per.absence %}bg-danger-gradient{% elif per.status == "present" %}bg-present{% elif per.status == "awaiting_return" %}bg-awaiting-return{% elif per.status == "leave" and per.troubleshooting %}bg-troubleshooting-gradient{% elif per.status == "leave" %}bg-leave-gradient{% elif per.status == "troubleshooting" %}bg-troubleshooting{% elif per.status == "expected" %}bg-warning-gradient{% else %}bg-gray{% endif %}">
+                                                        <a style="{% if per.status == "leave" %}color: #FFF;{% else %}color: #000;{% endif %}"
+                                                           href="{% if day_value.datetime.date == today.date %}
+                            {% url 'nobinobi_daily_follow_up:Presence_detail_list' child.classroom_id %}
+                            {% else %}
+                            {% url 'nobinobi_daily_follow_up:DailyFollowUp_summary_week' pk=child.id date=day_value.datetime.date %}
+                            {% endif %}">{{ child.usual_name }}</a>
+
+                                                        <a href="{% url 'nobinobi_child:Child_detail' pk=child.pk %}"><i
+                                                                class="far fa-eye"></i></a>
+                                                        {% if per.birthday %}
+                                                            <i class="fas fa-birthday-cake"></i>
+                                                        {% endif %}
+                                                        {% if child.childspecificneed %}
+                                                            <i class='fas fa-exclamation-triangle'></i>
+                                                        {% endif %}
+                                                        {% if display_age_group_in_presence %}
+                                                            <small>({{ child.age_group.name.0 }})</small> {% endif %}
+                                                        {% if per.absence %}
+                                                            <small>({{ per.absence.type }})</small>{% endif %}</td>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% elif type == "day" %}
+                                            <td>&nbsp;</td>
+                                        {% endif %}
+                                    {% empty %}
+                                        <td>&nbsp;</td>
+                                    {% endfor %}
+                                {% endfor %}
+                            </tr>
+                        {% endif %}
+
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    <tr class="bg-dark-gradient">
+                        <td colspan="1000">{% trans "Expected" %}</td>
+                    </tr>
+                    <tr>
+                        {% for day in dict_table.values %}
+                            {% for type, order in day.periods.items %}
+                                {% if type == "morning" %}
+                                    {% for period in order.values %}
+                                        {% if period.dayoff %}
+                                            <td class="text-center">-</td>
+                                        {% else %}
+                                            <td class="text-center">{{ period.expected }}</td>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% elif type == "day" %}
+                                    <td>&nbsp;</td>
+                                {% endif %}
+                            {% empty %}
+                                <td>&nbsp;</td>
+                            {% endfor %}
+                        {% endfor %}
+                    </tr>
+                    <tr class="bg-dark-gradient">
+                        <td colspan="1000">{% trans "Present" %}</td>
+                    </tr>
+                    <tr>
+                        {% for day in dict_table.values %}
+                            {% for type, order in day.periods.items %}
+                                {% if type == "morning" %}
+                                    {% for period in order.values %}
+                                        {% if period.dayoff %}
+                                            <td class="text-center">-</td>
+                                        {% else %}
+                                            <td class="text-center">{{ period.present }}</td>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% elif type == "day" %}
+                                    <th>&nbsp;</th>
+                                {% endif %}
+                            {% empty %}
+                                <th>&nbsp;</th>
+                            {% endfor %}
+                        {% endfor %}
+                    </tr>
+
+                    </tfoot>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <div class="btn-toolbar" style="justify-content: center;" role="toolbar" aria-label="nav_times">
+                    <div class="btn-group" style="display: contents;" role="group" aria-label="nav_times">
+                        <a type="button" class="btn btn-secondary"
+                           href="{% url 'nobinobi_daily_follow_up:presence_week_kindergarten_list' classroom_id=classroom.id date=month_before.date %}"><i
+                                class="fa fa-angle-double-left"></i></a>
+                        <a type="button" class="btn btn-secondary"
+                           href="{% url 'nobinobi_daily_follow_up:presence_week_kindergarten_list' classroom_id=classroom.id date=week_before.date %}"><i
+                                class="fa fa-angle-left"></i></a>
+                        <a type="button" class="btn btn-info"
+                           href="{% url 'nobinobi_daily_follow_up:presence_week_kindergarten_list' classroom_id=classroom.id date=today.date %}">{{ now|date:'SHORT_DATE_FORMAT' }}</a>
+                        <a type="button" class="btn btn-secondary"
+                           href="{% url 'nobinobi_daily_follow_up:presence_week_kindergarten_list' classroom_id=classroom.id date=week_after.date %}"><i
+                                class="fa fa-angle-right"></i></a>
+                        <a type="button" class="btn btn-secondary"
+                           href="{% url 'nobinobi_daily_follow_up:presence_week_kindergarten_list' classroom_id=classroom.id date=month_after.date %}"><i
+                                class="fa fa-angle-double-right"></i></a>
+                    </div>
+                </div>
+
+                <table class="table table-responsive table-bordered text-center" width="100%">
+                    <thead class="bg-dark-gradient">
+                    <tr>
+                        {% for day in dict_table.values %}
+                            <th class="{% if day.datetime.date == today.date %}bg-info{% endif %}"
+                                colspan="{{ day.periods.afternoon|length }}"
+                                width="20%">{{ day.datetime|date:"SHORT_DATE_FORMAT" }}</th>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        {% for day in dict_table.values %}
+                            {% for type, order in day.periods.items %}
+                                {% if type == "afternoon" %}
+                                    {% for period in order.values %}
+                                        <th class="{% if day.datetime.date == today.date %}bg-info{% endif %}">{{ period.name }}</th>
+                                    {% endfor %}
+                                {% elif type == "day" %}
+                                    <th>&nbsp;</th>
+                                {% endif %}
+                            {% empty %}
+                                <th>&nbsp;</th>
+                            {% endfor %}
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for child, day in dict_table_child.items %}
+                        {% if day.type.afternoon %}
+                            <tr>
+                                {% for day_value in day.days.values %}
+                                    {% for type, period in day_value.periods.items %}
+                                        {% if type == "afternoon" %}
+                                            {% for per in period.values %}
+                                                {% if per.dayoff %}
+                                                    <td class="bg-dark-gradient">{% trans "Day off" %}</td>
+                                                {% elif per.holiday %}
+                                                    <td class="bg-dark-gradient">{% trans "Holiday" %}</td>
+                                                {% elif per.closure %}
+                                                    <td class="bg-dark-gradient">{% trans "Closure" %}</td>
+                                                {% elif not per.status %}
+                                                    <td class="bg-dark-gradient">&nbsp;</td>
+                                                {% else %}
+                                                    <td class="{% if per.absence %}bg-danger-gradient{% elif per.status == "present" %}bg-present{% elif per.status == "awaiting_return" %}bg-awaiting-return{% elif per.status == "leave" and per.troubleshooting %}bg-troubleshooting-gradient{% elif per.status == "leave" %}bg-leave-gradient{% elif per.status == "troubleshooting" %}bg-troubleshooting{% elif per.status == "expected" %}bg-warning-gradient{% else %}bg-gray{% endif %}">
+                                                        <a style="{% if per.status == "leave" %}color: #FFF;{% else %}color: #000;{% endif %}"
+                                                           href="{% if day_value.datetime.date == today.date %}
+                            {% url 'nobinobi_daily_follow_up:Presence_detail_list' child.classroom_id %}
+                            {% else %}
+                            {% url 'nobinobi_daily_follow_up:DailyFollowUp_summary_week' pk=child.id date=day_value.datetime.date %}
+                            {% endif %}">{{ child.usual_name }}</a>
+
+                                                        <a href="{% url 'nobinobi_child:Child_detail' pk=child.pk %}"><i
+                                                                class="far fa-eye"></i></a>
+                                                        {% if per.birthday %}
+                                                            <i class="fas fa-birthday-cake"></i>
+                                                        {% endif %}
+                                                        {% if child.childspecificneed %}
+                                                            <i class='fas fa-exclamation-triangle'></i>
+                                                        {% endif %}
+                                                        {% if display_age_group_in_presence %}
+                                                            <small>({{ child.age_group.name.0 }})</small> {% endif %}
+                                                        {% if per.absence %}
+                                                            <small>({{ per.absence.type }})</small>{% endif %}</td>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% elif type == "day" %}
+                                            <td>&nbsp;</td>
+                                        {% endif %}
+                                    {% empty %}
+                                        <td>&nbsp;</td>
+                                    {% endfor %}
+                                {% endfor %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    <tr class="bg-dark-gradient">
+                        <td colspan="1000">{% trans "Expected" %}</td>
+                    </tr>
+                    <tr>
+                        {% for day in dict_table.values %}
+                            {% for type, order in day.periods.items %}
+                                {% if type == "afternoon" %}
+                                    {% for period in order.values %}
+                                        {% if period.dayoff %}
+                                            <td class="text-center">-</td>
+                                        {% else %}
+                                            <td class="text-center">{{ period.expected }}</td>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% elif type == "day" %}
+                                    <td>&nbsp;</td>
+                                {% endif %}
+                            {% empty %}
+                                <td>&nbsp;</td>
+                            {% endfor %}
+                        {% endfor %}
+                    </tr>
+                    <tr class="bg-dark-gradient">
+                        <td colspan="1000">{% trans "Present" %}</td>
+                    </tr>
+                    <tr>
+                        {% for day in dict_table.values %}
+                            {% for type, order in day.periods.items %}
+                                {% if type == "afternoon" %}
+                                    {% for period in order.values %}
+                                        {% if period.dayoff %}
+                                            <td class="text-center">-</td>
+                                        {% else %}
+                                            <td class="text-center">{{ period.present }}</td>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% elif type == "day" %}
+                                    <th>&nbsp;</th>
+                                {% endif %}
+                            {% empty %}
+                                <th>&nbsp;</th>
+                            {% endfor %}
+                        {% endfor %}
+                    </tr>
+
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extrajs %}
+{% endblock %}
