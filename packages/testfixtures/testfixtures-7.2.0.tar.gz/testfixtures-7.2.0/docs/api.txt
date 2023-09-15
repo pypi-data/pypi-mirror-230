@@ -1,0 +1,201 @@
+API Reference
+=============
+
+.. currentmodule:: testfixtures
+
+
+Comparisons
+-----------
+
+.. autofunction:: compare
+
+.. autoclass:: Comparison
+
+.. autoclass:: MappingComparison
+   :members:
+
+.. autoclass:: Permutation
+   :members:
+
+.. autoclass:: RoundComparison
+   :members:
+
+.. autoclass:: RangeComparison
+   :members:
+
+.. autoclass:: SequenceComparison
+   :members:
+
+.. autoclass:: Subset
+   :members:
+
+.. autoclass:: StringComparison
+   :members:
+
+
+testfixtures.comparison
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. automodule:: testfixtures.comparison
+
+.. autofunction:: testfixtures.comparison.register
+
+.. autofunction:: testfixtures.comparison.compare_simple
+
+.. autofunction:: testfixtures.comparison.compare_object
+
+.. autofunction:: testfixtures.comparison.compare_exception
+
+.. autofunction:: testfixtures.comparison.compare_with_type
+
+.. autofunction:: testfixtures.comparison.compare_sequence
+
+.. autofunction:: testfixtures.comparison.compare_generator
+
+.. autofunction:: testfixtures.comparison.compare_tuple
+
+.. autofunction:: testfixtures.comparison.compare_dict
+
+.. autofunction:: testfixtures.comparison.compare_set
+
+.. autofunction:: testfixtures.comparison.compare_text
+
+.. autoclass:: testfixtures.comparison.CompareContext
+
+.. currentmodule:: testfixtures
+
+Capturing
+---------
+
+.. autoclass:: LogCapture
+   :members:
+
+.. autofunction:: log_capture
+
+.. autoclass:: OutputCapture
+   :members:
+
+Mocking
+-------
+.. autoclass:: Replace
+   :members:
+
+.. autofunction:: replace_in_environ
+
+.. autofunction:: replace_on_class
+
+.. autofunction:: replace_in_module
+
+.. autoclass:: Replacer
+   :members:
+   :special-members: __call__
+
+.. autofunction:: replace
+
+.. autofunction:: mock_date(year=2001, month=1, day=1, delta=None, delta_type='days', strict=False)
+
+.. autoclass:: testfixtures.datetime.MockDate
+    :members:
+    :member-order: bysource
+
+.. autofunction:: mock_datetime(year=2001, month=1, day=1, hour=0, minute=0, second=0, microsecond=0, tzinfo=None, delta=None, delta_type='seconds', date_type=datetime.date, strict=False)
+
+.. autoclass:: testfixtures.datetime.MockDateTime
+    :members:
+    :member-order: bysource
+
+.. autofunction:: mock_time(year=2001, month=1, day=1, hour=0, minute=0, second=0, microsecond=0, tzinfo=None, delta=None, delta_type='seconds')
+
+.. autoclass:: testfixtures.datetime.MockTime
+    :members:
+    :special-members: __new__
+    :member-order: bysource
+
+testfixtures.mock
+~~~~~~~~~~~~~~~~~
+
+.. automodule:: testfixtures.mock
+
+
+testfixtures.popen
+~~~~~~~~~~~~~~~~~~
+
+.. automodule:: testfixtures.popen
+   :members:
+
+.. currentmodule:: testfixtures
+
+Assertions
+----------
+
+.. autoclass:: ShouldRaise
+   :members:
+
+.. autoclass:: should_raise
+
+.. autofunction:: ShouldAssert
+
+.. autoclass:: ShouldWarn
+   :members:
+
+.. autoclass:: ShouldNotWarn
+   :members:
+
+
+Resources
+---------
+
+.. autoclass:: TempDirectory
+   :members:
+
+.. autofunction:: tempdir
+
+.. autofunction:: generator
+
+
+Helpers and Constants
+---------------------
+
+.. autofunction:: diff
+
+.. autofunction:: wrap
+
+.. data:: not_there
+
+   A singleton used to represent the absence of a particular attribute or parameter.
+
+
+Framework Helpers
+-----------------
+
+Framework-specific helpers provided by testfixtures.
+
+testfixtures.components
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. automodule:: testfixtures.components
+   :member-order: bysource
+   :members:
+
+
+testfixtures.django
+~~~~~~~~~~~~~~~~~~~
+
+.. automodule:: testfixtures.django
+  :members:
+
+testfixtures.sybil
+~~~~~~~~~~~~~~~~~~
+
+
+.. automodule:: testfixtures.sybil
+   :member-order: bysource
+   :members:
+
+
+testfixtures.twisted
+~~~~~~~~~~~~~~~~~~~~
+
+.. automodule:: testfixtures.twisted
+   :member-order: bysource
+   :members:

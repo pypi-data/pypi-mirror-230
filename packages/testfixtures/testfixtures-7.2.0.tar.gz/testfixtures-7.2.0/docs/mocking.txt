@@ -1,0 +1,683 @@
+Mocking out objects and methods
+===============================
+
+.. py:currentmodule:: testfixtures
+
+Mocking is the process of replacing objects used in your code with ones
+that make testing easier, but only while the tests are running.
+
+This may mean replacing resources or dependencies, such as database
+connections or file paths, with ones that are isolated for testing.
+It may also mean replacing chunks of complex functionality
+that aren't the subject of the test with mock objects that allow you
+to check that the mocked out functionality is being used as expected.
+
+What to mock with
+-----------------
+
+Python has a standard mock implementation in the form of :mod:`unittest.mock`
+which is also available as a `rolling backport`__ so that the latest features
+and bugfixes can be used in any version of Python.
+
+__ https://mock.readthedocs.io
+
+For convenience, testfixtures provides a facade over both of these in the form
+of :mod:`testfixtures.mock`. The contents are identical and preference is given
+to the rolling backport if it is present. The facade also contains any bugfixes
+that are critical to the operation of functionality provided by testfixtures.
+
+Testfixtures also provides specialised mocks for dealing with
+:doc:`dates and times <datetime>` and :doc:`subprocesses <popen>`.
+
+How to mock
+-----------
+
+Testfixtures provides :class:`Replace`, :class:`Replacer` and the :func:`replace`
+decorator to mock out objects. These work in a similar way to
+:func:`unittest.mock.patch`, and have been around longer. They still provide a little
+more flexibility than :func:`~unittest.mock.patch`, so use whichever feels best in
+your codebase.
+
+Methods of replacement
+----------------------
+
+When using the tools provided by Testfixtures, there are three different methods of
+mocking out functionality that can be used to replace functions, classes
+or even individual methods on a class. Consider the following module:
+
+.. topic:: testfixtures.tests.sample1
+   :class: module
+
+   .. literalinclude:: ../testfixtures/tests/sample1.py
+      :pyobject: X
+
+.. do the import quietly
+
+  >>> from testfixtures.tests.sample1 import X
+
+We want to mock out the ``y`` method of the ``X`` class, with,
+for example, the following function:
+
+.. code-block:: python
+
+  def mock_y(self):
+       return 'mock y'
+
+The context managers
+~~~~~~~~~~~~~~~~~~~~
+
+For replacement of a single thing, it's easiest to use the
+:class:`~testfixtures.Replace` context manager:
+
+.. code-block:: python
+
+  from testfixtures import Replace
+
+  def test_function():
+      with Replace('testfixtures.tests.sample1.X.y', mock_y):
+          print(X().y())
+
+For the duration of the ``with`` block, the replacement is used:
+
+>>> test_function()
+mock y
+
+For multiple replacements, the :class:`~testfixtures.Replacer` context
+manager can be used instead:
+
+
+.. code-block:: python
+
+  from testfixtures.mock import Mock
+  from testfixtures import Replacer
+
+  def test_function():
+      with Replacer() as replace:
+          mock_y = replace('testfixtures.tests.sample1.X.y', Mock())
+          mock_y.return_value = 'mock y'
+          print(X().y())
+
+For the duration of the ``with`` block, the replacement is used:
+
+>>> test_function()
+mock y
+
+For replacements that are friendly to static analysis tools such as IDEs, three convenience
+context managers are provided:
+
+- To replace or remove environment variables, use :func:`replace_in_environ`:
+
+  .. code-block:: python
+
+      import os
+      from testfixtures import replace_in_environ
+
+      def test_function():
+          with replace_in_environ('SOME_ENV_VAR', 1234):
+              print(repr(os.environ['SOME_ENV_VAR']))
+
+  For the duration of the ``with`` block, the replacement is used:
+
+  >>> test_function()
+  '1234'
+
+  For more details, see :ref:`replacing-in-environ`.
+
+- To replace methods on classes, including normal methods, class methods and static methods,
+  use :func:`replace_on_class`:
+
+  .. code-block:: python
+
+      from testfixtures import replace_on_class
+
+      class MyClass:
+
+          def the_method(self, value: str) -> str:
+              return 'original' + value
+
+      instance = MyClass()
+
+      def test_function():
+          with replace_on_class(
+              MyClass.the_method,
+              lambda self, value: type(self).__name__+value
+          ):
+              print(instance.the_method(':it'))
+
+  For the duration of the ``with`` block, the replacement is used:
+
+  >>> test_function()
+  MyClass:it
+
+  For more details, see :ref:`replacing-on-classes`.
+
+- To replace functions in modules use :func:`replace_in_module`:
+
+  .. code-block:: python
+
+      from testfixtures import replace_in_module
+      from testfixtures.tests.sample1 import z as original_z
+
+      def test_function():
+          with replace_in_module(original_z, lambda: 'replacement z'):
+              from testfixtures.tests.sample1 import z
+              print(z())
+
+  For the duration of the ``with`` block, the replacement is used:
+
+  >>> test_function()
+  replacement z
+
+  For more details, see :ref:`replacing-in-modules`.
+
+
+The decorator
+~~~~~~~~~~~~~
+
+If you want to replace different things in different test functions, you may
+find the decorator suits your needs better:
+
+.. code-block:: python
+
+  from testfixtures import replace
+
+  @replace('testfixtures.tests.sample1.X.y', mock_y)
+  def test_function():
+      print(X().y())
+
+When using the decorator, the replacement is used for the duration of
+the decorated callable's execution:
+
+>>> test_function()
+mock y
+
+If you need to manipulate or inspect the object that's used as a
+replacement, you can add an extra parameter to your function. The
+decorator will see this and pass the replacement in it's place:
+
+.. code-block:: python
+
+  from testfixtures.mock import Mock, call
+  from testfixtures import compare, replace
+
+  @replace('testfixtures.tests.sample1.X.y', Mock())
+  def test_function(mocked_y):
+      mocked_y.return_value = 'mock y'
+      print(X().y())
+      compare(mocked_y.mock_calls, expected=[call()])
+
+The above still results in the same output:
+
+>>> test_function()
+mock y
+
+.. note::
+    This method is not compatible with pytest's fixture discovery stuff.
+    Instead, put a fixture such as the following in your ``conftest.py``:
+
+    .. code-block:: python
+
+      from testfixtures import Replace
+      import pytest
+
+      @pytest.fixture()
+      def mocked_y():
+          m = Mock()
+          with Replace('testfixtures.tests.sample1.X.y', m):
+              yield m
+
+Manual usage
+~~~~~~~~~~~~
+
+If you want to replace something for the duration of a doctest or you
+want to replace something for every test in a
+:class:`~unittest.TestCase`, then you can use the
+:class:`~testfixtures.Replacer` manually.
+
+The instantiation and replacement are done in the set-up step
+of the :class:`~unittest.TestCase` or equivalent:
+
+>>> from testfixtures import Replacer
+>>> replacer = Replacer()
+>>> replacer.replace('testfixtures.tests.sample1.X.y', mock_y)
+
+The replacement then stays in place until removed:
+
+>>> X().y()
+'mock y'
+
+Then, in the tear-down step of the :class:`~unittest.TestCase` or equivalent,
+the replacement is removed:
+
+>>> replacer.restore()
+>>> X().y()
+'original y'
+
+The :meth:`~testfixtures.Replacer.restore` method can also be added as an
+:meth:`~unittest.TestCase.addCleanup` if that is easier or more compact in your test
+suite.
+
+Replacing more than one thing
+-----------------------------
+
+Both the :class:`~testfixtures.Replacer` and the
+:func:`~testfixtures.replace` decorator can be used to replace more
+than one thing at a time. For the former, this is fairly obvious:
+
+.. code-block:: python
+
+  def test_function():
+      with Replacer() as replace:
+          y = replace('testfixtures.tests.sample1.X.y', Mock())
+          y.return_value = 'mock y'
+          aMethod = replace('testfixtures.tests.sample1.X.aMethod', Mock())
+          aMethod.return_value = 'mock method'
+          x = X()
+          print(x.y(), x.aMethod())
+
+.. the result:
+
+   >>> test_function()
+   mock y mock method
+
+For the decorator, it's less obvious but still pretty easy:
+
+.. code-block:: python
+
+  from testfixtures import replace
+
+  @replace('testfixtures.tests.sample1.X.y', Mock())
+  @replace('testfixtures.tests.sample1.X.aMethod', Mock())
+  def test_function(aMethod, y):
+      print(aMethod, y)
+      aMethod().return_value = 'mock method'
+      y().return_value = 'mock y'
+      x = X()
+      print(aMethod, y)
+      print(x.y(), x.aMethod())
+
+You'll notice that you can still get access to the replacements, even
+though there are several of them.
+
+Replacing things that may not be there
+--------------------------------------
+
+The following code shows a situation where ``hpy`` may or may not be
+present depending on whether the ``guppy`` package is installed or
+not.
+
+
+.. topic:: testfixtures.tests.sample2
+   :class: module
+
+   .. literalinclude:: ../testfixtures/tests/sample2.py
+      :lines: 10-19
+
+To test the behaviour of the code that uses ``hpy`` in both of
+these cases, regardless of whether or not the ``guppy`` package is
+actually installed, we need to be able to mock out both ``hpy`` and the
+``guppy`` global. This is done by doing non-strict replacement, as
+shown in the following :class:`~unittest.TestCase`:
+
+.. imports
+
+  >>> import unittest,sys
+
+.. code-block:: python
+
+    from testfixtures.tests.sample2 import dump
+    from testfixtures import replace
+    from testfixtures.mock import Mock, call
+
+    class Tests(unittest.TestCase):
+
+        @replace('testfixtures.tests.sample2.guppy', True)
+        @replace('testfixtures.tests.sample2.hpy', Mock(), strict=False)
+        def test_method(self, hpy):
+
+            dump('somepath')
+
+            compare([
+                     call(),
+                     call().heap(),
+                     call().heap().stat.dump('somepath')
+                   ], hpy.mock_calls)
+
+        @replace('testfixtures.tests.sample2.guppy', False)
+        @replace('testfixtures.tests.sample2.hpy', Mock(), strict=False)
+        def test_method_no_heapy(self,hpy):
+
+            dump('somepath')
+
+            compare(hpy.mock_calls,[])
+
+.. the result:
+
+   >>> from io import StringIO
+   >>> suite = unittest.TestLoader().loadTestsFromTestCase(Tests)
+   >>> unittest.TextTestRunner(verbosity=0,stream=StringIO()).run(suite)
+   <unittest...TextTestResult run=2 errors=0 failures=0>
+
+
+Non-strict replacement using the ``strict`` keyword parameter is supported both
+when calling a :class:`Replacer` or using the :meth:`~testfixtures.Replacer.replace` method.
+
+Replacing items in dictionaries and lists
+-----------------------------------------
+
+:class:`~testfixtures.Replace`, :class:`~testfixtures.Replacer` and the
+:func:`~testfixtures.replace` decorator can be used to replace items
+in dictionaries and lists.
+
+For example, suppose you have a data structure like the following:
+
+.. topic:: testfixtures.tests.sample1
+   :class: module
+
+   .. literalinclude:: ../testfixtures/tests/sample1.py
+      :lines: 67-70
+
+You can mock out the value associated with ``key`` and the second
+element in the ``complex_key`` list as follows:
+
+.. code-block:: python
+
+  from pprint import pprint
+  from testfixtures import Replacer
+  from testfixtures.tests.sample1 import some_dict
+
+  def test_function():
+      with Replacer() as replace:
+          replace('testfixtures.tests.sample1.some_dict.key', 'foo')
+          replace('testfixtures.tests.sample1.some_dict.complex_key.1', 42)
+          pprint(some_dict)
+
+While the replacement is in effect, the new items are in place:
+
+>>> test_function()
+{'complex_key': [1, 42, 3], 'key': 'foo'}
+
+When it is no longer in effect, the originals are returned:
+
+>>> pprint(some_dict)
+{'complex_key': [1, 2, 3], 'key': 'value'}
+
+If the dictionary is :any:`os.environ`, then see :ref:`replacing-in-environ`.
+
+.. _removing_attr_and_item:
+
+Removing attributes and dictionary items
+----------------------------------------
+
+:class:`~testfixtures.Replace`, :class:`~testfixtures.Replacer` and the
+:func:`~testfixtures.replace` decorator can be used to remove
+attributes from objects and remove items from dictionaries.
+
+For example, suppose you have a data structure like the following:
+
+.. topic:: testfixtures.tests.sample1
+   :class: module
+
+   .. literalinclude:: ../testfixtures/tests/sample1.py
+      :lines: 67-70
+
+If you want to remove the ``key`` for the duration of a test, you can
+do so as follows:
+
+.. code-block:: python
+
+  from testfixtures import Replace, not_there
+  from testfixtures.tests.sample1 import some_dict
+
+  def test_function():
+      with Replace('testfixtures.tests.sample1.some_dict.key', not_there):
+          pprint(some_dict)
+
+While the replacement is in effect, ``key`` is gone:
+
+>>> test_function()
+{'complex_key': [1, 2, 3]}
+
+When it is no longer in effect, ``key`` is returned:
+
+>>> pprint(some_dict)
+{'complex_key': [1, 2, 3], 'key': 'value'}
+
+If you want the whole ``some_dict`` dictionary to be removed for the
+duration of a test, you would do so as follows:
+
+.. code-block:: python
+
+  from testfixtures import Replace, not_there
+  from testfixtures.tests import sample1
+
+  def test_function():
+      with Replace('testfixtures.tests.sample1.some_dict', not_there):
+          print(hasattr(sample1, 'some_dict'))
+
+While the replacement is in effect, ``key`` is gone:
+
+>>> test_function()
+False
+
+When it is no longer in effect, ``key`` is returned:
+
+>>> pprint(sample1.some_dict)
+{'complex_key': [1, 2, 3], 'key': 'value'}
+
+.. _replacing-in-environ:
+
+Replacing environment variables
+-------------------------------
+
+To ensure an environment variable is present and set to a particular value,
+use :meth:`~Replacer.in_environ`:
+
+>>> import os
+>>> replace = Replacer()
+>>> replace.in_environ('SOME_ENV_VAR', 1234)
+>>> print(repr(os.environ['SOME_ENV_VAR']))
+'1234'
+
+If you want to make sure an environment variable is unset and not present, use :any:`not_there`:
+
+>>> replace.in_environ('SOME_ENV_VAR', not_there)
+>>> 'SOME_ENV_VAR' in os.environ
+False
+
+.. invisible-code-block: python
+
+ replace.restore()
+
+.. _replacing-on-classes:
+
+Replacing methods on classes
+----------------------------
+
+To replace methods on classes, including normal methods, class methods and static methods,
+in a way that is friendly to static analysis, use :meth:`~Replacer.on_class`:
+
+.. code-block:: python
+
+  class MyClass:
+
+      def normal_method(self, value: str) -> str:
+          return 'original' + value
+
+      @classmethod
+      def class_method(cls, value: str) -> str:
+          return 'original' + value
+
+      @staticmethod
+      def static_method(value: str) -> str:
+          return 'original' + value
+
+For normal methods, the replacement will be called with the correct ``self``:
+
+>>> instance = MyClass()
+>>> replace = Replacer()
+>>> replace.on_class(MyClass.normal_method, lambda self, value: type(self).__name__+value)
+>>> print(instance.normal_method(':it'))
+MyClass:it
+
+For class methods, the replacement you provide will be wrapped in a :any:`classmethod`
+if you have not already done so:
+
+>>> replace.on_class(MyClass.class_method, lambda cls, value: cls.__name__+value)
+>>> print(instance.class_method(':it'))
+MyClass:it
+
+Likewise, for static methods, the replacement you provide will be wrapped in a :any:`staticmethod`
+if you have not already done so:
+
+>>> replace.on_class(MyClass.static_method, lambda value: 'mocked'+value)
+>>> print(instance.static_method(':it'))
+mocked:it
+
+.. invisible-code-block: python
+
+ replace.restore()
+
+If you need to replace a class attribute such as ``FOO`` in this example:
+
+.. code-block:: python
+
+  class MyClass:
+      FOO = 1
+
+It can be done like this:
+
+>>> instance = MyClass()
+>>> replace = Replacer()
+>>> replace(MyClass.FOO, 42, container=MyClass, name='FOO')
+42
+>>> print(instance.FOO)
+42
+
+.. invisible-code-block: python
+
+ replace.restore()
+
+If you encounter methods that have an incorrect ``__name__``, such as those returned by poorly
+implemented decorators:
+
+.. code-block:: python
+
+    def bad(f):
+        def inner(self, x):
+            return f(self, x)
+        return inner
+
+    class SampleClass:
+
+        @bad
+        def method(self, x):
+            return x*2
+
+They can be replaced by specifying the correct name:
+
+>>> instance = SampleClass()
+>>> replace = Replacer()
+>>> replace.on_class(SampleClass.method, lambda self, value: value*3, name='method')
+>>> print(instance.method(2))
+6
+
+.. invisible-code-block: python
+
+ replace.restore()
+
+.. _replacing-in-modules:
+
+Replacing items in modules
+--------------------------
+
+To replace functions in modules use :meth:`~Replacer.in_module`:
+
+>>> from testfixtures.tests.sample1 import z as original_z
+>>> replace = Replacer()
+>>> replace.in_module(original_z, lambda: 'replacement z')
+>>> from testfixtures.tests.sample1 import z
+>>> z()
+'replacement z'
+
+.. invisible-code-block: python
+
+ replace.restore()
+
+If you need to replace usage in a module other than the one where the function is defined,
+it can be done as follows
+
+>>> from testfixtures.tests.sample1 import z
+>>> from testfixtures.tests import sample3
+>>> replace = Replacer()
+>>> replace.in_module(z, lambda: 'replacement z', module=sample3)
+>>> sample3.z()
+'replacement z'
+
+.. invisible-code-block: python
+
+ replace.restore()
+
+If you need to replace a module global, then you can use :class:`Replace` as follows:
+
+>>> from testfixtures.tests import sample3
+>>> replacer = Replacer()
+>>> replacer.replace(sample3.SOME_CONSTANT, 43,
+...                  container=sample3, name='SOME_CONSTANT')
+>>> from testfixtures.tests.sample3 import SOME_CONSTANT
+>>> SOME_CONSTANT
+43
+
+.. invisible-code-block: python
+
+ replacer.restore()
+
+Gotchas
+-------
+
+- Make sure you replace the object where it's used and not where it's
+  defined. For example, with the following code from the
+  ``testfixtures.tests.sample1`` package:
+
+  .. literalinclude:: ../testfixtures/tests/sample1.py
+     :lines: 30-34
+
+  You might be tempted to mock things as follows:
+
+  >>> replace = Replacer()
+  >>> replace('time.time', Mock())
+  <...>
+
+  But this won't work:
+
+  >>> from testfixtures.tests.sample1 import str_time
+  >>> type(float(str_time()))
+  <... 'float'>
+
+  You need to replace :func:`~time.time` where it's used, not where
+  it's defined:
+
+  >>> replace('testfixtures.tests.sample1.time', Mock())
+  <...>
+  >>> str_time()
+  "<...Mock...>"
+
+  .. cleanup
+
+   >>> replace.restore()
+
+  A corollary of this is that you need to replace *all* occurrences of
+  an original to safely be able to test. This can be tricky when an
+  original is imported into many modules that may be used by a
+  particular test.
+
+- You can't replace whole top level modules, and nor should you want
+  to! The reason being that everything up to the last dot in the
+  replacement target specifies where the replacement will take place,
+  and the part after the last dot is used as the name of the thing to
+  be replaced:
+
+  >>> Replacer().replace('sys', Mock())
+  Traceback (most recent call last):
+   ...
+  ValueError: target must contain at least one dot!
