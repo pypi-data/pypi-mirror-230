@@ -1,0 +1,309 @@
+"""
+This module meant for preprocessing (cleansing and unifying) the address before putting into extraction
+"""
+
+import re
+from copy import deepcopy
+from typing import Dict
+
+import pandas as pd
+from preprocessing_pgp.address.const import (
+    ADDRESS_PUNCTUATIONS,
+    DICT_NORM_ABBREV_REGEX_KW,
+    DICT_NORM_CITY_DASH_REGEX,
+)
+from preprocessing_pgp.address.utils import number_pad_replace
+from preprocessing_pgp.name.preprocess import remove_spare_spaces
+
+
+class VietnameseAddressCleaner:
+    """
+    Class support cleansing function for Vietnamese Addresses
+    """
+
+    # * PRIVATE
+    def __replace_with_keywords(self, address: str, keywords: Dict) -> str:
+        """
+        Helper function to replace sub-address with given dictionary of keywords
+
+        Parameters
+        ----------
+        address : str
+            The input address to replace with keywords
+        keywords : Dict
+            The dictionary with `str` key - 'target' and (list `str`) as value - 'keywords'
+
+        Returns
+        -------
+        str
+            The replaced address
+        """
+
+        replaced_address = deepcopy(address)
+
+        for replace_txt, target_subs in keywords.items():
+            reg_target = re.compile("|".join(map(re.escape, target_subs)))
+            replaced_address = re.sub(reg_target, replace_txt, replaced_address)
+
+            if replaced_address != address:
+                return replaced_address
+
+        return replaced_address
+
+    def __clean_address_with_regex(self, address: str, regex: str) -> str:
+        """
+        Helper function to clean any address with given non-grouping regex & removing spaces
+        """
+        address_match = re.search(regex, address)
+
+        if address_match is not None:
+            sub_address = address_match.group(0).strip()
+            cleaned_address = address.replace(
+                sub_address, sub_address.replace(" ", "") + " "
+            )
+        else:
+            cleaned_address = address
+
+        return cleaned_address
+
+    def __clean_digit_district(self, address: str) -> str:
+        """
+        Helper function to clean district with digit
+
+        * E.g: 'p 7' -> 'p7', and more
+        """
+        district_regex = r"(?i)[^A|a]?p [0-9]+"
+
+        cleaned_address = self.__clean_address_with_regex(address, district_regex)
+
+        district_glue_regex = r"(?i)p[0-9]+"
+        cleaned_address = self.__clean_address_with_regex(
+            cleaned_address, district_glue_regex
+        )
+
+        return cleaned_address
+
+    def __clean_digit_ward(self, address: str) -> str:
+        """
+        Helper function to clean ward with digit
+
+        * E.g: 'q 7' -> 'q7', and more
+        """
+        ward_regex = r"(?i)[^A|a]?q [0-9]+"
+
+        cleaned_address = self.__clean_address_with_regex(address, ward_regex)
+
+        ward_glue_regex = r"(?i)q[0-9]+"
+        cleaned_address = self.__clean_address_with_regex(
+            cleaned_address, ward_glue_regex
+        )
+
+        return cleaned_address
+
+    def __clean_special_dash_case(self, address: str) -> str:
+        """
+        Helper function to clean address with dash
+            * Remove spaces between dash
+
+        * E.g: 'br - vt' -> 'br-vt', and more
+        """
+        cleaned_address = re.sub(r"\s*-\s*", "-", address)
+        return cleaned_address
+
+    # * PROTECTED
+    def _unify_address(self, address: str) -> str:
+        """
+        Helper function to unify address to lower words and unidecode
+        """
+        unified_address = address.title()
+        # unified_address = unified_address.lower()
+        # unified_address = unidecode(unified_address)
+
+        return unified_address
+
+    def _remove_spare_spaces(self, address: str) -> str:
+        """
+        Helper function to remove spare spaces from string
+
+        Parameters
+        ----------
+        address : str
+            The input address to remove spare spaces
+
+        Returns
+        -------
+        str
+            Clean address without any spare spaces
+        """
+
+        cleaned_address = re.sub(" +", " ", address)
+        cleaned_address = cleaned_address.strip()
+
+        return cleaned_address
+
+    def _remove_padding_number(self, address: str) -> str:
+        """
+        Helper function to remove any number in string with padding zeros
+        """
+
+        digit_group_regex = r"(\d+)"
+
+        cleaned_address = re.sub(digit_group_regex, number_pad_replace, address)
+
+        return cleaned_address
+
+    def _clean_digit_address(self, address: str) -> str:
+        """
+        Helper function to clean address containing digits
+
+        Parameters
+        ----------
+        address : str
+            The raw address which may contain digits
+
+        Returns
+        -------
+        str
+            Clean address with digits
+        """
+        cleaned_address = self.__clean_digit_district(address)
+        cleaned_address = self.__clean_digit_ward(cleaned_address)
+
+        return cleaned_address
+
+    def _clean_dash_address(self, address: str) -> str:
+        """
+        Helper function to clean cities with dash '-'
+
+        * E.g: 'ba ria vung tau' -> 'ba ria - vung tau', and more
+        """
+        cleaned_address = self.__clean_special_dash_case(address)
+
+        return self.__replace_with_keywords(cleaned_address, DICT_NORM_CITY_DASH_REGEX)
+
+    def _clean_abbrev_address(self, address: str) -> str:
+        """
+        Helper function to clean & unify abbrev in address
+        """
+        return self.__replace_with_keywords(address, DICT_NORM_ABBREV_REGEX_KW)
+
+    def _clean_full_address(self, address: str) -> str:
+        """
+        Method for cleansing full address removing special characters
+
+        Parameters
+        ----------
+        address : str
+            The remained address to be cleaned
+
+        Returns
+        -------
+        str
+            The cleaned address
+        """
+        remain_punctuation = "".join(ADDRESS_PUNCTUATIONS)
+        clean_address = re.sub(
+            f"(?i)[^\u0030-\u0039\u0061-\u007A\u00C0-\u1EF8{remain_punctuation}]",
+            " ",
+            address,
+        )
+
+        clean_address = remove_spare_spaces(clean_address)
+
+        return clean_address
+
+    def _remove_wrap_info(self, address: str) -> str:
+        """
+        Method for remove all the information wrap inside brackets
+
+        Parameters
+        ----------
+        address : str
+            The remained address to be cleaned
+
+        Returns
+        -------
+        str
+            The cleaned address from wrap information
+        """
+
+        bracket_dict = {
+            "round": {"open": "(", "close": ")"},
+            "square": {"open": "[", "close": "]"},
+            "curly": {"open": "{", "close": "}"},
+        }
+
+        remove_regex = "|".join(
+            [
+                fr'\{bracket["open"]}.*\{bracket["close"]}|\{bracket["open"]}.*$'
+                for _, bracket in bracket_dict.items()
+            ]
+        )
+
+        clean_address = re.sub(remove_regex, " ", address)
+
+        clean_address = remove_spare_spaces(clean_address)
+
+        return clean_address
+
+    # * PUBLIC
+    def clean_address(self, address: str) -> str:
+        """
+        Method for cleansing and unifying address
+
+        Parameters
+        ----------
+        address : str
+            The raw address that need cleansing and unifying
+
+        Returns
+        -------
+        str
+            Unified and cleaned address
+        """
+        unified_address = self._unify_address(address)
+
+        cleaned_address = self._remove_wrap_info(unified_address)
+
+        cleaned_address = self._clean_abbrev_address(cleaned_address)
+
+        cleaned_address = self._remove_spare_spaces(cleaned_address)
+
+        cleaned_address = self._remove_padding_number(cleaned_address)
+
+        cleaned_address = self._clean_full_address(cleaned_address)
+
+        cleaned_address = self._clean_digit_address(cleaned_address)
+
+        cleaned_address = self._clean_dash_address(cleaned_address)
+
+        cleaned_address = self._remove_spare_spaces(cleaned_address)
+
+        return cleaned_address.title()
+
+
+def clean_vi_address(data: pd.DataFrame, address_col: str) -> pd.DataFrame:
+    """
+    Function to clean and unify vietnamese address in data
+
+    Parameters
+    ----------
+    data : pd.DataFrame
+        Raw data containing the address
+    address_col : str
+        The raw address column that need cleansing and unifying
+
+    Returns
+    -------
+    pd.DataFrame
+        Final unified and cleansed data with new column named `cleaned_<address_col>`
+    """
+    cleaner = VietnameseAddressCleaner()
+
+    cleaned_data = data
+
+    cleaned_data[f"cleaned_{address_col}"] = cleaned_data[address_col].progress_apply(
+        cleaner.clean_address
+    )
+
+    return cleaned_data
