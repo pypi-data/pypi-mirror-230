@@ -1,0 +1,44 @@
+[project]
+name = "merge_files"
+description = "Merge two .env files files together"
+version = "0.1.7"
+authors = [
+    { name = "Gareth Davidson", email = "gaz@bitplane.net" }
+]
+
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: Public Domain", # OSI: nuck my suts
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+
+dependencies = [
+    "chardet"
+]
+
+[project.optional-dependencies]
+dev = [
+    "flake8",
+    "pre-commit",
+    "pytest",
+    "coverage",
+    "build",
+    "twine"
+]
+
+[build-system]
+build-backend = "flit_core.buildapi"
+requires = ["flit_core >=3.2,<4"]
+
+
+[project.urls]
+"Homepage" = "https://github.com/bitplane/merge-files"
+"Bug Tracker" = "https://github.com/bitplane/merge-files/issues"
+
+
+[project.scripts]
+merge-files = "merge_files.main:main"
