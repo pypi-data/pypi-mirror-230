@@ -1,0 +1,177 @@
+[tool.poetry]
+name = "pynteracta"
+version = "0.3.4"
+description = "A wrapper for Interacta API"
+authors = ["Simone Dalla <simodalla@gmail.com>"]
+license = "BSD-3-Clause"
+readme = "README.md"
+packages = [{ include = "pynteracta", from = "src" }]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Information Technology",
+  "Intended Audience :: System Administrators",
+  "License :: OSI Approved :: MIT License",
+  "Framework :: Pydantic",
+  "Framework :: Pydantic :: 2",
+  "Operating System :: Unix",
+  "Operating System :: POSIX :: Linux",
+  "Environment :: Console",
+  "Environment :: MacOS X",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Internet",
+]
+homepage = "https://github.com/simodalla/pynteracta"
+repository = "https://github.com/simodalla/pynteracta"
+
+
+[tool.poetry.scripts]
+pynta = "pynteracta.cli.commands:app"
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+requests = "^2.28.1"
+typer = "^0.9.0"
+pydantic = { extras = ["email"], version = "^2.0" }
+pyjwt = { extras = ["crypto"], version = "^2.6.0" }
+pydantic-settings = "^2.0.0"
+pydantic-settings-toml = "^0.2.0"
+
+
+[tool.poetry.group.dev.dependencies]
+ipdb = "^0.13.9"
+pytest = "^7.1"
+pip-tools = "^6.9.0"
+flake8 = "^6.0.0"
+flake8-isort = "^6.0.0"
+coverage = "^7.0.0"
+black = "^23.0"
+pylint = "^2.15.4"
+pre-commit = "^3.0"
+bumpver = "^2023.1124"
+bandit = "^1.7.4"
+pytest-cov = "^4.0.0"
+mypy = "^1.0"
+types-requests = "^2.28.11.2"
+pytest-xdist = "^3.2.0"
+pytest-sugar = "^0.9.6"
+pytest-mock = "^3.10.0"
+time-machine = "^2.9.0"
+responses = "^0.23.3"
+faker = "^19.2.0"
+devtools = "^0.12.2"
+
+
+[tool.poetry.group.pytest.dependencies]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.bumpver]
+current_version = "0.3.4"
+version_pattern = "MAJOR.MINOR.PATCH"
+commit_message = "bump version v{old_version} -> v{new_version}"
+tag_message = "v{new_version}"
+tag_scope = "default"
+commit = true
+tag = true
+push = false
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = ['current_version = "{version}"', 'version = "{version}"']
+"src/pynteracta/__init__.py" = ["{version}"]
+"src/pynteracta/__main__.py" = ["- pynteracta v{version}"]
+
+# [tool.isort]
+# profile = "black"
+# default_section = "THIRDPARTY"
+# known_first_party = ["pynteracta"]
+# known_django = "django"
+# sections = [
+#     "FUTURE",
+#     "STDLIB",
+#     "THIRDPARTY",
+#     "DJANGO",
+#     "FIRSTPARTY",
+#     "LOCALFOLDER",
+# ]
+# skip_glob = ["**/migrations/*.py"]
+
+[tool.black]
+line-length = 100
+target-version = ['py311']
+include = '\.pyi?$'
+exclude = '''
+
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \._venv
+    | _build
+    | buck-out
+    | build
+    | dist
+    | migrations
+    | demo
+    | \.sh
+  )
+)
+'''
+
+[tool.ruff]
+# Docs: https://beta.ruff.rs/docs/
+# Rules: https://beta.ruff.rs/docs/rules/
+select = [
+  "B",
+  "C4",
+  "EXE",
+  "F",
+  "E",
+  "ISC",
+  "ICN",
+  "INP",
+  "PIE",
+  "SIM",
+  "W",
+  "T20",
+  "UP",
+  "T10",
+  "G",
+  "C90",
+  "ERA",
+]
+ignore = ["G004"] #["B008", "SIM102"]
+fixable = ["ALL"]
+unfixable = ["G004", "ERA001", "F401"]
+
+exclude = [
+  ".git",
+  ".mypy_cache",
+  ".pre-commit-cache",
+  ".ruff_cache",
+  ".tox",
+  ".venv",
+  "venv",
+  "docs",
+  "__pycache",
+  "**/migrations/*",
+]
+line-length = 100
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+target-version = "py311"
+src = ["src", "test"]
+
+[tool.ruff.mccabe]
+# Unlike Flake8, default to a complexity level of 10.
+max-complexity = 10
