@@ -1,0 +1,341 @@
+Metadata-Version: 2.1
+Name: ecip
+Version: 0.0.1
+Summary: A python package for the USPS Ecip-Application
+Author-email: David Lindenbaum <david.e.lindenbaum@usps.gov>, Emma Garvey <emma.r.garvey@usps.gov>, Mary Bollinger <mary.e.bollinger@usps.gov>
+Project-URL: Homepage, https://github.usps.gov/eng/ecip-ECIP-Application.git
+Project-URL: Bug Tracker, https://github.usps.gov/eng/ecip-ECIP-Application.git/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+**See Wiki Page for more information regarging the following: Docker Images, MLflow, Jenkins and Ansible Deployment Automation**
+
+## Purpose
+
+This is the source repository for the ECIPs Program
+
+## Automated deployment best practices
+As a best practice when automating deployment one should do the following:
+1. update the Docker directory as it is liable to change between releases.
+2. grab the latest release version number noted on this repo.
+
+## Deployment instructions
+
+### 1)  Verify Docker is configured right with:
+```
+docker info  
+```
+The container storage should be at /containers/docker_data
+
+using the override.conf and httpproxy and httpsproxy
+
+### 2)  All code should be stored at /home/idock/ECIP-Application
+
+Note: if you are on the alpha site (56.25.223.96) you may need to use sudo for this step. 
+
+```
+cd /home/idock
+```
+Delete existing ECIP-Application directory only if present:
+```
+rm -rf /home/idock/ECIP-Application
+```
+(If your account is not the owner of the ECIP-Application folder:)
+```
+sudo rm -rf /home/idock/ECIP-Application
+```
+Pull release code from github:
+```
+git config --global http.sslVerify false
+git clone https://github.usps.gov/eng/ECIP-Application.git -b release --single-branch
+```
+(For alpha site:)
+```
+sudo git clone https://github.usps.gov/eng/ECIP-Application.git -b release --single-branch
+```
+### 3)  Set environment variables
+Use the version number of the images you wish to pull from Harbor. You can find the VERSION by viewing the tag of the Docker image that has been updated (Projects > ecip > Repositories > Select Updated Image > Tags). Because database trimming is now automated via Celery Beats, you will also need to set the database trimming environment variables. Set the following env variables to define the ecips_db location, where to stage the trimmed database, where to backup the full database, and the number of days to keep when trimming:
+
+```
+export REPOSITORY="mrflvapodr4.usps.gov/ecip"
+export WORKSPACE="/home/idock/ECIP-Application/"
+export VERSION="vA.B.C"
+export ECIPS_DB="/mnt/database/ecips_db"
+export ECIPS_TMP="/mnt/database/ecips_db_temp"
+export ECIPS_BACKUP="/mnt/database/backup"
+export DAYS=14
+export LOGGING_LEVEL="debug"
+```
+
+For deploying a feature or development branch (Not from: release or master) you will also require an additional variable. 
+  **Development branch:**
+  ```
+  export IMAGE_BRANCH="_dev"
+  ```
+
+  **Any other branch:**
+  ```
+  export IMAGE_BRANCH="_feature"
+  ```
+
+### 4) Update MPE mapping file
+```
+python /home/idock/ECIP-Application/Docker/create_envfiles.py
+```
+Note: if on the alpha site, you need to change the read/write permissions before running the command above.
+```
+sudo chmod 777 /home/idock/ECIP-Application/Docker/
+sudo chmod 777 /home/idock/ECIP-Application/Docker/mpe_mappings.env
+sudo chmod 777 /home/idock/ECIP-Application/Docker/create_envfiles.py 
+```
+### 5) Update the email_env list
+Via the ansible script you can update what emails are used for the alerting. To do this use the following template.
+```
+echo "ECIPS_EMAIL_ALERT_LIST=email1, email2, email3' > /home/idock/ECIP-Application/Docker/email_list.env
+```
+
+### 6) Pull New Docker Images from Remote Repository:
+Doing this will minimize downtime and speed up the remaining processess. It also allows you to verify the containers are all up to date in the local repository by checking Docker images.
+
+```
+docker-compose -f docker-compose-build-gpu.yml pull
+```
+**Verify that the images in the local are correct for the version pulled using**
+```
+docker images
+```
+* To clear disk memory, you can (but are not required to) remove outdated images using either command. The clean_images.sh script removes all dangling or unused images and containers.
+```
+docker rmi <IMAGE_NAME>
+```
+OR
+```
+bash clean_images.sh
+```
+
+## ---At this point you will be interupting the processes all actions prior to this can be done while processes are in progress.---
+
+### 7) Prepare server for deployment (Only if upgrading a previous deployment):
+Bring down the previous application:  
+```
+cd /home/idock/ECIP-Application/Docker
+bash stop_services.sh
+docker-compose -f docker-compose-deploy-gpu.yml down
+```
+**It is a good idea at this point to verify all containers releated to the application have been stopped**
+```
+docker ps
+```
+**if any containers linger it is a good idea to sue docker kill to stop them so they don't interfere with the deployment**
+
+If new fields have been added to result data, the database needs to be updated to reflect this change. 
+This is necessary if new models are added to the application. The script creates backups in mnt/database/backup/ecips_db, each backup here is in the form of a timestamped directory and can be removed with the 'rm -r' command. Additionally, it is recommeded that the trim database step be run first in memory constrained environments.
+
+## Trim database
+Trimming the ECIPS database is now automated via Celery. We have depreciated the trim_database.sh script but it can also be run to trim the database. Note environment variables must be set.
+
+Run the trimming script and remove the migrations container: 
+```
+cd /home/idock/ECIP-Application/Docker
+bash trim_database.sh
+```
+**Verify that the database is being cleared** 
+You should only see data for the number of days you have kept the data.
+```
+cd /mnt/database/ecips_db/
+cd mpe_device=<SELECT ANY DEVICE>
+cd year=<CURRENT YEAR>
+cd month=<CURRENT MONTH>
+ls 
+```
+
+## End Trim database
+
+### 8) Migrate Database
+
+**This requires the services to be stopped.**
+This will update the database to the new configuration.
+
+```
+cd /home/idock/ECIP-Application/Docker
+bash start_migrations.sh
+docker exec -it ecips_worker_migrations conda run -n ecips python /ECIPs/ecips_tasks/upgrade.py
+docker kill ecips_worker_migrations
+bash stop_migrations.sh
+```
+### 9) Deploy containers
+GPU resources are directly launched via docker-compose.  We have depreciated the start_gpuserver.sh script.
+
+```
+cd /home/idock/ECIP-Application/Docker
+docker-compose -f docker-compose-deploy-gpu.yml up -d
+```
+
+### 10) Verify new files can be detected
+```
+docker logs -f docker_ecips_monitor_mpe_1
+```
+After 1-5 minutes files should be detected
+
+Check to see how long it takes to search the files (Aim for 2 minutes or less)
+
+
+If testing container is needed run
+```
+bash start_testcontainer.sh
+```
+
+## Testing Processing
+1) Open up  flower at localhost:9000 to inspect the tasking see that tasks are being processed
+*  The first run will take ~3min as the gpus connect
+*  After that tasks should be processed in the 100-1s range depending on image size.
+*  Insure that with system running there is no backlog in the queues, (Flower Will Indicate this)
+
+2) Open 2 teminal windows:
+* Terminal 1: open the MPE log:
+```
+docker logs -f docker_ecips_monitor_mpe_1
+```
+* Termimnal 2: navigate to an MPE image folder and touch the *.tif image files
+** MPE images folder structure:
+*** /images/[MPENAME]/[DATE(FMT=YYYY-MM-DD)]/[run(ex:01-000)]/[group(ex:01)]
+
+```
+cd /images/APBS-1/2021-01-01/01-000/01/
+touch *.tif
+```
+** Within a couple minutes (depending on the time configured between image pulls; currently set to 2 minutes) you should see these files being picjed up in the MPE log. Verify processing in Flower and then verify that *.json files are being created with results for each *.tif file. Note it may take several minutes to see the json files. We also want to verify there are no errors being reported from this processing.
+
+Once this is verified close the MPE log by ctrl+z on terminal 1:
+
+* Terminal 1: open the PRIM log:
+```
+docker logs -f docker_ecips_monitor_prlm_1
+```
+* Termimnal 2: touch the PRLM file
+
+```
+cd /images/APBS-1/2021-01-01/01-000/
+touch *.PRLM
+```
+** within a few minutes (depending on the time configured between image pulls; currently 5 minutes) you should see the PRLM file process through the PRLM log. verify there are no errors.
+
+## Testing Hazmat
+
+* Add an image to the latest image directory
+* Or update an existing test image by removeing the .lock file and touching the file 
+```
+cd /images/APBS-1/.../../../
+rm -f test_img.tif
+touch test_img.tif
+```
+* Check ecips serving to verify it built correctly:
+```
+docker logs -f ecips_serving
+```
+
+* Check docker logs to verify image has been processed:
+```
+docker logs -f docker_ecips_monitor_mpe_1
+```
+* Check ecips worker gpu livemail
+```
+docker logs -f ecips_worker_gpu_livemail_v1
+```
+* Check the Results of the Hazmat pipeline
+```
+docker logs -f docker_ecips_celery_worker_comms_gpu_1
+```
+
+## Testing Search
+2) After images are being processed we will test webapat. This test requires that the images results are converted to parquet files and saved in the database. This process happens every hour on the hour. For new deployments, this process must occur before this test is run.
+
+We have to simulate a webapat user
+
+open two windows
+
+in one:
+```
+docker logs -f ecips_worker_gpu_faiss_v1
+```
+in second
+
+```
+docker exec -it docker_ecips_monitor_webapat_1 bash
+cd /home/webapat/input
+cp 000065A.png /home/webapat/000065A_1.tmp
+cp /home/webapat/000065A_1.tmp .
+mv 000065A_1.tmp 000065A_1.png
+ 
+```
+* The first search will take ~5 minutes to provide  initial results and should take ~5 min per a day indexed.
+The logs should show that results are written to /home/webapat/output/000065A_1/000065A_1_total.json.
+
+
+### Run a second search 
+```
+cp /home/webapat/000065A_1.tmp 000065A_2.tmp 
+mv 000065A_2.tmp 000065A_2.png
+```
+The second search should take ~5  minutes per a day indexed.
+
+Check the docker logs -f ecips_worker_gpu_faiss_v1 for status.
+
+* A result folder should now exist at  /home/webapat/output/000065A_2/
+
+
+## Expected endpoints
+Flower (Celery Monitoring Tool) - Port 9000  
+Jupyter Lab Instance Test Instance - Port 9001  
+ECIPS API - Port 9002
+-------------------------------------
+|EndPoint Type   |  Enpoint         |
+|----------------|------------------|
+| Health         | /ApplicationHealth|
+| Health         | /SystemHealth     |
+| Stats          | /SummaryStats     |
+-------------------------------------
+
+To view these on the alpha site, use this command while logging in:
+```
+ssh -L 9000:56.25.223.96:9000 <user>@56.25.223.96
+```
+Flower will be reachable on localhost:9000
+
+To see the Jupyter Lab:
+```
+ssh -L 9001:56.25.223.96:9001 <user>@56.25.223.96
+docker exec -it ecips_worker_gpu_test bash
+```
+When in the test docker container:
+```
+jupyter lab --no-browser --port 9001
+```
+Jupyter Lab will be reachable on localhost:9001
+
+## Deployed Containers
+1) ecips_redis - the ECIPs REDIS server for Celery Results and Queues
+2) ecips_rabbitmq - the ECIPS RabbitMQ backend for Celery Messaging
+3) ecips_celery_worker_livemail_gpu - This container is the real time celery worker for managing ingest and extraction of new imagery
+4) ecips_celery_worker_faiss_gpu - This container is the real time celery worker for managing the FAISS similarity search
+5) ecips_celery_beats - This container triggers various celery tasks such as parquet creation
+6) ecips_controller - This container is the ECIPs RestAPI and how external groups can interact with ECIPs
+7) ecips_monitor_mpe - This container monitors the /images input folder for new MPE data
+8) ecips_monitor_webapat - This container monitors the /home/webapat/input folder for Webapat
+9) ecips_flower - This container is used to visually monitor the Celery Tasking server
+10) ecips_testing - This container is used for Jupyter Lab access  and interacting with the ECIPs server in a test scenario
+11) ecips_monitor_prlm - This container montiors the /images input folder for new .PRLM files
+12) ecips_celery_worker_risk_gpu - This container performs the risk calculations and email alerting for ECIPs
+13) ecips_beats - This container handles all the heart beat tasks
+
+
+## Test Files
+1) [Example .pngs](./ecips_testing/ecips_test_files/raw_images) 
+2) [Example result JSON](./ecips_testing/ecips_test_files/results) 
+
+
+    
+   

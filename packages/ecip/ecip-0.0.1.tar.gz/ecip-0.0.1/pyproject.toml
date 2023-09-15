@@ -1,0 +1,26 @@
+[project]
+name = "ecip"
+version = "0.0.1"
+authors = [
+  { name="David Lindenbaum", email="david.e.lindenbaum@usps.gov" },
+    { name="Emma Garvey", email="emma.r.garvey@usps.gov" },
+    { name="Mary Bollinger", email="mary.e.bollinger@usps.gov" }
+]
+description = "A python package for the USPS Ecip-Application"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dynamic = ["dependencies"]
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+[project.urls]
+"Homepage" = "https://github.usps.gov/eng/ecip-ECIP-Application.git"
+"Bug Tracker" = "https://github.usps.gov/eng/ecip-ECIP-Application.git/issues"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
