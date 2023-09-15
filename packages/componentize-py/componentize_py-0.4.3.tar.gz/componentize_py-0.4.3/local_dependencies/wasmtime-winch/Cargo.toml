@@ -1,0 +1,24 @@
+[package]
+name = "wasmtime-winch"
+description = "Integration between Wasmtime and Winch"
+version= "13.0.0"
+authors= ["The Wasmtime Project Developers"]
+edition= "2021"
+license = "Apache-2.0 WITH LLVM-exception"
+repository = "https://github.com/bytecodealliance/wasmtime"
+resolver = '2'
+
+[dependencies]
+winch-codegen = { path = "../winch-codegen" }
+target-lexicon = { version = "0.12.3", default-features = false, features = ["std"] }
+wasmtime-environ = { path = "../wasmtime-environ" }
+anyhow = "1.0.22"
+object = { version = "0.32", default-features = false, features = ['read_core', 'elf', 'std'] }
+cranelift-codegen = { path = "../cranelift-codegen" }
+wasmtime-cranelift-shared = { path = "../wasmtime-cranelift-shared" }
+wasmparser = "0.112.0"
+gimli = { version = "0.28.0", default-features = false, features = ['read', 'std'] }
+
+[features]
+component-model = ["wasmtime-environ/component-model"]
+all-arch = ["winch-codegen/all-arch"]

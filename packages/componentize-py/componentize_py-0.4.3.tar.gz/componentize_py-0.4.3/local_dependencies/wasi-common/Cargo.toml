@@ -1,0 +1,49 @@
+[package]
+name = "wasi-common"
+version= "13.0.0"
+authors= ["The Wasmtime Project Developers"]
+description = "WASI implementation in Rust"
+license = "Apache-2.0 WITH LLVM-exception"
+categories = ["wasm"]
+keywords = ["webassembly", "wasm"]
+repository = "https://github.com/bytecodealliance/wasmtime"
+readme = "README.md"
+edition= "2021"
+include = ["src/**/*", "WASI/phases/**/*", "README.md", "LICENSE", "build.rs"]
+build = "build.rs"
+
+# This doesn't actually link to a native library, but it allows us to set env
+# vars like `DEP_WASI_COMMON_19_*` for crates that have build scripts and depend
+# on this crate, allowing other crates to use the same witx files.
+links = "wasi-common-19"
+resolver = '2'
+
+[dependencies]
+anyhow = "1.0.22"
+thiserror = "1.0.43"
+wiggle = { path = "../wiggle" }
+wasmtime = { path = "../wasmtime" }
+tracing = "0.1.26"
+cap-std = "2.0.0"
+cap-rand = { version = "2.0.0", features = ["small_rng"] }
+bitflags = "2.0"
+log = { version = "0.4.8", default-features = false }
+
+[target.'cfg(unix)'.dependencies]
+rustix = { version = "0.38.8", features = ["fs"] }
+
+[target.'cfg(windows)'.dependencies]
+io-extras = "0.18.0"
+windows-sys= { version = "0.48.0", features = [
+    "Win32_Foundation",
+    "Win32_Networking_WinSock"] }
+
+[features]
+default = ["trace_log"]
+# This feature enables the `tracing` logs in the calls to target the `log`
+# ecosystem of backends (e.g. `env_logger`. Disable this if you want to use
+# `tracing-subscriber`.
+trace_log = [ "wiggle/tracing_log", "tracing/log" ]
+# Need to make the wiggle_metadata feature available to consumers of this
+# crate if they want the snapshots to have metadata available.
+wiggle_metadata = ["wiggle/wiggle_metadata"]

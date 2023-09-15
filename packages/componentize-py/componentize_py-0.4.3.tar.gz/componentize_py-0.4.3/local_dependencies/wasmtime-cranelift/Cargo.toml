@@ -1,0 +1,37 @@
+[package]
+name = "wasmtime-cranelift"
+version= "13.0.0"
+authors= ["The Wasmtime Project Developers"]
+description = "Integration between Cranelift and Wasmtime"
+license = "Apache-2.0 WITH LLVM-exception"
+repository = "https://github.com/bytecodealliance/wasmtime"
+documentation = "https://docs.rs/wasmtime-cranelift/"
+categories = ["wasm"]
+keywords = ["webassembly", "wasm"]
+edition= "2021"
+resolver = '2'
+
+[dependencies]
+anyhow = "1.0.22"
+log = { version = "0.4.8", default-features = false }
+wasmtime-environ = { path = "../wasmtime-environ" }
+cranelift-wasm = { path = "../cranelift-wasm" }
+cranelift-codegen = { path = "../cranelift-codegen" }
+cranelift-frontend = { path = "../cranelift-frontend" }
+cranelift-entity = { path = "../cranelift-entity" }
+cranelift-native = { path = "../cranelift-native" }
+cranelift-control = { path = "../cranelift-control" }
+wasmtime-cranelift-shared = { path = "../wasmtime-cranelift-shared" }
+wasmparser = "0.112.0"
+target-lexicon = { version = "0.12.3", default-features = false, features = ["std"] }
+gimli = { version = "0.28.0", default-features = false, features = ['read', 'std'] }
+object = { version = "0.32", default-features = false, features = ['read_core', 'elf', 'std','write'] }
+thiserror = "1.0.43"
+cfg-if = "1.0"
+wasmtime-versioned-export-macros = { path = "../wasmtime-versioned-export-macros" }
+
+[features]
+all-arch = ["cranelift-codegen/all-arch"]
+component-model = ["wasmtime-environ/component-model"]
+incremental-cache = ["cranelift-codegen/incremental-cache"]
+wmemcheck = []

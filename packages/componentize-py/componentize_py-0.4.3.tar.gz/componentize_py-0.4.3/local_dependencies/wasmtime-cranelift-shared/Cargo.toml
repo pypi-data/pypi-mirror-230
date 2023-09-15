@@ -1,0 +1,20 @@
+[package]
+name = "wasmtime-cranelift-shared"
+version= "13.0.0"
+authors= ["The Wasmtime Project Developers"]
+description = "Base-level integration with Wasmtime and Cranelift"
+license = "Apache-2.0 WITH LLVM-exception"
+repository = "https://github.com/bytecodealliance/wasmtime"
+documentation = "https://docs.rs/wasmtime-cranelift-shared/"
+edition= "2021"
+resolver = '2'
+
+[dependencies]
+anyhow = "1.0.22"
+wasmtime-environ = { path = "../wasmtime-environ" }
+cranelift-codegen = { path = "../cranelift-codegen" }
+cranelift-control = { path = "../cranelift-control" }
+cranelift-native = { path = "../cranelift-native" }
+target-lexicon = { version = "0.12.3", default-features = false, features = ["std"] }
+gimli = { version = "0.28.0", default-features = false, features = ['read', 'std'] }
+object = { version = "0.32", default-features = false, features = ['read_core', 'elf', 'std'] }

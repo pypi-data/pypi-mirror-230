@@ -1,0 +1,24 @@
+[package]
+authors = ["The Cranelift Project Developers"]
+name = "cranelift-frontend"
+version = "0.100.0"
+description = "Cranelift IR builder helper"
+license = "Apache-2.0 WITH LLVM-exception"
+documentation = "https://docs.rs/cranelift-frontend"
+categories = ["no-std"]
+repository = "https://github.com/bytecodealliance/wasmtime"
+readme = "README.md"
+edition= "2021"
+resolver = '2'
+
+[dependencies]
+cranelift-codegen = { path = "../cranelift-codegen" }
+target-lexicon = { version = "0.12.3", default-features = false, features = ["std"] }
+log = { version = "0.4.8", default-features = false }
+hashbrown = { version = "0.14", default-features = false , optional = true }
+smallvec = { version = "1.6.1", features = ["union"] }
+
+[features]
+default = ["std"]
+std = ["cranelift-codegen/std"]
+core = ["hashbrown", "cranelift-codegen/core"]

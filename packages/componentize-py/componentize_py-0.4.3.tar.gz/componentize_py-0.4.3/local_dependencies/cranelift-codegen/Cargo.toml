@@ -1,0 +1,109 @@
+[package]
+authors = ["The Cranelift Project Developers"]
+name = "cranelift-codegen"
+version = "0.100.0"
+description = "Low-level code generator library"
+license = "Apache-2.0 WITH LLVM-exception"
+documentation = "https://docs.rs/cranelift-codegen"
+repository = "https://github.com/bytecodealliance/wasmtime"
+categories = ["no-std"]
+readme = "README.md"
+keywords = ["compile", "compiler", "jit"]
+build = "build.rs"
+edition= "2021"
+resolver = '2'
+
+[dependencies]
+anyhow = { version = "1.0.22", optional = true }
+bumpalo = "3"
+capstone = { version = "0.9.0", optional = true }
+cranelift-codegen-shared = { path = "../cranelift-codegen-shared", version = "0.100.0" }
+cranelift-entity = { path = "../cranelift-entity" }
+cranelift-bforest = { path = "../cranelift-bforest" }
+cranelift-control = { path = "../cranelift-control" }
+hashbrown = { version = "0.14", default-features = false , features = ["raw"] }
+target-lexicon = { version = "0.12.3", default-features = false, features = ["std"] }
+log = { version = "0.4.8", default-features = false }
+serde = { version = "1.0.188", optional = true }
+serde_derive = { version = "1.0.188", optional = true }
+bincode = { version = "1.2.1", optional = true }
+gimli = { version = "0.28.0", default-features = false, features = ['read', 'std',"write"] , optional = true }
+smallvec = { version = "1.6.1", features = ["union"] }
+regalloc2 = { version = "0.9.2", features = ["checker"] }
+souper-ir = { version = "2.1.0", optional = true }
+sha2 = { version = "0.10.2", optional = true }
+
+[build-dependencies]
+cranelift-codegen-meta = { path = "../cranelift-codegen-meta", version = "0.100.0" }
+cranelift-isle = { path = "../cranelift-isle", version = "=0.100.0" }
+
+[features]
+default = ["std", "unwind", "host-arch"]
+
+# The "std" feature enables use of libstd. The "core" feature enables use
+# of some minimal std-like replacement libraries. At least one of these two
+# features need to be enabled.
+std = []
+
+# The "core" feature used to enable a hashmap workaround, but is now
+# deprecated (we (i) always use hashbrown, and (ii) don't support a
+# no_std build anymore). The feature remains for backward
+# compatibility as a no-op.
+core = []
+
+# Enable the `to_capstone` method on TargetIsa, for constructing a Capstone
+# context, and the `disassemble` method on `MachBufferFinalized`.
+disas = ["anyhow", "capstone"]
+
+# Enables detailed logging which can be somewhat expensive.
+trace-log = []
+
+# This enables unwind info generation functionality.
+unwind = ["gimli"]
+
+# ISA targets for which we should build.
+# If no ISA targets are explicitly enabled, the ISA target for the host machine is enabled.
+x86 = []
+arm64 = []
+s390x = []
+riscv64 = []
+# Enable the ISA target for the host machine
+host-arch = []
+
+# Option to enable all architectures.
+all-arch = [
+    "x86",
+    "arm64",
+    "s390x",
+    "riscv64"
+]
+
+# For dependent crates that want to serialize some parts of cranelift
+enable-serde = [
+    "serde",
+    "serde_derive",
+    "cranelift-entity/enable-serde",
+    "regalloc2/enable-serde",
+    "smallvec/serde"
+]
+
+# Enable the incremental compilation cache for hot-reload use cases.
+incremental-cache = [
+    "enable-serde",
+    "bincode",
+    "sha2"
+]
+
+# Enable support for the Souper harvester.
+souper-harvest = ["souper-ir", "souper-ir/stringify"]
+
+# Report any ISLE errors in pretty-printed style.
+isle-errors = ["cranelift-isle/fancy-errors"]
+
+# Put ISLE generated files in isle_generated_code/, for easier
+# inspection, rather than inside of target/.
+isle-in-source-tree = []
+
+[[bench]]
+name = "x64-evex-encoding"
+harness = false

@@ -1,0 +1,31 @@
+[package]
+authors = ["The Winch Project Developers"]
+name = "winch-codegen"
+description = "Winch code generation library"
+license = "Apache-2.0 WITH LLVM-exception"
+repository = "https://github.com/bytecodealliance/wasmtime"
+version = "0.11.0"
+edition= "2021"
+resolver = '2'
+
+[dependencies]
+wasmparser = "0.112.0"
+smallvec = { version = "1.6.1", features = ["union"] }
+anyhow = "1.0.22"
+target-lexicon = { version = "0.12.3", default-features = false, features = ["std","std"] }
+# The following two dependencies (cranelift-codegen, regalloc2) are temporary;
+# mostly to have access to `PReg`s and the calling convention.
+# In the next iteration we'll factor out the common bits so that they can be consumed
+# by Cranelift and Winch.
+cranelift-codegen = { path = "../cranelift-codegen" }
+regalloc2 = "0.9.2"
+gimli = { version = "0.28.0", default-features = false, features = ['read', 'std'] }
+wasmtime-environ = { path = "../wasmtime-environ" }
+
+[features]
+x64 = ["cranelift-codegen/x86"]
+arm64 = ["cranelift-codegen/arm64"]
+all-arch = [
+    "x64",
+    "arm64",
+]

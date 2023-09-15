@@ -1,0 +1,79 @@
+[package]
+name = "wasmtime-wasi"
+version= "13.0.0"
+authors= ["The Wasmtime Project Developers"]
+description = "WASI implementation in Rust"
+license = "Apache-2.0 WITH LLVM-exception"
+categories = ["wasm"]
+keywords = ["webassembly", "wasm"]
+repository = "https://github.com/bytecodealliance/wasmtime"
+readme = "README.md"
+edition= "2021"
+include = ["src/**/*", "README.md", "LICENSE", "build.rs", "witx/*", "wit/**/*"]
+build = "build.rs"
+resolver = '2'
+
+[dependencies]
+wasmtime = { path = "../wasmtime" }
+anyhow = "1.0.22"
+wasi-common = { path = "../wasi-common" }
+wasi-cap-std-sync = { optional = true , path = "../wasi-cap-std-sync" }
+wasi-tokio = { optional = true , path = "../wasi-tokio" }
+wiggle = { optional = true , path = "../wiggle" }
+libc = "0.2.60"
+once_cell = "1.12.0"
+
+tokio = { version = "1.26.0" , optional = true, features = ["time", "sync", "io-std", "io-util", "rt", "rt-multi-thread", "net"] }
+bytes = "1.4"
+thiserror = { version = "1.0.43", optional = true }
+tracing = { version = "0.1.26", optional = true }
+cap-std = { version = "2.0.0", optional = true }
+cap-rand = { version = "2.0.0", features = ["small_rng"] , optional = true }
+cap-fs-ext = { version = "2.0.0", optional = true }
+cap-net-ext = { version = "2.0.0", optional = true }
+cap-time-ext = { version = "2.0.0", optional = true }
+io-lifetimes = { version = "2.0.2", default-features = false , optional = true }
+fs-set-times = { version = "0.20.0", optional = true }
+is-terminal = { version = "0.4.0", optional = true }
+bitflags = { version = "2.0", optional = true }
+async-trait = { version = "0.1.71", optional = true }
+system-interface = { version = "0.26.0", features = ["cap_std_impls"] , optional = true}
+futures = { version = "0.3.27", default-features = false , optional = true }
+
+[target.'cfg(unix)'.dependencies]
+rustix = { version = "0.38.8", optional = true , features = ["event", "fs", "net"] }
+
+[target.'cfg(windows)'.dependencies]
+io-extras = "0.18.0"
+windows-sys = "0.48.0"
+rustix = { version = "0.38.8", optional = true , features = ["event", "net"] }
+
+[features]
+default = ["sync", "preview2", "preview1-on-preview2"]
+sync = ["wasi-cap-std-sync", "wiggle"]
+tokio = ["wasi-tokio", "wasmtime/async", "wiggle/wasmtime_async" ]
+exit = []
+preview2 = [
+    'wasmtime/component-model',
+    'wasmtime/async',
+    'dep:thiserror',
+    'dep:tracing',
+    'dep:cap-std',
+    'dep:cap-rand',
+    'dep:cap-fs-ext',
+    'dep:cap-net-ext',
+    'dep:cap-time-ext',
+    'dep:io-lifetimes',
+    'dep:fs-set-times',
+    'dep:is-terminal',
+    'dep:bitflags',
+    'dep:async-trait',
+    'dep:system-interface',
+    'dep:rustix',
+    'dep:tokio',
+    'dep:futures',
+]
+preview1-on-preview2 = [
+    "preview2",
+    "wiggle",
+]
