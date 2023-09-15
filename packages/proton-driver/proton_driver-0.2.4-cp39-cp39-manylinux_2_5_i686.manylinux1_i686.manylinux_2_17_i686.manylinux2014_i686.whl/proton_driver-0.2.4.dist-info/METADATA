@@ -1,0 +1,47 @@
+Metadata-Version: 2.1
+Name: proton-driver
+Version: 0.2.4
+Summary: Python driver with native interface for Proton
+Home-page: https://github.com/timeplus-io/proton-python-driver
+Author: Konstantin Lebedev
+Author-email: kostyan.lebedev@gmail.com
+License: MIT
+Keywords: Proton db database cloud analytics
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Information Technology
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: SQL
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Classifier: Topic :: Database
+Classifier: Topic :: Software Development
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Software Development :: Libraries :: Application Frameworks
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+Requires-Python: >=3.4, <4
+License-File: LICENSE
+Requires-Dist: pytz
+Requires-Dist: tzlocal
+Requires-Dist: tzlocal (<2.1) ; python_version == "3.5"
+Provides-Extra: lz4
+Requires-Dist: clickhouse-cityhash (>=1.0.2.1) ; extra == 'lz4'
+Requires-Dist: lz4 ; (implementation_name != "pypy") and extra == 'lz4'
+Requires-Dist: lz4 (<=3.0.1) ; (implementation_name == "pypy") and extra == 'lz4'
+Provides-Extra: numpy
+Requires-Dist: numpy (>=1.12.0) ; extra == 'numpy'
+Requires-Dist: pandas (>=0.24.0) ; extra == 'numpy'
+Provides-Extra: zstd
+Requires-Dist: zstd ; extra == 'zstd'
+Requires-Dist: clickhouse-cityhash (>=1.0.2.1) ; extra == 'zstd'
+
+This is forked from https://github.com/mymarilyn/clickhouse-driver. Necessary changes are made to support https://github.com/timeplus-io/proton with date types and namespaces changes.
