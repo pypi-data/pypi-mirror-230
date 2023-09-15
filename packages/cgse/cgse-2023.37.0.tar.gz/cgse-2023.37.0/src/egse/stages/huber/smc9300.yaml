@@ -1,0 +1,63 @@
+BaseClass:
+    egse.stages.huber.HuberSMC9300Interfcae
+
+ProxyClass:
+    egse.stages.huber.HuberSMC9300Proxy
+
+ControlServerClass:
+    egse.stages.huber.HuberSMC9300ControlServer
+
+ControlServer:
+    egse.stages.huber.smc9300_cs
+
+UserInterface:
+    egse.stages.huber.smc9300_ui
+
+Commands:
+
+    # Each of these groups is parsed and used on both the server and the client side.
+    #
+    # The group name (e.g. is_simulator) will be monkey patched in the Proxy class for the device
+    # or service.
+    #
+    # The other field are:
+    #   description:   Used by the doc_string method to generate a help string
+    #   cmd:           Command string that will eventually be send to the hardware controller for
+    #                  the device. This cmd string is also used at the client side to parse and
+    #                  validate the arguments.
+    #   device_method: The name of the method to be called on the device class.
+    #                  These should all be defined by the interface class for the device, i.e.
+    #                  HuberSMC9300Interface in this case.
+    #                  If device_method is not given, the command name (group name) will be used
+    #                  for the device_method.
+    #   response:      The name of the method to be called from the device protocol.
+    #                  This method should exist in the subclass of the CommandProtocol base class,
+    #                  i.e. in this case it will be the HuberSMC9300Protocol class.
+    #                  If response is not given the method `handle_device_method()` will be called.
+
+    # Definition of the DeviceInterface
+
+    is_simulator:
+        description:    Ask if the connected class is a simulator instead of the real device Controller class.
+        returns:        bool | True if the far end is a simulator instead of the real hardware
+
+    is_connected:
+        description:    Check if the HUBER Stage Controller is connected.
+
+    connect:
+        description:    Connect the HUBER hardware controller.
+
+    reconnect:
+        description:    Reconnect the HUBER hardware controller.
+
+                        This command will force a disconnect and then try to re-connect to the controller.
+
+    disconnect:
+        description:    Disconnect from the Huber hardware controller.
+
+                        This command will be send to the Huber Control Server which will then
+                        disconnect from the hardware controller.
+
+                        This command does not affect the ZeroMQ connection of the Proxy to the
+                        control server. Use the service command `disconnect_cs()` to disconnect
+                        from the control server.

@@ -1,0 +1,105 @@
+BaseClass:
+    egse.filterwheel.eksma.fw8smc5_interface.Fw8Smc5Interface
+
+ProxyClass:
+    egse.filterwheel.eksma.fw8smc5.Fw8Smc5Proxy
+
+ControlServer:
+    egse.filterwheel.eksma.fw8smc5_cs
+
+UserInterface:
+    egse.filterwheel.eksma.fw8smc5_ui
+
+Commands:
+
+    connect:
+        description:        Connect the Filter Wheel hardware controller.
+
+    reconnect:
+        description:        Reconnect the Lamp hardware controller.
+
+                            This command will force a disconnect and then try to re-connect to the controller.
+
+    disconnect:
+        description:        Disconnect from the Lamp controller. This command will be send to the
+                            Thorlabs Control Server which will then disconnect from the hardware controller.
+                            This command doesn't affect the ZeroMQ connection of this Proxy to the
+                            control server. Use the service command `disconnect_cs()` to disconnect
+                            from the control server.
+
+    is_connected:
+        description:        Check if the Thorlabs Hardware Controller is connected.
+
+    is_simulator:
+        description:        Ask if the control server is a simulator instead of the real controller class.
+        returns:            bool | True if the far end is a simulator instead of the real hardware
+
+    get_idn:
+        description:        Get the device ID string.
+        returns:            str | ID string
+
+    get_error_flags:
+        description:        Read the error status word for both controllers.
+        returs:             (int, int)
+
+    is_moving:
+        description:        Check whether either of the two wheels is currently moving.
+        returns:            (bool, bool)
+
+    get_position_steps:
+        description:        Read the current position of one wheel in encoder steps.
+        args:
+            id:             int | wheel ID [0, 1]
+        returns:            int | position in encoder steps
+        cmd:                "{id}" # Not a real command.
+
+    set_position_steps:
+        description:        Move one wheel to a encoder step position (blocking).
+        args:
+            id:             int | wheel ID [0, 1]
+            position:       int | position in encoder steps
+        cmd:                "{id}{position}" # Not a real command.
+
+    get_position_wheels:
+        description:        Return the filter position of both wheels.
+        returns:            (int, int) | index [0 - 7]
+
+    set_position_wheels:
+        description:        Set the wheels to specific filter positions.
+        args:
+            position_a:     int | position index of wheel 0
+            position_b:     int | position index of wheel 1
+        cmd:                "{position_a}{position_b}" # Not a real command.
+
+    get_position_index:
+        description:        Get the position of both wheels as a single index (sorted by attenuation).
+        returns:            int | index [0 - 63]
+
+    set_position_index:
+        description:        Move the wheels to a single filter index position (blocking).
+        args:
+            index:          int | index [0 - 63]
+        cmd:                "{index}" # Not a real command.
+
+    get_relative_intensity:
+        description:        Read the relative intensity value of the current filter.
+        returns:            float | relative intensity [0 - 1] = [opaque - transparent]
+
+    set_relative_intensity:
+        description:        Set filter combination that matches the relative intensity the closest.
+        args:
+            rel_intensity:  float | relative intensity [0 - 1] = [opaque - transparent]
+        cmd:                "{rel_intensity}" # Not a real command.
+
+    intensity_level_up:
+        description:        Increase the relative intensity by one level
+
+    intensity_level_down:
+        description:        Decrease the relative intensity by one level
+
+    home:
+        description:        Move both wheels to the home position (blocking).
+
+    set_position_wheel:
+        description:
+        cmd:                "{id}{position}"

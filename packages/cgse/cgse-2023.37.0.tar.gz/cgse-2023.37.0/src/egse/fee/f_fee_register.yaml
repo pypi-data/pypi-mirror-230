@@ -1,0 +1,43 @@
+# Register Map for the F-FEE camera of PLATO.
+#
+# This map is populated from the document: PLATO-DLR-PL-ICD-0007_idraft.5_F-FEE_CD_ICD_draft
+#
+# Format
+#
+#   Register Name:
+#      Sub Register Name: [address, offset, width, default]
+#
+
+DEB_STATUS:
+    reg_address:                0x0000_0000
+    OPER_MODE:                 [ 0, 4, 0]
+    ERROR_UNCORRECTED:         [ 8, 2, 0]
+    ERROR_CORRECTED:           [10, 6, 0]
+    PLL_STATUS:                [16, 8, 0]
+
+DEB_OVF:
+    reg_address:                0x0000_0004
+    ROW_ACTIVE_LIST_1_CNT_OVF: [ 0, 1, 0]
+    ROW_ACTIVE_LIST_2_CNT_OVF: [ 1, 1, 0]
+    ROW_ACTIVE_LIST_3_CNT_OVF: [ 2, 1, 0]
+    ROW_ACTIVE_LIST_4_CNT_OVF: [ 3, 1, 0]
+    ROW_ACTIVE_LIST_5_CNT_OVF: [ 4, 1, 0]
+    ROW_ACTIVE_LIST_6_CNT_OVF: [ 5, 1, 0]
+    ROW_ACTIVE_LIST_7_CNT_OVF: [ 6, 1, 0]
+    ROW_ACTIVE_LIST_8_CNT_OVF: [ 7, 1, 0]
+
+    OUTPUT_BUF_1_OVF:          [ 8, 1, 0]
+    OUTPUT_BUF_2_OVF:          [ 9, 1, 0]
+    OUTPUT_BUF_3_OVF:          [10, 1, 0]
+    OUTPUT_BUF_4_OVF:          [11, 1, 0]
+    OUTPUT_BUF_5_OVF:          [12, 1, 0]
+    OUTPUT_BUF_6_OVF:          [13, 1, 0]
+    OUTPUT_BUF_7_OVF:          [14, 1, 0]
+    OUTPUT_BUF_8_OVF:          [15, 1, 0]
+
+    RMAP_1_OVF:                [16, 1, 0]
+    RMAP_2_OVF:                [18, 1, 0]
+    RMAP_3_OVF:                [20, 1, 0]
+    RMAP_4_OVF:                [22, 1, 0]
+
+    LINE_PIXEL_CNT_OVF:        [24, 8, 0]

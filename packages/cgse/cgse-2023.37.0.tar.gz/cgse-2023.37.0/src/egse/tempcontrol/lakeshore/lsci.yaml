@@ -1,0 +1,162 @@
+BaseClass:
+    egse.tempcontrol.lakeshore.LakeShoreInterface
+
+ProxyClass:
+    egse.tempcontrol.lakeshore.LakeShoreProxy
+
+ControlServerClass:
+    egse.tempcontrol.lakeshore.LakeShoreControlServer
+
+ControlServer:
+    egse.tempcontrol.lakeshore.lsci_cs
+
+UserInterface:
+    egse.tempcontrol.lakeshore.lsci_ui
+
+Commands:
+
+    # Each of these groups is parsed and used on both the server and the client side.
+    # The group name (e.g. is_simulator) will be monkey patched in the Proxy class for the device or service.
+    # The other field are:
+    #   description:   Used by the doc_string method to generate a help string
+    #   cmd:           Command string that will eventually be send to the hardware controller for the
+    #                  device after the arguments have been filled.
+    #   device_method: The name of the method to be called on the device class.
+    #                  These should all be defined by the base class for the device, i.e. LakeShoreBase.
+    #   response:      The name of the method to be called from the device protocol.
+    #                  This method should exist in the subclass of the CommandProtocol base class, i.e.
+    #                  in this case it will be the LakeShoreProtocol class.
+
+    # Definition of the the DeviceInterface
+
+    disconnect:
+        description  : Disconnect from the LakeShore controller. This command will be send to the
+                       LakeShore Control Server which will then disconnect from the hardware controller.
+                       This command doesn't affect the ZeroMQ connection of this Proxy to the
+                       control server. Use the service command ``disconnect()`` to disconnect
+                       from the control server.
+
+    connect:
+        description:    Connect the LakeShore hardware controller
+
+    reconnect:
+        description:    Reconnect the LakeShore hardware controller.
+
+                        This command will force a disconnect and then try to re-connect to the controller.
+
+    is_simulator:
+        description:   Ask if the control server is a simulator instead of the real LakeShoreController class.
+        returns:       bool | True if the far end is a simulator instead of the real hardware
+
+    is_connected:
+        description:   Check if the LakeShore Hardware Controller is connected.
+
+
+    # Definition of the device commands
+
+    info:
+        description:   Retrieve basic information about the LakeShore and the Controller.
+        cmd:           "*IDN?\n"
+        returns:        str | Model number
+
+    get_id:
+        description:   Return LakeShore ID.
+        returns:       str | Returns return id LakeShore LS_X
+  
+    get_temperature:
+        description:   Retrieve the temperature from the given channel.
+        cmd:           "CRDG?\n"
+        returns:       float | The current temperature for the given channel
+
+    get_params_pid:
+        description:   Returns control loop PID values. See the PID command for parameter descriptions.
+        args:
+          output:     int | output Specifies which output’s control loop to configure 1–4      
+        cmd:           "PID? {output}\n"
+        returns:        list | [P, I, D]
+
+    get_setpoint:
+        description:   Returns Control Setpoint Query.
+        args:
+          output:     int | output Specifies which output’s control loop to configure 1–4      
+        cmd:           "SETP? {output}\n"
+        returns:        str | value
+
+    get_tuning_status:
+        description:   Returns Tuning Status   
+        cmd:           "TUNEST?\n"
+        returns:        list 
+
+    get_heater_setup:
+        description:   Returns Heater Setup   
+        args:
+          output:     int | output Specifies which output’s control loop to configure 1–4   
+        cmd:           "HTRSET? {output}\n"
+        returns:        list 
+
+    get_range:
+        description:   Get Range mode.
+        args:
+          output:     int | output Specifies which output’s control loop to configure 1–4          
+        cmd:           "RANGE? {output}\n"
+        returns:       int | Returns the remote interface mode
+  
+    get_heater_status:
+        description:   Returns Heater Status
+        args:
+          output:     int | output Specifies which output’s control loop to configure 1–4             
+        cmd:           "HTRST? {output}\n"
+        returns:        list 
+
+    get_heater:
+        description:   Heater Output Query
+        args:
+          output:     int | output Specifies which output’s control loop to configure 1–4             
+        cmd:           "HTR? {output}\n"
+        returns:        float 
+
+    set_params_pid:
+        description:   Set control loop PID values.
+        args:
+          output:     int | output PID      
+          p:        int | P Value      
+          i:        int | I Value
+          d:        int | D Value
+        cmd:           "PID {output},{p},{i},{d}\n"
+        returns:        None
+
+    set_setpoint:
+        description:   Returns Control Setpoint Command.
+        args:
+          output:     int | output Specifies which output’s control loop to configure 1–4    
+          value:      srt | value The value for the setpoint (in the preferred units of the control loop sensor).        
+        cmd:           "SETP {output},{value}\n"
+        returns:        None
+    
+    set_autotune:
+        description:   Set Autotune params.
+        args:
+          output:     int | output Specifies which output’s control loop to configure 1–4    
+          value:      srt | value The value for the setpoint (in the preferred units of the control loop sensor).        
+        cmd:           "ATUNE {output},{mode}\n"
+        returns:        None
+
+    set_heater_setup:
+        description:   Set Heater params.
+        args:
+          output:           int 
+          heater_resistant: int
+          max_current:      int 
+          max_user_current: str
+          output_display:   int
+
+        cmd:           "ATUNE {output},{mode}\n"
+        returns:        None
+    
+    set_range:
+        description:   Set Range params.
+        args:
+          output:     int | output Specifies which output’s control loop to configure 1–4    
+          value:      srt | value The value for the setpoint (in the preferred units of the control loop sensor).        
+        cmd:           "RANGE {output},{mode}\n"
+        returns:        None

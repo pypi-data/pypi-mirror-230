@@ -1,0 +1,227 @@
+BaseClass:
+    egse.tempcontrol.srs.ptc10.ptc10Interface
+
+ProxyClass:
+    egse.tempcontrol.srs.ptc10.ptc10Proxy
+
+ControlServerClass:
+    egse.tempcontrol.srs.ptc10_cs.ptc10ControlServer
+
+ControlServer:
+    egse.tempcontrol.srs.ptc10_cs
+
+UserInterface:
+    egse.tempcontrol.srs.ptc10_ui
+
+Commands:
+
+    # Each of these groups is parsed and used on both the server and the client side.
+    # The group name (e.g. is_simulator) will be monkey patched in the Proxy class for the device or service.
+    # The other field are:
+    #   description:   Used by the doc_string method to generate a help string
+    #   cmd:           Command string that will eventually be send to the hardware controller for the
+    #                  device after the arguments have been filled.
+    #   device_method: The name of the method to be called on the device class.
+    #                  These should all be defined by the base class for the device.
+    #                  This method should exist in the subclass of the CommandProtocol base class.
+
+    # Definition of the the DeviceInterface
+
+    disconnect:
+        description: Disconnect from the Temperature regulator controller. This command will be send to the
+                       Thorlabs Control Server which will then disconnect from the hardware controller.
+                       This command doesn't affect the ZeroMQ connection of this Proxy to the
+                       control server. Use the service command ``disconnect_cs()`` to disconnect
+                       from the control server.
+
+    connect:
+        description:    Connect the temperature hardware controller
+
+    reconnect:
+        description:    Reconnect the temperature hardware controller.
+
+                        This command will force a disconnect and then try to re-connect to the controller.
+
+    is_simulator:
+        description:   Ask if the control server is a simulator instead of the real SRSPTC10Controller class.
+        returns:       bool | True if the far end is a simulator instead of the real hardware
+
+    is_connected:
+        description:   Check if the SRS Hardware Controller is connected.
+
+
+    # Definition of the device commands
+    info:
+        description:    Returns basic information about the device, its name, firmware version etc.
+        returns:        str
+
+    alarm_status:
+        description:    Returns the current status of the Alarm Status Register, and then clears the register.
+        returns:        str
+
+    get_names:
+        description:    Returns a tuple of 2 lists with the names of inputs (4 sensors) in the first list and the names of
+                        outputs (3 heaters) in the second list.
+        returns:         tuple
+
+    set_name:
+        description:    Modifies the name of the specified channel (input or output).
+        cmd:            '{old_name} {new_name}'
+
+    clear_error:
+        description:    Erases all error messages for the port over which the instruction was transmitted. Also clears all messages
+                        from the System.Com. Errors window regardless of which port generated them.
+
+    stop:
+        description:    kill.all stops all currently running macros with the given runtime name. The runtime name is assigned with the
+                        "name" instruction and is not necessarily the same as the file name that a macro may be saved under.
+                        The kill.all instruction stops all currently-running macros regardless of name or which port started the macro.
+
+    standby:
+        description:    Puts the PTC10 into stby mode, in which the outputs are turned off, data acquisition is paused, macros are
+                        paused, the front panel display and system fan are shut off, and the system does not respond to remote commands.
+                        The PTC321's excitation currents remain on, and the chassis cooling fan may switch on occassionally.
+                        Press the "Output Enable" key to exit standby mode. There is no remote command to leave stand by mode.
+
+    reset:
+        description:    Resets the PTC10.
+                        The *RST instruction is equivalent to turning the instrument off and back on again, except the Power On bit of
+                        the Event Status Register is not set. *RST has the following effects
+                        - Outputs are disabled (as if the “Output enable” button were pressed).
+                        - All currently-running macros are stopped, regardless of whether the macros were started by the GPIB interface,
+                        another I/O port, or the Program screen.
+                        - The instrument returns to the Select screen.
+                        -Partially-received instructions on all I/O ports are cleared.
+                        - All pending transmissions on all I/O ports are cancelled.
+                        - The error queues for all I/O ports are cleared.
+                        - The plot screen returns to showing the most recent data on autoscaled Y axes.
+                        - The instrument automatically triggers at the rate set with the “A/D rate” control.
+                        - Clears all locally-stored log data. Logs on USB devices are not affected. If data is not being logged to a
+                        USB storage device, the Plot screen shows no accumulated data immediately after a *RST command.
+
+    read_temperature:
+        description:    Reads the temperature from the 3 PT1000 corresponding to TRP2/TRP3/TRP4.
+        returns:         list
+
+    read_heater:
+        description:    Reads the 3x heater outputs with the unit (W, A or V).
+                        Returns a tuple. 1st element is a list with the 3 values of the heaters. 2nd element is a string with the unit
+                        ('W', 'A' or 'V').
+        returns:         tuple
+
+    disable_heater:
+        description:    Disables the specified heater output. output_ch = 1, 2, 3
+                        <channel>.Off cancels any active autotuning process, turns PID feedback off, and sets the channel's
+                        output to zero or the lower limit.
+        cmd:            '{output_ch}'
+
+    outputs_enable:
+      description:      Enables all outputs. Equivalent to press the red button twice on the front panel of the PTC10 when outputs disabled.
+
+    outputs_disable:
+        description:    Disables all outputs. Equivalent to press the red button on the front panel of the PTC10 when output enabled.
+
+    disable_all:
+      description:      Both disable_heater function used for all heaters AND outputs_disable.
+
+    is_outputs_enable:
+      description:      Returns a boolean corresponding to the state of the red button/light on the front panel of the PTC10.
+                        True means outputs enabled (red light switch on)
+                        False means outputs disabled (red light switch off)
+      returns:           bool
+
+    output_limit:
+        description:    Sets the min and max output and can be used to prevent the PID loop for delivering excessive power to a
+                        heater. The limits must be expressed in the same units that the output is expressed in. The limits must
+                        normally be reset when the output units are changed, since the limits are not converted to the new units.
+                        output_ch = 1, 2, 3
+                        low = float >= 0
+                        high = float > low
+        cmd:            '{output_ch} {low} {high}'
+
+    output_unit:
+        description:    Sets the unit for the 3 heaters
+                        unit = W, A, V, or in lowercase w, a, v
+        cmd:            '{unit}'
+
+    set_heater_input:
+        description:    Sets the sensor as input for the specified heater.
+                        output_ch = 1, 2, 3
+                        input = name of the sensor (e.g. TRP2)
+        cmd:            '{output_ch} {input}'
+
+    setpoint:
+        description:    Sets the temperature setpoint. The PID attemps to keep the input at this value by changing the output.
+                        output_ch = 1, 2, 3
+                        setpoint = float (°C)
+        cmd:            '{output_ch} {setpoint}'
+
+    get_PID:
+        description:    Returns a dictionary with P, I and D parameters as float,
+                        {"P" P_value, "I" I_value, "D" D_value}
+                        output_ch = 1, 2, 3
+        cmd:            '{output_ch}'
+
+    set_PID:
+        description:    The input must be stable before either Step or Relay tuning is started. Furthermore, the output must be greater
+                        than half the step height before starting relay tuning. The best time to start a step response is when the
+                        system is first turned on at the beginning of the day, i.e the heater is cold and its temperature stable.
+                        See User Manual for further details.
+                        input_ch parameter sets the PID input channel which is the temperature that the PID feedback loop controls. intput_ch = 1, 2, 3
+                        output_ch parameter sets the PID output channel. output_ch = 1, 2, 3
+                        PID parameter sets the three coefficients respectively in P, I and D. PID = [float, float, float]
+        cmd:            '{input_ch} {output_ch} {PID}'
+
+    autotune_PID:
+        description:    Configures the PID with autotune.
+                        User Manual p.50 "If the system has never been tuned, start with the feedback turned off and the heater at ambient temperature.
+                        If the system has been tuned before, it’s better to wait for the temperature to stabilize at the setpoint.
+                        In either case, the key to successful autotuning is to start with a stable temperature."
+                        Prints message if failure to autotune PID. Old values for P, I and D are retained.
+                        input_ch parameter sets the PID input channel which is the temperature that the PID feedback loop controls. intput_ch = 1, 2, 3
+                        output_ch parameter sets the PID output channel. output_ch = 1, 2, 3
+        cmd:            '{input_ch} {output_ch}'
+
+    set_auto:
+        description:    Enables the specified output to reach the specified setpoint automatically.
+                        output_ch = 1, 2, 3
+                        setpoint = float (°C)
+        cmd:            '{output_ch} {setpoint}'
+
+    set_manual:
+        description:    Enables the specified output manually with the specified value.
+                        The unit is the one currently in effect (W, A or V).
+                        output_ch = 1, 2, 3
+                        value = float >= 0
+        cmd:            '{output_ch} {value}'
+
+    set_survival:
+        description:    Sets all outputs to the min Non op temperature for TRP2, TRP3 and TRP4 as given in the Setup YAML file.
+                        We assume that P, I and D coefficients are already correctly set.
+
+    set_stable:
+        description:    Sets all outputs to the same temperature setpoint given as parameter.
+                        We assume that P, I and D coefficients are already correctly set.
+        cmd:            '{setpoint}'
+
+    set_custom:
+        description:    Sets the outputs given as parameter to the corresponding temperature given as parameter.
+                        If an output channel is not given as parameter in the dictionary outputs_dict, this output
+                        channel will remain at the same state and with same setpoint as before.
+                        outputs_dict = {output_ch setpoint} for example, { 3 -110, 1 -106 }
+        cmd:            '{outputs_dict}'
+
+    heater_sensor_error:
+        description:    Returns a list with names of sensors (TRP) and heaters which cannot be read by the PTC10.
+        returns:         list
+
+    disable_heater_error:
+        description:    Disables heaters whose PT1000 sensors are faulty.
+                        This function does not re-enable heater if a PT1000 is no longer faulty.
+
+    get_time:
+        description:    Returns PTC10 time as a string.
+        returns:        str
+
+    update_time:
+        description:    Updates the PTC10 date and time in UTC from the server's time which is ntp synchronised.

@@ -1,0 +1,265 @@
+BaseClass:
+    egse.aeu.AWGInterface
+
+ProxyClass:
+    egse.aeu.AWGProxy
+
+ControlServerClass:
+    egse.aeu.AWGControlServer
+
+ControlServer:
+    egse.aeu.aeu_cs
+
+
+#UserInterface:
+#    egse.aeu.aeu_ui
+
+Commands:
+
+
+    # Each of these groups is parsed and used on both the server and the client side.
+    #
+    # The group name (e.g. is_simulator) will be monkey patched in the Proxy class for the device
+    # or service.
+    #
+    # The other field are:
+    #   description:   Used by the doc_string method to generate a help string
+    #   cmd:           Command string that will eventually be send to the hardware controller for
+    #                  the device. This cmd string is also used at the client side to parse and
+    #                  validate the arguments.
+    #   device_method: The name of the method to be called on the device class.
+    #                  These should all be defined by the interface class for the device, i.e.
+    #                  AEUInterface in this case.
+    #                  When the device_method is the same as the group name, it can be omitted.
+    #   response:      The name of the method to be called from the device protocol.
+    #                  This method should exist in the subclass of the CommandProtocol base class,
+    #                  i.e. in this case it will be the AEUProtocol class.
+    #                  The default (when no response is given) is 'handle_device_method'.
+
+    # Definition of the the DeviceInterface
+
+    is_simulator:
+        description: Ask if the connected class is a simulator instead of the real device Controller class.
+        returns: bool | True if the far-end is a simulator instead of the real hardware
+
+    is_connected:
+        description: Check if the device hardware controller is connected.
+
+    connect:
+        description: Connect the device hardware controller.
+
+    reconnect:
+        description: Reconnect the device hardware controller.  This command will force a disconnect and then try to
+                     re-connect to the controller.
+
+    disconnect:
+        description: Disconnect from the device hardware controller. This command will be send to the Control Server
+                     which will then disconnect from the hardware controller.
+                     This command does not affect the ZeroMQ connection of the Proxy to the control server. Use the
+                     service command `disconnect_cs()` to disconnect from the control server.
+
+    # AWG commands
+
+    reset:
+        description:    Reset the instrument to the remote operation default settings.
+        cmd:            "*RST"
+
+    set_channel:
+        description:    Select the required channel (1/2) as the destination for sub-sequent commands.
+        cmd:            "CHN {}"
+
+    get_channel:
+        description:    Return the currently selected channel number (1/2).
+        cmd:            "CHN?"
+
+    set_waveform_type:
+        description:    Set the output waveform type (ARB for arbitrary, SQUARE for square).
+        cmd:            "WAVE {}"
+
+#    get_waveform_type:
+#        description:    Return the output waveform type (ARB for arbitrary, SQUARE for square).
+#        cmd:            "WAVE?"
+
+    set_output_load:
+        description:    Set the output load [Ohm], which the generator is to assume for amplitude and DC offset entries.
+        cmd:            "ZLOAD {}"
+
+#    get_output_load:
+#        description:    Return the output load.
+#        cmd:            "ZLOAD?"
+
+    set_amplitude:
+        description:    Set the amplitude to the given value [Vpp].
+        cmd:            "AMPL {}"
+
+#    get_amplitude:
+#        description:    Return the amplitude [Vpp].
+#        cmd:            "AMPL?"
+
+    set_dc_offset:
+        description:    Set the DC offset to the given value [V].
+        cmd:            "DCOFFS {}"
+
+#    get_dc_offset:
+#        description:    Returns the DC offset [V].
+#        cmd:            "DCOFFS?"
+
+    set_duty_cycle:
+        description:    Set the square waveform symmetry to the given value [%].
+        cmd:            "SQRSYMM {}"
+
+#    get_duty_cycle:
+#        description:    Return the square waveform symmetry [%].
+#        cmd:            "SQRSYMM?"
+
+    set_frequency:
+        description:    Set the waveform frequency [Hz].
+        cmd:            "FREQ {}"
+
+#    get_frequency:
+#        description:    Return the waveform frequency [Hz].
+#        cmd:            "FREQ?"
+
+    set_output_status:
+        description:    Set the output status and type (ON/OFF).
+        cmd:            "OUTPUT {}"
+
+#    get_output_status:
+#        description:    Return the output status and type (ON/OFF).
+#        cmd:            "OUTPUT?"
+
+    set_arb_waveform:
+        description:    Set the given arbitrary waveform type (ARB1/ARB2/ARB3/ARB4).
+        cmd:            "ARBLOAD {}"
+
+    get_arb_waveform:
+        description:    Return the arbitrary waveform type (ARB1/ARB2/ARB3/ARB4).
+        cmd:            "ARBLOAD?"
+
+    define_arb_waveform:
+        description:    Define an arbitrary waveform (ARB1/ARB2/ARB3/ARB5) with the given name and waveform point
+                        interpolation state (ON/OFF).
+        cmd:            "ARBDEF {}, {}, {}"
+
+    load_arb1_data:
+        description:    Load data to an existing arbitrary waveform memory location ARB1.
+        cmd:            "ARB1 {}"
+
+    load_arb2_data:
+        description:    Load data to an existing arbitrary waveform memory location ARB2.
+        cmd:            "ARB2 {}"
+
+    load_arb3_data:
+        description:    Load data to an existing arbitrary waveform memory location ARB3.
+        cmd:            "ARB3 {}"
+
+    load_arb4_data:
+        description:    Load data to an existing arbitrary waveform memory location ARB4.
+        cmd:            "ARB4 {}"
+
+    load_arb1_ascii:
+        description:    Load data to an existing arbitrary waveform memory location ARB1.
+        cmd:            "ARB1 {}"
+
+    load_arb2_ascii:
+        description: Load data to an existing arbitrary waveform memory location ARB2.
+        cmd: "ARB2 {}"
+
+    load_arb3_ascii:
+        description: Load data to an existing arbitrary waveform memory location ARB3.
+        cmd: "ARB3 {}"
+
+    load_arb4_ascii:
+        description: Load data to an existing arbitrary waveform memory location ARB4.
+        cmd: "ARB4 {}"
+
+    get_arb1_def:
+        description:    Return the user-specified waveform name, waveform point interpolation state, and waveform length
+                        of ARB1.
+        cmd:            "ARBDEF1?"
+
+    get_arb2_def:
+        description:    Return the user-specified waveform name, waveform point interpolation state, and waveform length
+                        of ARB2.
+        cmd:            "ARBDEF2?"
+
+    get_arb3_def:
+        description:    Return the user-specified waveform name, waveform point interpolation state, and waveform length
+                        of ARB3.
+        cmd:            "ARBDEF3?"
+
+    get_arb4_def:
+        description:    Return the user-specified waveform name, waveform point interpolation state, and waveform length
+                        of ARB4.
+        cmd:            "ARBDEF4?"
+
+    get_arb1:
+        description:    Return The data for the existing waveform location ARB1.
+        cmd:            "ARB1?"
+
+    get_arb2:
+        description:    Return The data for the existing waveform location ARB2.
+        cmd:            "ARB2?"
+
+    get_arb3:
+        description:    Return The data for the existing waveform location ARB3.
+        cmd:            "ARB3?"
+
+    get_arb4:
+        description:    Return The data for the existing waveform location ARB4.
+        cmd:            "ARB4?"
+
+    clear_status:
+        description:    Clear the status structure.  This indirectly clear the status byte register.
+        cmd:            "*CLS"
+
+    execution_error_register:
+        description:    Query and clear the execution error register.  This register contains a number representing the
+                        last error encountered over the current interface.
+        cmd:            "EER?"
+
+    query_error_register:
+        description:    Query and clear the query error register.
+        cmd:            "QER?"
+
+    get_id:
+        description:    Retun the instrument identification, i.e. manufacturer, model, serial number, revision of the
+                        main firmware (XX.xx), revision of the remote interface firmware (YY.yy), and revision of the
+                        USB flash drive interface (ZZ.zz).
+        cmd:            "*IDN?"
+
+    set_counter_status:
+        description:    Set the external counter to ON or OFF.
+        cmd:            "CNTRSWT {}"
+
+    get_counter_status:
+        description:    Return the external counter status (ON/OFF).
+        cmd:            "CNTRSWT?"
+
+    set_counter_source:
+        description:    Set the counter source to AC (Alternating Current) or DC (Direct Current) coupled input.
+        cmd:            "CNTRCPLNG {}"
+
+    get_counter_source:
+        description:    Return the counter source coupled input (AC for Alternating Current, DC for Direct Current).
+        cmd:            "CNTRCPLNG?"
+
+    set_counter_type:
+        description:    Set the counter type (FREQUENCY/PERIOD/WIDTH/NWIDTH/DUTY).
+        cmd:            "CNTRTYPE {}"
+
+    get_counter_type:
+        description:    Return the counter type (FREQUENCY/PERIOD/WIDTH/NWIDTH/DUTY).
+        cmd:            "CNTRTYPE?"
+
+    get_counter_value:
+        description:    Return the currently measured count value.  If the counter type is FREQUENCY, the returned
+                        value is expressed in Hz.  If the couter type is DUTY (duty cycle), the returned value is
+                        expressed in %.  Else the returned value is expressed in s.
+        cmd:            "CNTRVAL?"
+
+    align:
+        description:    Send signal to  align the zero phase reference of both channels. This shall be used to
+                        synchronise Clk_ccdread with Clk_heater.  To synchronise both channels, the frequency should
+                        be the same.
+        cmd:            "ALIGN"

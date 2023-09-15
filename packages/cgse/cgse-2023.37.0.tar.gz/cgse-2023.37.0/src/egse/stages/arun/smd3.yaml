@@ -1,0 +1,68 @@
+BaseClass:
+    egse.stages.arun.smd3_interface.Smd3Interface
+
+ProxyClass:
+    egse.stages.arun.smd3.Smd3Proxy
+
+ControlServer:
+    egse.stages.arun.smd3_cs
+
+Commands:
+
+    disconnect:
+        description:        Disconnect from the device.
+
+    connect:
+        description:        Connect to the device.
+
+    reconnect:
+        description:        Reconnect to the device.
+                            This command will force a disconnect and then try to re-connect to the controller.
+    is_connected:
+        description:        Check if the Thorlabs Hardware Controller is connected.
+
+    is_simulator:
+        description:        Ask if the control server is a simulator instead of the real controller class.
+        returns:            bool | True if the far end is a simulator instead of the real hardware
+
+    get_idn:
+        description:        Get device IDN message.
+        returns:            str | serial number
+
+    clear_flags:
+        description:        Clear all faults on the controller
+
+    move_mask_fov:
+        description:        Move mask into or out of the FOV
+        cmd:                "{enable}"
+
+    mask_in_fov:
+      description:          Get whether the mask is in the FOV
+      returns:              bool | mask in FOV
+
+    emergency_stop:
+      description:          Immediatly stops the motor and raises an error flag
+
+    bake:
+      description:          Bake out the stepper motor
+
+    actual_position:
+      description:          Set/Get the current position in steps
+      cmd:                  "{position}"
+
+    actual_position_mm:
+      description:          Get the current position in steps
+
+    actual_frequency:
+      description:          Get the current velocity in hz
+
+    absolute_move:
+      description:
+      cmd:                  "{absolute_position}"
+
+    relative_move:
+      description:
+      cmd:                  "{relative_position}"
+
+    run_homing:
+      description:          Run the homing procedure for the hartmann stage

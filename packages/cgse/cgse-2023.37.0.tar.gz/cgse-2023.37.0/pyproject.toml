@@ -1,0 +1,181 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cgse"
+description = "PLATO Common-EGSE"
+dynamic = ["version", "readme"]
+requires-python = ">=3.8"
+license = {text = "LGPL-3.0"}
+keywords = ["CGSE", "PLATO"]
+authors = [
+    {name = "Rik Huygen", email = "rik.huygen@kuleuven.be"},
+    {name = "Sara Regibo", email = "sara.regibo@kuleuven.be"},
+]
+maintainers = [
+    {name = "Pierre Royer"},
+    {name = "Nicolas Beraud"},
+    {name = "Sena Gomashie"},
+    {name = "Jesus Saiz"},
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python :: 3.8",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+]
+
+dependencies = [
+    "apscheduler",
+    "astropy == 4.0",  # see issue #1306
+    "click",
+    "deepdiff",
+    "distro",
+    "ginga",
+    "gitpython >= 3",
+    "h5py >= 3.5",  # see issue #2002
+    "invoke",
+    "matplotlib >= 3.5",
+    "natsort",
+    "numpy == 1.22.4",  # see issue #2002
+    "openpyxl",
+    "pandas",
+    "paramiko",
+    "persist-queue",
+    "prometheus-client",
+    "psutil",
+    "pyqtgraph",
+    "pytz",
+    "pyyaml",
+    "pyzmq",
+    "qled",
+    "requests",
+    "rich",
+    "scipy",
+    "sshtunnel",
+    "sympy",
+    "textual",
+    "transforms3d",
+    "transitions",
+    "typing_extensions",
+
+    "pylibftdi",
+    "pyserial",
+    "pylzma",
+    "pyusb",
+    "PyVISA",
+    "PyVISA-py",
+    "ThorlabsPM100",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-mock", "pytest-cov", "pipdeptree", "pdoc3"]
+pyqt5 = ["pyqt5 >= 5.15", "PyQtWebEngine >= 5.15"]
+pyqt6 = ["pyqt6 >= 6.5", "PyQtWebEngine >= 6.5"]
+tools = ["cutelog", "gui-executor", "visidata"]
+
+[project.urls]
+documentation = "https://ivs-kuleuven.github.io/plato-cgse-doc/"
+repository = "https://github.com/IvS-KULeuven/plato-common-egse"
+
+[project.scripts]
+log_cs = 'egse.logger.log_cs:cli'
+sm_cs = 'egse.storage.storage_cs:cli'
+cm_cs = 'egse.confman.confman_cs:cli'
+pm_cs = 'egse.procman.procman_cs:cli'
+syn_cs = 'egse.synoptics.syn_cs:cli'
+
+tcs_cs = "egse.tcs.tcs_cs:cli"
+dpu_cs = "egse.dpu.dpu_cs:cli"
+feesim = "egse.fee.feesim:cli"
+puna_cs = "egse.hexapod.symetrie.puna_cs:cli"
+smc9300_cs = "egse.stages.huber.smc9300_cs:cli"
+smc9300_sim = "egse.stages.huber.smc9300_sim:cli"
+pm100a_cs = "egse.powermeter.thorlabs.pm100a_cs:cli"
+fw8smc4_cs = "egse.filterwheel.eksma.fw8smc4_cs:cli"
+ksc101_cs = "egse.shutter.thorlabs.ksc101_cs:cli"
+lampEQ99_cs = "egse.lampcontrol.energetiq.lampEQ99_cs:cli"
+zonda_cs = "egse.hexapod.symetrie.zonda_cs:cli"
+cdaq9184_cs = "egse.powermeter.ni.cdaq9184_cs:cli"
+cdaq9375_cs = "egse.ni.alarms.cdaq9375_cs:cli"
+daq6510_cs = "egse.tempcontrol.keithley.daq6510_cs:cli"
+lsci_cs = "egse.tempcontrol.lakeshore.lsci_cs:cli"
+das = "egse.das:cli"
+aeu_cs = "egse.aeu.aeu_cs:cli"
+ptc10_cs = "egse.tempcontrol.srs.ptc10_cs:cli"
+ogse_sim = "egse.collimator.fcul.ogse_sim:cli"
+ogse_cs = "egse.collimator.fcul.ogse_cs:cli"
+fitsgen = "egse.dpu.fitsgen:cli"
+n_fee_hk = "egse.fee.n_fee_hk:cli"
+fov_hk = "egse.fov.fov_hk:cli"
+fw8smc5_cs = "egse.filterwheel.eksma.fw8smc5_cs:cli"
+bbb_lamp_cs = "egse.lampcontrol.beaglebone.beaglebone_cs:cli"
+sc10_cs = "egse.shutter.thorlabs.sc10_cs:cli"
+ensemble_cs = "egse.stages.aerotech.ensemble_cs:cli"
+smd3_cs = "egse.stages.arun.smd3_cs:cli"
+agilent34792_cs = "egse.tempcontrol.agilent.agilent34972_cs:cli"
+agilent34790_cs = "egse.tempcontrol.agilent.agilent34970_cs:cli"
+bbb_heater_cs = "egse.tempcontrol.beaglebone.beaglebone_cs:cli"
+spid_cs = "egse.tempcontrol.spid.spid_cs:cli"
+apc_cs = "egse.ups.apc.apc_cs:cli"
+bbb_vacuum_cs = "egse.vacuum.beaglebone.beaglebone_cs:cli"
+igm402_cs = "egse.vacuum.instrutech.igm402_cs:cli"
+acp40_cs = "egse.vacuum.pfeiffer.acp40_cs:cli"
+tc400_cs = "egse.vacuum.pfeiffer.tc400_cs:cli"
+hdf5_report = "scripts.create_hdf5_report:cli"
+gimbal_cs = "egse.gimbal.symetrie.gimbal_cs:cli"
+update_cgse = "scripts.update_operational_cgse:cli"
+update_cgse_old = "scripts.update_operational_cgse_old:cli"
+
+[project.gui-scripts]
+cm_ui = "egse.confman.confman_ui:main"
+pm_ui = "egse.procman.procman_ui:main"
+setup_ui = "egse.confman.setup_ui:main"
+puna_ui = "egse.hexapod.symetrie.puna_ui:main"
+tcs_ui = "egse.tcs.tcs_ui:main"
+smc9300_ui = "egse.stages.huber.smc9300_ui:main"
+pm100a_ui = "egse.powermeter.thorlabs.pm100a_ui:main"
+fw8smc4_ui = "egse.filterwheel.eksma.fw8smc4_ui:main"
+ksc101_ui = "egse.shutter.thorlabs.ksc101_ui:main"
+lampEQ99_ui = "egse.lampcontrol.energetiq.lampEQ99_ui:main"
+zonda_ui = "egse.hexapod.symetrie.zonda_ui:main"
+lsci_ui = "egse.tempcontrol.lakeshore.lsci_ui:main"
+fov_ui = "egse.fov.fov_ui:main"
+visited_positions_ui = "egse.visitedpositions:main"
+vis_pos_ui = "egse.visitedpositions:main"
+image_ui = "egse.imageviewer.imageviewer:main"
+hdf5_ui = "egse.dpu.hdf5_viewer:main"
+aeu_ui = "egse.aeu.aeu_ui:main"
+ptc10_ui = "egse.tempcontrol.srs.ptc10_ui:main"
+cdaq9184_ui = "egse.powermeter.ni.cdaq9184_ui:main"
+dpu_ui = "egse.dpu.dpu_ui:main"
+ogse_ui = "egse.collimator.fcul.ogse_ui:main"
+fitsgen_ui = "egse.dpu.fitsgen_ui:main"
+gimbal_ui = "egse.gimbal.symetrie.gimbal_ui:main"
+mech_pos_ui="egse.csl.__init__:mechanical_position_ui"
+fw8smc5_ui = "egse.filterwheel.eksma.fw8smc5_ui:main"
+
+[tool.setuptools.dynamic]
+version = {attr = "egse.version.__PYPI_VERSION__"}
+readme = {file = ["README.md"]}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["egse", "scripts"]
+namespaces = true
+
+[tool.setuptools.package-data]
+scripts = [
+    "*.yaml",
+]
+egse = [
+    "*.yaml",
+    "*.png",
+    "*.svg",
+    "*.qss",
+    "lib/*/*.dylib",
+    "lib/ximc/**",
+    "lib/gssw/*",
+    "data/*",
+    "aeu/arbdata/*",
+]

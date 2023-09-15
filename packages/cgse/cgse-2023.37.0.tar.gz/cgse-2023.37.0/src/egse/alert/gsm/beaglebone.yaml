@@ -1,0 +1,51 @@
+BaseClass:
+    egse.alert.gsm.BeagleboneInterface
+
+ProxyClass:
+    egse.alert.gsm.beaglebone.BeagleboneProxy
+
+ControlServerClass:
+    egse.alert.gsm.beaglebone.BeagleboneControlServer
+
+ControlServer:
+    egse.alert.gsm.beaglebone_cs
+
+Commands:
+
+    # Definition of the DeviceInterface.
+
+    disconnect:
+        description: Disconnect from the PWM Controller.
+
+    connect:
+        description: Connect to the PWM Controller.
+
+    reconnect:
+        description: Reconnect to the PWM Controller.
+
+    is_simulator:
+        description: Ask if the control server is a simulator.
+        returns:     bool | True if far end is a simulator.
+
+    is_connected:
+        description: Check if PWM Controller is connected.
+
+    # Definition of the device commands.
+
+    set_alert:
+        description: Sets one of the available alerts
+        args:        
+            pin:    uint | 0 - 2 
+        cmd:        "{pin}"
+
+    get_alert:
+        description: Gets the current state of the alerts
+        args:
+            pin:     uint | 0 - 2
+        returns:     bool | state of the alert
+
+    unset_alert:
+        description: Unsets one of the available alerts
+        args:
+            pin:    uint | 0 - 2
+        cmd:        "{pin}"

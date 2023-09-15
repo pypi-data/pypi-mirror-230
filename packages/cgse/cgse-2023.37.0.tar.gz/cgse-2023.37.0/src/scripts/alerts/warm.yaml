@@ -1,0 +1,49 @@
+alerts:
+  IGM402 Pressure gauge limit:
+      sensor: GSRON_IGM402_IG_P
+      operational_limit:
+        max: 0.00001
+        min: 0.000001
+      timeout: 0.5
+      unit: mbar
+      maxAge: 5
+      actions:
+      fdir: FDIR_PRESSURE_LIMIT
+
+  # GN2 exhaust flow block rate-of-change:
+  #     sensor: GSRON_AG34972_1_T201
+  #     rate_of_change:
+  #       limit: 10
+  #       time_window: 60
+  #     timeout: 5
+  #     unit: C
+  #     actions:
+
+  # Test setpoint alert:
+  #   sensor: GSRON_AG34972_1_T202
+  #   setpoint:
+  #     # sensor: GSRON_PID_CH3_SETPOINT
+  #     value: 23
+  #     offset: 2
+  #   timeout: 1
+  #   unit: C
+  #   actions:
+  #     - Do something 3
+  #     - Do something 4
+  
+  # Test mask alert:
+  #   sensor: GSRON_ENSEMBLE_FAULT_X
+  #   mask: 0x02
+  #   timeout: 10
+  #   actions:
+
+# hardware:
+#   Agilent34972 DAQ0:
+#     code: AGILENT
+#     arg: 0
+#   Agilent34972 DAQ1:
+#     code: AGILENT
+#     arg: 1
+#   Agilent34970 DAQ0:
+#     code: AGILENT
+#     arg: 0

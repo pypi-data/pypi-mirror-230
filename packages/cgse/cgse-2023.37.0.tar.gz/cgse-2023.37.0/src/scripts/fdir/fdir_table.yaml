@@ -1,0 +1,70 @@
+# This file hold the configuration of the FDIR system
+# Each entry represents a predefined FDIR situation.
+# The entries hold:
+#   - priority: only FDIR signals with a higher priority that the current state of the FDIR manager
+#     are acted on (idle = -1).
+#   - script: the mitigation script to execute with its arguments.
+#   - actions: description of the mitigation actions performed by the script. This information is
+#     shown in the alert pop-up on the client.
+
+# Just for testing
+FDIR_TEST:
+    priority: 1
+    script: /fdir_test_recovery.py
+    actions:
+        - don't worry
+        - just a test
+
+# Hardware failures
+# Are called whenever the CS loses its connection with the device
+# Usually recovers by trying to reconnect to the device and gettings its IDN
+# If the CS is unable to retreive an IDN from the device, it will alert an operator
+FDIR_AGILENT_HW:
+    priority: 1
+    script: /hw_recovery/fdir_agilent_hw_recovery.py
+    args: [agilent_index]
+    actions:
+        - shut down heaters regulated by this DAQ
+        - alert operator
+
+# Control server failures
+# Are called whenever proxies can't reach a control server
+# Usually recovers by trying to restart the control server
+# If the CS can't be restarted, it will alert an operator
+FDIR_CS_STOPPED:
+    priority: 1
+    script: /cs_recovery/fdir_cs_recovery.py
+    actions:
+        - alert operator
+
+# Hardware errors
+# Are called when a device raises an error flag
+# Recovery depends on the type of error
+# An operator will be alerted if scripts is unable to recover within a set amount of time
+FDIR_TC400_ERROR:
+    priority: 1
+    script: /error_recovery/fdir_tc400_error_recovery.py
+    actions:
+        - alert operator
+
+# Housekeeping limit violations
+# Are called when a upper or lower limit on some HK variable is crossed
+# Recovery depends on the type of error
+# An operator will always be alerted in this case
+FDIR_PRESSURE_LIMIT:
+    priority: 1
+    script: /limit_recovery/fdir_pressure_limit_recovery.py
+    actions:
+        - close gate valve
+        - close LN2 valves
+        - Turn off IG filament
+
+
+# Pealing of heaters, which leads to high resistance.
+FDIR_BB_HEATER_LIMIT:
+    priority: 1
+    scripts: /limit_recovery/fdir_bb_beaglebone_limit.py
+    args: [agilent_index, channel_index]
+    actions:
+        - shut down heater and corresponding PID channel
+        - alert operator

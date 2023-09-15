@@ -1,0 +1,90 @@
+# The commands in this file are fake.
+# One of the parameters of the command is the device index. If this is included here, the client
+# will have to pass this argument for every function call. I prefer to add this on the
+# controller side. Note that arguments must be included in the cmd string for the proxy interface.
+
+BaseClass:
+    egse.vacuum.instrutech.igm402_interface.Igm402Interface
+
+ProxyClass:
+    egse.vacuum.instrutech.igm402.Igm402Proxy
+
+ControlServer:
+    egse.vacuum.instrutech.igm402_cs
+
+Commands:
+
+    disconnect:
+        description:        Disconnect from the device.
+
+    connect:
+        description:        Connect to the device.
+
+    reconnect:
+        description:        Reconnect to the device.
+                            This command will force a disconnect and then try to re-connect to the controller.
+    is_connected:
+        description:        Check if the Thorlabs Hardware Controller is connected.
+
+    is_simulator:
+        description:        Ask if the control server is a simulator instead of the real controller class.
+        returns:            bool | True if the far end is a simulator instead of the real hardware
+
+    get_idn:
+        description:        Get device firmware version.
+        returns:            str | version number
+
+    get_status:
+        description:        Get the device status string.
+        returns:            str | status string
+
+    get_system_pressure:
+        description:        Read IG and CG pressures combined (single value?).
+        returns:            str | String reply containing the pressure in Torr
+
+    get_ion_gauge_pressure:
+        description:        Read IG pressure.
+        returns:            str | String reply containing the pressure in Torr
+
+    get_cgn_pressure:
+        description:        Read CG pressures.
+        args:
+            index:          int | device index [1, 2]
+        cmd:                "{index}"
+        returns:            str | String reply containing the pressure in Torr
+
+    set_filament_enable:
+        description:        Power up/down the filament and start/stop reading pressure.
+        args:
+            enable:         bool | True = enable
+        cmd:                "{enable}"
+
+    set_enable_degas:
+        description:        Start/stop a degas cycle.
+        args:
+            enable:         bool | True = enable
+        cmd:                "{enable}"
+
+    set_emission_current:
+        description:        Set the emission current to 4mA or 100uA.
+        args:
+            current:        int | 4mA = 1, 100uA = 0
+        cmd:                "{current}"
+
+    set_filament:
+        description:        Select filament 1 or 2.
+        args:
+            type:           int | 1 = F1, 2 = F2
+        cmd:                "{type}"
+
+    set_trip_point_i_low:
+        description:        Turn on the IG filament below this pressure.
+        args:
+            pressure:       int | threshold pressure
+        cmd:                "{pressure}"
+
+    set_trip_point_i_high:
+        description:        Turn off the IG filament above this pressure.
+        args:
+            pressure:       int | threshold pressure
+        cmd:                "{pressure}"

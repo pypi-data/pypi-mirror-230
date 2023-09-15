@@ -1,0 +1,52 @@
+BaseClass:
+    egse.shutter.thorlabs.sc10_interface.Sc10Interface
+
+ProxyClass:
+    egse.shutter.thorlabs.sc10.Sc10Proxy
+
+ControlServer:
+    egse.shutter.thorlabs.sc10_cs
+
+Commands:
+
+    disconnect:
+        description:        Disconnect from the device.
+
+    connect:
+        description:        Connect to the device.
+
+    reconnect:
+        description:        Reconnect to the device.
+                            This command will force a disconnect and then try to re-connect to the controller.
+    is_connected:
+        description:        Check if the Thorlabs Hardware Controller is connected.
+
+    is_simulator:
+        description:        Ask if the control server is a simulator instead of the real controller class.
+        returns:            bool | True if the far end is a simulator instead of the real hardware
+
+    get_idn:
+        description:    Read the device ID string.
+        cmd:            "id?\r"
+        returns:        str | Model number and version revision
+
+    get_enable:
+        description:    Check if the device is enabled.
+        cmd:            "ens?\r"
+        returns:        bool | True if enabled
+
+    toggle_enable:
+        description:    Toggle the enable.
+        cmd:            "ens\r"
+
+    set_mode:
+        description:    Set the mode of operation. 1 - manual, 2 - auto, 3 - signal, 4 - repeat, 5 - external gate
+        args:
+            mode:       int | mode of operation
+        cmd:            "mode={mode}\r"
+
+    set_open_duration:
+        description:    Set shutter open time.
+        args:
+            duration:   int | time in ms [0 - 999999]
+        cmd:            "open={duration}\r"

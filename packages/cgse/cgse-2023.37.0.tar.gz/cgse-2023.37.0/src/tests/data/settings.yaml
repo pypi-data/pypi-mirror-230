@@ -1,0 +1,26 @@
+# Test YAML file for the settings unit testing
+
+GROUP_1:       # THIS IS A FIRST GROUP
+
+    VAR_1:     variable one
+    VAR_2:     variable_two
+
+GROUP_2:       # THIS IS A SECOND GROUP
+
+    VAR_1:     1
+    VAR_2:     2
+
+EMPTY_GROUP:   # This empty group should raise a SettingsError
+
+GROUP_3:       # This group contains different types of variables
+
+    ARR_1:     [1,2,3,4,5]
+    ARR_2:     {one: 1, two: 2}
+
+    FLT_1:     3.14
+    FLT_2:     6.2e-3
+
+DUPLICATES:
+
+    VAR_X:   "x"
+    VAR_X:   "y"

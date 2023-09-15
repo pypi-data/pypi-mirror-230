@@ -1,0 +1,110 @@
+BaseClass:
+    egse.tempcontrol.beaglebone.BeagleboneInterface
+
+ProxyClass:
+    egse.tempcontrol.beaglebone.BeagleboneProxy
+
+ControlServerClass:
+    egse.tempcontrol.beaglebone.BeagleboneControlServer
+
+ControlServer:
+    egse.tempcontrol.beaglebone.beaglebone_cs
+
+UserInterface:
+    egse.tempcontrol.beaglebone.beaglebone_ui
+
+Commands:
+
+    # Definition of the DeviceInterface.
+
+    disconnect:
+        description: Disconnect from the PWM Controller.
+
+    connect:
+        description: Connect to the PWM Controller.
+
+    reconnect:
+        description: Reconnect to the PWM Controller.
+
+    is_simulator:
+        description: Ask if the control server is a simulator.
+        returns:     bool | True if far end is a simulator.
+
+    is_connected:
+        description: Check if PWM Controller is connected.
+
+    # Definition of the device commands.
+    set_enable:
+        description: Enable PWM pin.
+        args:
+            dev_idx:   int  | Device index.
+            chnl_idx:  int  | Channel index.
+            enable: bool | Enable PWM pin.
+        cmd:         "{dev_idx}{pin_number}{enable}"
+
+    set_duty_cycle:
+        description: Duty cycle duration in ns.
+        args:
+            dev_idx:   int | Device index.
+            chnl_idx:  int | Channel index.
+            duty_cycle: int | Duty cycle.
+        cmd:         "{dev_idx}{pin_number}{duty_cycle}"
+
+    set_period:
+        description: Period duration in ns.
+        args:
+            dev_idx:   int | Device index.
+            chnl_idx:  int | Channel index.
+            period:     int | Period.
+        cmd:         "{dev_idx}{pin_number}{period}"
+
+    get_temperature:
+        description: Get board temperature.
+        args:
+            dev_idx:  int | Device index.
+        cmd:  "{dev_idx}"
+        returns:     float | Temperature dgrC
+
+    get_voltage:
+        description: Get channel voltage.
+        args:
+            dev_idx:   int | Device index.
+            chnl_idx:  int | Channel index.
+        cmd: "{dev_idx}{chnl_idx}"
+        returns:       float | Voltage V
+
+    get_current:
+        description: Get channel current.
+        args:
+            dev_idx:   int | Device index.
+            chnl_idx:  int | Channel index.
+        cmd: "{dev_idx}{chnl_idx}"
+        returns:       float | Current A
+
+    get_power:
+        description: Get channel power.
+        args:
+            dev_idx:   int | Device index.
+            chnl_idx:  int | Channel index.
+        cmd: "{dev_idx}{chnl_idx}"
+        returns:       float | Power W
+
+    get_enable:
+        description: Get channel state
+        args:
+            dev_idx:   int | Device index.
+            chnl_idx:  int | Channel index.
+        cmd: "{dev_idx}{chnl_idx}"
+        returns:       bool | state
+
+    get_duty_cycle:
+        description: Get channel duty cycle.
+        args:
+            dev_idx:   int | Device index.
+            chnl_idx:  int | Channel index.
+        cmd: "{dev_idx}{chnl_idx}"
+        returns:       int | duty cycle in ns
+
+    connect_beaglebone:
+        description:
+        cmd: "{device}"

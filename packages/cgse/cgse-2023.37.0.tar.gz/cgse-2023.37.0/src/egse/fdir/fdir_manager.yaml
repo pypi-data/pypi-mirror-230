@@ -1,0 +1,51 @@
+BaseClass:
+    egse.fdir.FdirManagerInterface
+
+ProxyClass:
+    egse.fdir.FdirManagerProxy
+
+ControlServerClass:
+    egse.alert.FdirManagerControlServer
+
+ControlServer:
+    egse.fdir.fdir_manager_cs
+
+
+Commands:
+    is_connected:
+        description:
+        args:
+        cmd:                ""
+
+    is_simulator:
+        descripton:
+        args:
+        cmd:                ""
+
+    register_script:
+        description:        Register a control script with the FDIR CS.
+        args:
+            host:           str | name of the host machine of the script
+            pid:            int | Process ID of the script
+        cmd:                "{host}{pid}"
+
+    deregister_script:
+        description:        Deregister a script with the FDIR CS.
+        args:
+            host:           str | name of the host machine of the script
+            pid:            int | Process ID of the script
+        cmd:                "{host}{pid}"
+
+    signal_fdir:
+        description:        Alert the CS that an FDIR situation occured
+        args:
+            fdir_code:      str | Predefined FDIR code.
+            script_args:    list | optional arguments for recovery script.
+        cmd:                "{fdir_code}{kwargs}"
+
+    clear_fdir:
+        description:        Clear all asserted FDIR codes. The CS will return to it's initial state.
+
+    get_state:
+        description:        Check if the CS is in it's idle or some FDIR code was triggered.
+        returns:            str | active FDIR code (empty string if idle)

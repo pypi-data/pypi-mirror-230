@@ -1,0 +1,98 @@
+BaseClass:
+    egse.lampcontrol.energetiq.lampEQ99.LampEQ99Interface
+
+ProxyClass:
+    egse.lampcontrol.energetiq.lampEQ99.LampEQ99Proxy
+
+ControlServerClass:
+    egse.lampcontrol.energetiq.lampEQ99_cs.LampEQ99ControlServer
+
+ControlServer:
+    egse.lampcontrol.energetiq.lampEQ99_cs
+
+UserInterface:
+    egse.lampcontrol.energetiq.lampEQ99_ui
+
+Commands:
+
+    # Each of these groups is parsed and used on both the server and the client side.
+    # The group name (e.g. is_simulator) will be monkey patched in the Proxy class for the device or service.
+    # The other field are:
+    #   description:   Used by the doc_string method to generate a help string
+    #   cmd:           Command string that will eventually be send to the hardware controller for the
+    #                  device after the arguments have been filled.
+    #   device_method: The name of the method to be called on the device class.
+    #                  These should all be defined by the base class for the device.
+    #                  This method should exist in the subclass of the CommandProtocol base class.
+
+    # Definition of the the DeviceInterface
+
+    connect:
+        description:    Connect the Filter Wheel hardware controller
+
+    reconnect:
+        description:    Reconnect the Lamp hardware controller.
+
+                        This command will force a disconnect and then try to re-connect to the controller.
+
+    disconnect:
+        description  : Disconnect from the Lamp controller. This command will be send to the
+                       Thorlabs Control Server which will then disconnect from the hardware controller.
+                       This command doesn't affect the ZeroMQ connection of this Proxy to the
+                       control server. Use the service command `disconnect_cs()` to disconnect
+                       from the control server.
+
+    is_connected:
+        description:   Check if the Thorlabs Hardware Controller is connected.
+
+    is_simulator:
+        description:   Ask if the control server is a simulator instead of the real LampEQ99Controller class.
+        returns:       bool | True if the far end is a simulator instead of the real hardware
+
+    get_id:
+        description:   Retrieve the rSCPI Identification for the Lamp.
+        returns:       str | The IDN for the given device
+
+    info:
+      description: Retrieve basic information about the Lamp and the Controller.
+
+
+    # Definition of the device commands
+
+    ldls_reset:
+        description:  Resets the instrument to the factory default and the ouput is shut off. The unit remains in
+                      remote mode
+        returns:      None
+
+    lamp_errors:
+        description:  Returns a comma delimited list of error codes with a string description included.
+                      If no error has occurred, a 0 is returned.
+        returns:      dict | ErrorCode and ErrorMessage
+
+    set_lamp:
+        description:  Turns the lamp output on or off
+        args:
+          _enable:    bool | "0" disables "1" enables
+        cmd:          "{_enable}"
+        returns:      None
+
+    get_lamp:
+        description:  Returns the output state. Will return true as soon as the turned on process has started, even if
+                      the lamp has not yet turned on. To determine the lamp and laser state use get_lamp_state
+        returns:      bool | 0 OFF 1 ON
+
+    set_lamp_time:
+        description: Resets the lamp runtime to the new value in hours.
+        args:
+          _time:      float | the number of hours from 0 to 999
+        cmd:          "{_time}"
+        returns:      None
+
+    get_lamp_time:
+        description: The number of hours accumulated while the lamp was on. The value is in hours.
+        returns:     int | number of hours
+
+    get_lamp_status:
+        description: Returns the LDLS condition register. The condition register reflects the state of the instrument at
+                     the time the condition register is read.
+        returns:     dict | with all the bit status TBW

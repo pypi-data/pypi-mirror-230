@@ -1,0 +1,205 @@
+BaseClass:
+    egse.stages.aerotech.ensemble_interface.EnsembleInterface
+
+ProxyClass:
+    egse.stages.aerotech.ensemble.EnsembleProxy
+
+ControlServer:
+    egse.stages.aerotech.ensemble_cs
+
+Commands:
+
+    disconnect:
+        description:        Disconnect from the device.
+
+    connect:
+        description:        Connect to the device.
+
+    reconnect:
+        description:        Reconnect to the device.
+                            This command will force a disconnect and then try to re-connect to the controller.
+    is_connected:
+        description:        Check if the Thorlabs Hardware Controller is connected.
+
+    is_simulator:
+        description:        Ask if the control server is a simulator instead of the real controller class.
+        returns:            bool | True if the far end is a simulator instead of the real hardware
+
+    get_idn:
+        description:        Get device firmware version.
+        cmd:                "VERSION\n"
+        returns:            str | version number
+
+    reset:
+        description:        Reset the controller.
+        cmd:                "RESET\n"
+
+    abort:
+        description:        Abort all motion.
+        args:
+            axis:           str | axis identifier (multiple axes allowed)
+        cmd:                "ABORT {axis}\n"
+
+    clear_errors:
+        description:        Clear all faults on all axes.
+        cmd:                "ACKNOWLEDGEALL\n"
+
+    get_status:
+        description:        Get the status of an axis.
+        args:
+            axis:           str | axis identifier
+        cmd:                "AXISSTATUS({axis})\n"
+        returns:            int | axis status
+
+    get_plane_status:
+        description:        Get the status of the plane
+        cmd:                "PLANESTATUS(0)\n"
+
+    get_fault:
+        description:        Get the fault codes of an axis.
+        args:
+            axis:           str | axis identifier
+        cmd:                "AXISFAULT({axis})\n"
+        returns:            int | fault codes
+
+    set_blocking:
+        description:        Blocking prevents motion on an axis.
+        args:
+            axis:           str | axis identifier
+            enable:         bool | True = block
+        cmd:                "BLOCKMOTION {axis} {enable}\n"
+
+    get_actual_position:
+        description:        Get the actual position read from the encoders.
+        args:
+            axis:           str | axis identifier
+        cmd:                "PFBK({axis})\n"
+        returns:            float | actual position in degrees
+
+    get_error_position:
+        description:        Get the position error calculated by the .
+        args:
+            axis:           str | axis identifier
+        cmd:                "PERR({axis})\n"
+        returns:            float | actual position in degrees
+
+    get_command_position:
+        description:        Get the TARGET position of an axis.
+        args:
+            axis:           str | axis identifier
+        cmd:                "PLANEPOS({axis})\n"
+        returns:            float | target position in degrees
+
+    get_actual_velocity:
+        description:        Get the actual velocity read from the encoders.
+        args:
+            axis:           str | axis identifier
+        cmd:                "VFBK({axis})\n"
+        returns:            float | actual position in degrees
+
+    get_command_velocity:
+        description:        Get the TARGET velocity of an axis.
+        args:
+            axis:           str | axis identifier
+        cmd:                "VCMD({axis})\n"
+        returns:            float | target position in degrees
+
+
+    get_actual_current:
+        description:        Get the actual current read from the controller
+        args:
+            axis:           str | axis identifier
+        cmd:                "IFBK({axis})\n"
+        returns:            float | actual current
+
+    get_command_current:
+        description:        Get the TARGET current of an axis
+        args:
+            axis:           str | axis identifier
+        cmd:                "ICMD({axis})\n"
+        returns:            float | target current
+
+    enable_axis:
+        description:        Enable an axis.
+        args:
+            axis:           str | axis identifier (multiple axes allowed)
+        cmd:                "ENABLE {axis}\n"
+
+    enable_axes:
+        description:        Enable both axes.
+        cmd:                ""
+
+    disable_axes:
+        description:        Disable both axes.
+        cmd:                ""
+
+    set_wait_mode:
+        description:        Set the wait mode
+        cmd:                "{mode}"
+
+    disable_axis:
+        description:        Disable an axis.
+        args:
+            axis:           str | axis identifier (multiple axes allowed)
+        cmd:                "DISABLE {axis}\n"
+
+    set_absolute:
+        description:        Set the controller to absolute positioning.
+        cmd:                "ABS\n"
+
+    set_incremental:
+        description:        Set the controller to relative positioning.
+        cmd:                "INC\n"
+
+    home_axis:
+        description:        Home one axis
+        args:
+            axis:           str | axis identifier
+        cmd:                "HOME {axis}\n"
+
+    home_axes:
+        description:        home both axes
+        cmd:                ""
+
+    move_axis_degrees:
+        description:        Move one axis using either the encoder position or user defined units.
+        args:
+            axis:           str | axis identifier ['X', 'Y']
+            position:       float | target position in encoder degrees
+        cmd:                "{axis}{position}"
+
+    move_axes_degrees:
+        description:        Move one axis using either the encoder position or user defined units.
+        args:
+            position_x:     float | target position in encoder degrees for the X axis
+            position_y:     float | target position in encoder degrees for the Y axis
+        cmd:                "{position_x}{position_y}"
+
+    is_moving:
+        description:        Check if the device is in motion
+        returns:            bool | True if in motion
+
+    is_homed:
+        description:        Checks if the device is homed
+        returns:            bool | True if homed
+
+    get_parameter:
+        description:        Get the value of a parameter.
+        args:
+          index:            int | parameter index
+        cmd:                "GETPARM({index})\n"
+        returns:            int | paramter value
+
+    set_parameter:
+        description:        Set a parameter value for all axes.
+        args:
+            index:          int | parameter index
+            value:          int | parameter value
+        cmd:                "SETPARM({index}, {value})\n"
+
+    query:
+        description:        Send a command to the Ensemble controler
+        args:
+            command:        str | ASCII command
+        cmd:                "{command}"
+        returns:            str | ASCII response

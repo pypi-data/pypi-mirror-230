@@ -1,0 +1,73 @@
+BaseClass:
+    egse.powermeter.ni.cdaq9184.cdaq9184Interface
+
+ProxyClass:
+    egse.powermeter.ni.cdaq9184.cdaq9184Proxy
+
+ControlServerClass:
+    egse.powermeter.ni.cdaq9184_cs.cdaq9184ControlServer
+
+ControlServer:
+    egse.powermeter.ni.cdaq9184_cs
+
+UserInterface:
+    egse.powermeter.ni.cdaq9184_ui
+
+Commands:
+
+    # Each of these groups is parsed and used on both the server and the client side.
+    # The group name (e.g. is_simulator) will be monkey patched in the Proxy class for the device or service.
+    # The other field are:
+    #   description:   Used by the doc_string method to generate a help string
+    #   cmd:           Command string that will eventually be send to the hardware controller for the
+    #                  device after the arguments have been filled.
+    #   device_method: The name of the method to be called on the device class.
+    #                  These should all be defined by the base class for the device.
+    #                  This method should exist in the subclass of the CommandProtocol base class.
+
+    # Definition of the the DeviceInterface
+
+    disconnect:
+        description: Disconnect from the NI device controller. This command will be send to the
+                       NI Control Server which will then disconnect from the hardware controller.
+                       This command doesn't affect the ZeroMQ connection of this Proxy to the
+                       control server. Use the service command ``disconnect_cs()`` to disconnect
+                       from the control server.
+
+    connect:
+        description:    Connect the temperature hardware controller
+
+    reconnect:
+        description:    Reconnect the temperature hardware controller.
+
+                        This command will force a disconnect and then try to re-connect to the controller.
+
+    is_simulator:
+        description:   Ask if the control server is a simulator instead of the real cdaq9184Controller class.
+        returns:       bool | True if the far end is a simulator instead of the real hardware
+
+    is_connected:
+        description:   Check if the SRS Hardware Controller is connected.
+
+
+    # Definition of the device commands
+    info:
+        description:   Returns basic information about the device, its name, firmwre version etc.
+        returns:       str
+
+
+    read_values:
+        description:   Reads the timestamped signals of the CDAQ9184. Returns all the values with date.
+        returns:       list
+
+    read_photodiodes:
+        description:   À MODIFIER Returns the timestamped and voltage signals from the photodidodes connected to the NI9239.
+                       Returns 2 lists in a tuple, 1st list with mean and 2nd with standard deviation.
+        returns:       dict
+
+    read_temperatures:
+        description:   Returns the timestamped and temperature signals from the PT1000 connected to the NI9226
+                       Returns a dictionary with 2 elements which are lists, 1st list with mean temperature
+                       and 2nd with standard deviation temperature.
+        returns:       dict
+

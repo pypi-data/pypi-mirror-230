@@ -1,0 +1,44 @@
+BaseClass:
+    egse.tempcontrol.agilent.Agilent34972Interface
+
+ProxyClass:
+    egse.tempcontrol.agilent.Agilent34972Proxy
+
+ControlServerClass:
+    egse.tempcontrol.agilent.Agilent34972ControlServer
+
+ControlServer:
+    egse.tempcontrol.agilent.agilent34972_cs
+
+Commands:
+    # The command strings in this file are not used.
+    # They need to include the arguments of the commands though or else the control server will
+    # remove them from the interface.
+
+    disconnect:
+        description: Disconnect from the Agilent34972 Controller.
+
+    connect:
+        description: Connect to the Agilent34972 Controller.
+
+    reconnect:
+        description: Reconnect to the Agilent34972 Controller.
+
+    is_simulator:
+        description: Ask if the control server is a simulator.
+        returns:     bool | True if far end is a simulator.
+
+    is_connected:
+        description: Check if Agilent34972 Controller is connected.
+
+    # Definition of the device commands.
+    get_idn:
+        description: Get device IDN message.
+        returns:     str
+
+    read_resistance_temperature:
+        description: Measure temperatures for all channels in the scan list
+        returns:     tuple(list(float), list(float)) | tuple of lists of resistance and temperature values
+
+    trigger_scan:
+        description: Perform a scan of the specified channels

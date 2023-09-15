@@ -1,0 +1,62 @@
+BaseClass:
+    egse.lampcontrol.beaglebone.BeagleboneInterface
+
+ProxyClass:
+    egse.lampcontrol.beaglebone.BeagleboneProxy
+
+ControlServerClass:
+    egse.lampcontrol.beaglebone.BeagleboneControlServer
+
+ControlServer:
+    egse.lampcontrol.beaglebone.beaglebone_cs
+
+Commands:
+
+    # Definition of the DeviceInterface
+
+    disconnect:
+        description: Discconect from the Valve Controller.
+
+    connect:
+        description: Connect to the Valve controller.
+
+    reconnect:
+        description: Reconnect to the Valve controller.
+
+    is_simulator:
+        description: Ask if the control server is a is a simulator.
+        returns:    bool | True if far en is a simulator.
+
+    is_connected:
+        description: Checl of Valve Controller is connected.
+
+    set_lamp:
+        description:    Sets the lamp to the given state
+        args:
+            state:      int | State of the lamp
+        cmd:            "{state}"
+
+    set_interlock:
+        description:    Sets the interlock to the given state
+        args:
+            state:      int | state of the lamp
+        cmd:            "{state}"
+
+    get_lamp_on:
+        description:    Returns the on state of the lamp
+        returns:        bool | True if lamp is on
+
+    get_laser_on:
+        description:    Returns the on state of the laser
+        returns:        bool | True is laser is on
+
+    get_lamp_module_fault:
+        description:    Returns the state of the fault of the lamp
+        returns:        bool | True is there is a fault
+
+    get_controller_fault:
+        description:    Returns the state of the fault of the controller
+        returns:        bool | True is there is a fault
+
+    fix_controller_fault:
+        description:    Fixes the controller fault

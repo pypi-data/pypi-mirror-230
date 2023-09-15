@@ -1,0 +1,45 @@
+BaseClass:
+    egse.ups.apc.APCInterface
+
+ProxyClass:
+    egse.ups.apc.APCProxy
+
+ControlServerClass:
+    egse.ups.apc.APControlServer
+
+ControlServer:
+    egse.ups.apc.apc_cs
+
+Commands:
+
+    # Definition of the DeviceInterface.
+
+    disconnect:
+        description: Disconnect from the APC Controller.
+
+    connect:
+        description: Connect to the APC Controller.
+
+    reconnect:
+        description: Reconnect to the APC Controller.
+
+    is_simulator:
+        description: Ask if the control server is a simulator.
+        returns:     bool | True if far end is a simulator.
+
+    is_connected:
+        description: Check if APC Controller is connected.
+
+    # Definition of the device commands.
+    get_bcharge:
+        description: Battery charge.
+        returns:  float | Percentage battery charge
+
+    get_onbatt:
+        description: On battery power.
+        returns:  bool | On battery power
+
+    get_timeleft:
+        description: Time left when on battery.
+        returns:  float | Time left in minutes.
+

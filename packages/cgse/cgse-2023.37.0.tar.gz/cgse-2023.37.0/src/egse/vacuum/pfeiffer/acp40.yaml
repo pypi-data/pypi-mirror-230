@@ -1,0 +1,60 @@
+BaseClass:
+    egse.vacuum.pfeiffer.acp40_interface.Acp40Interface
+
+ProxyClass:
+    egse.vacuum.pfeiffer.acp40.Acp40Proxy
+
+ControlServer:
+    egse.vacuum.pfeiffer.acp40_cs
+
+Commands:
+    # The commands in this file are fake.
+    # One of the parameters of the command is the device index. If this is included here, the client
+    # will have to pass this argument for every function call. I prefer to add this on the
+    # controller side. Note that arguments must be included in the cmd string for the proxy interface.
+
+    disconnect:
+        description:        Disconnect from the device.
+
+    connect:
+        description:        Connect to the device.
+
+    reconnect:
+        description:        Reconnect to the device.
+                            This command will force a disconnect and then try to re-connect to the controller.
+    is_connected:
+        description:        Check if the Thorlabs Hardware Controller is connected.
+
+    is_simulator:
+        description:        Ask if the control server is a simulator instead of the real ShutterKSC01Controller class.
+        returns:            bool | True if the far end is a simulator instead of the real hardware
+
+    get_idn:
+        description:        Get device IDN message.
+        returns:            str | ID string
+
+    get_device_status:
+        description:        Get the device status word
+        returns:            str | Status word
+
+    get_address:
+        description:        Get the device addres
+        returns:            int | Device address
+
+    set_standby:
+        description:        Switches from stand-by speed to the default setting (?)
+
+    set_nominal_speed:
+        description:        Set the pump to nominal speed (80 RPM). Must be preceded by a set_standby command
+
+    set_rpm:
+        description:        Set the pump to a specific RPM.
+        args:
+            rpm:            int | Pump speed (RMP) [35, 80].
+        cmd:                "{address}"
+
+    set_enable:
+        description:        Turn the pump on or off.
+        args:
+            enable:         bool | True = on
+        cmd:                "{enable}"
