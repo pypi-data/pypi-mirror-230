@@ -1,0 +1,304 @@
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = [
+  "poetry-core>=1",
+]
+
+[tool.poetry]
+name = "trigon"
+version = "0.2.0"
+description = "A batteries-included python web framework"
+readme = "README.md"
+authors = ["Vasilis Sioros <billsioros97@gmail.com>"]
+license = "MIT"
+homepage = "https://billsioros.github.io/trigon"
+repository = "https://github.com/billsioros/trigon"
+keywords = []
+classifiers = [
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+]
+
+[tool.poetry.scripts]
+trigon = "trigon.cli.manage:cli"
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/billsioros/trigon/issues"
+"Changelog" = "https://github.com/billsioros/trigon/releases"
+
+[tool.poetry.dependencies]
+python = ">=3.8,<4.0"
+fastapi = "^0.103.1"
+loguru = "^0.7.1"
+sqlalchemy = "^2.0.20"
+pydantic = "^2.3.0"
+pydantic-settings = "^2.0.3"
+alembic = "^1.12.0"
+uvicorn = { extras = ["standard"], version = "^0.23.2" }
+typer = "^0.9.0"
+lagom = "^2.4.1"
+
+[tool.poetry.group.dev.dependencies]
+python-semantic-release = "*"
+isort = "*"
+mypy = "*"
+black = "*"
+ruff = "*"
+pre-commit = "*"
+poethepoet = "*"
+
+[tool.poetry.group.tests.dependencies]
+coverage = { extras = ["toml"], version = "*" }
+pytest = "*"
+pytest-cov = "*"
+pytest-sugar = "*"
+pytest-clarity = "*"
+
+[tool.poetry.group.docs.dependencies]
+mkdocs = "*"
+mkdocs-material = "*"
+mkdocs-minify-plugin = "*"
+mkdocs-redirects = "*"
+mkdocstrings = { extras = ["python"], version = "*" }
+mdx-truly-sane-lists = "*"
+mike = "*"
+
+[tool.black]
+line-length = 99
+target-version = ["py38"]
+skip-string-normalization = true
+
+[tool.ruff]
+select = [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "I",
+  "N",
+  "Q",
+  "S",
+  "T",
+  "W",
+  "ANN",
+  "ARG",
+  "BLE",
+  "COM",
+  "DJ",
+  "DTZ",
+  "EM",
+  "ERA",
+  "EXE",
+  "FBT",
+  "ICN",
+  "INP",
+  "ISC",
+  "NPY",
+  "PD",
+  "PGH",
+  "PIE",
+  "PL",
+  "PT",
+  "PTH",
+  "PYI",
+  "RET",
+  "RSE",
+  "RUF",
+  "SIM",
+  "SLF",
+  "TCH",
+  "TID",
+  "TRY",
+  "UP",
+  "YTT",
+]
+ignore = []
+
+fixable = [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "I",
+  "N",
+  "Q",
+  "S",
+  "T",
+  "W",
+  "ANN",
+  "ARG",
+  "BLE",
+  "COM",
+  "DJ",
+  "DTZ",
+  "EM",
+  "ERA",
+  "EXE",
+  "FBT",
+  "ICN",
+  "INP",
+  "ISC",
+  "NPY",
+  "PD",
+  "PGH",
+  "PIE",
+  "PL",
+  "PT",
+  "PTH",
+  "PYI",
+  "RET",
+  "RSE",
+  "RUF",
+  "SIM",
+  "SLF",
+  "TCH",
+  "TID",
+  "TRY",
+  "UP",
+  "YTT",
+]
+unfixable = []
+
+exclude = [
+  ".bzr",
+  ".direnv",
+  ".eggs",
+  ".git",
+  ".git-rewrite",
+  ".hg",
+  ".mypy_cache",
+  ".nox",
+  ".pants.d",
+  ".pytype",
+  ".ruff_cache",
+  ".svn",
+  ".tox",
+  ".venv",
+  "__pypackages__",
+  "_build",
+  "buck-out",
+  "build",
+  "dist",
+  "node_modules",
+  "venv",
+]
+per-file-ignores = {}
+
+line-length = 99
+
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+target-version = "py38"
+
+[tool.ruff.mccabe]
+max-complexity = 10
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
+[tool.ruff.flake8-quotes]
+docstring-quotes = "double"
+
+[tool.isort]
+profile = "black"
+src_paths = ["src/trigon", "tests"]
+line_length = 99
+known_first_party = "trigon"
+
+[tool.pytest.ini_options]
+addopts = "-vv --color=yes"
+log_cli = false
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
+log_cli_format = "%(asctime)s %(levelname)s %(message)s"
+log_cli_level = "INFO"
+python_files = "test_*.py"
+python_functions = "test_*"
+testpaths = "tests"
+
+[tool.coverage.paths]
+source = ["src"]
+
+[tool.coverage.run]
+branch = true
+source = ["trigon"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 100
+exclude_lines = [
+  "if self.debug:",
+  "pragma: no cover",
+  "raise NotImplementedError",
+  "if __name__ == .__main__.:",
+]
+ignore_errors = true
+omit = ["tests/*"]
+
+[tool.mypy]
+files = ["src/trigon"]
+warn_unused_configs = true
+warn_return_any = true
+ignore_missing_imports = true
+pretty = true
+color_output = true
+show_column_numbers = true
+show_error_codes = true
+show_error_context = true
+strict = true
+
+[tool.semantic_release]
+version_toml = "pyproject.toml:tool.poetry.version"
+changelog_components = "semantic_release.changelog.changelog_headers,semantic_release.changelog.compare_url"
+build_command = "python -m pip install poetry && poetry build"
+
+[tool.vulture]
+min_confidence = 95
+paths = ["src/trigon", "tests"]
+
+[tool.poe.tasks]
+
+[tool.poe.tasks.clean]
+help = "Clean up any auxiliary files"
+cmd = "rm -rf ./**/__pycache__ logs dist site .pytest_cache .mypy_cache .ruff_cache .coverage"
+
+[tool.poe.tasks.format]
+help = "Format your codebase"
+shell = "poetry run isort .; poetry run black ."
+
+[tool.poe.tasks.hooks]
+help = "Run all pre-commit hooks"
+cmd = "poetry run pre-commit run --all-files --color always"
+
+[tool.poe.tasks.type]
+help = "Run static type checking on your codebase"
+cmd = "poetry run mypy"
+
+[tool.poe.tasks.lint]
+help = "Lint your code for errors"
+cmd = "poetry run ruff ."
+
+[tool.poe.tasks.docs]
+help = "Build and serve the documentation"
+cmd = "poetry run mkdocs serve"
+
+[tool.poe.tasks.test]
+help = "Run the test suite and produce a coverage report"
+cmd = "poetry run pytest --cov=trigon"
+
+[tool.docformatter]
+black = true
+non-strict = true
+non-cap = ["trigon"]
+recursive = true
+in-place = true
+
+[tool.bandit]
+recursive = true
+exclude_dirs = ["tests"]
