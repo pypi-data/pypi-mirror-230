@@ -1,0 +1,60 @@
+Metadata-Version: 2.1
+Name: mkdocs-plantuml-local
+Version: 0.2.1
+Summary: Render PlantUML diagrams without sending sensitive data to a public server
+License: MIT
+Author: Lawrence
+Author-email: lawrence@acode.ninja
+Requires-Python: >=3.11,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: cssselect (>=1.2.0,<2.0.0)
+Requires-Dist: lxml (>=4.9.3,<5.0.0)
+Requires-Dist: mkdocs (>=1.5.2,<2.0.0)
+Description-Content-Type: text/markdown
+
+# MkDocs PlantUML Local
+
+Render Plantuml codeblocks in mkdocs without sending sensitive diagrams to a public server.
+
+## Configuration
+
+**Minimal**
+
+```yaml
+plugins:
+  - plantuml-local
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: plantuml
+          class: plantuml
+          format: !!python/name:pymdownx.superfences.fence_code_format
+```
+
+**All**
+
+```yaml
+plugins:
+  - plantuml-local:
+      # shortname is language used to identify 
+      # blocks to process, defaults to `plantuml`
+      shortname: puml
+      # background_colour sets the background
+      # fill colour used, defaults to `transparent`
+      background_colour: white
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: puml
+          class: puml
+          format: !!python/name:pymdownx.superfences.fence_code_format
+```
+
+## Licence
+
+This MkDocs plugin is licenced under the MIT license.
+
+Plantuml is redistributed with this package, under the [GPL-3.0 license](https://github.com/plantuml/plantuml/blob/master/license.txt).
+
