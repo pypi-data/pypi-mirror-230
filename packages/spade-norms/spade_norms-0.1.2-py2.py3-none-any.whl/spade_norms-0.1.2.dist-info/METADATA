@@ -1,0 +1,139 @@
+Metadata-Version: 2.1
+Name: spade-norms
+Version: 0.1.2
+Summary: SPADE Normative Plugin
+Home-page: https://github.com/javipalanca/spade_norms
+Author: Javi Palanca
+Author-email: jpalanca@dsic.upv.es
+License: MIT license
+Keywords: spade_norms
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Internet :: XMPP
+Requires-Python: >=3.8
+License-File: LICENSE
+License-File: AUTHORS.rst
+Requires-Dist: aiohttp (==3.8.4)
+Requires-Dist: aiohttp-jinja2 (==1.5)
+Requires-Dist: aioopenssl (==0.6.0)
+Requires-Dist: aiosasl (==0.5.0)
+Requires-Dist: aiosignal (==1.3.1)
+Requires-Dist: aioxmpp (==0.13.3)
+Requires-Dist: arrow (==1.2.3)
+Requires-Dist: async-timeout (==4.0.2)
+Requires-Dist: attrs (==23.1.0)
+Requires-Dist: Babel (==2.12.1)
+Requires-Dist: cffi (==1.15.1)
+Requires-Dist: charset-normalizer (==3.1.0)
+Requires-Dist: cryptography (==41.0.1)
+Requires-Dist: dnspython (==2.3.0)
+Requires-Dist: exceptiongroup (==1.1.1)
+Requires-Dist: frozenlist (==1.3.3)
+Requires-Dist: idna (==3.4)
+Requires-Dist: iniconfig (==2.0.0)
+Requires-Dist: Jinja2 (==3.0.3)
+Requires-Dist: jinja2-time (==0.2.0)
+Requires-Dist: lxml (==4.9.2)
+Requires-Dist: MarkupSafe (==2.1.3)
+Requires-Dist: multidict (==5.2.0)
+Requires-Dist: packaging (==23.1)
+Requires-Dist: pluggy (==1.2.0)
+Requires-Dist: pyasn1 (==0.4.8)
+Requires-Dist: pyasn1-modules (==0.2.8)
+Requires-Dist: pycparser (==2.21)
+Requires-Dist: pyOpenSSL (==23.2.0)
+Requires-Dist: python-dateutil (==2.8.2)
+Requires-Dist: pytz (==2022.1)
+Requires-Dist: singletonify (==0.2.4)
+Requires-Dist: six (==1.16.0)
+Requires-Dist: sortedcollections (==2.1.0)
+Requires-Dist: sortedcontainers (==2.4.0)
+Requires-Dist: spade (==3.3.0)
+Requires-Dist: timeago (==1.0.16)
+Requires-Dist: tomli (==2.0.1)
+Requires-Dist: tzlocal (==5.0.1)
+Requires-Dist: yarl (==1.9.2)
+
+===========
+SPADE Norms
+===========
+
+
+.. image:: https://img.shields.io/pypi/v/spade_norms.svg
+        :target: https://pypi.python.org/pypi/spade_norms
+
+.. image:: https://img.shields.io/pypi/pyversions/spade_norms.svg
+    :target: https://pypi.python.org/pypi/spade_norms
+
+.. image:: https://img.shields.io/pypi/l/spade_norms
+    :target: https://opensource.org/licenses/MIT
+    :alt: MIT License
+
+.. image:: https://pepy.tech/badge/spade_norms
+    :target: https://pepy.tech/project/spade_norms
+    :alt: Downloads
+
+.. image:: https://readthedocs.org/projects/spade-norms/badge/?version=latest
+        :target: https://spade-norms.readthedocs.io/en/latest/?version=latest
+        :alt: Documentation Status
+
+.. image:: https://img.shields.io/pypi/format/spade_norms.svg
+    :target: https://pypi.python.org/pypi/spade_norms
+
+
+SPADE Normative Plugin
+
+
+* Free software: MIT license
+* Documentation: https://spade-norms.readthedocs.io.
+
+
+Features
+--------
+
+* Extension for SPADE_ providing normative capabilities
+* Enables the development of agents that are norm aware
+* Computes before an agent performs an action whether it is allowed or not
+* Easy engine override of the core engines to customize the behaviour
+
+Credits
+-------
+
+This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
+
+.. _Cookiecutter: https://github.com/audreyr/cookiecutter
+.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+.. _SPADE: https://spade-mas.readthedocs.io/en/latest/readme.html
+
+Installation and debug of plugin: https://stackoverflow.com/a/19048754
+
+
+=======
+History
+=======
+
+0.1.2 (2023-09-14)
+------------------
+
+* Agent added to inference method so it can access all agent's parameters once it's overridden.
+* Changes in documentation to improve readability and reproductibility.
+
+0.1.1 (2023-07-21)
+------------------
+
+* Fixed import bug.
+
+0.1.0 (2023-07-12)
+------------------
+
+* First release on PyPI.
