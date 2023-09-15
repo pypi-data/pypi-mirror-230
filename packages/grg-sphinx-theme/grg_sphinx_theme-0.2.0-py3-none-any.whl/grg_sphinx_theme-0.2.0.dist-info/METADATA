@@ -1,0 +1,157 @@
+Metadata-Version: 2.1
+Name: grg-sphinx-theme
+Version: 0.2.0
+Summary: A GRG sphinx theme to use across GRG projects
+Project-URL: Homepage, https://github.com/GRG-Projects/grg-sphinx-theme
+Project-URL: documentation, https://github.com/GRG-Projects/grg-sphinx-theme/blob/main/README.md
+Project-URL: source, https://github.com/GRG-Projects/grg-sphinx-theme
+Project-URL: download, https://pypi.org/project/grg-sphinx-theme/#files
+Project-URL: tracker, https://github.com/GRG-Projects/grg-sphinx-theme/issues
+Author-email: Mk996 <grg-l@list.indiana.edu>, skoudoro <grg-l@list.indiana.edu>
+Maintainer-email: GRG web team <grg-l@list.indiana.edu>
+License: BSD 3-Clause License
+        
+        Copyright (c) 2023, GRG
+        
+        Redistribution and use in source and binary forms, with or without
+        modification, are permitted provided that the following conditions are met:
+        
+        1. Redistributions of source code must retain the above copyright notice, this
+           list of conditions and the following disclaimer.
+        
+        2. Redistributions in binary form must reproduce the above copyright notice,
+           this list of conditions and the following disclaimer in the documentation
+           and/or other materials provided with the distribution.
+        
+        3. Neither the name of the copyright holder nor the names of its
+           contributors may be used to endorse or promote products derived from
+           this software without specific prior written permission.
+        
+        THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+        AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+        IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+        DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+        FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+        DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+        SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+        CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+        OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+        OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+License-File: LICENSE
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.8
+Requires-Dist: pydata-sphinx-theme==0.13.3
+Requires-Dist: sphinx>=4
+Provides-Extra: all
+Requires-Dist: grg-sphinx-theme[dev,doc,style,test]; extra == 'all'
+Provides-Extra: dev
+Requires-Dist: build; extra == 'dev'
+Requires-Dist: gitpython; extra == 'dev'
+Requires-Dist: grg-sphinx-theme[style]; extra == 'dev'
+Requires-Dist: twine; extra == 'dev'
+Requires-Dist: wheel; extra == 'dev'
+Provides-Extra: docs
+Requires-Dist: numpydoc; extra == 'docs'
+Requires-Dist: sphinx~=5.3; extra == 'docs'
+Requires-Dist: texext; extra == 'docs'
+Requires-Dist: tomli; python_version < '3.11' and extra == 'docs'
+Provides-Extra: style
+Requires-Dist: flake8; extra == 'style'
+Requires-Dist: isort; extra == 'style'
+Provides-Extra: test
+Requires-Dist: codecov; extra == 'test'
+Requires-Dist: coverage; extra == 'test'
+Requires-Dist: coveralls; extra == 'test'
+Requires-Dist: pytest!=5.3.4; extra == 'test'
+Requires-Dist: pytest-cov; extra == 'test'
+Requires-Dist: pytest-doctestplus; extra == 'test'
+Requires-Dist: pytest-httpserver; extra == 'test'
+Requires-Dist: pytest-xdist; extra == 'test'
+Description-Content-Type: text/markdown
+
+# grg-sphinx-theme
+
+A Sphinx theme for GRG projects and its affiliated packages.
+
+## Usage
+
+**install**
+
+```
+pip install grg-sphinx-theme
+```
+
+To start using the theme you need to set the theme in `conf.py` 
+
+```python
+html_theme = "grg_sphinx_theme"
+```
+
+To set different navbar-links update the html_theme_options 
+
+```
+html_theme_options = {
+...
+  "navbar_center": ["components/navbar-links.html"],
+  "navbar_links": [
+     {
+        "url": "#",
+        "name": "Home",
+     },
+     {
+        "name": "Community",
+        "children": [
+          {
+            "url": "https://www.geeksforgeeks.org/python-ways-to-concatenate-two-lists/",
+            "name": "GeeksForGeeks",
+            "external": True
+          }
+        ]
+     },
+     {
+        "name": "Multiple",
+        "sections": [
+            {
+              "name": "First",
+              "children": [
+                  {
+                    "name": "First-Hello",
+                    "url": "",
+                    "external": True
+                  },
+                  {
+                    "name": "First-How",
+                    "url": ""
+                  }
+              ]
+            },
+            {
+              "name": "Second",
+              "children": [
+                  {
+                    "name": "Second-Hello",
+                    "url": ""
+                  },
+                  {
+                    "name": "Second-How",
+                    "url": "",
+                    "external": True
+                  }
+              ]
+            }
+        ]
+     }
+  ]
+...
+}
+```
+
+## Contributing Guidelines
+
+For contribution we are required to have to maintain the same coding standard and formatting. We recommend using VSCode as an editor and use prettier extension on the VSCode.
+
+For more steps, you can read our [Contributing guidelines](CONTRIBUTING.md)
