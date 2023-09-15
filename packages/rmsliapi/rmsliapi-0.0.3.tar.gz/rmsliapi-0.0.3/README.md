@@ -1,0 +1,63 @@
+# Python Client for LI API
+
+# Setup
+Once the GMD repo is copied to your local machine, you will need to build a wheel 
+and then install the wheel in the project where you plan to use the LI API Client.
+
+## Build A Wheel
+Create a virtual environment. Navigate to the `li_api_python_client` 
+directory. Run the following terminal command:
+```
+pip install -r requirements.txt
+```
+To build wheels for this package:
+- run `$ python3 -m build` to build `.whl` file
+- this places a `.whl` file in the `dist` directory
+- Navigate to the project directory in which you will use this client. (You should also use a virtual environment.)
+  - `pip install <full path to .whl generated above>`
+  - Install and setup `dynaconf`:
+    - `pip install dynaconf`
+    - `dynaconf init -f toml`
+  - `pip install requests`
+
+# Usage
+- To use this client run a Python program including the following:
+```file.py
+from config import settings
+...
+```
+
+## CSV Format and Size
+- The CSV should have at least the following named columns (case-sensitive, brackets indicates optional):
+    - id
+    - CountryScheme 
+    - CountryCode
+    - CountryRMSCode
+    - \[Admin1Name\]
+    - \[Admin2Name\] 
+    - \[CityName\] 
+    - \[PostalCode\]
+    - \[StreetAddress\]
+- It is recommended that the CSV use '~' as the separator (delimiter) because addresses often have commas in them.
+
+## Access Tokens
+Each token is valid for a limited amount of time. Access tokens should not be placed in any files that are under version control. 
+
+Tokens can be obtained by requesting one from the LI Team or from the latest build of "location-intelligence-lkg" in CICD web interface. 
+- Option 1
+  - https://dev.azure.com/rms-cicd-pipeline/sdp/_build
+  - select 'Releases' in left menu
+  - search for "location-intelligence-lkg" and select it
+  - From the latest release for which the 'eu-west-1 Deploy Succeeded' (scroll over buttons to see full name), click that button.
+  - Click the 'Succeed' icon with the green arc 
+  - Select 'Smoke Test' from the list
+  - In the pop-up window, search "s2s" and find where the token is. copy and use in API call.
+  - can verify at jwt.io: scroll over the expiration date to translate to human-readable date format
+- Option 2
+  - https://dev.azure.com/rms-cicd-pipeline/sdp/_build
+  - Pipelines
+  - RMS.location-intelligence
+  - latest run with "Deploy: success" (hover over green checks to see which is "Deploy")
+  - "Jobs"; default is to show "Stages"
+  - "Services"
+  - One of "Run Test: ..." will have the s2s token. Search for "s2s" in each until you find "INFO: S2S token generated as : ..."
