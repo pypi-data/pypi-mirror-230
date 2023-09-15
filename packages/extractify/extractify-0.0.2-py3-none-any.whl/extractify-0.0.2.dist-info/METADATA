@@ -1,0 +1,46 @@
+Metadata-Version: 2.1
+Name: extractify
+Version: 0.0.2
+Description-Content-Type: text/markdown
+Requires-Dist: tika
+Requires-Dist: openpyxl
+Requires-Dist: argparse
+
+# Extractify
+
+Extractify is a command-line tool for converting documents in various formats (.pdf, .doc, .docx, .xlsx, .txt) to plain text. The tool creates a 'txt' subdirectory within the specified input directory and saves the plain text files with the same filenames but with a .txt extension.
+
+## Installation
+
+Install Extractify using pip:
+
+```bash
+pip install extractify
+```
+
+## Usage
+To use Extractify, run the following command:
+
+```bash
+extractify <input_dir>
+Replace <input_dir> with the path to the directory containing the documents you want to convert.
+```
+
+Extractify will create a 'txt' subdirectory within the input directory and save the plain text files there.
+
+## Supported Formats
+Extractify currently supports the following document formats:
+
+PDF (.pdf)
+Microsoft Word (.doc and .docx)
+Microsoft Excel (.xlsx)
+Plain Text (.txt)
+
+## Dependencies
+Extractify requires the following Python libraries:
+
+```bash
+tika
+openpyxl
+argparse
+```
