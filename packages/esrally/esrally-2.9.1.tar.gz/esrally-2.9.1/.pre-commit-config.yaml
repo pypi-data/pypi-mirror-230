@@ -1,0 +1,35 @@
+repos:
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.7.0
+    hooks:
+      - id: pyupgrade
+        args: [
+          "--py38-plus",
+          "--keep-percent-format"
+        ]
+
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
+    hooks:
+      - id: black
+
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+
+  - repo: local
+    hooks:
+      - id: pylint
+        name: pylint
+        entry: pylint
+        language: system
+        types: [python]
+        args:
+          [
+            "-rn",
+            "-j0",
+            "--rcfile=.pylintrc",
+          ]
+        exclude: ^(docs/|changelog.py)
+        require_serial: true
