@@ -1,0 +1,112 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "whl2conda"
+description = "build conda packages directly from pure python wheels"
+readme = "README.md"
+dynamic = ["version"]
+license = "Apache-2.0"
+license-files.paths = ["LICENSE.md"]
+authors = [
+  { name = "Christopher Barber", email = "christopher.barber@analog.com" },
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Build Tools",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+keywords = ["conda", "wheel", "build"]
+requires-python = ">=3.8"
+dependencies = [
+    "conda-package-handling >=2.2",
+    "platformdirs >=3.10",
+    "tomlkit >=0.12",
+    "wheel >=0.41",
+]
+
+[project.urls]
+repository = "https://github.com/analog-cbarber/whl2conda"
+documentation = "https://zuzukin.github.io/whl2conda/"
+
+[project.scripts]
+whl2conda = "whl2conda.cli:main"
+
+[tool.hatch.build]
+include = [
+    "src/whl2conda/**/*.py",
+    "src/whl2conda/**/*.json",
+    "src/whl2conda/py.typed",
+    "src/whl2conda/VERSION"
+]
+
+[tool.hatch.version]
+path = "src/whl2conda/VERSION"
+pattern = "\\s*(?P<version>[\\w.]*)"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/whl2conda"]
+
+[tool.black]
+line-length = 88
+skip-string-normalization = true
+
+[tool.mypy]
+check_untyped_defs = true
+mypy_path = "src"
+explicit_package_bases = true
+files = [
+    "src/whl2conda",
+    "test"
+]
+show_error_codes = true
+
+[[tool.mypy.overrides]]
+module = [
+    "conda_package_handling.*",
+    "wheel.*"
+]
+ignore_missing_imports = true
+
+[tool.pylint.build_main]
+jobs = 0  # enable parallel checks
+py-version = "3.8" # min python version
+source-roots = ["src"]
+
+[tool.pylint.design]
+max-args = 5
+max-attributes = 20
+max-bool-expr = 5
+max-branches = 12
+max-locals = 15
+max-parents = 7
+max-public-methods = 20
+max-returns = 6
+max-statements = 50
+min-public-methods = 1
+
+[tool.pylint.variables]
+allowed-redefined-builtins = ["help", "license"]
+
+[tool.pylint."messages control"]
+disable = [
+    "bad-inline-option",
+    "deprecated-pragma",
+    "file-ignored",
+    "fixme",
+    "invalid-name",
+    "locally-disabled",
+    "raw-checker-failed",
+    "suppressed-message",
+    "trailing-newlines",
+    "unspecified-encoding",
+    "use-dict-literal",
+    "use-symbolic-message-instead",
+    "useless-suppression",
+    "wrong-import-order"
+]
