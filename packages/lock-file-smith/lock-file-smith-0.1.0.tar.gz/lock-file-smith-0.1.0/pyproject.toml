@@ -1,0 +1,44 @@
+[project]
+name = "lock-file-smith"
+description = "Simple wrapper for Git LFS (Large File Storage) commands."
+readme = "README.md"
+requires-python = ">=3.8"
+license = {file = "LICENSE"}
+keywords = [
+    "python",
+    "library",
+    "git",
+    "lfs",
+]
+authors = [
+    {name = "Huey Yeng", email = "huey.yeng.mmu@gmail.com"}
+]
+maintainers = [
+    {name = "Huey Yeng", email = "huey.yeng.mmu@gmail.com"}
+]
+classifiers = [
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.8",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Microsoft :: Windows :: Windows 10",
+]
+dynamic = [
+    "version",
+    "dependencies",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/hueyyeng/lock-file-smith"
+"Bug Reports" = "https://github.com/hueyyeng/lock-file-smith/issues"
+"Source" = "https://github.com/hueyyeng/lock-file-smith"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.dynamic]
+version = {attr = "lockfilesmith.__version__"}
