@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "thunder-ase"
+version = "0.5.3"
+authors = [
+  { name="PJ Ren", email="openrpj@gmail.com" },
+]
+description = "ASE calculator interface for FIREBALL code"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.scripts]
+fit-gaussians = "thunder_ase.utils:fit_gaussian"
+
+[tool.setuptools]
+packages=['thunder_ase', 'thunder_ase.utils']
+
+[project.urls]
+"Homepage" = "https://github.com/thunder-dft/thunder-ase"
+"Bug Tracker" = "https://github.com/thunder-dft/thunder-ase/issues"
