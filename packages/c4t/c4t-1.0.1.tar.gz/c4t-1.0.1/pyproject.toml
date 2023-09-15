@@ -1,0 +1,75 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "c4t"
+version = "1.0.1"
+authors = [
+  { name="p4irin", email="139928764+p4irin@users.noreply.github.com" },
+]
+description = "Install Chrome for Testing assets."
+readme = "README.md"
+requires-python = ">=3.8.10"
+keywords = [
+  "chrome", "testing", "selenium", "chromedriver", "cft"
+]
+dependencies = [
+  "requests >= 2.31.0",
+  "wget >= 3.2",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Operating System :: POSIX :: Linux",
+    "Intended Audience :: Developers",    
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Software Development :: Testing",    
+    "License :: OSI Approved :: MIT License",    
+]
+
+[project.optional-dependencies]
+dev = [
+  "build == 0.10.0",
+  "twine >= 4.0.2",
+  "bumpver >= 2023.1126",
+]
+test = [
+  "selenium >= 4.12.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/p4irin/c4t"
+"Bug Tracker" = "https://github.com/p4irin/c4t/issues"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.bumpver]
+current_version = "1.0.1"
+version_pattern = "MAJOR.MINOR.PATCH"
+commit_message = "Bump version {old_version} -> {new_version}"
+tag_message = "{new_version}"
+commit = true
+tag = true
+push = false
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = [
+  'current_version = "{version}"',
+  'version = "{version}"',
+]
+"src/c4t/__init__.py" = [
+  "^__version__ = '{version}'$",
+]
+"tests/__init__.py" = [
+  "^__version__ = '{version}'$",
+]
+"README.md" = [
+  " - v{version}$",
+]
+
