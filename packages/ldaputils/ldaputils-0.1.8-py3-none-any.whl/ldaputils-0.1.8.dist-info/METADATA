@@ -1,0 +1,77 @@
+Metadata-Version: 2.1
+Name: ldaputils
+Version: 0.1.8
+Summary: Ldap utils library.
+Home-page: https://github.com/zencore-cn/zencore-issues
+Author: zencore
+Author-email: dobetter@zencore.cn
+License: MIT
+Keywords: ldaputils
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: ldap3 >=2.8.1
+Requires-Dist: fastutils >=0.36.2
+
+# ldaputils
+
+Ldap utils library.
+
+## Install
+
+```
+pip install ldaputils
+```
+
+## Usage
+
+```
+# use your own host, port, username and password values.
+# username must be a fully qualified dn.
+# Use ipython help to see more init parameters.
+server = LdapService(
+    host="localhost,
+    port=389,
+    username="cn=admin,dc=example,dc=com",
+    password="adminpassword",
+)
+
+name = nameutils.get_random_name() # use fastutils.nameutils.get_random_name for test
+username = pinyinutils.to_pinyin(name).lower()
+user_detail = {
+    "cn": name,
+    "ou": "AI Tech Group",
+    "l": "HangZhou, China",
+}
+assert self.server.add_user_entry(username, user_detail)
+assert self.server.delete_user_entry(username)
+```
+
+## Releases
+
+### v0.1.0 2020/11/14
+
+- First release.
+- Add, update, delete user entry function ready.
+- Get user and get users function ready.
+
+### v0.1.4 2020/11/17
+
+- Add util functions.
+
+### v0.1.5 2020/11/21
+
+- Add attributes param for LdapService.get_user_entries.
+
+### v0.1.7 2021/03/24
+
+- Fix add_user_entry changed the user_detail dict problem.
+
+### v0.1.8 2023/09/15
+
+- Doc update.
