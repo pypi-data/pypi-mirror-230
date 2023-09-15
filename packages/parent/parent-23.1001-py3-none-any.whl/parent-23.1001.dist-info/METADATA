@@ -1,0 +1,40 @@
+Metadata-Version: 2.1
+Name: parent
+Version: 23.1001
+Summary: 
+License: MIT
+Author: Adam Zahradník
+Author-email: adam.zahradnik@trojsten.sk
+Requires-Python: >=3.11,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: click (>=8.1.7,<9.0.0)
+Requires-Dist: pyprctl (>=0.1.3,<0.2.0)
+Description-Content-Type: text/markdown
+
+# parent
+
+A simple way to run process with limited resources.
+
+## Usage
+
+```
+Options:
+  -m, --memory INTEGER     Memory address space limit of the program in kB.
+  -t, --cpu-time INTEGER   Limit the amount of CPU time the program can use in
+                           milliseconds.
+  -r, --real-time INTEGER  Limit the amount of real time the program can run
+                           for in milliseconds.
+  -f, --file-size INTEGER  Limit the size of files that the program can create
+                           / modify in kB.
+  -p, --processes INTEGER  Number of processes (or threads) the program can
+                           use.
+  -i, --stdin FILE         Redirect stdin from file.
+  -o, --stdout FILE        Redirect stdout to file.
+  -e, --stderr FILE        Redirect stderr to file.
+  --stderr-to-stdout       Redirect stderr to stdout.
+  -s, --stats FILENAME     File to write stats data to.
+  --help                   Show this message and exit.
+```
+
