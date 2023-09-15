@@ -1,0 +1,16 @@
+{% extends "admin/change_form_object_tools.html" %}
+
+{% block object-tools-items %}
+{% for button in django_object_toolbar_changeform_buttons %}
+<li>
+    <a href="{{button.href}}"
+        title="{{button.help_text|default:button.title}}"
+        {% if button.klass %}class="{{button.klass}}"{% endif %}
+        {% if button.target %}target="{{button.target}}"{% endif %}>
+        {% if button.icon %}<i class="{{button.icon}}"></i>{% endif %}
+        {{button.title}}
+    </a>
+</li>
+{% endfor %}
+{{block.super}}
+{% endblock %}
