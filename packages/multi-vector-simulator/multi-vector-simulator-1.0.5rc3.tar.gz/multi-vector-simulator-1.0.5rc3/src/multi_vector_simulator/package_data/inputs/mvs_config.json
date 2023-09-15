@@ -1,0 +1,797 @@
+{
+    "constraints": {
+        "maximum_emissions": {
+            "unit": "kgCO2eq/a",
+            "value": 8000000
+        },
+        "minimal_degree_of_autonomy": {
+            "unit": "factor",
+            "value": 0.01
+        },
+        "minimal_renewable_factor": {
+            "unit": "factor",
+            "value": 0.01
+        },
+        "net_zero_energy": {
+            "unit": "bool",
+            "value": false
+        }
+    },
+    "economic_data": {
+        "currency": "NOK",
+        "discount_factor": {
+            "unit": "factor",
+            "value": 0.06
+        },
+        "label": "economic_data",
+        "project_duration": {
+            "unit": "year",
+            "value": 20
+        },
+        "tax": {
+            "unit": "factor",
+            "value": 0
+        }
+    },
+    "energyBusses": {
+        "ESS Li-Ion bus": {
+            "energyVector": "Electricity",
+            "label": "ESS Li-Ion bus"
+        },
+        "Electricity": {
+            "energyVector": "Electricity",
+            "label": "Electricity"
+        },
+        "Electricity (DSO)": {
+            "energyVector": "Electricity",
+            "label": "Electricity (DSO)"
+        },
+        "Fuel": {
+            "energyVector": "Electricity",
+            "label": "Fuel"
+        },
+        "PV plant (mono) bus": {
+            "energyVector": "Electricity",
+            "label": "PV plant (mono) bus"
+        }
+    },
+    "energyConsumption": {
+        "Electricity demand": {
+            "energyVector": "Electricity",
+            "file_name": "demand.csv",
+            "inflow_direction": "Electricity",
+            "label": "Electricity demand",
+            "type_oemof": "sink",
+            "unit": "kW"
+        }
+    },
+    "energyConversion": {
+        "Backup_diesel_generator": {
+            "age_installed": {
+                "unit": "year",
+                "value": 0
+            },
+            "development_costs": {
+                "unit": "currency",
+                "value": 0
+            },
+            "dispatch_price": {
+                "unit": "currency/kWh",
+                "value": 0
+            },
+            "efficiency": {
+                "unit": "factor",
+                "value": 0.33
+            },
+            "energyVector": "Electricity",
+            "inflow_direction": "Fuel",
+            "installedCap": {
+                "unit": "kW",
+                "value": 0
+            },
+            "label": "Backup_diesel_generator",
+            "lifetime": {
+                "unit": "year",
+                "value": 15
+            },
+            "maximumCap": {
+                "unit": "None or float",
+                "value": 1
+            },
+            "optimizeCap": {
+                "unit": "bool",
+                "value": true
+            },
+            "outflow_direction": "Electricity",
+            "specific_costs": {
+                "unit": "currency/kW",
+                "value": 600
+            },
+            "specific_costs_om": {
+                "unit": "currency/kW/year",
+                "value": 5
+            },
+            "type_oemof": "transformer",
+            "unit": "kW"
+        },
+        "Charge_contoller_ESS_Li-Ion_(charge)": {
+            "age_installed": {
+                "unit": "year",
+                "value": 0
+            },
+            "development_costs": {
+                "unit": "currency",
+                "value": 0
+            },
+            "dispatch_price": {
+                "unit": "currency/kWh",
+                "value": 0
+            },
+            "efficiency": {
+                "unit": "factor",
+                "value": 1
+            },
+            "energyVector": "Electricity",
+            "inflow_direction": "Electricity",
+            "installedCap": {
+                "unit": "kW",
+                "value": 0.5
+            },
+            "label": "Charge_contoller_ESS_Li-Ion_(charge)",
+            "lifetime": {
+                "unit": "year",
+                "value": 10
+            },
+            "maximumCap": {
+                "unit": "None or float",
+                "value": null
+            },
+            "optimizeCap": {
+                "unit": "bool",
+                "value": true
+            },
+            "outflow_direction": "ESS Li-Ion bus",
+            "specific_costs": {
+                "unit": "currency/kW",
+                "value": 0
+            },
+            "specific_costs_om": {
+                "unit": "currency/kW/year",
+                "value": 0
+            },
+            "type_oemof": "transformer",
+            "unit": "kW"
+        },
+        "Charge_contoller_ESS_Li-Ion_(discharge)": {
+            "age_installed": {
+                "unit": "year",
+                "value": 0
+            },
+            "development_costs": {
+                "unit": "currency",
+                "value": 0
+            },
+            "dispatch_price": {
+                "unit": "currency/kWh",
+                "value": 0
+            },
+            "efficiency": {
+                "unit": "factor",
+                "value": 1
+            },
+            "energyVector": "Electricity",
+            "inflow_direction": "ESS Li-Ion bus",
+            "installedCap": {
+                "unit": "kW",
+                "value": 0.5
+            },
+            "label": "Charge_contoller_ESS_Li-Ion_(discharge)",
+            "lifetime": {
+                "unit": "year",
+                "value": 10
+            },
+            "maximumCap": {
+                "unit": "None or float",
+                "value": null
+            },
+            "optimizeCap": {
+                "unit": "bool",
+                "value": true
+            },
+            "outflow_direction": "Electricity",
+            "specific_costs": {
+                "unit": "currency/kW",
+                "value": 0
+            },
+            "specific_costs_om": {
+                "unit": "currency/kW/year",
+                "value": 0
+            },
+            "type_oemof": "transformer",
+            "unit": "kW"
+        },
+        "Transformer_station_(DSO)_feedin": {
+            "age_installed": {
+                "unit": "year",
+                "value": 5
+            },
+            "development_costs": {
+                "unit": "currency",
+                "value": 0
+            },
+            "dispatch_price": {
+                "unit": "currency/kWh",
+                "value": 0
+            },
+            "efficiency": {
+                "unit": "factor",
+                "value": 0.96
+            },
+            "energyVector": "Electricity",
+            "inflow_direction": "Electricity",
+            "installedCap": {
+                "unit": "kW",
+                "value": 1250
+            },
+            "label": "Transformer_station_(DSO)_feedin",
+            "lifetime": {
+                "unit": "year",
+                "value": 30
+            },
+            "maximumCap": {
+                "unit": "None or float",
+                "value": null
+            },
+            "optimizeCap": {
+                "unit": "bool",
+                "value": false
+            },
+            "outflow_direction": "Electricity (DSO)",
+            "specific_costs": {
+                "unit": "currency/kW",
+                "value": 0
+            },
+            "specific_costs_om": {
+                "unit": "currency/kW/year",
+                "value": 0
+            },
+            "type_oemof": "transformer",
+            "unit": "kVA"
+        },
+        "solar_inverter_(mono)": {
+            "age_installed": {
+                "unit": "year",
+                "value": 0
+            },
+            "development_costs": {
+                "unit": "currency",
+                "value": 0
+            },
+            "dispatch_price": {
+                "unit": "currency/kWh",
+                "value": 0
+            },
+            "efficiency": {
+                "unit": "factor",
+                "value": 1
+            },
+            "energyVector": "Electricity",
+            "inflow_direction": "PV plant (mono) bus",
+            "installedCap": {
+                "unit": "kW",
+                "value": 0
+            },
+            "label": "solar_inverter_(mono)",
+            "lifetime": {
+                "unit": "year",
+                "value": 15
+            },
+            "maximumCap": {
+                "unit": "None or float",
+                "value": null
+            },
+            "optimizeCap": {
+                "unit": "bool",
+                "value": true
+            },
+            "outflow_direction": "Electricity",
+            "specific_costs": {
+                "unit": "currency/kW",
+                "value": 3000
+            },
+            "specific_costs_om": {
+                "unit": "currency/kW/year",
+                "value": 0
+            },
+            "type_oemof": "transformer",
+            "unit": "kW"
+        },
+        "transformer_station_(DSO)_consumption": {
+            "age_installed": {
+                "unit": "year",
+                "value": 5
+            },
+            "development_costs": {
+                "unit": "currency",
+                "value": 0
+            },
+            "dispatch_price": {
+                "unit": "currency/kWh",
+                "value": 0
+            },
+            "efficiency": {
+                "unit": "factor",
+                "value": 0.96
+            },
+            "energyVector": "Electricity",
+            "inflow_direction": "Electricity (DSO)",
+            "installedCap": {
+                "unit": "kW",
+                "value": 1250
+            },
+            "label": "transformer_station_(DSO)_consumption",
+            "lifetime": {
+                "unit": "year",
+                "value": 30
+            },
+            "maximumCap": {
+                "unit": "None or float",
+                "value": null
+            },
+            "optimizeCap": {
+                "unit": "bool",
+                "value": false
+            },
+            "outflow_direction": "Electricity",
+            "specific_costs": {
+                "unit": "currency/kW",
+                "value": 0
+            },
+            "specific_costs_om": {
+                "unit": "currency/kW/year",
+                "value": 0
+            },
+            "type_oemof": "transformer",
+            "unit": "kVA"
+        }
+    },
+    "energyProduction": {
+        "Diesel": {
+            "age_installed": {
+                "unit": "year",
+                "value": 0
+            },
+            "development_costs": {
+                "unit": "currency",
+                "value": 0
+            },
+            "dispatch_price": {
+                "unit": "currency/kWh",
+                "value": 0.64
+            },
+            "emission_factor": {
+                "unit": "kgCO2eq/unit",
+                "value": 2.7
+            },
+            "energyVector": "Electricity",
+            "file_name": "None",
+            "installedCap": {
+                "unit": "kWp",
+                "value": 0
+            },
+            "label": "Diesel",
+            "lifetime": {
+                "unit": "year",
+                "value": 20
+            },
+            "maximumCap": {
+                "unit": "None or float",
+                "value": null
+            },
+            "optimizeCap": {
+                "unit": "bool",
+                "value": true
+            },
+            "outflow_direction": "Fuel",
+            "renewableAsset": {
+                "unit": "bool",
+                "value": false
+            },
+            "specific_costs": {
+                "unit": "currency/unit",
+                "value": 0
+            },
+            "specific_costs_om": {
+                "unit": "currency/unit/year",
+                "value": 0
+            },
+            "type_oemof": "source",
+            "unit": "l"
+        },
+        "PV_plant_(mono)": {
+            "age_installed": {
+                "unit": "year",
+                "value": 0
+            },
+            "development_costs": {
+                "unit": "currency",
+                "value": 10000
+            },
+            "dispatch_price": {
+                "unit": "currency/kWh",
+                "value": 0
+            },
+            "emission_factor": {
+                "unit": "kgCO2eq/unit",
+                "value": 0
+            },
+            "energyVector": "Electricity",
+            "file_name": "pv_gen_merra2_2014_eff1_tilt40_az180.csv",
+            "installedCap": {
+                "unit": "kWp",
+                "value": 50
+            },
+            "label": "PV_plant_(mono)",
+            "lifetime": {
+                "unit": "year",
+                "value": 30
+            },
+            "maximumCap": {
+                "unit": "None or float",
+                "value": 10000
+            },
+            "optimizeCap": {
+                "unit": "bool",
+                "value": true
+            },
+            "outflow_direction": "PV plant (mono) bus",
+            "renewableAsset": {
+                "unit": "bool",
+                "value": true
+            },
+            "specific_costs": {
+                "unit": "currency/unit",
+                "value": 7200
+            },
+            "specific_costs_om": {
+                "unit": "currency/unit/year",
+                "value": 80
+            },
+            "type_oemof": "source",
+            "unit": "kWp"
+        }
+    },
+    "energyProviders": {
+        "Electricity_grid_DSO": {
+            "emission_factor": {
+                "unit": "kgCO2eq/kWh",
+                "value": 0.019
+            },
+            "energyVector": "Electricity",
+            "energy_price": {
+                "unit": "currency/kWh",
+                "value": 0.1
+            },
+            "feedin_tariff": {
+                "unit": "currency/kWh",
+                "value": 0.05
+            },
+            "inflow_direction": "Electricity (DSO)",
+            "label": "Electricity_grid_DSO",
+            "optimizeCap": {
+                "unit": "bool",
+                "value": true
+            },
+            "outflow_direction": "Electricity (DSO)",
+            "peak_demand_pricing": {
+                "unit": "currency/kW",
+                "value": 60
+            },
+            "peak_demand_pricing_period": {
+                "unit": "times per year (1,2,3,4,6,12)",
+                "value": 2
+            },
+            "renewable_share": {
+                "unit": "factor",
+                "value": 0.1
+            },
+            "type_oemof": "source",
+            "unit": "kW"
+        }
+    },
+    "energyStorage": {
+        "storage_01": {
+            "energyVector": "Electricity",
+            "inflow_direction": "ESS Li-Ion bus",
+            "input power": {
+                "age_installed": {
+                    "unit": "year",
+                    "value": 0
+                },
+                "c_rate": {
+                    "unit": "factor of total capacity (kWh)",
+                    "value": 1
+                },
+                "development_costs": {
+                    "unit": "currency",
+                    "value": 0
+                },
+                "dispatch_price": {
+                    "unit": "currency/kWh",
+                    "value": 0
+                },
+                "efficiency": {
+                    "unit": "factor",
+                    "value": 0.9500000000000001
+                },
+                "installedCap": {
+                    "unit": "kWh",
+                    "value": 1
+                },
+                "label": "ESS Li-Ion input power",
+                "lifetime": {
+                    "unit": "year",
+                    "value": 10
+                },
+                "specific_costs": {
+                    "unit": "currency/kWh",
+                    "value": 0
+                },
+                "specific_costs_om": {
+                    "unit": "currency/kWh/year",
+                    "value": 0
+                },
+                "unit": "kW"
+            },
+            "label": "ESS Li-Ion",
+            "optimizeCap": {
+                "unit": "bool",
+                "value": true
+            },
+            "outflow_direction": "ESS Li-Ion bus",
+            "output power": {
+                "age_installed": {
+                    "unit": "year",
+                    "value": 0
+                },
+                "c_rate": {
+                    "unit": "factor of total capacity (kWh)",
+                    "value": 1
+                },
+                "development_costs": {
+                    "unit": "currency",
+                    "value": 0
+                },
+                "dispatch_price": {
+                    "unit": "currency/kWh",
+                    "value": 0
+                },
+                "efficiency": {
+                    "unit": "factor",
+                    "value": 0.9500000000000001
+                },
+                "installedCap": {
+                    "unit": "kWh",
+                    "value": 1
+                },
+                "label": "ESS Li-Ion output power",
+                "lifetime": {
+                    "unit": "year",
+                    "value": 10
+                },
+                "specific_costs": {
+                    "unit": "currency/kWh",
+                    "value": 0
+                },
+                "specific_costs_om": {
+                    "unit": "currency/kWh/year",
+                    "value": 0
+                },
+                "unit": "kW"
+            },
+            "storage capacity": {
+                "age_installed": {
+                    "unit": "year",
+                    "value": 0
+                },
+                "development_costs": {
+                    "unit": "currency",
+                    "value": 0
+                },
+                "efficiency": {
+                    "unit": "factor",
+                    "value": 1
+                },
+                "fixed_thermal_losses_absolute": {
+                    "unit": "kWh",
+                    "value": 0
+                },
+                "fixed_thermal_losses_relative": {
+                    "unit": "factor",
+                    "value": 0
+                },
+                "installedCap": {
+                    "unit": "kWh",
+                    "value": 10
+                },
+                "label": "ESS Li-Ion storage capacity",
+                "lifetime": {
+                    "unit": "year",
+                    "value": 10
+                },
+                "soc_initial": {
+                    "unit": "None or factor",
+                    "value": null
+                },
+                "soc_max": {
+                    "unit": "factor",
+                    "value": 1
+                },
+                "soc_min": {
+                    "unit": "factor",
+                    "value": 0.2
+                },
+                "specific_costs": {
+                    "unit": "currency/kWh",
+                    "value": 4000
+                },
+                "specific_costs_om": {
+                    "unit": "currency/kWh/year",
+                    "value": 0
+                },
+                "unit": "kWh"
+            },
+            "storage_filename": "storage_01.csv",
+            "type_oemof": "storage"
+        }
+    },
+    "fixcost": {
+        "distribution_grid": {
+            "age_installed": {
+                "unit": "year",
+                "value": 10
+            },
+            "development_costs": {
+                "unit": "currency",
+                "value": 0
+            },
+            "label": "distribution_grid",
+            "lifetime": {
+                "unit": "year",
+                "value": 30
+            },
+            "specific_costs": {
+                "unit": "currency",
+                "value": 0
+            },
+            "specific_costs_om": {
+                "unit": "currency/year",
+                "value": 0
+            }
+        },
+        "engineering": {
+            "age_installed": {
+                "unit": "year",
+                "value": 0
+            },
+            "development_costs": {
+                "unit": "currency",
+                "value": 0
+            },
+            "label": "engineering",
+            "lifetime": {
+                "unit": "year",
+                "value": 20
+            },
+            "specific_costs": {
+                "unit": "currency",
+                "value": 0
+            },
+            "specific_costs_om": {
+                "unit": "currency/year",
+                "value": 0
+            }
+        },
+        "operation": {
+            "age_installed": {
+                "unit": "year",
+                "value": 0
+            },
+            "development_costs": {
+                "unit": "currency",
+                "value": 0
+            },
+            "label": "operation",
+            "lifetime": {
+                "unit": "year",
+                "value": 20
+            },
+            "specific_costs": {
+                "unit": "currency",
+                "value": 0
+            },
+            "specific_costs_om": {
+                "unit": "currency/year",
+                "value": 4600
+            }
+        }
+    },
+    "paths_to_plots": {
+        "costs": [],
+        "demands": [],
+        "flows_on_busses": [],
+        "graphviz": "",
+        "performance": [],
+        "resources": []
+    },
+    "project_data": {
+        "country": "Test country",
+        "label": "project_data",
+        "latitude": "0",
+        "longitude": "1",
+        "project_id": "1",
+        "project_name": "Test simulation",
+        "scenario_description": {
+            "unit": "Test scenario for test simulations with the MVS",
+            "value": NaN
+        },
+        "scenario_id": "1",
+        "scenario_name": "Test scenario"
+    },
+    "simulation_settings": {
+        "end_date": {
+            "data_type": "pandas_Timestamp",
+            "value": "2018-01-01 23:00:00"
+        },
+        "evaluated_period": {
+            "unit": "days",
+            "value": 1
+        },
+        "label": "simulation_settings",
+        "output_lp_file": {
+            "unit": "bool",
+            "value": false
+        },
+        "path_input_folder": "tests/inputs",
+        "path_output_folder": "C:\\Users\\ciara.dunks\\PycharmProjects\\multi-vector-simulator\\MVS_outputs",
+        "path_output_folder_inputs": "C:\\Users\\ciara.dunks\\PycharmProjects\\multi-vector-simulator\\MVS_outputs\\inputs",
+        "periods": 24,
+        "start_date": {
+            "data_type": "pandas_Timestamp",
+            "value": "2018-01-01 00:00:00"
+        },
+        "time_index": {
+            "data_type": "pandas_DatetimeIndex",
+            "value": [
+                1514764800000000000,
+                1514768400000000000,
+                1514772000000000000,
+                1514775600000000000,
+                1514779200000000000,
+                1514782800000000000,
+                1514786400000000000,
+                1514790000000000000,
+                1514793600000000000,
+                1514797200000000000,
+                1514800800000000000,
+                1514804400000000000,
+                1514808000000000000,
+                1514811600000000000,
+                1514815200000000000,
+                1514818800000000000,
+                1514822400000000000,
+                1514826000000000000,
+                1514829600000000000,
+                1514833200000000000,
+                1514836800000000000,
+                1514840400000000000,
+                1514844000000000000,
+                1514847600000000000
+            ]
+        },
+        "timestep": {
+            "unit": "minutes",
+            "value": 60
+        }
+    }
+}
