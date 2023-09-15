@@ -1,0 +1,11 @@
+build-package:
+    stage: deploy
+    image: python:3.10
+    script:
+        - cat $PYPIRC > /tmp/.pypirc
+        - pip install twine
+        - pip install --upgrade build
+        - python -m build
+        - twine upload --config-file /tmp/.pypirc dist/*
+    only:
+        - tags
