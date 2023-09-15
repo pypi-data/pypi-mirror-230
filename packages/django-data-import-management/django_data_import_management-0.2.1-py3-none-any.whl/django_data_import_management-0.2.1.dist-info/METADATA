@@ -1,0 +1,134 @@
+Metadata-Version: 2.1
+Name: django-data-import-management
+Version: 0.2.1
+Summary: Django data import management application.
+Author: Qian DingFeng
+Author-email: qiandingfeng@zencore.cn
+Maintainer: Qian DingFeng
+Maintainer-email: qiandingfeng@zencore.cn
+License: MIT
+Keywords: django extentions
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: django
+Requires-Dist: django-static-jquery-ui
+Requires-Dist: django-static-fontawesome
+Requires-Dist: django-safe-fields
+Requires-Dist: django-changelist-toolbar-admin
+Requires-Dist: django-object-toolbar-admin
+Requires-Dist: zenutils
+
+# django-data-import-management
+
+Django data import management application.
+
+
+## Install
+
+```
+pip install django-data-import-management
+```
+
+## Usage
+
+**pro/settings.py**
+
+```
+INSTALLED_APPS = [
+    ...
+    'django_data_import_management',
+    'example_app',
+    ...
+]
+```
+
+**example_app/import_workflow.py**
+
+```
+from django_data_import_management.models import DjangoDataImportWorkflow
+from django_data_import_management.models import ParsedItem
+
+class ExampleImportWorkflow(DjangoDataImportWorkflow):
+
+    def do_parse(self):
+        items = []
+        for i in range(10):
+            item = ParsedItem()
+            info = str(i)
+            data = {
+                "index": 1,
+            }
+            item.mark_success(info, data)
+            items.append(item)
+        return items        # Note: always return the parsed ParsedItems
+    
+    def do_import(self, import_items):
+        for item in import_items:
+            item.mark_success()
+        return import_items   # Note: always return import_items
+
+```
+
+**example_app/apps.py**
+
+```
+class ExampleAppConfig(AppConfig):
+    name = 'example_app'
+
+    def ready(self):
+        from django_data_import_management.models import register_django_data_import_workflow
+        from .import_workflows import ExampleImportWorkflow
+        register_django_data_import_workflow("Example Import", ExampleImportWorkflow)
+```
+
+**example_app/__init__.py**
+
+```
+default_app_config = "example_app.apps.ExampleAppConfig"
+```
+
+*Steps:*
+
+1. Setup dependencies.
+1. Create a new workflow.
+1. Register the workflow when project starts.
+
+## Releases
+
+
+
+### v0.1.4
+
+- First release.
+
+### v0.1.5
+
+- Pass datafile instance to workflow.
+
+### v0.1.6
+
+- Add DjangoSimpleExportedDataImportWorkflow base class. 
+
+### v0.1.8
+
+- Fix string format problem.
+- Fix fk problem.
+
+### v0.1.9
+
+- Fix dependence package version problem.
+
+### v0.2.0
+
+- Fix ugettext problem for Django 4.2.x.
+- Add do_parse and do_import object toolbar button.
+
+### v0.2.1
+
+- Doc update.
