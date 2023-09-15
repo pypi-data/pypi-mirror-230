@@ -1,0 +1,68 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "auto_rxn"
+author = "auto_rxn developers"
+requires-python = ">=3.9"
+readme = "README.md"
+dynamic = ["version"]
+license = "MIT"
+dependencies = ["platformdirs",
+                "click",
+                "happi",
+                "pandas",
+                "bluesky",
+                "suitcase-csv",
+	        "tomli",
+      	        "tomli-w",
+                 ]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering",
+]
+
+[project.urls]
+Source = "https://github.com/uw-madison-chem-shops/auto_rxn"
+Issues = "https://github.com/uw-madison-chem-shops/auto_rxn/issues"
+"Home Page" = "https://uw-madison-chem-shops.github.io/auto_rxn/"
+
+[project.optional-dependencies]
+dev = ["black", "pre-commit"]
+
+[project.scripts]
+auto_rxn = "auto_rxn.__main__:main"
+auto-rxn = "auto_rxn.__main__:main"
+
+[project.entry-points."happi.containers"]
+fake_furnace = "auto_rxn.devices._fake_furnace"
+fake_mfc = "auto_rxn.devices._fake_mfc"
+
+[tool.hatch.version]
+path = "auto_rxn/__version__.py"
+
+[tool.black]
+line-length = 99
+target-version = ['py311']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | build
+  | dist
+)/
+'''
