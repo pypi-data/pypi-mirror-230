@@ -1,0 +1,38 @@
+
+
+/* inline-original-hidden: 隐藏TabularInline及StackInline中的orininal显示。可加在TabularInline类的claases属性中。可加在StackInline类的claases属性中。 */
+.inline-original-hidden .original p {
+    display: none;
+}
+.inline-group .tabular .inline-original-hidden tr.has_original td {
+    padding: 8px 0 4px 8px;
+}
+.inline-group .tabular .inline-original-hidden tr.has_original td input {
+    margin: 0;
+}
+
+
+/* related-actions-hidden: 外键的增改删按钮隐藏。可加在fieldsets的classes属性中。 */
+.related-actions-hidden .related-widget-wrapper-link {
+    display: none;
+}
+
+
+/* inline-narror-input: TabularInline字符串输入框改为小框。可加在TabularInline类的claases属性中。可加在fieldsets的classes属性中。 */
+.tabular .inline-narror-input .vTextField,
+.tabular .inline-narror-input .vUUIDField {
+    width: 10em;
+}
+
+
+/* form-row-c2: FormChange表单两例显示，同时控制textarea的宽度。可加在fieldsets的classes属性中。 */
+.form-row-c2 .form-row .fieldBox {
+    width: 444px;
+}
+.form-row-c2 .form-row > div > textarea.vLargeTextField {
+    width: 725px;
+}
+.form-row-c2 .form-row > div.fieldBox > textarea.vLargeTextField {
+    width: 260px;
+    height: 100px;
+}

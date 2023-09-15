@@ -1,0 +1,66 @@
+{% extends "admin/base.html" %}
+{% load django_simple_tags %}
+
+
+{% block extrastyle %}
+{{block.super}}
+
+{% block django_admin_fixwidth_layout_block %}
+{% get_setting "DJANGO_ADMIN_USE_FIXED_WIDTH_LAYOUT" False as django_admin_use_fixed_width_layout %}
+{% if django_admin_use_fixed_width_layout %}
+<style>
+body {
+    width: {% get_setting "DJANGO_ADMIN_WIDTH" "1280px" %};
+    margin: auto;
+}
+html {
+    background-color: {% get_setting "DJANGO_ADMIN_BACKGROUND_COLOR" "#f5f6f8" %};
+}
+#content {
+    min-height: 800px;
+}
+#footer {
+    background-color: {% get_setting "DJANGO_ADMIN_BACKGROUND_COLOR" "#f5f6f8" %};
+    text-align: center;
+    color: {% get_setting "DJANGO_ADMIN_FOOTER_COLOR" "#c5cbd2" %};
+}
+.login #content {
+    min-height: 220px;
+}
+</style>
+{% endif %}
+{% endblock %}
+
+
+{% block extra_css %}
+<style>
+{% for css in request.extra_css %}
+{% autoescape off %}{{css}}{% endautoescape %}
+{% endfor %}
+</style>
+{% endblock %}
+
+{% endblock %}
+
+
+{% block blockbots %}
+{{block.super}}
+
+{% block extra_js %}
+<script>
+(function($) {
+{% for js in request.extra_js %}
+{% autoescape off %}{{js}}{% endautoescape %}
+{% endfor %}
+})(django.jQuery);
+</script>
+{% endblock %}
+
+{% endblock %}
+
+
+{% block footer %}
+<div id="footer">
+    {% get_setting "DJANGO_ADMIN_FOOTER" %}
+</div>
+{% endblock %}

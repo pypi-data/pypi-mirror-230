@@ -1,0 +1,23 @@
+{% load i18n %}
+<div class="django_power_admin_widgets_popup_config_table_wrapper">
+    <textarea class="django_power_admin_widgets_popup_config_table_textarea" name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %} style="display: none;">{% if widget.value %}{{ widget.value }}{% endif %}</textarea>
+    <span class="popup_config_table_more_configs">{{config.moreConfigBtnLabel}}</span>
+    <div class="django_power_admin_widgets_popup_config_table_popup" style="display: none;">
+        <table class="django_power_admin_widgets_popup_config_table" >
+            <tr class="django_power_admin_widgets_popup_config_table_title">
+                <th class="django_power_admin_widgets_popup_config_table_title_item_title">{% trans "Config Item Title" %}</th>
+                <th class="django_power_admin_widgets_popup_config_table_title_item_key">{% trans "Config Item Key" %}</th>
+                <th class="django_power_admin_widgets_popup_config_table_title_item_value">{% trans "Config Item Value" %}</th>
+                <th class="django_power_admin_widgets_popup_config_table_title_item_help">{% trans "Config Item Help" %}</th>
+            </tr>
+            {% for item in config.configitems %}
+            <tr class="django_power_admin_widgets_popup_config_table_item">
+                <td class="django_power_admin_widgets_popup_config_table_item_title">{{item.title}}</td>
+                <td class="django_power_admin_widgets_popup_config_table_item_key">{{item.key}}</td>
+                <td class="django_power_admin_widgets_popup_config_table_item_value"><input type="text" /></td>
+                <td class="django_power_admin_widgets_popup_config_table_item_help">{{item.help}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
