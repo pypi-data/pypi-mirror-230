@@ -1,0 +1,10 @@
+{% for button in buttons %}
+<a href="{{button.href}}"
+    title="{{button.help_text|default:button.title}}"
+    {% if button.klass %}class="{{button.klass}}"{% endif %}
+    {% if button.target %}target="{{button.target}}"{% endif %}>
+    {% if button.icon %}<i class="{{button.icon}}"></i>{% endif %}
+    {{button.title}}
+</a>
+{% if not forloop.last %}<span class="django-object-toolbar-admin-sperator">|</span>{% endif %}
+{% endfor %}
