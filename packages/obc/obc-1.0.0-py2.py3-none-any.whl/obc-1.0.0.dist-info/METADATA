@@ -1,0 +1,126 @@
+Metadata-Version: 2.1
+Name: obc
+Version: 1.0.0
+Summary: The Open Badges Client
+Home-page: https://github.com/openfun/open-badges-client
+Author: Open FUN (France Universite Numerique)
+Author-email: fun.dev@fun-mooc.fr
+License: MIT
+Keywords: Openbadge,API
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pydantic[email] >=2.0.0
+Requires-Dist: httpx >=0.24.1
+Provides-Extra: ci
+Requires-Dist: twine ==4.0.2 ; extra == 'ci'
+Provides-Extra: dev
+Requires-Dist: bandit ==1.7.5 ; extra == 'dev'
+Requires-Dist: black ==23.9.1 ; extra == 'dev'
+Requires-Dist: flake8 ==6.1.0 ; extra == 'dev'
+Requires-Dist: isort ==5.12.0 ; extra == 'dev'
+Requires-Dist: pydocstyle ==6.3.0 ; extra == 'dev'
+Requires-Dist: pylint ==2.17.5 ; extra == 'dev'
+Requires-Dist: pytest ==7.4.2 ; extra == 'dev'
+Requires-Dist: pytest-cov ==4.1.0 ; extra == 'dev'
+Requires-Dist: pytest-httpx ==0.24.0 ; extra == 'dev'
+Requires-Dist: responses ==0.23.3 ; extra == 'dev'
+
+# OBC, the Open Badges Client
+
+`obc` is a python library that provides a standard API to interact with Open
+Badge platforms.
+
+## Quick start guide
+
+### Install OBC
+
+`obc` is distributed as a python package. It can be installed using `pip` (or
+any other package manager) from PyPI:
+
+```
+$ pip install obc
+```
+
+### Use providers in your application
+
+Let say you want to issue an existing Open Badge Factory badge for a list of
+recipients, an example implementation would look like:
+
+```python
+from obc.providers.obf import BadgeIssue, BadgeQuery, OBF
+
+# Configure Open Badge Factory provider using your client identifier and secret
+# key
+obf = OBF(client_id="my_obf_client_id", client_secret="super_secret")
+
+# Get the badge with the "badge_id" identifier
+badge = next(obf.read(query=BadgeQuery(id="badge_id")))
+
+# We want to issue a badge for the following recipients
+issue = BadgeIssue(
+    recipient=[
+      "jane@example.org",
+      "tarzan@example.org"
+    ]
+)
+
+event_url, event_id = obf.issue(badge, issue)
+```
+
+More details will follow in the upcoming documentation.
+
+### Hack on the project
+
+If you want to start contributing on the project, use the `bootstrap` Makefile
+target to build the Docker development image:
+
+```
+$ make bootstrap
+```
+
+To run tests, type:
+
+```
+$ make test
+```
+
+And to lint sources, there is also a command for that:
+
+```
+$ make lint
+```
+
+If you had new dependencies to the project, you will have to rebuild the Docker
+image (and the development environment):
+
+```
+$ make build && make dev
+```
+
+You can explore all other target using:
+
+```
+$ make help
+```
+
+## Contributing
+
+This project is intended to be community-driven, so please, do not hesitate to
+get in touch if you have any question related to our implementation or design
+decisions.
+
+We try to raise our code quality standards and expect contributors to follow
+the recommandations from our
+[handbook](https://openfun.gitbooks.io/handbook/content).
+
+## License
+
+This work is released under the MIT License (see [LICENSE](./LICENSE)).
