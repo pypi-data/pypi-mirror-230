@@ -1,0 +1,106 @@
+Metadata-Version: 2.1
+Name: giford
+Version: 0.6.0
+Summary: easy image and gif manipulation
+Author: Alex Harding
+License: MIT License
+        
+        Copyright (c) 2023 Alex Harding
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: homepage, https://github.com/whale-net/giford
+Project-URL: repository, https://github.com/whale-net/giford.git
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: numpy
+Requires-Dist: scikit-image
+Requires-Dist: ffmpeg-python
+Requires-Dist: setuptools
+Requires-Dist: setuptools-scm
+Requires-Dist: Pillow
+Provides-Extra: test
+Requires-Dist: pytest; extra == "test"
+Requires-Dist: pytest-xdist; extra == "test"
+Requires-Dist: pytest-cov; extra == "test"
+Provides-Extra: mypy
+Requires-Dist: mypy; extra == "mypy"
+Requires-Dist: types-Pillow; extra == "mypy"
+Provides-Extra: lint
+Requires-Dist: black; extra == "lint"
+Requires-Dist: giford[mypy]; extra == "lint"
+Requires-Dist: pylint; extra == "lint"
+Provides-Extra: dev
+Requires-Dist: giford[test]; extra == "dev"
+Requires-Dist: giford[lint]; extra == "dev"
+
+# giford
+[![Pytest](https://github.com/whale-net/giford/actions/workflows/pytest.yml/badge.svg)](https://github.com/whale-net/giford/actions/workflows/pytest.yml)
+[![codecov](https://codecov.io/gh/whale-net/giford/graph/badge.svg?token=QX182ZYMHN)](https://codecov.io/gh/whale-net/giford)
+
+## about
+modify images and create gifs with unified toolkit
+
+### concepts
+
+![giford_concepts](./diagrams/giford_concepts.drawio.svg)
+
+### class diagram (very crude)
+
+![giford_class_diagram](./diagrams/giford_architecture.drawio.svg)
+
+## manifesto:
+lowercase because it's friendly
+
+newlines at end of files because it's nice
+
+if you understand why an image manipulation library needs a manifesto, then you arent thinking little enough
+
+## setup
+todo - package config
+packages - scikit-image (skimage), ffmpeg
+python sample_run.py
+
+python >=3.11
+needed because:
+```
+from typing import Self
+```
+
+install required for developmet
+will install linters, pytest and all supporting modules for those
+```
+pip install -e .[dev]
+```
+
+## building
+
+```
+pip install build
+pip install setuptools-scm
+python -m build
+```
+
+## coverage wheel
+[![coveragegraph](https://codecov.io/gh/whale-net/giford/graphs/sunburst.svg?token=QX182ZYMHN)](https://codecov.io/gh/whale-net/giford)
+
+## sometimes things don't go right
+![whoops](./whoops_example.gif)
+![whoops](./whoops_example2.gif)

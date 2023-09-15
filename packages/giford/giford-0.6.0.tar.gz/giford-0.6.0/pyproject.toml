@@ -1,0 +1,69 @@
+[build-system]
+requires = ['setuptools', 'setuptools_scm[toml]>=6.2']
+build-backend = 'setuptools.build_meta'
+
+[project]
+name = 'giford'
+authors = [{name = 'Alex Harding'}]
+# unsure if >3.10 is ok, but 3.10.7 works
+requires-python = '>=3.10'
+description = 'easy image and gif manipulation'
+#version = "0.2.0" using setuptools_scm
+dynamic = ['version']
+license = {file = 'LICENSE.txt'}
+dependencies = [
+    'numpy',
+    'scikit-image',
+    'ffmpeg-python',
+    'setuptools',
+    'setuptools-scm',
+    'Pillow'
+]
+
+[project.optional-dependencies]
+# TODO one day these should be split so dev doesn't require installing all of these
+test = [
+    'pytest',
+    'pytest-xdist',
+    'pytest-cov',
+]
+mypy = [
+    'mypy',
+    'types-Pillow'
+]
+lint = [
+    'black',
+    'giford[mypy]',
+    'pylint',
+]
+dev = [
+    'giford[test]',
+    'giford[lint]'
+]
+
+
+[project.urls]
+homepage = 'https://github.com/whale-net/giford'
+repository = 'https://github.com/whale-net/giford.git'
+
+[tool.setuptools.packages.find]
+where = ['.']
+include = ['giford*']
+exclude = ['tests*']
+namespaces = false  # true by default
+
+[tool.setuptools_scm]
+write_to = 'giford/_version.py'
+
+# mypy config
+[tool.mypy]
+disallow_untyped_defs = true
+plugins = 'numpy.typing.mypy_plugin'
+# supress modules that don't have type hints
+# i cba stubs
+[[tool.mypy.overrides]]
+module = [
+    'ffmpeg',
+    'skimage'
+]
+ignore_missing_imports = true
