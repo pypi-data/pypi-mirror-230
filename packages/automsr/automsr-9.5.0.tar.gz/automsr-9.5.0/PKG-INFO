@@ -1,0 +1,114 @@
+Metadata-Version: 2.1
+Name: automsr
+Version: 9.5.0
+Summary: Automate Rewards points collection
+Home-page: https://github.com/Crissal1995/automsr
+License: MIT
+Author: Cristiano Salerno
+Author-email: cristianosalerno1@gmail.com
+Requires-Python: >=3.8,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: email-validator (>=2.0.0.post2,<3.0.0)
+Requires-Dist: faker (>=19.3.1,<20.0.0)
+Requires-Dist: markdown (>=3.4.4,<4.0.0)
+Requires-Dist: pydantic (>=2.1.1,<3.0.0)
+Requires-Dist: pyyaml (>=6.0.1,<7.0.0)
+Requires-Dist: questionary (>=2.0.1,<3.0.0)
+Requires-Dist: selenium (>=4.11.2,<5.0.0)
+Requires-Dist: tqdm (>=4.65.0,<5.0.0)
+Requires-Dist: types-pyyaml (>=6.0.12.11,<7.0.0.0)
+Requires-Dist: types-tqdm (>=4.65.0.2,<5.0.0.0)
+Project-URL: Repository, https://github.com/Crissal1995/automsr
+Description-Content-Type: text/markdown
+
+# AutoMSR
+
+[![PyPI - Version](https://img.shields.io/pypi/v/automsr)](https://pypi.org/project/automsr/#history)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/automsr)](https://pypi.org/project/automsr)
+[![Checks](https://github.com/Crissal1995/automsr/actions/workflows/checks.yaml/badge.svg)](https://github.com/Crissal1995/automsr/actions/workflows/checks.yaml)
+
+## Description
+
+**AutoMSR** is an automation tool created for educational purpose,
+intending to show how to use Selenium as an automation driver
+for the Microsoft Rewards service.
+
+### What it does
+
+This tool is intended to show how to collect automatically daily points for
+Microsoft Rewards.
+
+What is included:
+- Daily promotions completed.
+- Other activities completed.
+- Free punchcards completed.
+- Searches with a desktop User Agent completed.
+- Searches with a mobile User Agent completed.
+
+### Warning
+
+Before using this software, read carefully the [Microsoft Terms of Service](https://www.microsoft.com/servicesagreement),
+section _Microsoft Rewards_.
+
+TL;DR: the usage of AutoMSR could lead in a ban.
+
+## Setup
+
+### Installation
+
+```shell
+$ pip install automsr  # this will install the binary `automsr`
+```
+
+### Configuration
+
+AutoMSR behaviour can be configured using a `config.yaml` file.
+
+An example with every input described in detail is found here: [link](https://github.com/Crissal1995/automsr/blob/main/tests/configs/config.example.yaml).
+
+### Chromedriver
+Download the correct [Chromedriver](https://chromedriver.chromium.org/downloads) matching your Chrome version.
+
+## Usage
+
+### Help
+
+```shell
+$ automsr --help
+```
+
+### Execute AutoMSR
+
+```shell
+$ automsr run
+
+# config.yaml is somewhere else than current directory
+$ automsr run --config path/to/a/config.yaml
+```
+
+### Retrieve local Chrome profiles
+
+```shell
+$ automsr profiles
+# ChromeProfile(displayed_name='yourProfileName', path=Path('generic/profile/dir'))
+
+$ automsr profiles --format pretty-json
+# [
+#     {
+#         "displayed_name": "yourProfileName",
+#         "path": generic/profile/dir"
+#     }
+# ]
+```
+
+### Check that email sending works
+
+```shell
+$ automsr email
+```
+
