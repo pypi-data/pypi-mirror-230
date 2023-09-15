@@ -1,0 +1,79 @@
+{
+  "type": "array",
+  "items": {
+      "type": "object",
+      "properties": {
+          "name": { "type": "string" },
+          "groups": { 
+            "type": "array",
+            "items": { "type": "string" }
+        },
+          "priority": { "type": "integer" },
+          "condition": { "$ref": "#/definitions/condition" },
+          "actions": { 
+            "type": "array",
+            "items": { "type": "string" }
+        }
+      },
+      "required": ["priority", "condition", "actions", "name"]
+  },
+  "definitions": {
+      "condition": {
+          "oneOf": [
+              {
+                  "properties": {
+                      "and": {
+                          "type": "array",
+                          "items": { "$ref": "#/definitions/condition" }
+                      }
+                  },
+                  "required": ["and"]
+              },
+              {
+                  "properties": {
+                      "or": {
+                          "type": "array",
+                          "items": { "$ref": "#/definitions/condition" }
+                      }
+                  },
+                  "required": ["or"]
+              },
+              {
+                  "properties": {
+                      "type": { "enum": ["number", "string"], "type": "string" },
+                      "arg1": {
+                          "properties": {
+                              "type": { "enum": ["reference", "static"], "type": "string" },
+                              "value": { "type": ["number", "string"] }
+                          },
+                          "required": ["type", "value"]
+                      },
+                      "arg2": {
+                          "properties": {
+                              "type": { "enum": ["reference", "static"], "type": "string" },
+                              "value": {
+                                  "oneOf": [
+                                      { "type": "number" },
+                                      { "type": "string" },
+                                      {
+                                          "type": "array",
+                                          "items": {
+                                              "oneOf": [
+                                                  { "type": "number" },
+                                                  { "type": "string" }
+                                              ]
+                                          }
+                                      }
+                                  ]
+                              }
+                          },
+                          "required": ["type", "value"]
+                      },
+                      "operation": { "enum": ["equals", "greater_than", "less_than", "is_in"], "type": "string" }
+                  },
+                  "required": ["type", "arg1", "arg2", "operation"]
+              }
+          ]
+      }
+  }
+}
