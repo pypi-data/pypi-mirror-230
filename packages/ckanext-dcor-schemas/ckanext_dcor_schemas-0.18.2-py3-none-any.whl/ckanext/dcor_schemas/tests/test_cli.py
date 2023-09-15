@@ -1,0 +1,118 @@
+import uuid
+
+import pytest
+
+from ckan.cli.cli import ckan
+from ckan import model
+import ckan.tests.factories as factories
+
+from .helper_methods import make_dataset
+
+
+@pytest.mark.ckan_config('ckan.plugins', 'dcor_schemas')
+@pytest.mark.usefixtures('clean_db', 'with_plugins', 'with_request_context')
+def test_zombies_basic_clean_db(cli):
+    result = cli.invoke(ckan, ["list-zombie-users"])
+    for line in result.output.split("\n"):
+        if not line.strip():
+            continue
+        elif line.count("INFO"):
+            continue
+        elif line.count("WARNI"):
+            continue
+        else:
+            assert False, f"clean_db -> no users -> no output, got '{line}'"
+
+
+@pytest.mark.ckan_config('ckan.plugins', 'dcor_schemas')
+# Test with the 'activity' plugin present.
+@pytest.mark.usefixtures('clean_db', 'with_plugins', 'with_request_context')
+def test_zombies_with_a_user(cli):
+    factories.User(name=f"test_user_{uuid.uuid4()}")
+    result = cli.invoke(ckan, ["list-zombie-users", "--last-activity-weeks",
+                               "0"])
+    print(result)  # for debugging
+    for line in result.output.split("\n"):
+        if not line.strip():
+            continue
+        elif line.count("INFO"):
+            continue
+        elif line.count("WARNI"):
+            continue
+        elif line.count("test_user_"):
+            break
+        else:
+            print(f"Encountered line {line}")
+    else:
+        assert False, "test_user should have been found"
+
+
+@pytest.mark.ckan_config('ckan.plugins', 'dcor_schemas')
+@pytest.mark.usefixtures('clean_db', 'with_plugins', 'with_request_context')
+def test_zombies_with_a_user_with_dataset(cli, create_with_upload):
+    user = factories.User()
+    owner_org = factories.Organization(users=[{
+        'name': user['id'],
+        'capacity': 'admin'
+    }])
+    # Note: `call_action` bypasses authorization!
+    create_context = {'ignore_auth': False,
+                      'user': user['name'], 'api_version': 3}
+    make_dataset(create_context, owner_org,
+                 create_with_upload=create_with_upload,
+                 activate=True)
+
+    result = cli.invoke(ckan, ["list-zombie-users", "--last-activity-weeks",
+                               "0"])
+    for line in result.output.split("\n"):
+        if not line.strip():
+            continue
+        elif line.count("INFO"):
+            continue
+        elif line.count("WARNI"):
+            continue
+        else:
+            assert False, "user with dataset should have been ignored"
+
+
+@pytest.mark.ckan_config('ckan.plugins', 'dcor_schemas')
+@pytest.mark.usefixtures('clean_db', 'with_plugins', 'with_request_context')
+def test_zombies_with_active_user(cli):
+    user = factories.User()
+    owner_org = factories.Organization(users=[{
+        'name': user['id'],
+        'capacity': 'admin'
+    }])
+    context = {'ignore_auth': False,
+               'user': user['name'], 'model': model, 'api_version': 3}
+    # create recent activity
+    make_dataset(context, owner_org, activate=False)
+
+    result = cli.invoke(ckan, ["list-zombie-users", "--last-activity-weeks",
+                               "12"])
+    for line in result.output.split("\n"):
+        if not line.strip():
+            continue
+        elif line.count("INFO"):
+            continue
+        elif line.count("WARNI"):
+            continue
+        else:
+            assert False, f"active user should have been ignored, got '{line}'"
+
+
+@pytest.mark.ckan_config('ckan.plugins', 'dcor_schemas')
+@pytest.mark.usefixtures('clean_db', 'with_plugins', 'with_request_context')
+def test_zombies_with_admin(cli):
+    factories.Sysadmin()
+    result = cli.invoke(ckan, ["list-zombie-users", "--last-activity-weeks",
+                               "0"])
+    for line in result.output.split("\n"):
+        if not line.strip():
+            continue
+        elif line.count("INFO"):
+            continue
+        elif line.count("WARNI"):
+            continue
+        else:
+            assert False, "sysadmin should have been ignored"
