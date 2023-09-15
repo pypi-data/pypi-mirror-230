@@ -1,0 +1,42 @@
+version: "3.9"  # optional since v1.27.0
+
+services:
+  whatrecord-frontend:
+    env_file:
+      - .env
+    image: node:18.9-alpine
+    working_dir: /usr/src/app
+    ports:
+      - "${WHATRECORD_FRONTEND_PORT}:${WHATRECORD_FRONTEND_PORT}"
+    volumes:
+      - ../frontend:/usr/src/app
+      - ./support:/usr/share/whatrecord/support
+    entrypoint: /bin/sh
+    command: /usr/share/whatrecord/support/start_frontend.sh
+    # depends_on:
+    #   - whatrecord
+
+  whatrecord:
+    env_file:
+      - .env
+    environment:
+        STARTUP_SCRIPTS: /usr/local/src/whatrecord/whatrecord/tests/iocs/*/st.cmd
+       # STARTUP_SCRIPTS: /ics/examples/iocBoot/*/st.cmd
+    build:
+      context: ../
+      # with respect to the build context:
+      dockerfile: docker/Dockerfile
+      args:
+        - PIP_EXTRAS=happi pytmc pytest pytest-aiohttp ophyd
+    image: pcdshub/whatrecord:latest
+    command: bash /usr/share/whatrecord/support/start_example.sh
+    ports:
+      - "${WHATRECORD_API_PORT}:${WHATRECORD_API_PORT}"
+    volumes:
+      - ./cache/:/var/lib/whatrecord/cache
+      - ./support:/usr/share/whatrecord/support
+      # Add arbitrary IOCs to the list and switch up STARTUP_SCRIPTS above.
+      # - /Users/klauer/docs/conferences/EPICS_Meeting_2022/ics/examples:/ics/examples
+      # Uncomment this to reinstall whatrecord from source without
+      # having to rebuild the image:
+      - ../:/usr/local/src/dev-whatrecord

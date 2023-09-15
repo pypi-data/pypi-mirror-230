@@ -1,0 +1,16 @@
+include AUTHORS.rst
+include CONTRIBUTING.rst
+include LICENSE.md
+include Makefile
+include README.rst
+
+include requirements.txt
+include dev-requirements.txt
+include docs-requirements.txt
+
+recursive-include src/_whatrecord *.pyx
+recursive-include whatrecord/grammar *.lark
+recursive-include whatrecord/tests/epicsarch/ *.txt
+recursive-include whatrecord/tests *.db *.cmd *.dbd *.proto *.pvlist *.acf t1-*.txt *.st LICENSE
+recursive-include whatrecord/tests *.substitutions *.substitutions.expanded
+recursive-include whatrecord/tests Makefile
