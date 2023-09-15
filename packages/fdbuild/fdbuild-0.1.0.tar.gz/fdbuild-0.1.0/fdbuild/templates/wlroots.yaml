@@ -1,0 +1,21 @@
+# SPDX-FileCopyrightText: 2022 Roman Gilg <subdiff@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
+#
+# wlroots: a modular Wayland compositor library
+#
+---
+template: default-meson
+
+projects:
+  - libdisplay-info:
+      source:
+        origin: https://gitlab.freedesktop.org/emersion/libdisplay-info.git
+        branch: main
+  - seatd:
+      source:
+        origin: https://git.sr.ht/~kennylevinsen/seatd
+  - wlroots:
+      source:
+        origin: https://gitlab.freedesktop.org/wlroots/wlroots.git

@@ -1,0 +1,29 @@
+# SPDX-FileCopyrightText: 2022 Roman Gilg <subdiff@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
+#
+# Minimal freedesktop.org Wayland build
+#
+---
+template: default-meson
+
+source:
+  branch: main
+
+projects:
+  - wayland:
+      source:
+        origin: https://gitlab.freedesktop.org/wayland/wayland.git
+  - wayland-protocols:
+      source:
+        origin: https://gitlab.freedesktop.org/wayland/wayland-protocols.git
+  - libinput:
+      source:
+        origin: https://gitlab.freedesktop.org/libinput/libinput.git
+      configure:
+        options:
+          - debug-gui=false
+      install:
+        hooks:
+          post: sudo udevadm hwdb --update

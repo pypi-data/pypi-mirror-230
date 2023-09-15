@@ -1,0 +1,21 @@
+# SPDX-FileCopyrightText: 2022 Roman Gilg <subdiff@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
+#
+# LLVM Compiler Infrastructure build
+#
+---
+template: default-cmake
+
+source:
+  branch: main
+  origin: https://github.com/llvm/llvm-project.git
+
+configure:
+  path: llvm
+  options:
+    - CMAKE_BUILD_TYPE=Release
+    - LLVM_ENABLE_PROJECTS=clang
+    - LLVM_ENABLE_RUNTIMES=libcxx;libcxxabi
+    - CLANG_INCLUDE_TESTS=Off

@@ -1,0 +1,62 @@
+# SPDX-FileCopyrightText: 2022 Roman Gilg <subdiff@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
+#
+# Common components for Linux graphics userspace.
+#
+# This template provides:
+# - Kernel interface library (libdrm)
+# - Wayland common libraries
+# - X11 common libraries
+# - User space graphics driver (Mesa)
+# - XServer including Xwayland
+#
+# In case only a subset of these components should be built, projects can be disabled after
+# deployment of the template simply by commenting out the respective entries in the projects list.
+#
+# Building for an X11 session only can be achieved by commenting out the "wayland" entry and vice
+# versa for building a pure Wayland session (that means without Xwayland) the x11 and xserver
+# entries can be removed.
+
+# Note though that in both cases the configure options of the mesa project need to be adapted, as
+# otherwise Mesa will not build due to missing Wayland/X11 windowing system dependencies. This can
+# be easily done in the FDBuild settings file of Mesa.
+#
+---
+source:
+  plugin: git
+
+build:
+  threads: max
+
+install:
+  path: /usr/local
+  sudo: false
+
+projects:
+  - template drm
+  - template wayland
+  - x11:
+      projects:
+        - template xorgproto
+        - template libx
+        - template xcb
+        # TODO(romangg): libxkbcommon and xkeyboard-config are not about "graphics". Consider
+        # splitting up anything input related to a separate meta package (also libinput).
+        - xkbcommon:
+            source:
+              origin: https://github.com/xkbcommon/libxkbcommon.git
+            configure:
+              plugin: meson
+            build:
+              plugin: ninja
+        - xkeyboard-config:
+            source:
+              origin: https://gitlab.freedesktop.org/xkeyboard-config/xkeyboard-config.git
+            configure:
+              plugin: meson
+            build:
+              plugin: ninja
+  - template mesa
+  - template xserver

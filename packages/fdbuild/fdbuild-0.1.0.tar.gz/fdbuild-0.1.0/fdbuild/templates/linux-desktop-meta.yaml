@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: 2022 Roman Gilg <subdiff@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
+#
+# A vertical slice of Linux userspace.
+#
+---
+source:
+  plugin: git
+
+build:
+  threads: max
+
+install:
+  path: /usr/local
+  sudo: false
+
+projects:
+  - template linux-graphics-meta
+  - template qt6
+  - template wlroots
+  - template kwinft-plasma-meta
