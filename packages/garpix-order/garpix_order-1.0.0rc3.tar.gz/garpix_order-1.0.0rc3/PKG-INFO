@@ -1,0 +1,49 @@
+Metadata-Version: 2.1
+Name: garpix_order
+Version: 1.0.0rc3
+Home-page: https://github.com/garpixcms/garpix_order
+Author: Garpix LTD
+Author-email: info@garpix.com
+License: MIT
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Web Environment
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Framework :: Django
+Classifier: Programming Language :: Python :: 3.8
+Description-Content-Type: text/markdown
+
+# Garpix Order
+
+```python
+from garpix_order.models import BaseOrder, BaseOrderItem, BasePayment
+
+
+class Order(BaseOrder):
+    pass
+
+
+class Service(BaseOrderItem):
+    def pay(self):
+        pass
+
+
+class Invoice(BasePayment):
+    pass
+```
+
+**BaseOrder** - основной класс заказа.
+
+`items` - метод для получения связанных OrderItem.
+
+`items_amount` - метод для получения суммы оплаты.
+
+**BaseOrderItem** - части заказа. В один заказ можно положить несколько сущностей.
+
+`pay` - метод вызовет у всех BaseOrderItem, когда оплачивается заказ.
+
+`full_amount` - метод возвращает полную сумма заказа. 
+
+**Invoice** - Основная модель для отслеживания статуса оплаты (транзакция). Содержит `status` с типом FSM.
