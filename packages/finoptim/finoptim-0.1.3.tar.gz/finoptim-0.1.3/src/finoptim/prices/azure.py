@@ -1,0 +1,4 @@
+
+
+def azure():
+    raise NotImplementedError
