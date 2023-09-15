@@ -1,0 +1,260 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "$schema": {
+            "type": "string",
+            "format": "uri"
+        },
+        "worlds": {
+            "type": "object",
+            "properties": {
+                "Great Temple": { "$ref": "#/$defs/world" },
+                "Temple Grounds": { "$ref": "#/$defs/world" },
+                "Agon Wastes": { "$ref": "#/$defs/world" },
+                "Torvus Bog": { "$ref": "#/$defs/world" },
+                "Sanctuary Fortress": { "$ref": "#/$defs/world" }
+            },
+            "default": {},
+            "additionalProperties": false,
+            "$comment": "The list of properties is replaced in runtime with all worlds in the provided ISO."
+        },
+        "small_randomizations": {
+            "properties": {
+                "seed": {
+                    "type": "number",
+                    "description": "Number to use as seed for the small randomizations"
+                },
+                "echo_locks": {
+                    "type": "boolean",
+                    "description": "Randomize the solution of the Annihilator+Echo Visor puzzles sound puzzles.",
+                    "default": true
+                },
+                "minigyro_chamber": {
+                    "type": "boolean",
+                    "description": "Randomize the solution of the puzzle in Minigyro Chamber.",
+                    "default": true
+                },
+                "rubiks": {
+                    "type": "boolean",
+                    "description": "Randomize the solution of the color puzzles in Main Gyro Chamber.",
+                    "default": true
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "seed"
+            ]
+        },
+        "area_patches": {
+            "type": "object",
+            "properties": {
+                "torvus_temple": {
+                    "type": "boolean",
+                    "description": "Remove objects to minimize the chance of alloc failure",
+                    "default": false
+                }
+            },
+            "description": "Pre-written patches for specific areas",
+            "default": {}
+        },
+        "inverted": {
+            "type": "boolean",
+            "description": "Inverts Light and Dark Aether",
+            "default": false
+        },
+        "auto_enabled_elevators": {
+            "type": "boolean",
+            "description": "Set elevators to be activated on room load",
+            "default": false
+        },
+        "cosmetics": {
+            "type": "object",
+            "properties": {
+                "suits": {
+                    "type": "object",
+                    "properties": {
+                        "varia": {
+                            "$ref": "#/$defs/suit_skin"
+                        },
+                        "dark": {
+                            "$ref": "#/$defs/suit_skin"
+                        },
+                        "light": {
+                            "$ref": "#/$defs/suit_skin"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "$comment": "Choose from a number of custom suit textures"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "suits"
+            ]
+        }
+    },
+    "required": [
+        "small_randomizations",
+        "cosmetics"
+    ],
+    "additionalProperties": false,
+    "$defs": {
+        "world": {
+            "type": "object",
+            "properties": {
+                "areas": {
+                    "type": "object",
+                    "patternProperties": {
+                        ".*": {
+                            "$ref": "#/$defs/area"
+                        }
+                    }
+                }
+            },
+            "required": ["areas"],
+            "additionalProperties": false,
+            "$comment": "The list of areas is replaced in runtime with the existing areas of each specific world."
+        },
+        "area": {
+            "type": "object",
+            "properties": {
+                "docks": {
+                    "type": "object",
+                    "patternProperties": {
+                        ".*": {
+                            "$ref": "#/$defs/dock"
+                        }
+                    },
+                    "default": {},
+                    "$comment": "The list of docks is replaced in runtime with the existing docks of each specific area."
+                },
+                "layers": {
+                    "type": "object",
+                    "patternProperties": {
+                        ".*": {
+                            "type": "boolean"
+                        }
+                    },
+                    "default": {},
+                    "$comment": "The list of layers is replaced in runtime with the existing layers of each specific area."
+                },
+                "low_memory_mode": {
+                    "type": "boolean",
+                    "default": false,
+                    "$comment": "Some areas are riding the memory/object limit. Certain patches will account for these limitations if this flag is set."
+                },
+                "new_name": {
+                    "type": ["string", "null"],
+                    "default": null,
+                    "$comment": "If set, rename the area to this value"
+                },
+                "elevators": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "instance_id": {
+                                "type": "integer"
+                            },
+                            "target_assets": {
+                                "$ref": "#/$defs/area_identifier"
+                            },
+                            "target_strg": {
+                                "type": ["integer", "null"],
+                                "default": null
+                            },
+                            "target_name": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "instance_id",
+                            "target_assets",
+                            "target_name"
+                        ],
+                        "additionalProperties": false
+                    },
+                    "default": []
+                }
+            },
+            "additionalProperties": false
+        },
+        "dock": {
+            "type": "object",
+            "properties": {
+                "connect_to": {
+                    "type": "object",
+                    "properties": {
+                        "area": {
+                            "type": "string"
+                        },
+                        "dock": {
+                            "type": "string"
+                        }
+                    },
+                    "required": ["area", "dock"],
+                    "additionalProperties": false
+                },
+                "old_door_type": {
+                    "$ref": "#/$defs/dock_type"
+                },
+                "new_door_type": {
+                    "$ref": "#/$defs/dock_type"
+                }
+            },
+            "default": {},
+            "additionalProperties": false
+        },
+        "dock_type": {
+            "type": "string",
+            "enum": [
+                "Normal",
+                "Dark",
+                "Light",
+                "Annihilator",
+                "Disabled",
+                "Missile",
+                "SuperMissile",
+                "PowerBomb",
+                "SeekerMissile",
+                "ScrewAttack",
+                "Bomb",
+                "Boost",
+                "Grapple",
+                "Darkburst",
+                "Sunburst",
+                "SonicBoom",
+                "AgonEnergy",
+                "TorvusEnergy",
+                "SanctuaryEnergy",
+                "DarkVisor",
+                "EchoVisor",
+                "Cannon",
+                "Charge",
+                "Power"
+            ]
+        },
+        "area_identifier": {
+            "type": "object",
+            "properties": {
+                "world_asset_id": {
+                    "type": "integer"
+                },
+                "area_asset_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "suit_skin": {
+            "type": "string",
+            "enum": [
+                "player1",
+                "player2",
+                "player3",
+                "player4"
+            ],
+            "default": "player1"
+        }
+    }
+}
