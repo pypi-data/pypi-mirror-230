@@ -1,0 +1,36 @@
+Metadata-Version: 2.1
+Name: gom
+Version: 0.3.0
+Summary: Live GPU utilization monitor, inspired by nvidia-smi. Shows per-container GPU usage as well as total GPU usage.
+Author: Ben Gubler
+Author-email: nebrelbug@gmail.com
+Requires-Python: >=3.8,<4.0
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: click (>=8.0.0,<9.0.0)
+Requires-Dist: pynvml (>=11.0.0,<12.0.0)
+Requires-Dist: tabulate (>=0.9.0,<0.10.0)
+Description-Content-Type: text/markdown
+
+# gom
+
+`gom` displays a human-readable table with GPU usage information. Think `nvidia-smi`, but minimalist and pretty. 
+
+It also shows per-container GPU usage information if Docker is installed.
+
+## Installation
+
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install `gom`.
+
+## Usage
+
+`gom show` displays a table with GPU usage information.
+
+`gom watch` displays a table with GPU usage information and updates it every second.
+
+## Troubleshooting
+
+You may need to install a different version of `pynvml` depending on your CUDA version. 
