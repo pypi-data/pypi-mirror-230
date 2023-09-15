@@ -1,0 +1,58 @@
+{% load static %}
+{% load i18n %}
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{% trans "Stroll" %} {{ classroom }} - {{ date|date:"SHORT_DATETIME_FORMAT" }} | Nobinobi</title>
+  <link rel="stylesheet" href="{% static "vendor/adminLTE/dist/css/adminlte.min.css" %}">
+
+  <style type="text/css">
+    @page {
+      margin-top: 0cm;
+      margin-left: 1cm;
+      margin-right: 1cm;
+    }
+
+    @page {
+      size: A4 landscape;
+    }
+
+  </style>
+</head>
+<body>
+<div class="page-header">
+  <h3>{{ classroom }}
+    <small>({{ date|date:"SHORT_DATETIME_FORMAT" }})</small>
+  </h3>
+</div>
+<table class="table table-bordered table-striped table-condensed table-responsive">
+  <thead>
+  <tr>
+    <th>{% trans "Child" %}</th>
+    <th>{% trans "Phones" %} ({% trans "Main" %} / {% trans "Mobile" %} / {% trans "Professional" %})</th>
+    <th>{% trans "Medications" %}</th>
+  </tr>
+  </thead>
+  <tbody>
+  {% for presence in presences %}
+    <tr>
+      <td>{{ presence.child.full_name }} {% if presence.child.childspecificneed %}/!\{% endif %}</td>
+      <td>
+        {% for contact, info in presence.child.get_contacts_phone.items %}
+          {{ info.order }}) {{ info.link_with_child }} - {{ info.phone }} / {{ info.mobile_phone|default:"-" }} / {{ info.professional_phone|default:"-" }}<br>
+        {% endfor %}
+      </td>
+      <td>{% for medic in presence.dailyfollowup.medication_set.all %}
+        {{ medic.type_medication }},
+      {% endfor %}<br>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</body>
+</html>

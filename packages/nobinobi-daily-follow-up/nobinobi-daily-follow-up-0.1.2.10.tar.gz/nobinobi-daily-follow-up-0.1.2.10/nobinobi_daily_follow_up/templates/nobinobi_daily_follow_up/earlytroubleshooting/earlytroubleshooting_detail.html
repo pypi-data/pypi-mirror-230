@@ -1,0 +1,34 @@
+{% load widget_tweaks i18n %}
+
+<div class="modal-header">
+  <h3 class="modal-title">{% trans "Early troubleshooting detail" %}</h3>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <table class="table table-bordered table-hover">
+    <tbody>
+    <tr>
+      <th>{% trans "Child" %}</th>
+      <td>{{ earlytroubleshooting.child.full_name }}</td>
+    </tr>
+    <tr>
+      <th>{% trans "Date" %}</th>
+      <td>{{ earlytroubleshooting.date|date:"SHORT_DATE_FORMAT" }}</td>
+    </tr>
+    <tr>
+      <th>{% trans "Periods" %}</th>
+      <td>{% for period in earlytroubleshooting.periods.all %}
+      {{ period }},
+      {% endfor %}
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Close" %}</button>
+</div>

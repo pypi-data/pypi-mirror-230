@@ -1,0 +1,46 @@
+<!--
+  ~   Copyright (C) Prolibre Sarl 2019 <Florian Alu> <alu@prolibre.com>
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License and any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+{% extends "nobinobi_daily_follow_up/base.html" %}
+{% load i18n static crispy_forms_tags%}
+
+{% block title %}{{ title }} - {{ classroom }} - {{ now }}{% endblock %}
+
+{% block extrastyle %}
+{% endblock %}
+
+{% block content_title_block %}
+  <h1>{{ title }} <small>({{ classroom }})</small></h1>
+  <h2>{{ now|date:"SHORT_DATE_FORMAT" }}</h2>
+{% endblock %}
+
+{% block breadcrumb %}
+  {{ block.super }}
+  <li class="breadcrumb-item active">{{ title }}</li>
+{% endblock %}
+
+{% block content_card_title %}
+  <h2>{% trans "Select children and activities." %}</h2>
+{% endblock %}
+
+{% block content_card_body %}
+  {% include "includes/messages.html" %}
+  {% crispy form form.helper %}
+{% endblock %}
+{% block content_card_footer %}
+{% endblock %}
+{% block extrajs %}
+{% endblock %}
