@@ -1,0 +1,16 @@
+class Address():
+    def __init__(self, **kwargs):
+        self.municipalityId = kwargs.get('municipalityId')
+        self.municipalityName = kwargs.get('municipalityName')
+        self.districtId = kwargs.get('districtId')
+        self.districtName = kwargs.get('districtName')
+        self.regionId = kwargs.get('regionId')
+        self.regionName = kwargs.get('regionName')
+        self.houseNumber = kwargs.get('houseNumber')
+        self.referenceNumber = kwargs.get('referenceNumber')
+        self.zip = kwargs.get('zip')
+        self.streetName = kwargs.get('streetName')
+        self.streetId = kwargs.get('streetId')
+        self.text = kwargs.get('text')
+        self.isActive = kwargs.get('isActive')
+        self.id = kwargs.get('id')
