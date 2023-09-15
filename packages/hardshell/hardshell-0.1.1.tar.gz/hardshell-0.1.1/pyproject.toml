@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "hardshell"
+version = "0.1.1"
+description = "Harden your operating system against vulnerabilities"
+license = "MIT"
+authors = ["Tom Burge <tom@tomburge.org>"]
+readme = "README.md"
+homepage = "https://github.com/tomburge/hardshell"
+repository = "https://github.com/tomburge/hardshell"
+documentation = "https://github.com/tomburge/hardshell"
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["hardshell", "harden", "os", "security"]
+# packages = []
+
+[tool.poetry.scripts]
+hardshell = "hardshell.__main__:main"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+click = "^8.1.7"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.4"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.9.1"
+isort = "^5.12.0"
+pytest-cov = "^4.1.0"
+
+[tool.poetry_bumpversion.file."hardshell/__init__.py"]
+search = '__version__ = "{current_version}"'
+replace = '__version__ = "{new_version}"'
+
+[tool.poetry_bumpversion.file."tests/hardshell.py"]
+search = 'assert __version__ == "{current_version}"'
+replace = 'assert __version__ == "{new_version}"'
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
