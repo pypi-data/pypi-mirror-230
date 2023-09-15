@@ -1,0 +1,198 @@
+body, html{
+	height: 100%;
+}
+
+textarea {
+	width: 100%;
+	padding: 5px 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.listitem {
+	color: #AAAAAA;
+	position: relative;
+	float: left;
+	width: 100%;
+	border-bottom: 2px solid #ddd;
+}
+
+.choices {
+	color: #000;
+	position: relative;
+	font-weight: 500;
+	font-size: 1.35em;
+	margin: 10px 10px 10px;
+	min-height: 30px;
+	min-width: 300px;
+	padding: 0px 15px;
+	height: 30px;
+	z-index: 9;
+	cursor: pointer;
+}
+
+.audio-single {
+	display: block;
+	margin: .7rem auto;
+	width: 100%;
+	max-width: 320px;
+}
+
+.col-1 {
+    grid-column: auto / span 1;
+    padding: 10px;
+}
+
+.container {
+	display: block;
+	position: relative;
+	margin: 0px auto;
+	height: auto;
+	padding-top: 32px;
+	width: 800px;
+}
+
+.user-study {
+    max-width: 1050px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/******************************************************************************
+Grid
+******************************************************************************/
+
+
+.grid {
+	display: grid;
+	align-items: center;
+	height: 100%;
+}
+
+.grid-20-80 {
+	grid-template-columns: 20fr 80fr;
+}
+
+.grid-question {
+	grid-template-columns: repeat(5, 1fr);
+}
+
+
+/******************************************************************************
+Navigation button
+******************************************************************************/
+
+
+.button {
+	display: block;
+	border: 0;
+	text-align: center;
+	margin-left: auto;
+	margin-right: 0;
+	margin-top: 10px;
+	padding: 10px 15px;
+	background-color: #eeeeee;
+	color: #444444;
+	min-width: 70px;
+}
+
+.button:hover.button {
+	cursor: default;
+}
+
+.button.active {
+	background-color: #dddddd;
+	color: #000000;
+}
+
+.button.active:hover.button {
+    color: #ffffff;
+    cursor: pointer;
+    background-color: #000000;
+}
+
+
+/******************************************************************************
+Radio button
+******************************************************************************/
+
+
+.check{
+	position: relative;
+	border: 3px solid #bbbbbb;
+	border-radius: 100%;
+	height: 20px;
+	width: 20px;
+	z-index: 5;
+	justify-self: center;
+}
+
+.check:hover {
+	background: #ffffff;
+	cursor: default;
+}
+
+.check.active:hover {
+	border: 3px solid #888888;
+	cursor: pointer;
+}
+
+.check.active:hover::before {
+	background: #888888;
+}
+
+.check::before {
+	display: block;
+	position: absolute;
+	content: '';
+	border-radius: 100%;
+	height: 10px;
+	width: 10px;
+	top: 5px;
+	left: 5px;
+	margin: auto;
+}
+
+.check.active.selected {
+	border: 3px solid #000000;
+}
+
+.check.active.selected::before {
+	background: #000000;
+}
+
+
+/******************************************************************************
+Word selection
+******************************************************************************/
+
+
+.break {
+	flex-basis: 100%;
+	height: 0;
+}
+
+.wordselect {
+	align-content: flex-start;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 30px;
+	justify-content: flex-start;
+}
+
+.word {
+	margin-right: 1rem;
+	color: #666666;
+	cursor: pointer;
+}
+
+.word.active:hover {
+	color: #000000;
+}
+
+.word.active.selected {
+	color: #000000;
+	font-weight: 900;
+}
