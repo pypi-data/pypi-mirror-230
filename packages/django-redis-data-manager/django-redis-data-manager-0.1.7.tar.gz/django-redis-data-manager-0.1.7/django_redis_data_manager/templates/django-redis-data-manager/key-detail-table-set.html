@@ -1,0 +1,40 @@
+<table>{% load i18n %}
+    <tbody>
+        <tr>
+            <th width="100">{% trans "Key" %}</th>
+            <td>{{key}}</td>
+        </tr>
+        <tr>
+            <th>{% trans "Type" %}</th>
+            <td>{% trans "Redis Set" %}</td>
+        </tr>
+        <tr>
+            <th>{% trans "Set Members Count" %}</th>
+            <td>{{value.smembers_count}}</td>
+        </tr>
+        <tr>
+            <th>{% trans "TTL" %}</th>
+            <td>{{value_ttl}}</td>
+        </tr>
+    </tbody>
+</table>
+<table>
+    <thead>
+        <tr>
+            <th width="100">{% trans "Index" %}</th>
+            <th>{% trans "Member Value" %}</th>
+        </tr>
+    </thead>
+</table>
+<div class="django-redis-data-manager-key-detail-list">
+<table>
+    <tbody>
+        {% for member in value.smembers %}
+        <tr>
+            <td width="100">{{forloop.counter}}</td>
+            <td><pre>{{member|linebreaksbr}}</pre></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>

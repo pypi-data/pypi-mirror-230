@@ -1,0 +1,40 @@
+<table>{% load i18n %}
+    <tbody>
+        <tr>
+            <th width="200">{% trans "Key" %}</th>
+            <td>{{key}}</td>
+        </tr>
+        <tr>
+            <th>{% trans "Type" %}</th>
+            <td>{% trans "Redis Hash" %}</td>
+        </tr>
+        <tr>
+            <th>{% trans "Field Count" %}</th>
+            <td>{{value.field_count}}</td>
+        </tr>
+        <tr>
+            <th>{% trans "TTL" %}</th>
+            <td>{{value_ttl}}</td>
+        </tr>
+    </tbody>
+</table>
+<table>
+    <thead>
+        <tr>
+            <th width="200">{% trans "Field Name" %}</th>
+            <th>{% trans "Field Value" %}</th>
+        </tr>
+    </thead>
+</table>
+<div class="django-redis-data-manager-key-detail-list">
+<table>
+    <tbody>
+        {% for field_name, field_value in value.fields.items %}
+        <tr>
+            <td width="200">{{field_name}}</td>
+            <td><pre>{{field_value|linebreaksbr}}</pre></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>

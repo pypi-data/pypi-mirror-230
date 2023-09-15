@@ -1,0 +1,20 @@
+<table>{% load i18n %}
+    <tbody>
+        <tr>
+            <th width="100">{% trans "Key" %}</th>
+            <td>{{key}}</td>
+        </tr>
+        <tr>
+            <th>{% trans "Type" %}</th>
+            <td>{% trans "Redis String" %}</td>
+        </tr>
+        <tr>
+            <th>{% trans "TTL" %}</th>
+            <td>{{value_ttl}}</td>
+        </tr>
+        <tr>
+            <th>{% trans "Value" %}</th>
+            <td><pre>{{value|linebreaksbr}}</pre></td>
+        </tr>
+    </tbody>
+</table>
