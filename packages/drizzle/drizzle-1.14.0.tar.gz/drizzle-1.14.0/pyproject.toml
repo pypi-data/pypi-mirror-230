@@ -1,0 +1,82 @@
+[project]
+name = "drizzle"
+description = "A package for combining dithered images into a single image"
+requires-python = ">=3.8"
+authors = [
+    { name = "STScI", email = "help@stsci.edu" },
+]
+dependencies = [
+    "numpy",
+    "astropy",
+]
+dynamic = [
+    "version",
+]
+
+[project.readme]
+file = "README.rst"
+content-type = "text/x-rst"
+
+[project.license]
+file = "licenses"
+content-type = "text/plain"
+
+[project.urls]
+Homepage = "https://github.com/spacetelescope/drizzle"
+"Bug Tracker" = "https://github.com/spacetelescope/drizzle/issues"
+Documentation = "http://spacetelescope.github.io/drizzle/"
+"Source Code" = "https://github.com/spacetelescope/drizzle"
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-cov",
+    "coverage",
+]
+docs = [
+    "tomli; python_version<'3.11'",
+    "sphinx",
+    "sphinx-automodapi",
+    "sphinx-rtd-theme",
+    "matplotlib",
+]
+
+[build-system]
+requires = [
+    "setuptools>=61.2",
+    "setuptools_scm[toml]>=3.4",
+    "wheel",
+    "numpy",
+]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+zip-safe = false
+include-package-data = false
+
+[tool.setuptools.packages.find]
+namespaces = false
+
+[tool.pytest.ini_options]
+minversion = "4.6"
+norecursedirs = [
+    "build",
+    "docs/_build",
+]
+
+[tool.setuptools_scm]
+
+[tool.ruff]
+line-length = 100
+extend-select = [
+    "F",
+    "W",
+    "E",
+    "C4",
+    "COM",
+]
+extend-exclude = [
+    "docs",
+    ".eggs",
+    ".tox",
+]
