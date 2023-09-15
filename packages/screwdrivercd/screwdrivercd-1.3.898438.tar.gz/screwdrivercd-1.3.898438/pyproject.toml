@@ -1,0 +1,33 @@
+# Copyright 2019, Verizon Inc.
+# Licensed under the terms of the bsd license.  See the LICENSE file in the project root for terms
+[build-system]
+requires = [
+  "setuptools >= 40.9.0",
+  "wheel",
+]
+build-backend = "setuptools.build_meta"
+
+[tool.sdv4_installdeps]
+# Non Python package dependencies to install
+# See the documentation at https://yahoo.github.io/python-screwdrivercd/Install_Dependencies/
+# for the configuration options available.
+fail_on_error = true
+install = ["apk", "apt-get", "brew", "pip3", "yum"]
+
+[tool.sdv4_installdeps.apk]
+deps = []
+
+[tool.sdv4_installdeps.apt-get]
+deps = []
+
+[tool.sdv4_installdeps.brew]
+deps = []
+
+[tool.sdv4_installdeps.yum]
+deps = []
+
+[tool.sdv4_installdeps.pip3]
+deps = [
+  'mkdocstrings',
+  'pytkdocs[numpy-style]'
+]
