@@ -1,0 +1,51 @@
+name: docs
+
+on:
+  push:
+    branches:
+      - main
+      - devel
+  pull_request:
+    branches:
+      - main
+      - devel
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install build deps
+        run: |
+          pip install mudkip maturin
+
+      - name: Build and install baskerville
+        run: |
+          maturin build
+          wheel_file=$(find target/wheels -name "*.whl")
+          pip install "$wheel_file"
+
+      - name: Build and test docs
+        if: |
+          github.event_name == 'pull_request'
+          || github.ref == 'refs/heads/devel'
+        run: |
+          mudkip build --check
+          mudkip test
+
+      - name: Build and publish docs
+        if: |
+          github.repository == 'jaynewey/baskerville-py'
+          && github.event_name == 'push'
+          && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "action@github.com"
+          mudkip build --check --update-gh-pages --repository https://x-access-token:${GH_TOKEN}@github.com/jaynewey/baskerville-py

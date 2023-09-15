@@ -1,0 +1,17 @@
+[package]
+name = "baskerville_py"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "baskerville"
+crate-type = ["cdylib"]
+
+[dependencies]
+regex = "1.9.3"
+baskerville = { version = "0.2.0", features = ["python"] }
+baskerville_py_macro = { path = "local_dependencies/baskerville_py_macro" }
+
+[dependencies.pyo3]
+version = "0.19.0"
+features = ["abi3-py37"]
