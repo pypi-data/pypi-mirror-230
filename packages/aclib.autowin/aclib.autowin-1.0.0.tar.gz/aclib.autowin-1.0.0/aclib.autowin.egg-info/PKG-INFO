@@ -1,0 +1,63 @@
+Metadata-Version: 2.1
+Name: aclib.autowin
+Version: 1.0.0
+Summary: auto window task
+Home-page: https://github.com/AnsChaser/aclib.autowin
+Author: AnsChaser
+Author-email: anschaser@163.com
+License: MIT
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: aclib.winlib
+Provides-Extra: cv
+Requires-Dist: aclib.cv; extra == "cv"
+Provides-Extra: dm
+Requires-Dist: aclib.dm; extra == "dm"
+Provides-Extra: full
+Requires-Dist: aclib.autowin[cv,dm]; extra == "full"
+Provides-Extra: dev
+Requires-Dist: aclib.autowin[full]; extra == "dev"
+Requires-Dist: aclib.pip; extra == "dev"
+Requires-Dist: build; extra == "dev"
+Requires-Dist: twine; extra == "dev"
+
+# Installation
+
+### General
+    pip install aclib.autowin
+### work with dm
+    pip install aclib.autowin[dm]
+### work with cv
+    pip install aclib.autowin[cv]
+### full installation
+    pip install aclib.autowin[full]
+
+
+# Usage
+
+```python
+from aclib.autowin._typing import *
+
+from aclib.autowin import screen, Window, AppWindow
+from aclib.autowin.cvwindow import CvWindow, Target     # [cv] requires
+from aclib.autowin.dmwindow import DmWindow, Target     # [dm] requires
+
+# full requires
+# if all requires ready, you can get all api from this module
+# the classs 'Window' in this module is inherit from 'CvWindow' & 'DmWindow'
+from aclib.autowin.windows import screen, Window, AppWindow, Target
+```
