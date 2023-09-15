@@ -1,0 +1,33 @@
+[project]
+name = "timeseer"
+description = "Python SDK for Timeseer.AI"
+readme = "README.md"
+authors = [
+    {name = "Timeseer.AI", email = "pypi@timeseer.ai"}
+]
+dynamic = ["version"]
+license = {text = "Copyright Timeseer.AI 2023"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "kukur >= 0.0.21",
+    "pyarrow",
+]
+requires-python = ">=3.8"
+
+[project.urls]
+Homepage = "https://timeseer.ai/"
+
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"timeseer_client" = "."}
+packages = [
+    "timeseer_client",
+    "timeseer_client.internal",
+    "timeseer_client.metadata",
+]
