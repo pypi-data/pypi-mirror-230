@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=45", "setuptools_scm[toml]>=6.2"]
+
+[project]
+authors = [{name = "Tom de Geus", email = "tom@geus.me"}]
+classifiers = ["License :: OSI Approved :: MIT License"]
+dependencies = ["numpy", "scipy"]
+description = "Simple fit functions"
+dynamic = ["version"]
+name = "powerfit"
+readme = "README.md"
+requires-python = ">=3.6"
+
+[project.urls]
+Source = "https://github.com/tdegeus/powerfit"
+
+[tool.setuptools_scm]
+write_to = "powerfit/_version.py"
