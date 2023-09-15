@@ -1,0 +1,9 @@
+#!/bin/sh
+
+old_ext="$1"
+new_ext="$2"
+
+for file in *.${old_ext}; do
+  mv -v -- "$file" "$(echo "$file" | sed "s/\.${old_ext}$/.${new_ext}/")"
+done
+
