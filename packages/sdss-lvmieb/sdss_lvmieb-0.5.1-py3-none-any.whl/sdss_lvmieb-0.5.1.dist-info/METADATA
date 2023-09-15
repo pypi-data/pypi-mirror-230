@@ -1,0 +1,92 @@
+Metadata-Version: 2.1
+Name: sdss-lvmieb
+Version: 0.5.1
+Summary: Control software for the Local Volume Mapper Instrument Electronics Box
+Home-page: https://github.com/sdss/lvmieb
+License: BSD-3-Clause
+Keywords: astronomy,software
+Author: Changgon Kim
+Author-email: changgonkim@khu.ac.kr
+Maintainer: José Sánchez-Gallego
+Maintainer-email: gallegoj@uw.edu
+Requires-Python: >=3.9,<3.12
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Documentation :: Sphinx
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Dist: numpy (>=1.20.3,<2.0.0)
+Requires-Dist: sdss-clu (>=2.0.0,<3.0.0)
+Requires-Dist: sdss-drift (>=1.1.0,<2.0.0)
+Requires-Dist: sdsstools (>=1.0.0,<2.0.0)
+Project-URL: Documentation, https://sdss-lvmieb.readthedocs.org
+Project-URL: Repository, https://github.com/sdss/lvmieb
+Description-Content-Type: text/markdown
+
+# lvmieb
+
+![Versions](https://img.shields.io/badge/python->3.8-blue)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Documentation Status](https://readthedocs.org/projects/lvmieb/badge/?version=latest)](https://lvmieb.readthedocs.io/en/latest/?badge=latest)
+[![Test](https://github.com/sdss/lvmieb/actions/workflows/test.yml/badge.svg)](https://github.com/sdss/lvmieb/actions/workflows/test.yml)
+[![Docker](https://github.com/sdss/lvmieb/actions/workflows/docker.yml/badge.svg)](https://github.com/sdss/lvmieb/actions/workflows/docker.yml)
+[![codecov](https://codecov.io/gh/sdss/lvmieb/branch/main/graph/badge.svg?token=IyQglaQYSF)](https://codecov.io/gh/sdss/lvmieb)
+
+Control software for the SDSS-V LVM (Local Volume Mapper) spectrograph Instrument Electronics Box (IEB).
+
+## Quick Start
+
+### Installation
+
+`lvmieb` uses the [CLU](https://clu.readthedocs.io/en/latest/) framework and requires a RabbitMQ instance running in the background.
+
+`lvmieb` can be installed using `pip`
+
+```console
+pip install sdss-lvmieb
+```
+
+or by cloning this repository
+
+```console
+git clone https://github.com/sdss/lvmieb
+```
+
+The preferred installation for development is using [poetry](https://python-poetry.org/)
+
+```console
+cd lvmieb
+poetry install
+```
+
+
+### Basic ping-pong test
+
+Start the `lvmieb` actor.
+
+```console
+lvmieb start
+```
+
+In another terminal, type `clu` and `lvmieb ping` for test.
+
+```console
+$ clu
+lvmieb ping
+07:41:22.636 lvmieb >
+07:41:22.645 lvmieb : {
+    "text": "Pong."
+}
+```
+
+Stop `lvmieb` actor.
+
+```console
+lvmieb stop
+```
+
