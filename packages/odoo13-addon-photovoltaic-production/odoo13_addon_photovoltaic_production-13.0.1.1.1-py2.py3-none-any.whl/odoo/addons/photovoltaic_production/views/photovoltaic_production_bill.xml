@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="photovoltaic_production_bill_view_tree" model="ir.ui.view">
+    <field name="name">photovoltaic_production_bill.tree</field>
+    <field name="model">photovoltaic.production.bill</field>
+    <field name="arch" type="xml">
+      <tree expand="1">
+        <field name="bill_date" />
+        <field name="production_date" />
+        <field name="plant" />
+        <field name="billed_production" />
+        <field name="price" />
+        <field name="bill_number" />
+      </tree>
+    </field>
+  </record>
+
+  <record id="photovoltaic_production_bill_view_search" model="ir.ui.view">
+    <field name="name">photovoltaic_production_bill.search</field>
+    <field name="model">photovoltaic.production.bill</field>
+    <field name="arch" type="xml">
+      <search>
+        <group name="groupby">
+          <filter
+            string="Plant"
+            name="group_plant"
+            domain=""
+            context="{'group_by': 'plant'}"
+          />
+        </group>
+      </search>
+    </field>
+  </record>
+
+  <record id="photovoltaic_production_bill_view_form" model="ir.ui.view">
+    <field name="name">photovoltaic_production_bill.form</field>
+    <field name="model">photovoltaic.production.bill</field>
+    <field name="arch" type="xml">
+      <form>
+        <group colspan="4">
+          <group colspan="2" col="2">
+            <separator string="Dates" colspan="2"/>
+            <field name="bill_date" />
+            <field name="production_month" />
+            <field name="production_year" />
+          </group>
+
+          <group colspan="2" col="2">
+            <separator string="Other" colspan="2"/>
+            <field name="plant" />
+            <field name="billed_production" />
+            <field name="price" />
+            <field name="bill_number" />
+          </group>
+        </group>
+      </form>
+    </field>
+  </record>
+
+  <record id="photovoltaic_production_bill_action" model="ir.actions.act_window">
+    <field name="name">Bill</field>
+    <field name="res_model">photovoltaic.production.bill</field>
+    <field name="view_mode">tree,form</field>
+    <field name="context">{ 'search_default_group_plant': True }</field>
+  </record>
+
+  <record id="menu_photovoltaic_production_bill" model="ir.ui.menu">
+    <field name="name">Bills</field>
+    <field name="sequence" eval="100"/>
+    <field name="action" ref="photovoltaic_production_bill_action"/>
+    <field name="parent_id" ref="photovoltaic_production_menu"/>
+  </record>
+
+</odoo>
