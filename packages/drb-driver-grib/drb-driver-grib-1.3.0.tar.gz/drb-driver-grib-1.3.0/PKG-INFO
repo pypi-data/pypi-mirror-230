@@ -1,0 +1,53 @@
+Metadata-Version: 2.1
+Name: drb-driver-grib
+Version: 1.3.0
+Summary: DRB GRIB driver
+Author: GAEL Systems
+Author-email: drb-python@gael.fr
+License: LGPLv3
+Project-URL: Documentation, http://drb-python.gitlab.io/impl/grib
+Project-URL: Source, https://gitlab.com/drb-python/impl/grib
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Environment :: Plugins
+Classifier: License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENCE.txt
+Requires-Dist: drb~=2.2.0
+Requires-Dist: numpy>=1.21.2
+Requires-Dist: xarray>=0.19.0
+Requires-Dist: cfgrib>=0.9.10.1
+Requires-Dist: ecmwflibs>=0.4.17
+Requires-Dist: eccodes>=1.5.1
+
+# GRIB driver
+This drb-driver-grib module implements grib format access with DRB data model. It is able to navigates among the grib contents.
+
+## GRIB Factory and GRIB Node
+The module implements the basic factory model defined in DRB in its node resolver. Based on the python entry point mechanism, this module can be dynamically imported into applications.
+
+The entry point group reference is `drb.driver`.<br/>
+The driver name is `grib`.<br/>
+The factory class `DrbGribFactory` is encoded into `drb.drivers.factory`
+module.<br/>
+
+The GRIB data model containing a set of Attributes, Dimensions; Coordinates and Variables. It also includes User-defined set of types.
+The Drb structure implemented here, reproduces this representation.
+Attributes are reported in node as node attributes whereas Coordinates, Dimensions and Values are reported as node children. The raw content is available in Variable node requesting array (xarray, or numpy ndarray types)
+
+## limitations
+The current version does not manage child modification and insertion. `DrbGribNode` is currently read only.
+The factory to build DrbGribNode supports file directly opening it with path, for other implementation ByteIO or BufferedIOBase, they are manged with a local temporary file, removed when the node is closed..
+
+## Using this module
+To include this module into your project, the `drb-driver-grib` module shall be referenced into `requirements.txt` file, or the following pip line can be run:
+```commandline
+pip install drb-driver-grib
+```
+
+This module depends on cfgrib
+
+See installation of cfgrib, on https://pypi.org/project/cfgrib/
+If you install it by pip install you need to install the ECMWF ecCodes library.
+See https://confluence.ecmwf.int/display/ECC/ecCodes+installation.
+
