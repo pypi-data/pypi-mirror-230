@@ -1,0 +1,58 @@
+Metadata-Version: 2.1
+Name: shear_psf_leakage
+Version: 0.1.5
+Summary: PSF leakage for shear catalogue data
+Author: Martin Kilbinger
+Author-email: martin.kilbinger@cea.fr
+Requires-Python: >=3.9,<3.12
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: camb (>=1.5.0,<2.0.0)
+Requires-Dist: cmake (>=3.27.2,<4.0.0)
+Requires-Dist: cs-util (==0.0.6)
+Requires-Dist: jupyter (>=1.0.0,<2.0.0)
+Requires-Dist: jupytext (>=1.15.1,<2.0.0)
+Requires-Dist: lmfit (>=1.2.2,<2.0.0)
+Requires-Dist: matplotlib (>=3.7.2,<4.0.0)
+Requires-Dist: pandas (>=2.0.3,<3.0.0)
+Requires-Dist: pyyaml (>=6.0.1,<7.0.0)
+Requires-Dist: scipy (==1.10.1)
+Requires-Dist: stats (>=0.1.2a0,<0.2.0)
+Requires-Dist: swig (>=4.1.1,<5.0.0)
+Requires-Dist: treecorr (>=4.3.3,<5.0.0)
+Requires-Dist: uncertainties (>=3.1.7,<4.0.0)
+Description-Content-Type: text/markdown
+
+# Shear PSF leakage
+
+## About
+
+This library quantifies the PSF leakage on weak-lensing galaxy shear            
+measurements. It computes the following quantities:                             
+                                                                                
+- The object-wise PSF leakage at linear and quadratic order, using regression.  
+- The object-wise dependency of galaxy shear to other (scalar) observables.     
+- The scale-dependent PSF leakage function galaxy - PSF leakage using           
+  two-point correlation functions. 
+
+## Installation
+
+The fastest way to Install this library is with `pip` automatically from
+pypi.org,
+
+```bash
+pip install shear_psf_leakage
+```
+
+Alternatively, you can use
+
+## Authors
+
+Martin Kilbinger <martin.kilbinger@cea.fr>
+
+Clara Bonini <mail>
+
+Axel Guinot <mail>
+
