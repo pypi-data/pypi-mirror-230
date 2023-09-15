@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "jevgeni-tarassov-rusty-results"
+version = "1.0.3"
+description = "Result class similar to Rust's Result"
+authors = ["Jevgeni Tarassov <jevgeni@tarassov.ch>"]
+repository = 'https://github.com/tarassov-ch/rusty-results'
+homepage = 'https://jevgeni.tarassov.ch/code/rusty-results'
+readme = "README.md"
+packages = [{include = "rusty_results"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.2"
+black = "^23.9.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
