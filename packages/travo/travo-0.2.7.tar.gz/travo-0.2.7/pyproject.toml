@@ -1,0 +1,118 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "travo"
+description = 'Management tools for gitlab-based assignment workflows'
+dynamic = [
+    "version"
+]
+authors = [
+  { name = "Pierre Thomas Froidevaux"},
+  { name = "Alexandre Blondin-Massé"},
+  { name = "Jean Privat"},
+  { name = "Nicolas M. Thiéry", email = "Nicolas.Thiery@universite-paris-saclay.fr"},
+]
+readme = "README.md"
+license = {text = "CC"}
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Information Technology",
+  "Topic :: Scientific/Engineering",
+  "Programming Language :: Python :: 3",
+]  # classifiers list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
+
+requires-python = ">=3.6"
+
+dependencies = [
+  "colorlog",
+  "dataclasses",
+  "deprecation",
+  "typing_utils",
+  "requests",
+  "tqdm",
+  "anybadge",
+  "python-i18n[YAML]",
+]
+
+[project.optional-dependencies]
+# feature dependency groups
+jupyter = [
+    "ipywidgets",
+    "nbgrader",
+]
+
+test = [
+    "pytest",
+    "mypy",
+    "nbgrader",
+    "types-requests",
+    "types-pkg_resources",
+    "types-toml",
+    "tqdm",
+    "ipydatagrid",
+]
+
+[project.urls]
+Repository = "https://gitlab.com/travo-cr/travo.git/"
+
+[project.scripts]
+travo = "travo.console_scripts:travo"
+travo-echo-travo-token = "travo.console_scripts:travo_echo_travo_token"
+
+[tool.flit.sdist]
+exclude = ["talks/"]
+
+[tool.pytest.ini_options]
+addopts = "--doctest-modules --doctest-continue-on-failure --ignore=talks"
+doctest_optionflags = "NORMALIZE_WHITESPACE IGNORE_EXCEPTION_DETAIL ELLIPSIS"
+
+# Workaround
+#
+# By default, mypy assigns treats each script as a module named
+# __main__. This prevents checking several scripts at once. The usual
+# workaround is to use the option `scripts_are_modules`. Then the
+# script is treated as a module bearing its name. But then there is a
+# conflict between the script travo and the module travo.
+#
+# To work around this, we have a symbolic link travo-py -> travo, and
+# we only check scripts containing a '-' in their names ...
+[tool.mypy]
+files = "*.py, travo/*.py, scripts/*-*"
+warn_return_any = "True"
+warn_unused_configs = "True"
+disallow_untyped_defs = "True"
+disallow_untyped_calls = "True"
+disallow_incomplete_defs = "True"
+check_untyped_defs = "True"
+no_implicit_optional = "True"
+scripts_are_modules = "True"
+
+[tool.tox]
+legacy_tox_ini = """
+    [tox]
+    envlist =
+        py36
+        py3
+
+    [testenv]
+    # install pytest in the virtualenv where commands will be executed
+    deps =
+        pytest
+        mypy
+        nbgrader
+        types-requests
+        types-pkg_resources
+        types-toml
+        tqdm
+        ipydatagrid
+
+    commands =
+        mypy
+        pytest --junitxml=report.xml
+
+    [testenv:py36]
+    commands =
+        pytest --junitxml=report.xml
+"""

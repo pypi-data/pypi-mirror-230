@@ -1,0 +1,53 @@
+stages:
+  - tests_python311
+  - tests_python39
+  - tests_python36
+
+before_script:
+#  - apt-get update
+#  - apt-get install -y iptables init-system-helpers
+#  - wget https://download.docker.com/linux/debian/dists/jessie/pool/stable/amd64/docker-ce_18.06.3~ce~3-0~debian_amd64.deb
+#  - dpkg -i docker-ce_18.06.3~ce~3-0~debian_amd64.deb
+
+  - pip install tox
+  - pip install .[test]
+
+tests_python311:
+    image: python:3.11
+    stage: tests_python311
+    script:
+      - tox -e py311
+    artifacts:
+      when: always
+      reports:
+        junit:
+          - report.xml
+
+tests_python39:
+    image: python:3.9
+    stage: tests_python39
+    script:
+      - tox -e py39
+    artifacts:
+      when: always
+      reports:
+        junit:
+          - report.xml
+
+tests_python36:
+    image: python:3.6
+    stage: tests_python36
+    script:
+      # tox configuration in pyproject.toml is not supported with python3.6
+      - pytest --junitxml=report.xml
+    artifacts:
+      when: always
+      reports:
+        junit:
+          - report.xml
+
+    # python 3.6 tests are for checking backward compatibility; no
+    # need to waste energy running them if the 3.9 tests fails.
+    # Also parallel runs currently tend to fail due to reaching the
+    # rate limit of the test gitlab instance.
+    needs: [tests_python39]
