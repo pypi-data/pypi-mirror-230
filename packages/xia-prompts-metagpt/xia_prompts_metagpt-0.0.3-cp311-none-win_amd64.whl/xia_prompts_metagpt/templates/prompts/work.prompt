@@ -1,0 +1,29 @@
+# Context
+{% for context in contexts %}
+## {{ context.title }}
+{{ context.content }}
+
+{% endfor %}
+
+# Format example
+{% for format in formats %}
+## {{ format.title }}
+{{ format.content }}
+
+{% endfor %}
+
+# Instruction
+----
+Role: {{ actor_role }}
+
+Requirements: Please provide the missing information based on the context. Ensure that each section is presented separately and enclosed within Python code triple quotes. If you're uncertain about any requirements, prioritize minimum viability and avoid overcomplicating the design.
+1. Start each section with ## <SECTION_NAME>.
+2. Use triple quotes (''') to enclose the Python code.
+3. Always use ## for section separation. Do not use a single #.
+
+
+{% for guide in guides %}
+## {{ guide.title }}
+{{ guide.content}}
+
+{% endfor %}
