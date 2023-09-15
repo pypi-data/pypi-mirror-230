@@ -1,0 +1,25 @@
+[tool.black]
+line-length = 120
+
+[tool.flake8]
+max-line-length = 120
+extend-ignore = """
+    Q000,
+    WPS306,
+    I001,
+    I005,
+    WPS229,
+    D400,
+    WPS317,
+    S101,
+    WPS507
+"""
+
+[tool.pylint]
+max-line-length = 120
+
+[tool.mypy]
+
+[[tool.mypy.overrides]]
+module = "testrail_api.*"
+ignore_missing_imports = true
