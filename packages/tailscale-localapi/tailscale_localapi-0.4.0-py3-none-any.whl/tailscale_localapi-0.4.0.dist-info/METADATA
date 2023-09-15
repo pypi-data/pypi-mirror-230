@@ -1,0 +1,37 @@
+Metadata-Version: 2.1
+Name: tailscale-localapi
+Version: 0.4.0
+Summary: Control Tailscale's local socket API
+License: MIT
+Author: Antoine POPINEAU
+Author-email: antoine@popineau.eu
+Requires-Python: >=3.10,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: requests (==2.29.0)
+Requires-Dist: urllib3 (==1.26.16)
+Description-Content-Type: text/markdown
+
+# Tailscale Local API
+
+This library can be used to control and get information from Tailscaled's local socket API.
+
+It is not a Tailscale SaaS API library.
+
+## Usage
+
+```python
+ts = TailscaleAPI.v0()
+
+ts.connect()
+ts.set_exit_node("hostname")
+
+peer1 = ts.peer("hostname")
+print(peer1.ip_address)
+
+for peer in ts.peers():
+  print(peer.ip_address)
+```
+
