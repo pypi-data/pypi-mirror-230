@@ -1,0 +1,31 @@
+build:
+  # set to true if your model requires a GPU
+  gpu: false
+
+  # install python library using a requirements.txt file, mutually exclusive with python_packages
+  python_requirements: requirements.txt
+
+  # a list of ubuntu apt packages to install
+  system_packages:
+    - "libgl1-mesa-glx"
+    - "libglib2.0-0"
+
+  # python version in the form '3.8' or '3.8.12'
+  python_version: "3.9"
+
+  # a list of packages in the format <package-name>==<version>, mutually exclusive with python_requirements
+  python_packages:
+    - "numpy==1.19.4"
+    - "torch==1.8.0"
+    - "torchvision==0.9.0"
+
+  # commands run after the environment is setup
+  run:
+    - "echo env is ready!"
+    - "echo another command if needed"
+
+# predict.py defines how predictions are run on your model
+predict: "predict.py:Predictor"
+
+#image please fill in your username and model name with out the bracket
+image: "registry.wizmodel.com/<replace with your username>/<replace with your model name>"
