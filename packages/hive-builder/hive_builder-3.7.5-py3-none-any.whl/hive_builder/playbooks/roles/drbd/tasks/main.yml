@@ -1,0 +1,92 @@
+---
+- name: check kernel version
+  shell: uname -r
+  register: uname_result
+  check_mode: False
+  changed_when: False
+# Ansible module unarchive supports extracting files from URL.
+# But there is not a way how to increase timeout in case of network
+# issues. Module get_url has default timeout 10 seconds for URL requests
+# and it can be changed.
+# https://github.com/CentOS-PaaS-SIG/contra-env-setup/pull/12
+- name: download drbd rpm tarball
+  get_url:
+    url: >-
+      {{ hive_drbd_download_url | default( 'https://github.com/procube-open/drbd9-rpm/releases/download/' +
+        (('9.0.22/drbd9-rpm-amzn2' if uname_result.stdout is version('4.14.203', 'lt')
+         else '9.0.25/drbd9-rpm-amzn2' if uname_result.stdout is version('4.14.219', 'lt')
+         else '9.0.27/drbd9-rpm-amzn2'  if uname_result.stdout is version('4.14.225', 'lt')
+         else '9.1.2/drbd9-rpm-amzn2'  if uname_result.stdout is version('4.14.232', 'lt')
+         else '9.1.2-1/drbd9-rpm-amzn2'
+        ) if ansible_distribution == 'Amazon' else
+        (
+         'Latests/drbd-9.1.12-v9.22.0-4.18.0-372.32.1.el8.x86_64' if ansible_distribution_release == 'Ootpa'
+         else 'Latests/drbd-9.1.12-v9.22.0-4.18.0-425.3.1.el8.x86_64' if uname_result.stdout == '4.18.0-425.3.1.el8.x86_64'
+         else 'Latests/drbd-9.1.12-v9.22.0-4.18.0-425.13.1.el8_7.x86_64' if uname_result.stdout == '4.18.0-425.13.1.el8.x86_64'
+         else 'Latests/drbd-9.2.3-v9.22.0-4.18.0-425.19.2.el8_7.x86_64'
+        ) ) + '.tar.gz') }}
+    dest: /root/drbd9-rpm.tar.gz
+- name: extract drbd rpm files
+  unarchive:
+    src: /root/drbd9-rpm.tar.gz
+    remote_src: yes
+    dest: /root/
+- name: gather rpm file list
+  shell: ls -1 /root/RPMS/*/*.rpm
+  check_mode: False
+  changed_when: False
+  register: hive_safe_rpms
+- name: install packages
+  yum:
+    state: present
+    name: "{{ hive_safe_rpms.stdout_lines }}"
+    disable_gpg_check: true
+  register: drbd_install
+- name: install LVM tools
+  yum:
+    state: present
+    name: lvm2
+- name: change usage count setting
+  lineinfile:
+    regexp: "usage-count .*;"
+    line: "        usage-count no;"
+    path: /etc/drbd.d/global_common.conf
+    state: present
+- name: setup minor-count configuration
+  lineinfile:
+    insertafter: "# minor-count"
+    line: "        minor-count 128;"
+    path: /etc/drbd.d/global_common.conf
+    state: present
+
+- include_tasks: vg.yml
+  loop: "{{ hive_safe_mirrored_disk_devices }}"
+  loop_control:
+    loop_var: disk
+
+- name: set net.ipv4.tcp_rmem
+  sysctl:
+    name: net.ipv4.tcp_rmem
+    value: "131072 1048576 16777216"
+
+- name: set net.ipv4.tcp_wmem
+  sysctl:
+    name: net.ipv4.tcp_wmem
+    value: "131072 1048576 16777216"
+
+- import_tasks: iptables.yml
+  vars:
+    hive_safe_iptables_name: drbd
+    hive_safe_iptables_dports:
+      - 7000:7999
+    hive_safe_iptables_protocol: tcp
+
+- name: "install drbd resource service template"
+  copy:
+    src: drbd-resource@.service
+    dest: /usr/lib/systemd/system/
+- name: "install waiting drbd device tool"
+  copy:
+    src: waitdevice
+    dest: /usr/bin/
+    mode: 0755
