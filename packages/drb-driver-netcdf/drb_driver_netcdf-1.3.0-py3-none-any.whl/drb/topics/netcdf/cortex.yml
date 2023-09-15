@@ -1,0 +1,22 @@
+id: 83720abe-2c0e-11ec-8d3d-0242ac130003
+label: 'netCDF'
+category: FORMATTING
+factory: netcdf
+signatures:
+  - name: (?i).*\.nc
+  - python: |
+      return 'application/x-netcdf' in node.get_attribute('Content-Type')
+---
+id: b4e6ba07-3a59-4736-b33d-3c55dcae2c56
+label: 'HDF'
+category: FORMATTING
+factory: netcdf
+signatures:
+  - name: (?i).*\.h(df|5|df5)
+---
+id: b47a2cba-26e9-4e7e-8205-8f34299bdc0d
+label: 'HDFEOS'
+category: FORMATTING
+factory: netcdf
+signatures:
+  - name: (?i).*\.hdfeos
