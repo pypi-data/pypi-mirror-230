@@ -1,0 +1,81 @@
+
+.worflow-progress-bar {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.worflow-progress-bar li{
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    color: #333;
+    margin-right: 10px;
+}
+
+.worflow-progress-bar li.worflow-progress-finished i {
+    color: #79aec8;
+}
+
+.worflow-progress-bar li.worflow-progress-doing i,
+.worflow-progress-bar li.worflow-progress-doing .workflow-progress-title-text {
+    color: #417690;
+}
+
+.worflow-progress-bar li.worflow-progress-canceled i,
+.worflow-progress-bar li.worflow-progress-canceled .workflow-progress-title-text,
+.worflow-progress-bar li.worflow-progress-canceled .workflow-progress-content {
+    color: #ba2121;
+}
+
+.worflow-progress-bar li.worflow-progress-doing .workflow-progress-title-text {
+    font-weight: bold;
+}
+
+.worflow-progress-bar li.worflow-progress-todo {
+    color: #aaa;
+}
+
+.worflow-progress-bar .workflow-progress-title {
+    margin: 0;
+    padding: 0;
+}
+
+.worflow-progress-bar .workflow-progress-title i,
+.worflow-progress-bar .workflow-progress-title .workflow-progress-title-text,
+.worflow-progress-bar .workflow-progress-title .workflow-progress-title-bar {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.worflow-progress-bar .workflow-progress-title i {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    font-size: 1.5em;
+    padding-right: 5px;
+}
+
+.worflow-progress-bar .workflow-progress-title .workflow-progress-title-bar {
+    margin-left: 5px;
+    width: 50px;
+    border-top: solid 1px #ccc;
+}
+
+.worflow-progress-bar li.worflow-progress-finished .workflow-progress-title .workflow-progress-title-bar {
+    border-top: solid 1px #79aec8;
+}
+
+.worflow-progress-bar li.worflow-progress-canceled .workflow-progress-title .workflow-progress-title-bar {
+    border-top: solid 1px #ba2121;
+}
+
+.worflow-progress-bar .workflow-progress-content {
+    padding-left: 25px;
+    color: #aaa;
+}
