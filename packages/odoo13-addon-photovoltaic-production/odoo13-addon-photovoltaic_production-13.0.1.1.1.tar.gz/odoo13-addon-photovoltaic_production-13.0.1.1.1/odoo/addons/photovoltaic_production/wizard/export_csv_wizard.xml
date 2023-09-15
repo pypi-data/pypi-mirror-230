@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="export_csv_wizard_view_form" model="ir.ui.view">
+    <field name="name">export_csv_wizard.form</field>
+    <field name="model">export.csv.wizard</field>
+    <field name="arch" type="xml">
+      <form>
+        <field invisible="1" name="state" />
+        <field invisible="1" name="filename" />
+
+        <div states="choose" class="oe_button_box" style="padding: 5px">
+          <button string="Yesterday" name="yesterday" type="object" style="margin: 3px" />
+          <button string="Last week" name="last_week" type="object" style="margin: 3px" />
+          <button string="Last month" name="last_month" type="object" style="margin: 3px" />
+          <button string="Last year" name="last_year" type="object" style="margin: 3px" />
+          <span style="padding: 3px"></span>
+          <button string="All plants" name="all_plants" type="object" style="margin: 3px" />
+          <button string="No plants" name="no_plants" type="object" style="margin: 3px" />
+        </div>
+
+        <group states="choose">
+          <field name="date_begin"/>
+          <field name="date_end"/>
+          <field name="period"/>
+          <field name="leave_gaps"/>
+          <field name="plants"/>
+        </group>
+
+        <div states="get">
+          <field name="data" readonly="1" filename="filename" />
+        </div>
+
+        <footer states="choose">
+          <button string="Export" name="export" type="object" class="oe_highlight" />
+          <button string="Close" special="cancel" type="object" />
+        </footer>
+
+        <footer states="get">
+          <button string="Close" special="cancel" type="object" />
+        </footer>
+
+      </form>
+    </field>
+  </record>
+
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="view_photovoltaic_power_station_form_inherit" model="ir.ui.view">
+    <field name="name">view.photovoltaic_power_station.form.inherit</field>
+    <field name="model">photovoltaic.power.station</field>
+    <field name="inherit_id" ref="photovoltaic_mgmt.view_photovoltaic_power_station_form"/>
+
+    <field name="arch" type="xml">
+      <xpath expr="//notebook" position="inside">
+        <page string="Remote measuring">
+          <group string="Production">
+            <field name="production_name"/>
+            <field name="billing_error_margin"/>
+          </group>
+
+          <group string="Remote measuring data">
+            <field name="link_address"/>
+            <field name="measure_address"/>
+            <field name="measure_key"/>
+            <field name="connection_type"/>
+          </group>
+
+          <group string="IP communication">
+            <field name="ip_address"/>
+            <field name="ip_port"/>
+          </group>
+
+          <group string="GSM communication">
+            <field name="phone"/>
+          </group>
+        </page>
+      </xpath>
+    </field>
+  </record>
+</odoo>
