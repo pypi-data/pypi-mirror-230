@@ -1,0 +1,45 @@
+.TH BIDSPARTICIPANTS "1" "2023\-09\-14" "bidscoin 4.1.1" "Generated Python Manual"
+.SH NAME
+bidsparticipants
+.SH SYNOPSIS
+.B bidsparticipants
+[-h] [-k KEYS [KEYS ...]] [-d] [-b BIDSMAP] sourcefolder bidsfolder
+.SH DESCRIPTION
+(Re)scans data sets in the source folder for subject metadata to populate the participants.tsv
+file in the bids directory, e.g. after you renamed (be careful there!), added or deleted data
+in the bids folder yourself.
+
+Provenance information, warnings and error messages are stored in the
+bidsfolder/code/bidscoin/bidsparticipants.log file.
+
+.TP
+\fBsourcefolder\fR
+The study root folder containing the raw source data folders
+
+.TP
+\fBbidsfolder\fR
+The destination / output folder with the bids data
+
+.SH OPTIONS
+.TP
+\fB\-k\fR \fI\,KEYS [KEYS ...]\/\fR, \fB\-\-keys\fR \fI\,KEYS [KEYS ...]\/\fR
+Space separated list of the participants.tsv columns. Default: 'session_id' 'age' 'sex' 'size' 'weight'
+
+.TP
+\fB\-d\fR, \fB\-\-dryrun\fR
+Do not save anything, only print the participants info on screen
+
+.TP
+\fB\-b\fR \fI\,BIDSMAP\/\fR, \fB\-\-bidsmap\fR \fI\,BIDSMAP\/\fR
+The study bidsmap file with the mapping heuristics. If the bidsmap filename is relative (i.e. no "/" in the name) then it is assumed to be located in bidsfolder/code/bidscoin. Default: bidsmap.yaml
+
+.SH COMMENTS
+examples:
+  bidsparticipants myproject/raw myproject/bids
+  bidsparticipants myproject/raw myproject/bids \-k participant_id age sex
+ 
+
+.SH AUTHOR
+.nf
+Marcel Zwiers <m.zwiers@donders.ru.nl>
+.fi

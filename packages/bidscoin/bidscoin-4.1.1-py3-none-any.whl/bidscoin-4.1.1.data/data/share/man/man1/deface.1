@@ -1,0 +1,62 @@
+.TH DEFACE "1" "2023\-09\-14" "bidscoin 4.1.1" "Generated Python Manual"
+.SH NAME
+deface
+.SH SYNOPSIS
+.B deface
+[-h] [-p PARTICIPANT_LABEL [PARTICIPANT_LABEL ...]] [-o OUTPUT] [-c] [-n NATIVESPEC] [-a ARGS] [-f] bidsfolder pattern
+.SH DESCRIPTION
+A wrapper around the 'pydeface' defacing tool (https://github.com/poldracklab/pydeface).
+
+Except for BIDS inheritances and IntendedFor usage, this wrapper is BIDS\-aware (a 'bidsapp')
+and writes BIDS compliant output
+
+Linux users can distribute the computations to their HPC compute cluster if the DRMAA
+libraries are installed and the DRMAA_LIBRARY_PATH environment variable set
+
+For multi\-echo data see `medeface`
+
+.TP
+\fBbidsfolder\fR
+The bids\-directory with the subject data
+
+.TP
+\fBpattern\fR
+Globlike search pattern (relative to the subject/session folder) to select the images that need to be defaced, e.g. 'anat/*_T1w*'
+
+.SH OPTIONS
+.TP
+\fB\-p\fR \fI\,PARTICIPANT_LABEL [PARTICIPANT_LABEL ...]\/\fR, \fB\-\-participant_label\fR \fI\,PARTICIPANT_LABEL [PARTICIPANT_LABEL ...]\/\fR
+Space separated list of sub\-# identifiers to be processed (the sub\-prefix can be left out). If not specified then all sub\-folders in the bidsfolder will be processed
+
+.TP
+\fB\-o\fR \fI\,OUTPUT\/\fR, \fB\-\-output\fR \fI\,OUTPUT\/\fR
+A string that determines where the defaced images are saved. It can be the name of a BIDS datatype folder, such as 'anat', or of the derivatives folder, i.e. 'derivatives'. If output is left empty then the original images are replaced by the defaced images
+
+.TP
+\fB\-c\fR, \fB\-\-cluster\fR
+Use the DRMAA library to submit the deface jobs to a high\-performance compute (HPC) cluster
+
+.TP
+\fB\-n\fR \fI\,NATIVESPEC\/\fR, \fB\-\-nativespec\fR \fI\,NATIVESPEC\/\fR
+DRMAA native specifications for submitting deface jobs to the HPC cluster
+
+.TP
+\fB\-a\fR \fI\,ARGS\/\fR, \fB\-\-args\fR \fI\,ARGS\/\fR
+Additional arguments (in dict/json\-style) that are passed to pydeface. See examples for usage
+
+.TP
+\fB\-f\fR, \fB\-\-force\fR
+Deface all images, regardless if they have already been defaced (i.e. if {"Defaced": True} in the json sidecar file)
+
+.SH COMMENTS
+examples:
+  deface myproject/bids anat/*_T1w*
+  deface myproject/bids anat/*_T1w* \-p 001 003 \-o derivatives
+  deface myproject/bids anat/*_T1w* \-c \-n "\-l walltime=00:60:00,mem=4gb"
+  deface myproject/bids anat/*_T1w* \-a '{"cost": "corratio", "verbose": ""}'
+ 
+
+.SH AUTHOR
+.nf
+Marcel Zwiers <m.zwiers@donders.ru.nl>
+.fi

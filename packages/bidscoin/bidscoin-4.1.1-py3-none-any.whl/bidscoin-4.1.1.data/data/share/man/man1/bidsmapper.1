@@ -1,0 +1,77 @@
+.TH BIDSMAPPER "1" "2023\-09\-14" "bidscoin 4.1.1" "Generated Python Manual"
+.SH NAME
+bidsmapper
+.SH SYNOPSIS
+.B bidsmapper
+[-h] [-b BIDSMAP] [-t TEMPLATE] [-p PLUGINS [PLUGINS ...]] [-n SUBPREFIX] [-m SESPREFIX] [-u UNZIP] [-s] [-a] [-f] [--no-update] sourcefolder bidsfolder
+.SH DESCRIPTION
+The bidsmapper scans your source data repository to identify different data types by matching
+them against the run\-items in the template bidsmap. Once a match is found, a mapping to BIDS
+output data types is made and the run\-item is added to the study bidsmap. You can check and
+edit these generated bids\-mappings to your needs with the (automatically launched) bidseditor.
+Re\-run the bidsmapper whenever something was changed in your data acquisition protocol and
+edit the new data type to your needs (your existing bidsmap will be re\-used).
+
+The bidsmapper uses plugins, as stored in the bidsmap['Options'], to do the actual work
+
+.TP
+\fBsourcefolder\fR
+The study root folder containing the raw source data folders
+
+.TP
+\fBbidsfolder\fR
+The destination folder with the (future) bids data and the bidsfolder/code/bidscoin/bidsmap.yaml output file
+
+.SH OPTIONS
+.TP
+\fB\-b\fR \fI\,BIDSMAP\/\fR, \fB\-\-bidsmap\fR \fI\,BIDSMAP\/\fR
+The study bidsmap file with the mapping heuristics. If the bidsmap filename is relative (i.e. no '/' in the name) then it is assumed to be located in bidsfolder/code/bidscoin. Default: bidsmap.yaml
+
+.TP
+\fB\-t\fR \fI\,TEMPLATE\/\fR, \fB\-\-template\fR \fI\,TEMPLATE\/\fR
+The bidsmap template file with the default heuristics (this could be provided by your institute). If the bidsmap filename is relative (i.e. no '/' in the name) then it is assumed to be located in bidsfolder/code/bidscoin. Default: bidsmap_dccn
+
+.TP
+\fB\-p\fR \fI\,PLUGINS [PLUGINS ...]\/\fR, \fB\-\-plugins\fR \fI\,PLUGINS [PLUGINS ...]\/\fR
+List of plugins to be used. Default: the plugin list of the study/template bidsmap)
+
+.TP
+\fB\-n\fR \fI\,SUBPREFIX\/\fR, \fB\-\-subprefix\fR \fI\,SUBPREFIX\/\fR
+The prefix common for all the source subject\-folders (e.g. 'Pt' is the subprefix if subject folders are named 'Pt018', 'Pt019', ...). Use '*' when your subject folders do not have a prefix. Default: the value of the study/template bidsmap, e.g. 'sub\-'
+
+.TP
+\fB\-m\fR \fI\,SESPREFIX\/\fR, \fB\-\-sesprefix\fR \fI\,SESPREFIX\/\fR
+The prefix common for all the source session\-folders (e.g. 'M_' is the subprefix if session folders are named 'M_pre', 'M_post', ..). Use '*' when your session folders do not have a prefix. Default: the value of the study/template bidsmap, e.g. 'ses\-'
+
+.TP
+\fB\-u\fR \fI\,UNZIP\/\fR, \fB\-\-unzip\fR \fI\,UNZIP\/\fR
+Wildcard pattern to unpack tarball/zip\-files in the sub/ses sourcefolder that need to be unzipped (in a tempdir) to make the data readable. Default: the value of the study/template bidsmap
+
+.TP
+\fB\-s\fR, \fB\-\-store\fR
+Store provenance data samples in the bidsfolder/code/provenance folder (useful for inspecting e.g. zipped or transfered datasets)
+
+.TP
+\fB\-a\fR, \fB\-\-automated\fR
+Save the automatically generated bidsmap to disk and without interactively tweaking it with the bidseditor
+
+.TP
+\fB\-f\fR, \fB\-\-force\fR
+Discard the previously saved bidsmap and logfile
+
+.TP
+\fB\-\-no\-update\fR
+Do not update any sub/sesprefixes in or prepend the sourcefolder name to the <<filepath:regexp>> expression that extracts the subject/session labels. This is normally done to make the extraction more robust, but could case problems for certain use cases
+
+.SH COMMENTS
+examples:
+  bidsmapper myproject/raw myproject/bids
+  bidsmapper myproject/raw myproject/bids \-t bidsmap_custom  # Uses a template bidsmap of choice
+  bidsmapper myproject/raw myproject/bids \-p nibabel2bids    # Uses a plugin of choice
+  bidsmapper myproject/raw myproject/bids \-u '*.tar.gz'      # Unzip tarball sourcefiles
+ 
+
+.SH AUTHOR
+.nf
+Marcel Zwiers <m.zwiers@donders.ru.nl>
+.fi

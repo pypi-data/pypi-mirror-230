@@ -1,0 +1,65 @@
+.TH BIDSCOIN "1" "2023\-09\-14" "bidscoin 4.1.1" "Generated Python Manual"
+.SH NAME
+bidscoin
+.SH SYNOPSIS
+.B bidscoin
+[-h] [-l] [-p] [-i INSTALL [INSTALL ...]] [-u UNINSTALL [UNINSTALL ...]] [-d DOWNLOAD] [-t [TEST]] [-b BIDSMAPTEST] [-v]
+.SH DESCRIPTION
+BIDScoin is a toolkit to convert and organize raw data\-sets according to the Brain Imaging Data Structure (BIDS)
+
+The basic workflow is to run these two tools:
+
+  $ bidsmapper sourcefolder bidsfolder        # This produces a study bidsmap and launches a GUI
+  $ bidscoiner sourcefolder bidsfolder        # This converts your data to BIDS according to the study bidsmap
+
+Set the environment variable BIDSCOIN_DEBUG=TRUE in your console to run BIDScoin in its more verbose DEBUG logging mode
+
+For more documentation see: https://bidscoin.readthedocs.io
+
+.SH OPTIONS
+.TP
+\fB\-l\fR, \fB\-\-list\fR
+List all executables (i.e. the apps, bidsapps and utilities)
+
+.TP
+\fB\-p\fR, \fB\-\-plugins\fR
+List all installed plugins and template bidsmaps
+
+.TP
+\fB\-i\fR \fI\,INSTALL [INSTALL ...]\/\fR, \fB\-\-install\fR \fI\,INSTALL [INSTALL ...]\/\fR
+A list of template bidsmaps and/or bidscoin plugins to install
+
+.TP
+\fB\-u\fR \fI\,UNINSTALL [UNINSTALL ...]\/\fR, \fB\-\-uninstall\fR \fI\,UNINSTALL [UNINSTALL ...]\/\fR
+A list of template bidsmaps and/or bidscoin plugins to uninstall
+
+.TP
+\fB\-d\fR \fI\,DOWNLOAD\/\fR, \fB\-\-download\fR \fI\,DOWNLOAD\/\fR
+Download folder. If given, tutorial MRI data will be downloaded here
+
+.TP
+\fB\-t\fR \fI\,[TEST]\/\fR, \fB\-\-test\fR \fI\,[TEST]\/\fR
+Test the bidscoin installation and template bidsmap
+
+.TP
+\fB\-b\fR \fI\,BIDSMAPTEST\/\fR, \fB\-\-bidsmaptest\fR \fI\,BIDSMAPTEST\/\fR
+Test the run\-items and their bidsnames of all normal runs in the study bidsmap. Provide the bids\-folder or the bidsmap filepath
+
+.TP
+\fB\-v\fR, \fB\-\-version\fR
+Show the installed version and check for updates
+
+.SH COMMENTS
+examples:
+  bidscoin \-l
+  bidscoin \-d data/bidscoin_tutorial
+  bidscoin \-t
+  bidscoin \-t my_template_bidsmap
+  bidscoin \-b my_study_bidsmap
+  bidscoin \-i data/my_template_bidsmap.yaml downloads/my_plugin.py
+ 
+
+.SH AUTHOR
+.nf
+Marcel Zwiers <m.zwiers@donders.ru.nl>
+.fi
