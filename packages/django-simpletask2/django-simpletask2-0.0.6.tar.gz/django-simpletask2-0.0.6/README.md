@@ -1,0 +1,166 @@
+# django-simpletask2
+
+A simple asynchronous task manager based on the Django framework. All business logic written in a custom task data model. Tasks are triggered by a Redis queue.
+
+## Install
+
+```
+pip install django-simpletask2
+```
+
+## Usage
+
+**pro/settings.py**
+
+```
+INSTALLED_APPS = [
+    ...
+    'django_simpletask2',
+    ...
+]
+
+# requires redis cache backend, see django-redis for detail
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://:xxx@xxx:6379/0?decode_responses=True",
+    }
+}
+
+DJANGO_SIMPLETASK2_TASK_PULL_TIMEOUT = 5 # optional, default to 5
+DJANGO_SIMPLETASK2_REDIS_NAME = "default" # optional, default to "default"
+DJANGO_SIMPLETASK2_ACLKEY = "Bqud27SzhUymXDuBfvYNHJWQm0i4FdUB" # optional, default to settings.SECRET_KEY
+```
+
+**pro/urls.py**
+
+```
+from django.urls import path
+from django.urls import include
+
+urlpatterns = [
+    ...
+    path('django-simpletask2/', include("django_simpletask2.urls")),
+    ....
+]
+```
+
+**app/models.py**
+
+```
+import base64
+from django.db import models
+from django_simpletask2.models import SimpleTask
+
+
+class HelloTask(SimpleTask):
+    name = models.CharField(max_length=64)
+
+    def do_task_main(self, payload):
+        return "Hello, {}. Nice to meet you!".format(self.name)
+
+class WorldTask(SimpleTask):
+    url = models.CharField(max_length=128)
+    content = models.TextField(null=True, blank=True)
+
+    is_multi_steps = True
+    final_step = 2
+
+    def do_task_main_step1(self, payload=None):
+        return {
+            "proxy": {
+                "method": "GET",
+                "url": self.url,
+            }
+        }
+    
+    def do_task_main_step2(self, payload=None):
+        payload = payload or {}
+        base64content = payload.get("proxied_content", None)
+        if base64content:
+            try:
+                content = base64.decodebytes(base64content.encode()).decode("utf-8")
+                success = True
+            except UnicodeDecodeError:
+                try:
+                    content = base64.decodebytes(base64content.encode()).decode("gb18030")
+                    success = True
+                except UnicodeDecodeError:
+                    content = "failed to decode proxied_content: {0}".format(base64content)
+                    success = False
+        else:
+            content = payload.get("proxied_error", None)
+            success = False
+
+        self.content = content
+        self.save()
+
+        if success:
+            return True
+        else:
+            raise RuntimeError("WorldTask.do_task_main_step2 failed....")
+```
+
+**etc/django-simpletask2-server-config.yml**
+
+```
+redis: "redis://:xxx@xxx:6379/0?decode_responses=True"
+channels: default
+server: https://localhost:80000/django-simpletask2/
+aclkey: xxxx
+task-pull-engine: redis
+threads: 1
+idle-sleep: 5
+error-sleep: 5
+auto-reset-task-interval: 60
+do-auto-reset-task: true
+```
+
+**Start django-simpletask2-server to trigger tasks**
+
+```
+django-simpletask2-server --config etc/django-simpletask2-server-config.yml start
+```
+
+## Error Codes
+
+| Code | Message |
+| --- | --- |
+| 2910000 | system error. |
+| 2910001 | please send request parameters in PAYLOAD format. |
+| 2910002 | `aclkey` field is required. |
+| 2910003 | aclkey is wrong and access denied. |
+| 2910004 | got an already deleted task {task_info}, you may ignore this and continue. |
+| 2910005 | bad formatted task_info: {task_info}. |
+| 2910006 | Simple task model {task_class_name} not exists. |
+| 2910007 | task handler is not implemented, task={app_label}.{model_name}, handler={}. |
+| 2910008 | task status is not READY but {status}, you can not start it. |
+| 2910009 | calling {handler_name} failed with error message: {error}. |
+| 2910010 | save task done status failed with error message: {error}. |
+| 2910011 | `task_info` field is required for a multi-steps task. payload={payload}. |
+| 2910012 | got NO task in channels: {channels}. |
+| 2910013 | task {task_info} locked by another worker. |
+| 2910014 | task {app_label}.{model_name}:{task_id} failed to save status with error message: {error}. |
+| 2910015 | `task_info` field is required. |
+| 2910016 | get task instance {task_info} failed with error: {error}. |
+
+
+## Releases
+
+### v0.0.1
+
+- First release.
+
+### v0.0.4
+
+- Fixed the problem that the task duplicately executed for the task queue is too long.
+
+### v0.0.5
+
+- Fix do_task problem in actions.
+- Fix ugettext_lazy problem.
+- Fix problems in django 4.x.
+
+### v0.0.6
+
+- Doc update.
