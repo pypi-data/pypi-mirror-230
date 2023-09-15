@@ -1,0 +1,144 @@
+Metadata-Version: 2.1
+Name: rlvoice-1
+Version: 1.2.1
+Summary: Text to Speech (TTS) library for Python 3. Works without internet connection or delay. Supports multiple TTS engines, including Sapi5, nsss, and espeak.
+Home-page: https://github.com/Akul-AI/rlvoice-1
+Author: AkulAI
+Author-email: akulgoel2010@gmail.com
+Keywords: rlvoice,pyttsx,ivona,pyttsx for python3,TTS for python3,rlvoice,text to speech for python,tts,text to speech,speech,speech synthesis,offline text to speech,offline tts,gtts
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Information Technology
+Classifier: Intended Audience :: System Administrators
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: POSIX
+Classifier: License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: comtypes; platform_system == "Windows"
+Requires-Dist: pypiwin32; platform_system == "Windows"
+Requires-Dist: pywin32; platform_system == "Windows"
+Requires-Dist: pyobjc>=2.4; platform_system == "Darwin"
+Requires-Dist: six
+
+
+[![Downloads](https://static.pepy.tech/badge/rlvoice-1)](https://pepy.tech/project/rlvoice-1) [![PyPI version](https://badge.fury.io/py/rlvoice-1.svg)](https://badge.fury.io/py/rlvoice-1)
+
+<b>Credits to <a href="github.com/nateshmbhat">nateshmbhat</a> for creating the original library pyttsx3.</b>
+
+<h2 align="center">Offline Text To Speech (TTS) converter for Python </h2>
+
+`RLVoice` is a text-to-speech conversion library in Python. Unlike alternative libraries, **it works offline**.
+
+## Installation :
+
+
+	pip install rlvoice-1
+
+> If you get installation errors , make sure you first upgrade your wheel version using :  
+`pip install --upgrade wheel`
+
+> **DO NOT USE** `pip install rlvoice`, make sure you add the `-1` next to it, or it will download the wrong package.
+
+### Linux installation requirements : 
+
++ If you are on a linux system and if the voice output is not working , then  : 
+
+	Install espeak , ffmpeg and libespeak1 as shown below: 
+
+	```
+	sudo apt update && sudo apt install espeak ffmpeg libespeak1
+	```
+
+
+## Features : 
+
+- ✨Fully **OFFLINE** text to speech conversion
+- 🎈 Choose among different voices installed in your system
+- 🎛 Control speed/rate of speech
+- 🎚 Tweak Volume
+- 📀 Save the speech audio as a file
+- ❤️ Simple, powerful, & intuitive API
+
+
+## Usage :
+
+```python3
+import rlvoice
+
+engine = rlvoice.init()
+engine.say("I will speak this text")
+engine.runAndWait()
+```
+
+**Single line usage with speak function with default options**
+
+```python3
+import rlvoice
+
+rlvoice.speak("I will speak this text")
+```
+
+	
+**Changing Voice , Rate and Volume :**
+
+```python3
+import rlvoice
+
+engine = rlvoice.init()  # object creation
+
+""" RATE"""
+rate = engine.getProperty('rate')  # getting details of current speaking rate
+print(rate)  # printing current voice rate
+engine.setProperty('rate', 125)  # setting up new voice rate
+
+"""VOLUME"""
+volume = engine.getProperty('volume')  # getting to know current volume level (min=0 and max=1)
+print(volume)  # printing current volume level
+engine.setProperty('volume', 1.0)  # setting up volume level  between 0 and 1
+
+"""VOICE"""
+voices = engine.getProperty('voices')  # getting details of current voice
+# engine.setProperty('voice', voices[0].id)  #changing index, changes voices. o for male
+engine.setProperty('voice', voices[1].id)  # changing index, changes voices. 1 for female
+
+engine.say("Hello World!")
+engine.say('My current speaking rate is ' + str(rate))
+engine.runAndWait()
+engine.stop()
+
+"""Saving Voice to a file"""
+# On linux make sure that 'espeak' and 'ffmpeg' are installed
+engine.save_to_file('Hello World', 'test.mp3')
+engine.runAndWait()
+
+```
+
+
+Full documentation is located in the ```docs``` folder.
+
+
+#### Included TTS engines:
+
+* sapi5
+* nsss
+* espeak
+* coqui_ai_tts
+
+Feel free to wrap another text-to-speech engine for use with ``rlvoice-1``.
+
+### Project Links :
+
+* PyPI (https://pypi.org/project/rlvoice-1)
+* GitHub (https://github.com/Akul-AI/rlvoice-1)
