@@ -1,0 +1,78 @@
+# ipa-utils
+
+Freeipa command line utils. Use sub-command to do real work.
+
+## Install
+
+```
+pip install ipa-utils
+```
+
+## Installed Commands
+
+- ipa-utils
+
+## Sub-commands of ipa-utils
+
+- `add-user` Create a new user entry.
+- `change-password` Change user's password.
+- `delete-user` Delete a user entry.
+- `get-user-details` Get user entry information.
+- `get-users` Export all users to a csv file.
+- `update-user` Update user attributes.
+
+## Usage and Examples
+
+```
+C:\ipa-utils>ipa-utils
+Usage: ipa-utils [OPTIONS] COMMAND [ARGS]...
+
+  Freeipa command line utils. Use sub-command to do real work.
+
+Options:
+  -h, --host TEXT      Server address, default to 127.0.0.1.
+  -p, --port INTEGER   Server port, default 389.
+  -u, --username TEXT  Usesname to binding. Different user may have different
+                       field permissions. If no username provides, bind with
+                       anonymous user.
+
+  -P, --password TEXT  Password for the user.
+  -b, --base-dn TEXT   BaseDN of the ldap server. If no BaseDN provides, try
+                       to search it automatically.
+
+  --help               Show this message and exit.
+
+Commands:
+  add-user         Create a new user entry.
+  change-password  Delete a user entry.
+  delete-user      Delete a user entry.
+  get-user-detail  Get user entry information.
+  get-users        Export all users to a csv file.
+  update-user      Update user attributes.
+```
+
+## Releases
+
+### v0.1.7 2019-08-18
+
+- Old release.
+- Support get-user-detail and get-users.
+
+### v0.2.0 2020-06-24
+
+- Add add-user sub-command.
+- Add update-user sub-command.
+- Add delete-user sub-command.
+
+### v0.2.1 2020-06-24
+
+- Doc update.
+
+### v0.2.2 2022-03-09
+
+- Add IpaService.modify_user_password.
+- Use module instead of single file.
+
+### v0.2.3 2023-09-15
+
+- Doc update.
