@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "preprocessing-pgp"
+version = "0.2.10.post2.dev2"
+description = "Preprocessing required data for customer service purpose"
+readme = "README.md"
+authors = [{ name = "quangvm9", email = "quangvm9@fpt.com.vn" }]
+license = { text = "MIT License" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["nlp", "text", "preprocessing"]
+dependencies = [
+    "Unidecode",
+    "tqdm",
+    "pandas",
+    "numpy",
+    "regex",
+    "flashtext",
+    "pyarrow",
+    "tensorflow>=2.8",
+    "imbalanced-learn",
+    "pickle5",
+    "rapidfuzz",
+    "dnspython",
+]
+requires-python = ">=3.9"
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "bumpver",
+    "isort",
+    "pip-tools",
+    "pytest",
+    "build",
+    "twine",
+    "autopep8",
+    "pylint",
+]
+
+[project.urls]
+homepage = "https://github.com/quangvuminh2000/preprocessing-pgp"
+
+[project.scripts]
+realpython = "preprocessing_pgp.__main__:main"
