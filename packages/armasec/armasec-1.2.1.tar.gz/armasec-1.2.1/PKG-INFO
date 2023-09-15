@@ -1,0 +1,126 @@
+Metadata-Version: 2.1
+Name: armasec
+Version: 1.2.1
+Summary: Injectable FastAPI auth via OIDC
+Home-page: https://github.com/omnivector-solutions/armasec
+License: MIT
+Author: Omnivector Engineering Team
+Author-email: info@omnivector.solutions
+Requires-Python: >=3.8,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Provides-Extra: cli
+Requires-Dist: auto-name-enum (>=2,<3)
+Requires-Dist: fastapi (>=0.68)
+Requires-Dist: httpx (>=0,<1)
+Requires-Dist: jmespath (>=1.0.1,<2.0.0)
+Requires-Dist: loguru (>=0.5.3,<0.6.0) ; extra == "cli"
+Requires-Dist: pendulum (>=2.1.2,<3.0.0) ; extra == "cli"
+Requires-Dist: py-buzz (>=4.1,<5.0)
+Requires-Dist: pydantic (<2.0)
+Requires-Dist: pyperclip (>=1.8.2,<2.0.0) ; extra == "cli"
+Requires-Dist: pytest (>=6,<8)
+Requires-Dist: python-jose[cryptography] (>=3.2,<4.0)
+Requires-Dist: respx (>=0,<1)
+Requires-Dist: rich (>=13.5.2,<14.0.0) ; extra == "cli"
+Requires-Dist: snick (>=1.3,<2.0)
+Requires-Dist: typer (>=0.9.0,<0.10.0) ; extra == "cli"
+Project-URL: CHANGELOG, https://github.com/omnivector-solutions/armasec/blob/main/CHANGELOG.md
+Project-URL: CONDUCT, https://github.com/omnivector-solutions/armasec/blob/main/CONDUCT.md
+Project-URL: CONTRIBUTING, https://github.com/omnivector-solutions/armasec/blob/main/CONTRIBUTING.md
+Project-URL: Documentation, https://omnivector-solutions.github.io/armasec
+Project-URL: Repository, https://github.com/omnivector-solutions/armasec
+Description-Content-Type: text/markdown
+
+[![Build Status](https://github.com/omnivector-solutions/armasec/actions/workflows/test_on_push.yaml/badge.svg)](https://github.com/omnivector-solutions/armasec/actions/workflows/test_on_push.yaml)
+[![Build Documentation](https://github.com/omnivector-solutions/armasec/actions/workflows/build_docs.yaml/badge.svg)](https://github.com/omnivector-solutions/armasec/actions/workflows/build_docs.yaml)
+
+
+![Python Versions](https://img.shields.io/pypi/pyversions/armasec?label=python-versions&logo=python&style=plastic)
+![PyPI Versions](https://img.shields.io/pypi/v/armasec?label=pypi-version&logo=python&style=plastic)
+![License](https://img.shields.io/pypi/l/armasec?style=plastic)
+
+
+> An [Omnivector](https://www.omnivector.io/) initiative
+>
+> [![omnivector-logo](https://omnivector-public-assets.s3.us-west-2.amazonaws.com/branding/omnivector-logo-text-black-horz.png)](https://www.omnivector.io/)
+
+
+
+# Armasec
+
+Adding a security layer on top of your API can be difficult, especially when working with an OIDC
+platform. It's hard enough to get your OIDC provider configured correctly. Armasec aims to take the
+pain out of securing your APIs routes.
+
+Armasec is an opinionated library that attempts to use the most obvious and commonly used workflows
+when working with OIDC and making configuration as simple as possible.
+
+When using the
+[Armasec](https://github.com/omnivector-solutions/armasec/blob/main/armasec/armasec.py) helper
+class, you only need two configuration settings to get going:
+
+1. Domain: the domain of your OIDC provider
+2. Audience: An optional setting that restricts tokens to those intended for your API.
+
+That's it! Once you have those settings dialed in, you can just worry about checking the permissions
+scopes of your endpoints
+
+
+## Documentation
+
+Documentation is hosted hosted on `github.io` at
+[the Armasec homepage](https://omnivector-solutions.github.io/armasec/).
+
+
+## Quickstart
+
+1. Install `armasec` and `uvicorn`:
+
+```bash
+pip install armasec uvicorn
+```
+
+
+2. Save th Minimal Example (example.py) locally:
+
+```python
+import os
+
+from armasec import Armasec
+from fastapi import FastAPI, Depends
+
+
+app = FastAPI()
+armasec = Armasec(
+    os.environ.get("ARMASEC_DOMAIN"),
+    audience=os.environ.get("ARMASEC_AUDIENCE"),
+)
+
+@app.get("/stuff", dependencies=[Depends(armasec.lockdown("read:stuff"))])
+async def check_access():
+    return dict(message="Successfully authenticated!")
+```
+
+
+4. Set the Armasec environment variables:
+
+* ARMASEC_DOMAIN
+* ARMASEC_AUDIENCE
+
+
+5. Run the app
+
+```bash
+uvicorn --host 0.0.0.0 example:app
+```
+
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
