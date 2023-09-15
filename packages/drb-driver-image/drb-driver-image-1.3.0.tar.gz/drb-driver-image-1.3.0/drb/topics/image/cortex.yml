@@ -1,0 +1,36 @@
+id: b7e03ac0-2b62-11ec-8d3d-0242ac130003
+label: 'image'
+category: FORMATTING
+factory: image
+signatures:
+  - python: |
+      import os
+      supported_ext = {
+            '.tif',
+            '.tiff',
+            '.image',
+            '.jp2',
+            '.png',
+            '.gif',
+            '.webp',
+            '.bmp',
+            '.jpeg',
+            '.jpg',
+            # '.blx',
+            # '.kap',
+            # '.dt0',
+            # '.dt1',
+            # '.bin',
+            # '.gpkg',
+            # '.mem'
+        }
+      filename, file_extension = os.path.splitext(node.path.filename)
+      if file_extension and file_extension.lower() in supported_ext:
+          return True
+        
+      for key_attr, ns in  node.attributes.keys():
+          if key_attr.lower() == 'content-type':
+              for content_image in ['image/geotiff', 'image/geotiff8', 'image/gif', 'image/jpeg', 'image/png', 'image/tiff', 'image/tiff8']:
+                    if content_image in node.get_attribute(key_attr):
+                        return True
+      return False
