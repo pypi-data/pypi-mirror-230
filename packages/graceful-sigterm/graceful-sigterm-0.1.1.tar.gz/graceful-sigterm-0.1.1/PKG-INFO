@@ -1,0 +1,82 @@
+Metadata-Version: 2.1
+Name: graceful-sigterm
+Version: 0.1.1
+Summary: Receive the kill signal from the operating system and gracefully wait for the worker thread to end.
+Author: Huang YongSi
+Author-email: huangyongsi@zencore.cn
+Maintainer: Huang YongSi
+Maintainer-email: huangyongsi@zencore.cn
+License: MIT
+Keywords: sigterm,kill python
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# graceful-sigterm
+
+Receive the kill signal from the operating system and gracefully wait for the worker thread to end.
+
+Note: The package name is `graceful-sigterm` but the module name is `sigterm` for short.
+
+## Install
+
+```
+pip install graceful-sigterm
+```
+
+## Usage Example 1
+
+*example1.py*
+
+```
+import time
+import signal
+import sigterm
+
+
+def worker():
+    print("Press Ctrl+C, and wait 5 seconds to stop...")
+    while not sigterm.is_stopped():
+        print(".", end="", flush=True)
+        sigterm.wait_until_stop(timeout=1)
+    print("")
+    for i in range(5):
+        print("x", end="", flush=True)
+        time.sleep(1)
+
+
+def main():
+    sigterm.setup()
+    sigterm.setup(signal.SIGINT)
+    sigterm.register_worker(worker)
+    sigterm.execute()
+
+
+if __name__ == "__main__":
+    main()
+```
+
+*output*
+
+```
+test@test-Pro sigterm % python example1.py
+Press Ctrl+C, and wait 5 seconds to stop...
+....^C
+xxxxx%      
+```
+
+
+## Releases
+
+### v0.1.0
+
+- First realse.
+
+### v0.1.1
+
+- Doc update.
