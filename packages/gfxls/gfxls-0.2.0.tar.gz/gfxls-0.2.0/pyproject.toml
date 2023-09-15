@@ -1,0 +1,59 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "gfxls"
+dynamic = ["version"]
+description = "gfxls - list files on terminal with thumbnails"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3"
+
+keywords = [
+    "terminal",
+    "color",
+    "image",
+    "ls",
+    "filebrowser",
+]
+dependencies = [
+    "vignette",
+    "Pillow",
+    "prettytable",
+]
+
+# https://pypi.org/classifiers/
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: Public Domain",
+    "Topic :: Desktop Environment",
+    "Topic :: Multimedia :: Graphics",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+
+[[authors]]
+name = "Hg"
+email = "dev@indigo.re"
+
+[project.scripts]
+gfxls = "gfxls:main"
+
+[project.urls]
+Homepage = "https://gitlab.com/hydrargyrum/gfxls"
+
+[tool.hatch.version]
+path = "gfxls.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/gfxls.py",
+]
