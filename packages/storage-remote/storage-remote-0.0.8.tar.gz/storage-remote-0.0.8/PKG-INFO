@@ -1,0 +1,44 @@
+Metadata-Version: 2.1
+Name: storage-remote
+Version: 0.0.8
+Home-page: https://github.com/circles-zone/storage-remote-graphql-python-package
+Author: Circles
+Author-email: info@circles.life
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: Other/Proprietary License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+Requires-Dist: requests>=2.31.0
+Requires-Dist: python-dotenv>=1.0.0
+Requires-Dist: mysql-connector>=2.2.9
+Requires-Dist: pymysql>=1.1.0
+Requires-Dist: pytest>=7.4.0
+Requires-Dist: logger-local>=0.0.61
+Requires-Dist: database-without-orm-local>=0.0.90
+Requires-Dist: url-local>=0.0.28
+
+# RemoteCirclesStorage Class
+
+The `RemoteCirclesStorage` class provides methods for interacting with the remote storage service.  
+It allows you to upload and download files from the remote storage.
+
+## Installation
+
+```bash
+pip install storage-remote
+```
+
+Usage Example:
+
+```python
+from storage_remote.remote_circles_storage import RemoteCirclesStorage
+
+# Uploading a file
+remote_storage = RemoteCirclesStorage()
+remote_path = remote_storage.put("file.txt", "/local/path/file.txt", 1, 2, 3)
+print(f"Uploaded file to remote path: {remote_path}")
+
+# Downloading a file
+downloaded_contents = remote_storage.download("file.txt", 2, 3, "/local/path/file.txt")
+print(f"Downloaded file contents: {downloaded_contents}")
+```
