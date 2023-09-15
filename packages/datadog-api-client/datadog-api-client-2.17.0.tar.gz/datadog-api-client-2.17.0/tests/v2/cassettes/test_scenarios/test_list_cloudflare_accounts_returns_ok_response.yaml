@@ -1,0 +1,56 @@
+interactions:
+- request:
+    body: '{"data":{"attributes":{"api_key":"fakekey","email":"dev@datadog.com","name":"testlistcloudflareaccountsreturnsokresponse1674810001"},"type":"cloudflare-accounts"}}'
+    headers:
+      accept:
+      - application/json
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.datadoghq.com/api/v2/integrations/cloudflare/accounts
+  response:
+    body:
+      string: '{"data":{"attributes":{"email":"dev@datadog.com","name":"testlistcloudflareaccountsreturnsokresponse1674810001"},"type":"cloudflare-accounts","id":"1458cfdd2c5679bdc8693a9c5a32bf45"}}
+
+        '
+    headers:
+      content-type:
+      - application/json
+    status:
+      code: 201
+      message: Created
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+    method: GET
+    uri: https://api.datadoghq.com/api/v2/integrations/cloudflare/accounts
+  response:
+    body:
+      string: '{"data":[{"attributes":{"email":"dev@datadog.com","name":"testlistcloudflareaccountsreturnsokresponse1674810001"},"type":"cloudflare-accounts","id":"1458cfdd2c5679bdc8693a9c5a32bf45"}]}
+
+        '
+    headers:
+      content-type:
+      - application/json
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - '*/*'
+    method: DELETE
+    uri: https://api.datadoghq.com/api/v2/integrations/cloudflare/accounts/1458cfdd2c5679bdc8693a9c5a32bf45
+  response:
+    body:
+      string: ''
+    headers:
+      content-type:
+      - text/html; charset=utf-8
+    status:
+      code: 204
+      message: No Content
+version: 1

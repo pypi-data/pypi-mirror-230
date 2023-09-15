@@ -1,0 +1,36 @@
+interactions:
+- request:
+    body: '{"data":{"attributes":{"name":"my_new_rum_application","type":"ios"},"type":"rum_application_create"}}'
+    headers:
+      accept:
+      - application/json
+      content-type:
+      - application/json
+    method: POST
+    uri: https://api.datadoghq.com/api/v2/rum/applications
+  response:
+    body:
+      string: '{"data":{"attributes":{"updated_by_handle":"frog@datadoghq.com","application_id":"a5107087-ff92-413e-9dac-7ee1ebaa2322","name":"my_new_rum_application","created_by_handle":"frog@datadoghq.com","created_at":1670264406913,"org_id":321813,"updated_at":1670264406913,"is_active":false,"hash":"pub827b35dae6920b425915f489a4a309ac","client_token":"pub827b35dae6920b425915f489a4a309ac","type":"ios"},"type":"rum_application","id":"a5107087-ff92-413e-9dac-7ee1ebaa2322"}}
+
+        '
+    headers:
+      content-type:
+      - application/json
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - '*/*'
+    method: DELETE
+    uri: https://api.datadoghq.com/api/v2/rum/applications/a5107087-ff92-413e-9dac-7ee1ebaa2322
+  response:
+    body:
+      string: ''
+    headers: {}
+    status:
+      code: 204
+      message: No Content
+version: 1
