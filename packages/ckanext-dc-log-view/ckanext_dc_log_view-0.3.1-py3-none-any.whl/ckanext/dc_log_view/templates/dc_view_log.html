@@ -1,0 +1,32 @@
+{% asset 'dc_log_view/dc_log_view' %}
+
+{% block page %}
+
+{% if logs %}
+
+<p>
+Use the tab-control below to browse all logs present in this DC resource.
+</p>
+
+<!-- Tabs -->
+    <div class="w3c">
+ {% for keyval in logs|dictsort %}
+	<div id="{{ keyval[0] }}">
+	<a href="#{{ keyval[0] }}">{{ keyval[0] }}</a>
+	<div>
+<pre>
+{% for line in logs[keyval[0]] %}{{ line }}
+{% endfor %}
+</pre>
+	</div>
+	</div>
+ {% endfor %}
+    </div>
+
+{% else %}
+<p>
+This DC resource does not contain any logs.
+</p>
+{% endif %}
+
+{% endblock %}
