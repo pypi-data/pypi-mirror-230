@@ -1,0 +1,92 @@
+# see https://gitlab.com/modulispaces/admcycles/-/blob/master/.gitlab-ci.yml
+# to use conda instead of docker images
+before_script:
+  - export MAKEFLAGS="-j2"
+
+test:9.0:
+test:9.0: &test
+  image: sagemath/sagemath-dev:9.0
+  script:
+    - sudo apt update
+    # https://github.com/moby/moby/issues/27988
+    - echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections
+    - sudo apt-get install -qy
+    #- DEBIAN_FRONTEND="noninteractive" TZ="Europe/Paris" 
+    - sudo apt install -qy texlive texlive-latex-extra texlive-luatex texlive-fonts-extra graphviz imagemagick pdf2svg
+    - sudo sed -i '/PDF/s/none/read|write/' /etc/ImageMagick-6/policy.xml
+    - sage -i dot2tex glucose
+    - sage -pip install pytimeparse roman
+    - sage -pip install .
+    - sage -c 'import sage.env; print(sage.env.SAGE_VERSION)'
+    - sage -python -V
+    - dot -V
+    - lualatex --version
+    - pdflatex --version
+    - convert --version
+    - sage -c 'import slabbe'
+    - export DIRECTORY=`pwd`
+    - cd
+    - sage -t --force-lib --long --show-skipped ${DIRECTORY}
+    - cd ${DIRECTORY}/docs && sage -sh -c "make html"
+
+#- sage -i cryptominisat latte_int   # cryptominisat is heavy on dependencies (cmake etc.)
+#- make doc
+#- make doc-pdf
+#
+
+# les images qui sont sur https://hub.docker.com/r/sagemath/sagemath-dev/
+
+# tmp disable
+#test:9.1.rc5:
+#  << : *test
+#  image: sagemath/sagemath-dev:9.1.rc5
+
+# tmp disable
+#test:9.1.rc5-py3:
+#  << : *test
+#  image: sagemath/sagemath-dev:9.1.rc5-py3
+
+# tmp disable
+#test:9.2.beta3:
+#  << : *test
+#  image: sagemath/sagemath-dev:9.2.beta3
+
+# Pour 9.3.beta8 et 9.3.beta3, it needs the memlimit
+#- sage -t --force-lib --long --memlimit=4000 ${DIRECTORY} # broken in 9.3 and 9.4
+#test:9.3.beta3:
+#  << : *test
+#  image: sagemath/sagemath-dev:9.3.beta3
+#
+#test:9.3.beta8:
+#  << : *test
+#  image: sagemath/sagemath-dev:9.3.beta8
+#
+
+# tmp disable
+#test:sagemath-dev-9.3:
+#  << : *test
+#  image: sagemath/sagemath-dev:9.3
+
+# Set entry point in bash, not in sage
+# https://docs.gitlab.com/ee/ci/yaml/#imageentrypoint
+test:9.3:
+  << : *test
+  image: 
+    name: sagemath/sagemath:9.3
+    entrypoint: [""]
+
+# tmp disable
+# test:9.4:
+#   << : *test
+#   image: sagemath/sagemath-dev:9.4
+
+# this image is broken as it takes more than one hour to unpack and test
+#test:9.5:
+#  << : *test
+#  image: sagemath/sagemath-dev:9.5
+#
+#test:dev:
+#  << : *test
+#  image: sagemath/sagemath-dev:develop
+
+
