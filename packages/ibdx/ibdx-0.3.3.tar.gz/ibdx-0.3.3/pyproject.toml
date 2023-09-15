@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ibdx"
+dynamic = ["version"]
+description = "yet another backup/restore program for mysql InnoDB tables"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "pymysql ==1.1.0",
+    "typer >= 0.7.0, < 1.0.0",
+    "python-dotenv == 0.21.0",
+]
+
+[project.scripts]
+ibdx = "ibdx.cli:cli"
+
+[project.urls]
+homepage = "https://github.com/Grvzard/ibdx"
+
+[tool.hatch.version]
+path = "ibdx/__init__.py"
+
+[tool.black]
+line-length = 120
+skip-string-normalization = true
+
+[tool.ruff]
+line-length = 120
+select = [
+    "E",
+    "F",
+    "W",
+]
