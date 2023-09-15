@@ -1,0 +1,57 @@
+Metadata-Version: 2.1
+Name: mkdocs-pdf
+Version: 0.1.1
+Summary: MkDocs plugin for embedding PDFs in a Markdown way
+Author-email: Thomas Rooijakkers <thomas.rooijakkers@tno.nl>
+Maintainer-email: Thomas Rooijakkers <thomas.rooijakkers@tno.nl>
+License: MIT
+Project-URL: Homepage, https://github.com/ThomasTNO/mkdocs-pdf
+Project-URL: Source, https://github.com/ThomasTNO/mkdocs-pdf
+Keywords: mkdocs,pdf,embed
+Platform: any
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Information Technology
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: lxml
+
+# MkDocs PDF
+
+This plugin allows you to embed PDFs in your documentation using standard
+Markdown syntax.
+
+## Installation
+
+Install the package with pip
+
+```
+pip install mkdocs-pdf
+```
+
+## Configuration
+
+```yaml
+# mkdocs.yml
+markdown_extensions:
+  - attr_list
+plugins:
+  - mkdocs-pdf
+```
+
+## Usage
+
+To embed a PDF file simple use the following syntax.
+
+```markdown
+![Alt text](<path to pdf>){ type=application/pdf }
+```
+
+Optionally, you can specify style constraints, e.g.
+
+```markdown
+![Alt text](<path to pdf>){ type=application/pdf style="min-height:25vh;width:100%" }
+```
