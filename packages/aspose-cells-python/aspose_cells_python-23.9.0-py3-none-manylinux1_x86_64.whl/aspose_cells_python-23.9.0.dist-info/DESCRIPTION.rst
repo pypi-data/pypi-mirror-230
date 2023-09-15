@@ -1,0 +1,123 @@
+Product description 
+==================================
+
+
+`Product Page <https://products.aspose.com/cells/python-net>`_ | `Docs <https://docs.aspose.com/cells/python-net/>`_ | `API Reference <https://reference.aspose.com/cells/python-net/>`_ | `Demos <https://products.aspose.app/cells/family/>`_ | `Blog <https://blog.aspose.com/category/cells/>`_ | `Code Samples <https://github.com/aspose-cells/Aspose.Cells-for-Python-via-.NET>`_ | `Free Support <https://forum.aspose.com/c/cells>`_ | `Temporary License <https://purchase.aspose.com/temporary-license>`_ | `EULA <https://company.aspose.com/legal/eula>`_
+
+Try our `free online apps <https://products.aspose.app/cells/family>`_ demonstrating some of the most popular Aspose.Cells functionality.
+
+A powerful library for manipulating and converting Excel (XLS, XLSX, XLSB), CSV, ODS, PDF, JSON, JPG, PNG, BMP, SVG, EMF and HTML files.
+
+
+
+Aspsoe.Cells API Features
+-------------------------
+
+Aspose.Cells offers a wide arrange of features for creating, reading, manipulating and saving Excel® files:
+
+* Spreadsheet generation & manipulation via API.
+* High-quality file format conversion & rendering.
+* Print Microsoft Excel® files to physical or virtual printers.
+* Combine, modify, protect, or parse Excel® sheets.
+* Apply worksheet formatting.
+* Configure and apply page setup for the worksheets.
+* Create & customize Excel® charts, Pivot Tables, conditional formatting rules, slicers, tables & spark-lines.
+* Convert Excel® charts to images & PDF.
+* Convert Excel® files to various other formats.
+* Formula calculation engine that supports all basic and advanced Excel functions.
+
+Supported Read & Write Formats
+-----------------------------------
+
+* Microsoft Excel®: XLS, XLSX, XLSB, XLSM, XLT, XLTX, XLTM, SpreadsheetML
+* OpenOffice: ODS, SXC, FODS
+* Text: JSON, TXT, CSV, TSV, Tab-Delimited
+* Web: HTML, MHTML
+* iWork®: Numbers
+
+Save Excel® Files As
+-----------------------------------
+* Microsoft Word®: DOCX
+* Microsoft PowerPoint®: PPTX
+* Microsoft Excel®: XLAM
+* Fixed Layout: PDF, XPS
+* Text: JSON, TXT, CSV, TSV, Tab-Delimited, XML
+* Image: TIFF, PNG, BMP, JPEG, GIF, SVG
+* Metafile: EMF
+* Markdown: MD
+
+Create Excel File from scratch using Python
+-------------------------------------------
+
+.. code-block:: python
+
+   # import the python package
+   import aspose.cells
+   from aspose.cells import License, Workbook, FileFormatType
+
+   # Create a new Workbook
+   workbook = Workbook()
+   # Get the first worksheet
+   worksheet = workbook.worksheets[0]
+   # Get the "A1" cell
+   cells = worksheet.cells
+   cell = cells.get("A1")
+   # Write "Hello World" to  "A1" in the first sheet
+   cell.put_value("Hello World!")
+   # save this workbook to XLSX
+   workbook.save("HelloWorld.xlsx")
+
+
+
+
+Convert Excel XLSX File to PDF using Python
+-----------------------------------------------------
+
+.. code-block:: python
+
+   # import the python package
+   import aspose.cells
+   from aspose.cells import License, Workbook, FileFormatType
+
+   workbook = Workbook("bookwithChart.xlsx")
+   # save this workbook to resultFile,you can see a chart while open the file with MS-Excel*/
+   workbook.save("Convert.pdf");
+
+
+
+Create Excel File and set style for the cells
+------------------------------------------------
+
+.. code-block:: python
+
+   import aspose.cells as ac
+   import aspose.pydrawing as ad
+   from aspose.cells import License, Workbook, FileFormatType
+
+   workbook = Workbook()
+   worksheet = workbook.worksheets[0]
+   # get cells style
+   style = worksheet.cells.style
+   # set font color
+   style.font.color = ad.Color.green
+   # set pattern
+   style.pattern = ac.BackgroundType.GRAY12
+   # set Background
+   style.background_color = ad.Color.red
+   # set Border
+   style.set_border(ac.BorderType.LEFT_BORDER, ac.CellBorderType.THIN, ad.Color.blue)
+   style.set_border(ac.BorderType.RIGHT_BORDER, ac.CellBorderType.DOUBLE, ad.Color.gold)
+   # set string value to cell 'A1'
+   cells = worksheet.cells
+   cell = cells.get("A1")
+   cell.put_value("Text")
+   # apply style to cell 'A1'
+   cell.set_style(style)
+   # save this workbook to resultFile
+   workbook.save("Style.xlsx")
+
+
+
+`Product Page <https://products.aspose.com/cells/python-net>`_ | `Docs <https://docs.aspose.com/cells/python-net/>`_ | `API Reference <https://reference.aspose.com/cells/python-net/>`_ | `Demos <https://products.aspose.app/cells/family/>`_ | `Blog <https://blog.aspose.com/category/cells/>`_ | `Free Support <https://forum.aspose.com/c/cells>`_ | `Temporary License <https://purchase.aspose.com/temporary-license>`_ | `EULA <https://company.aspose.com/legal/eula>`_
+
+

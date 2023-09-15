@@ -1,0 +1,54 @@
+from typing import List, Optional, Dict, Iterable
+import aspose.pycore
+import aspose.pydrawing
+import aspose.cells
+import aspose.cells.charts
+import aspose.cells.digitalsignatures
+import aspose.cells.drawing
+import aspose.cells.drawing.activexcontrols
+import aspose.cells.drawing.equations
+import aspose.cells.drawing.texts
+import aspose.cells.externalconnections
+import aspose.cells.json
+import aspose.cells.markup
+import aspose.cells.metadata
+import aspose.cells.numbers
+import aspose.cells.ods
+import aspose.cells.pivot
+import aspose.cells.properties
+import aspose.cells.querytables
+import aspose.cells.rendering
+import aspose.cells.rendering.pdfsecurity
+import aspose.cells.revisions
+import aspose.cells.saving
+import aspose.cells.settings
+import aspose.cells.slicers
+import aspose.cells.tables
+import aspose.cells.timelines
+import aspose.cells.utility
+import aspose.cells.vba
+import aspose.cells.webextensions
+
+class JsonExportHyperlinkType:
+    '''Represents type of exporting hyperlinks to json.'''
+    
+    @classmethod
+    @property
+    def DISPLAY_STRING(cls) -> JsonExportHyperlinkType:
+        '''Export display string'''
+        ...
+    
+    @classmethod
+    @property
+    def ADDRESS(cls) -> JsonExportHyperlinkType:
+        '''Export url'''
+        ...
+    
+    @classmethod
+    @property
+    def HTML_STRING(cls) -> JsonExportHyperlinkType:
+        '''Export as html string.'''
+        ...
+    
+    ...
+
