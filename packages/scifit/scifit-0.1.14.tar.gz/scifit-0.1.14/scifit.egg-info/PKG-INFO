@@ -1,0 +1,130 @@
+Metadata-Version: 2.1
+Name: scifit
+Version: 0.1.14
+Summary: Scientific Fit for Python
+Author-email: Jean Landercy <jeanlandercy@live.com>
+License: BSD 3-Clause License
+        
+        Copyright (c) 2020-2023, Jean Landercy (see AUTHORS and LICENSE_bundled files)
+        All rights reserved.
+        
+        Redistribution and use in source and binary forms, with or without
+        modification, are permitted provided that the following conditions are met:
+        
+        * Redistributions of source code must retain the above copyright notice, this
+          list of conditions and the following disclaimer.
+        
+        * Redistributions in binary form must reproduce the above copyright notice,
+          this list of conditions and the following disclaimer in the documentation
+          and/or other materials provided with the distribution.
+        
+        * Neither the name of the copyright holder nor the names of its
+          contributors may be used to endorse or promote products derived from
+          this software without specific prior written permission.
+        
+        THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+        AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+        IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+        DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+        FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+        DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+        SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+        CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+        OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+        OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+        
+Project-URL: Homepage, https://github.com/jlandercy/scifit
+Keywords: scientific,curve-fitting,optimization
+Classifier: Intended Audience :: Science/Research
+Classifier: Intended Audience :: Education
+Classifier: Topic :: Education
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Classifier: Topic :: Scientific/Engineering :: Chemistry
+Classifier: Topic :: Utilities
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Provides-Extra: dev
+License-File: LICENSE
+License-File: LICENSE_bundled
+License-File: AUTHORS
+
+[![Pypi Workflow](https://github.com/jlandercy/scifit/actions/workflows/pypi.yaml/badge.svg?branch=main)](https://github.com/jlandercy/scifit/actions/workflows/pypi.yaml)
+[![Documentations Workflow](https://github.com/jlandercy/scifit/actions/workflows/docs.yaml/badge.svg?branch=main)](https://github.com/jlandercy/scifit/actions/workflows/docs.yaml)
+
+![SciFit Banner](./docs/source/media/branding/Banner.png)
+
+# SciFit
+
+> Comprehensive fits for scientists
+
+Welcome to SciFit project the Python package for comprehensive fits for scientists
+designed to ease fitting procedure and automatically perform the quality assessment.
+
+The SciFit project aims to support your work by:
+
+ - Providing a clean, stable and compliant interface for each solver;
+ - Perform ad hoc transformations, processing and tests on each stage of a solver procedure;
+ - Render high quality figures summarizing solver solution and the quality assessment.
+
+## Installation
+
+You can install the SciFit package by issuing:
+
+```commandline
+python -m pip install --upgrade scifit
+```
+
+Which update you to the latest version of the package.
+
+## Quick start
+
+Let's fit some data:
+
+```python
+from scifit.solvers.scientific import *
+
+# Select a specific solver:
+solver = HillEquationFitSolver()
+
+# Create some synthetic dataset:
+data = solver.synthetic_dataset(
+    xmin=0.0, xmax=5.0, resolution=50,
+    parameters=[3.75, 0.21],
+    sigma=0.1, scale_mode="auto", seed=1234,
+)
+
+# Perform regression:
+solution = solver.fit(data)
+
+# Render results:
+axe = solver.plot_fit()
+```
+
+We have a nice adjustments for such noisy data:
+
+![Fit figure](./docs/source/media/branding/FitFigure.png)
+
+Or even better a full fit report to check each key points at once:
+
+```python
+solver.report("hill_report")
+```
+
+![Report page](./docs/source/media/branding/ReportPage.png)
+
+Which produces a PDF file called `hill_report.pdf`.
+
+## Resources
+
+ - [Documentations][20]
+ - [Repository][21]
+
+[20]: https://github.com/jlandercy/scifit/tree/main/docs
+[21]: https://github.com/jlandercy/scifit
