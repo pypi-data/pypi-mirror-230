@@ -1,0 +1,31 @@
+{% extends "pydata_sphinx_theme/layout.html" %}
+{# ref: https://github.com/pydata/pydata-sphinx-theme/blob/master/src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html #}
+{%- import "static/macros.html" as grg_macro with context %}
+
+{# We need to load the pydata macros and our own macros#}
+{%- block css %}
+  {{ super() }}
+  {{ grg_macro.head_assets() }}
+{%- endblock css %}
+
+{# Here we cannot use super() as the base template includes the header into nav tag #}
+{# the includes is grg-sphinx-theme header and it extends pydata-sphinx-theme header #}
+{%- block docs_navbar %}
+<nav class="bd-header navbar navbar-expand-lg bd-navbar">
+  {%- include "sections/header.html" %}
+</nav>
+{%- endblock docs_navbar %}
+
+{%- block scripts_end %}
+  {{ super() }}
+  {{ grg_macro.body_scripts() }}
+{%- endblock scripts_end %}
+
+{%- block footer %}
+  <footer class="bd-footer">
+    {%- include "sections/footer.html" with context %}
+    <div class="copyright-text">
+      <i class="fa-regular fa-copyright"></i> {{ theme_footer_copyright }}
+    </div>
+  </footer>
+{%- endblock footer %}
