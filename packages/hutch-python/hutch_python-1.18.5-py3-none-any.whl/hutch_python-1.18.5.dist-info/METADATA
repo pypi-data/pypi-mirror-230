@@ -1,0 +1,136 @@
+Metadata-Version: 2.1
+Name: hutch-python
+Version: 1.18.5
+Summary: Launcher and Config Reader for LCLS Interactive IPython Sessions
+Author: SLAC National Accelerator Laboratory
+License: Copyright (c) 2023, The Board of Trustees of the Leland Stanford Junior
+        University, through SLAC National Accelerator Laboratory (subject to receipt
+        of any required approvals from the U.S. Dept. of Energy). All rights reserved.
+        Redistribution and use in source and binary forms, with or without
+        modification, are permitted provided that the following conditions are met:
+        
+        (1) Redistributions of source code must retain the above copyright notice,
+            this list of conditions and the following disclaimer.
+        
+        (2) Redistributions in binary form must reproduce the above copyright notice,
+            this list of conditions and the following disclaimer in the documentation
+            and/or other materials provided with the distribution.
+        
+        (3) Neither the name of the Leland Stanford Junior University, SLAC National
+            Accelerator Laboratory, U.S. Dept. of Energy nor the names of its
+            contributors may be used to endorse or promote products derived from this
+            software without specific prior written permission.
+        
+        THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+        ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+        WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+        DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER, THE UNITED STATES GOVERNMENT,
+        OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+        EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
+        OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+        INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+        CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+        IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+        OF SUCH DAMAGE.
+        
+        You are under no obligation whatsoever to provide any bug fixes, patches, or
+        upgrades to the features, functionality or performance of the source code
+        ("Enhancements") to anyone; however, if you choose to make your Enhancements
+        available either publicly, or directly to SLAC National Accelerator Laboratory,
+        without imposing a separate written license agreement for such Enhancements,
+        then you hereby grant the following license: a non-exclusive, royalty-free
+        perpetual license to install, use, modify, prepare derivative works, incorporate
+        into other computer software, distribute, and sublicense such Enhancements or
+        derivative works thereof, in binary and source code form.
+        
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.9
+Description-Content-Type: text/x-rst
+License-File: LICENSE
+License-File: AUTHORS.rst
+Requires-Dist: archapp >=1.0.2
+Requires-Dist: bluesky >=1.8.0
+Requires-Dist: coloredlogs >=15.0.0
+Requires-Dist: cookiecutter >=1.7.0
+Requires-Dist: happi >=1.9.0
+Requires-Dist: ipython >=7.26.0
+Requires-Dist: jinja2 >=2.11.0
+Requires-Dist: lightpath >=1.0.1
+Requires-Dist: matplotlib >=3.4.0
+Requires-Dist: nabs >=1.5.0
+Requires-Dist: pcdscalc >=0.3.0
+Requires-Dist: pcdsdaq >=2.3.0
+Requires-Dist: pcdsdevices >=7.0.0
+Requires-Dist: pcdsutils >=0.5.0
+Requires-Dist: psdaq-control-minimal
+Requires-Dist: pyfiglet >=0.8.0
+Requires-Dist: pyqt5
+Requires-Dist: pyyaml >=5.4.0
+Requires-Dist: requests >=2.26.0
+Requires-Dist: simplejson >=3.17.0
+Provides-Extra: doc
+Requires-Dist: docs-versions-menu ; extra == 'doc'
+Requires-Dist: nbsphinx ; extra == 'doc'
+Requires-Dist: sphinx ; extra == 'doc'
+Requires-Dist: sphinx-rtd-theme ; extra == 'doc'
+Requires-Dist: sphinxcontrib-jquery ; extra == 'doc'
+Requires-Dist: pypandoc ; extra == 'doc'
+Provides-Extra: test
+Requires-Dist: lightpath ; extra == 'test'
+Requires-Dist: packaging ; extra == 'test'
+Requires-Dist: pytest ; extra == 'test'
+Requires-Dist: pytest-timeout ; extra == 'test'
+
+============
+Hutch Python
+============
+.. image:: https://travis-ci.org/pcdshub/hutch-python.svg?branch=master
+   :target: https://travis-ci.org/pcdshub/hutch-python
+   :alt: Build Status
+
+``hutch-python`` is the launcher and config reader for LCLS interactive IPython
+sessions. The documentation is hosted at
+`<https://pcdshub.github.io/hutch-python>`_.
+
+Requirements
+------------
+
+This module is intended to be run using the latest pcds release in the
+`pcds-envs <https://github.com/pcdshub/pcds-envs>`_ package.
+
+This module requires Python 3.6+ and the following utilities:
+
+- ``ipython``, for improved interactive sessions
+- `pcdsdaq <https://github.com/pcdshub/pcdsdaq>`_
+  for using the daq in scans
+- `pcdsdevices <https://github.com/pcdshub/pcdsdevices>`_
+  for our Device abstraction layers
+- `elog <https://github.com/pcdshub/elog>`_
+  for posting to the LCLS experiment elogs
+- `happi <https://github.com/pcdshub/happi>`_
+  to enable device loading from a happi database
+- `psdm_qs_cli <https://github.com/slaclab/psdm_qs_cli>`_
+  as an optional happi dependency for loading from the experiment
+  questionnaire
+- `lightpath <https://github.com/pcdshub/lightpath>`_
+  organizes devices to provide a summarized state of the beamline as a whole
+- ``pyyaml``, for reading config files
+- ``coloredlogs``, for colored logging
+- ``pyfiglet`` for hutch banners (think big ``xpppython`` on startup)
+- `cookiecutter <https://github.com/audreyr/cookiecutter>`_
+  for starting new hutch repos
+
+To connect to the LCLS DAQ, your environment must have access to
+
+- ``pydaq`` for connecting to and running the daq
+- ``pycdb`` for changing daq object configurations
+- ``pyami`` for viewing data from the daq
+
+These are not available outside of the slac intranet, and in some cases
+must be sync'd with the active DAQ versions, independent of all other
+packages.
+
+To automatically select the current experiment, you must run with access to
+the LCLS NFS directories.
