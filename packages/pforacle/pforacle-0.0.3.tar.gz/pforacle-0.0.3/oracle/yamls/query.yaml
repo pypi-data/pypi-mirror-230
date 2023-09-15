@@ -1,0 +1,16 @@
+oracle.tools.query.run_query:
+  function: run_query
+  inputs:
+    connection:
+      type:
+      - CustomConnection
+    query:
+      type:
+      - string
+    params:
+      type:
+      - object
+  module: oracle.tools.query
+  name: Oracle Query Tool
+  description: This tool queries Oracle databases to assist in grounded LLM responses
+  type: python
