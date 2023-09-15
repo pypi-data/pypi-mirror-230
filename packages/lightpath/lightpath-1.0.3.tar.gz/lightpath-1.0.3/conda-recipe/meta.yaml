@@ -1,0 +1,49 @@
+{% set package_name = "lightpath" %}
+{% set import_name = "lightpath" %}
+{% set version =
+load_file_regex(load_file=os.path.join(import_name, "_version.py"),
+regex_pattern=".*version = '(\S+)'").group(1) %}
+
+package:
+  name: {{ package_name }}
+  version: {{ version }}
+
+source:
+  path: ..
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - python >=3.6
+    - pip
+    - setuptools_scm
+  run:
+    - python >=3.6
+    - coloredlogs
+    - happi >=1.6.0
+    - numpy
+    - ophyd
+    - prettytable
+    - pydm
+    - pyqt >=5
+    - qtawesome
+    - qtpy
+    - typhos >=1.0.0
+
+test:
+  imports:
+    - lightpath
+  requires:
+    - ipython
+    - matplotlib
+    - pytest <7.2.0
+    - pytest-qt
+
+about:
+  home: https://github.com/pcdshub/lightpath
+  license: SLAC Open License
+  summary: LCLS Lightpath Module
