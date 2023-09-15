@@ -1,0 +1,50 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ref_gsd"
+dynamic = ["version"]
+description = "Reference implementation of generalised score distribution in python"
+authors = [{ name = "Krzysztof Rusek", email = "krussek@gmail.com" }]
+license = {file = "LICENSE"}
+readme = "README.md"
+
+keywords = ["jax", "distribution", "QoE", "test"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Telecommunications Industry",
+    "License :: OSI Approved :: Apache Software License",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+requires-python = ">=3.9"
+dependencies=["jax>=0.4.6"]
+
+[project.urls]
+Homepage = "https://github.com/gsd-authors/gsd"
+
+[tool.hatch.version]
+path = "src/gsd/__init__.py"
+
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/gsd"]
+
+[tool.hatch.build.targets]
+include = [
+    "/src/",
+]
+
+[tool.hatch.envs.default]
+dependencies=["pytest","jaxlib>=0.4.6"]
+
+[tool.hatch.envs.default.scripts]
+test = "pytest {args:tests}"
+
