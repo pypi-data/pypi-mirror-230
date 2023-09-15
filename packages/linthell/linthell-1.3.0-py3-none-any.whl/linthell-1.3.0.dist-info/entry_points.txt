@@ -1,0 +1,12 @@
+[console_scripts]
+linthell=linthell:cli
+
+[linthell.plugins]
+black-check=linthell.plugins.black_check:LinthellBlackCheckPlugin
+black-diff=linthell.plugins.black_diff:LinthellBlackDiffPlugin
+flake8=linthell.plugins.flake8:LinthellFlake8Plugin
+isort-diff=linthell.plugins.isort_diff:LinthellIsortDiffPlugin
+mypy=linthell.plugins.mypy:LinthellMypyPlugin
+pydocstyle=linthell.plugins.pydocstyle:LinthellPydocstylePlugin
+pylint=linthell.plugins.pylint:LinthellPylintPlugin
+
