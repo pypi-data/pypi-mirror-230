@@ -1,0 +1,93 @@
+from conans import ConanFile, tools, AutoToolsBuildEnvironment,MSBuild
+import os
+import platform
+
+
+class resiprocateConan(ConanFile):
+    name = "libdb"
+    version = "@version@"
+    settings = "os", "arch", "compiler", "build_type"
+    options = {"shared": [True, False]}
+    default_options = "shared=False"
+    url = "https://gitlab.gz.cvte.cn/1602/3rd/berkeleydb.git"
+
+    def configure(self):
+        del self.settings.compiler.libcxx
+        
+    def source(self):
+        self.run("git clone git@gitlab.gz.cvte.cn/1602/3rd/berkeleydb.git @git_ref@ .")
+        @checkout@
+        
+#    def buildAndroid(self):
+#        if (tools.os_info.is_windows):
+#            builder = AutoToolsBuildEnvironment(self, win_bash=True)
+#        else:
+#            builder = AutoToolsBuildEnvironment(self)
+#
+#        if (tools.os_info.is_windows):
+#            self.run('export PATH=%s/tools:$PATH'%str(tools.unix_path(os.environ['ANDROID_SDK'])), win_bash=True)
+#        else:
+#            self.run('export PATH=%s/tools:$PATH'%str(tools.unix_path(os.environ['ANDROID_SDK'])))
+#        ndkroot = str(tools.unix_path(os.environ['NDK_HOME']))
+#        target = "android-%s"%str(self.settings.os.api_level)
+#        arch = str(self.settings.arch)
+#        if (arch == 'armv7'):
+#            arch = 'arm'
+#        elif(arch == 'armv8'):
+#            arch = 'arm64'
+
+    def buildWin(self):
+        with tools.vcvars(self.settings, filter_known_paths=False):
+            builder = MSBuild(self)
+            # builder.build_env.include_paths.append("%s/include"%self.deps_cpp_info['OpenSSL'].rootpath)
+            if self.options.shared == False:
+                self.btype = 'Static %s'%self.settings.build_type
+            else:
+                self.btype = self.settings.build_type
+            builder.build('build_windows/Berkeley_DB_vs2017.sln', build_type=self.btype, targets=['db'], platforms={"x86":"Win32"})
+
+#    def buildiOS(self):
+#        builder = AutoToolsBuildEnvironment(self)
+#        arch = str(self.settings.arch)
+#        if (arch == 'armv8'):
+#            arch = 'arm64'
+#        elif (arch == 'x86'):
+#            arch = 'i386'
+#        
+#        make_args = ['OS=ios', 'ARCH=%s'%arch, 'SDK_MIN=%s'%str(self.settings.os.version)]
+#
+#        builder.make(args=make_args)
+
+    def buildUnix(self):
+        self.run('chmod +x dist/configure')
+        builder = AutoToolsBuildEnvironment(self)
+        cfgargs =['--disable-shared', '--enable-cxx', '--enable-stl', '--enable-pthread_api', 'CC=gcc']
+        cfgargs.append("--prefix=%s"%self.package_folder)
+        builder.configure(configure_dir="dist/", args=cfgargs)
+        #builder.make(args=["install"])    
+        self.run('make install') 
+
+    def build(self):
+        with tools.chdir(self.source_folder):
+            if(self.settings.os == "Windows"):
+                #self.buildWin()
+                return
+            #elif(self.settings.os == "Android"):
+            #    self.buildAndroid()
+            #elif(self.settings.os == "iOS"):
+            #    self.buildiOS()
+            else:
+                self.buildUnix()
+
+    def package(self):
+        with tools.chdir(self.source_folder):
+            bindir = "build_windows/bin/%s-%s"%(self.settings.arch, self.settings.build_type)
+            if (self.settings.os == "Windows"):
+                self.copy("%s/include/*"%bindir, "%s/include/"%self.package_folder, keep_path=False)
+                self.copy("%s/lib/*"%bindir, "%s/lib/"%self.package_folder, keep_path=False)
+
+    def package_info(self):
+        if(self.settings.os =='Windows'):
+            self.cpp_info.libs = ['libdb']
+        else:
+            self.cpp_info.libs = ['db', 'db_cxx', 'db_stl']

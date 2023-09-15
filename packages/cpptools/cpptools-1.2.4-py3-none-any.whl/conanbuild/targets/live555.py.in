@@ -1,0 +1,105 @@
+from conans import ConanFile, CMake, tools
+import os, shutil
+
+class Live555Conan(ConanFile):
+    name = "live555"
+    version = "@version@"
+    license = "<Put the package license here>"
+    author = "<Put your name here> <And your email here>"
+    url = "<Package recipe repository url here, for issues about the package>"
+    description = "<Description of Live555 here>"
+    topics = ("<Put some tag here>", "<here>", "<and here>")
+    settings = "os", "compiler", "build_type", "arch"
+    options = {"shared": [True, False], "fPIC": [True, False]}
+    default_options = "shared=False", "fPIC=True"
+    generators = "cmake"
+    
+    def source(self):
+        self.run('git clone git@gitlab.gz.cvte.cn:1602/rtcbase/live555.git @git_ref@ .')
+        @checkout@
+
+    def config_options(self):
+        del self.settings.compiler.libcxx
+        if self.settings.os == "Windows":
+            del self.options.fPIC
+
+    def buildWindows(self):
+        cmake = CMake(self)
+        cmake_options = []
+        cmake_options.append("-DEVENT__ENABLE_VERBOSE_DEBUG=OFF")
+        cmake.configure(source_folder = "live555", args=cmake_options)
+        cmake.build()
+
+    def buildAndroid(self):
+        cmake = CMake(self)
+        cmake_options = []
+
+        cmake.generator = "Unix Makefiles"
+        toolchain_file = os.environ.get("NDK_HOME") + "/build/cmake/android.toolchain.cmake"
+        cmake_options.append("-DCMAKE_TOOLCHAIN_FILE="+toolchain_file)
+        cmake_options.append("-DANDROID_TOOLCHAIN=gcc")
+        cmake_options.append("-DCMAKE_CXX_FLAGS=-frtti -fexceptions -DANDROID_OLD_NDK -DNEWLOCALE_NOT_USED")
+        if(self.settings.arch == "armv7"):
+            cmake_options.append("-DANDROID_ABI=armeabi-v7a")
+        elif(self.settings.arch == "armv8"):
+            cmake_options.append("-DANDROID_ABI=arm64-v8a")
+        elif(self.settings.arch == "x86"):
+            cmake_options.append("-DANDROID_ABI=x86")
+        elif(self.settings.arch == "x86_64"):
+            cmake_options.append("-DANDROID_ABI=x86_64")
+        
+        cmake.configure(source_folder = "live555", args=cmake_options)
+        cmake.build()
+
+    def buildLinux(self):
+        cmake = CMake(self)
+        cmake_options = []
+
+        if("CMAKE_TOOLCHAIN_FILE_NAME" in os.environ):
+            cmake_options.append("-DCMAKE_TOOLCHAIN_FILE=%s"%os.environ.get("CMAKE_TOOLCHAIN_FILE_NAME"))
+        elif(self.settings.arch == "x86"):
+            cmake_options.append("-DCMAKE_C_FLAGS=-m32 -fPIC")
+            cmake_options.append("-DCMAKE_CXX_FLAGS=-m32 -fPIC")
+            cmake_options.append("-DCMAKE_EXE_LINKER_FLAGS=-m32 -fPIC")
+        else:
+            cmake_options.append("-DCMAKE_C_FLAGS=-fPIC")
+            cmake_options.append("-DCMAKE_CXX_FLAGS=-fPIC")
+        
+        cmake.configure(source_folder = "live555", args=cmake_options)
+        cmake.build()
+
+    def buildMacOS(self):
+        print("Don't need to build this lib for Mac Os")
+    
+    def buildIOS(self):
+        print("Don't need to build this lib for IOS")
+
+    def build(self):
+        if(self.settings.os == "Android"):
+            self.buildAndroid()
+        elif(self.settings.compiler == "Visual Studio"):
+            self.buildWindows()
+        elif(self.settings.os == "Linux"):
+            self.buildAndroid()
+        elif(self.settings.os == "Macos"):
+            self.buildMacOS()
+        elif(self.settings.os == "iOS"):
+            self.buildMacOS()
+
+        # Explicit way:
+        # self.run('cmake %s/hello %s'
+        #          % (self.source_folder, cmake.command_line))
+        # self.run("cmake --build . %s" % cmake.build_config)
+
+    def package(self):
+        self.copy("*.h", dst="include", src="live555", keep_path=False)
+        self.copy("*.hh", dst="include", src="live555", keep_path=False)
+        self.copy("*live555.lib", dst="lib", keep_path=False)
+        self.copy("*.dll", dst="bin", keep_path=False)
+        self.copy("*.so", dst="lib", keep_path=False)
+        self.copy("*.dylib", dst="lib", keep_path=False)
+        self.copy("*.a", dst="lib", keep_path=False)
+
+    def package_info(self):
+        self.cpp_info.libs = ["live555"]
+

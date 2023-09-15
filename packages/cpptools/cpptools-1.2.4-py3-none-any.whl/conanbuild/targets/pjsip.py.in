@@ -1,0 +1,157 @@
+from conans import ConanFile, AutoToolsBuildEnvironment, MSBuild, tools
+from conans.errors import ConanInvalidConfiguration
+from conans.tools import Version
+from conans.errors import ConanInvalidConfiguration
+import os
+import glob
+import fnmatch
+
+
+class PJSIPConan(ConanFile):
+    name = "pjsip"
+    version = "@version@"
+    description = "PJSIP is a free and open source multimedia communication library written in C language " \
+                  "implementing standard based protocols such as SIP, SDP, RTP, STUN, TURN, and ICE"
+    topics = ("conan", "pjsip", "sip", "voip", "multimedia", "sdp", "rtp", "stun", "turn", "ice")
+    url = "https://github.com/bincrafters/conan-pjsip"
+    homepage = "https://www.pjsip.org/"
+    license = "GPL-2.0-or-later"
+    exports_sources = ["patches/*.patch"]
+    settings = "os", "arch", "compiler", "build_type"
+    options = {"shared": [True, False], "fPIC": [True, False]}
+    default_options = {"shared": False, "fPIC": True}
+
+    requires = "OpenSSL/1.1.1@1602/stable", "openh264/1.8@1602/stable"
+
+    def config_options(self):
+        if self.settings.os == 'Windows':
+            del self.options.fPIC
+
+    def configure(self):
+        if self.settings.compiler == "Visual Studio" and self.options.shared:
+            # https://www.pjsip.org/pjlib/docs/html/group__pj__dll__target.htm
+            raise ConanInvalidConfiguration("shared MSVC builds are not supported")
+
+    def source(self):
+        # Windows users MUST download the .zip because the files have CRLF line-ends,
+        # while the .bz2 has LF line-ends and is for Unix and Mac OS X systems
+        self.run("git clone git@gitlab.gz.cvte.cn:1602/service/pjproject.git @git_ref@ .")
+        @checkout@
+
+    def build(self):
+        if self.settings.compiler == "Visual Studio":
+            self._build_msvc()
+        else:
+            self._build_configure()
+
+    def _build_msvc(self):
+        tools.replace_in_file(os.path.join(self.build_folder, "build", "vs", "pjproject-vs14-common-defaults.props"),
+                              "<OutputFile>..\lib\$(ProjectName)-$(TargetCPU)-$(Platform)-vc$(VSVer)-$(Configuration).lib</OutputFile>",
+                              "<OutputFile>..\lib\$(ProjectName)-.lib</OutputFile>")
+        for root, _, filenames in os.walk(self.build_folder):
+            for filename in filenames:
+                if fnmatch.fnmatch(filename, "*.vcxproj"):
+                    fullname = os.path.join(root, filename)
+                    print("process", fullname)
+                    tools.replace_in_file(fullname,
+                                          "-$(TargetCPU)-$(Platform)-vc$(VSVer)-$(Configuration).lib</OutputFile>",
+                                          "-.lib</OutputFile>",
+                                          strict=False)
+        #raise ConanInvalidConfiguration("enough")
+
+        # https://trac.pjsip.org/repos/wiki/Getting-Started/Windows
+        with tools.chdir(self.build_folder):
+            version = Version(str(self.settings.compiler.version))
+            sln_file = "pjproject-vs14.sln" if version >= "14.0" else "pjproject-vs8.sln"
+            build_type = "Debug" if self.settings.build_type == "Debug" else "Release"
+            build_type += "-Static"
+            msbuild = MSBuild(self)
+            for p in self.deps_cpp_info["openh264"].include_paths:
+                msbuild.build_env.include_paths.append(p)
+            for p in self.deps_cpp_info["openh264"].lib_paths:
+                msbuild.build_env.lib_paths.append(p)
+            msbuild.build(project_file=sln_file, targets=["pjsua"], build_type=build_type,
+                          platforms={"x86": "Win32", "x86_64": "x64"})
+
+    def _build_configure(self):
+        tools.replace_in_file(os.path.join(self.build_folder, "build.mak.in"),
+                              "export TARGET_NAME := @target@",
+                              "export TARGET_NAME := ")
+        with tools.chdir(self.build_folder):
+            args = ["--with-ssl=%s" % self.deps_cpp_info["OpenSSL"].rootpath]
+            args.append("--with-openh264=%s" % self.deps_cpp_info["openh264"].rootpath)
+            if self.options.shared:
+                args.extend(["--disable-static", "--enable-shared"])
+            else:
+                args.extend(["--disable-shared", "--enable-static"])
+            # disable autodetect
+            args.extend(["--disable-darwin-ssl",
+                         "--enable-openssl",
+                         "--disable-opencore-amr",
+                         "--disable-silk",
+                         "--disable-opus"])
+            env_build = AutoToolsBuildEnvironment(self)
+            env_build.configure(args=args)
+            env_build.make()
+            env_build.install()
+
+    def package(self):
+        self.copy(pattern="LICENSE", dst="licenses", src=self.build_folder)
+        if self.settings.compiler == "Visual Studio":
+            self.copy(pattern="*", src=os.path.join(self.build_folder, "pjlib", "include"),
+                      dst="include", keep_path=True)
+            self.copy(pattern="*", src=os.path.join(self.build_folder, "pjlib-util", "include"),
+                      dst="include", keep_path=True)
+            self.copy(pattern="*", src=os.path.join(self.build_folder, "pjnath", "include"),
+                      dst="include", keep_path=True)
+            self.copy(pattern="*", src=os.path.join(self.build_folder, "pjmedia", "include"),
+                      dst="include", keep_path=True)
+            self.copy(pattern="*", src=os.path.join(self.build_folder, "pjsip", "include"),
+                      dst="include", keep_path=True)
+            self.copy(pattern="*.lib", src=os.path.join(self.build_folder),
+                      dst="lib", keep_path=False)
+
+    def _format_lib(self, lib):
+        return lib + "-"
+
+    def package_info(self):
+        is_win = self.settings.os == "Windows"
+        libs = ["pjsua2-lib" if is_win else "pjsua2",
+                "pjsua-lib" if is_win else "pjsua",
+                "pjsip-ua",
+                "pjsip-simple",
+                "pjsip-core" if is_win else "pjsip",
+                "pjmedia-codec",
+                "pjmedia-videodev",
+                "pjmedia",
+                "pjmedia-audiodev",
+                "pjnath",
+                "pjlib-util",
+                "libsrtp" if is_win else "srtp",
+                "libresample" if is_win else "resample",
+                "libgsmcodec" if is_win else "gsmcodec",
+                "libspeex" if is_win else "speex",
+                "libilbccodec" if is_win else "ilbccodec",
+                "libg7221codec" if is_win else "g7221codec",
+                "libyuv" if is_win else "yuv",
+                "libwebrtc" if is_win else "webrtc",
+                "pjlib" if is_win else "pj"]
+        self.cpp_info.libs = [self._format_lib(lib) for lib in libs]
+        if self.settings.os == "Linux":
+            self.cpp_info.libs.extend(["m", "pthread"])
+        elif self.settings.os == "Macos":
+            self.cpp_info.frameworks = ["CoreAudio",
+                                        "CoreServices",
+                                        "AudioUnit",
+                                        "AudioToolbox",
+                                        "Foundation",
+                                        "AppKit",
+                                        "AVFoundation",
+                                        "CoreGraphics",
+                                        "QuartzCore",
+                                        "CoreVideo",
+                                        "CoreMedia",
+                                        "VideoToolbox",
+                                        "Security"]
+        elif self.settings.os == "Windows":
+            self.cpp_info.libs.extend(["wsock32", "ws2_32", "ole32", "dsound"])

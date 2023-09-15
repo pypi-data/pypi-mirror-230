@@ -1,0 +1,95 @@
+from conans import ConanFile, tools, CMake
+import os
+import platform
+
+class StunLibConan(ConanFile):
+    name='stunlib'
+    version = '@version@'
+    settings = 'os', 'arch', 'compiler', 'build_type'
+    url='https://gitlab.gz.cvte.cn/1602/Rtcbase/stunlib'
+    options = {"shared": [True, False]}
+    default_options = {'shared':False}
+    generators="cmake_find_package"
+
+    def source(self):
+        self.run('git clone git@gitlab.gz.cvte.cn:1602/rtcbase/stunlib.git @git_ref@ .')
+        @checkout@
+
+    def configure(self):
+        del self.settings.compiler.libcxx
+
+    def cmakeBuild(self):
+        cmake = CMake(self)
+        options = ['-DCMAKE_INSTALL_PREFIX=%s'%self.package_folder]
+        if self.options.shared :
+            options.append('-DBUILD_SHARED_LIBS=ON')
+        else :
+            options.append('-DBUILD_SHARED_LIBS=OFF')
+
+        if self.settings.os == "Android":
+            cmake.generator = "Unix Makefiles"
+            toolchain_file = os.environ.get(
+                "ANDROID_NDK_HOME") + "build/cmake/android.toolchain.cmake"
+            options.append("-DCMAKE_TOOLCHAIN_FILE="+toolchain_file)
+            options.append("-DANDROID_TOOLCHAIN=%s"%self.settings.compiler)
+            if self.settings.compiler == "clang":
+                options.append("-DANDROID_STL=c++_static")
+            else:
+                options.append("-DANDROID_STL=gnustl_static")
+            options.append("-DANDROID_PLATFORM=android-%s"%self.settings.os.api_level)
+            if(self.settings.arch == "armv7"):
+                options.append("-DANDROID_ABI=armeabi-v7a")
+            elif(self.settings.arch == "armv8"):
+                options.append("-DANDROID_ABI=arm64-v8a")
+        elif self.settings.os == "iOS":
+            sysroot = "iphoneos"
+            if(self.settings.arch == "x86" or self.settings.arch == "x86_64"):
+                sysroot = "iphonesimulator"
+            target_arch = str(self.settings.arch)
+            if(self.settings.arch == "armv8"):
+                target_arch = "arm64"
+            elif(self.settings.arch == "x86"):
+                target_arch = "i386"
+            options.append("-DCMAKE_OSX_SYSROOT="+sysroot)
+            options.append("-DCMAKE_OSX_ARCHITECTURES="+target_arch)
+            options.append("-DIOS=TRUE")
+        elif(self.settings.os == "Macos"):
+            sysroot = "macosx"
+            target_arch = str(self.settings.arch)
+            if(self.settings.arch == "x86"):
+                target_arch = "i386"
+            options.append("-DCMAKE_OSX_SYSROOT="+sysroot)
+            options.append("-DCMAKE_OSX_ARCHITECTURES="+target_arch)
+            options.append("-DMACOS=TRUE")
+        elif(self.settings.os == "Linux"):
+            if(self.settings.arch == "x86"):
+                options.append("-DCMAKE_C_FLAGS=-m32 -fPIC")
+                options.append("-DCMAKE_CXX_FLAGS=-m32 -fPIC")
+                options.append("-DCMAKE_EXE_LINKER_FLAGS=-m32")
+            elif(self.settings.arch == "armv7"):
+                if("CFLAGS" in os.environ):
+                    options.append("-DCMAKE_C_FLAGS=-fPIC %s"%os.environ.get("CFLAGS"))
+                else:
+                    options.append("-DCMAKE_C_FLAGS=-fPIC")
+                if("CXXFLAGS" in os.environ):
+                    options.append("-DCMAKE_CXX_FLAGS=-fPIC %s"%os.environ.get("CXXFLAGS"))
+                else:
+                    options.append("-DCMAKE_CXX_FLAGS=-fPIC")
+            else:
+                options.append("-DCMAKE_CXX_FLAGS=-fPIC")
+                options.append("-DCMAKE_C_FLAGS=-fPIC")
+            if("CMAKE_TOOLCHAIN_FILE_NAME" in os.environ):
+                options.append("-DCMAKE_TOOLCHAIN_FILE=%s"%os.environ.get("CMAKE_TOOLCHAIN_FILE_NAME"))
+        
+        print(str(options))
+        cmake.configure(args=options)
+        cmake.build(target='stunlib')
+        cmake.install()
+
+
+    def build(self):
+        with tools.chdir(self.source_folder):
+            self.cmakeBuild()
+        
+    def package_info(self):
+        self.cpp_info.libs = ['stunlib']

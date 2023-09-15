@@ -1,0 +1,61 @@
+from conans import ConanFile, tools, CMake, AutoToolsBuildEnvironment
+from conans.util import files
+import os, shutil
+
+
+class WxSVGConan(ConanFile):
+    name = "wxsvg"
+    version = "@version@"
+    generators = "cmake"
+    settings = "os", "arch", "compiler", "build_type"
+    url = "https://gitlab.gz.cvte.cn/1602/3rd/wxsvg"
+    # license = "http://www.zlib.net/zlib_license.html"
+    description = "Process GUI library "
+    options = {"wxcairo":[True, False]}
+    default_options = {"wxcairo":False}
+
+    def source(self):
+        self.run("git clone git@gitlab.gz.cvte.cn:1602/3rd/wxsvg.git @git_ref@ .")
+        @checkout@
+
+    def configure(self):
+        if((self.settings.os != "Linux") and (not self.options.wxcairo)):
+            self.requires.add( 'cairo/1.16@1602/stable')
+        del self.settings.compiler.libcxx
+        
+    def build(self):
+        with tools.chdir(self.build_folder):
+            cmake = CMake(self)
+            cmake_options = []
+            if(self.options.wxcairo):
+                cmake_options.append("-DWXCAIRO=ON")
+            if(self.settings.os == "Macos"):
+                sysroot = "macosx"
+                target_arch = str(self.settings.arch)
+                if(target_arch == "x86"):
+                    target_arch = "i386"
+                cmake_options.append("-DCMAKE_OSX_SYSROOT="+sysroot)
+                cmake_options.append("-DCMAKE_OSX_ARCHITECTURES="+target_arch)
+                cmake_options.append("-DMACOS=TRUE")
+            elif(self.settings.compiler == "Visual Studio"):
+                if (self.settings.compiler.runtime == 'MT' or self.settings.compiler.runtime == 'MTd'):
+                    tools.download('https://artifactory.gz.cvte.cn/artifactory/binaries/1602/buildtool/UseStaticMsvcrt.cmake', 'UseStaticMsvcrt.cmake')
+                    cmake_options.append("-DCMAKE_USER_MAKE_RULES_OVERRIDE=UseStaticMsvcrt.cmake")
+
+            cmake_options.append('-DCMAKE_INSTALL_PREFIX=%s'%(self.package_folder))
+            cmake.configure(args=cmake_options)
+            self.run('cmake .')
+            cmake.build()
+            cmake.install()
+                
+    def package(self):
+        if(self.settings.compiler=='Visual Studio'):
+            self.copy(pattern="*.pdb", dst="lib", src="%s"%(self.build_folder), keep_path=False)
+
+    def package_info(self):
+        self.cpp_info.includedirs.append('include/wxSVG')
+        self.cpp_info.includedirs.append('include/wxSVGXML')
+        if(self.settings.compiler=='Visual Studio'): 
+            self.cpp_info.libs = ['wxsvg.lib', 'wxsvgxml.lib']
+        elif(self.settings.os=='Linux'):
+            self.cpp_info.libs = ['wxsvg', 'wxsvgxml']

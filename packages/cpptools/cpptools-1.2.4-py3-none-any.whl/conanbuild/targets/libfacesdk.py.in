@@ -1,0 +1,71 @@
+from conans import ConanFile, AutoToolsBuildEnvironment
+from conans import tools
+import os
+import shutil
+from conans import CMake
+
+class FaceSDKConan(ConanFile):
+    name = "libfacesdk"
+    version = "@version@"
+    url = "git@gitlab.gz.cvte.cn:1602/3rd/libfacesdk-conan.git"
+    license = "Private"
+    homepage = "https://gitlab.gz.cvte.cn/luopingfeng/GeneralFaceSDK"
+    description = "FaceSDK a cross platform sdk for face tracking"
+    settings = "os", "compiler", "build_type", "arch"
+    options = {"shared": [True, False]}
+    default_options = "shared=False"
+    generators = "cmake"
+    
+    def config(self):
+        self.requires.add("OpenCV/3.4@1602/stable")
+        self.options["OpenCV"].shared = self.options.shared
+        self.requires.add("zlib/1.2.11@1602/stable")
+        self.options["zlib"].shared = self.options.shared
+        self.requires.add("protobuf/3.5.0.1@1602/stable")
+        self.options["protobuf"].shared = self.options.shared
+                
+    def source(self):
+        self.run("git clone git@gitlab.gz.cvte.cn:1602/3rd/GeneralFaceSDK.git @git_ref@ .")
+        @checkout@
+        self.run("git submodule update --init --recursive")
+        
+    def build(self):
+        cmake = CMake(self)
+        opencvDir = self.deps_cpp_info['OpenCV'].rootpath
+        opencvLibs = ""
+        if (self.settings.os == "Windows"):
+            for lib in self.deps_cpp_info['OpenCV'].libs:
+                opencvLibs = opencvLibs + lib + ".lib;"
+        elif (self.settings.os == "Macos"):
+            for lib in self.deps_cpp_info['OpenCV'].libs:
+                opencvLibs = opencvLibs + "lib" + lib + ".a;"
+        else:
+            for lib in self.deps_cpp_info['OpenCV'].libs:
+                opencvLibs = opencvLibs + "lib" + lib + ".a;"
+
+        cmake_options = []
+        cmake_options.append("-DOpenCV_INCLUDE_DIRS=%s/include" % opencvDir)
+        cmake_options.append("-DOpenCV_LIBRARY_DIRS=%s/share/OpenCV/3rdparty/lib;%s/lib" % (opencvDir, opencvDir))
+        cmake_options.append("-DOpenCV_LIBS=%s" % opencvLibs)
+
+        print(cmake_options)
+        cmake.configure(args=cmake_options)
+        cmake.build()
+
+    def package(self):
+        if (self.settings.os == "Windows"):
+            self.copy("*.lib", "lib", "lib", keep_path=False)
+        elif (self.settings.os == "Macos"):
+            self.copy("*.a", "lib", "lib", keep_path=False)
+        else:
+            pass
+			
+        srcRootDir = os.path.join(self.source_folder, "GeneralFaceSDK")
+        self.copy("*.h*", dst="include", src=os.path.join(srcRootDir, "src", "tracker"), keep_path=True )
+        self.copy("*.h*", dst="include/dlib", src=os.path.join(srcRootDir, "3rd", "dlib", "dlib"), keep_path=True )
+        
+    def package_info(self):
+        """ Define the required info that the consumers/users of this package will have
+        to add to their projects
+        """
+        self.cpp_info.libs = ["dlibsdk", "facesdk"]

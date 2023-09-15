@@ -1,0 +1,62 @@
+from conans import ConanFile, tools, CMake, AutoToolsBuildEnvironment
+from conans.util import files
+import os, shutil
+
+
+class libqrencodeConan(ConanFile):
+    name = "libqrencode"
+    version = "@version@"
+    generators = "cmake"
+    settings = "os", "arch", "compiler", "build_type"
+    options = {"shared": [True, False]}
+    default_options = "shared=False"
+    url = "https://gitlab.gz.cvte.cn/1602/3rd/libqrencode"
+    # license = "http://www.zlib.net/zlib_license.html"
+    # description = "A Massively Spiffy Yet Delicately Unobtrusive Compression Library " \
+    #               "(Also Free, Not to Mention Unencumbered by Patents)"
+
+    def source(self):
+        self.run("git clone git@gitlab.gz.cvte.cn:1602/3rd/libqrencode.git @git_ref@ .")
+        @checkout@
+        self.run("git submodule update --init --recursive")
+
+    def configure(self):
+        del self.settings.compiler.libcxx
+
+    def build(self):
+        with tools.chdir(self.build_folder):
+            cmake = CMake(self)
+            cmake_options = ['-DWITH_TOOLS=NO', '-DWITHOUT_PNG=YES']
+
+            if(self.settings.os == "Macos"):
+                sysroot = "macosx"
+                target_arch = str(self.settings.arch)
+                if(target_arch == "x86"):
+                    target_arch = "i386"
+                cmake_options.append("-DCMAKE_OSX_SYSROOT="+sysroot)
+                cmake_options.append("-DCMAKE_OSX_ARCHITECTURES="+target_arch)
+                cmake_options.append("-DMACOS=TRUE")
+            elif(self.settings.os == "Linux"):
+                if(self.settings.arch == "x86"):
+                    cmake_options.append("-DCMAKE_C_FLAGS=-m32 -fPIC")
+                    cmake_options.append("-DCMAKE_CXX_FLAGS=-m32 -fPIC")
+                    cmake_options.append("-DCMAKE_EXE_LINKER_FLAGS=-m32 -fPIC")
+                else:
+                    cmake_options.append("-DCMAKE_C_FLAGS=-fPIC")
+                    cmake_options.append("-DCMAKE_CXX_FLAGS=-fPIC")
+            elif(self.settings.compiler == "Visual Studio"):
+                cmake_options.append("-DCMAKE_CXX_FLAGS=/w")
+                if (self.settings.compiler.runtime == 'MT' or self.settings.compiler.runtime == 'MTd'):
+                    tools.download('https://artifactory.gz.cvte.cn/artifactory/binaries/1602/buildtool/UseStaticMsvcrt.cmake', 'UseStaticMsvcrt.cmake')
+                    cmake_options.append("-DCMAKE_USER_MAKE_RULES_OVERRIDE=UseStaticMsvcrt.cmake")
+
+            cmake_options.append('-DCMAKE_INSTALL_PREFIX=%s'%(self.package_folder))
+            cmake.configure(args=cmake_options)
+            cmake.build()
+            cmake.install()
+
+    def package_info(self):
+        if(self.settings.os == 'Windows' and self.settings.build_type == 'Debug'):
+            self.cpp_info.libs = ['qrencoded']
+        else:
+            self.cpp_info.libs = ['qrencode']

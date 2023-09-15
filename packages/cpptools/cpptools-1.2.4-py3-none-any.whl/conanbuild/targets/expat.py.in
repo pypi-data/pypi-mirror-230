@@ -1,0 +1,51 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from conans import ConanFile, CMake, tools
+
+
+class ExpatConan(ConanFile):
+    name = "expat"
+    version = "@version@"
+    description = "Fast XML parser in C"
+    url = "https://github.com/bincrafters/conan-expat"
+    license = "MIT"
+    exports = ['LICENSE.md']
+    exports_sources = ['CMakeLists.txt', 'FindEXPAT.cmake']
+    generators = "cmake"
+    settings = "os", "compiler", "build_type", "arch"
+    options = {"shared": [True, False]}
+    default_options = "shared=False"
+
+    def source(self):
+        base_url = "https://github.com/libexpat/libexpat/archive"
+        zip_name = "R_%s.zip" % self.version.replace(".", "_") 
+        tools.get("%s/%s" % (base_url, zip_name))
+
+    def build(self):
+        cmake = CMake(self, parallel=True)
+
+        cmake.definitions['BUILD_doc'] = False
+        cmake.definitions['BUILD_examples'] = False
+        cmake.definitions['BUILD_tests'] = False
+        cmake.definitions['BUILD_tools'] = False
+        cmake.definitions['CMAKE_DEBUG_POSTFIX'] = 'd'
+        cmake.definitions['CMAKE_POSITION_INDEPENDENT_CODE'] = True
+        cmake.definitions['BUILD_shared'] = self.options.shared
+        
+        src_dir = "libexpat-R_%s/expat"%self.version.replace(".", "_")
+
+        cmake.configure(source_dir=src_dir)
+        cmake.build()
+        cmake.install()
+
+    def package(self):
+        self.copy("FindEXPAT.cmake", ".", ".")
+
+    def package_info(self):
+        self.cpp_info.libs = ["expatd" if self.settings.build_type == "Debug" else "expat"]
+        if not self.options.shared:
+            self.cpp_info.defines = ["XML_STATIC"]
+
+    def configure(self):
+        del self.settings.compiler.libcxx

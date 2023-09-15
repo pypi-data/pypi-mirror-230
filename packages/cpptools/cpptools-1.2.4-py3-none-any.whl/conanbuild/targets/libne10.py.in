@@ -1,0 +1,58 @@
+from conans import ConanFile, CMake
+import os
+import shutil
+
+
+class Ne10Conan(ConanFile):
+    name = "libne10"
+    version = "@version@"
+    url = "https://github.com/projectNe10/Ne10.git"
+    settings = "os", "arch", "build_type"
+    options = {"shared": [True, False]}
+    default_options = "shared=False"
+
+    def source(self):
+        self.run('git clone https://github.com/projectNe10/Ne10.git @git_ref@ .')
+        @checkout@
+
+    def build(self):
+        cmake = CMake(self,generator="Unix Makefiles")
+        # Wrap original CMakeLists.txt for be able to include and call CONAN_BASIC_SETUP
+        # It will allow us to set architecture flags, link with the requires etc
+        cmake_options = ['-DCMAKE_C_FLAGS=-fPIC', "-DCMAKE_CXX_FLAGS=-fPIC", "-DCMAKE_ASM_FLAGS=--apcs=/fpic", '-DNE10_BUILD_EXAMPLES=OFF', '-DNE10_BUILD_UNIT_TEST=OFF', '-DNE10_ARM_HARD_FLOAT=OFF','-DCMAKE_INSTALL_PREFIXE=%s'%self.package_folder]
+
+        if (self.settings.os == "Android"):
+            cmake_options.append('-DCMAKE_TOOLCHAIN_FILE=%s/Ne10/android/android_config.cmake'%self.build_folder)
+        elif (self.settings.os == "iOS"):
+            sysroot = "iphoneos"
+            target_arch = str(self.settings.arch)
+            if(self.settings.arch == "armv8"):
+                target_arch = "arm64"
+            cmake_options.append("-DCMAKE_OSX_SYSROOT="+sysroot)
+            cmake_options.append("-DCMAKE_OSX_ARCHITECTURES="+target_arch)
+            cmake_options.append("-DIOS=TRUE")
+            cmake_options.append('-DCMAKE_TOOLCHAIN_FILE=%s/Ne10/ios/ios_config.cmake'%self.build_folder)
+        elif(self.settings.os == "Linux"):
+            if(self.settings.arch == "armv7"):
+                if("CFLAGS" in os.environ):
+                    cmake_options.append("-DCMAKE_C_FLAGS=-fPIC %s"%os.environ.get("CFLAGS"))
+                else:
+                    cmake_options.append("-DCMAKE_C_FLAGS=-fPIC")
+                if("CXXFLAGS" in os.environ):
+                    cmake_options.append("-DCMAKE_CXX_FLAGS=-fPIC %s"%os.environ.get("CXXFLAGS"))
+                else:
+                    cmake_options.append("-DCMAKE_CXX_FLAGS=-fPIC")
+            elif(self.settings.arch == "armv8"):
+                cmake_options.append("-DCMAKE_CXX_FLAGS=-fPIC")
+                cmake_options.append("-DCMAKE_C_FLAGS=-fPIC")
+                
+            cmake_options.append("-DCMAKE_TOOLCHAIN_FILE=%s/Ne10/GNUlinux_config.cmake"%self.build_folder)
+        cmake.configure(args=cmake_options, source_folder=os.path.join(self.build_folder, 'Ne10'))
+        cmake.build()
+
+    def package_info(self):
+        self.cpp_info.libs = ['NE10']
+
+    def package(self):
+        self.copy(pattern="*.h", dst="include", src="%s/Ne10/inc"%self.build_folder, keep_path=False)
+        self.copy(pattern="*libNE10.a", dst="lib", src="%s/modules"%self.build_folder, keep_path=False)

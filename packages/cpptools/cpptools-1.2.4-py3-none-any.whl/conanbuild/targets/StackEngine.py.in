@@ -1,0 +1,69 @@
+from conans import ConanFile, tools
+from conans.util import files
+import os
+import shutil
+
+class StackEngineConan(ConanFile):
+    name = "StackEngine"
+    version = "@version@"
+    generators = "cmake"
+    settings = "os", "arch", "compiler", "build_type"
+    options = {"shared": [True, False]}
+    default_options = "shared=True"
+    url = "git@gitlab.gz.cvte.cn:1602/sdks/avcengine.git"
+    # license = "http://www.zlib.net/zlib_license.html"
+    # description = "A Massively Spiffy Yet Delicately Unobtrusive Compression Library " \
+    #               "(Also Free, Not to Mention Unencumbered by Patents)"
+
+    def configure(self):
+        del self.settings.compiler.libcxx
+
+    def source(self):
+        self.run('git clone git@gitlab.gz.cvte.cn:1602/sdks/avcengine.git @git_ref@ --depth=1 .')
+        return
+    def build(self):
+        print("zlj start call build function")
+        with tools.chdir(self.build_folder):
+            if(self.settings.os == 'Windows'):
+                compileArch = ''
+                # only support Visual Studio 15 2017 generators for windows
+                compileGenerator = 'Visual Studio 15 2017'
+
+                if (self.settings.arch == 'x86_64'):
+                    compileArch = 'Win64'
+
+                self.run('cmake . -G "%s %s" -DWITH_RECORD=OFF -DBUILD_SDK=ON -DCMAKE_BUILD_TYPE=%s -DCMAKE_INSTALL_PREFIX=%s'%(compileGenerator, compileArch, self.settings.build_type, self.package_folder))
+                if(self.settings.arch == "x86"):
+                    tools.replace_in_file("webrtc-src/webrtc/api/mediastream_interface_and_implicit_video_frame_api.cmake",  "mediastream_interface_and_implicit_video_frame_api", "ms_and_video_frame_api", strict=False)
+                    tools.replace_in_file("webrtc-src/webrtc/api/libjingle_peerconnection_api.cmake",  "mediastream_interface_and_implicit_video_frame_api", "ms_and_video_frame_api", strict=False)
+                    self.run("cmake --build . --target stackengine --config %s -- /maxcpucount:56"%self.settings.build_type)
+                    self.run("cmake -DBUILD_TYPE=%s -P cmake_install.cmake "%self.settings.build_type)
+                    #build multi-process desktop capture tool
+                    if(os.path.isfile("maxme-src/tools/desktop_capture_host/desktop_capture_host.vcxproj")):
+                        self.run("cmake --build . --target desktop_capture_host --config %s -- /maxcpucount:56"%self.settings.build_type)
+                elif(self.settings.arch == "x86_64"):
+                    tools.replace_in_file("webrtc-src/webrtc/api/mediastream_interface_and_implicit_video_frame_api.cmake",  "mediastream_interface_and_implicit_video_frame_api", "ms_and_video_frame_api", strict=False)
+                    tools.replace_in_file("webrtc-src/webrtc/api/libjingle_peerconnection_api.cmake",  "mediastream_interface_and_implicit_video_frame_api", "ms_and_video_frame_api", strict=False)
+                    self.run("cmake --build . --target stackengine --config %s -- /maxcpucount:56"%self.settings.build_type)
+                    self.run("cmake -DBUILD_TYPE=%s -P cmake_install.cmake"%self.settings.build_type)
+                    #build multi-process desktop capture tool
+                    if(os.path.isfile("maxme-src/tools/desktop_capture_host/desktop_capture_host.vcxproj")):
+                        self.run("cmake --build . --target desktop_capture_host --config %s -- /maxcpucount:56"%self.settings.build_type)
+
+    def package(self):
+        if(self.settings.os == "Windows"):
+            if(self.settings.arch == "x86"):
+                shutil.copy(os.path.join(self.build_folder, 'bin\\stackengine.pdb'), os.path.join(self.package_folder, 'bin\\stackengine.pdb'))
+                shutil.copy(os.path.join(self.build_folder, 'bin\\desktop_capture_host.pdb'), os.path.join(self.package_folder, 'bin\\desktop_capture_host.pdb'))
+                shutil.copy(os.path.join(self.build_folder, 'bin\\desktop_capture_host.exe'), os.path.join(self.package_folder, 'bin\\desktop_capture_host.exe'))
+            elif(self.settings.arch == "x86_64"):
+                shutil.copy(os.path.join(self.build_folder, 'bin\\stackengine.pdb'), os.path.join(self.package_folder, 'bin\\stackengine.pdb'))
+                shutil.copy(os.path.join(self.build_folder, 'bin\\desktop_capture_host.pdb'), os.path.join(self.package_folder, 'bin\\desktop_capture_host.pdb'))
+                shutil.copy(os.path.join(self.build_folder, 'bin\\desktop_capture_host.exe'), os.path.join(self.package_folder, 'bin\\desktop_capture_host.exe'))
+            ori = os.path.join(self.package_folder, 'include')
+            tmp = os.path.join(self.package_folder, 'tmp_include')
+            os.rename(ori, tmp)
+            os.rename(os.path.join(tmp, 'avcengine'), ori)
+            shutil.rmtree(tmp)
+    def package_info(self):
+        self.cpp_info.libs = ['stackengine']

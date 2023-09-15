@@ -1,0 +1,22 @@
+from conans import ConanFile, tools
+import os
+import platform
+import shutil
+
+class xpackConan(ConanFile):
+    name = "xpack"
+    version = "@version@"
+    settings = "os", "arch", "compiler", "build_type"
+    exports_sources = ""
+    url = "https://github.com/xyz347/xpack"
+
+    def source(self):
+        tools.download('https://github.com/xyz347/xpack/archive/refs/tags/v@version@.tar.gz', 'xpack.tar.gz')
+        tools.untargz("xpack.tar.gz")
+        os.remove("xpack.tar.gz")
+        shutil.move("xpack-@version@", "xpack")
+
+
+    def package(self):
+        with tools.chdir(self.source_folder):
+            shutil.copytree("xpack", "%s/include/xpack"%self.package_folder)

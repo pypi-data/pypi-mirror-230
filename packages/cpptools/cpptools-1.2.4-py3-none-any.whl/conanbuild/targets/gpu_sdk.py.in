@@ -1,0 +1,45 @@
+from conans import ConanFile, CMake
+
+
+class GpuSdkConan(ConanFile):
+    name = "gpu_sdk"
+    version = "@version@"
+    license = "MIT"
+    url = "https://gitlab.gz.cvte.cn/1602/qoe/GpuSdk.git"
+    description = "GPU SDK for Intel, AMD, Nvidia"
+    settings = "os", "arch"
+    options = {"shared": [True, False], "fPIC": [True, False]}
+    default_options = {"shared": False, "fPIC": True}
+    generators = "cmake"
+    exports_sources = "*"
+
+    def config_options(self):
+        if self.settings.os == "Windows":
+            del self.options.fPIC
+        else:
+            self.fail("Only Windows is supported")
+            
+    def source(self):
+        self.run("git clone git@gitlab.gz.cvte.cn/1602/qoe/GpuSdk.git @git_ref@ .")
+        @checkout@
+
+    def build(self):
+        pass
+
+    def package(self):
+        self.copy("*.h", dst="include", keep_path=True)
+        if self.settings.arch == "x86":
+            self.copy("NVAPI/x86/nvapi.lib", dst="lib", keep_path=False)
+        elif self.settings.arch == "x86_64":
+            self.copy("NVAPI/amd64/nvapi64.lib", dst="lib", keep_path=False)
+        self.copy("*.dll", dst="bin", keep_path=False)
+        self.copy("*.dylib*", dst="lib", keep_path=False)
+        self.copy("*.so", dst="lib", keep_path=False)
+        self.copy("*.a", dst="lib", keep_path=False)
+
+    def package_info(self):
+        if self.settings.arch == "x86":
+            self.cpp_info.libs = ["nvapi"]
+        elif self.settings.arch == "x86_64":
+            self.cpp_info.libs = ["nvapi64"]
+        self.cpp_info.includedirs = ["include", "include/ADL", "include/NVAPI", "include/d3dkmt"]

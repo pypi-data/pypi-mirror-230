@@ -1,0 +1,185 @@
+from conans import ConanFile, tools, AutoToolsBuildEnvironment
+import os
+import platform
+import shutil
+import copy
+
+class LibvpxConan(ConanFile):
+    name = "libvpx"
+    version = "@version@"
+    settings = "os", "arch", "compiler", "build_type"
+    options = {"shared": [True, False]}
+    default_options = "shared=False"
+    url = "https://gitlab.gz.cvte.cn:1602/3rd/vpx"
+    build_vars = {}
+    
+    def source(self):
+        self.run("git clone https://chromium.googlesource.com/webm/libvpx.git @git_ref@ .")
+        @checkout@
+
+    def configure(self):
+        del self.settings.compiler.libcxx
+
+    def _genConfigureArgs(self):
+        configure_args = ""
+        arch = str(self.settings.arch)
+        if (arch == "armv8"):
+            arch = "arm64"
+
+        host = str(self.settings.os)
+        if (host == "Windows"):
+            if (arch == "x86"):
+                host = "win32"
+            elif (arch == "x86_64"):
+                host = "win64"
+        elif (host == "iOS"):
+            if (arch == "x86" or arch == "x86_64"):
+                host = "iphonesimulator"
+            else:
+                host = "darwin"
+        elif (host == "Macos"):
+            host = "darwin10"
+        elif (host == "Android"):
+            host = "linux"
+
+        compiler = str(self.settings.compiler).lower()
+
+        if (compiler == "visual studio"):
+            compiler = "vs"+str(self.settings.compiler.version)
+        elif(compiler == "apple-clang" or compiler == "clang"):
+            compiler = "gcc"
+
+        target = arch+'-'+host+'-'+compiler
+
+        configure_args = ['--target='+target.lower()]
+        configure_args.append('--enable-realtime-only')
+        configure_args.append('--disable-examples')
+        configure_args.append('--disable-tools')
+        configure_args.append('--disable-docs')
+        configure_args.append('--enable-better-hw-compatibility')
+        configure_args.append('--disable-unit-tests')
+        if (self.settings.compiler == 'Visual Studio' and (self.settings.compiler.runtime == 'MT' or self.settings.compiler.runtime == 'MTd')):
+            configure_args.append("--enable-static-msvcrt")
+
+        if (self.settings.build_type == "Debug"):
+            configure_args.append("--enable-debug")
+            configure_args.append("--enable-debug-libs")
+
+        if (not self.settings.os == "Windows"):
+            configure_args.append("--enable-pic")
+            configure_args.append("--as=yasm")
+            if(self.options.shared):
+                configure_args.append("--enable-shared")
+                configure_args.append("--disable-static")
+            else:
+                configure_args.append("--enable-static")
+                configure_args.append("--disable-shared")
+
+        if(self.settings.os == "Android"):
+            arch = self.settings.arch
+            toolchain = 'arm-linux-androideabi'
+            if(self.settings.arch == 'armv8'):
+                arch = 'arm64'
+                toolchain = 'aarch64-linux-android'
+            elif(self.settings.arch == 'x86'):
+                toolchain = 'x86-linux-android'
+            elif(self.settings.arch == 'x86_64'):
+                toolchain = 'x86_64-linux-android'
+            elif(self.settings.arch == 'armv7'):
+                arch = 'arm'
+
+            ndk = os.environ['NDK_HOME']
+
+            os.environ['CC'] = "%s/toolchains/%s-%s/prebuilt/%s-x86_64/bin/%s-gcc"%(ndk, toolchain, self.settings.compiler.version, platform.system().lower(), toolchain)
+            os.environ['CXX'] = "%s/toolchains/%s-%s/prebuilt/%s-x86_64/bin/%s-g++"%(ndk, toolchain, self.settings.compiler.version, platform.system().lower(), toolchain)
+
+            os.environ['LD'] = "%s/toolchains/%s-%s/prebuilt/%s-x86_64/bin/%s-ld"%(ndk, toolchain, self.settings.compiler.version, platform.system().lower(), toolchain)
+            os.environ['NM'] = "%s/toolchains/%s-%s/prebuilt/%s-x86_64/bin/%s-nm"%(ndk, toolchain, self.settings.compiler.version, platform.system().lower(), toolchain)
+            os.environ['AR'] = "%s/toolchains/%s-%s/prebuilt/%s-x86_64/bin/%s-ar"%(ndk, toolchain, self.settings.compiler.version, platform.system().lower(), toolchain)
+            os.environ['RANLIB'] = "%s/toolchains/%s-%s/prebuilt/%s-x86_64/bin/%s-ranlib"%(ndk, toolchain, self.settings.compiler.version, platform.system().lower(), toolchain)
+            os.environ['OBJDUMP'] = "%s/toolchains/%s-%s/prebuilt/%s-x86_64/bin/%s-objdump"%(ndk, toolchain, self.settings.compiler.version, platform.system().lower(), toolchain)
+            os.environ['STRIP'] = "%s/toolchains/%s-%s/prebuilt/%s-x86_64/bin/%s-strip"%(ndk, toolchain, self.settings.compiler.version, platform.system().lower(), toolchain)
+            os.environ['AS'] = "%s/toolchains/%s-%s/prebuilt/%s-x86_64/bin/%s-as"%(ndk, toolchain, self.settings.compiler.version, platform.system().lower(), toolchain)
+
+            os.environ['LDFLAGS'] = "--sysroot=%s/platforms/android-%s/arch-%s/"%(ndk, self.settings.os.api_level, arch)
+
+            configure_args.append("--extra-cflags='--sysroot=%s/platforms/android-%s/arch-%s/'"%(ndk, self.settings.os.api_level, arch))
+            configure_args.append("--extra-cxxflags='--sysroot=%s/platforms/android-%s/arch-%s/'"%(ndk, self.settings.os.api_level, arch))
+
+            #os.environ['PATH'] = '%s/bin'%sdk_path
+            #configure_args.append("--sdk-path=%s"%sdk_path)
+
+        if (self.settings.os == "Linux"):
+            os.system("chmod +x ./configure")
+            if(self.settings.arch == "x86"):
+                configure_args.append('--extra-cflags=-m32')
+            elif(self.settings.arch == "armv7"):
+                configure_args.append('--extra-cflags= -mfloat-abi=softfp -mfpu=neon')
+
+        if(tools.os_info.is_windows):
+            configure_args.append('--prefix=%s'%tools.unix_path(self.package_folder))
+        else:
+            configure_args.append('--prefix=%s'%self.package_folder)
+        
+        return configure_args
+        
+    def buildAndroid(self):
+        args = ""
+        for arg in self._genConfigureArgs():
+            args += " %s"%str(arg)
+
+        self.run("./configure %s"%(args), win_bash=tools.os_info.is_windows)
+        self.run("make")
+
+    
+    def buildWin(self):
+        with tools.vcvars(self.settings, filter_known_paths=True):
+            args = ""
+            for arg in self._genConfigureArgs():
+                args +=" %s"%str(arg)
+            self.run("./configure %s"%args, win_bash=True)
+            self.run("make", win_bash=True)
+
+    def build(self):
+        with tools.chdir(self.source_folder):
+            if (self.settings.os == "Windows"):
+                self.buildWin()
+            elif(self.settings.os == "Android"):
+                shutil.copyfile('%s/sources/android/cpufeatures/cpu-features.c'%os.environ['NDK_HOME'], 'vpx_ports/cpu-features.c')
+                shutil.copyfile('%s/sources/android/cpufeatures/cpu-features.h'%os.environ['NDK_HOME'], 'vpx_ports/cpu-features.h')
+                with open('vpx_ports/vpx_ports.mk','a') as f:  
+                    f.write('PORTS_SRCS-yes += cpu-features.c \n')
+                    f.write('PORTS_SRCS-yes += cpu-features.h \n')
+
+                self.buildAndroid();
+            else:       
+                if (tools.os_info.is_windows):
+                    env_build = AutoToolsBuildEnvironment(self, win_bash=True)
+                else:
+                    os.system("chmod +x ./configure")
+                    env_build = AutoToolsBuildEnvironment(self)
+                    
+                env_build.configure(args=self._genConfigureArgs(), build=False, host=False)
+                env_build.make()
+
+    def package(self):
+        with tools.chdir(self.source_folder):
+            self.copy("vpx/*.h", "%s/include/vpx"%self.package_folder, keep_path=False)
+            self.copy("*.lib", "%s/lib"%self.package_folder, keep_path=False)
+            self.copy("*.a", "%s/lib"%self.package_folder, keep_path=False)
+            self.copy("*.so*", "%s/lib"%self.package_folder, keep_path=False)
+
+    def package_info(self):
+        self.cpp_info.libs = ['vpx']
+
+        if(self.settings.os == "Windows"):
+            if (self.settings.compiler.runtime == "MT" or self.settings.compiler.runtime == "MTd"):
+                self.cpp_info.libs = ["%smt" %
+                                      lib for lib in self.cpp_info.libs]
+            else :
+                self.cpp_info.libs = ["%smd" %
+                                      lib for lib in self.cpp_info.libs]
+
+            if(self.settings.build_type == "Debug"):
+                self.cpp_info.libs = ["%sd" %
+                                      lib for lib in self.cpp_info.libs]

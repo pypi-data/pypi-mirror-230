@@ -1,0 +1,86 @@
+from conans import ConanFile, tools, CMake, AutoToolsBuildEnvironment
+from conans.util import files
+import os
+
+
+class JsonCppConan(ConanFile):
+    name = "jsoncpp"
+    version = "@version@"
+    generators = "cmake"
+    settings = "os", "arch", "compiler", "build_type"
+    options = {"shared": [True, False]}
+    default_options = "shared=False"
+    exports_sources = "CMakeLists.txt", "devtools/*", "doc/*", "include/*", "makefiles/*", "pkg-config/*", "src/*", "test/*", "version.in","*.cmake"
+    url = "https://gitlab.gz.cvte.cn:1602/3rd/jsoncpp"
+
+    def configure(self):
+        del self.settings.compiler.libcxx
+        
+    def source(self):
+        self.run("git clone git@gitlab.gz.cvte.cn:1602/3rd/jsoncpp.git @git_ref@ .")
+        @checkout@
+
+    def build(self):
+        with tools.chdir(self.source_folder):
+            cmake = CMake(self)
+            cmake_options = ["-DBUILD_TEST=OFF", "-DBUILD_TOOL=OFF"]
+
+            if(self.settings.os == "Android"):
+                cmake.generator = "Unix Makefiles"
+                toolchain_file = os.environ.get(
+                    "NDK_HOME") + "/build/cmake/android.toolchain.cmake"
+                cmake_options.append("-DCMAKE_TOOLCHAIN_FILE="+toolchain_file)
+                cmake_options.append("-DANDROID_TOOLCHAIN=gcc")
+                cmake_options.append("-DANDROID_STL=gnustl_static")
+                if(self.settings.arch == "armv7"):
+                    cmake_options.append("-DANDROID_ABI=armeabi-v7a")
+                elif(self.settings.arch == "armv8"):
+                    cmake_options.append("-DANDROID_ABI=arm64-v8a")
+            elif(self.settings.os == "iOS"):
+                sysroot = "iphoneos"
+                if(self.settings.arch == "x86" or self.settings.arch == "x86_64"):
+                    sysroot = "iphonesimulator"
+                target_arch = str(self.settings.arch)
+                if(self.settings.arch == "armv8"):
+                    target_arch = "arm64"
+                elif(self.settings.arch == "x86"):
+                    target_arch = "i386"
+                cmake_options.append("-DCMAKE_OSX_SYSROOT="+sysroot)
+                cmake_options.append("-DCMAKE_OSX_ARCHITECTURES="+target_arch)
+                cmake_options.append("-DIOS=TRUE")
+            elif(self.settings.os == "Macos"):
+                sysroot = "macosx"
+                target_arch = str(self.settings.arch)
+                if(target_arch == "x86"):
+                    target_arch = "i386"
+                if(self.settings.arch == "armv8"):
+                    target_arch = "arm64"
+                cmake_options.append("-DCMAKE_OSX_SYSROOT="+sysroot)
+                cmake_options.append("-DCMAKE_OSX_ARCHITECTURES="+target_arch)
+                cmake_options.append("-DMACOS=TRUE")
+            elif(self.settings.os == "Linux"):
+                if("CMAKE_TOOLCHAIN_FILE_NAME" in os.environ):
+                    cmake_options.append("-DCMAKE_TOOLCHAIN_FILE=%s"%os.environ.get("CMAKE_TOOLCHAIN_FILE_NAME"))
+                elif(self.settings.arch == "x86"):
+                    cmake_options.append("-DCMAKE_C_FLAGS=-m32 -fPIC")
+                    cmake_options.append("-DCMAKE_CXX_FLAGS=-m32 -fPIC")
+                    cmake_options.append("-DCMAKE_EXE_LINKER_FLAGS=-m32 -fPIC")
+                else:
+                    cmake_options.append("-DCMAKE_C_FLAGS=-fPIC")
+                    cmake_options.append("-DCMAKE_CXX_FLAGS=-fPIC")
+            elif(self.settings.compiler == "Visual Studio"):
+                cmake_options.append("-DCMAKE_CXX_FLAGS=/w")
+                if (self.settings.compiler.runtime == 'MT' or self.settings.compiler.runtime == 'MTd'):
+                    tools.download('https://artifactory.gz.cvte.cn/artifactory/binaries/1602/buildtool/UseStaticMsvcrt.cmake', 'UseStaticMsvcrt.cmake')
+                    cmake_options.append("-DCMAKE_USER_MAKE_RULES_OVERRIDE=UseStaticMsvcrt.cmake")
+
+            cmake.configure(args=cmake_options)
+            cmake.build()
+            cmake.install()
+
+    def package(self):
+        self.output.warn("local cache: %s" % self.in_local_cache)
+        self.output.warn("develop: %s" % self.develop)
+
+    def package_info(self):
+        self.cpp_info.libs = ['jsoncpp']

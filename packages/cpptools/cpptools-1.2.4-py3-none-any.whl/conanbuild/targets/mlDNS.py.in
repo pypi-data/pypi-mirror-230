@@ -1,0 +1,113 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from conans import ConanFile, AutoToolsBuildEnvironment
+from conans import tools
+import os
+import shutil
+from conans import CMake
+
+
+class MLDNSConan(ConanFile):
+    name = "mlDNS"
+    version = "1.1.0"
+    url = "https://gitlab.gz.cvte.cn/1602/rtcbase/mldns"
+    license = "MIT"
+    description = "Mindlinker DNS utility"
+    generators = "cmake"
+    settings = "os", "arch", "compiler", "build_type"
+    options = {"shared": [True, False]}
+    default_options = "shared=False"
+
+    def getNdkVersion(self):
+        version = None
+        version_file = os.path.join(os.environ.get("NDK_HOME"), "source.properties")
+        with open(version_file, 'r') as fin:
+            for line in fin.readlines():
+                if "Pkg.Revision" in line:
+                    version = line.split("=")[-1].split(".")[0].strip()
+        return int(version)
+    
+    def source(self):
+        self.run("git clone git@gitlab.gz.cvte.cn/1602/rtcbase/mldns.git @git_ref@ .")
+        @checkout@
+
+    def config(self):
+        del self.settings.compiler.libcxx
+        if self.settings.compiler == "Visual Studio":
+            self.requires.add("Poco/1.9.1OpenSSL_SOO@1602/stable", private=False)
+        else:
+            self.requires.add("Poco/1.9.1OpenSSL@1602/stable", private=False)
+
+    def build(self):
+        cmake = CMake(self)
+        # Wrap original CMakeLists.txt for be able to include and call CONAN_BASIC_SETUP
+        # It will allow us to set architecture flags, link with the requires etc
+        cmake_options = []
+        cmake_options.append("-DWITH_TEST=ON")
+
+        if self.settings.os == "Android":
+            cmake.generator = "Unix Makefiles"
+            toolchain_file = os.environ.get(
+                "NDK_HOME") + "/build/cmake/android.toolchain.cmake"
+            cmake_options.append("-DCMAKE_TOOLCHAIN_FILE="+toolchain_file)
+            if self.getNdkVersion() > 17:
+                cmake_options.append("-DANDROID_TOOLCHAIN=clang")
+                cmake_options.append("-DANDROID_STL=c++_static")
+            else:
+                cmake_options.append("-DANDROID_TOOLCHAIN=gcc")
+                cmake_options.append("-DANDROID_STL=gnustl_static")
+            if(self.settings.arch == "armv7"):
+                cmake_options.append("-DANDROID_ABI=armeabi-v7a")
+            elif(self.settings.arch == "armv8"):
+                cmake_options.append("-DANDROID_ABI=arm64-v8a")
+        elif self.settings.os == "iOS":
+            sysroot = "iphoneos"
+            if(self.settings.arch == "x86" or self.settings.arch == "x86_64"):
+                sysroot = "iphonesimulator"
+            target_arch = str(self.settings.arch)
+            if(self.settings.arch == "armv8"):
+                target_arch = "arm64"
+            elif(self.settings.arch == "x86"):
+                target_arch = "i386"
+            cmake_options.append("-DCMAKE_OSX_SYSROOT="+sysroot)
+            cmake_options.append("-DCMAKE_OSX_ARCHITECTURES="+target_arch)
+            cmake_options.append("-DIOS=TRUE")
+        elif self.settings.os == "Macos":
+            sysroot = "macosx"
+            target_arch = str(self.settings.arch)
+            if(self.settings.arch == "x86"):
+                target_arch = "i386"
+            elif(self.settings.arch == "armv8"):
+                target_arch = "arm64"
+            cmake_options.append("-DCMAKE_OSX_SYSROOT="+sysroot)
+            cmake_options.append("-DCMAKE_OSX_ARCHITECTURES="+target_arch)
+            cmake_options.append("-DMACOS=TRUE")
+        elif self.settings.os == "Linux":
+            if("CMAKE_TOOLCHAIN_FILE_NAME" in os.environ):
+                cmake_options.append("-DCMAKE_TOOLCHAIN_FILE=%s"%os.environ.get("CMAKE_TOOLCHAIN_FILE_NAME"))
+            elif(self.settings.arch == "x86"):
+                cmake_options.append("-DCMAKE_C_FLAGS=-m32 -fPIC")
+                cmake_options.append("-DCMAKE_CXX_FLAGS=-m32 -fPIC")
+                cmake_options.append("-DCMAKE_EXE_LINKER_FLAGS=-m32 -fPIC")
+            else:
+                cmake_options.append("-DCMAKE_C_FLAGS=-fPIC")
+                cmake_options.append("-DCMAKE_CXX_FLAGS=-fPIC")
+        elif self.settings.compiler == "Visual Studio":
+            if (self.settings.compiler.runtime == 'MT' or self.settings.compiler.runtime == 'MTd'):
+                tools.download('https://artifactory.gz.cvte.cn/artifactory/binaries/1602/buildtool/UseStaticMsvcrt.cmake', 'UseStaticMsvcrt.cmake')
+                cmake_options.append("-DCMAKE_USER_MAKE_RULES_OVERRIDE=UseStaticMsvcrt.cmake")
+
+        cmake_options.append("-DCMAKE_INSTALL_PREFIX=%s" % self.package_folder)
+
+        cmake.configure(args=cmake_options, build_folder="build")
+        cmake.build()
+        cmake.install()
+
+    def package_info(self):
+        print("================ self.cpp_info.libs ================")
+        self.cpp_info.libs = ['mlDNS']
+        print(self.cpp_info.libs)
+        print("================ self.cpp_info.includedirs ================")
+        self.cpp_info.includedirs = ['include']
+        print(self.cpp_info.includedirs)

@@ -1,0 +1,227 @@
+from conans import ConanFile, tools, AutoToolsBuildEnvironment
+import os
+import platform
+
+
+class X264Conan(ConanFile):
+    name = "libx264_record"
+    version = "@version@"
+    settings = "os", "arch", "compiler", "build_type"
+    options = {"shared": [True, False]}
+    default_options = "shared=False"
+    url = "https://gitlab.gz.cvte.cn:1602/qoe/x264"
+    # license = "http://www.zlib.net/zlib_license.html"
+    # description = "A Massively Spiffy Yet Delicately Unobtrusive Compression Library " \
+    #               "(Also Free, Not to Mention Unencumbered by Patents)"
+    
+    def source(self):
+        self.run("git clone git@gitlab.gz.cvte.cn:1602/qoe/x264.git @git_ref@ .")
+        @checkout@
+
+    def configure(self):
+        del self.settings.compiler.libcxx
+
+    def buildAndroid(self):
+        in_win = platform.system() == "Windows"
+        if (in_win):
+            env_build = AutoToolsBuildEnvironment(self, win_bash=in_win)
+        else:
+            env_build = AutoToolsBuildEnvironment(self)
+
+        ndk_home = os.getenv("NDK_HOME")
+        if(in_win):
+            ndk_home = tools.unix_path(ndk_home)
+        api_level = str(self.settings.os.api_level)
+        env_build.fpic = True
+        env_build.libs.append("gcc")
+
+        sys_root = ""
+        host = ""
+        extra_c_flag = ""
+        ndk_toolchain_prefix = ""
+
+        if (self.settings.arch == "armv7"):
+            sys_root = ndk_home + "/platforms/android-"+api_level+"/arch-arm/"
+            extra_c_flag = "-DANDROID -mfpu=neon -march=armv7-a -mfloat-abi=softfp"
+            host = "arm-linux-androideabi"
+            if (in_win):
+                ndk_toolchain_prefix = ndk_home + \
+                    "/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-"
+            else:
+                ndk_toolchain_prefix = ndk_home + \
+                    "/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/arm-linux-androideabi-"
+        elif(self.settings.arch == "armv8"):
+            sys_root = ndk_home + "/platforms/android-"+api_level+"/arch-arm64/"
+            extra_c_flag = "-DANDROID -march=armv8-a -D__ANDROID__ -D__ARM_ARCH_8__ -D__ARM_ARCH_8A__"
+            host = "aarch64-linux-android"
+            if (in_win):
+                ndk_toolchain_prefix = ndk_home + \
+                    "/toolchains/aarch64-linux-android-4.9/prebuilt/windows-x86_64/bin/aarch64-linux-android-"
+            else:
+                ndk_toolchain_prefix = ndk_home + \
+                    "/toolchains/aarch64-linux-android-4.9/prebuilt/linux-x86_64/bin/aarch64-linux-android-"
+        elif(self.settings.arch == "x86"):
+            sys_root = ndk_home + "/platforms/android-"+api_level+"/arch-x86/"
+            extra_c_flag = "-DANDROID -march=i686 -mtune=i686 -m32 -mmmx -msse2 -msse3 -mssse3 -D__ANDROID__ -D__i686__"
+            host = "i686-linux-android"
+            if (in_win):
+                ndk_toolchain_prefix = ndk_home + \
+                    "/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-androideabi-"
+            else:
+                ndk_toolchain_prefix = ndk_home + \
+                    "/toolchains/x86-4.9/prebuilt/linux-x86_64/bin/i686-linux-androideabi-"
+        elif(self.settings.arch == "x86_64"):
+            sys_root = ndk_home + "/platforms/android-"+api_level+"/arch-x86/"
+            extra_c_flag = "-DANDROID -march=core-avx-i -mtune=core-avx-i -m64 -mmmx -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -mpopcnt -D__ANDROID__ -D__x86_64__"
+            host = "x86_64-linux-android"
+            if (in_win):
+                ndk_toolchain_prefix = ndk_home + \
+                    "/toolchains/x86_64-4.9/prebuilt/windows-x86_64/bin/x86_64-linux-androideabi-"
+            else:
+                ndk_toolchain_prefix = ndk_home + \
+                    "/toolchains/x86_64-4.9/prebuilt/linux-x86_64/bin/x86_64-linux-androideabi-"
+        build_args = ["--host=%s"%host, "--cross-prefix=" + ndk_toolchain_prefix, "--sysroot="+sys_root, "--extra-cflags="+extra_c_flag,
+                      "--enable-static", "--enable-pic", "--disable-cli"]
+
+        if (self.settings.build_type == "Debug"):
+            build_args.append("--enable-debug")
+        else:
+            build_args.append("--enable-strip")
+
+        if (in_win):
+            build_args.append("--prefix=%s"%tools.unix_path(self.package_folder))
+        else:
+            build_args.append("--prefix=%s"%self.package_folder)
+        env_build.configure(build=False, host=False, args=build_args)
+        env_build.make(args=["install"])
+
+    def buildWin(self):
+        with tools.vcvars(self.settings, filter_known_paths=False):
+            os.environ['CC'] = 'cl'
+            env_build = AutoToolsBuildEnvironment(self, win_bash=True)
+            build_args = ["--enable-static", "--enable-pic", "--disable-cli"]
+            build_args.append("--prefix=%s"%tools.unix_path(self.package_folder))
+
+            if (self.settings.build_type == "Debug"):
+                build_args.append("--enable-debug")
+            else:
+                build_args.append("--enable-strip")
+
+
+            env_build.configure(build=False, host=False, args=build_args)
+            # replace libraries pref and suf 
+            if(self.settings.build_type == "Debug"):
+                tools.replace_in_file("config.mak", "-Z7", "-FS", strict=False)
+            if (not self.settings.compiler.runtime == "MT"):
+                tools.replace_in_file("config.mak", "-MT", "-%s"%str(self.settings.compiler.runtime), strict=False)
+
+            env_build.make(args=["install"])
+
+    def buildMacos(self):
+        env_build = AutoToolsBuildEnvironment(self)
+        build_args = ["--enable-static", "--enable-pic", "--disable-cli", "--disable-opencl", "--prefix=%s"%self.package_folder]
+        if(self.settings.arch == "x86"):
+            build_args.append("--host=i386-apple-darwin")
+            build_args.append("--disable-asm")
+
+        if (self.settings.build_type == "Debug"):
+            build_args.append("--enable-debug")
+        env_build.fpic= True
+        env_build.configure(build=False, host=False, args=build_args)
+        env_build.make(args=["install"])
+
+    def buildiOS(self):
+        env_build = AutoToolsBuildEnvironment(self)
+        build_args = ["--enable-static", "--enable-pic", "--disable-cli", "--disable-opencl", "--prefix=%s"%self.package_folder]
+        target_arch = str(self.settings.arch)
+        target_platform = "iphoneos"
+        if(self.settings.arch == "armv8"):
+            target_arch = "arm64"
+        elif(self.settings.arch == "x86"):
+            target_arch = "i386"
+
+        extra_c_flags = "-mios-version-min=7.0 -fembed-bitcode -arch " + target_arch
+        if(target_arch == "x86_64"):
+            target_platform = "iphonesimulator"
+            extra_c_flags = "-mios-simulator-version-min=7.0 -arch " + target_arch
+        elif(target_arch == "i386"):
+            build_args.append("--disable-asm")
+            target_platform = "iphonesimulator"
+            extra_c_flags = "-mios-simulator-version-min=5.0 -arch " + target_arch
+
+        CC = "xcrun -sdk " + target_platform + " clang"            
+
+        os.environ['CC'] = "%s"%CC
+
+        if (self.settings.build_type == "Debug"):
+            build_args.append("--enable-debug")
+        else:
+            build_args.append("--enable-strip")
+
+        if(target_arch == "i386"):
+            build_args.append('--host=i386-apple-darwin')
+            build_args.append("--extra-asflags=%s"%extra_c_flags)
+        elif(target_arch == "arm64"):
+            AS = "%s/tools/gas-preprocessor.pl -arch aarch64 -- %s"%(self.build_folder , CC)
+            os.environ['AS'] = "%s"%AS
+            build_args.append('--host=aarch64-apple-darwin')
+            build_args.append("--extra-asflags=%s"%extra_c_flags)
+        elif(target_arch == "armv7"):
+            AS = "%s/tools/gas-preprocessor.pl -arch arm -- %s"%(self.build_folder , CC)
+            os.environ['AS'] = "%s"%AS
+            build_args.append('--host=arm-apple-darwin')
+            build_args.append("--extra-asflags=%s"%extra_c_flags)
+            build_args.append('--cpu=swift')
+
+        build_args.append("--extra-cflags="+extra_c_flags)
+        build_args.append("--extra-ldflags="+extra_c_flags)
+
+        env_build.configure(build=False, host=False, args=build_args)
+        if(target_arch == "armv7"):
+            env_build.make(args=["-j3", "install", "GASPP_FIX_XCODE5=1"])
+        else:
+            env_build.make(args=["-j3", "install"])
+
+    def buildLinux(self):
+        env_build = AutoToolsBuildEnvironment(self)
+        build_args = ["--enable-static", "--enable-pic", "--disable-cli",  "--prefix=%s"%self.package_folder]
+        if(self.settings.arch == "x86"):
+            build_args.append("--extra-cflags=-m32 -fPIC")
+            build_args.append("--extra-ldflags=-m32 -fPIC")
+            build_args.append("--host=i386-linux")
+        elif(self.settings.arch == "x86_64"):
+            build_args.append("--extra-cflags=-m64 -fPIC")
+            build_args.append("--extra-ldflags=-m64 -fPIC")
+        elif(self.settings.arch == "armv7"):
+            build_args.append("--extra-cflags=-mfpu=neon -march=armv7-a -mfloat-abi=softfp -fPIC")
+            build_args.append("--extra-ldflags=-mfpu=neon -march=armv7-a -mfloat-abi=softfp -fPIC")
+            build_args.append("--host=arm-linux-gnueabi")
+
+        if (self.settings.build_type == "Debug"):
+            build_args.append("--enable-debug")
+
+        env_build.fpic= True
+        env_build.configure(build=False, host=False, args=build_args)
+        env_build.make(args=["install"])
+
+    def build(self):
+        with tools.chdir(self.source_folder):
+            self.run('chmod +x configure')
+            self.run('chmod +x config.guess')
+            self.run('chmod +x config.sub')
+            if(self.settings.os == "Android"):
+                self.buildAndroid()
+            elif(self.settings.os == "iOS"):
+                self.buildiOS()
+            elif(self.settings.os == "Windows"):
+                self.buildWin()
+            elif(self.settings.os == "Macos"):
+                self.buildMacos()
+            elif(self.settings.os == "Linux"):
+                self.buildLinux()
+
+    def package_info(self):
+        if(self.settings.os == "Windows"):
+            self.cpp_info.libs = ['libx264']
+        else:
+            self.cpp_info.libs = ['x264']

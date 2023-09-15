@@ -1,0 +1,26 @@
+from conans import ConanFile, tools, CMake
+
+
+class SNDFileConan(ConanFile):
+    name = "libsndfile"
+    version = "@version@"
+    settings = "os", "compiler", "build_type", "arch"
+    description = "<Description of Spandsp here>"
+    url = "None"
+    license = "None"
+    author = "None"
+    topics = None
+    
+    def source(self):
+        self.run("git clone git@gitlab.gz.cvte.cn:1602/3rd/libsndfile.git @git_ref@ .")
+        @checkout@
+
+    def build(self):
+        cmake = CMake(self)
+        cmake.configure()
+        cmake.build()
+        cmake.install()
+
+
+    def package_info(self):
+        self.cpp_info.libs = ["sndfile"]
