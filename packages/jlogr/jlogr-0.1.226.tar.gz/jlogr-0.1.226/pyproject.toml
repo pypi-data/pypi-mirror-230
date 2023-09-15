@@ -1,0 +1,11 @@
+[build-system]
+requires = ["maturin>=1.0,<2.0"]
+build-backend = "maturin"
+
+[tool.maturin]
+features = ["pyo3/extension-module"]
+python-source = "package"
+module-name = "jlogr.jlogr"
+bindings = "pyo3"
+include = [{ path = "jlogr/jlogr.h", format = "sdist" }]
+# include = [{ path = "path/**/*", format = "sdist" }]
