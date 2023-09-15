@@ -1,0 +1,22 @@
+{% extends "admin/change_form.html" %}
+
+{% block field_sets %}
+
+{% if django_tabbed_changeform_admin_tabs %}
+
+<div class="django-tabbed-changeform-admin-tabs">
+    <ul>
+        {% for tab in django_tabbed_changeform_admin_tabs %}
+        <li><a href="#django-tabbed-changeform-admin-tab-{{forloop.counter}}">{{tab.0}}</a></li>
+        {% endfor %}
+    </ul>
+    {% for tab in django_tabbed_changeform_admin_tabs %}
+    <div class="django-tabbed-changeform-admin-content" id="django-tabbed-changeform-admin-tab-{{forloop.counter}}" data-content-classes="{% for c in tab.1 %}{{c}} {% endfor %}">
+    </div>
+    {% endfor %}
+</div>
+
+{% endif %}
+
+{{block.super}}
+{% endblock %}
