@@ -1,0 +1,82 @@
+distribution:
+  name: SMHI_extra
+  version: 1.0
+indices:
+  tngt0rrge1:
+    reference: SMHI
+    default_period: annual
+    output:
+      var_name: "tngt0rrge1"
+      standard_name:
+      proposed_standard_name:
+      long_name: "Number of days with rain and temperatures above zero degrees (days when pr >= 1 and Tmin > 0)"
+      units: "1"
+      cell_methods:
+    input:
+      temp_data: tasmin
+      precip_data: pr
+    index_function:
+      name: count_joint_occurrences_precipitation_temperature
+      parameters:
+        threshold_precip_data:
+          kind: quantity
+          standard_name: lwe_precipitation_rate
+          long_name: "Wet day threshold"
+          data: 1
+          units: "mm day-1"
+        threshold_temp_data:
+          kind: quantity
+          standard_name: air_temperature
+          long_name: "Level crossing value for daily air temperature"
+          data: 0
+          units: "degree_Celsius"
+        condition_precip_data:
+          kind: operator
+          operator: ">="
+        condition_temp_data:
+          kind: operator
+          operator: ">"
+    ET:
+      short_name:
+      long_name:
+      definition:
+      comment:
+
+  txgt13lt18:
+    reference: SMHI
+    default_period: annual
+    output:
+      var_name: "txgt13lt18"
+      standard_name:
+      proposed_standard_name:
+      long_name: "Number of days with daily maximum temperature above thirteen degC and below eighteen degC (13 < Tmax < 18)"
+      units: "1"
+      cell_methods:
+    input:
+      data: tasmax
+    index_function:
+      name: count_joint_occurrences_temperature
+      parameters:
+        threshold_low_data:
+          kind: quantity
+          standard_name: air_temperature
+          long_name: "Level crossing value for daily air temperature, low_data threshold"
+          data: 13
+          units: "degree_Celsius"
+        threshold_high_data:
+          kind: quantity
+          standard_name: air_temperature
+          long_name: "Level crossing value for daily air temperature, high_data threshold"
+          data: 18
+          units: "degree_Celsius"
+        condition_low_data:
+          kind: operator
+          operator: ">"
+        condition_high_data:
+          kind: operator
+          operator: "<"
+    ET:
+      short_name:
+      long_name:
+      definition:
+      comment:
