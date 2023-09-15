@@ -1,0 +1,59 @@
+# modules.copy: This file defines logical names for certain types of modules, and where they are
+#               located in the kernel source tree. This file is used to grab all modules to copy
+#               to the initramfs. We will also grab all dependencies of these modules.
+#
+#               You must specify to-be-included modules using:
+#               1. globs -- to grab bunches of modules that match the pattern,
+#               2. /** notation -- to grab bunches of modules in a sub-tree,
+#               3. short-name -- to find a module somewhere in the tree with that
+#                  name (don't include a '.ko') and it will be copied.
+
+[nvme]
+kernel/drivers/nvme/**
+
+[raid]
+kernel/drivers/md/**
+
+[ata]
+kernel/drivers/ata/**
+
+[scsi]
+kernel/drivers/scsi/**
+-scsi_debug
+
+[ethernet]
+kernel/drivers/net/ethernet/**
+
+[wifi]
+kernel/drivers/net/wireless/**
+kernel/net/wireless/**
+
+[bluetooth]
+kernel/net/bluetooth/**
+
+[iscsi]
+kernel/drivers/scsi/*iscsi*
+kernel/drivers/target/iscsi/**
+
+[pcmcia]
+kernel/drivers/pcmcia/**
+
+[usb]
+kernel/drivers/usb/host/**
+kernel/drivers/usb/typec/**
+
+[usb-storage]
+kernel/drivers/usb/storage/**
+
+[usb-input]
+kernel/drivers/hid/**
+
+[filesystems]
+kernel/drivers/block/loop.ko
+kernel/fs/**
+
+[virtio]
+kernel/drivers/virtio/**
+kernel/drivers/net/virtio_net.ko
+kernel/net/vmw_vsock/**
+kernel/fs/fuse/virtiofs.ko
