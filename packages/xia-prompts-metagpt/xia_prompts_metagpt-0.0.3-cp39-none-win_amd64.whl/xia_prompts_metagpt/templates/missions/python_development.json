@@ -1,0 +1,35 @@
+{
+  "domain": "software",
+  "skill": "developer_python",
+  "contexts": [
+    "design/python_package_name",
+    "design/logic_analysis",
+    "design/data_structures_and_interface_definitions",
+    "design/development_task_list",
+    "design/implement_approach",
+    "design/shared_knowledge",
+    "design/source_code_file_list",
+    "design/program_call_flow"
+  ],
+  "tasks": [
+    {% for task in development_task_list if task.endswith('.py') %}
+    {
+      "task_type": "Task",
+      "name": "develop/python_general",
+      "sub_name": "{{ task }}",
+      "title": "Code: {{ task }}",
+      "target": "code/{{ task }}",
+      "required_contexts": [
+        "design/implement_approach",
+        "design/python_package_name",
+        "design/source_code_file_list",
+        "design/data_structures_and_interface_definitions",
+        "design/program_call_flow",
+        "design/logic_analysis",
+        "design/development_task_list",
+        "design/shared_knowledge"
+      ]
+    }{{ ", " if not loop.last else "" }}
+    {% endfor %}
+  ]
+}

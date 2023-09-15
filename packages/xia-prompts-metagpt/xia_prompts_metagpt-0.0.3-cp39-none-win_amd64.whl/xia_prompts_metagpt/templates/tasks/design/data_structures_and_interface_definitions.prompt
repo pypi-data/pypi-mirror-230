@@ -1,0 +1,14 @@
+{% block format %}
+```mermaid
+classDiagram
+    class Game{
+        +int score
+    }
+    ...
+    Game "1" -- "1" Food: has
+```
+{% endblock %}
+
+{% block guide %}
+Use mermaid classDiagram code syntax, including classes (INCLUDING __init__ method) and functions (with type annotations), CLEARLY MARK the RELATIONSHIPS between classes, and comply with PEP8 standards. The data structures SHOULD BE VERY DETAILED and the API should be comprehensive with a complete design.
+{% endblock %}

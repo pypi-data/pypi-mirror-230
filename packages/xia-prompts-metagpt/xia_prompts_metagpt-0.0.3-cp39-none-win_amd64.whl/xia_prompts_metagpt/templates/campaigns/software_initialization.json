@@ -1,0 +1,30 @@
+{
+  "steps": {
+    "product_design": {
+      "stack": "full",
+      "type": "mission",
+      "mission_type": "product_design",
+      "upstream_steps": []
+    },
+    "architecture_design": {
+      "stack": "full",
+      "type": "mission",
+      "mission_type": "architecture_design",
+      "upstream_steps": ["product_design"]
+    },
+    "project_management": {
+      "stack": "full",
+      "type": "mission",
+      "mission_type": "project_management",
+      "upstream_steps": ["architecture_design"]
+    },
+    "python_development": {
+      "stack": "full",
+      "type": "mission",
+      "prompt_type": "develop_python",
+      "mission_type": "python_development",
+      "template_contexts": ["design/development_task_list"],
+      "upstream_steps": ["project_management"]
+    }
+  }
+}
