@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "servodoor"
+version = "0.1.0"
+description = "A simple library for controlling RC servo based doors" 
+license = "MIT"
+authors = ["Will Dickson <wbd@caltech.edu>"]
+readme = "README.md"
+packages= [{include = "servodoor"}]
+homepage = "https://github.com/willdickson/servodoor"
+repository = "https://github.com/willdickson/servodoor"
+classifiers = [ 
+    'Intended Audience :: Science/Research',
+    'License :: OSI Approved :: MIT License',
+    'Development Status :: 3 - Alpha',
+    ]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.12"
+pyserial = "^3.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
