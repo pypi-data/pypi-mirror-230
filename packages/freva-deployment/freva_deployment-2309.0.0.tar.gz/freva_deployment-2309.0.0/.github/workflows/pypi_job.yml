@@ -1,0 +1,31 @@
+name: Create Pip package
+run-name: ${{ github.actor }} is uploading the code to pypi 🧉
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  pipy:
+    runs-on: ubuntu-latest
+    env:
+      FLIT_USERNAME: __token__
+      FLIT_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v4
+      -
+        name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+      - name: Adding the evaluation config file
+        run: wget https://raw.githubusercontent.com/FREVA-CLINT/freva/main/assets/evaluation_system.conf -O assets/share/freva/deployment/config/evaluation_system.conf.tmpl
+      -
+        name: Install flit
+        run: python -m pip install flit
+      -
+        name: Publishing freva-deployment 📦 to PyPI
+        run: flit publish
