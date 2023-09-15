@@ -1,0 +1,76 @@
+Metadata-Version: 2.1
+Name: mako2clix
+Version: 0.1.1
+Summary: Mako Template Command-Line Tool
+Home-page: https://github.com/fbagagli/mako2clix
+License: MIT
+Keywords: mako,template,cli
+Author: fbagagli
+Author-email: francesco.bagagli@gmail.com
+Requires-Python: >=3.7
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: attrs (>=19.3.0)
+Requires-Dist: click (>=7.1.2)
+Requires-Dist: importlib_metadata (>=1.4,<2.0) ; python_version < "3.8"
+Requires-Dist: importlib_metadata (>=1.4,<2.0) ; python_version >= "3.8" and python_version < "3.10"
+Requires-Dist: importlib_metadata (>=4.13,<5.0) ; python_version >= "3.11" and python_version < "4.0"
+Requires-Dist: importlib_metadata (>=4.6,<5.0) ; python_version >= "3.10" and python_version < "4.0"
+Requires-Dist: importlib_metadata (>=6.5,<7.0) ; python_version >= "3.12" and python_version < "4.0"
+Requires-Dist: mako (>=1.1.3)
+Requires-Dist: pyyaml (>=5.3.1)
+Project-URL: Documentation, https://mako2clix.readthedocs.io
+Project-URL: Repository, https://github.com/fbagagli/mako2clix
+Description-Content-Type: text/markdown
+
+[![Tests](https://github.com/leaningdiggers/mako2clix/workflows/Tests/badge.svg)](https://github.com/leaningdiggers/mako2clix/actions?workflow=Tests)
+[![Codecov](https://codecov.io/gh/leaningdiggers/mako2clix/branch/master/graph/badge.svg)](https://codecov.io/gh/leaningdiggers/mako2clix)
+[![PyPI](https://img.shields.io/pypi/v/mako2clix.svg)](https://pypi.org/project/mako2clix/)
+[![Read the Docs](https://readthedocs.org/projects/mako2clix/badge/)](https://mako2clix.readthedocs.io/)
+
+# mako2clix
+
+This project aims to port Mako Template to a simple usage on command line
+
+## Installation
+
+To install the mako2clix Python project,
+run this command in your terminal:
+
+```
+$ pip install mako2clix
+```
+
+## Example
+
+Create a file `template.mako` containing:
+
+```mako
+hello ${name}!
+```
+
+And a data file `data.yaml`:
+
+```yaml
+name: world
+```
+
+Now you can render the file with:
+
+```bash
+$ m2cli -t template.mako -d data.yaml -o rendered
+```
+
+The output is saved to `rendered`:
+
+```
+hello world!
+```
+
+That's all!
+
