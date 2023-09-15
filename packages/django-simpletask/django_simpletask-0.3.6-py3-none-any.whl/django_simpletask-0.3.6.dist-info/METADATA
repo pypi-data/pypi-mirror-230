@@ -1,0 +1,181 @@
+Metadata-Version: 2.1
+Name: django-simpletask
+Version: 0.3.6
+Summary: Django application provides simple task model, admin, server services and client service.
+Author: Zhang XianWei
+Author-email: zhangxianwei@zencore.cn
+Maintainer: Zhang XianWei
+Maintainer-email: zhangxianwei@zencore.cn
+License: MIT
+Keywords: django abstract model,django simple task
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: Django >=2.2.20
+Requires-Dist: bizerror >=0.4.7
+Requires-Dist: django-apiview >=0.9.27
+Requires-Dist: django-db-lock >=0.5.2
+Requires-Dist: fastutils >=0.40.2
+Requires-Dist: requests >=2.25.1
+
+# django-simpletask
+
+Django application provides simple task model, admin, server services and client service.
+
+
+## Install
+
+```
+pip install django-simpletask
+```
+
+## Usage
+
+**pro/settings**
+
+```
+INSTALLED_APPS = [
+    'django_db_lock',
+    'django_simpletask',
+]
+
+DJANGO_SIMPLETASK_ACLKEY = "TsE9Jd3TrUtTA9wjGCLXoDqh891srpyo"
+
+```
+
+**Note:**
+
+- Mostly you need a lock service, so we add django_db_lock in INSTALLED_APPS.
+- Set DJANGO_SIMPLETASK_ACLKEY to your own aclkey. It will be used in task executor.
+
+**app/models.py**
+
+```
+from django.db import models
+from django_simpletask.models import SimpleTask
+
+class Task1(SimpleTask):
+    title = models.CharField(max_length=64)
+
+    class Meta:
+        permissions = [] + SimpleTask.Meta.permissions
+
+    def do_task_main(self):
+        return "done!"
+
+class Task2(SimpleTask):
+    title = models.CharField(max_length=64)
+
+    class Meta:
+        permissions = [] + SimpleTask.Meta.permissions
+
+    def do_task_main(self):
+        return "done!"
+```
+
+
+**Note:**
+
+- Write your own task model based on SimpleTask.
+- Add task reset permission.
+- Implement you own do_task_main.
+
+**app/admin.py**
+
+```
+from django.contrib import admin
+from django_simpletask.admin import SimpleTaskAdmin
+from .models import Task1
+from .models import Task2
+
+
+class TaskAdmin(SimpleTaskAdmin, admin.ModelAdmin):
+    list_display = ["title"] + SimpleTaskAdmin.list_display
+
+
+admin.site.register(Task1, TaskAdmin)
+admin.site.register(Task2, TaskAdmin)
+
+```
+
+**Note:**
+
+- Mostly we don't want to change anything inside task, so we set task fields readonly.
+
+**task_executor.py**
+
+```
+from daemon_application.app import DaemonApplication
+from django_simpletask.services import SimpleTaskService
+
+class TaskExcutor(DaemonApplication):
+    def main(self):
+        service = SimpleTaskService("http://127.0.0.1:8000/example/task/services/", aclkey="TsE9Jd3TrUtTA9wjGCLXoDqh891srpyo")
+        service.start()
+        service.join()
+
+app = TaskExcutor().get_controller()
+
+if __name__ == "__main__":
+    app()
+
+```
+
+**Note:**
+
+- Add task_executor.py script.
+- Set the server to your own url.
+- Set the aclkey match the DJANGO_SIMPLETASK_ACLKEY setting.
+
+## Release
+
+### v0.1.0
+
+- First release.
+- Take from django-fastadmin. django-fastadmin should forcus on admin extensions, but NOT abstract models.
+
+### v0.1.1
+
+- Add SimpleTask.do_tasks.
+
+### v0.1.2
+
+- Add SimpleTask.serve and SimpleTask.serve_forever.
+
+### v0.1.3
+
+- Add idle_sleep_time parameter for SimpleTask.serve_forever.
+
+### v0.1.6
+
+- Add reset action.
+- Add SimpleTask.force_finish.
+- Add multi-threads serve.
+
+### v0.2.2
+
+- Long running service don't use database.
+- Add aclkey check for simpletask apis.
+
+### v0.2.8
+
+- Add SimpleTaskServiceProxy and required views.
+- Add get_ready_tasks_queryset to SimpleTaskViews.
+
+### v0.2.9
+
+- Add channel params.
+
+### v0.3.5
+
+- Bad response handler.
+- Services changed a a lot.
+
+### v0.3.6
+
+- Doc update.
