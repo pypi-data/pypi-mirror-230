@@ -1,0 +1,48 @@
+[project]
+name = "gw_dsl_parser"
+dynamic = ["version"]
+requires-python = ">=3.6"
+description = "gw_dsl_parser: Convert your graphic-walker workflow to sql"
+authors = [ { name = "kanaries", email = "support@kanaries.net" } ]
+license-files = { paths = ["LICENSE"] }
+readme = "README.md"
+keywords = [ 'graphic-walker', 'pygwalker' ]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+]
+dependencies = [
+    "wasmtime"
+]
+[project.urls]
+homepage = "https://github.com/Kanaries/gw-dsl-parser-py"
+repository = "https://github.com/Kanaries/gw-dsl-parser-py"
+# changelog, documentation
+
+[project.optional-dependencies]
+dev = [
+    "build",
+    "twine",
+    "pytest",
+]
+
+[tool.hatch]
+version = { path = "gw_dsl_parser/__init__.py" }
+
+[tool.hatch.build]
+include = [
+    "gw_dsl_parser",
+]
+exclude = [ "/tests" ]
+artifacts = [
+    "gw_dsl_parser/dsl_parser.wasm"
+]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "README.md", "LICENSE",
+    "gw_dsl_parser"
+]
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
