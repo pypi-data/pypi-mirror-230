@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<registry>
+  <record name="plone.resources.development">
+    <field type="plone.registry.field.Bool">
+      <title>Frontend development mode</title>
+      <required>False</required>
+    </field>
+  </record>
+
+  <!-- Load default bundles with default values for all fields (e.g. to get rid of a depdendency on plone.base) -->
+  <records prefix="plone.bundles/bootstrap-js" interface='Products.CMFPlone.interfaces.IBundleRegistry' purge="true">
+    <value key="enabled">True</value>
+    <value key="jscompilation">++plone++static/bundle-bootstrap/js/bootstrap.bundle.min.js</value>
+    <value key="csscompilation"></value>
+    <value key="expression"></value>
+    <value key="depends"></value>
+    <value key="load_async">False</value>
+    <value key="load_defer">False</value>
+  </records>
+
+  <records prefix="plone.bundles/jquery" interface='Products.CMFPlone.interfaces.IBundleRegistry' purge="true">
+    <value key="enabled">True</value>
+    <value key="jscompilation">++plone++static/bundle-jquery/jquery.min.js</value>
+    <value key="csscompilation"></value>
+    <value key="expression"></value>
+    <value key="depends"></value>
+    <value key="load_async">False</value>
+    <value key="load_defer">False</value>
+  </records>
+
+  <records prefix="plone.bundles/plone" interface='Products.CMFPlone.interfaces.IBundleRegistry' purge="true">
+    <value key="enabled">True</value>
+    <value key="jscompilation">++plone++static/bundle-plone/bundle.min.js</value>
+    <value key="csscompilation"></value>
+    <value key="expression"></value>
+    <value key="depends"></value>
+    <value key="load_async">False</value>
+    <value key="load_defer">False</value>
+  </records>
+
+  <records prefix="plone.bundles/eventedit" interface='Products.CMFPlone.interfaces.IBundleRegistry'>
+    <value key="enabled">True</value>
+    <value key="expression">python: member is not None</value>
+    <value key="jscompilation">++plone++plone.app.event/event.js</value>
+    <value key="csscompilation"></value>
+    <value key="load_async">False</value>
+    <value key="load_defer">False</value>
+  </records>
+
+  <!-- Add new plone-view icon -->
+  <record name="plone.icon.plone-view">
+    <field type="plone.registry.field.TextLine">
+      <title>Plone Icon eye</title>
+    </field>
+    <value key="resource">++plone++bootstrap-icons/eye.svg</value>
+  </record>
+
+  <record name="plone.content_css">
+    <value purge="True"></value>
+  </record>
+
+  <records interface="Products.CMFPlone.interfaces.ISearchSchema"
+           prefix="plone" />
+
+</registry>
