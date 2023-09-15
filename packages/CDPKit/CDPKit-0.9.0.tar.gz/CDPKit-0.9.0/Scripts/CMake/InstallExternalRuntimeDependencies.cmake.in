@@ -1,0 +1,158 @@
+##
+# InstallExternalRuntimeDependencies.cmake
+#
+# This file is part of the Chemical Data Processing Toolkit
+#
+# Copyright (C) 2003 Thomas Seidel <thomas.seidel@univie.ac.at>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program; see the file COPYING. If not, write to
+# the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+# Boston, MA 02111-1307, USA.
+##
+
+
+IF(COMMAND CMAKE_POLICY)
+  CMAKE_POLICY(SET CMP0011 NEW)
+  CMAKE_POLICY(SET CMP0007 NEW)
+ENDIF()
+
+SET(CDPL_PYPI_PACKAGE_BUILD "@CDPL_PYPI_PACKAGE_BUILD@")
+SET(MSVC "@MSVC@")
+
+FUNCTION(INSTALL_DEPENDENCIES BINARY_INPUT_FILE LEVEL)
+  MESSAGE(" -- Installing external runtime dependencies of ${BINARY_INPUT_FILE}...")
+ 
+  IF(WIN32)
+    SET(SEARCH_DIRS "$ENV{PATH}")
+    SET(DEPENDENCY_INSTALL_DIR "@CDPKIT_EXECUTABLE_INSTALL_DIR@")
+    
+    IF(MSVC)
+      LIST(APPEND SEARCH_DIRS "@Boost_LIBRARY_DIR_RELEASE@")
+
+      GET_FILENAME_COMPONENT(CAIRO_DLL_DIR "@CAIRO_LIBRARIES@" DIRECTORY)
+      LIST(APPEND SEARCH_DIRS "${CAIRO_DLL_DIR}")
+
+      GET_FILENAME_COMPONENT(QT5_ROOT_DIR "@Qt5Core_DIR@" DIRECTORY)
+      GET_FILENAME_COMPONENT(QT5_ROOT_DIR "${QT5_ROOT_DIR}" DIRECTORY)
+      GET_FILENAME_COMPONENT(QT5_ROOT_DIR "${QT5_ROOT_DIR}" DIRECTORY)
+      LIST(APPEND SEARCH_DIRS "${QT5_ROOT_DIR}/bin")
+    ENDIF()
+  ELSE()
+    SET(SEARCH_DIRS "")
+    SET(DEPENDENCY_INSTALL_DIR "@CDPKIT_LIBRARY_INSTALL_DIR@")
+  ENDIF()
+
+  STRING(REPLACE "." "\\." CMAKE_INSTALL_PREFIX_X_PTN "^${CMAKE_INSTALL_PREFIX}")
+  STRING(REPLACE "+" "\\+" CMAKE_INSTALL_PREFIX_X_PTN "${CMAKE_INSTALL_PREFIX_X_PTN}")
+
+  SET(EXCLUDE_PATTERNS
+    "libcdpl"
+    "${CMAKE_INSTALL_PREFIX_X_PTN}"
+    )
+  
+  IF(APPLE)
+    LIST(APPEND EXCLUDE_PATTERNS
+      "Qt"
+      "libstdc\\+\\+"
+      )
+  ELSEIF(WIN32)
+    LIST(APPEND EXCLUDE_PATTERNS
+      "system32"
+      "ms-win-core"
+      )
+  ELSE()
+    LIST(APPEND EXCLUDE_PATTERNS
+      "libstdc\\+\\+"
+      "linux"
+      "libX"
+      "libGL"
+      "libEGL"
+      "libelf"
+      "libpython"
+      "libpthread"
+      "libgcc"
+      "libm\\.so"
+      "libm-"
+      "libc\\.so"
+      "libc-"
+      "librt"
+      "libdl"
+      )
+  ENDIF()
+    
+  GET_FILENAME_COMPONENT(FILE_SUFFIX "${BINARY_INPUT_FILE}" LAST_EXT)
+
+  IF("${FILE_SUFFIX}" STREQUAL "" OR "${FILE_SUFFIX}" STREQUAL ".exe")
+    FILE(GET_RUNTIME_DEPENDENCIES RESOLVED_DEPENDENCIES_VAR DEPENDENCIES UNRESOLVED_DEPENDENCIES_VAR UNRESOLVED_DEPS
+         EXECUTABLES "${BINARY_INPUT_FILE}" PRE_EXCLUDE_REGEXES ${EXCLUDE_PATTERNS} POST_EXCLUDE_REGEXES ${EXCLUDE_PATTERNS}
+         DIRECTORIES ${SEARCH_DIRS})  
+  ELSEIF("${FILE_SUFFIX}" STREQUAL ".dll" OR "${FILE_SUFFIX}" STREQUAL ".so" OR "${FILE_SUFFIX}" STREQUAL ".dylib")
+    FILE(GET_RUNTIME_DEPENDENCIES RESOLVED_DEPENDENCIES_VAR DEPENDENCIES UNRESOLVED_DEPENDENCIES_VAR UNRESOLVED_DEPS
+         LIBRARIES "${BINARY_INPUT_FILE}" PRE_EXCLUDE_REGEXES ${EXCLUDE_PATTERNS} POST_EXCLUDE_REGEXES ${EXCLUDE_PATTERNS}
+         DIRECTORIES ${SEARCH_DIRS})  
+  ELSEIF("${FILE_SUFFIX}" STREQUAL ".pyd")
+    FILE(GET_RUNTIME_DEPENDENCIES RESOLVED_DEPENDENCIES_VAR DEPENDENCIES UNRESOLVED_DEPENDENCIES_VAR UNRESOLVED_DEPS
+         MODULES "${BINARY_INPUT_FILE}" PRE_EXCLUDE_REGEXES ${EXCLUDE_PATTERNS} POST_EXCLUDE_REGEXES ${EXCLUDE_PATTERNS}
+         DIRECTORIES ${SEARCH_DIRS})
+  ENDIF()
+
+  FOREACH(DEPENDENCY ${DEPENDENCIES})
+    GET_FILENAME_COMPONENT(FILE_NAME "${DEPENDENCY}" NAME)
+
+    IF(APPLE)
+      IF("${DEPENDENCY}" MATCHES "/Python$")
+        EXECUTE_PROCESS(COMMAND "@CMAKE_INSTALL_NAME_TOOL@" "-change" "${DEPENDENCY}" "@executable_path/../../../../../../Python" "${BINARY_INPUT_FILE}"
+                    OUTPUT_VARIABLE STDOUT ERROR_VARIABLE STDERR)
+        CONTINUE()
+      ENDIF()
+      
+      IF(LEVEL GREATER 0)
+        EXECUTE_PROCESS(COMMAND "@CMAKE_INSTALL_NAME_TOOL@" "-change" "${DEPENDENCY}" "@loader_path/${FILE_NAME}" "${BINARY_INPUT_FILE}"
+                    OUTPUT_VARIABLE STDOUT ERROR_VARIABLE STDERR)
+      ELSE(LEVEL GREATER 0)
+        EXECUTE_PROCESS(COMMAND "@CMAKE_INSTALL_NAME_TOOL@" "-change" "${DEPENDENCY}" "@rpath/${FILE_NAME}" "${BINARY_INPUT_FILE}"
+                        OUTPUT_VARIABLE STDOUT ERROR_VARIABLE STDERR)
+      ENDIF()
+    ENDIF()
+    
+    IF(NOT EXISTS "${CMAKE_INSTALL_PREFIX}/${DEPENDENCY_INSTALL_DIR}/${FILE_NAME}")
+      MESSAGE("  -- Installing external dependency ${DEPENDENCY}")
+      FILE(INSTALL "${DEPENDENCY}" DESTINATION "${CMAKE_INSTALL_PREFIX}/${DEPENDENCY_INSTALL_DIR}" FOLLOW_SYMLINK_CHAIN)
+      
+      IF(APPLE)
+        INSTALL_DEPENDENCIES("${CMAKE_INSTALL_PREFIX}/${DEPENDENCY_INSTALL_DIR}/${FILE_NAME}" 1)
+      ENDIF()
+    ENDIF()
+  ENDFOREACH(DEPENDENCY)
+  
+  IF(APPLE)
+    IF("@CDPKIT_CODE_SIGNING_IDENTITY@" STREQUAL "-")
+      EXECUTE_PROCESS(COMMAND "@CODESIGN_EXECUTABLE@" "--force" "--timestamp" "--preserve-metadata=entitlements,requirements,flags" "--sign" "-" "${BINARY_INPUT_FILE}"
+                      OUTPUT_VARIABLE STDOUT ERROR_VARIABLE STDERR)
+    ELSE()
+      EXECUTE_PROCESS(COMMAND "@CODESIGN_EXECUTABLE@" "--force" "--timestamp" "--preserve-metadata=entitlements,requirements,flags" "--options" "runtime" "--sign" "@CDPKIT_CODE_SIGNING_IDENTITY@" "${BINARY_INPUT_FILE}"
+                      OUTPUT_VARIABLE STDOUT ERROR_VARIABLE STDERR)
+    ENDIF()
+  ENDIF()
+
+  FOREACH(DEPENDENCY ${UNRESOLVED_DEPS})
+    GET_FILENAME_COMPONENT(FILE_NAME "${DEPENDENCY}" NAME)
+
+    IF(NOT EXISTS "${CMAKE_INSTALL_PREFIX}/${DEPENDENCY_INSTALL_DIR}/${FILE_NAME}")
+      MESSAGE("  !! Warning: Unresolved dependency ${DEPENDENCY}.")
+    ENDIF()
+  ENDFOREACH(DEPENDENCY)
+ENDFUNCTION(INSTALL_DEPENDENCIES)
+
+INSTALL_DEPENDENCIES("${CMAKE_INSTALL_PREFIX}/@BINARY_INPUT_FILE@" 0)

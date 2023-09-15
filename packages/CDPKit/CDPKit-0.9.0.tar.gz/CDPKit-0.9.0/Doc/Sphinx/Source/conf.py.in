@@ -1,0 +1,115 @@
+##
+# conf.py  
+#
+# This file is part of the Chemical Data Processing Toolkit
+#
+# Copyright (C) 2003 Thomas Seidel <thomas.seidel@univie.ac.at>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program; see the file COPYING. If not, write to
+# the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+# Boston, MA 02111-1307, USA.
+##
+
+# Configuration file template for the Sphinx documentation builder.
+#
+# This file only contains a selection of the most common options. For a full
+# list see the documentation:
+# https://www.sphinx-doc.org/en/master/usage/configuration.html
+
+# -- Path setup --------------------------------------------------------------
+
+# If extensions (or modules to document with autodoc) are in another directory,
+# add these directories to sys.path here. If the directory is relative to the
+# documentation root, use os.path.abspath to make it absolute, like shown here.
+#
+# import os
+# import sys
+# sys.path.insert(0, os.path.abspath('.'))
+
+import sphinx_rtd_theme
+from datetime import date
+
+
+# -- Project information -----------------------------------------------------
+
+project = '@PROJECT_NAME@'
+copyright = str(date.today().year) + ', Thomas Seidel and Oliver Wieder'
+author = 'Thomas Seidel, Oliver Wieder'
+
+# The full version, including alpha/beta/rc tags
+version = '@CDPKIT_VERSION@'
+release = version
+
+
+# -- General configuration ---------------------------------------------------
+
+# Add any Sphinx extension module names here, as strings. They can be
+# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
+# ones.
+extensions = [
+    'sphinx_rtd_theme',
+    'sphinxcontrib.bibtex',
+    'sphinx_inline_tabs',
+    'docs_versions_menu'
+]
+
+# Add any paths that contain templates here, relative to this directory.
+
+templates_path = ['_templates']
+
+# List of patterns, relative to source directory, that match files and
+# directories to ignore when looking for source files.
+# This pattern also affects html_static_path and html_extra_path.
+
+exclude_patterns = []
+
+# -- Options for HTML output -------------------------------------------------
+# Add any paths that contain custom static files (such as style sheets) here,
+# relative to this directory. They are copied after the builtin static files,
+# so a file named "default.css" will overwrite the builtin "default.css".
+
+html_static_path = ['_static']
+
+# The theme to use for HTML and HTML Help pages.
+html_theme = "sphinx_rtd_theme"
+
+html_theme_options = { 
+    'logo_only': True,
+    'display_version': False,
+    'prev_next_buttons_location': 'bottom',
+    'style_external_links': False,
+    'vcs_pageview_mode': '',
+    'style_nav_header_background': '#aaaaaa',
+    # Toc options
+    'collapse_navigation': True,
+    'sticky_navigation': True,
+    'navigation_depth': 4,
+    'includehidden': True,
+    'titles_only': False
+}
+
+html_logo = '@CDPKIT_DOC_GRAPHICS_DIR@/Logo.svg'
+html_copy_source = True
+
+html_css_files = [
+    'css/custom.css'
+]
+
+bibtex_bibfiles = ['references.bib']
+bibtex_default_style = 'unsrt'
+bibtex_reference_style = 'label'
+
+docs_versions_menu_conf = {
+    'github_project_url': 'https://github.com/molinfo-vienna/CDPKit'
+}
