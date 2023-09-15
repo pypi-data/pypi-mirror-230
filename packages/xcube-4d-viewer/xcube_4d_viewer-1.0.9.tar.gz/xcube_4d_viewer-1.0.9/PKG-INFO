@@ -1,0 +1,33 @@
+Metadata-Version: 2.1
+Name: xcube_4d_viewer
+Version: 1.0.9
+Summary: API extension to the xcube server allowing cubes to be viewed in the Earthwave 4D viewer.
+Author: Earthwave Ltd
+Author-email: info@earthwave.co.uk
+License: MIT
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+![example workflow](https://github.com/earthwave/xcube_4d_viewer/actions/workflows/xcube_4d_viewer_test.yml/badge.svg)
+![example workflow](https://github.com/earthwave/xcube_4d_viewer/actions/workflows/xcube_4d_viewer_deploy.yml/badge.svg)
+# xcube_4d_viewer
+This repository is a plugin for the xcube server.
+
+xcube (https://xcube.readthedocs.io/en/latest/overview.html) is a Python package for generating and exploiting data
+cubes powered by xarray, dask, and zarr. It also provides a web API and server which can be used to access and
+visualise these data cubes.
+
+This repository serves as an API extension to the xcube server, allowing xcube data cubes to be analysed and
+visualised within Earthwave's 4D viewer. It computes configuration details and
+heatmap/3D heatmap/terrain tiles from the server's data cubes and provides them in a format expected by the 4D viewer.
+
+In order to connect to Earthwave's 4D viewer, the API extension needs to know the address of Earthwave's Middle Tier
+service, and the xcube server using the extension needs to be externally accessible. Therefore, to make use of the API,
+two additional keys must be set in the server config file:
+* ServerExternalURL - the externally accessible URL of the xcube server. This should be set up by the user
+through a tool such as nginx.
+* MiddleTierURL - the current URL of the Middle Tier service. Please contact support@earthwave.co.uk for this
+information.
+
+This work is done as part of the DeepESDL project (https://deepesdl.readthedocs.io/en/latest/).
