@@ -1,0 +1,44 @@
+BaseClass:
+    egse.vacuum.beaglebone.BeagleboneInterface
+    
+ProxyClass:
+    egse.vacuum.beaglebone.BeagleboneProxy
+    
+ControlServerClass:
+    egse.vacuum.beaglebone.BeagleboneControlServer
+    
+ControlServer:
+    egse.vacuum.beaglebone.beaglebone_cs
+
+UserInterface:
+    egse.vacuum.beaglebone.beaglebone_ui
+    
+Commands:
+    
+    # Definition of the DeviceInterface
+    
+    disconnect:
+        description: Discconect from the Valve Controller.
+        
+    connect:
+        description: Connect to the Valve controller.
+        
+    reconnect:
+        description: Reconnect to the Valve controller.
+        
+    is_simulator:
+        description: Ask if the control server is a is a simulator.
+        returns:    bool | True if far en is a simulator.
+        
+    is_connected:
+        description: Checl of Valve Controller is connected.
+    
+    
+    # Definition of the device commands
+    set_valve:
+        description: Set the state of a valve.
+        cmd:        "{valve_name}{valve_state}"
+        
+    get_valve:
+        description: Get state of a valve.
+        cmd:        "{valve_name}"

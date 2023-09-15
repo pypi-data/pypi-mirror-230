@@ -1,0 +1,36 @@
+BaseClass:
+    egse.tempcontrol.digalox.DigaloxInterface
+
+ProxyClass:
+    egse.tempcontrol.digalox.DigaloxProxy
+
+ControlServerClass:
+    egse.tempcontrol.digalox.DigaloxControlServer
+
+ControlServer:
+    egse.tempcontrol.digalox.digalox_cs
+
+Commands:
+    # The command strings in this file are not used.
+    # They need to include the arguments of the commands though or else the control server will
+    # remove them from the interface.
+
+    disconnect:
+        description: Disconnect from the Digalox LN2 level monitor Controller.
+
+    connect:
+        description: Connect to the Digalox LN2 level monitor Controller.
+
+    reconnect:
+        description: Reconnect to the Digalox LN2 level monitor Controller.
+    is_simulator:
+        description: Ask if the control server is a simulator.
+        returns:     bool | True if far end is a simulator.
+
+    is_connected:
+        description: Check if Digalox LN2 level monitor Controller is connected.
+
+    # Definition of the device commands.
+    get_value:
+        description: Querys the current LN2 level
+        returns:    float | Current LN2 level

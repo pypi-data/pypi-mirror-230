@@ -1,0 +1,66 @@
+BaseClass:
+    egse.vacuum.pfeiffer.tpg261_interface.Tpg261Interface
+
+ProxyClass:
+    egse.vacuum.pfeiffer.tpg261.Tpg261Proxy
+
+ControlServer:
+    egse.vacuum.pfeiffer.tpg261_cs
+
+
+Commands:
+
+    disconnect:
+        description:        Disconnect from the device.
+
+    connect:
+        description:        Connect to the device.
+
+    reconnect:
+        description:        Reconnect to the device.
+                            This command will force a disconnect and then try to re-connect to the controller.
+    is_connected:
+        description:        Check if the Thorlabs Hardware Controller is connected.
+
+    is_simulator:
+        description:        Ask if the control server is a simulator instead of the real controller class.
+        returns:            bool | True if the far end is a simulator instead of the real hardware
+
+    get_idn:
+        description:
+        returns:            str | firmware version
+
+    get_errors:
+        description:        Get errors
+        returns:            bytes | errors
+
+    reset:
+        description:        Reset all errors
+        returns:            bytes | list of errors
+    
+    turn_off_gauge:
+        description:        Turn off a gauge
+        cmd:                '{gauge}'
+        returns:            bytes | status
+
+    turn_on_gauge:
+        description:        Turn on a gauge
+        cmd:                '{gauge}'
+        returns:            bytes | status
+
+    get_gauge_pressure:
+        description:        Get the pressure on a specific gauge
+        cmd:                ''
+        returns:            float | pressure
+
+    request:
+        description:        Request information
+        cmd:                '{cmd}'
+        returns:            bool | acknowledge or not
+
+    enquire:
+        description:        Get the requested information
+        returns:            bytes | requested information
+
+
+    

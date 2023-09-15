@@ -1,0 +1,83 @@
+# The commands in this file are fake.
+# One of the parameters of the command is the device index. If this is included here, the client
+# will have to pass this argument for every function call. I prefer to add this on the
+# controller side. Note that arguments must be included in the cmd string for the proxy interface.
+# Additionally, this device requires a checksum that can only sensibly be calculated on the
+# controller side as well.
+
+BaseClass:
+    egse.vacuum.pfeiffer.tc400_interface.Tc400Interface
+
+ProxyClass:
+    egse.vacuum.pfeiffer.tc400.Tc400Proxy
+
+ControlServer:
+    egse.vacuum.pfeiffer.tc400_cs
+
+Commands:
+
+    disconnect:
+        description:        Disconnect from the device.
+
+    connect:
+        description:        Connect to the device.
+
+    reconnect:
+        description:        Reconnect to the device.
+                            This command will force a disconnect and then try to re-connect to the controller.
+    is_connected:
+        description:        Check if the Thorlabs Hardware Controller is connected.
+
+    is_simulator:
+        description:        Ask if the control server is a simulator instead of the real controller class.
+        returns:            bool | True if the far end is a simulator instead of the real hardware
+
+    get_idn:
+        description:        Read the type of display and control unit
+        returns:            str | ID string
+
+    get_last_error:
+        description:        Read latest error
+        returns:            int | error code of last encountered error
+
+    get_active_speed:
+        description:        Read the active rotation speed
+        returns:            int | current speed in Hz
+
+    get_drive_power:
+        description:        Read the power
+        returns:            int | current power in W
+
+    get_motor_temperature:
+        description:        Read the temperature
+        returns:            int | current temperature in C
+
+    set_heating:
+        description:        Turn heating on or off.
+        args:
+            enable:         bool | True to enable heating.
+        cmd:                "{enable}"
+
+    set_standby:
+        description:        Set the device in standby (idle).
+        args:
+            enable:         bool | True to enable standby.
+        cmd:                "{enable}"
+
+    set_pumpingstation:
+        description:        Enable the external power. Needs to be enabled before the pump.
+        args:
+            enable:         bool | Enable the external power.
+        cmd:                "{enable}"
+
+    set_motorpump:
+        description:        Turn the turbopump on or off.
+        args:
+            enable:         bool | True to turn on the pump motor.
+        cmd:                "{enable}"
+
+    set_gasmode:
+        description:        Select gas type setting.
+        args:
+            mode:           int | 0 - heavy, 1 - light, 2 - helium.
+        cmd:                "{mode}"

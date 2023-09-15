@@ -1,0 +1,273 @@
+BaseClass:
+    egse.aeu.CRIOInterface
+
+ProxyClass:
+    egse.aeu.CRIOProxy
+
+ControlServerClass:
+    egse.aeu.CRIOControlServer
+
+ControlServer:
+    egse.aeu.aeu_cs
+
+UserInterface:
+    egse.aeu.aeu_ui
+
+Commands:
+
+    # Each of these groups is parsed and used on both the server and the client side.
+    #
+    # The group name (e.g. is_simulator) will be monkey patched in the Proxy class for the device
+    # or service.
+    #
+    # The other field are:
+    #   description:   Used by the doc_string method to generate a help string
+    #   cmd:           Command string that will eventually be send to the hardware controller for
+    #                  the device. This cmd string is also used at the client side to parse and
+    #                  validate the arguments.
+    #   device_method: The name of the method to be called on the device class.
+    #                  These should all be defined by the interface class for the device, i.e.
+    #                  AEUInterface in this case.
+    #                  When the device_method is the same as the group name, it can be omitted.
+    #   response:      The name of the method to be called from the device protocol.
+    #                  This method should exist in the subclass of the CommandProtocol base class,
+    #                  i.e. in this case it will be the AEUProtocol class.
+    #                  The default (when no response is given) is 'handle_device_method'.
+
+    # Definition of the the DeviceInterface
+
+    is_simulator:
+        description: Ask if the connected class is a simulator instead of the real device Controller class.
+        returns: bool | True if the far-end is a simulator instead of the real hardware
+
+    is_connected:
+        description: Check if the device hardware controller is connected.
+
+    connect:
+        description: Connect the device hardware controller.
+
+    reconnect:
+        description: Reconnect the device hardware controller.  This command will force a disconnect and then try to
+                     re-connect to the controller.
+
+    disconnect:
+        description: Disconnect from the device hardware controller. This command will be send to the Control Server
+                     which will then disconnect from the hardware controller.
+                     This command does not affect the ZeroMQ connection of the Proxy to the control server. Use the
+                     service command `disconnect_cs()` to disconnect from the control server.
+
+    # cRIO commands
+
+    get_id:
+        description:    Return the instrument identification, i.e. manufacturer, model, serial number, and build version.
+        cmd:            "*IDN?"
+
+    reset:
+        description:    Reset the settings.  This command will configure
+                            - self-test with loop-back;
+                            - quality of frequency signals to "value inside of range";
+                            - set the stand-by mode;
+                            - protection sofware values (OCP, OVP, and UVP for N- and F-CAM).
+        cmd:            "*RST"
+
+    clear_error_queue:
+        description:    Clear the error queue.
+        cmd:            "*CLS"
+
+    get_n_cam_current:
+        description:    Return the measured current values for the N-CAM [A].
+        cmd:            "MEAS:N:CURR?"
+
+    get_f_cam_current:
+        description:    Return the measured current values for the F-CAM [A].
+        cmd:            "MEAS:F:CURR?"
+
+    get_n_cam_voltage:
+        description:    Return the measured voltage values for the N-CAM [V].
+        cmd:            "MEAS:N:VOLT?"
+
+    get_f_cam_voltage:
+        description:    Return the measured voltage values for the F-CAM [V].
+        cmd:            "MEAS:F:VOLT?"
+
+    set_loopback_option:
+        description:    Control the self-test operation.
+        cmd:            "CNTRL:LOOPBACK {}"
+
+    get_loopback_option:
+        description:    Return the option selected to self-test.
+        cmd:            "CNTRL:LOOPBACK?"
+
+    set_n_cam_secondary_power_status:
+        description:    Configure the secondary power lines of the N-CAM to ON/OFF.
+        cmd:            "CNTRL:N:OUTP {}"
+
+    get_n_cam_secondary_power_status:
+        description:    Return the status of the secondary power lines for the N-CAM.
+        cmd:            "CNTRL:N:OUTP?"
+
+    set_f_cam_secondary_power_status:
+        description:    Configure the secondary power lines of the F-CAM to ON/OFF.
+        cmd:            "CNTRL:F:OUTP {}"
+
+    get_f_cam_secondary_power_status:
+        description:    Return the status of the secondary power lines for the N-CAM.
+        cmd:            "CNTRL:F:OUTP?"
+
+    set_n_cam_ocp:
+        description:    Set the Over-Current Protection (OCP) values for the N-CAM [A].
+        cmd:            "CNTRL:N:CURR:PROT {}, {}, {}, {}, {}, {}"
+
+    get_n_cam_ocp:
+        description:    Return the Over-Current Protection (OCP) values for the N-CAM [A].
+        cmd:            "CNTRL:N:CURR:PROT?"
+
+    set_f_cam_ocp:
+        description:    Set the Over-Current Protection (OCP) values for the F-CAM [A].
+        cmd:            "CNTRL:F:CURR:PROT {}, {}, {}, {}, {}, {}"
+
+    get_f_cam_ocp:
+        description:    Return the Over-Current Protection (OCP) values for the F-CAM [A].
+        cmd:            "CNTRL:F:CURR:PROT?"
+
+    set_n_cam_ovp:
+        description:    Set the Over-Voltage Protection (OVP) values for the N-CAM [V].
+        cmd:            "CNTRL:N:VOLT:PROT:OV {}, {}, {}, {}, {}, {}"
+
+    get_n_cam_ovp:
+        description:    Return the Over-Voltage Protection (OVP) values for the N-CAM [V].
+        cmd:            "CNTRL:N:VOLT:PROT:OV?"
+
+    set_n_cam_uvp:
+        description:    Set the Under-Voltage Protection (UVP) values for the N-CAM [V].
+        cmd:            "CNTRL:N:VOLT:PROT:UV {}, {}, {}, {}, {}, {}"
+
+    get_n_cam_uvp:
+        description:    Return the Under-Voltage Protection (UVP) values for the N-CAM [V].
+        cmd:            "CNTRL:N:VOLT:PROT:UV?"
+
+    set_f_cam_ovp:
+        description:    Set the Over-Voltage Protection (OVP) values for the F-CAM [V].
+        cmd:            "CNTRL:F:VOLT:PROT:OV {}, {}, {}, {}, {}, {}"
+
+    get_f_cam_ovp:
+        description:    Return the Over-Voltage Protection (OVP) values for the F-CAM [V].
+        cmd:            "CNTRL:F:VOLT:PROT:OV?"
+
+    set_f_cam_uvp:
+        description:    Set the Under-Voltage Protection (UVP) values for the F-CAM [V].
+        cmd:            "CNTRL:F:VOLT:PROT:UV {}, {}, {}, {}, {}, {}"
+
+    get_f_cam_uvp:
+        description:    Return the Under-Voltage Protection (UVP) values for the F-CAM [V].
+        cmd:            "CNTRL:F:VOLT:PROT:UV?"
+
+    get_n_cam_voltage_quality:
+        description:    Return the secondary power line voltage information out-of-range for the N-CAM.
+        cmd:            "MEAS:N:VOLT:QUAL?"
+
+    get_f_cam_voltage_quality:
+        description:    Return the secondary power line voltage information out-of-range for the F-CAM.
+        cmd:            "MEAS:F:VOLT:QUAL?"
+
+    get_n_cam_current_quality:
+        description:    Return the secondary power line current information out-of-range for the N-CAM.
+        cmd:            "MEAS:N:CURR:QUAL?"
+
+    get_f_cam_current_quality:
+        description:    Return the secondary power line current information out-of-range for the F-CAM.
+        cmd:            "MEAS:F:CURR:QUAL?"
+
+    set_n_cam_clock_status:
+        description:    Enable/disable the clocks for the N-CAM (Clk_50MHz and Clk_ccdread).
+        cmd:            "CNTRL:N:CLOCK {}, {}"
+
+    get_n_cam_clock_status:
+        description:    Return whether the clock is enabled/disabled for the N-CAM (Clk_50MHz and Clk_ccdread).
+        cmd:            "CNTRL:N:CLOCK?"
+
+    get_n_cam_clock_quality:
+        description:    Returns the status of the synchronisation generator for the F-CAM (Clk_50MHz and Clk_ccdread).
+        cmd:            "MEAS:N:CLOCK:QUAL?"
+
+    set_f_cam_clock_status:
+        description:    Enable/disable the clocks for the F-CAM (Clk_50MHz_nom, Clk_50MHz_red, Clk_ccdread_nom, and
+                        Clk_ccdread_red).
+        cmd:            "CNTRL:F:CLOCK {}, {}, {}, {}"
+
+    get_f_cam_clock_status:
+        description:    Return whether the clock is enabled/disabled for the F-CAM (Clk_50MHz_nom, Clk_50MHz_red,
+                        Clk_ccdread_nom, and Clk_ccdread_red).
+        cmd:            "CNTRL:F:CLOCK?"
+
+    get_f_cam_clock_quality:
+        description:    Returns the status of the synchronisation generator for the F-CAM (Clk_50MHz_nom, Clk_50MHz_red,
+                        Clk_ccdread_nom, and Clk_ccdread_red).
+        cmd:            "MEAS:F:CLOCK:QUAL?"
+
+    set_svm_clock_status:
+        description:    Enable/disable the clocks for the SVM CAM TCS(Clk_50MHz_nom, Clk_50MHz_red, Clk_heater_nom, and
+                        Clk_heater_red).
+        cmd:            "CNTRL:SVM:CLOCK {}, {}, {}, {}"
+
+    get_svm_clock_status:
+        description:    Return whether the clock is enabled/disabled for the SVM CAM TCS (Clk_50MHz_nom, Clk_50MHz_red,
+                        Clk_heater_nom, and Clk_heater_red).
+        cmd:            "CNTRL:SVM:CLOCK?"
+
+    get_svm_clock_quality:
+        description:    Returns the status of the synchronisation generator for the SVM CAM TCS (Clk_50MHz_nom,
+                        Clk_50MHz_red, Clk_heater_nom, and Clk_heater_red).
+        cmd:            "MEAS:SVM:CLOCK:QUAL?"
+
+    get_led_status:
+        description:    Return the status of the leds (stand-by mode, self-test mode, functional check and TVAC
+                        operating mode, alignment operating mode, selected N-CAM, selected F-CAM, secondary power line
+                        V_CCD, secondary power line V_CLK, secondary power line V_AN1, secondary power line V_AN2,
+                        secondary power line V_AN3, secondary power line V_DIG, secondary voltage generation
+                        out-of-range, secondary current generation out-of-range, synchronisation generator failure,
+                        clock Clk_50MHz, clock Clk_ccdread, clock Clk_heater, nominal clock for the F-CAM Clk_F_FEE_N,
+                        redundant clock for the N-CAM Clk_F_FEE_R, and test port active).
+        cmd:            "MEAS:LED?"
+
+    set_operating_mode:
+        description:    Configure the mode (0 for stand-by mode, 1 for self-test mode, 2 for alignment operating mode,
+                        and 4 for functional and TVAC operating mode).
+        cmd:            "CNTRL:MODE {}"
+
+    get_operating_mode:
+        description:    Return the actual mode (0 for stand-by mode, 1 for self-test mode, 2 for alignment operating
+                        mode, and 4 for functional and TVAC operating mode).
+        cmd:            "CNTRL:MODE?"
+
+    get_data:
+        description:    Return all relevant data. This includes the actual current values (for N-CAM and F-CAM), the
+                        actual voltage values (for N-CAM and F-CAM), and the led status.
+        cmd:            "MEAS:ALL:ANALOG?"
+
+    get_error_info:
+        description:    Read the oldest error information the error queue.  The error queue can store up to 16 errors.
+                        Use the clear_error_queu command to clear the error queue.
+        cmd:            "SYST:ERR?"
+
+    get_num_errors:
+        description:    Return the number of errors in the error queue.  Use the clear_error_queu command to clear the
+                        error queue.
+        cmd:            "SYST:ERR:QUANT?"
+
+    get_selftest_result:
+        description:    Return the status/result of the self-test.
+        cmd:            "SYST:TEST:RESULT?"
+
+    get_protection_status:
+        description:    Return the status of the protections (status of the emergency button, OVP for PSU nominal,
+                        OVP for PSU redundant, OVP for PDU).
+        cmd:            "SYST:PROT?"
+
+    set_time:
+        description:    Configure the start-up and detection time.
+        cmd:            "SYST:TIME:PROT {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, "
+
+    get_time:
+        description:    Return the start and detection time.
+        cmd:            "SYST:TIME:PROT?"

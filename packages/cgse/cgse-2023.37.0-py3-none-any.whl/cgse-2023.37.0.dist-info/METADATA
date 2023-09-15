@@ -1,0 +1,144 @@
+Metadata-Version: 2.1
+Name: cgse
+Version: 2023.37.0
+Summary: PLATO Common-EGSE
+Author-email: Rik Huygen <rik.huygen@kuleuven.be>, Sara Regibo <sara.regibo@kuleuven.be>
+Maintainer: Pierre Royer, Nicolas Beraud, Sena Gomashie, Jesus Saiz
+License: LGPL-3.0
+Project-URL: documentation, https://ivs-kuleuven.github.io/plato-cgse-doc/
+Project-URL: repository, https://github.com/IvS-KULeuven/plato-common-egse
+Keywords: CGSE,PLATO
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Programming Language :: Python :: 3.8
+Classifier: License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)
+Requires-Python: >=3.8
+Description-Content-Type: text/x-rst
+License-File: COPYING
+License-File: COPYING.LESSER
+Requires-Dist: apscheduler
+Requires-Dist: astropy ==4.0
+Requires-Dist: click
+Requires-Dist: deepdiff
+Requires-Dist: distro
+Requires-Dist: ginga
+Requires-Dist: gitpython >=3
+Requires-Dist: h5py >=3.5
+Requires-Dist: invoke
+Requires-Dist: matplotlib >=3.5
+Requires-Dist: natsort
+Requires-Dist: numpy ==1.22.4
+Requires-Dist: openpyxl
+Requires-Dist: pandas
+Requires-Dist: paramiko
+Requires-Dist: persist-queue
+Requires-Dist: prometheus-client
+Requires-Dist: psutil
+Requires-Dist: pyqtgraph
+Requires-Dist: pytz
+Requires-Dist: pyyaml
+Requires-Dist: pyzmq
+Requires-Dist: qled
+Requires-Dist: requests
+Requires-Dist: rich
+Requires-Dist: scipy
+Requires-Dist: sshtunnel
+Requires-Dist: sympy
+Requires-Dist: textual
+Requires-Dist: transforms3d
+Requires-Dist: transitions
+Requires-Dist: typing-extensions
+Requires-Dist: pylibftdi
+Requires-Dist: pyserial
+Requires-Dist: pylzma
+Requires-Dist: pyusb
+Requires-Dist: PyVISA
+Requires-Dist: PyVISA-py
+Requires-Dist: ThorlabsPM100
+Provides-Extra: dev
+Requires-Dist: pytest ; extra == 'dev'
+Requires-Dist: pytest-mock ; extra == 'dev'
+Requires-Dist: pytest-cov ; extra == 'dev'
+Requires-Dist: pipdeptree ; extra == 'dev'
+Requires-Dist: pdoc3 ; extra == 'dev'
+Provides-Extra: pyqt5
+Requires-Dist: pyqt5 >=5.15 ; extra == 'pyqt5'
+Requires-Dist: PyQtWebEngine >=5.15 ; extra == 'pyqt5'
+Provides-Extra: pyqt6
+Requires-Dist: pyqt6 >=6.5 ; extra == 'pyqt6'
+Requires-Dist: PyQtWebEngine >=6.5 ; extra == 'pyqt6'
+Provides-Extra: tools
+Requires-Dist: cutelog ; extra == 'tools'
+Requires-Dist: gui-executor ; extra == 'tools'
+Requires-Dist: visidata ; extra == 'tools'
+
+<p align="center">
+<a href="https://ivs-kuleuven.github.io/plato-common-egse/"><img src="MKDOCS/docs/img/cgse-logo-200x200.png"/></a>
+</p>
+
+<p align="center">
+<a href="https://ivs-kuleuven.github.io/plato-common-egse/">
+<img src="https://img.shields.io/badge/Common--EGSE-Alpha-lightgrey.svg"/>
+</a>
+<a href="https://en.wikipedia.org/wiki/MacOS_version_history">
+<img src="https://img.shields.io/badge/Platform-macOS%20%26%20LinuX-blue.svg"/>
+</a>
+<a href="https://www.python.org">
+<img src="https://img.shields.io/badge/Python-3.7-green.svg"/>
+</a>
+</p>
+
+# Common-EGSE
+
+The PLATO Common-EGSE project defines the software and hardware that will be used to perform the
+PLATO Camera tests, i.e. the alignment tests at CSL and the thermal vacuum tests at IAS, INTA and
+SRON.
+
+The description of the hardware can be found in the respective project documentation.
+
+The description of the software is the purpose of this GitHub repository.
+
+## Documentation
+
+Full documentation of the Common-EGSE is given in the [GitHub pages](https://ivs-kuleuven.github.io/plato-common-egse/). These provide installation instructions, design documentation and different guides for users and developers.
+
+The documentation also provides the complete [API documentation](https://rhuygen.github.io/plato-common-egse/api/egse/) for developers.
+
+## Installation
+
+The software can be used as is from the repository, or you can run the setup to install locally. Installation documentation is provided in the [GitHub pages](https://ivs-kuleuven.github.io/plato-common-egse/installation/overview/).
+
+When you want to install locally using setup, execute the following commands in your terminal. Make sure you are always installing inside a virtual environemnt.
+
+```bash
+python3 -m venv venv
+source ./venv/bin/activate
+python3 setup.py install
+```
+This will install the necessary required packages and make a number of applications and services available in the `bin` directroy of your current environment.
+
+More detailed information is given in the installation documentation at '[Using setuptools](https://ivs-kuleuven.github.io/plato-common-egse/installation/setuptools/)'.
+
+## Source code
+
+The source code for this project is in the directory [src](src). Most of the code is in Python 3.7+, but some code needs to be compiled to create a shared library to be used by Python, e.g. the ESL_RMAP library for accessing the SpaceWire device over RMAP. Please check the README file in the [src/egse](src/egse) directory and in the [src/egse/dsi](src/egse/dsi) directory.
+
+
+##  4Links <a href="http://www.4links.co.uk"><img src="images/4links_logo.png"/></a>
+
+We have decided to use the 4Links Diagnostic SpaceWire Interface (DSI) to connect to the Front End Electronics (FEE) SpaceWire interface and read out the detectors (4xCCDs) of the PLATO Camera's.
+
+In the directory 4Links we have put the libraries that were kindly provided to us for the purpose of this project. The code is there purely for reference as the actual library code is included in the source package under the `src/egse/dsi` directory.
+
+## Symétrie <a href="http://www.symetrie.fr/en/home/"><img src="images/symetrie_logo.png"/></a>
+For alignment tests at CSL....
+
+##  Data
+
+The `data` directory contains test data that was generated by the [Plato Simulator<sup>3</sup>](https://github.com/IvS-KULeuven/PlatoSim3) and is used for end-to-end testing of this software.
+
+##  Protoype
+
+The project was started with a [prototype](prototype) and concept demonstration. That means we have focussed on defining the concepts that will be used and demonstrated their feasibility. The prototype is by no means the operational software that will be used during instrument testing, it doesn't include any form of testing, security, optimization or documentation. The software components stand by themselves and their only goal is to demonstrate a concept that was proposed.
+
+At this point, the prototype phase is finished and you can safely ignore all that is below that directory. It is however left there, as is, for reference.
+

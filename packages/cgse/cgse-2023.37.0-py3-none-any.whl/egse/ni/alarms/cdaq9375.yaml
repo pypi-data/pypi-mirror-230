@@ -1,0 +1,89 @@
+BaseClass:
+    egse.ni.alarms.cdaq9375.cdaq9375Interface
+
+ProxyClass:
+    egse.ni.alarms.cdaq9375.cdaq9375Proxy
+
+ControlServerClass:
+    egse.ni.alarms.cdaq9375.cdaq9375ControlServer
+
+ControlServer:
+    egse.ni.alarms.cdaq9375_cs
+
+Commands:
+
+    # Each of these groups is parsed and used on both the server and the client side.
+    # The group name (e.g. is_simulator) will be monkey patched in the Proxy class for the device or service.
+    # The other field are:
+    #   description:   Used by the doc_string method to generate a help string
+    #   cmd:           Command string that will eventually be send to the hardware controller for the
+    #                  device after the arguments have been filled.
+    #   device_method: The name of the method to be called on the device class.
+    #                  These should all be defined by the base class for the device.
+    #                  This method should exist in the subclass of the CommandProtocol base class.
+
+    # Definition of the the DeviceInterface
+
+    disconnect:
+        description: Disconnect from the NI device controller. This command will be send to the
+                       NI Control Server which will then disconnect from the hardware controller.
+                       This command doesn't affect the ZeroMQ connection of this Proxy to the
+                       control server. Use the service command ``disconnect_cs()`` to disconnect
+                       from the control server.
+
+    connect:
+        description:    Connect the temperature hardware controller
+
+    reconnect:
+        description:    Reconnect the temperature hardware controller.
+
+                        This command will force a disconnect and then try to re-connect to the controller.
+
+    is_simulator:
+        description:   Ask if the control server is a simulator instead of the real cdaq9375Controller class.
+        returns:       bool | True if the far end is a simulator instead of the real hardware
+
+    is_connected:
+        description:   Check if the SRS Hardware Controller is connected.
+
+
+    # Definition of the device commands
+    info:
+        description:   Returns basic information about the device, its name, firmwre version etc.
+        returns:       str
+
+
+    get_tvac_and_ups_state:
+        description:   Returns a dictionary with the state (1 or 0) of UPS_Ix and UPS_Arrakis (alarm summary and power
+                       supply absence) and the state of TVAC. The timestamp (well formatted with the fucntion
+                       format_datetime) with the CDAQ9375 time is included in the dictionary
+                       {"timestamp" = 2023-05-17T13:27:45.335,
+                       "UPS_Arrakis_alarm_summary" = 1/0,
+                       "UPS_Arrakis_power_supply_absence" = 1/0,
+                       "UPS_Ix_alarm_summary" = 1/0,
+                       "UPS_Ix_power_supply_absence" = 1/0,
+                       "TVAC_low_temp" = 1/0,
+                       "TVAC_High_Temp" = 1/0,
+                       "TVAC_Interlock_Cryo" = 1/0,
+                       "TVAC_vacuum" = 1/0}
+        returns:       dict
+
+    send_egse_state_to_tvac:
+        description:   Send to TVAC the state of EGSE (EXP1, EXP2, EXP3, EXP4)
+                       EXP1 = Low Temp NOP
+                       EXP2 = High Temp NOP
+                       EXP3 = low/High Temp OP
+                       EXP4 = UPS alarm (UPS_Ix_alarm_summary or UPS_Ix_power_supply_absence or UPS_Arrakis_alarm_summary or UPS_Arrakis_power_supply_absence)
+        cmd:           '{alarm_exp1} {alarm_exp2} {alarm_exp3} {alarm_exp4}'
+        returns:       str
+
+    dec2bitlist_compl:
+        description:   Decompose a integer (base 10) into a list of power of 2.
+                       e.g. 14 -> [8, 4, 2] (8+4+2 = 14)
+                       Args
+                       d is an integer base 10 to decompose (d <= 15)
+                       returns
+                       list of power of 2
+        cmd:           '{d}'
+        returns:       list
+

@@ -1,0 +1,132 @@
+BaseClass:
+    egse.powermeter.thorlabs.pm100a.ThorlabsPM100Interface
+
+ProxyClass:
+    egse.powermeter.thorlabs.pm100a.ThorlabsPM100Proxy
+
+ControlServerClass:
+    egse.powermeter.thorlabs.pm100a_cs.ThorlabsPM100ControlServer
+
+ControlServer:
+    egse.powermeter.thorlabs.pm100a_cs
+
+UserInterface:
+    egse.powermeter.thorlabs.pm100a_ui
+
+Commands:
+
+    # Each of these groups is parsed and used on both the server and the client side.
+    # The group name (e.g. is_simulator) will be monkey patched in the Proxy class for the device or service.
+    # The other field are:
+    #   description:   Used by the doc_string method to generate a help string
+    #   cmd:           Command string that will eventually be send to the hardware controller for the
+    #                  device after the arguments have been filled.
+    #   device_method: The name of the method to be called on the device class.
+    #                  These should all be defined by the base class for the device, i.e. LakeShoreBase.
+    #   response:      The name of the method to be called from the device protocol.
+    #                  This method should exist in the subclass of the CommandProtocol base class.
+
+    # Definition of the the DeviceInterface
+
+    is_connected:
+        description:    Check if the Thorlabs Hardware Controller is connected.
+
+    disconnect:
+        description:    Disconnect from the Thorlabs Powre Meter.
+
+                        This command will be send to the Thorlabs Control Server which will then
+                        disconnect from the hardware controller.
+
+                        This command doesn't affect the ZeroMQ connection of this Proxy to the
+                        control server. Use the service command ``disconnect()`` to disconnect
+                        from the control server.
+
+    connect:
+        description:    Connect to the Thorlabs Power Meter.
+
+    reconnect:
+        description:    Reconnect to the Thorlabs Power Meter.
+
+                        This command will force a disconnect and then try to re-connect to the controller.
+
+    is_simulator:
+        description:   Ask if the control server is a simulator instead of the real ThorlabsPM100Controller class.
+        returns:       bool | True if the far end is a simulator instead of the real hardware
+
+
+    # Definition of the device commands
+
+    info:
+        description:   Retrieve basic information about the Thorlabs and the Controller.
+
+    get_value:
+        description:   Retrieve the readout value from the Thorlabs power meter.
+        returns:       float | The current readout for the given device
+
+    get_average:
+        description:   Retrives the number of samples to average set in the Thorlabs power meter
+        returns:       int | the number of samples
+
+    get_id:
+        description:   Retrieve the rSCPI Identification for the Thorlabs power meter.
+        returns:       str | The IDN for the given device
+
+    get_wavelength:
+        description:   Retrieves the information of the configured wavelength in nm parameters for the Thorlabs power
+            meter
+        returns:       int | The value of the correction wavelength set in nm
+
+    get_range:
+        description:   Retrieves the upper power range of the Thorlabs Power meter
+        returns:       float | to be changed into string or something range goes from 2.41 W to 2.41E-5 W also if the
+            device is set to autorange
+
+    get_diameter:
+        description:   Retrieves the set beam parameter in mm of the Thorlabs Power meter
+        returns:       float | beam diameter in mm
+
+    get_autozero:
+        description:   Retrieves the autozero parameters of the Thorlabs Power meter
+        returns:       dict | set = bool, magnitude (W) = float
+
+    get_config:
+        description:   Retrieves the information of the parameters that have been set fot the Thorlabs power meter
+            (wavelength, and power range) together with a measured value
+        returns:       dict | returns a dictionary containing the parameters
+
+    set_wavelength:
+        description:   Sets the correction wavelength of the Thorlabs power meter
+        args:
+            wave:      int | set the wavelength in nm # possible values to be implemented are 532, 535, 635, 760, 830, 900, 1060
+        cmd:           "{wave}"
+        returns:       None
+
+    set_range:
+        description:   Sets the measurement range of the Thorlabs power meter
+        args:
+            range:     str | "up" to increase the power range, "down" to decrease it
+        kwargs:
+            auto:      bool | when True sets the Autorange ON
+        cmd:           "{range} {auto}"
+        returns:       None
+
+    set_average:
+        description:   Sets the number of samples to average of the Thorlabs power meter
+        args:
+            average:   int | number of samples (one sample takes 3ms)
+        cmd:           "{average}"
+        returns:       None
+
+    set_diameter:
+        description:   Sets the incident beam diameter parameter of the Thorlabs power meter
+        args:
+            diameter:  float | The beam diameter in mm. Values range from 0.1 to 9.4 mm
+        cmd:           "{diameter}"
+        returns:       None
+
+    set_zero:
+        description:   Measures dark for zero adjustment of the Thorlabs power meter. The sensor needs to be covered
+        args:
+            autozero:     bool | True = initiate autozero, False = abort autozero
+        cmd:           "{autozero}"
+        returns:       None

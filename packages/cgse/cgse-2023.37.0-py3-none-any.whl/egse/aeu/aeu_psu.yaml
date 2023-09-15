@@ -1,0 +1,204 @@
+BaseClass:
+    egse.aeu.PSUInterface
+
+ProxyClass:
+    egse.aeu.PSUProxy
+
+ControlServerClass:
+    egse.aeu.PSUControlServer
+
+ControlServer:
+    egse.aeu.aeu_cs
+
+#UserInterface:
+#    egse.aeu.aeu_ui
+
+Commands:
+
+    # Each of these groups is parsed and used on both the server and the client side.
+    #
+    # The group name (e.g. is_simulator) will be monkey patched in the Proxy class for the device
+    # or service.
+    #
+    # The other field are:
+    #   description:   Used by the doc_string method to generate a help string
+    #   cmd:           Command string that will eventually be send to the hardware controller for
+    #                  the device. This cmd string is also used at the client side to parse and
+    #                  validate the arguments.
+    #   device_method: The name of the method to be called on the device class.
+    #                  These should all be defined by the interface class for the device, i.e.
+    #                  AEUInterface in this case.
+    #                  When the device_method is the same as the group name, it can be omitted.
+    #   response:      The name of the method to be called from the device protocol.
+    #                  This method should exist in the subclass of the CommandProtocol base class,
+    #                  i.e. in this case it will be the AEUProtocol class.
+    #                  The default (when no response is given) is 'handle_device_method'.
+
+    # Definition of the the DeviceInterface
+
+    is_simulator:
+        description: Ask if the connected class is a simulator instead of the real device Controller class.
+        returns: bool | True if the far-end is a simulator instead of the real hardware
+
+    is_connected:
+        description: Check if the device hardware controller is connected.
+
+    connect:
+        description: Connect the device hardware controller.
+
+    reconnect:
+        description: Reconnect the device hardware controller.  This command will force a disconnect and then try to
+                     re-connect to the controller.
+
+    disconnect:
+        description: Disconnect from the device hardware controller. This command will be send to the Control Server
+                     which will then disconnect from the hardware controller.
+                     This command does not affect the ZeroMQ connection of the Proxy to the control server. Use the
+                     service command `disconnect_cs()` to disconnect from the control server.
+
+    # PSU commands
+
+    get_id:
+        description:    Return the model name, serial number, and firmware version of the PMX.
+        cmd:            "*IDN?"
+
+    reset:
+        description:    Reset the panel settings, clear alarms, abort the trigger sub-system operation, clear the
+                        OPC bit (bit0) of the status event register.
+        cmd:            "*RST"
+
+    test:
+        description:    Execute a self-test.
+        cmd:            "*TST"
+
+    get_error_info:
+        description:    Read the oldest error information the error queue.  The error queue can store up to 16 errors.
+                        Use the clear_psu command to clear the error queue.
+        cmd:            "SYST:ERR?"
+
+    clear:
+        description:    Clear all event registers, including the status byte, event status, and error queue.
+        cmd:            "*CLS"
+
+    set_channel:
+        description:    Specify the channel to configure (should be 1).
+        cmd:            "INST {}"
+
+    get_channel:
+        description:    Return the channel to configure (should be 1).
+        cmd:            "INST?"
+
+    get_channel_list:
+        description:    Return the list of channels that can be configured with the set_channel command.
+        cmd:            "INST:CAT?"
+
+    get_channel_info:
+        description:    Return the information of the channel currently being controlled.
+        cmd:            "INST:INFO?"
+
+    get_current:
+        description:    Return the measured value of the current [A].
+        cmd:            "MEAS:CURR?"
+
+    get_voltage:
+        description:    Return the measured value of the voltage [V].
+        cmd:            "MEAS:VOLT?"
+
+    recall_memory:
+        description:    Recall the settings (current, voltage, OCP (Over-Current Protection), and OVP (Over-Voltage
+                        Protection)) stored in the pre-set memory (1 for memory A, 2 for memory B, 3 for memory C).
+                        When recalling a pre-set memory when the output is turned on, the setting stored in the
+                        memory will be applied immediately.
+        cmd:            "MEM:REC {}"
+
+    conf_settings:
+        description:    Set whether or not to check the content saved in the pre-set memory (current, voltage, OCP
+                        (Over-Current Protection), and OVP (Over-Voltage Protection)), when recalling it from the
+                        control panel (1 to confirm the settings, 0 to reject the settings).  When recalling the memory
+                        with the recall_psu_memory command, the settings stored in the pre-set memory will be recalled
+                        immediately.
+        cmd:            "MEM:REC:CONF {}"
+
+    get_memory_config:
+        description:    Query whether or not to check the content (current, voltage, OCP (Over-Current Protection), and
+                        OVP (Over-Voltage Protection)) saved in the pre-set memory when recalling them from the control
+                        panel.
+        cmd:            "MEM:REC:CONF?"
+
+    get_memory_setting:
+        description:    Return the current, voltage, OCP (Over-Current Protection), and OVP (Over-Voltage Protection)
+                        as stored in the pre-set memory (1 for memory A, 2 for memory B, 3 for memory C).
+        cmd:            "MEM:REC:PREV? {}"
+
+    save_memory:
+        description:    Save to the pre-set memory (1 for memory A, 2 for memory B, 3 for memory C).  The current,
+                        voltage, OCP (Over-Current Protection), and OVP (Over-Voltage Protection) are saved in the
+                        pre-set memory.
+        cmd:            "MEM:SAVE {}"
+
+    set_output_status:
+        description:    Set the output status and type (ON/OFF).  This command is invalid when a protection function
+                        is activated.  The settings are reset to default with the reset_psu command.
+        cmd:            "OUTP {}"
+
+    get_output_status:
+        description:    Return the output status and type (ON/OFF).
+        cmd:            "OUTP?"
+
+    set_current:
+        description:    Set the current to the given value [A].  This is invalid when the PMX is configured such that
+                        constant current is controlled externally.  The settings are set to the default values with the
+                        reset_pmu command.
+        cmd:            "CURR {}"
+
+    get_current_config:
+        description:    Return the actual current configuration [A].
+        cmd:            "CURR?"
+
+    set_ocp:
+        description:    Set the Over-Current Protection (OCP) value [A].  The settings are set to the default values
+                        with the reset_pmu command.
+        cmd:            "CURR:PROT {}"
+
+    get_ocp:
+        description:    Return the Over-Current Protection (OCP) value [A].
+        cmd:            "CURR:PROT?"
+
+    set_voltage:
+        description:    Set the voltage to the given value [V].  This is invalid when the PMX is configured such that
+                        constant voltage is controlled externally.  The settigns are set to the default values with the
+                        reset_pmu command.
+        cmd:            "VOLT {}"
+
+    get_voltage_config:
+        description:    Return the actual voltage configuration [V].
+        cmd:            "VOLT?"
+
+    set_ovp:
+        description:    Set the Over-Voltage Protection (OVP) value [V].  The settings are set to the default values
+                        with the reset_pmu command.
+        cmd:            "VOLT:PROT {}"
+
+    get_ovp:
+        description:    Return the Over-Voltage Protection (OVP) value [A].
+        cmd:            "VOLT:PROT?"
+
+    set_priority_mode:
+        description:    Set the operation mode to be prioritised when the output is turned on.  Should be CC for
+                        Constant Current, CV for Constant Voltage.
+        cmd:            "SYST:CONF:STAR:PRI {}"
+
+    get_priority_mode:
+        description:    Return the operation mode to be prioritised when the output is turned on.  Should be CC for
+                        Constant Current, CV for Constant Voltage.
+        cmd:            "SYST:CONF:STAR:PRI?"
+
+    clear_alarms:
+        description:    Clear all alarms.
+        cmd:            "OUTP:PROT:CLE"
+
+    questionable_status_register:
+        description:    Query the status of the questionable status register.  A query does not clear the content of
+                        the register.  This command is usefule to get the events and status during PMX operation (e.g.
+                        when the PSU detects and OVP or OCP).
+        cmd:            "STAT:QUES:COND?"

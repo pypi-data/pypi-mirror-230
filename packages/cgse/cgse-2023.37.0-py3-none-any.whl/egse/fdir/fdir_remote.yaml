@@ -1,0 +1,37 @@
+BaseClass:
+    egse.fdir.FdirRemoteInterface
+
+ProxyClass:
+    egse.fdir.FdirRemoteProxy
+
+ControlServerClass:
+    egse.alert.FdirRemoteControlServer
+
+ControlServer:
+    egse.fdir.fdir_remote_cs
+
+Commands:
+    is_connected:
+        description:
+        args:
+        cmd:                ""
+
+    is_simulator:
+        description:
+        args:
+        cmd:                ""
+
+    kill_process:
+        description:        Instruct the CS to kill a process (test script).
+        args:
+            pid:            int | process ID of the script
+        cmd:                "{pid}"
+
+
+    generate_popup:
+        description:        Generate a pop-up on the remote (client) machine to warn about an FDIR situation.
+        args:
+            code:           str | fdir code
+            actions:        str | list of actions performed (delimited by newlines)
+            success:        bool | whether the recovery script was executed successfuly
+        cmd:                "{code}{actions}{success}"

@@ -1,0 +1,105 @@
+BaseClass:
+    egse.shutter.thorlabs.ksc101.ShutterKSC101Interface
+
+ProxyClass:
+    egse.shutter.thorlabs.ksc101.ShutterKSC101Proxy
+
+ControlServerClass:
+    egse.shutter.thorlabs.ksc101_cs.ShutterKSC101ControlServer
+
+ControlServer:
+    egse.shutter.thorlabs.ksc101_cs
+
+UserInterface:
+    egse.shutter.thorlabs.ksc101_ui
+
+Commands:
+
+    # Each of these groups is parsed and used on both the server and the client side.
+    # The group name (e.g. is_simulator) will be monkey patched in the Proxy class for the device or service.
+    # The other field are:
+    #   description:   Used by the doc_string method to generate a help string
+    #   cmd:           Command string that will eventually be send to the hardware controller for the
+    #                  device after the arguments have been filled.
+    #   device_method: The name of the method to be called on the device class.
+    #                  These should all be defined by the base class for the device, i.e. LakeShoreBase.
+    #   response:      The name of the method to be called from the device protocol.
+    #                  This method should exist in the subclass of the CommandProtocol base class, i.e.
+    #                  in this case it will be the LakeShoreProtocol class.
+
+    # Definition of the the DeviceInterface
+
+    disconnect:
+        description: Disconnect from the Shutter controller. This command will be send to the
+                       Thorlabs Control Server which will then disconnect from the hardware controller.
+                       This command doesn't affect the ZeroMQ connection of this Proxy to the
+                       control server. Use the service command ``disconnect_cs()`` to disconnect
+                       from the control server.
+
+    connect:
+        description:    Connect to the Thorlabs Shutter.
+
+    reconnect:
+        description:    Reconnect to the Thorlabs Shutter.
+
+                        This command will force a disconnect and then try to re-connect to the controller.
+
+    is_simulator:
+        description:   Ask if the control server is a simulator instead of the real ShutterKSC01Controller class.
+        returns:       bool | True if the far end is a simulator instead of the real hardware
+
+    is_connected:
+        description:   Check if the Thorlabs Hardware Controller is connected.
+
+
+    # Definition of the device commands
+
+    set_mode:
+        description:  Sets the KSC101 control mode.
+                      Manual - In this mode, operation of the solenoid is via the top panel wheel.Move the wheel up to
+                      open the solenoid (ON) and down to close (OFF).
+                      Single - In this mode, the solenoid will open/close each time the top panel wheel ismoved up/down.
+                      Auto - In this mode, the solenoid will open and close continuously after the toppanel wheel is
+                      moved up. The ON and OFF times, and the number of cyclesperformed
+                      Trigger - The K-Cube solenoid controllers have two bidirectional trigger ports(TRIG1 and TRIG2)
+                      that can be used to read an external logic signal or outputa logic level to control external
+                      equipment. By default, TRIG 1 is configured asan input and TRIG 2 as an output.
+                      The active logic state can be selected Highor Low to suit the requirements of the application
+        args:
+          mode:       str | Available modes are "Manual", "Single", "Auto", "Trigger"
+        cmd:          "{mode}"
+        returns:      None
+
+    set_enable:
+      description:  This message sets the output state of the solenoid unit, and overrides any existing settings.
+                    It can also be operated by the SET_CHANENABLESTATE message.
+      args:
+        status:     bool | True = open, False = closed
+      cmd:          "{status}"
+      returns:      None
+
+    set_cycle:
+      description:  Used to set the cycle parameters (On time, Off time, and number of cycles) that are applicable when
+                    the solenoid controller is operating in one of the non‐manual modes (Single and Automatic mode
+                    operations).
+      args:
+        on:         int | The duration of an on (open) state of the solenoid in ms ()
+        off:        int | The duration of an off (closed) state of the solenoid in ms ().
+        number:     int | The number of cycles from 0 to . If 0 is set then infinity cycles are foreseen in automatic
+                    mode, the cycling can then be stopped with the set_enable command.
+      cmd:          "{on} {off} {number}"
+      returns:      None
+
+    get_mode:
+      description:  Retrieves the operating control mode of the KSC101 Controller.
+      returns:      int | 1 = manual, 2 = single, 3 = auto, 4 = trigger, None = error
+
+    get_enable:
+      description:  Retrieves the shutter solenoid status.
+      returns:      int | 1 = enabled (open); 0 = disabled (closed)
+
+    get_cycle:
+      description:  Retrives the the cycle parameters (On time, Off time, and number of cycles) that are applicable when
+                    the solenoid controller is operating in one of the non‐manual modes (Single and Automatic mode
+                    operations).
+      returns:      dict |

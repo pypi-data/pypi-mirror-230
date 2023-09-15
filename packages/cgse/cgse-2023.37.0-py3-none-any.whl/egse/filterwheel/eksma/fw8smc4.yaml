@@ -1,0 +1,121 @@
+BaseClass:
+    egse.filterwheel.eksma.fw8smc4.FilterWheel8SMC4Interface
+
+ProxyClass:
+    egse.filterwheel.eksma.fw8smc4.FilterWheel8SMC4Proxy
+
+ControlServerClass:
+    egse.filterwheel.eksma.fw8smc4_cs.FilterWheelControlServer
+
+ControlServer:
+    egse.filterwheel.eksma.fw8smc4_cs
+
+UserInterface:
+    egse.filterwheel.eksma.fw8smc4_ui
+
+Commands:
+
+    # Each of these groups is parsed and used on both the server and the client side.
+    # The group name (e.g. is_simulator) will be monkey patched in the Proxy class for the device or service.
+    # The other field are:
+    #   description:   Used by the doc_string method to generate a help string
+    #   cmd:           Command string that will eventually be send to the hardware controller for the
+    #                  device after the arguments have been filled.
+    #   device_method: The name of the method to be called on the device class.
+    #                  These should all be defined by the base class for the device.
+    #                  This method should exist in the subclass of the CommandProtocol base class.
+
+    # Definition of the the DeviceInterface
+
+    connect:
+        description:    Connect the Filter Wheel hardware controller
+
+    reconnect:
+        description:    Reconnect the Filter Wheel hardware controller.
+
+                        This command will force a disconnect and then try to re-connect to the controller.
+
+    disconnect:
+        description  : Disconnect from the Filter Wheel controller. This command will be send to the
+                       Thorlabs Control Server which will then disconnect from the hardware controller.
+                       This command doesn't affect the ZeroMQ connection of this Proxy to the
+                       control server. Use the service command `disconnect_cs()` to disconnect
+                       from the control server.
+
+    is_connected:
+        description:   Check if the filterwheel Hardware Controller is connected.
+
+    is_simulator:
+        description:   Ask if the control server is a simulator instead of the real fw8smc4Controller class.
+        returns:       bool | True if the far end is a simulator instead of the real hardware
+
+
+    # Definition of the device commands
+    load_wheels:
+        description:  Gets the attenuation setup configuration loaded from the configuration manager proxy
+        returns:      None
+
+    wheel_factors:
+        description:  Returns the wheel attenuation factors and their corresponding wheel position index
+        returns:      list | [factor, [index_pos1, index_pos2]
+
+    set_position:
+        description:  Sets the position of each og the filter wheels
+        args:
+          pos_wheel1:   int | the position number of wheel 1 from 0 to 7
+          pos_wheel2:   int | the position number of wheel 2 from 0 to 7
+        cmd:          "{pos_wheel1}, {pos_wheel2}"
+        returns:        int | 0 or 1 if the movement was executed, - 1 if error occurred
+
+    get_position:
+        description:  Gets the position of each of the filter wheels
+        returns:      list | [pos_wheel1, pos_wheel2]
+
+    get_status:
+      description:  Gets the status of the filterwheel motor controller
+      returns:      list | [Current position, Speed, Temperature, Current, Voltage, statusFlags]
+
+    homing:
+        description:  Performs the homing of the filter wheels.
+        returns:      None
+
+    #Commands similar to the CSL Collimator, to be discussed
+    #TODO: discuss about the commands similarities
+
+    att_get_level:
+        description:    Reports current attenuator level (a factor 0..1) and its corresponding wheel position.
+        cmd:            "att level"
+        returns:        list | [wheel one index position, wheel 2 index position, attenuator factor]
+
+    att_set_level_factor:
+        description:    Sets attenuator to the level closest to <factor>.
+
+                        There are 38 levels of attenuation available, from
+                        0 to 1. This command chooses the level closest to
+                        the requested value.
+        cmd:            "att level {factor}"
+
+    att_set_level_position:
+        description:    Sets attenuator wheels to positions <a> and <b>. This command is identical to set_position.
+                        (wheels positions go from 1 to 8).
+        cmd:            "att level {a} {b}"
+
+    att_level_up:
+        description:    Sets the attenuator to the level immediately above the current level.
+                        It won't go above 1.
+        cmd:            "att level up"
+        returns:        list | [wheel one index position, wheel 2 index position]
+
+    att_level_down:
+        description:    Sets the attenuator to the level immediately below the current level.
+                        It won't go lower than the lower index (0 attenuation).
+        cmd:            "att level down"
+        returns:        list | [wheel one index position, wheel 2 index position]
+
+    # This has been correctly implemented:
+    att_status:
+        args:
+          _flag:        str  | a string hex value to be transformed into bit list flags
+        description:    Reports if device attenuator is ready for use.
+        cmd:            "{_flag}"
+        returns:        dict | a dictionary with all the status flags coming from get_status command

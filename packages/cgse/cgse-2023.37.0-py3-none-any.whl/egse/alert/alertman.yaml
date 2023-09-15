@@ -1,0 +1,37 @@
+BaseClass:
+    egse.alert.AlertManagerInterface
+
+ProxyClass:
+    egse.alert.AlertManagerProxy
+
+ControlServerClass:
+    egse.alert.alertman_cs.AlertManagerControlServer
+
+ControlServer:
+    egse.alert.alertman_cs
+
+UserInterface:
+    egse.alert.alertman_ui
+
+Commands:
+    status:
+        description: 
+        cmd: "{name}"
+
+    load_configuration:
+        description:
+        cmd: "{phase}"
+
+    start_alert:
+        description:
+        cmd: "{name}"
+
+    stop_alert:
+        description:
+        cmd: "{name}"
+      
+    stop_cs_monitor:
+       description:
+
+    start_cs_monitor:
+       description:

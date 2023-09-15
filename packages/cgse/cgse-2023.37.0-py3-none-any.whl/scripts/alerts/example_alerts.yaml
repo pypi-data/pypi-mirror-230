@@ -1,0 +1,54 @@
+##
+# Alert manager configuration examples
+# 
+# This file show the different configuration options for the 
+# alert manager.
+# 1. sensor alerts
+
+
+
+#There are 4 types of sensor alerts available:
+# 1. Absolute limits (Minimum and maximum)
+# 2. Rate of change limits
+# 3. Flag masks
+# 4. Setpoint variantion
+# You can also enter an FDIRcode if there is an FDIR code associated with the alert
+# These can be configured using the syntax described below
+
+alerts:
+  Example 1 temperature:
+    sensor:
+    operational_limit:
+      min:
+      max:
+    timeout:
+    unit:
+    actions:
+    fdir:
+
+  Example 2 Pressure:
+    sensor:
+    rate_of_change:
+      limit:
+      time_window:
+    timeout:
+    unit:
+    actions:
+    fdir:
+
+  Example 3 EOT flag:
+    sensor: 
+    mask:
+    actions:
+    fdir:
+
+  Example 4 Heater setpoint:
+    sensor:
+    setpoint:
+      sensor:
+      value:    #Optional
+      offset:
+    timeout:
+    unit:
+    actions:
+    fdir:

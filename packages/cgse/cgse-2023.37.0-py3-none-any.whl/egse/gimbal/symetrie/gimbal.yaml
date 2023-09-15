@@ -1,0 +1,168 @@
+BaseClass:
+    egse.gimbal.symmetrie.GimbalInterface
+
+ProxyClass:
+    egse.gimbal.symetrie.GimbalProxy
+
+ControlServerClass:
+    egse.gimbal.symetrie.GimbalControlServer
+
+ControlServer:
+    egse.gimbal.symetrie.gimbal_cs
+
+UserInterface:
+    egse.gimbal.symetrie.gimbal_ui
+
+Commands:
+
+    # Each of these groups is parsed and used on both the server and the client side.
+    #
+    # The group name (e.g. is_simulator) will be monkey patched in the Proxy class for the device
+    # or service.
+    #
+    # The other field are:
+    #   description:   Used by the doc_string method to generate a help string
+    #   cmd:           Command string that will eventually be send to the hardware controller for
+    #                  the device. This cmd string is also used at the client side to parse and
+    #                  validate the arguments.
+    #   device_method: The name of the method to be called on the device class.
+    #                  These should all be defined by the interface class for the device, i.e.
+    #                  GimbalInterface in this case.
+    #                  When the device_method is the same as the group name, it can be omitted.
+    #   response:      The name of the method to be called from the device protocol.
+    #                  This method should exist in the subclass of the CommandProtocol base class,
+    #                  i.e. in this case it will be the GimbalProtocol class.
+    #                  The default (when no response is given) is 'handle_device_method'.
+
+    # Definition of the the DeviceInterface
+
+    is_simulator:
+        description:    Ask if the connected class is a simulator instead of the real device Controller class.
+        returns:        bool | True if the far end is a simulator instead of the real hardware
+
+    is_connected:
+        description:    Check if the Gimbal hardware controller is connected.
+
+    connect:
+        description:    Connect the Gimbal hardware controller
+
+    reconnect:
+        description:    Reconnect the Gimbal hardware controller.
+
+                        This command will force a disconnect and then try to re-connect to the controller.
+
+    disconnect:
+        description:    Disconnect from the gimbal controller.
+
+                        This command will be send to the Gimbal Control Server which will then
+                        disconnect from the hardware controller.
+
+                        This command does not affect the ZeroMQ connection of the Proxy to the
+                        control server. Use the service command `disconnect_cs()` to disconnect
+                        from the control server.
+
+
+    # Definition of the device commands
+
+    is_in_position:
+        description:    Returns True when the actuators are in position.
+
+    info:
+        description:    Retrieve basic information about the Gimbal and the Controller.
+
+    reset:
+        description:    Completely resets the Gimbal controller with the standard boot cycle.
+        cmd:            "$$$"
+
+    stop:
+        description:    Stop the current motion.
+        cmd:            "&2 Q20=2"
+
+    homing:
+        description:    Start the homing cycle for the Gimbal.
+        cmd:            "&2 Q20=1"
+
+    is_homing_done:
+        description:    Check if Homing is done.
+
+    clear_error:
+        description:    Clear all errors in the controller software.
+        cmd:            "&2 Q20=15"
+
+    activate_control_loop:
+        description:    Activates the control loop on motors.
+        cmd:            "&2 Q20=3"
+
+    deactivate_control_loop:
+        description:    Disables the control loop on the servo motors.
+        cmd:            "&2 Q20=4"
+
+    configure_offsets:
+        description:    Change the definition of the offsets.
+        cmd:            "&2 Q80={grx} Q81={gry} Q20=21"
+
+    get_offsets:
+        description:    Retrieve the definition of the offsets.
+        cmd:            "&2 Q20=31"
+        query:          "&2 Q20 Q80,2,1"
+
+    get_general_state:
+        description:    Retreive general state information of the gimbal.
+
+    get_user_positions:
+        description:    Retreive the position of the object in the User Coordinate System.
+        cmd:            "&2 Q53,2,1"
+
+    get_machine_positions:
+        description:    Retreive the position of the gimbal in the Machine Coordinate System.
+        cmd:            "&2 Q47,2,1"
+
+    get_motor_temperatures:
+        description:    Retrieve the temperatures of the Gimbal motors.
+        cmd:            "&2 Q59,2,1"
+
+    get_actuator_length:
+        description:    Retreive the current length of the gimbal actuators.
+        cmd:            "&2 Q41,2,1"
+
+    get_actuator_state:
+        description:    Returns the general state of the actuators.
+
+    move_absolute:
+        description:    Move/define the Object Coordinate System position and orientation expressed in the invariant user coordinate system.
+        cmd:            "&2 Q70=0 Q71={grx} Q72={gry} Q20=11"
+
+    move_relative:
+        description:    Move the object relative to its current object position and orientation.
+        cmd:            "&2 Q70=1 Q71={grx} Q72={gry} Q20=11"
+
+    check_absolute_movement:
+        description:    Check if the requested object movement is valid.
+        cmd:            "&2 Q70=0 Q71={grx} Q72={gry} Q20=10"
+
+    check_relative_movement:
+        description:    Check if the requested object movement is valid.
+        cmd:            "&2 Q70=0 Q71={grx} Q72={gry} Q20=11"
+
+    goto_zero_position:
+        cmd:            "&2 Q80=2 Q20=13"
+
+    goto_specific_position:
+        cmd:            "&2 Q80={pos} Q20=13"
+
+    perform_maintenance:
+        description:    Ask the controller to perform the maintenance cycle which consists to
+                        travel the full range on one axis. Full range corresponds to the Gimbal
+                        machine limts (defined by the manufacturer), and the movement is
+                        performed in Machine coordinate system.
+
+    get_speed:
+        description:    Returns the rotation speed. the angular speed is expressed in degrees
+                        per second.
+
+    set_speed:
+        description:    Sets the speed of movements.
+        cmd:            "&2 Q81={sr} Q20=25"
+
+    get_debug_info:
+        description:    Returns debugging status information.

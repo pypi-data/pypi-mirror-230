@@ -1,0 +1,81 @@
+BaseClass:
+    egse.tempcontrol.spid.PIDInterface
+
+ProxyClass:
+    egse.tempcontrol.spid.PIDProxy
+
+ControlServerClass:
+    egse.tempcontrol.spid.PIDControlServer
+
+ControlServer:
+    egse.tempcontrol.spid.spid_cs
+
+UserInterface:
+    egse.tempcontrol.spid.spid_ui
+
+
+Commands:
+
+    # Definition of the DeviceInterface.
+
+    disconnect:
+        description:    Disconnect the PID Controller.
+
+    connect:
+        description:    Connect the PID Controller.
+
+    reconnect:
+        description:    Reconnect the PID Controller.
+
+    is_simulator:
+        description:    Ask if the control server is a simulator.
+        returns:        bool | True if it is a simulator.
+
+    is_connected:
+        description:    Check if PID Controller is connected.
+
+    set_temperature:
+        description:    Set PID control temperature.
+        args:
+            channel:    int | Channel index.
+            setpoint:   float | Temperature setpoint.
+        cmd:            "{channel}{setpoint}\n"
+
+    get_temperature:
+        description:    Set PID control temperature.
+        args:
+            channel:    int | Channel index.
+        cmd:            "{channel}\n"
+        returns:        int | Returns temperature setpoint for given channel
+
+    enable:
+      description:      Enable the PID controller
+      args:
+        channel:        int | channel index
+      cmd:              "{channel}\n"
+
+    disable:
+      description:      Disable the PID Controller
+      args:
+        channel:        int | channel index
+      cmd:              "{channel}\n"
+
+    set_pid_parameters:
+        description:    Set the PID parameters of a PID channel
+        args:
+            channel:    int | channel index
+            Kp:         float | proportional constant
+            Ki:         float | integral constant
+            Kd:         float | derivative constant
+            int_max:    maximum integral err
+            int_min:    minumum integral err
+            reset:      bool  | reset the error, default = True 
+        cmd:            "{channel}{Kp}{Ki}{Kd}{int_max}{int_min}{reset}"
+
+    get_pid_parameters:
+        description:    Get the current PID parameters
+        args:
+            channel:    int | channel index
+        cmd:            "{channel}"
+        returns:        int | returns all parameters and the max integral error
+

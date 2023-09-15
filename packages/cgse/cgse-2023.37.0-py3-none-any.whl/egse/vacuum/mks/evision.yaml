@@ -1,0 +1,75 @@
+BaseClass:
+    egse.vacuum.mks.evision_interface.EvisionInterface
+
+ProxyClass:
+    egse.vacuum.mks.evision.EvisionProxy
+
+ControlServer:
+    egse.vacuum.mks.evision_cs
+
+UserInterface:
+    egse.vacuum.mks.evision_ui
+
+Commands:
+
+    disconnect:
+        description:        Disconnect from the device.
+
+    connect:
+        description:        Connect to the device.
+
+    reconnect:
+        description:        Reconnect to the device.
+                            This command will force a disconnect and then try to re-connect to the controller.
+    is_connected:
+        description:        Check if the Thorlabs Hardware Controller is connected.
+
+    is_simulator:
+        description:        Ask if the control server is a simulator instead of the real controller class.
+        returns:            bool | True if the far end is a simulator instead of the real hardware
+
+    control_sensor:
+        description:
+
+    release_sensor:
+        description:
+
+    filament_select:
+        description:
+        cmd:                '{num}'
+
+    filament_control:
+        description:
+        cmd:                '{state}'
+
+    add_bar_chart:
+        description:
+        cmd:                "{name}{startMass}{endMass}{filterMode}{accuracy}{eGainIndex}{sourceIndex}{detectorIndex}"
+
+    add_scan:
+        description:
+        cmd:                "{name}"
+
+    start_scan:
+        description:
+        cmd:                "{num}"
+    
+    stop_scan:
+        description:        ""
+        cmd:                ""
+
+    resume_scan:
+        description:
+        cmd:                "{num}"
+
+    restart_scan:
+        description:        ""
+
+    get_mass_reading:
+        description:        ""
+
+    get_filament_status:
+        description:        ""
+
+    measurement_remove_all:
+        desciption:         ""
