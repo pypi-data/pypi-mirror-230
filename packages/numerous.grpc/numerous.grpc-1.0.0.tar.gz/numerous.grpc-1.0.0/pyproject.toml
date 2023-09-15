@@ -1,0 +1,18 @@
+[project]
+description = 'Protocol buffers and gRPC implementation for numerous'
+classifiers = [
+    'Operating System :: OS Independent',
+    'Programming Language :: Python :: 3',
+]
+name = 'numerous.grpc'
+version = '1.0.0'
+dependencies = ['grpcio>=1.56.2,<2', 'protobuf>=4.24,<5']
+
+[project.optional-dependencies]
+generate = ['grpcio-tools>=1.56.2,<2', 'mypy-protobuf>=3.5,<4']
+
+[build-system]
+requires = ["setuptools", "wheel"]
+
+[tool.setuptools.package-data]
+"numerous.grpc" = ['py.typed']
