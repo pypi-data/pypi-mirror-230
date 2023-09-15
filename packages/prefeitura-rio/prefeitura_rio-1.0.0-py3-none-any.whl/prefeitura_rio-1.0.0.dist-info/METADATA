@@ -1,0 +1,37 @@
+Metadata-Version: 2.1
+Name: prefeitura-rio
+Version: 1.0.0
+Summary: Pacote Python que implementa utilidades para nossos projetos!
+Home-page: https://github.com/prefeitura-rio/prefeitura-rio
+License: GPL-3.0-only
+Keywords: python,utilities,government
+Author: Gabriel Gazola Milan
+Author-email: gabriel.gazola@poli.ufrj.br
+Requires-Python: >=3.9,<3.11
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Provides-Extra: all
+Provides-Extra: metrics
+Provides-Extra: pipelines
+Provides-Extra: sgrc
+Requires-Dist: basedosdados[upload] (==2.0.0b13) ; extra == "all" or extra == "pipelines"
+Requires-Dist: google-cloud-storage (>=2.10.0,<3.0.0) ; extra == "all" or extra == "pipelines"
+Requires-Dist: infisical (>=1.4.2,<2.0.0) ; extra == "all" or extra == "pipelines"
+Requires-Dist: loguru (>=0.7.0,<0.8.0)
+Requires-Dist: numpy (>=1.23.3,<2.0.0) ; extra == "all" or extra == "metrics"
+Requires-Dist: pandas (>=2.0.3,<3.0.0) ; extra == "all" or extra == "pipelines"
+Requires-Dist: pendulum (>=2.1.2,<3.0.0) ; extra == "all" or extra == "sgrc"
+Requires-Dist: prefect (==1.4) ; extra == "all" or extra == "pipelines"
+Requires-Dist: pytz (>=2023.3,<2024.0) ; extra == "all" or extra == "sgrc"
+Requires-Dist: requests (>=2.31.0,<3.0.0) ; extra == "all" or extra == "sgrc"
+Requires-Dist: scikit-learn (>=1.1.2,<2.0.0) ; extra == "all" or extra == "metrics"
+Requires-Dist: sentry-sdk (>=1.29.2,<2.0.0) ; extra == "all" or extra == "pipelines"
+Project-URL: Repository, https://github.com/prefeitura-rio/prefeitura-rio
+Description-Content-Type: text/markdown
+
+# prefeitura-rio
+
+Um pacote Python que implementa utilidades para nossos projetos!
+
