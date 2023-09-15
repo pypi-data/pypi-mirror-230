@@ -1,0 +1,176 @@
+Metadata-Version: 2.1
+Name: autonomi-nos
+Version: 0.0.10
+Summary: Nitrous oxide system (NOS) for computer-vision.
+License: MIT License
+        
+        Copyright (c) 2023 Autonomi AI
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Documentation, https://autonomi-ai.github.io/nos/
+Project-URL: Source Code, https://github.com/autonomi-ai/nos
+Classifier: Development Status :: 3 - Alpha
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Scientific/Engineering :: Image Processing
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Requires-Python: >=3.7.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: av >=10.0.0
+Requires-Dist: cloudpickle >=2.2.1
+Requires-Dist: docker >=6.0.0
+Requires-Dist: gitpython
+Requires-Dist: grpcio-tools <=1.49.1
+Requires-Dist: loguru >=0.7.0
+Requires-Dist: opencv-python-headless >=4.6.0.66
+Requires-Dist: pandas
+Requires-Dist: Pillow
+Requires-Dist: psutil >=5.9.5
+Requires-Dist: py-cpuinfo >=9.0.0
+Requires-Dist: pydantic <2.0.0,>=1.10.12
+Requires-Dist: rich >=12.5.1
+Requires-Dist: tqdm
+Requires-Dist: typer >=0.7.0
+Requires-Dist: typing-extensions >=4.5.0
+Provides-Extra: dev
+Requires-Dist: black[jupyter] ==22.3.0 ; extra == 'dev'
+Requires-Dist: build ==0.10.0 ; extra == 'dev'
+Requires-Dist: pre-commit ==3.2.2 ; extra == 'dev'
+Requires-Dist: ruff ==0.0.262 ; extra == 'dev'
+Provides-Extra: docs
+Requires-Dist: mkdocs >=1.5.2 ; extra == 'docs'
+Requires-Dist: mkdocs-blog-plugin ; extra == 'docs'
+Requires-Dist: mkdocs-exclude ; extra == 'docs'
+Requires-Dist: mkdocs-include-markdown-plugin ; extra == 'docs'
+Requires-Dist: mkdocs-material ; extra == 'docs'
+Requires-Dist: mkdocs-material-extensions >=1.1 ; extra == 'docs'
+Requires-Dist: mkdocs-pymdownx-material-extras ; extra == 'docs'
+Requires-Dist: mkdocs-same-dir ; extra == 'docs'
+Requires-Dist: mkdocs-table-reader-plugin ; extra == 'docs'
+Requires-Dist: mkdocstrings ; extra == 'docs'
+Requires-Dist: mkdocstrings-python ; extra == 'docs'
+Requires-Dist: mkdocstrings[python] ; extra == 'docs'
+Provides-Extra: extras
+Requires-Dist: controlnet-aux ==0.0.6 ; extra == 'extras'
+Requires-Dist: matplotlib ; extra == 'extras'
+Requires-Dist: opencv-contrib-python-headless ; extra == 'extras'
+Provides-Extra: server
+Requires-Dist: accelerate >0.18.0 ; extra == 'server'
+Requires-Dist: diffusers >=0.17.1 ; extra == 'server'
+Requires-Dist: huggingface-hub ; extra == 'server'
+Requires-Dist: memray ; extra == 'server'
+Requires-Dist: pyarrow >=12.0.0 ; extra == 'server'
+Requires-Dist: ray[default] >=2.6.1 ; extra == 'server'
+Requires-Dist: safetensors >=0.3.0 ; extra == 'server'
+Requires-Dist: tabulate ; extra == 'server'
+Requires-Dist: timm >=0.9.2 ; extra == 'server'
+Requires-Dist: transformers >=4.29.2 ; extra == 'server'
+Requires-Dist: torch <2.0.0,>=1.12.1 ; extra == 'server'
+Requires-Dist: torchaudio >=0.13.1 ; extra == 'server'
+Requires-Dist: torchvision >=0.13.0 ; extra == 'server'
+Requires-Dist: controlnet-aux ==0.0.6 ; extra == 'server'
+Requires-Dist: matplotlib ; extra == 'server'
+Requires-Dist: opencv-contrib-python-headless ; extra == 'server'
+Provides-Extra: test
+Requires-Dist: pytest ; extra == 'test'
+Requires-Dist: pytest-asyncio ; extra == 'test'
+Requires-Dist: typeguard ; extra == 'test'
+Provides-Extra: torch
+Requires-Dist: torch <2.0.0,>=1.12.1 ; extra == 'torch'
+Requires-Dist: torchaudio >=0.13.1 ; extra == 'torch'
+Requires-Dist: torchvision >=0.13.0 ; extra == 'torch'
+
+<h1 align="center" style="font-size:54px;font-weight: bold;font-color:black;">🔥 NOS</h1>
+<h4 align="center">
+Optimize, serve and auto-scale Pytorch models on any hardware. <br>
+Cut your inference costs by 10x.
+</h4>
+
+
+
+
+<p align="center">
+<a href="https://www.autonomi.ai/"><b>Website</b></a> | <a href="https://autonomi-ai.github.io/nos/"><b>Docs</b></a> |  <a href="https://discord.gg/QAGgvTuvgg"><b>Discord</b></a>
+</p>
+
+<p align="center">
+<a href="https://pypi.org/project/autonomi-nos/">
+    <img alt="PyPi Version" src="https://badge.fury.io/py/autonomi-nos.svg">
+</a>
+<a href="https://pypi.org/project/autonomi-nos/">
+    <img alt="PyPi Version" src="https://img.shields.io/pypi/pyversions/autonomi-nos">
+</a>
+<a href="https://pypi.org/project/autonomi-nos/">
+    <img alt="PyPi Downloads" src="https://img.shields.io/pypi/dm/autonomi-nos">
+</a>
+<a href="https://discord.gg/QAGgvTuvgg">
+    <img alt="Discord" src="https://img.shields.io/badge/discord-chat-purple?color=%235765F2&label=discord&logo=discord">
+</a>
+<a href="https://twitter.com/autonomi_ai">
+    <img alt="PyPi Version" src="https://img.shields.io/twitter/follow/autonomi_ai.svg?style=social&logo=twitter">
+</a>
+
+</p>
+
+
+**NOS** is a PyTorch library for optimizing and running lightning-fast inference of popular computer vision models.
+
+*Optimizing and serving models for production AI inference is still difficult, often leading to notoriously expensive cloud bills and often underutilized GPUs. That’s why we’re building **NOS** - a fast inference server for modern AI workloads. With a few lines of code, developers can optimize, serve, and auto-scale Pytorch model inference without having to deal with the complexities of ML compilers, HW-accelerators, or distributed inference. Simply put, NOS allows AI teams to cut inference costs up to **10x**, speeding up development time and time-to-market.*
+
+
+## What is NOS?
+- ⚡️ **Fast**: Built for PyTorch and designed to optimize/run models faster
+- 🔥 **Performant**: Run models such as SDv2 or object detection 2-3x faster out-of-the-box
+- 👩‍💻 **No PhD required**: Optimize models for maximum HW performance without a PhD in ML
+- 📦 **Extensible**: Easily add optimization and HW-support for custom models
+- ⚙️ **HW-accelerated:** Take full advantage of your HW (GPUs, ASICs) without compromise
+- ☁️ **Cloud-agnostic:** Run on any cloud HW (AWS, GCP, Azure, Lambda Labs, On-Prem)
+
+
+**NOS** inherits its name from **N**itrous **O**xide **S**ystem, the performance-enhancing system typically used in racing cars. NOS is designed to be modular and easy to extend.
+
+
+## Batteries Included
+ - 💪 **SOTA Model Support:** NOS provides out-of-the-box support for popular CV models such as [Stable Diffusion](stabilityai/stable-diffusion-2), [OpenAI CLIP](openai/clip-vit-base-patch32), [YOLOX](https://github.com/Megvii-BaseDetection/YOLOX) object detection, tracking and more
+ - 🔌 **APIs:** NOS provides out-of-the-box APIs and avoids all the ML model deployment hassles
+ - 🐳 **Docker:** NOS ships with docker images to run accelerated and scalable CV workloads
+ - 📈 **Multi-Platform**: NOS allows you to run models on different HW (NVIDIA, custom ASICs) without any model compilation or runtime management.
+
+
+## Getting Started
+
+Get started with NOS in a few lines of code:
+
+```shell
+pip install autonomi-nos[torch]
+```
+
+- [API Documentation](https://autonomi-ai.github.io/nos/)
+- [Quickstart](https://autonomi-ai.github.io/nos/docs/quickstart/)
+- [Supported Models](https://autonomi-ai.github.io/nos/docs/ROADMAP/#model-hub)
+- [Roadmap](https://autonomi-ai.github.io/nos/docs/ROADMAP/)
+
+
+## Contribute
+We welcome contributions! Please see our [contributing guide](docs/CONTRIBUTING.md) for more information.
