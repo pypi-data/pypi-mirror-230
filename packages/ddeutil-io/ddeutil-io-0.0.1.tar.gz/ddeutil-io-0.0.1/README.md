@@ -1,0 +1,54 @@
+# Data Utility Package: _IO_
+
+[![test](https://github.com/korawica/ddeutil-io/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/korawica/ddeutil-io/actions/workflows/tests.yml)
+[![size](https://img.shields.io/github/languages/code-size/korawica/ddeutil-io)](https://github.com/korawica/ddeutil-io)
+
+**Table of Contents**:
+
+- [Config](#config)
+- [Register](#register)
+
+This **Utility IO** Object was created for `load` the config data from any file
+format types like `.yaml`, `.json`, or `.toml`, and manage retention and version
+of this config file lifecycle.
+
+**Install from PyPI**:
+
+```shell
+pip install ddeutil-io
+```
+
+## Config
+
+The **Config Object** is the file system handler object.
+
+```python
+from pathlib import Path
+from ddeutil.io.config import ConfFile
+
+config: ConfFile = ConfFile(path=Path(), compress="gzip")
+```
+
+## Register
+
+The **Register Object** is the metadata generator object for the config data.
+If you passing name and configs to this object, it will find the config name
+in any stage storage and generate its metadata to you.
+
+```python
+from ddeutil.io.register import Register
+from ddeutil.io.models import Params
+
+registry: Register = Register(
+    name='examples:conn_data_local_file',
+    config=Params.model_validate({
+        "stages": {
+          "raw": {"format": "{naming:%s}.{timestamp:%Y%m%d_%H%M%S}"},
+        },
+    }),
+)
+```
+
+## License
+
+This project was licensed under the terms of the [MIT license](LICENSE).
