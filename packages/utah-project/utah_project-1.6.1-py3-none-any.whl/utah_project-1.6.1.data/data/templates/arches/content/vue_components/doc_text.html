@@ -1,0 +1,133 @@
+  <!--
+  =====================================================================================
+  EHTML Markup
+  =====================================================================================
+  -->
+  <script type="text/html" id="doc-text-template">
+    <textarea class="textarea is-family-code has-background-black has-text-info" style="box-shadow: none;" rows="25" v-model="doc.text" v-on:ondragover="dragover"> </textarea>
+  </script>
+
+
+  <script type="text/javascript">
+    const DOCUMENT_NOT_FOUND = {
+          'header' : "{% trans %}Dragging Error{% endtrans %}",
+          'body' : "{% trans %}The dropped document is no longer available in the source location{% endtrans %}",
+          'can_close':true,
+          'color' : "is-warning"
+    }
+
+
+    var DOC_TEXT_COMPONENT = {
+        template : "#doc-text-template",
+        data() {
+            return {}
+        },
+        props: ['doc'],
+        watch:{
+            doc : {
+                deep: true, 
+                handler(){
+                    this.process_change()                  
+                }
+            }
+        },
+        mounted() {
+            this.drop_methods = {
+                htm:'drop_htm',
+                html:'drop_html',
+                jpg:'drop_img',
+                jpeg:'drop_img',
+                jfif:'drop_img',
+                png:'drop_img',
+                gif:'drop_img',
+                wav:'drop_audio',
+                mp3:'drop_audio'
+            }
+        },
+        methods : {
+            split_uri: (uri)=>{
+                var slash_loc=uri.lastIndexOf("/")
+                var dir =uri.slice(0, slash_loc)
+                var filename = uri.slice(slash_loc+1)
+                return {"dir":dir, "filename":filename}
+            },
+            dragover: (e)=>{
+                ev.preventDefault();
+            },
+            drop: function(){},
+            process_change: function() {
+                const myre = /\<\!\-\- sub\=\'(.*)\' \-\-\>/
+                var matches = this.doc.text.match(myre)
+                if (matches != null) {
+                    var parsed_uri = this.parse_uri(matches[1])
+                    if (!parsed_uri.is_folder) {
+                        ext = parsed_uri.lcase_extension
+
+                        if (ext in this.drop_methods) {
+                            this[this.drop_methods[ext]](matches[0], matches[1])
+                        } else {
+                            this.replace_sub_tag(matches[0], "<a href='" + matches[1] + "' target='new'>" + parsed_uri.filename + "</a>")
+                        }
+                    } else {
+                        this.replace_sub_tag(matches[0], "<a href='" + matches[1] + "' target='new'>" + matches[1] + "</a>")
+                    }
+                }
+            },
+            drop_htm: function(sub_tag, uri) {
+                doc = this.doc.get_root_folder().find_item_by_uri(uri, false)
+                if (doc != null) {
+                    doc.read(
+                        ()=>{
+                            this.replace_sub_tag(sub_tag, doc.text)
+                        },
+                        ( error_tag )=>{
+                            emit_remote_error( error_tag )
+                        }
+                    )
+                } else {
+                    emit_message( DOCUMENT_NOT_FOUND )
+                    this.replace_sub_tag(sub_tag, "")
+                }
+            },
+            drop_html: function(sub_tag, uri) {
+                doc = this.doc.get_root_folder().find_item_by_uri(uri, false)
+                if (doc != null) {
+                    doc.read(
+                        ()=>{
+                            var new_tag = "<a href='" + uri + "' target='new'>" + doc.metadata.title + "</a>"                        
+                            this.replace_sub_tag(sub_tag, new_tag)
+                        },
+                        ( error_tag )=>{
+                            emit_remote_error( error_tag )
+                        }
+                    )
+                } else {
+                    emit_message( DOCUMENT_NOT_FOUND )
+                    this.replace_sub_tag(sub_tag, "")
+                }
+            },
+            drop_img: function(sub_tag, uri){
+                new_tag = "<img src='" + uri + "' />"
+                this.replace_sub_tag(sub_tag, new_tag)
+            },
+            drop_audio: function(sub_tag, uri){
+                new_tag = `
+<audio
+    controls
+    src='` + uri + `'>
+        <a href='` + uri + `'>
+            Download audio
+        </a>
+</audio>
+`
+                this.replace_sub_tag(sub_tag, new_tag)
+            },
+            replace_sub_tag : function(sub_tag, replacement_value){
+                this.doc.text = this.doc.text.replace(sub_tag, replacement_value)
+            },
+            parse_uri : (uri)=>{
+                return path_parser(uri)
+            }
+        }
+    }
+  </script>

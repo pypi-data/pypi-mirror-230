@@ -1,0 +1,103 @@
+{% extends arches_layout %}
+{% block main_content %}
+<table style="width:100%" class="table">
+    <thead>
+        <tr>
+            <th class="has-background-info" colspan="2">
+                {% trans %}Security{% endtrans %}
+            </th>
+        </tr>
+        <tr>
+            <th style="width:350px;">
+                {% trans %}Function{% endtrans %}  
+            </th>
+            <th>
+                {% trans %}Description{% endtrans %}
+            </th>
+        </tr>
+    </thead>
+
+
+    <tbody>
+        {% if arches_nav_bean.is_authorized("/security/groups") %}
+        <tr>
+            <td>
+                <a href="/security/groups">{% trans %}Manage Groups{% endtrans %}</a>
+            </td>
+            <td>
+                {% trans %}Create, Delete and Change user groups{% endtrans %}
+            </td>
+        </tr>    
+        {% endif %}
+        
+        {% if arches_nav_bean.is_authorized("/security/users") %}
+        <tr>
+            <td>
+                <a href="/security/users">{% trans %}Manage Group Enrollments{% endtrans %}</a>
+            </td>
+            <td>
+                {% trans %}Add and remove users to and from user groups{% endtrans %}
+            </td>
+        </tr>    
+        {% endif %}
+        
+        {% if arches_nav_bean.is_authorized("/security/uri_access_rights") %}
+        <tr>
+            <td>
+                <a href="/security/uri_access_rights">{% trans %}URI Access Rights{% endtrans %}</a>
+            </td>
+            <td>
+                {% trans %}Manage security regarding the URI's in this application{% endtrans %}
+            </td>
+        </tr>    
+        {% endif %}
+
+    </tbody>
+
+</table>
+
+        <table style="width:100%" class="table">
+            <thead>
+                <tr>
+                    <th class="has-background-info" colspan="2">
+                        {% trans %}Content{% endtrans %}
+                    </th>
+                </tr>
+                        <tr>
+                    <th style="width:350px;">
+                        {% trans %}Function{% endtrans %}
+                    </th>
+                    <th>
+                        {% trans %}Description{% endtrans %}
+                    </th>
+                </tr>
+            </thead>
+        
+        
+            <tbody>
+
+                
+        
+    {% for microsite_name in microsite_names %}
+        {% set view_folder_uri = "/arches/content/manage_microsite/" + microsite_name %}
+        
+        {% if arches_nav_bean.is_authorized(view_folder_uri) %}
+        <tr>
+            <td>
+                <a href="{{ view_folder_uri }}">{% trans %}Content manage microsite: {% endtrans %}{{ microsite_name }}</a>
+            </td>
+            <td>
+                {% trans %}Content Management Functions{% endtrans %}
+            </td>
+        </tr>    
+        {% endif %}
+
+
+    {% endfor %}
+
+
+
+    </tbody>
+
+</table>
+{% endblock %}

@@ -1,0 +1,13 @@
+{
+    "must_implement": "utah.core.taskpool.ProcessingPool",
+    "type": "utah.impl.zion.taskpool.ProcessingPool",
+    "load_it": true,
+    "config": {
+        "total_threads": 10, 
+        "gc_secs": 900, 
+        "status_retention_days": 31, 
+        "upd_timeout_secs": 3600, 
+        "task_timeout_secs": 3600, 
+        "base_path": "${UTAH_VARIABLE_DATA}/data/task"
+    }
+}

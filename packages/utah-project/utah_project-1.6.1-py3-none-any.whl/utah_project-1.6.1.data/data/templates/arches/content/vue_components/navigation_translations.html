@@ -1,0 +1,185 @@
+  <!--
+  =====================================================================================
+  Navigation Translations
+    DONE: Add create locale function
+    DONE: Display Translations with switching logic
+    DONE: Create a delete locale function
+    DONE: Create an edit locale function
+  =====================================================================================
+  -->
+  <script type="text/html" id="navigation-translations-template">
+    <div style="align-items:center; padding: 5px 0px 5px 10px; margin-bottom:15px;" class="has-background-info has-text-white" width="100%">
+        <span class="mr-5">{% trans %}Tools{% endtrans %}</span>
+        <i class="mr-3 fa fa-plus is-size-5" title="{% trans %}Add a new supported locale to navigation{% endtrans %}" v-on:click="add_locale"></i>
+        <i class="mr-3 fa fa-trash is-size-5" title="{% trans %}Delete the selected locale{% endtrans %}" v-on:click="delete_locale"></i>
+    </div>
+
+    <div v-if="locale_list.length==0">
+        {% trans %}There are no translations to display at this time{% endtrans %}        
+    </div>
+    <div class="columns is-gapless" v-if="locale_list.length>0">
+        <div class="column is-1">
+            <ul>
+                <li v-for="locale in locale_list" 
+                    style="cursor: pointer" 
+                    v-bind:class="{'has-background-white' : (locale==selected_locale), 'has-text-weight-semibold' : (locale==selected_locale) }" 
+                    v-on:click="select_locale(locale)">
+                        <span v-if="locale!=selected_locale">
+                            {{ "{{ locale }}" }}
+                        </span>
+                        <string-editor v-else 
+                            v-model="edit_locale" 
+                            v-bind:validation_regex='locale_validation'
+                            v-bind:key="selected_locale" 
+                            v-on:change="locale_changed"
+                            style="border:0; width:90%; font-size: 1rem;"
+                            error_style="border:0; width:90%; font-size: 1rem;"
+                            class="is-5" 
+                            error_class="is-5 has-background-danger-light">
+                        </string-editor>
+                    </li>
+            </ul>    
+        </div>
+        <div style="height:2000px ;" class="column has-background-white" v-bind:key="selected_locale">
+            <table style="width:100%;" class="table">
+                <thead>
+                    <tr>
+                        <th>Base Text</th>
+                        <th>Translation</th>
+                    </tr>    
+                </thead>
+                <tbody>
+                    <tr style="height: 50px;" v-for="base_text in sorted_base_keys">
+                        <td width="50%;"><span class="pt-5 pb-5">{{ "{{base_text}}" }}</span></td>
+                        <td width="50%;">
+                            <string-editor v-model="selected_translations[base_text]" validation_regex="^([^\x00-\x1F]{1,100})$" class="is-5" error_class="has-background-danger-light" style="width:100%; border:0; font-size: 1rem;" error_style="width:100%; border:0; font-size: 1rem;" size="50"></string-editor>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</script>
+
+  <script type="text/javascript">
+    var NAVIGATION_TRANSLATIONS_COMPONENT = {
+      props : ['nav_tree'],
+      template : "#navigation-translations-template",
+      data() {
+        return {
+          locale_list : [],
+          selected_translations : null,
+          selected_locale: null,
+          edit_locale: null,
+          locale_validation: null
+        }
+      },
+      watch:{
+      },
+      mounted() {
+        this.locale_list = Object.keys(this.nav_tree.translations).sort()
+        if (this.locale_list.length > 0) {
+            this.select_locale(this.locale_list[0])
+        }
+      },
+      methods : {
+        add_locale() {
+            const PROMPT_TEXT = {
+                'header' : "{% trans %}Navigation Editor{% endtrans %}",
+                'body' : "{% trans %}Enter new locale{% endtrans %}",
+                'color' : "is-info",
+                'can_close':true
+            }
+
+            emit_prompt(PROMPT_TEXT, 
+            (locale) => {
+                if (!(locale in this.nav_tree.translations)) {
+                    var label_list = []
+                    this.gather_labels(this.nav_tree, label_list)
+                    var new_translations = {}
+                    for (var i=0; i<label_list.length; i++) {
+                        new_translations[label_list[i]] = label_list[i]
+                    }
+                    this.nav_tree.translations[locale] = new_translations
+                    this.locale_list[this.locale_list.length] = locale
+                    this.locale_list.sort()
+                    this.select_locale(locale)
+                } else {
+                    const MSG_TEXT = {
+                        'header' : "{% trans %}Navigation Editor{% endtrans %}",
+                        'body' : "{% trans %}Locale has already been defined{% endtrans %}",
+                        'color' : "is-warning",
+                        'can_close':true
+                    }
+                    emit_message(MSG_TEXT)
+                }
+            })
+
+        },
+        delete_locale(e) {
+            const CONFIRM_TEXT = {
+                'header' : "{% trans %}Navigation Editor{% endtrans %}",
+                'body' : "{% trans %}Are you sure you want to remove this locale. Click OK to confirm.{% endtrans %}",
+                'color' : "is-danger",
+                'can_close':true
+            }
+            emit_confirmation_request(CONFIRM_TEXT, 
+            () => {
+                delete this.nav_tree.translations[this.selected_locale]
+                this.locale_list = Object.keys(this.nav_tree.translations).sort()
+                if (this.locale_list.length > 0) {
+                    this.select_locale(this.locale_list[0])
+                } else {
+                    this.selected_locale = null
+                    this.edit_locale = null
+                }
+            })
+
+        },
+        select_locale(locale) {
+            this.selected_translations = this.nav_tree.translations[locale]
+            this.sorted_base_keys = Object.keys(this.selected_translations).sort()
+            this.selected_locale = locale
+            this.edit_locale = locale
+            this.reset_locale_validate()
+        },
+        gather_labels(node, list) {
+            if ("description" in node) {
+                list[list.length] = node.description
+            }
+            if ("children" in node) {
+                for (var i=0; i<node.children.length; i++) {
+                    this.gather_labels(node.children[i], list)
+                }
+            }
+        },
+        locale_changed(e) {
+            translations = this.nav_tree.translations[this.selected_locale]
+            delete this.nav_tree.translations[this.selected_locale]
+            this.nav_tree.translations[this.edit_locale] = translations
+            this.selected_locale = this.edit_locale
+            this.locale_list = Object.keys(this.nav_tree.translations).sort()
+            this.reset_locale_validate()
+        },
+        reset_locale_validate() {
+            if (this.locale_list.length > 0) {
+                var ll = ""
+                var s = ""
+                for (var i=0; i<this.locale_list.length; i++) {
+                    if (this.locale_list[i] != this.selected_locale) {
+                        ll = ll + s + this.locale_list[i]
+                        s = "|"
+                    }
+                }
+
+                this.locale_validation  = "^(?!(" + ll + ")*?$)[a-z,A-Z,_,\-]{1,30}$"
+
+            } else {
+                this.locale_validation  = "^[a-z,A-Z,_,\-]{1,30}$"
+            }
+        }
+      }
+    }
+
+  </script>

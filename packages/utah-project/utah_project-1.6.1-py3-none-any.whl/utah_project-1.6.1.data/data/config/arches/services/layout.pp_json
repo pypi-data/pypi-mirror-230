@@ -1,0 +1,20 @@
+{
+    "must_implement": "utah.arches.webtools.SkinService",
+    "type": "utah.arches.webtools.SkinService",
+    "load_it": true,
+    "config": {
+        "uri_to_metadata_mappings": [
+            ^{${UTAH_APP_HOME}/config/arches/services/uri_to_metadata_mappings.pp_txt, ''}
+            ^{${UTAH_APP_HOME}/config/application/services/uri_to_metadata_mappings.pp_txt, ','}
+        ],
+        "default_layout": "1_col",
+        "layouts": {
+            ^{${UTAH_APP_HOME}/config/arches/services/arches_layouts.pp_txt, ''}
+            ^{${UTAH_APP_HOME}/config/application/services/application_layouts.pp_txt, ','}
+        },
+        "default_aux_content_type": "right_channel",
+        "aux_content_types": {
+            ^{${UTAH_APP_HOME}/config/arches/services/aux_content_types.pp_txt, ''}
+        }
+    }
+}

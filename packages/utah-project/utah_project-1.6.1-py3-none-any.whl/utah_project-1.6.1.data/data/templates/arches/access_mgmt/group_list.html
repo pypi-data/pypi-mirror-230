@@ -1,0 +1,33 @@
+{% extends arches_layout %}
+{% block main_content %}
+<table style="width:100%;" class="table">
+<thead>
+    <tr>
+        <th style="width:200px;" class="is-info">
+            {% trans %}Group{% endtrans %}
+        </th>
+        <th class="is-info">
+            {% trans %}Description{% endtrans %}
+        </th>
+    </tr>
+</thead>
+
+<tbody>
+{% for group in groups %}
+    <tr>
+        <td nowrap>
+            <a href="/arches/access_mgmt/groups/{{ group.name }}">{{ group.name }}</a>
+        </td>
+        <td>
+            {{ group.description }}
+        </td>
+    </tr>
+{% endfor %}
+</tbody>
+
+
+</table>
+<a class="button is-info" href="/arches/access_mgmt/groups/__new">{% trans %}Add New{% endtrans %}</a>
+
+
+{% endblock %}

@@ -1,0 +1,197 @@
+{% extends arches_layout %}
+{% block main_content %}
+
+<log_viewer>
+  <div style="height:93%;">
+    <div>
+
+      <div class="m-0 p-3 is-flex is-flex-direction-row is-align-items-center has-background-info-light is-size-7">
+        {% trans %}Start Entry#{% endtrans %}&nbsp;
+        <p class="control">
+          <input style="width:70px;" class="input ml-1 mr-3" v-bind:disabled="!!(log_entries)" type="text" v-model="from_entry_number" />
+        </p>
+        {% trans %}End Entry#{% endtrans %}&nbsp;
+        <p class="control">
+          <input style="width:70px;" class="input ml-1 mr-3" v-bind:disabled="!!(log_entries)" type="text" v-model="to_entry_number" />
+        </p>
+        {% trans %}from Timestamp{% endtrans %}&nbsp;
+        <p class="control">
+          <input style="width:170px;" class="input ml-1" v-bind:disabled="!!(log_entries)" type="date"  v-model="from_date" />
+          <input style="width:130px;" class="input mr-3" v-bind:disabled="!!(log_entries)" type="time"  v-model="from_time" />
+        </p>  
+        {% trans %}To Timestamp{% endtrans %}&nbsp;
+        <p class="control">
+          <input style="width:170px;" class="input ml-1" v-bind:disabled="!!(log_entries)" type="date"  v-model="to_date" />
+          <input style="width:130px;" class="input mr-3" v-bind:disabled="!!(log_entries)" class="input" type="time"  v-model="to_time" />
+        </p>
+        {% trans %}Module Regex{% endtrans %}&nbsp;
+        <p class="control">
+          <input style="width:160px;" class="input ml-1 mr-3" v-bind:disabled="!!(log_entries)" type="text" v-model="module_regex" />
+        </p>
+        {% trans %}Message Regex{% endtrans %}&nbsp;
+        <p class="control">
+          <input style="width:160px;" class="input ml-1 mr-3" v-bind:disabled="!!(log_entries)" type="text" v-model="message_regex" />
+        </p>
+        <p class="control">
+          <button class="button ml-1 mr-3" v-bind:disabled="!!(log_entries)" v-on:click="search">{% trans %}Search{% endtrans %}</button>
+        </p>
+        <p class="control">
+          <button class="button ml-1 mr-3" v-bind:disabled="!(log_entries)" v-on:click="clear">{% trans %}Clear{% endtrans %}</button>
+        </p>
+      </div>
+    </div>
+    <div class="table-container">
+      <table style="height:90%; font-family: 'Courier New', Courier, monospace; font-size: small; display:block; overflow:auto" class="table is-striped is-fullwidth" v-if="log_entries" v-on:scroll="scroll">
+      <thead style="display:table-header-group;width:98vw;">
+        <tr>
+          <th style="width:5%;"></th>
+          <th style="width:13%;"></th>
+          <th style="width:5%;"></th>
+          <th style="width:15%;"></th>
+          <th style="width:60%;"></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th style="width:5%;">{% trans %}Entry #{% endtrans %}</th>
+          <th style="width:13%;">{% trans %}Timestamp{% endtrans %}</th>
+          <th style="width:5%;">{% trans %}Severity{% endtrans %}</th>
+          <th style="width:15%;">{% trans %}Module{% endtrans %}</th>
+          <th style="width:60%;">{% trans %}Message{% endtrans %}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="log_entry in log_entries">
+          <td>{{ "{{log_entry.entry_number}}" }}</td>
+          <td>{{ "{{log_entry.entry_timestamp}}" }}</td>
+          <td>{{ "{{log_entry.severity}}" }}</td> 
+          <td>{{ "{{log_entry.modulename}}" }}</td>
+          <td>
+            <div v-for="line in log_entry.message_lines">{{ "{{ line.replace(' ','&nbsp;') }}" | safe }}</div>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</log_viewer>
+    
+{% raw %}
+    
+    <!--
+    =====================================================================================
+    Main App
+    =====================================================================================
+    -->
+    
+    <script type="text/javascript">
+    
+
+      
+  
+      const log_viewer_app = Vue.createApp( 
+        {
+          data() {
+            return {
+              from_entry_number:"",
+                to_entry_number:"",
+                from_timestamp:"",
+                to_timestamp:"",
+                module_regex:"",
+                message_regex:"",
+                log_entries : null
+            }
+          },
+          mounted(){
+          },
+          methods : {
+            format_datetime_string : function(sdate, stime) {
+              if (sdate != undefined) {
+                if (stime == undefined) {
+                  stime="00:00:00"
+                } else {
+                  stime=stime+":00"
+                }
+
+                string_date = sdate + " " + stime
+                d = new Date(string_date)
+                ret_datetime = 
+                  d.getFullYear().toString().padStart(2, '0') + "-" + 
+                  (d.getMonth() + 1).toString().padStart(2, '0') + "-" + 
+                  d.getDate().toString().padStart(2, '0') + " " + 
+                  d.getHours().toString().padStart(2, '0') + ":" + 
+                  d.getMinutes().toString().padStart(2, '0') + ":" + 
+                  d.getSeconds().toString().padStart(2, '0')
+
+              } else {
+                ret_datetime = ""
+              }
+
+                return ret_datetime
+
+              },
+            search : function() {
+              this.from_timestamp = this.format_datetime_string(this.from_date, this.from_time)
+              this.to_timestamp = this.format_datetime_string(this.to_date, this.to_time)
+
+              axios.get("/arches/log_viewer/log_entries",
+                {params : {
+                  from_entry_number : this.from_entry_number, 
+                  to_entry_number : this.to_entry_number,
+                  from_timestamp : this.from_timestamp,
+                  to_timestamp : this.to_timestamp,
+                  module_regex : this.module_regex,
+                  message_regex : this.message_regex,
+                  max_ret_values : 100
+                  } 
+                }).then(RESP=>{
+                  this.log_entries = RESP.data
+                }).catch(ERR => {
+                  alert("error")
+                });
+            },
+            scroll : function(e) {
+              if (e.target.offsetHeight + e.target.scrollTop >= e.target.scrollHeight) {
+                next_entry_number = this.log_entries[this.log_entries.length-1].entry_number + 1
+
+                axios.get("/arches/log_viewer/log_entries",
+                {params : {
+                  from_entry_number : next_entry_number,
+                  to_entry_number : this.to_entry_number,
+                  from_timestamp : this.from_timestamp,
+                  to_timestamp : this.to_timestamp,
+                  module_regex : this.module_regex,
+                  message_regex : this.message_regex,
+                  max_ret_values : 100
+                  } 
+                }).then(RESP=>{
+                  this.log_entries.push.apply(this.log_entries, RESP.data);
+                }).catch(ERR => {
+                  alert("error")
+                });
+
+
+              }
+            },
+            clear : function () {
+              this.log_entries = null
+            },
+            date_reformat : function(input_date) {
+              date1 = new Date('2021-11-11 12:00:00');
+              console.log(date1.getTimezoneOffset());
+            }
+          }
+        }
+      )
+    
+
+    
+      log_viewer_app.mount("log_viewer")
+    
+    </script>
+  
+  {% endraw %}
+
+
+{% endblock main_content %}

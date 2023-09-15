@@ -1,0 +1,111 @@
+  <!--
+  =====================================================================================
+  Extended Attributes
+  =====================================================================================
+  -->
+  <script type="text/html" id="extended-attributes-template">
+    
+    <table class="table">
+      <thead>
+        <tr>
+          <th style="width:300px;"><i class="fa fa-plus-square ml-2" aria-hidden="true" v-on:click="add_tag()"></i> {% trans %}Key{% endtrans%}</th>
+          <th style="width:320px;">{% trans %}Value{% endtrans%}</th>
+          <th style="width:60px;">&nbsp;</th>
+        </tr>
+    </thead>
+      <tbody>
+        <tr v-for="(item, key, index) in temp_ext_attr">
+          <td class="pt-4">{{ "{{ key }}" }}</td>
+          <td><input class="input" style="width:300px;" type="text" v-bind:placeholder="inhext_attr[key]" v-model="temp_ext_attr[key]" v-on:keyup="value_change(key)"></td>
+          <td class="pt-4"><i class="fa fa-trash ml-2" aria-hidden="true" v-on:click="delete_value(key)"></i></td>
+        </tr>
+    </tbody>
+    </table>
+  </script>
+
+
+  <script type="text/javascript">
+    var EXTENDED_ATTRIBUTES_COMPONENT = {
+      template : "#extended-attributes-template",
+      props: {
+        ext_attr : Object,
+        inhext_attr : Object
+      },
+      data() {
+        return { 
+          temp_ext_attr:{}
+        }
+      },
+      created() {
+        this.temp_ext_attr = {}
+        iea_keys = Object.keys(this.inhext_attr)
+        for (i=0; i<iea_keys.length; i++) {
+          key = iea_keys[i]
+          this.temp_ext_attr[key] = ""
+        }
+        
+        ea_keys = Object.keys(this.ext_attr)
+        for (i=0; i<ea_keys.length; i++) {
+          key = ea_keys[i]
+          this.temp_ext_attr[key] = this.ext_attr[key]
+        }
+        
+      },
+      methods : {
+        add_tag : function() {
+          emit_prompt(PROMPT_NEW_EXTENDED_ATTRIBUTE, 
+            (value) => {
+              if (this.temp_ext_attr.hasOwnProperty(value)) {
+                ret_message = "{% trans %}Property name is not unique{% endtrans %}"
+              } else {
+                this.temp_ext_attr[value] = ""
+                this.ext_attr[value] = ""
+                ret_message = null
+              }
+
+              return ret_message
+            }
+          )
+        },
+        value_change : function(attr_name) {
+          value = this.temp_ext_attr[attr_name]
+          this.ext_attr[attr_name] = value
+        },
+        delete_value : function(attr_name) {
+          if (this.ext_attr.hasOwnProperty(attr_name)) {
+            delete this.ext_attr[attr_name]
+          }
+          if (!this.inhext_attr.hasOwnProperty(attr_name)) {
+            delete this.temp_ext_attr[attr_name]
+          } else {
+            this.temp_ext_attr[attr_name] = ""
+          }
+        }
+      },
+
+      watch:{
+        inhext_attr : {
+          deep: true,
+          handler(){
+            tea_keys = Object.keys(this.temp_ext_attr)
+            for (i=0; i<tea_keys.length; i++) {
+              key = tea_keys[i]
+              delete this.temp_ext_attr[key]
+            }
+
+            iea_keys = Object.keys(this.inhext_attr)
+            for (i=0; i<iea_keys.length; i++) {
+              key = iea_keys[i]
+              this.temp_ext_attr[key] = ""
+            }
+            
+            ea_keys = Object.keys(this.ext_attr)
+            for (i=0; i<ea_keys.length; i++) {
+              key = ea_keys[i]
+              this.temp_ext_attr[key] = this.ext_attr[key]
+            }
+          }
+        }
+      }
+    }
+  </script>

@@ -1,0 +1,37 @@
+{% extends arches_layout %}
+{% block main_content %}
+
+<form class="box" action="/arches/authentication/login"  method="POST">
+  {% if message %}
+    {% if error %}
+      {% set tag="is-danger" %}
+    {% else %}
+      {% set tag="is-info" %}
+    {% endif %}
+
+    <div class="notification {{ tag }}">
+      {{ message }}
+    </div>
+  {% endif %}
+
+
+    <div class="field">
+      <label class="label">{% trans %}Email{% endtrans %}</label>
+      <div class="control">
+        <input class="input" type="email" placeholder="{% trans %}e.g. alex@example.com{% endtrans %}" name="user_id" value="{{ user_id }}">
+      </div>
+    </div>
+  
+    <div class="field">
+      <label class="label">{% trans %}Password{% endtrans %}</label>
+      <div class="control">
+        <input class="input" type="password" name="password" placeholder="********">
+      </div>
+    </div>
+
+    <input type="hidden" name="go_back" value="{{ go_back }}" />
+
+    <button class="button is-info" name="submit_button" value="submit" >{% trans %}Sign in{% endtrans %}</button>
+
+  </form>
+{% endblock %}

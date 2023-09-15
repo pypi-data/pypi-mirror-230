@@ -1,0 +1,86 @@
+  <!--
+  =====================================================================================
+  Prompt
+  =====================================================================================
+  -->
+  <script type="text/html" id="prompt-template">
+    <div v-if="visible" class="modal is-active">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+
+        <article v-bind:class="'message  ' + message.color">
+          <div class="message-header">
+            <p> {{ "{{  message.header  }}" }} </p>
+            <button class="delete" aria-label="delete" v-on:click="hide"></button>
+          </div>
+          <div class="message-body has-background-white">
+
+
+            <div class="field">
+              <label class="label">{{ "{{  message.body  }}" }}</label>
+              <div class="control">
+                <input class="input" type="text" v-model="value" v-on:keyup="clear_error_text" ref="default_input"/>
+                <p v-if="error_text > ''" class="help is-danger">{{ "{{ error_text }}" }}</p>
+              </div>
+            </div>
+      
+
+            <div class="buttons">
+              <button v-bind:disabled='(value=="")' v-on:click="submit" class="button is-normal">{% trans %}OK{% endtrans %}</button>
+              <button v-on:click="hide" class="button is-normal">{% trans %}Cancel{% endtrans %}</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </script>
+
+
+  <script type="text/javascript">
+    var PROMPT_COMPONENT = {
+      mounted() {
+        listen_prompt_request((payload) => {
+          this.message = payload[0]
+          this.submit_callback = payload[1]
+          this.value = ""
+          this.visible = true
+          this.error_text = ""
+          Vue.nextTick( ()=> {
+            this.$refs.default_input.focus()
+          })
+        })
+      },
+      template : "#prompt-template",
+      data() {
+        return {
+          message:"",
+          submit_callback:null,
+          visible:false,
+          value:"",
+          error_text: ""
+        }
+      },
+      methods : {
+        hide : function() {
+          this.visible = false
+        },
+        submit : function() {
+          msg = this.submit_callback(this.value)
+          if (msg==null) {
+            this.error_text = ""
+            this.hide()
+          } else {
+            this.error_text = msg
+          }
+        },
+        clear_error_text : function() {
+          if (this.error_text > "") {
+            this.error_text = ""
+          }
+        }
+      }
+    }
+  </script>
+
+
+

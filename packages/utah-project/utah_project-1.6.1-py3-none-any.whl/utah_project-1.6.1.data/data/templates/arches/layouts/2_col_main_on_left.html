@@ -1,0 +1,30 @@
+<html>
+    <head>
+        {% include 'arches/layouts/fragments/header.html' %}
+    </head>
+    <body>
+        <div style="min-height:100%;" class="is-flex is-flex-direction-column">
+            <div class="is-flex-shrink-0">
+                {% include 'arches/layouts/fragments/navigation.html' %}
+            </div>
+            <div class="columns is-flex-grow-1 px-0 pt-2 mx-0 my-0">
+                <div class="column px-0 pt-0 mx-0 my-0">
+                    <div class="content pl-2 mx-0 my-0">
+                        {% block main_content %}{% endblock %}
+                    </div>
+                </div>
+                <div class="column is-one-fifth pt-0 px-2 mx-0 my-0">
+                    {% set left_channel = arches_theme_bean.get_aux_content_docs("right_channel") %}
+                    {% for acd in left_channel %}
+                        {{ acd.text | safe }}
+                    {% endfor %}      
+                </div>
+            </div>
+            <div class="is-flex-shrink-0">
+                <footer>
+                    {{ arches_theme_bean.get_last_aux_content_doc("footer").text | safe }}
+                </footer>
+            </div>
+        </div>
+    </body>
+</html>

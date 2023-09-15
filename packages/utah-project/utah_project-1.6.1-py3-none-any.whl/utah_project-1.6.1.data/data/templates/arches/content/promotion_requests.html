@@ -1,0 +1,29 @@
+{% extends arches_layout %}
+{% block main_content %}
+
+
+<h4>{% trans %}Microsite: {% endtrans %} {{ microsite }}</h4>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>{% trans %}View Job{% endtrans %}</th>
+            <th>{% trans %}Time Started{% endtrans %}</th>
+            <th>{% trans %}Status{% endtrans %}</th>
+            <th>{% trans %}User Id{% endtrans %}</th>
+            <th>{% trans %}Items Synced{% endtrans %}</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for promotion_request in promotion_requests %}
+        <tr>
+            <td><a href="/arches/content/promotion/{{ promotion_request.microsite }}/view_jobs/{{ promotion_request.id }}"><i class="fas fa-search"></i></a></td>
+            <td>{{ promotion_request.start_timestamp|format_datetime('short') }}</td>
+            <td>{{ promotion_status_translations[promotion_request.status] }}</td>
+            <td>{{ promotion_request.extended_attributes["user_id"] }}</td>
+            <td>{{ promotion_request.differences|length }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

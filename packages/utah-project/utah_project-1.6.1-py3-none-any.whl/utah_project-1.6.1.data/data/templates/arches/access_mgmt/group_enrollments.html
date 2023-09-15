@@ -1,0 +1,81 @@
+{% extends arches_layout %}
+{% block main_content %}
+
+<form class="box" action="/arches/access_mgmt/users/{{ profile.user_id }}/group_enrollments" method="POST">
+    {% if message %}
+      {% if error %}
+        {% set tag="is-danger" %}
+      {% else %}
+        {% set tag="is-info" %}
+      {% endif %}
+  
+      <div class="notification {{ tag }}">
+        {{ message }}
+      </div>
+    {% endif %}
+  
+    <div class="field">
+        <label class="label">{% trans %}User Id{% endtrans %}</label>
+        <div class="control">
+          <input class="input" disabled type="text" placeholder="{% trans %}name@domain.com{% endtrans %}" name="user_id" value="{{ profile.user_id }}">
+        </div>
+      </div>
+    
+    
+      <div class="field">
+        <label class="label">{% trans %}First Name{% endtrans %}</label>
+        <div class="control">
+          <input class="input" disabled type="text" placeholder="{% trans %}John{% endtrans %}" name="first_name" value="{{ profile.first_name }}">
+        </div>
+      </div>
+    
+    
+        <div class="field">
+      <label class="label">{% trans %}Last Name{% endtrans %}</label>
+      <div class="control">
+        <input class="input" disabled type="text" placeholder="{% trans %}Smith{% endtrans %}" name="last_name" value="{{ profile.last_name }}">
+      </div>
+    </div>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                  {% trans %}Selected{% endtrans %}
+                </th>
+                <th>
+                  {% trans %}Name{% endtrans %}
+                </th>
+                <th>
+                  {% trans %}Description{% endtrans %}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+{% for group in groups %}
+            <tr>
+                <td class="has-text-centered">
+                    <input type="checkbox" name="group_{{ group.name }}" value="{{ group.name }}" {% if group.selected %}checked{% endif %}>
+                </td>
+                <td>
+                    {{ group.name }}
+                </td>
+                <td>
+                  {{ group.description }}
+                </td>
+            </tr>
+{% endfor %}
+        </tbody>
+
+
+    </table>
+
+
+    <button class="button is-info" type="submit" name="submit_button" value="submit">{% trans %}Update{% endtrans %}</button>
+    <a class="button" href="/arches/access_mgmt/users/delete_user?user_id={{profile.user_id}}">{% trans %}Delete User{% endtrans %}</a>
+    <a class="button" href="/arches/access_mgmt/users">{% trans %}Cancel{% endtrans %}</a>
+  </form>
+
+  
+  {% endblock %}

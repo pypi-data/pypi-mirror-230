@@ -1,0 +1,11 @@
+{
+    "must_implement": "utah.core.profile.BaseProfileService",
+    "type": "utah.impl.bryce.profile.ProfileService",
+    "load_it" : true,
+    "config": {
+        "mongo_db_info": {
+            "connection_url": "${MONGO_COMMON_CONNECTION_URL}",
+            "db_name": "${MONGO_COMMON_APP_DB}"
+        }
+    }
+}

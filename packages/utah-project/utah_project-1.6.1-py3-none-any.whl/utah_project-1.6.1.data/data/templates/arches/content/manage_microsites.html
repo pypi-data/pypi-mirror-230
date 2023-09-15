@@ -1,0 +1,325 @@
+{% extends arches_layout %}
+{% block main_content %}
+
+{% include 'arches/content/vue_components/general_utils.html' %}
+{% include 'arches/content/vue_components/emitter_utils.html' %}
+{% include 'arches/content/vue_components/root_folder.html' %}
+{% include 'arches/content/vue_components/folder.html' %}
+{% include 'arches/content/vue_components/file.html' %}
+{% include 'arches/content/vue_components/general_editor.html' %}
+{% include 'arches/content/vue_components/folder_editor.html' %}
+{% include 'arches/content/vue_components/text_editor.html' %}
+{% include 'arches/content/vue_components/navigation_editor.html' %}
+{% include 'arches/content/vue_components/navigation_editor_node.html' %}
+{% include 'arches/content/vue_components/navigation_editor_drop_separator.html' %}
+{% include 'arches/content/vue_components/navigation_translations.html' %}
+{% include 'arches/content/vue_components/binary_editor.html' %}
+{% include 'arches/content/vue_components/script_field.html' %}
+{% include 'arches/content/vue_components/ehtml_editor.html' %}
+{% include 'arches/content/vue_components/extended_attributes.html' %}
+{% include 'arches/content/vue_components/doc_text.html' %}
+{% include 'arches/content/vue_components/string_editor.html' %}
+{% include 'arches/content/vue_components/system_message.html' %}
+{% include 'arches/content/vue_components/confirm_dialog.html' %}
+{% include 'arches/content/vue_components/prompt.html' %}
+{% include 'arches/content/vue_components/prompt_y_n_cancel.html' %}
+
+
+<content_manager style="height:93vh;" class="columns mt-0 ml-0">
+  <div style="height:100%;" class="column is-one-third pr-0">
+    <article style="height:100%;" class="message is-info is-flex is-flex-grow-1 is-flex-direction-column">
+      <div class="message-header is-flex is-flex-direction-row is-justify-content-start">
+ 
+        <span>{% trans %}Microsite Selector{% endtrans %}</span>
+        <select v-if="microsites" class="select has-background-info-light ml-3" v-model="microsite_root" style="height:34px;">
+          <option v-for="microsite in microsites" v-bind:value="microsite" v-bind:text="microsite"></option>
+        </select>
+ 
+        {% if arches_nav_bean.is_authorized("/arches/content/microsite/api/microsite_list", "POST") %}
+          <a class="fa fa-download py-0 pr-0 pl-3" v-bind:href="'/arches/content/manage/archive' + microsite_root"  v-bind:title="'{% trans %}Download archive of microsite{% endtrans %} ' + microsite_root"></a>
+          <button style="height:25px;" class="button is-info m-0 py-0 pr-0 pl-3 fa fa-plus-square" v-on:click="create_microsite" title="{% trans %}Create a new microsite{% endtrans %}"></button>
+          <button style="height:25px;" class="button is-info m-0  py-0 pr-0 pl-3 fa fa-minus-square" v-on:click="delete_microsite" title="{% trans %}Delete microsite{% endtrans %}"></button>
+        {% endif %}
+
+      </div>
+      <div style="overflow-y:auto; min-width: 0;" class="message-body is-align-self-stretch">
+        <root-folder :key="microsite_root" v-if="microsite_root != null" v-bind:uri="microsite_root"></root-folder>
+      </div>
+    </article>
+  </div>
+
+  <general-editor></general-editor>
+  <system-message></system-message>
+  <confirmation></confirmation>
+  <prompt></prompt>
+  <prompt-y-n-cancel></prompt-y-n-cancel>
+
+</content_manager>
+
+  <!--
+  =====================================================================================
+  Main App
+  =====================================================================================
+  -->
+
+  <script type="text/javascript">
+
+    var item_to_move = null
+
+    MSG_DOCUMENT_SAVED = {
+      'header' : "{% trans %}Document Action{% endtrans %}",
+      'body' : "{% trans %}Document was successfully saved{% endtrans %}",
+      'can_close':true,
+      'color' : "is-info"
+    }
+
+    MSG_DOCUMENT_CREATED = {
+      'header' : "{% trans %}Document Action{% endtrans %}",
+      'body' : "{% trans %}Document was successfully created{% endtrans %}",
+      'can_close':true,
+      'color' : "is-info"
+    }
+
+    MSG_CONFIRM_DELETE = {
+      'header' : "{% trans %}Document Action{% endtrans %}",
+      'body' : "{% trans %}Repository item will be deleted, continue?{% endtrans %}",
+      'color' : "is-danger"
+    }
+
+    MSG_UNPACK_ZIP = {
+      'header' : "{% trans %}Upload Zip File{% endtrans %}",
+      'body' : "{% trans %}File selected is a zip archive. Unpack after it is uploaded?{% endtrans %}",
+      'color' : "is-info"
+    }
+
+    MSG_CONFIRM_ABORT_CHANGES = {
+      'header' : "{% trans %}Document Editor{% endtrans %}",
+      'body' : "{% trans %}Document has changed, click OK to abort changes?{% endtrans %}",
+      'color' : "is-warning"
+    }
+
+    MSG_CONFIRM_DELETE_MICROSITE = {
+      'header' : "{% trans %}Delete Microsite{% endtrans %}",
+      'body' : "{% trans %}Microsite and all of its content will be deleted, proceed?{% endtrans %}",
+      'color' : "is-danger"
+    }
+
+    MSG_ITEM_DELETED = {
+      'header' : "{% trans %}Delete{% endtrans %}",
+      'body' : "{% trans %}Item was deleted{% endtrans %}",
+      'color' : "is-info",
+      'can_close':true
+    }
+
+    MSG_MICROSITE_CREATED = {
+      'header' : "{% trans %}New Microsite{% endtrans %}",
+      'body' : "{% trans %}New microsite was created{% endtrans %}",
+      'color' : "is-info",
+      'can_close':true
+    }
+
+    MSG_MICROSITE_DELETED = {
+      'header' : "{% trans %}Delete Microsite{% endtrans %}",
+      'body' : "{% trans %}Microsite was deleted{% endtrans %}",
+      'color' : "is-info",
+      'can_close':true
+    }
+
+    PROMPT_NEW_EXTENDED_ATTRIBUTE = {
+      'header' : "{% trans %}Extended Attributes{% endtrans %}",
+      'body' : "{% trans %}Specify new extended attribute name{% endtrans %}",
+      'color' : "is-info",
+      'can_close':true
+    }
+
+    PROMPT_NEW_LINK = {
+      'header' : "{% trans %}Linked Documents{% endtrans %}",
+      'body' : "{% trans %}Specify path to css, icon file, etc to link{% endtrans %}",
+      'color' : "is-info",
+      'can_close':true
+    }
+
+    PROMPT_NEW_MICROSITE = {
+      'header' : "{% trans %}New Microsite{% endtrans %}",
+      'body' : "{% trans %}Specify new microsite name{% endtrans %}",
+      'color' : "is-info",
+      'can_close':true
+    }
+
+    const content_manager_app = Vue.createApp(
+      {
+        mounted() {
+          axios.get("/arches/content/manage/microsites/api/manageable_microsites").then(RESPONSE =>
+            {
+              this.microsites = RESPONSE.data
+              this.microsite_root = this.microsites[0]
+            }
+          ).catch(
+            (err)=>{
+              tag = error_processor("ContentEditor", "load_manageable_microsites", err)
+              emit_remote_error(tag)
+            }
+          )
+        },
+        data() {
+          return {
+            selected : false,
+            microsite_root: null,
+            microsites: null
+          }
+        },
+        methods : {
+          create_microsite : function() {
+            emit_prompt(PROMPT_NEW_MICROSITE, (microsite_name) => {
+              axios.post("/arches/content/microsite/api/microsite_list/" + microsite_name).then(
+                (response) => {
+                  //emit_message(MSG_MICROSITE_CREATED)
+                  this.microsites[this.microsites.length] = "/" + microsite_name
+                  this.microsite_root = this.microsites[this.microsites.length-1]
+                  this.microsites.sort()
+                }
+              ).catch(
+                (err) => {
+                  tag = error_processor("Microsite", "create", err)
+                  emit_remote_error(tag)
+                }
+              )
+            })
+          },
+          delete_microsite : function() {
+
+            emit_confirmation_request(MSG_CONFIRM_DELETE_MICROSITE, () => {
+              axios.delete("/arches/content/microsite/api/microsite_list" + this.microsite_root).then(
+                (response) => {
+                  //emit_message(MSG_MICROSITE_DELETED)
+                  index = this.microsites.findIndex((item) => {
+                    ret_value = (item == this.microsite_root)
+                    return ret_value
+                  })
+
+                  this.microsites.splice(index, 1)
+                  this.microsite_root = this.microsites[0]
+                }
+              ).catch(
+                (err) => {
+                  tag = error_processor("Microsite", "delete", err)
+                  emit_remote_error(tag)
+                }
+              )
+
+            })
+
+          }
+        }
+      }
+    )
+
+    content_manager_app.component('root-folder', ROOT_FOLDER_COMPONENT)
+    content_manager_app.component('folder', FOLDER_COMPONENT)
+    content_manager_app.component('file', FILE_COMPONENT)
+    content_manager_app.component('general-editor', GENERAL_EDITOR_COMPONENT)
+    content_manager_app.component('folder-editor', FOLDER_EDITOR_COMPONENT)
+    content_manager_app.component('text-editor', TEXT_EDITOR_COMPONENT)
+    content_manager_app.component('navigation-editor', NAVIGATION_EDITOR_COMPONENT)
+    content_manager_app.component('nav-editor-node', NAVIGATION_EDITOR_NODE_COMPONENT)
+    content_manager_app.component('nav-editor-drop-separator', NAVIGATION_EDITOR_DROP_SEPARATOR_COMPONENT)
+    content_manager_app.component('nav-translations', NAVIGATION_TRANSLATIONS_COMPONENT)
+    content_manager_app.component('binary-editor', BINARY_EDITOR_COMPONENT)
+    content_manager_app.component('script-field', SCRIPT_FIELD_COMPONENT)
+    content_manager_app.component('ehtml-editor', EHTML_EDITOR_COMPONENT)
+    content_manager_app.component('string-editor', STRING_EDITOR_COMPONENT)
+    content_manager_app.component('system-message', SYSTEM_MESSAGE_COMPONENT)
+    content_manager_app.component('confirmation', CONFIRMATION_COMPONENT)
+    content_manager_app.component('prompt', PROMPT_COMPONENT)
+    content_manager_app.component('prompt-y-n-cancel', PROMPT_Y_N_CANCEL_COMPONENT)
+    content_manager_app.component('extended-attributes', EXTENDED_ATTRIBUTES_COMPONENT)
+    content_manager_app.component('doc-text', DOC_TEXT_COMPONENT)
+
+    
+    function emit_remote_error(error_tag) {
+      tags = {
+        'RootFolder.load_children.server.FolderDoesNotExist' : {
+          'header' : "{% trans %}System Error{% endtrans %}",
+          'body' : "{% trans %}Specified root folder does not exist{% endtrans %}",
+          'can_close':false,
+          'color' : "is-danger"
+          },
+        'TextDocument.create.server.DocumentAlreadyExists' : {
+          'header' : "{% trans %}Naming Error{% endtrans %}",
+          'body' : "{% trans %}A document by that name already exists{% endtrans %}",
+          'can_close':true,
+          'color' : "is-warning"
+          },
+        'EHTMLDocument.create.server.DocumentAlreadyExists' : {
+          'header' : "{% trans %}Naming Error{% endtrans %}",
+          'body' : "{% trans %}A document by that name already exists{% endtrans %}",
+          'can_close':true,
+          'color' : "is-warning"
+        },
+        'EHTMLDocument.rename.server.DocumentAlreadyExists' : {
+          'header' : "{% trans %}Rename Error{% endtrans %}",
+          'body' : "{% trans %}A document by that name already exists in the folder{% endtrans %}",
+          'can_close':true,
+          'color' : "is-warning"
+        },
+        'TextDocument.rename.server.DocumentAlreadyExists' : {
+          'header' : "{% trans %}Rename Error{% endtrans %}",
+          'body' : "{% trans %}A document by that name already exists in the folder{% endtrans %}",
+          'can_close':true,
+          'color' : "is-warning"
+        },
+        'EHTMLDocument.move.server.DocumentAlreadyExists' : {
+          'header' : "{% trans %}Move Error{% endtrans %}",
+          'body' : "{% trans %}A document by that name already exists in the folder{% endtrans %}",
+          'can_close':true,
+          'color' : "is-warning"
+        },
+        'TextDocument.move.server.DocumentAlreadyExists' : {
+          'header' : "{% trans %}Move Error{% endtrans %}",
+          'body' : "{% trans %}A document by that name already exists in the folder{% endtrans %}",
+          'can_close':true,
+          'color' : "is-warning"
+        },
+        'Microsite.create.server.MicrositeAlreadyExists' : {
+          'header' : "{% trans %}Create Microsite{% endtrans %}",
+          'body' : "{% trans %}Microsite already exists{% endtrans %}",
+          'can_close':true,
+          'color' : "is-warning"
+        },
+        'Microsite.delete.server.MicrositeNotFound' : {
+          'header' : "{% trans %}Delete Microsite{% endtrans %}",
+          'body' : "{% trans %}Could not find microsite while trying to delete it{% endtrans %}",
+          'can_close':true,
+          'color' : "is-warning"
+        },
+        'Microsite.delete.server.DeleteMainMicrositeAttempted' : {
+          'header' : "{% trans %}Delete Microsite{% endtrans %}",
+          'body' : "{% trans %}Cannot delete the main microsite{% endtrans %}",
+          'can_close':true,
+          'color' : "is-warning"
+        }
+      }
+
+      message = null
+
+      if (error_tag in tags) {
+        message = tags[error_tag]
+      } else {
+
+        message = {
+          'header' : "{% trans %}System Error{% endtrans %}",
+          'body' : "{% trans %}Untrapped system error was returned:{% endtrans %}" + error_tag + "",
+          'can_close':false,
+          'color' : "is-danger"
+        }
+      }
+
+      emit_message(message)
+      //emitter.emit('message', message);
+    }
+
+    content_manager_app.mount("content_manager")
+  </script>
+
+
+{% endblock main_content %}

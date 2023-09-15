@@ -1,0 +1,15 @@
+{
+    "must_implement": "utah.core.authentication.BaseAuthenticationService",
+    "type": "utah.impl.zion.authentication.JsonAuthenticationService",
+    "load_it": true,
+    "config": {
+        "token_cache_timeout_secs" : 900,
+        "authentication_directory_path": "${UTAH_VARIABLE_DATA}/data/authentication",
+        "account_verification_required": false,
+        "pwd_min_upper_case": 1,
+        "pwd_min_lower_case": 1,
+        "pwd_min_numbers": 1,
+        "pwd_min_special_chars": 1,
+        "pwd_min_length": 8
+    }
+}

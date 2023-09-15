@@ -1,0 +1,17 @@
+{
+    "must_implement": "utah.core.taskpool.ProcessingPool",
+    "type": "utah.impl.bryce.taskpool.ProcessingPool",
+    "load_it": true,
+    "config": {
+        "total_threads": 10, 
+        "gc_secs": 900, 
+        "status_retention_days": 31, 
+        "upd_timeout_secs": 3600, 
+        "task_timeout_secs": 3600, 
+        "mongo_db_info": {
+            "connection_url": "${MONGO_LOCAL_CONNECTION_URL}",
+            "db_name": "${MONGO_LOCAL_APP_DB}"
+        },
+        "collection": "task"
+    }
+}

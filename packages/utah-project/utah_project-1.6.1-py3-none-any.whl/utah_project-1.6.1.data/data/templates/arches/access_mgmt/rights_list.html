@@ -1,0 +1,83 @@
+{% extends arches_layout %}
+{% block main_content %}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                {% trans %}Right category & name{% endtrans %}
+            </th>
+            <th>
+                {% trans %}URI{% endtrans %}
+            </th>
+            <th>
+                {% trans %}Methods{% endtrans %}
+            </th>
+            <th>
+                {% trans %}Authorized Groups{% endtrans %}
+            </th>
+            <th>
+                {% trans %}Filters{% endtrans %}
+            </th>
+            {% if render_env_col %}
+            <th>
+                {% trans %}Permitted Environments{% endtrans %}
+            </th>
+            {% endif %}
+        </tr>        
+    </thead>
+
+
+    <tbody>
+
+{% for uri_access_right in uri_access_rights %}
+        <tr>
+            <td>
+                <a href="/arches/access_mgmt/uri_access_rights/{{ uri_access_right.id }}">{{ uri_access_right.category }}::{{ uri_access_right.right_name }}</a>
+            </td>
+            <td>
+                {{ uri_access_right.uri }}                
+            </td>
+            <td>
+                {% for method in uri_access_right.methods %}
+                <span class="tag">
+                    {{ method }}
+                </span>
+                {% endfor %}
+            </td>
+            <td>
+                {% for group in uri_access_right.authorized_groups %}
+                <span class="tag">
+                    {{ group }}
+                </span>
+                {% endfor %}
+            </td>
+            <td>
+                {% for filter in uri_access_right.filters %}
+                <span class="tag">
+                    {{ filter }}
+                </span>
+                {% endfor %}
+            </td>
+
+            {% if render_env_col %}
+            <td>
+                {% for permitted_environment in uri_access_right.permitted_environments %}
+                <span class="tag">
+                    {{ permitted_environment }}
+                </span>
+                {% endfor %}
+            </td>
+            {% endif %}
+
+
+        </tr>
+{% endfor %}
+
+    </tbody>
+</table>
+
+<a class="button is-info" href="/arches/access_mgmt/uri_access_rights/__new">{% trans %}Add New{% endtrans %}</a>
+
+
+{% endblock %}

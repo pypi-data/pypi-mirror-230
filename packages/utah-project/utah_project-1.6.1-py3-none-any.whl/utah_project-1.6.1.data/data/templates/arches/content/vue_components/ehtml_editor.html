@@ -1,0 +1,697 @@
+  <!--
+  =====================================================================================
+  EHTML Editor
+  =====================================================================================
+  -->
+  <script type="text/html" id="ehtml-editor-template">
+    <form v-bind:class="{'is-invisible': (!visible)}">
+
+      <div class="field">
+        <label class="label">{% trans %}Last Modified Date{% endtrans %}</label>
+        <div class="control">
+          <input class="input" type="text" disabled v-model="ehtml_doc.last_modified_date" />
+        </div>
+      </div>
+  
+
+      <div class="field">
+        <label class="label">{% trans %}Suppress Inheritance{% endtrans %}</label>
+        <div class="control">
+          <label class="checkbox">
+            <input type="checkbox" v-model="ehtml_doc.metadata.suppress_inheritance" v-on:change="suppress_inheritance_changed" ref="default_input" />
+          </label>
+        </div>
+      </div>
+  
+
+      <div class="field pt-3">
+        <label class="label">{% trans %}Title{% endtrans %}</label>
+        <div class="control">
+          <input class="input" type="text" v-bind:placeholder="inherited_metadata.title" v-model="ehtml_doc.metadata.title">
+        </div>
+      </div>
+
+      <div class="field pt-3">
+        <label class="label">{% trans %}Page Layout{% endtrans %}</label>
+        <div class="control">
+          <div style="width:50%;" class="select">
+            <select style="width:100%;" v-model="ehtml_doc.metadata.layout">
+              <option v-if="!ehtml_doc.metadata.suppress_inheritance" value="">{{ "{{  inherited_layout_description  }}" }} ({% trans %}Inherited{% endtrans %})</option>
+              <option v-for="(layout, index) in layouts" v-bind:value="index">{{ "{{  layout.description  }}" }}</option>
+            </select>
+          </div>
+        </div>
+        <img v-if="display_layout != ''" class="pt-2" style="width:100px" v-bind:src="(ehtml_doc.metadata.layout == '') ? '/static/images/' + inherited_metadata.layout + '.png' : '/static/images/' + ehtml_doc.metadata.layout + '.png'" />
+      </div>
+
+      <div class="field pt-3">
+        <label class="label">{% trans %}Keywords{% endtrans %}</label>
+        <div class="control">
+          <input class="input" type="text" v-bind:placeholder="inherited_metadata.keywords" v-model="ehtml_doc.metadata.keywords">
+        </div>
+      </div>
+
+      <div class="field pt-3">
+        <label class="label">{% trans %}Description{% endtrans %}</label>
+        <div class="control">
+          <input class="input" type="text" v-bind:placeholder="inherited_metadata.description" v-model="ehtml_doc.metadata.description">
+        </div>
+      </div>
+
+      <div class="field pt-3" title="{% trans %}Drag and drop extra content items to attach to this page. Unneeded locale information will be stripped from document paths.{% endtrans %}" v-on:dragover="aux_content_dragover" v-on:drop="add_aux_content_drop">
+        <label class="label">{% trans %}Aux Content Items{% endtrans %}</label>
+        <div class="control">
+          <table class="table is-bordered is-striped">
+            <thead>
+              <tr>
+                <th style='width:250px' class="has-text-centered pb-3">{% trans %}Type{% endtrans %}</th>
+                <th style="width:350px" class="has-text-centered pb-3">{% trans %}Path{% endtrans %}</th>
+                <th style="width:50px" class="has-text-centered pb-3"></th>
+                <th style="width:50px"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style='height:50px' v-for="aux_content_ref in inherited_metadata.aux_content_refs">
+                <td class="outline px-2" ><em>{{ "{{  aux_content_types[aux_content_ref.aux_content_type]  }}" }}</em></td>
+                <td class="outline px-2" ><em>{{ "{{  aux_content_ref.uri  }}" }} ({% trans %}Inherited{% endtrans %})</em></td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr style="height:50px" draggable="true" v-for="(aux_content_ref, index) in ehtml_doc.metadata.aux_content_refs"  @dragstart="reseq_drag($event, index, 'ac')" @dragover="reseq_dragover($event, 'ac')" @drop="reseq_drop($event, index, ehtml_doc.metadata.aux_content_refs, 'ac')" @reseq_dragend="reseq_dragend">
+                <td class="outline px-2" >
+
+                  <div v-if="aux_content_types_list" class="select">
+                    <select v-model="ehtml_doc.metadata.aux_content_refs[index].aux_content_type">
+                      <option v-for="act in aux_content_types_list" v-bind:value="act.value">{{ "{{ act.description }}" }}</option>
+                    </select>
+                  </div>
+
+                </td>
+                <td class="outline px-2">
+                  {{ "{{  ehtml_doc.metadata.aux_content_refs[index].uri  }}" }}
+                </td>
+                <td style="vertical-align: middle;">
+                  <i class="fa fa-trash ml-2" aria-hidden="true" v-on:click="delete_aux_content(index)"></i>
+                </td>
+                <td style="vertical-align: middle;">
+                  <i class="fa fa-grip-vertical ml-2"> </i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="field pt-3" title="{% trans %}Drag and drop javascript files to be referenced in the head of this document. Unneeded locale information will be stripped from document paths.{% endtrans %}" v-on:dragover="script_dragover" v-on:drop="add_script_drop">
+        <label class="label">{% trans %}Scripts{% endtrans %}</label>
+        <div class="control">
+          <table class="table is-bordered is-striped">
+            <thead>
+              <tr>
+                <th class="pb-3" style="width:600px;"><i class="fa fa-plus-square ml-2" aria-hidden="true" v-on:click="add_script()"></i> {% trans %}Path{% endtrans %}</th>
+                <th style="width:50px"></th>
+                <th style="width:50px"></th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr v-for="script in inherited_metadata.scripts"  style='height:50px' >
+                <td class="outline px-2"><em>{{ "{{  script  }}" }} ({% trans %}Inherited{% endtrans %})</em></td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr draggable="true" v-for="(script, index) in ehtml_doc.metadata.scripts" style='height:50px'  @dragstart="reseq_drag($event, index, 's')" @dragover="reseq_dragover($event, 's')" @drop="reseq_drop($event, index, ehtml_doc.metadata.scripts, 's')" @dragend="reseq_dragend">
+                <td class="outline px-2 py-2">
+                  <input class="input" style="width:570px" type="text" v-model="ehtml_doc.metadata.scripts[index]" v-on:dragover="script_dragover" v-on:drop="script_drop($event, index)">
+                </td>
+                <td style="vertical-align: middle;">
+                  <i class="fa fa-trash ml-2" aria-hidden="true" v-on:click="delete_script(index)"></i>
+                </td>
+                <td style="vertical-align: middle;">
+                  <i class="fa fa-grip-vertical ml-2"> </i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="field pt-3"  title="{% trans %}Drag and drop any CSS or Icon documents to be included in the header of this document. Unneeded locale information will be stripped from document paths.{% endtrans %}" v-on:dragover="link_dragover" v-on:drop="add_link_drop">
+        <label class="label">{% trans %}Linked Header Documents (CSS and Icon){% endtrans %}</label>
+        <div class="control">
+          <table class="table is-bordered is-striped" cellpadding="4px;">
+            <thead>
+              <tr style="height:50px">
+                <th style="width:100px;" class="has-text-centered pb-3">{% trans %}Type{% endtrans %}</th>
+                <th style="width:100px;" class="has-text-centered pb-3">{% trans %}Rel{% endtrans %}</th>
+                <th style="width:500px;" class="has-text-centered pb-3">{% trans %}<i class="fa fa-plus-square ml-2" aria-hidden="true" v-on:click="prompt_new_link()"></i> Path{% endtrans %}</th>
+                <th style="width:130px;" class="has-text-centered pb-3">{% trans %}Media{% endtrans %}</th>
+                <th style="width:50px" class="has-text-centered pb-3"></th>
+                <th style="width:50px" class="has-text-centered pb-3"></th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr v-for="link in inherited_metadata.links" style="height:50px">
+
+                <td class="outline px-2">
+                  {{ "{{  link.type  }}" }}
+                </td>
+
+                <td class="outline px-2">
+                  {{ "{{  link.rel  }}" }}
+                </td>
+
+
+                <td class="outline px-2">
+                  {{ "{{  link.href  }}" }} ({% trans %}Inherited{% endtrans %})
+                </td>
+
+                <td class="outline px-2">
+                  {{ "{{  link.media  }}" }}
+                </td>
+
+                <td>
+                </td>
+
+                <td>
+                </td>
+              </tr>
+
+
+
+              <tr style="height:50;" draggable="true" v-for="(link, index) in ehtml_doc.metadata.links"  @dragstart="reseq_drag($event, index, 'l')" @dragover="reseq_dragover($event, 'l')" @drop="reseq_drop($event, index, ehtml_doc.metadata.links, 'l')" @dragend="reseq_dragend">
+
+                <td class="outline px-2">
+                    {{ "{{  ehtml_doc.metadata.links[index].type  }}" }}
+                </td>
+
+                <td class="outline px-2">
+                  {{ "{{  ehtml_doc.metadata.links[index].rel  }}" }}
+                </td>
+
+
+                <td class="outline px-2">
+                  {{ "{{  ehtml_doc.metadata.links[index].href  }}" }}
+                </td>
+
+                <td class="outline px-2">
+
+                  <div class="select">
+                    <select v-model="ehtml_doc.metadata.links[index].media">
+                      <option value="all">{% trans %}All{% endtrans %}</option>
+                      <option value="print">{% trans %}Print{% endtrans %}</option>
+                      <option value="screen">{% trans %}Screen{% endtrans %}</option>
+                      <option value="speech">{% trans %}Speech{% endtrans %}</option>
+                    </select>
+                  </div>
+                </td>
+
+                <td style="vertical-align: middle;">
+                  <i class="fa fa-trash ml-2" aria-hidden="true" v-on:click="delete_link(index)"></i>
+                </td>
+                <td style="vertical-align: middle;">
+                  <i class="fa fa-grip-vertical ml-2"> </i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+      <div class="field pt-3">
+        <label class="label">Extended Attributes</label>
+        <div class="control">
+          <extended-attributes v-if="((ehtml_doc.last_modified_date != null) && (this.visible))" v-bind:ext_attr="ehtml_doc.metadata.extended_attributes" v-bind:inhext_attr="inherited_metadata.extended_attributes"></extended-attributes>
+        </div>
+      </div>
+
+      <div class="field pt-3">
+        <label class="label">{% trans %}HTML Markup{% endtrans %}</label>
+        <div class="control">
+          <doc-text v-bind:doc="ehtml_doc"></doc-text>
+        </div>
+      </div>
+
+
+    </form>
+  </script>
+
+  <script type="text/javascript">
+
+    const LINKED_DOC_METADATA = {
+          "ico" : {"type" : "image/x-icon", "rel" : "icon"},
+          "png" : {"type" : "image/png", "rel" : "icon"},
+          "gif" : {"type" : "image/gif", "rel" : "icon"},
+          "jpeg" : {"type" : "image/jpeg", "rel" : "icon"},
+          "jpg" : {"type" : "image/jpeg", "rel" : "icon"},
+          "webp" : {"type" : "image/webp", "rel" : "icon"},
+          "css" : {"type" : "text/css", "rel" : "stylesheet"}
+    }
+
+    const EHTML_EDITOR_COMPONENT = {
+      props : ['ehtml_doc'],
+      template : "#ehtml-editor-template",
+      mounted : function() {
+      },
+      created : function() {
+        this.visible = false
+
+        axios.get("/arches/content/manage/microsites/api/layouts_info").then(
+            (response)=>{
+              this.layouts = response.data.layouts
+
+              this.aux_content_types = response.data.aux_content_types
+              this.aux_content_types_list = []
+              this.default_aux_content_value = response.data.default_aux_content_type
+
+              aux_content_type_keys = Object.keys(this.aux_content_types)
+              for (var i=0; i<aux_content_type_keys.length; i++) {
+                this.aux_content_types_list[i] = {"value":aux_content_type_keys[i], "description" : this.aux_content_types[aux_content_type_keys[i]]}
+              }
+                var parsed_path = path_parser(this.ehtml_doc.uri)
+                var parameters = null
+                if (parsed_path.locale != null) {
+                  parameters = { params: {locale : parsed_path.locale }}
+                }
+                axios.get("/arches/content/manage/api/inherited_metadata" + parsed_path.non_localized_path, parameters).then(
+                    (response)=>{
+                      this.blank_inherited_metadata = this.inheritable_metadata
+                      this.inheritable_metadata = response.data.metadata
+
+                      layout_key = this.inheritable_metadata["layout"]
+                      if (layout_key == "") {
+                        layout_key = this.ehtml_doc.metadata.layout
+                      }
+
+                      if (layout_key != "") {
+                        this.inherited_layout_description = this.layouts[layout_key].description
+                      } else {
+                        this.inherited_layout_description = ""
+                      }
+
+                      if (this.ehtml_doc.metadata.suppress_inheritance) {
+                        this.swap_inherited_metadata(this.inherited_metadata, this.blank_inherited_metadata)
+                      } else {
+                        this.swap_inherited_metadata(this.inherited_metadata, this.inheritable_metadata)
+                      }
+
+                      this.visible = true
+
+                      Vue.nextTick( ()=> {
+                        this.$refs.default_input.focus()
+                      })
+
+                    }
+                ).catch(
+                    (err)=>{
+                      tag = error_processor("ehtml_editor", "init", err)
+                      emit_remote_error(tag)
+                    }
+                )
+              }
+        ).catch(
+            (err)=>{
+              tag = error_processor("ehtml_editor", "init", err)
+              emit_remote_error(tag)
+            }
+        )
+
+      },
+      data() {
+        return {
+          changed : false,
+          default_aux_content_value : null,
+          aux_content_types_list : null,
+          layouts : null,
+          inheritable_metadata : {"title":"", "keywords":"", "description":"", "layout":"", "suppress_inheritance" : false, "extended_attributes" : {}, "aux_content_refs" : [], "links" : [], "scripts" : []},
+          blank_inherited_metadata : {"title":"", "keywords":"", "description":"", "layout":"", "suppress_inheritance" : false, "extended_attributes" : {}, "aux_content_refs" : [], "links" : [], "scripts" : []},
+          inherited_layout_description : "",
+          visible : false,
+          drag_type: null
+        }
+      },
+      watch:{
+        ehtml_doc : {
+          deep: true,
+          handler(){
+            this.changed = this.ehtml_doc.changed()
+          }
+        }
+      },
+      computed : {
+        inherited_metadata : function() {
+          if (this.ehtml_doc.metadata.suppress_inheritance) {
+            return this.blank_inherited_metadata
+          } else {
+            return this.inheritable_metadata
+          }
+        },
+        display_layout : function() {
+          ret_layout = null
+          if (this.ehtml_doc.metadata.layout > "") {
+              ret_layout = this.ehtml_doc.metadata.layout
+          } else {
+            if (!this.ehtml_doc.metadata.suppress_inheritance) {
+              ret_layout = this.inheritable_metadata.layout
+            } else {
+              ret_layout = ""
+            }
+          }
+              
+          return ret_layout
+        }
+      },
+      methods : {
+        swap_inherited_metadata : function(inherited_metadata, new_inherited_metadata) {
+          inherited_metadata.title = new_inherited_metadata.title
+          inherited_metadata.keywords = new_inherited_metadata.keywords
+          inherited_metadata.description = new_inherited_metadata.description
+          inherited_metadata.layout = new_inherited_metadata.layout
+          inherited_metadata.suppress_inheritance = new_inherited_metadata.suppress_inheritance
+          inherited_metadata.extended_attributes = new_inherited_metadata.extended_attributes
+          inherited_metadata.aux_content_refs = new_inherited_metadata.aux_content_refs
+          inherited_metadata.links = new_inherited_metadata.links
+          inherited_metadata.scripts = new_inherited_metadata.scripts
+        },
+        suppress_inheritance_changed : function() {
+
+          if (this.ehtml_doc.metadata.suppress_inheritance) {
+            this.swap_inherited_metadata(this.inherited_metadata, this.blank_inherited_metadata)
+            if (this.ehtml_doc.metadata.layout == "") {
+              this.ehtml_doc.metadata.layout = this.inheritable_metadata.layout
+            }
+          } else {
+            if (this.ehtml_doc.metadata.layout == this.inherited_metadata.layout) {
+              this.ehtml_doc.metadata.layout = ""
+            }
+
+            this.swap_inherited_metadata(this.inherited_metadata, this.inheritable_metadata)
+
+            for (var i=0; i<this.ehtml_doc.metadata.scripts.length; i++) {
+              if (this.uri_in_scripts_list(this.ehtml_doc.metadata.scripts[i], this.inherited_metadata.scripts)) {
+                this.ehtml_doc.metadata.scripts.splice(i,1)
+                i=i-1
+              }
+            }
+
+            for (var i=0; i<this.ehtml_doc.metadata.aux_content_refs.length; i++) {
+              if (this.uri_in_aux_content_refs(this.ehtml_doc.metadata.aux_content_refs[i].uri, this.inherited_metadata.aux_content_refs)) {
+                this.ehtml_doc.metadata.aux_content_refs.splice(i,1)
+                i=i-1
+              }
+            }
+
+            for (var i=0; i<this.ehtml_doc.metadata.links.length; i++) {
+              if (this.uri_in_links_list(this.ehtml_doc.metadata.links[i].href, this.inherited_metadata.links)) {
+                this.ehtml_doc.metadata.links.splice(i,1)
+                i=i-1
+              }
+            }
+
+
+
+
+          }
+
+
+        },
+        move_aux_content : function(index, dir) {
+          temp = this.ehtml_doc.metadata.aux_content_refs[index]
+          this.ehtml_doc.metadata.aux_content_refs[index] = this.ehtml_doc.metadata.aux_content_refs[index + dir]
+          this.ehtml_doc.metadata.aux_content_refs[index + dir] = temp
+        },
+        add_aux_content : function() {
+          this.ehtml_doc.metadata.aux_content_refs[this.ehtml_doc.metadata.aux_content_refs.length] = {"aux_content_type":this.default_aux_content_value, "uri":null}
+        },
+        delete_aux_content : function(index) {
+          this.ehtml_doc.metadata.aux_content_refs.splice(index, 1)
+        },
+        move_script : function(index, dir) {
+          temp = this.ehtml_doc.metadata.scripts[index]
+          this.ehtml_doc.metadata.scripts[index] = this.ehtml_doc.metadata.scripts[index + dir]
+          this.ehtml_doc.metadata.scripts[index + dir] = temp
+        },
+        prompt_new_script : function() {
+          emit_prompt(PROMPT_NEW_SCRIPT, 
+            (value) => {
+                script_info = this.parse_uri(value)
+                ext = uri_info.lcase_ext
+
+                this.ehtml_doc.metadata.scripts[this.ehtml_doc.metadata.scripts.length] = value
+
+                ret_message = null
+
+              return ret_message
+            }
+          )
+        },
+        add_script : function() {
+            this.ehtml_doc.metadata.scripts[this.ehtml_doc.metadata.scripts.length] = null
+        },
+        delete_script : function(index) {
+          this.ehtml_doc.metadata.scripts.splice(index, 1)
+        },
+        move_link : function(index, dir) {
+          temp = this.ehtml_doc.metadata.links[index]
+          this.ehtml_doc.metadata.links[index] = this.ehtml_doc.metadata.links[index + dir]
+          this.ehtml_doc.metadata.links[index + dir] = temp
+        },
+        add_link : function() {
+          this.ehtml_doc.metadata.links[this.ehtml_doc.metadata.links.length] = {"type":null, "rel":null, "media":null, "href":null}
+        },
+        delete_link : function(index) {
+          this.ehtml_doc.metadata.links.splice(index, 1)
+        },
+        parse_uri : function(uri) {
+          ret_values = {}
+          const re = /^(.*)\/(.*?)(-((aa|ab|ae|af|ak|am|an|ar|as|av|ay|az|ba|be|bg|bi|bm|bn|bo|br|bs|ca|ce|ch|co|cr|cs|cu|cv|cy|da|de|dv|dz|ee|el|en|eo|es|et|eu|fa|ff|fi|fj|fo|fr|fy|ga|gd|gl|gn|gu|gv|ha|he|hi|ho|hr|ht|hu|hy|hz|ia|id|ig|ii|ik|io|is|it|iu|jv|ka|kg|ki|kj|kk|kl|km|kn|kr|kv|kw|ky|la|lb|lg|li|ln|lo|lt|lv|mg|mh|mi|mk|ml|mn|mr|mt|my|na|nb|nd|ne|ng|nl|nn|no|nr|nv|ny|oc|oj|om|or|os|pi|pl|ps|pt|qu|rm|rn|ro|ru|rw|sc|se|sg|si|sk|sl|sm|sn|so|sq|sr|ss|st|su|sv|sw|ta|te|th|ti|tk|tl|tn|to|tr|ts|tw|ty|uk|ur|ve|vi|vo|wa|wo|xh|yi|yo|za|zu)(_([A-Z]{2})(_(.*))?)?))?\.([\w]*)$/;
+          matches = uri.match(re)
+
+          ret_values["non_i18n_uri"] = matches[1] + "/" + matches[2] + "." + matches[10]
+          ret_values["lcase_ext"] = matches[10].toLowerCase()
+          return ret_values
+        },
+        link_dragover : function() {
+          event.stopPropagation()
+
+          uri_info = this.parse_uri(item_to_move.uri)
+          ext = uri_info.lcase_ext
+          uri = uri_info.non_i18n_uri
+
+          valid_extension = false
+          in_list = false
+          if (ext in LINKED_DOC_METADATA) {
+            valid_extension = true
+          }
+
+          if (valid_extension) {
+            if (this.uri_in_links_list(uri, this.ehtml_doc.metadata.links) || this.uri_in_links_list(uri, this.inherited_metadata.links)) {
+              in_list = true
+            }
+          }
+
+          if (valid_extension && (!in_list)) {
+              event.preventDefault()
+          }
+        },
+        prompt_new_link : function() {
+          emit_prompt(PROMPT_NEW_LINK, 
+            (value) => {
+              uri_info = this.parse_uri(value)
+              ext = uri_info.lcase_ext
+
+              if (this.uri_in_links_list(value, this.ehtml_doc.metadata.links) || this.uri_in_links_list(value, this.inherited_metadata.links)) {
+                ret_message = "{% trans %}Linked document is already associated{% endtrans %}"
+              } else if (! ext in LINKED_DOC_METADATA) {
+                ret_message = "{% trans %}Path has an invalid extension for document linking{% endtrans %}"
+              } else {
+
+                link_metadata = LINKED_DOC_METADATA[ext]
+                this.ehtml_doc.metadata.links[this.ehtml_doc.metadata.links.length] = {
+                  "type" : link_metadata.type,
+                  "rel" : link_metadata.rel,
+                  "href" : value,
+                  "media" : "all"
+                }
+
+                ret_message = null
+              }
+
+              return ret_message
+            }
+          )
+        },
+        add_link_drop : function() {
+          event.stopPropagation()
+
+          uri_info = this.parse_uri(item_to_move.uri)
+          ext = uri_info.lcase_ext
+          uri = uri_info.non_i18n_uri
+
+          link_metadata = LINKED_DOC_METADATA[ext]
+          this.ehtml_doc.metadata.links[this.ehtml_doc.metadata.links.length] = {
+            "type" : link_metadata.type,
+            "rel" : link_metadata.rel,
+            "href" : uri,
+            "media" : "all"
+          }
+        },
+        change : function() {
+        },
+        script_dragover(event) {
+            event.stopPropagation()
+            event.preventDefault()
+
+            if (item_to_move) {
+
+              uri_info = this.parse_uri(item_to_move.uri)
+              ext = uri_info.lcase_ext
+              uri = uri_info.non_i18n_uri
+
+              in_list = false
+              if (this.uri_in_scripts_list(uri, this.ehtml_doc.metadata.scripts) || this.uri_in_scripts_list(uri, this.inherited_metadata.scripts)) {
+                in_list = true
+              }
+
+              if (uri.endsWith(".js") && (!in_list)) {
+                  event.preventDefault()
+              }
+            }
+        },
+        script_drop(event, index) {
+          event.preventDefault()
+          event.stopPropagation()
+
+          uri_info = this.parse_uri(item_to_move.uri)
+          ext = uri_info.lcase_ext
+          uri = uri_info.non_i18n_uri
+
+          if (uri.endsWith(".js")) {
+            this.ehtml_doc.metadata.scripts[index] = uri
+          }
+        },
+        add_script_drop(event) {
+          event.stopPropagation()
+
+            uri_info = this.parse_uri(item_to_move.uri)
+            ext = uri_info.lcase_ext
+            uri = uri_info.non_i18n_uri
+
+            this.ehtml_doc.metadata.scripts[this.ehtml_doc.metadata.scripts.length] = uri
+        },
+        reseq_drag(e, index, drag_type) {
+          e.stopPropagation()
+          const dataList = e.dataTransfer.items;
+          dataList.clear()
+          dataList.add("script_" + String(index), "text/index");  
+          this.drag_type=drag_type
+        },
+        reseq_dragover(e, drag_type) {
+          if (this.drag_type == drag_type) {
+            e.preventDefault();
+            e.stopPropagation()
+            e.dataTransfer.dropEffect = "move"
+          }
+        },
+        reseq_dragend() {
+          this.drag_type=null
+        },
+        reseq_drop(e, index, reseq_list, drag_type) {
+          if (this.drag_type == drag_type) {
+            var drag_index = null
+            // Loop through the dropped items and log their data
+            for (const item of e.dataTransfer.items) {
+              if ((item.kind === "string") && (item.type == "text/index")) {
+                item.getAsString((s) => {
+                  m = s.match(/^script_([0-9]*)$/)
+                  if (m) {
+                    drag_index = Number(m[1])
+
+                    tmp = reseq_list[drag_index]
+                    reseq_list.splice(drag_index, 1)
+                    reseq_list.splice(index, 0, tmp)
+
+                    e.stopPropagation()
+
+                  }
+                })
+              }
+            }
+          }
+        },
+        add_aux_content_drop(event) {
+          if (item_to_move) {
+            event.stopPropagation()
+
+            uri_info = this.parse_uri(item_to_move.uri)
+            ext = uri_info.lcase_ext
+            uri = uri_info.non_i18n_uri
+
+            this.ehtml_doc.metadata.aux_content_refs[this.ehtml_doc.metadata.aux_content_refs.length] = {"aux_content_type":this.default_aux_content_value, "uri":uri}
+          }
+        },
+        aux_content_dragover(event) {
+          if (item_to_move) {
+            event.stopPropagation()
+
+            uri_info = this.parse_uri(item_to_move.uri)
+            ext = uri_info.lcase_ext
+            uri = uri_info.non_i18n_uri
+
+            in_list = false
+            if (this.uri_in_aux_content_refs(uri, this.inherited_metadata.aux_content_refs) || this.uri_in_aux_content_refs(uri, this.ehtml_doc.metadata.aux_content_refs)) {
+              in_list = true
+            }
+
+            if (uri.endsWith(".htm") && (!in_list)) {
+                event.preventDefault()
+            }
+          }
+        },
+        aux_content_drop(event, index) {
+            event.stopPropagation()
+
+            uri_info = this.parse_uri(item_to_move.uri)
+            ext = uri_info.lcase_ext
+            uri = uri_info.non_i18n_uri
+
+            this.ehtml_doc.metadata.aux_content_refs[index]["uri"] = uri
+        },
+        uri_in_links_list : function(uri, links_list) {
+          in_list = false
+          for (var i=0; i<links_list.length; i++) {
+            if (uri == links_list[i].href) {
+              in_list = true
+              break
+            }
+          }
+          return in_list
+        },
+        uri_in_scripts_list : function(uri, scripts_list) {
+          in_list = false
+          for (var i=0; i<scripts_list.length; i++) {
+            if (uri == scripts_list[i]) {
+              in_list = true
+              break
+            }
+          }
+          return in_list
+        },
+        uri_in_aux_content_refs : function(uri, aux_content_refs) {
+          in_list = false
+          for (var i=0; i<aux_content_refs.length; i++) {
+            if (uri == aux_content_refs[i].uri) {
+              in_list = true
+              break
+            }
+          }
+          return in_list
+        }
+      }
+    }
+
+  </script>

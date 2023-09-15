@@ -1,0 +1,26 @@
+{
+    "must_implement": "utah.arches.webtools.BaseFlaskConfig",
+    "type": "utah.arches.webtools.FlaskConfigFS",
+    "load_it": true,
+    "config": {
+        "secret_key_location": "${UTAH_VARIABLE_DATA}/data/flask_secret_key.txt",
+        "new_secret_key_every_startup": false,
+        "blueprint_module_list": [
+            {"class_name" : "utah.arches.web_blueprints.access_mgmt", "load_it" : true},
+            {"class_name" : "utah.arches.web_blueprints.admin", "load_it" : true},
+            {"class_name" : "utah.arches.web_blueprints.authentication", "load_it" : true},
+            {"class_name" : "utah.arches.web_blueprints.content", "load_it" : true},
+            {"class_name" : "utah.arches.web_blueprints.log_viewer", "load_it" : true},
+            {"class_name" : "utah.arches.web_blueprints.navigation", "load_it" : true},
+            {"class_name" : "utah.arches.web_blueprints.registration", "load_it" : true},
+            {"class_name" : "utah.arches.web_blueprints.render_content", "load_it" : true}
+            ^{${UTAH_APP_HOME}/config/application/services/blueprint_modules.pp_json,','}
+        ],
+        "temp_download_path": "${UTAH_VARIABLE_DATA}/temp",
+        "default_locale"    : "^{${UTAH_APP_HOME}/config/application/i18n/default_locale.txt}",
+        "supported_locales" : "^{${UTAH_APP_HOME}/config/application/i18n/supported_locales.txt}",        
+        "default_timezone"  : "UTC",
+        "translation_directories" : "${UTAH_APP_HOME}/config/arches/i18n;${UTAH_APP_HOME}/config/application/i18n",
+        "message_domain" : "arches;application"
+    }
+}

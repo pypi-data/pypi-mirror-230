@@ -1,0 +1,11 @@
+{
+    "must_implement": "utah.core.navigation.BaseNavigationService",
+    "type": "utah.impl.zion.navigation.NavigationService",
+    "load_it": ${ARCHES_SVC_LOAD_NAVIGATION, 'true'},
+    "config": {
+        "main_microsite": "main",
+        "reload_interval_secs": 300,
+        "root_dir": "${UTAH_VARIABLE_DATA}/user_managed_content",
+        "nav_path_pattern": "%s/__system/navigation.json"
+    }
+}

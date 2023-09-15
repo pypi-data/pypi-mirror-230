@@ -1,0 +1,89 @@
+Metadata-Version: 2.1
+Name: utah-project
+Version: 1.6.1
+Summary: Utah Project
+Home-page: https://www.utahproject.org
+Author: George Tsiones
+Author-email: gtsiones@comcast.net
+License: BSD-3
+Keywords: pipeline flask deployment
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Framework :: Flask
+Requires-Python: >3.6
+Requires-Dist: flask >2.0.0
+Requires-Dist: blinker
+Requires-Dist: pyyaml
+Requires-Dist: pymongo
+Requires-Dist: requests
+Requires-Dist: python-dateutil
+Requires-Dist: flask-babel
+Requires-Dist: flask-restful
+Requires-Dist: importlib-metadata
+
+Utah Project
+============
+
+Utah Project is designed to help developers build full stack web app solutions in python. It does this by integrating many of the 
+components in the python ecosystem into one software stack realized in a preconfigured reference application.
+It begins with a set of base libraries to handle common needs when building web applications 
+and fronts them with flask. It takes into consideration the following problems: 
+
+1. Externalized Content Management and Delivery
+2. Authentication
+3. Authorization
+4. Profile Management
+5. Configuration Bootstrapping
+6. Site Navigation
+7. Command processing
+8. Robust and Dynamic Page Templating
+9. Internationalization
+10. Server Configuration (For CentOS and Redhat)
+11. APIs
+
+For more detail go to our `home page`_.
+
+Consumption Models
+------------------
+Utah can be consumed in two modes. 
+
+1. Canned installable RPM for Linux Systems
+2. Workspace for building your own applications
+
+Installing our canned application on a server is pretty straight forward and out 
+of the box will provide a nice content management and delivery solution.  To get 
+started follow our `Quick Start`_ guide
+
+The workspace gives you the ability to mix your functionality with our out of 
+the box services. Our command processing is all based on `flask`_. Your first question 
+might be why flask? Simple enough; flask is awesome and the most straight forward 
+way to implement web functionality in python. If you know flask, adding 
+functionality will be a simple proposition. The workspace comes with all 
+of the component dependancies preconfgiured in a working application ready 
+to have your functionality added to it. In addtion the workspace comes with an RPM spec 
+which is needed to build your application into your own RPM so your 
+application is server deployable.
+
+
+Setting up a workspace is also straightforward.  To do so follow our `workspace setup`_ guide.
+
+
+Release Notes
+-------------
+**Version 1.6.0**
+
+Features:
+
+* Split the configuration and templates out to make upgrades for custome applications much easier. This is a step towards provising an project upgrade utility in future releases.
+* Fixed the bryce setup (which relies on mongodb) use urls instead of parameters to make compatible with mongo atlas
+* Added feature to content upload. If a zip is updated user is prompted to unpack. If they do so the zip will be unpacked in the repo after upload.
+
+Bug Fixes:
+
+* Corrected an issue in content drag and drop where file names with hyphens and underscores get an error
+
+
+.. _home page: https://www.utahproject.org
+.. _Quick Start: https://www.utahproject.org/main/how_tos/installation_and_configuration.html#quick_setup
+.. _flask: https://flask.palletsprojects.com/en/2.0.x/
+.. _workspace setup: https://www.utahproject.org/main/how_tos/developers.html

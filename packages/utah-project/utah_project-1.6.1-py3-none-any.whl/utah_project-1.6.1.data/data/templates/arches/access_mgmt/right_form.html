@@ -1,0 +1,181 @@
+{% extends arches_layout %}
+{% block main_content %}
+
+{% if function == "add" %}
+<form class="box" action="/arches/access_mgmt/uri_access_rights/__new" method="POST">  
+{% endif %}
+{% if function == "update" %}
+<form class="box" action="/arches/access_mgmt/uri_access_rights/{{ uri_access_right.id }}" method="POST">
+{% endif %}
+
+
+    {% if message %}
+      {% if error %}
+        {% set tag="is-danger" %}
+      {% else %}
+        {% set tag="is-info" %}
+      {% endif %}
+  
+      <div class="notification {{ tag }}">
+        {{ message }}
+      </div>
+    {% endif %}
+    <div class="field">
+      <label class="label">{% trans %}Category{% endtrans %}</label>
+      <div class="control">
+        {% if not "category" in field_errors %}
+        <input class="input" type="text" placeholder="Admin" name="category" value="{{ uri_access_right.category }}">
+        {% else %}
+        <input class="input is-danger" type="text" placeholder="Admin" name="category" value="{{ uri_access_right.category }}">
+        <p class="help is-danger">{{ field_errors["category"] }}</p>
+        {% endif %}
+      </div>
+    </div>
+  
+  
+  
+
+  <div class="field">
+    <label class="label">{% trans %}Right Name{% endtrans %}</label>
+    <div class="control">
+      {% if not "right_name" in field_errors %}
+      <input class="input" type="text" placeholder="content_reader" name="right_name" value="{{ uri_access_right.right_name }}">
+      {% else %}
+      <input class="input is-danger" type="text" placeholder="content_reader" name="right_name" value="{{ uri_access_right.right_name }}">
+      <p class="help is-danger">{{ field_errors["right_name"] }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+
+
+  <div class="field">
+    <label class="label">{% trans %}URI{% endtrans %}</label>
+    <div class="control">
+      {% if not "uri" in field_errors %}
+      <input class="input" type="text" placeholder="/create_address" name="uri" value="{{ uri_access_right.uri }}">
+      {% else %}
+      <input class="input is-danger" type="text" placeholder="/create_address" name="uri" value="{{ uri_access_right.uri }}">
+      <p class="help is-danger">{{ field_errors["uri"] }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+
+  <div class="columns">
+
+
+
+    <div class="column">
+      <div class="field">
+        <label class="label">{% trans %}Allowed Methods{% endtrans %}</label>
+        <div class="control">
+          <div class="select is-multiple">
+            {% if not "methods" in field_errors %}
+            <select style="width: 275px;" multiple size="size" name="methods">
+            {% for method in uri_access_right.methods %}
+                <option{% if method.selected %} selected{% endif %} value="{{ method.value }}">{{ method.description }}</option>
+            {% endfor %}
+            </select>
+          {% else %}
+          <select style="width: 275px;" class="select is-multiple is-danger" multiple size="4" name="methods">
+            {% for method in uri_access_right.methods %}
+            <option{% if method.selected %} selected{% endif %} value="{{ method.value }}">{{ method.description }}</option>
+            {% endfor %}
+          </select>
+          <p class="help is-danger">{{ field_errors["methods"] }}</p>
+          {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="column">
+      <div class="field">
+        <label class="label">{% trans %}Filters{% endtrans %}</label>
+        <div class="control">
+          <div class="select is-multiple">
+            {% if not "filters" in field_errors %}
+            <select style="width: 275px;" style="width: 250%;" multiple size="10" name="filters">
+            {% for filter in uri_access_right.filters %}
+                <option{% if filter.selected %} selected{% endif %} value="{{ filter.value }}">{{ filter.description }}</option>
+            {% endfor %}
+            </select>
+          {% else %}
+          <select style="width: 275px;" class="select is-danger" multiple size="10" name="filters">
+            {% for filter in uri_access_right.filters %}
+            <option{% if filter.selected %} selected{% endif %} value="{{ filter.value }}">{{ filter.description }}</option>
+            {% endfor %}
+          </select>
+          <p class="help is-danger">{{ field_errors["filters"] }}</p>
+          {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+
+    <div class="column">
+      <div class="field">
+        <label class="label">{% trans %}Authorized Groups{% endtrans %}</label>
+        <div class="control">
+          <div class="select is-multiple">
+            {% if not "authorized_groups" in field_errors %}
+            <select style="width: 275px;" multiple size="10" name="authorized_groups">
+            {% for group in uri_access_right.groups %}
+                <option{% if group.selected %} selected{% endif %} value="{{ group.value }}">{{ group.description }}</option>
+            {% endfor %}
+            </select>
+            {% else %}
+            <select style="width: 275px;" class="select is-danger" multiple size="10" name="authorized_groups">
+              {% for authorized_group in uri_access_right.authorized_groups %}
+              <option{% if group.selected %} selected{% endif %} value="{{ group.value }}">{{ group.description }}</option>
+              {% endfor %}
+            </select>
+            <p class="help is-danger">{{ field_errors["authorized_groups"] }}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    {% if uri_access_right.permitted_environments|length >= 2 %}
+    <div class="column">
+      <div class="field">
+        <label class="label">{% trans %}Access Permitted in Envs (None = all){% endtrans %}</label>
+        <div class="control">
+          <div class="select is-multiple">
+            <select style="width: 275px;" multiple size="10" name="permitted_environments">
+              {% for permitted_environment in uri_access_right.permitted_environments %}
+              <option{% if permitted_environment.selected %} selected{% endif %} value="{{ permitted_environment.value }}">{{ permitted_environment.description }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+
+
+  </div>
+
+    {% if function == "add" %}
+      <button class="button is-info" name="submit_button" value="add" >{% trans %}Add{% endtrans %}</button>
+    {% endif %}
+    {% if function == "update" %}
+      <button class="button is-info" name="submit_button" value="update">{% trans %}Update{% endtrans %}</button>
+      <a  class="button" href="/arches/access_mgmt/uri_access_rights/{{ uri_access_right.id }}/__delete">{% trans %}Delete{% endtrans %}</a>
+      {% endif %}
+    <a  class="button" href="/arches/access_mgmt/uri_access_rights">{% trans %}Cancel{% endtrans %}</a>
+
+
+  </form>
+  
+{% endblock %}

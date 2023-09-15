@@ -1,0 +1,49 @@
+  <!--
+  =====================================================================================
+  System Message
+  =====================================================================================
+  -->
+  <script type="text/html" id="system-message-template">
+    <div v-if="visible" class="modal is-active">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+
+        <article :class="'message  ' + message.color">
+          <div class="message-header">
+            <p> {{ "{{  message.header  }}" }} </p>
+            <button v-if="message.can_close" class="delete" aria-label="delete" v-on:click="hide" ref="default_input"></button>
+          </div>
+          <div class="message-body has-background-white">
+            {{ "{{  message.body  }}" }}
+          </div>
+        </article>
+      </div>
+    </div>
+  </script>
+
+
+  <script type="text/javascript">
+    var SYSTEM_MESSAGE_COMPONENT = {
+      data() {
+        return {
+          message:null,
+          visible:false
+        }
+      },
+      mounted() {
+        listen_message((message) => {
+          this.message = message
+          this.visible = true
+          Vue.nextTick( () =>{
+            this.$refs.default_input.focus()
+          })
+        })
+      },
+      template : "#system-message-template",
+      methods : {
+        hide : function() {
+          this.visible = false
+        }
+      }
+    }
+  </script>

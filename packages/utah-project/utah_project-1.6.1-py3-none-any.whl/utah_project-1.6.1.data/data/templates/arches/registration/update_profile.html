@@ -1,0 +1,46 @@
+{% extends arches_layout %}
+{% block main_content %}
+
+<form class="box" action="/security/profile" method="POST">
+  {% if message %}
+    {% if error %}
+      {% set tag="is-danger" %}
+    {% else %}
+      {% set tag="is-info" %}
+    {% endif %}
+
+    <div class="notification {{ tag }}">
+      {{ message }}
+    </div>
+  {% endif %}
+
+  <div class="field">
+    <label class="label">{% trans %}First Name{% endtrans %}</label>
+    <div class="control">
+      {% if not "first_name" in field_errors %}
+      <input class="input" type="text" placeholder="{% trans %}John{% endtrans %}" name="first_name" value="{{ profile.first_name }}">
+      {% else %}
+      <input class="input is-danger" type="text" placeholder="{% trans %}John{% endtrans %}" name="first_name" value="{{ profile.first_name }}">
+      <p class="help is-danger">{{ field_errors["first_name"] }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+
+  <div class="field">
+    <label class="label">{% trans %}Last Name{% endtrans %}</label>
+    <div class="control">
+      {% if not "last_name" in field_errors %}
+      <input class="input" type="text" placeholder="{% trans %}Smith{% endtrans %}" name="last_name" value="{{ profile.last_name }}">
+      {% else %}
+      <input class="input is-danger" type="text" placeholder="{% trans %}Smith{% endtrans %}" name="last_name" value="{{ profile.last_name }}">
+      <p class="help is-danger">{{ field_errors["last_name"] }}</p>
+      {% endif %}
+    </div>
+  </div>
+    
+  <button class="button is-info" name="submit_button" value="submit" >{% trans %}Update{% endtrans %}</button>
+
+</form>
+
+{% endblock %}

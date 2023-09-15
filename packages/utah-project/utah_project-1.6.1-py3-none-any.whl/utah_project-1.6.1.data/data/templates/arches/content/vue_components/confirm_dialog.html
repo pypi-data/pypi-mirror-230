@@ -1,0 +1,62 @@
+  <!--
+  =====================================================================================
+  Confirm dialog
+  =====================================================================================
+  -->
+  <script type="text/html" id="confirmation-template">
+    <div v-if="visible" class="modal is-active">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+
+        <article :class="'message  ' + message.color">
+          <div class="message-header">
+            <p> {{ "{{  message.header  }}" }} </p>
+            <button class="delete" aria-label="delete" v-on:click="hide"></button>
+          </div>
+          <div class="message-body has-background-white">
+
+
+            <div class="field">
+              <label class="label">{{ "{{  message.body  }}" }}</label>
+            </div>
+
+            <div class="buttons">
+              <button v-on:click="execute" class="button is-normal">{% trans %}OK{% endtrans %}</button>
+              <button v-on:click="hide" class="button is-normal">{% trans %}Cancel{% endtrans %}</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </script>
+
+
+  <script type="text/javascript">
+    var CONFIRMATION_COMPONENT = {
+      data() {
+        return {
+          message:null,
+          visible:false,
+          callback:null
+        }
+      },
+      mounted() {
+        listen_confirmation_request((payload) => {
+          this.message = payload[0]
+          this.callback = payload[1]
+          this.visible = true
+        })
+      },
+      template : "#confirmation-template",
+      methods : {
+        hide : function() {
+          this.visible = false
+        },
+        execute : function() {
+          this.hide()
+          this.callback()
+        }
+      }
+    }
+  </script>
+

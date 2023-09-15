@@ -1,0 +1,44 @@
+  <!--
+  =====================================================================================
+  Text Editor
+  =====================================================================================
+  -->
+  <script type="text/html" id="text-editor-template">
+    <div class="field">
+      <label class="label">{% trans %}Last Modified Date{% endtrans %}</label>
+      <div class="control">
+        <input class="input" type="text" disabled v-model="text_doc.last_modified_date" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">{% trans %}Text{% endtrans %}</label>
+      <div class="control">
+        <doc-text v-bind:doc="text_doc"></doc-text>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/javascript">
+    var TEXT_EDITOR_COMPONENT = {
+      props : ['text_doc'],
+      template : "#text-editor-template",
+      data() {
+        return {
+          changed:false
+        }
+      },
+      watch:{
+        text_doc : {
+          deep: true,
+          handler(){
+            this.changed = this.text_doc.changed()
+          }
+        }
+      },
+      mounted() {
+      }
+    }
+
+  </script>
+

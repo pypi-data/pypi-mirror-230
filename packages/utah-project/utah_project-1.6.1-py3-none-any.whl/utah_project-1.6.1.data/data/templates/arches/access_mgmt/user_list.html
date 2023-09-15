@@ -1,0 +1,50 @@
+{% extends arches_layout %}
+{% block main_content %}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+              {% trans %}Email Address{% endtrans %}
+            </th>
+            <th>
+              {% trans %}First Name{% endtrans %}
+            </th>
+            <th>
+              {% trans %}Last Name{% endtrans %}
+            </th>
+            <th>
+              {% trans %}Group Enrollments{% endtrans %}
+            </th>
+  </tr>
+    </thead>
+    
+    <tbody>
+    {% for profile in profiles %}
+        <tr>
+            <td>
+              <a href="/arches/access_mgmt/users/{{ profile.user_id }}/group_enrollments">{{ profile.user_id }}</a>
+            </td>
+            <td>
+              {{ profile.first_name }}
+            </td>
+            <td>
+              {{ profile.last_name }}
+            </td>
+            <td>
+              {% for group in profile.groups %}
+                <span class="tag">
+                  {{ group }}
+                </span>
+              {% endfor %}
+            </td>
+
+        </tr>
+    {% endfor %}
+    </tbody>
+    
+    </table>
+
+    <a class="button is-info" href="/arches/registration/register/admin/form">{% trans %}Add User{% endtrans %}</a>
+
+{% endblock %}

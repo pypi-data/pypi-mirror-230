@@ -1,0 +1,49 @@
+  <!--
+  =====================================================================================
+  Binary Editor
+  =====================================================================================
+  -->
+  <script type="text/html" id="binary-editor-template">
+    <div class="field">
+      <label class="label">{% trans %}Last Modified Date{% endtrans %}</label>
+      <div class="control">
+        <input class="input" type="text" disabled v-model="binary_doc.last_modified_date" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">{% trans %}Size{% endtrans %}</label>
+      <div class="control">
+        <input class="input" type="text" disabled v-model="binary_doc.size" />
+      </div>
+    </div>
+
+    <img v-if="doc_type==1" v-bind:src="binary_doc.uri" width='500'/>
+    <audio v-if="doc_type==2" controls>
+      <source v-bind:src="binary_doc.uri" >
+      {% trans %}Your browser does not support the audio tag.{% endtrans %}
+    </audio>
+  </script>
+
+  <script type="text/javascript">
+    var BINARY_EDITOR_COMPONENT = {
+      props : ['binary_doc'],
+      template : "#binary-editor-template",
+      data() {
+        return {
+        }
+      },
+      computed: {
+        doc_type() {
+          ret_value = 0
+          if (!!this.binary_doc.name.toLowerCase().match(/^([a-z,A-Z,0-9,\-,\_]*)\.(jpg|jpeg|png|jfif|gif)$/)) {
+            ret_value = 1
+          } else if (!!this.binary_doc.name.toLowerCase().match(/^([a-z,A-Z,0-9,\-,\_]*)\.(wav|m4a|mp3|ogg)$/)) {
+            ret_value = 2
+          }
+          return ret_value
+        }
+      }
+    }
+
+  </script>

@@ -1,0 +1,212 @@
+  <!--
+  =====================================================================================
+  General Editor
+  =====================================================================================
+  -->
+  <script type="text/html" id="general-editor-template">
+
+    <div v-if='selected_folder_item' style="height:100%;" class="column mr-2" v-on:keydown.ctrl.s="save_key">
+
+      <div style="height:100%;" class="is-flex is-flex-grow-1 is-flex-direction-column">
+        <div style="align-items:center; line-height: 1.25; padding: 0.75em 1em; border-radius: 4px 4px 0px 0px; font-weight: 700;" class="has-background-info has-text-white is-flex is-flex-direction-row is-justify-content-start">
+                    
+          <span>{% trans %}Item Manager{% endtrans %}</span>
+  
+          <span class="is-justify-content-right">
+
+            <a 
+              style="height:25px;" 
+              class="m-0 py-0 pr-0 pl-3" 
+              v-if="this.show_preview()" 
+              v-bind:disabled="(selected_folder_item.changed())" 
+              v-bind:href="'/arches/content/manage/review_doc' + selected_folder_item.uri" 
+              target="preview">
+                <i class="has-text-white" style="padding-top:4px;" class="fa fa-glasses" aria-hidden="true"></i>
+            </a>
+            <button 
+              style="height:25px;" 
+              class="button is-info m-0 py-0 pr-0 pl-3 fa fa-save" 
+              v-on:click="save"
+              title="{% trans %}Click to save changes{% endtrans %}"
+              v-if="this.show_save()"
+              v-bind:disabled="(!(selected_folder_item.changed() && !editing_name))">
+            </button>
+
+            <button 
+              style="height:25px;" 
+                class="button is-info m-0 py-0 pr-0 pl-3 fa fa-trash" 
+                v-on:click="confirm_delete"
+                v-if="this.show_delete()"
+                title="{% trans %}Click to delete document{% endtrans %}">
+            </button>
+            
+          </span>
+
+          <span style="height:34px;">&nbsp;</span>
+
+        </div>
+        <div style="padding: 0.75em 1em; height:100%; overflow-y:auto; min-width: 0;" class="is-align-self-stretch has-background-info-light">
+  
+          <form>
+            <div class="field">
+              <label class="label">
+                {% trans %}URI{% endtrans %}
+              </label>
+              <div class="control">
+                <input disabled class="input" type="text" v-model="selected_folder_item.uri">
+              </div>
+            </div>
+  
+            <div class="field">
+              <label class="label">
+                {% trans %}Name{% endtrans %}
+                <i v-if="this.show_rename()" v-on:click="edit_name" class="fas fa-pen"></i>
+                <i v-if="editing_name" v-on:click="save_new_name" class="fas fa-save pr-2"></i>
+                <i v-if="editing_name" v-on:click="cancel_edit_name" class="fas fa-window-close"></i>
+              </label>
+              <div class="control">
+                <input v-bind:disabled="!editing_name" class="input" type="text"  v-model="item_name">
+              </div>
+            </div>
+          </form>
+  
+          <folder-editor :key="selected_folder_item.uri" v-if='selected_folder_item.type==0' v-bind:folder='selected_folder_item'></folder-editor>
+          <text-editor :key="selected_folder_item.uri" v-if='((selected_folder_item.type==2) && !this.editing_navigation())' v-bind:text_doc='selected_folder_item'></text-editor>
+          <ehtml-editor :key="selected_folder_item.uri" v-if='selected_folder_item.type==1' v-bind:ehtml_doc='selected_folder_item'></ehtml-editor>
+          <binary-editor :key="selected_folder_item.uri" v-if='selected_folder_item.type==3' v-bind:binary_doc='selected_folder_item'></binary-editor>
+          <navigation-editor :key="selected_folder_item.uri" v-if='this.editing_navigation()' v-bind:text_doc='selected_folder_item'></navigation-editor>
+    
+        </div>
+      </div>
+    </div>
+
+  </script>
+
+  <script type="text/javascript">
+    var GENERAL_EDITOR_COMPONENT = {
+      data() {
+        return {
+          selected_folder_item : null,
+          item_name : null,
+          editing_name : false,
+          can_rename : true
+        }
+      },
+      mounted() {
+        listen_request_folder_item_selected((selected_folder_item) => {
+          if ((this.selected_folder_item.type == 0) || (!this.selected_folder_item.changed())) {
+            emit_folder_item_selected(selected_folder_item)
+          } else {
+            emit_confirmation_request(MSG_CONFIRM_ABORT_CHANGES, ()=>{ emit_folder_item_selected(selected_folder_item) })
+          }
+        })
+
+        listen_folder_item_selected((selected_folder_item) => {
+          if (selected_folder_item instanceof RootFolder) {
+            this.can_rename = false
+          } else {
+            this.can_rename = true
+          }
+
+
+          if ((this.selected_folder_item) && (this.selected_folder_item.type > 0)) {
+            this.selected_folder_item.init()
+          }
+
+          this.selected_folder_item = selected_folder_item
+          if (this.selected_folder_item) {
+            this.item_name = this.selected_folder_item.name
+          }
+
+          if ((selected_folder_item) && (selected_folder_item.type > 0)) {
+            selected_folder_item.read(null,
+                ( error_tag )=>{
+                emit_remote_error( error_tag )
+              }
+            )
+          }
+        })
+      },
+      methods: {
+        save_key(e) {
+          e.preventDefault()
+          if (this.selected_folder_item.changed()) {
+            this.save()
+          }
+        },
+        edit_name() {
+          this.editing_name = true
+        },
+        cancel_edit_name() {
+          this.editing_name = false
+          this.item_name = this.selected_folder_item.name
+        },
+        save_new_name() {
+          this.selected_folder_item.rename(this.item_name,
+            () => {
+              this.editing_name = false
+            },
+            (tag) => {
+              emit_remote_error(tag)
+            }
+          )
+        },
+        save() {
+          this.selected_folder_item.update(
+            ()=>{
+              emit_message(MSG_DOCUMENT_SAVED)
+            },
+            (tag)=>{
+              emit_remote_error(tag)
+            }
+          )
+        },
+        confirm_delete() {
+          emit_confirmation_request(MSG_CONFIRM_DELETE, this.delete)
+        },
+        delete() {
+          root_folder = this.selected_folder_item.get_root_folder()
+
+          this.selected_folder_item.delete(()=>{}, (tag) => { emit_remote_error(tag) })
+
+          emit_folder_item_selected(root_folder)
+        },
+        show_preview() {
+          ret_value = false
+          if (this.selected_folder_item.type == 1) {
+            ret_value = true
+          }
+          return ret_value
+        },
+        show_save() {
+          ret_value = false
+          if (!this.selected_folder_item.is_folder && this.selected_folder_item.type != 3) {
+            ret_value = true
+          }
+          return ret_value
+        },
+        show_delete() {
+          ret_value = false
+          if (this.selected_folder_item.name != "navigation.json") {
+            ret_value = true
+          }
+          return ret_value
+        },
+        editing_navigation() {
+          ret_value = false
+          if (this.selected_folder_item.name == "navigation.json") {
+            ret_value = true
+          }
+          return ret_value
+        },
+        show_rename() {
+          ret_value = false
+          if (!this.editing_name && (this.selected_folder_item.name != "navigation.json") && (!(this.selected_folder_item instanceof RootFolder))) {
+            ret_value = true
+          }
+          return ret_value
+        }
+      },
+      template : "#general-editor-template"
+    }
+  </script>

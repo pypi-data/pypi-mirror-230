@@ -1,0 +1,14 @@
+{
+    "must_implement": "utah.core.utilities.Sendmail",
+    "type": "utah.arches.webtools.I18NSendmail",
+    "load_it": true,
+    "config": {
+        "host": "SMTP GATEWAY HOSTS GOES HERE. MAKE SURE TO REPLACE THE PORT NUMBER WITH THE CORRECT ONE FOR YOUR GATEWAY",
+        "user_account": "SMTP GATEWAY USER ID GOES HERE",
+        "password": "SMTP GATEWAY PASSWORD GOES HERE",
+        "port": 0,
+        "from_addr": "FROM EMAIL ADDRESS GOES HERE",
+        "subject": "{% trans %}YOUR EMAIL SUBJECT GOES HERE{% endtrans %}",
+        "body_template": "{% trans %}YOUR EMAIL BODY GOES HERE WITH AS REFERENCE TO THE VERIFICATION NUMBER %(verification_code)s FOR COMPLETION OF THE REGISTRATION{% endtrans %}"
+    }
+}

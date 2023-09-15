@@ -1,0 +1,11 @@
+        
+        <meta charset="{{ arches_theme_bean.text_encoding }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{{ arches_theme_bean.metadata.title }}</title>
+        <meta name="keywords" content="{{ arches_theme_bean.keywords }}">
+        <meta name="description" content="{{ arches_theme_bean.description }}">
+{% for link in arches_theme_bean.metadata.links %}
+        <link rel="{{ link.rel }}" type="{{ link.type }}" href="{{ link.href }}" media="{{ link.media }}" />{% endfor %}
+{% for script in arches_theme_bean.metadata.scripts %}
+        <script type="text/javascript" src="{{ script }}"></script>{% endfor %}
+

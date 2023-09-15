@@ -1,0 +1,13 @@
+{
+    "must_implement": "utah.core.content.BaseContentService",
+    "type": "utah.impl.zion.content.ContentService",
+    "load_it": true,
+    "config": {
+        "filesystem_root": "${UTAH_VARIABLE_DATA}/next_user_managed_content",
+        "main_microsite": "main",
+        "archive_temp_dir" : "${UTAH_VARIABLE_DATA}/data/temp",
+        "default_doc_name": "default.html",
+        "cache_timeout_secs": 300,
+        "deployment_model": ${UTAH_DEPLOYMENT_MODEL, '0'}
+    }
+}

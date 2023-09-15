@@ -1,0 +1,15 @@
+{
+    "must_implement":"utah.core.content.BasePromotionService",
+    "type":"utah.impl.bryce.content.PromotionService",
+    "load_it" : true,
+    "config":{
+        "repo_list":[
+            {"short_name":"local", "description":"Content Repo being used by the running instance", "service_name":"content"},
+            {"short_name":"downstream", "description":"Content Repo being used by the promoted to instance", "service_name":"next_content"}
+        ],
+        "mongo_db_info": {
+            "connection_url": "${MONGO_LOCAL_CONNECTION_URL}",
+            "db_name": "${MONGO_LOCAL_APP_DB}"
+        }
+    }
+}

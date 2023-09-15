@@ -1,0 +1,20 @@
+  <!--
+  =====================================================================================
+  Script field
+  =====================================================================================
+  -->
+  <script type="text/html" id="script-field-template">
+    <input class="input" type="text"  v-on:keyup="inform_change" v-model="script" />
+  </script>
+
+  <script type="text/javascript">
+    const SCRIPT_FIELD_COMPONENT = {
+    props : ['script'],
+    template : "#script-field-template",
+    methods : {
+      inform_change : function() {
+        this.$emit('change');
+      }
+    }
+  }
+  </script>

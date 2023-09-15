@@ -1,0 +1,16 @@
+{
+    "must_implement": "utah.core.content.BaseContentService",
+    "type": "utah.impl.bryce.content.ContentService",
+    "load_it" : true,
+    "config": {
+        "mongo_db_info": {
+            "connection_url": "${MONGO_DOWNSTREAM_CONNECTION_URL}",
+            "db_name": "${MONGO_DOWNSTREAM_APP_DB}"
+        },
+        "temp_dir": "${UTAH_VARIABLE_DATA}/data/temp",
+        "main_microsite": "main",
+        "default_doc_name": "default.html",
+        "cache_timeout_secs": 900,
+        "deployment_model": ${UTAH_DEPLOYMENT_MODEL, '0'}
+    }
+}

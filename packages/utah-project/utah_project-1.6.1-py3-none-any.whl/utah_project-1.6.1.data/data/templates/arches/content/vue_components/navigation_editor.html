@@ -1,0 +1,113 @@
+  <!--
+  =====================================================================================
+  Navigation Editor
+  =====================================================================================
+  -->
+  <script type="text/html" id="navigation-editor-template">
+
+    <div class="field">
+      <label class="label">{% trans %}Last Modified Date{% endtrans %}</label>
+      <div class="control">
+        <input class="input" type="text" disabled v-model="text_doc.last_modified_date" />
+      </div>
+    </div>
+
+
+    <div style="padding-bottom: 0px; margin-bottom: 5px;" class="tabs">
+      <ul>
+        <li v-on:click="click_navigation_tree" v-bind:class="{ 'is-active': show_navigation_tree }"><a>Navigation Tree</a></li>
+        <li v-on:click="click_translations" v-bind:class="{ 'is-active': show_translations }"><a>Language Translations</a></li>
+      </ul>
+    </div>
+
+
+    <div style="height:2000px;">
+      <div v-if="((nav_tree != null) && (show_navigation_tree))">
+        <div style="align-items:center; padding: 5px 0px 5px 10px; margin-bottom:15px;" class="has-background-info has-text-white" width="100%">
+            <span class="mr-5">{% trans %}Tools{% endtrans %}</span>
+            <i class="mr-3" title="{% trans %}Drag tag to navigation tree to add Label{% endtrans %}" draggable='true'  class="ml-1 fa fa-tag is-size-5" v-on:dragstart="start_tag_drag"> </i>
+            <i title="{% trans %}Drag and drop to include a microsite in this microsite's navigation{% endtrans %}" draggable='true' class="fa fa-sitemap ml-2 is-size-5" v-on:dragstart="start_microsite_drag"> </i>
+        </div>
+    
+    
+        <ul class='menu-list has-text-info'>
+          <li>
+
+            <nav-editor-node is_root_node="(true)" v-bind:root_node="nav_tree" v-bind:nav_node="nav_tree"></nav-editor-node>
+
+          </li>
+
+        </ul>
+
+      </div>
+
+      <nav-translations v-if='show_translations' v-bind:nav_tree="nav_tree"></nav-translations>
+    </div>
+
+
+
+
+
+        
+  </script>
+
+  <script type="text/javascript">
+    var NAVIGATION_EDITOR_COMPONENT = {
+      props : ['text_doc'],
+      template : "#navigation-editor-template",
+      data() {
+        return {
+          changed : false,
+          nav_tree : null,
+          node_map : null,
+          show_navigation_tree: true,
+          show_translations: false
+        }
+      },
+      watch:{
+        nav_tree : {
+          deep: true,
+          handler(){
+            this.text_doc["text"] = JSON.stringify(this.nav_tree, null, 4)
+            this.changed = this.text_doc.changed()
+          }
+        }
+      },
+      mounted() {
+        this.text_doc.read(this.parse_doc)
+      },
+      methods : {
+        click_navigation_tree(e) {
+          this.show_navigation_tree = true
+          this.show_translations = false
+        },
+        click_translations(e) {
+          this.show_navigation_tree = false
+          this.show_translations = true
+        },
+        parse_doc() {
+          this.node_map = new Object();
+          this.nav_tree = JSON.parse(this.text_doc["text"]);
+        },
+        check_repo_item_method(uri) {
+          alert(uri)
+        },
+        start_tag_drag(e) {
+          e.stopPropagation()
+
+          const dataList = e.dataTransfer.items;
+          dataList.clear()
+          dataList.add("12345", "text/nav-label");
+        },
+        start_microsite_drag(e) {
+          e.stopPropagation()
+
+          const dataList = e.dataTransfer.items;
+          dataList.clear()
+          dataList.add("12345", "text/nav-microsite");
+        }
+      }
+    }
+
+  </script>
+

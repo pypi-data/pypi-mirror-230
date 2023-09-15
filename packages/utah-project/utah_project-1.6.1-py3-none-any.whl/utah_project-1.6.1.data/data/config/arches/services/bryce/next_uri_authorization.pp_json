@@ -1,0 +1,15 @@
+{
+    "must_implement": "utah.core.authorize.BaseURIAuthorizationService",
+    "type": "utah.impl.bryce.authorize.URIAuthorizationService",
+    "load_it" : true,
+    "config": {
+        "mongo_db_info": {
+            "connection_url": "${MONGO_DOWNSTREAM_CONNECTION_URL}",
+            "db_name": "${MONGO_DOWNSTREAM_APP_DB}"
+        },
+        "group_service_name": "group_service",
+        "cache_timeout_secs": 300,
+        "environment_type": "${UTAH_ENVIRONMENT_TYPE, 'FULL'}",
+        "available_environment_types": "${UTAH_AVAILABLE_ENVIRONMENT_TYPES, 'FULL'}"
+    }
+}

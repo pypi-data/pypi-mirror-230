@@ -1,0 +1,14 @@
+{
+    "must_implement": "utah.core.navigation.BaseNavigationService",
+    "type": "utah.impl.bryce.navigation.NavigationService",
+    "load_it" : ${ARCHES_SVC_LOAD_NAVIGATION, 'true'},
+    "config": {
+        "mongo_db_info": {
+            "connection_url": "${MONGO_LOCAL_CONNECTION_URL}",
+            "db_name": "${MONGO_LOCAL_APP_DB}"
+        },
+        "main_microsite": "main",
+        "reload_interval_secs": 900,
+        "nav_path_pattern": "/%s/__system/navigation.json"
+    }
+}

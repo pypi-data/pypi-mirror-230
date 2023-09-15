@@ -1,0 +1,24 @@
+<article class="message is-dark">
+    <div class="message-header">
+        <p>Navigation</p>
+    </div>
+    <div class="message-body">
+      <ul>
+        {% for l1_child_arches_nav_bean in arches_nav_bean.get_children() %}
+        <li>
+          {% if l1_child_arches_nav_bean.is_selected() %}
+          <a class="has-text-weight-bold" href="{{ l1_child_arches_nav_bean.get_uri() }}">{{ l1_child_arches_nav_bean.get_description() }}</a>
+          <ul>
+            {% for l2_child_arches_nav_bean in l1_child_arches_nav_bean.get_children() %}
+            <li>&nbsp;&nbsp;&nbsp;<a{% if l2_child_arches_nav_bean.is_selected() %} class="has-text-weight-bold"{% endif %} href="{{ l2_child_arches_nav_bean.get_uri() }}">{{ l2_child_arches_nav_bean.get_description() }}</a></li>
+            {% endfor %}
+          </ul>
+            {% else %}
+          <a href="{{ l1_child_arches_nav_bean.get_uri() }}">{{ l1_child_arches_nav_bean.get_description() }}</a>
+        {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+</article>
+

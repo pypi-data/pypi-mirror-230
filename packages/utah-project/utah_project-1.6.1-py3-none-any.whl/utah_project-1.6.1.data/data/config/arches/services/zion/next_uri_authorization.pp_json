@@ -1,0 +1,12 @@
+{
+    "must_implement": "utah.core.authorize.BaseURIAuthorizationService",
+    "type": "utah.impl.zion.authorize.URIAuthorizationService",
+    "load_it": true,
+    "config": {
+        "group_service_name": "group_service",
+        "authorization_config_path": "${UTAH_VARIABLE_DATA}/data/next_authorization/access_rights.json",
+        "cache_timeout_secs": 300,
+        "environment_type": "${UTAH_ENVIRONMENT_TYPE, 'FULL'}",
+        "available_environment_types": "${UTAH_AVAILABLE_ENVIRONMENT_TYPES, 'FULL:NONE'}"
+    }
+}

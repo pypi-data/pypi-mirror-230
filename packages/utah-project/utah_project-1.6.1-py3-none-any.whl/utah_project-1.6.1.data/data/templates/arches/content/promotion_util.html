@@ -1,0 +1,80 @@
+{% extends arches_layout %}
+{% block main_content %}
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th class="has-text-centered" colspan="2">{% trans %}Difference Viewer{% endtrans %}</th>
+                <th class="has-text-centered" colspan="2">{% trans %}Full Sync{% endtrans %}</th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>{% trans %}Microsite{% endtrans %}</th>
+                <th>{% trans %}Total Differences{% endtrans %}</th>
+                <th class="has-text-centered">{% trans %}From Local{% endtrans %}</th>
+                <th class="has-text-centered">{% trans %}To Local{% endtrans %}</th>
+                <th class="has-text-centered">{% trans %}From Local{% endtrans %}</th>
+                <th class="has-text-centered">{% trans %}To Local{% endtrans %}</th>
+                <th class="has-text-centered">{% trans %}Past Promotion Jobs{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for microsite in microsites %}
+            <tr>
+                <td>/{{ microsite }}</td>
+                <td>{{ diff_counts[microsite] }}</td>
+
+                {% if diff_counts[microsite]==0 %}
+
+                <td class="has-text-centered"><span class="has-text-grey-lighter" title="{% trans %}There are no differences between the repositories{% endtrans %}"><i class="fa fa-sync"></i><i class="fa fa-file-export"></i></span></td>
+                <td class="has-text-centered"><span class="has-text-grey-lighter" title="{% trans %}There are no differences between the repositories{% endtrans %}"><i class="fa fa-sync"></i><i class="fa fa-file-import"></i></span></span></td>
+                <td class="has-text-centered"><span class="has-text-grey-lighter" title="{% trans %}There are no differences between the repositories{% endtrans %}"><i class="fa fa-upload"></i></span></td>
+                <td class="has-text-centered"><span class="has-text-grey-lighter" title="{% trans %}There are no differences between the repositories{% endtrans %}"><i class="fa fa-download"></i></span></td>
+
+                {% else %}
+                
+                
+                {% if arches_nav_bean.is_authorized("/arches/content/promotion/%s/local_to_downstream/promote/differences" % microsite) %}
+                <td class="has-text-centered"><a title="{% trans %}Display Differences (Local to Downstream for promotion){% endtrans %}" href="/arches/content/promotion/{{ microsite }}/local_to_downstream/promote/differences"><i class="fa fa-sync"></i><i class="fa fa-file-export"></i></a></td>
+                {% else %}
+                <td class="has-text-centered"><span class="has-text-grey-lighter" title="{% trans %}You are not authorized to perform this action{% endtrans %}"><i class="fa fa-sync"></i><i class="fa fa-file-export"></i></span></td>
+                {% endif %}
+                
+                {% if arches_nav_bean.is_authorized("/arches/content/promotion/%s/downstream_to_local/promote/differences" % microsite) %}
+                <td class="has-text-centered"><a title="{% trans %}Display Differences (Downstream to Local for restoration){% endtrans %}" href="/arches/content/promotion/{{ microsite }}/downstream_to_local/promote/differences"><i class="fa fa-sync"></i><i class="fa fa-file-import"></i></a></td>
+                {% else %}
+                <td class="has-text-centered"><span class="has-text-grey-lighter" title="{% trans %}You are not authorized to perform this action{% endtrans %}"><i class="fa fa-sync"></i><i class="fa fa-file-import"></i></span></span></td>
+                {% endif %}
+
+                {% if arches_nav_bean.is_authorized("/arches/content/promotion/%s/local_to_downstream/sync/differences" % microsite) %}
+                <td class="has-text-centered"><a title="{% trans %}Display Differences (Local to Downstream full sync){% endtrans %}" href="/arches/content/promotion/{{ microsite }}/local_to_downstream/sync/differences"><i class="fa fa-upload"></i></a></td>
+                {% else %}
+                <td class="has-text-centered"><span class="has-text-grey-lighter" title="{% trans %}You are not authorized to perform this action{% endtrans %}"><i class="fa fa-upload"></i></span></td>
+                {% endif %}
+
+                {% if arches_nav_bean.is_authorized("/arches/content/promotion/%s/downstream_to_local/sync/differences" % microsite) %}
+                <td class="has-text-centered"><a title="{% trans %}Display differences (Downstream to Local full restore){% endtrans %}" href="/arches/content/promotion/{{ microsite }}/downstream_to_local/sync/differences"><i class="fa fa-download"></i></a></td>
+                {% else %}
+                <td class="has-text-centered"><span class="has-text-grey-lighter" title="{% trans %}You are not authorized to perform this action{% endtrans %}"><i class="fa fa-download"></i></span></td>
+                {% endif %}
+
+                {% endif %}
+
+
+                {% if arches_nav_bean.is_authorized("/arches/content/promotion/%s/view_jobs" % microsite) %}
+                <td class="has-text-centered"><a title="{% trans %}Review Past promotion jobs{% endtrans %}" href="/arches/content/promotion/{{ microsite }}/view_jobs"><i class="fa fa-search"></i></a></td>
+                {% else %}
+                <td class="has-text-centered"><span class="has-text-grey-lighter" title="{% trans %}You are not authorized to perform this action{% endtrans %}"><i class="fa fa-search"></i></span></td>
+                {% endif %}
+
+                
+            </tr>
+            {% endfor %}
+    
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -1,0 +1,83 @@
+<script type="text/javascript">
+    var emitter = new mitt();
+    // Message
+    function emit_message(message) {
+      emitter.emit('message', message);
+    }
+  
+    function listen_message(myfunc) {
+      emitter.on('message', myfunc);
+    } 
+  
+    function listen_message(myfunc) {
+      emitter.on('message', myfunc);
+    }
+
+
+    // Prompt
+    function emit_prompt(message, submit_callback) {
+      emitter.emit('prompt', [message, submit_callback]);
+    }
+
+    function listen_prompt_request(myfunc) {
+      emitter.on('prompt', myfunc);
+    }
+  
+    // Confirmation
+    function emit_confirmation_request(message, callback) {
+      emitter.emit('confirmation-request', [message, callback]);
+    }
+
+    function listen_confirmation_request(myfunc) {
+      emitter.on('confirmation-request', myfunc);
+    }
+  
+
+    // Prompt Y/N/Cancel
+    function emit_prompt_y_n_cancel_request(message, callback_y, callback_n, callback_hide) {
+      emitter.emit('prompt-y-n-cancel-request', [message, callback_y, callback_n, callback_hide]);
+    }
+
+    function listen_prompt_y_n_cancel_request(myfunc) {
+      emitter.on('prompt-y-n-cancel-request', myfunc);
+    }
+  
+
+    // Folder Item
+    function emit_request_folder_item_selected(selected_folder_item) {
+      emitter.emit('request-folder-item-selected', selected_folder_item);
+    }
+  
+    function listen_request_folder_item_selected(myfunc) {
+      emitter.on('request-folder-item-selected', myfunc);
+    }
+
+
+    function emit_folder_item_selected(selected_folder_item) {
+      emitter.emit('folder-item-selected', selected_folder_item);
+    }
+  
+    function listen_folder_item_selected(myfunc) {
+      emitter.on('folder-item-selected', myfunc);
+    }
+
+
+    function emit_reload_folder_item(folder_uri) {
+      emitter.emit('reload-folder-item', folder_uri);
+    }
+  
+    function listen_reload_folder_item(myfunc) {
+      emitter.on('reload-folder-item', myfunc);
+    }
+
+
+
+    // Remote Error
+    function listen_remote_error(myfunc) {
+      emitter.on('remote-error', myfunc);
+    }
+  
+  </script>
+  
+  
+  

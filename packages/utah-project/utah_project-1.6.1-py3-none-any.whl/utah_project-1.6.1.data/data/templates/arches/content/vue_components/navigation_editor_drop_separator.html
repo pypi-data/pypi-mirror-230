@@ -1,0 +1,258 @@
+<!--
+  =====================================================================================
+  Navigation Editor Drop Separator
+  =====================================================================================
+  -->
+<script type="text/html" id="navigation-editor-drop-separator-template">
+    <p v-bind:class="{'has-background-grey-lighter' : activated}" class="bubble-separator" v-on:dragover="dragover" v-on:dragleave="dragleave" v-on:drop="drop1">&nbsp;</p>
+</script>
+
+<script type="text/javascript">
+var NAVIGATION_EDITOR_DROP_SEPARATOR_COMPONENT = {
+    props : ['root_node', 'nav_node', 'nav_node_id', 'insert_loc'],
+    template : "#navigation-editor-drop-separator-template",
+    data() {
+        return {
+            activated:false
+        }
+    },
+    watch:{
+    },
+    mounted() {
+    },
+    methods : {
+        gather_labels(node, list) {
+            if ("description" in node) {
+                list[list.length] = node.description
+            }
+            if ("children" in node) {
+                for (var i=0; i<node.children.length; i++) {
+                    this.gather_labels(node.children[i], list)
+                }
+            }
+        },
+        true_up_translations() {
+
+          var all_labels = []
+          this.gather_labels(this.root_node, all_labels)
+          var all_locales = Object.keys(this.root_node.translations)
+          for (var i=0; i<all_locales.length; i++) {
+            var locale = all_locales[i]
+            var trans_table = this.root_node.translations[locale]
+
+            // Add missing keys
+            for (var j=0; j<all_labels.length; j++) {
+              if (!(all_labels[j] in trans_table)) {
+                trans_table[all_labels[j]] = all_labels[j]
+              }
+            }
+
+            // Remove extraneous keys
+            var all_trans_keys = Object.keys(trans_table)
+            for (var j=0; j<all_trans_keys.length; j++) {
+              if (all_labels.indexOf(all_trans_keys[j]) == -1) {
+                delete trans_table[all_trans_keys[j]]
+              }
+            }
+
+          }
+
+        },
+        dragover(e) {
+            //e.stopPropagation()
+            e.preventDefault()
+
+            this.activated = true
+            //e.dataTransfer.dropEffect = "move"
+
+        },
+        dragleave(e) {
+            e.stopPropagation()
+            e.preventDefault()
+
+            this.activated = false            
+        },
+        drop_nav_node(id) {
+            var mr = this.find_node_by_id(id, this.root_node)
+            var orig_parent = mr[0]
+            var orig_position = mr[1]
+            var node_to_move = mr[2]
+
+            var location = this.insert_loc
+            if (orig_parent == this.nav_node) {
+                if (orig_position < this.insert_loc) {
+                    location = this.insert_loc-1
+                }
+                this.delete_node(id)
+                this.add_node(node_to_move, location)
+            } else if (!this.nav_node_id.startsWith(id+":")) {
+                this.delete_node(id)
+                this.add_node(node_to_move, location)                
+            }
+
+
+        },
+        drop_plain_text(document_tag) {
+            var uri = null
+
+            const myre = /<\!\-\- sub\=\'((.*)\/([a-z,A-Z,0-9,\-\_]*|(.*)\.html))\' \-\-\>/
+            var matches = document_tag.match(myre)
+
+            if (matches) {
+                uri = matches[1]
+            } else {
+                const straight_url = /^(https?:\/\/[a-z,A-Z,0-9,\.\-\_]*(\:[0-9]{1,5})?)(.*)?$/
+                matches = document_tag.match(straight_url)
+                var uri = matches[0]
+                var mypage_url = window.location.href
+                var mypage_matches = mypage_url.match(straight_url)
+                if (mypage_matches[1] == matches[1]) {
+                    if (matches[3] != undefined) {
+                        uri = matches[3]
+                    } else {
+                        uri = "/"
+                    }
+                } 
+            }
+
+            if (uri != null) {
+                already_in_tree = this.find_node_by_uri(uri, this.root_node)
+                if (already_in_tree==null) {
+                    const PROMPT_TEXT = {
+                    'header' : "{% trans %}Navigation Editor{% endtrans %}",
+                    'body' : "{% trans %}Enter default text for item{% endtrans %}",
+                    'color' : "is-info",
+                    'can_close':true
+                    }
+
+                    emit_prompt(PROMPT_TEXT, 
+                    (text) => {
+                        new_nav_node = {
+                            uri : uri,
+                            description : text
+                        }
+                        this.add_node(new_nav_node, this.insert_loc)
+                        this.true_up_translations()
+                    })
+                } else {
+                    const PROMPT_TEXT = {
+                        'header' : "{% trans %}Navigation Editor{% endtrans %}",
+                        'body' : "{% trans %}Item is already in navigation tree{% endtrans %}",
+                        'color' : "is-warning",
+                        'can_close':true
+                    }
+
+                    emit_message(PROMPT_TEXT)
+                }
+            }
+        },
+        drop_label(placeholder) {
+            const PROMPT_LABEL = {
+            'header' : "{% trans %}Navigation Editor{% endtrans %}",
+            'body' : "{% trans %}Enter default label text{% endtrans %}",
+            'color' : "is-info",
+            'can_close':true
+            }
+
+            emit_prompt(PROMPT_LABEL, 
+            (label_text) => {
+                new_nav_node = {
+                uri : '#',
+                description : label_text
+                }
+                this.add_node(new_nav_node, this.insert_loc)
+                this.true_up_translations()
+            })
+        },
+        drop_microsite(placeholder) {
+            const PROMPT_MICROSITE = {
+            'header' : "{% trans %}Navigation Editor{% endtrans %}",
+            'body' : "{% trans %}Enter new microsite name{% endtrans %}",
+            'color' : "is-info",
+            'can_close':true
+            }
+
+            emit_prompt(PROMPT_MICROSITE, 
+            (microsite) => {
+                new_nav_node = { microsite : microsite }
+                this.add_node(new_nav_node, this.insert_loc)
+            })
+        },
+        process_dropped_items(e, func_map) {
+            for (const item of e.dataTransfer.items) {
+                if (item.kind === "string") {
+                    const item_type = item.type
+                    if (item.type in func_map) {
+                        item.getAsString((s) => {
+                            func_map[item_type](s)
+                        })
+                    }
+                }
+            }
+        },
+        drop1(e) {
+            e.stopPropagation()
+            e.preventDefault()
+
+            this.process_dropped_items(e, 
+            {
+                'text/plain':this.drop_plain_text, 
+                'text/nav-node-id':this.drop_nav_node, 
+                'text/nav-label':this.drop_label,
+                'text/nav-microsite':this.drop_microsite
+            })
+
+            this.activated = false
+        },
+        add_node(new_nav_node, location) {
+          if (!('children' in this.nav_node)) {
+              this.nav_node['children'] = []
+            }
+            this.nav_node.children.splice(location, 0, new_nav_node)
+        },
+        delete_node(id){
+          results = this.find_node_by_id(id, this.root_node)
+          results[0].children.splice(results[1], 1)
+            if (results[0].children.length==0) {
+              delete results[0]['children'] 
+            }
+        },
+        find_node_by_id(id, root_node) {
+          segs = id.split(":")
+          var curr_node = root_node
+          var parent_node = null
+          var pointer = null
+          for (var i=0; i<segs.length; i++) {
+            parent_node = curr_node
+            pointer = parseInt(segs[i])
+            curr_node = curr_node.children[pointer]
+          }
+          return [parent_node, pointer, curr_node]
+        },
+        find_node_by_uri(uri, curr_nav_node) {
+            if (curr_nav_node.uri == uri) {
+                return [curr_nav_node, 0]
+            }
+
+            if (Object.hasOwn(curr_nav_node, 'children') && curr_nav_node.children.length > 0) {
+                for (var i=0; i<curr_nav_node.children.length; i++) {
+                    if (curr_nav_node.children[i].uri == uri) {
+                        return [ curr_nav_node, i ]
+                    }
+                }
+
+                for (var i=0; i<curr_nav_node.children.length; i++) {
+                    var result = this.find_node_by_uri(uri, curr_nav_node.children[i])
+                    if (result != null) {
+                        return result
+                    }
+                }
+            }
+
+          return null
+
+        }
+    }
+}
+
+</script>

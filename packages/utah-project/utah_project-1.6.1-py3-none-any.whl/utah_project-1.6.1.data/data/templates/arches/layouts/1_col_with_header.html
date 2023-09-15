@@ -1,0 +1,13 @@
+<html>
+    <head>
+        {% include 'arches/layouts/fragments/header.html' %}
+    </head>
+    <body>
+      {% include 'arches/layouts/fragments/navigation.html' %}
+      <div class="content pl-2 mx-0 my-0">
+        <h1 class="title">{{ arches_theme_bean.metadata.title }}</h1>
+        <h2 class="subtitle">{{ arches_theme_bean.metadata.description }}</h2>
+        {% block main_content %}{% endblock %}
+      </div>
+    </body>
+</html>

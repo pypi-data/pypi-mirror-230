@@ -1,0 +1,191 @@
+  <!--
+  =====================================================================================
+  Folder editor (For uploads and file creates)
+  =====================================================================================
+  -->
+  <script type="text/html" id="folder-editor-template">
+    <div>
+      <label class="label">{% trans %}Create new sub folders documents. Enter name and click create{% endtrans %}</label>
+
+      <div class="field has-addons">
+        <div class="control">
+          <input class="input" type="text" placeholder="{% trans %}IE: my_sub_folder{% endtrans %}" v-model="new_folder_name">
+        </div>
+        <div class="control">
+          <button class="button is-info" :disabled="!(valid_folder_name && new_folder_entered)" v-on:click="create_new_folder">
+            {% trans %}Create{% endtrans %}
+          </button>
+        </div>
+      </div>
+
+      <p class="help is-danger"><span v-if="(new_folder_entered && !valid_folder_name)">{% trans %}Please enter a folder name. Letters, Numbers, hyphens and underscores are permitted{% endtrans %}</span>&nbsp;</p>
+
+
+
+      <label class="label">{% trans %}Create new text documents. Enter name and click create{% endtrans %}</label>
+
+      <div class="field has-addons">
+        <div class="control">
+          <input class="input" type="text" placeholder="{% trans %}IE: my_file_name.html{% endtrans %}" v-model="new_file_name">
+        </div>
+        <div class="control">
+          <button class="button is-info" :disabled="!(valid_file_name && new_file_entered)" v-on:click="create_new_file">
+            {% trans %}Create{% endtrans %}
+          </button>
+        </div>
+      </div>
+
+      <p class="help is-danger"><span v-if="(new_file_entered && !valid_file_name)">{% trans %}Please enter a file name with a text type extension ie: .js, .htm, .html, .css, .json, .mjs, .csv, .txt, .xml{% endtrans %}</span>&nbsp;</p>
+
+      <div class="field pt-5">
+        <label class="label">{% trans %}...or upload a file by clicking below{% endtrans %}</label>
+        <div class="control">
+          <div class="file has-name">
+            <label class="file-label">
+              <input class="file-input" type="file" ref="upload_file" name="resume" v-on:change="upload_file_changed">
+              <span class="file-cta">
+                <span class="file-icon">
+                  <i class="fas fa-upload"></i>
+                </span>
+                <span class="file-label">
+                  {% trans %}Click to select file{% endtrans %}
+                </span>
+              </span>
+              <span style='width:350px' class="file-name">
+                {{ "{{ upload_file_name }}" }}
+              </span>
+            </label>
+          </div>
+        </div>
+        <label v-if:='(upload_progress > -1)' class="label">
+          <progress class="progress" v-bind:value="upload_progress" max="100">{{ "{{ upload_progress }}" }}%</progress>
+        </label>
+
+      </div>
+    </div>
+  </script>
+
+  <script type="text/javascript">
+    var FOLDER_EDITOR_COMPONENT = {
+      props : ['folder'],
+      template : "#folder-editor-template",
+      data() {
+        return {
+          new_file_name : "",
+          new_folder_name : "",
+          upload_file_name : "",
+          upload_progress: -1,
+        }
+      },
+      computed : {
+        new_file_entered() {
+          return (this.new_file_name != "")
+        },
+        new_folder_entered() {
+          return (this.new_folder_name != "")
+        },
+        valid_file_name() {
+          return (!!this.new_file_name.match(/^([^\*\/]*)\.(js|htm|html|css|json|mjs|csv|txt|xml|yaml)$/))
+        },
+        valid_folder_name() {
+          //return (!!this.new_folder_name.match(/^([a-z,A-Z,0-9,\-,\_]*)$/))
+          return (!this.new_file_name.match(/(\/)|(\*)/))
+        }
+      },
+      methods : {
+        create_document_object(file_name) {
+          file_type = get_type(file_name)
+          if (file_type == TYPE_TEXT_DOCUMENT) {
+              fh = new TextDocument(file_name, this.folder)
+          } else if (file_type == TYPE_HTML_DOCUMENT) {
+              fh = new EHTMLDocument(file_name, this.folder)
+          } else {
+              fh = new BinaryDocument(file_name, this.folder)
+          }
+
+          return fh
+        },
+        create_new_file() {
+
+          fh = this.create_document_object(this.new_file_name)
+
+          fh.create(
+            ()=>{
+              this.new_file_name=""
+            },
+            (tag)=>{
+              emit_remote_error(tag)
+            }
+          )
+
+        },
+        create_new_folder() {
+          this.folder.create_child_folder(this.new_folder_name, ()=>{this.new_folder_name = ""}, (tag)=>{emit_remote_error(tag)})
+        },
+        upload_file_changed(e) {
+          if (event.target.files.length == 0) {
+            return
+          }
+
+          var file = event.target.files[0];
+          this.upload_file_name = file.name
+          let formData = new FormData();
+          formData.append("file", file);
+
+          file_name = file.name.replace(/[^A-Za-z0-9\._\-]/g, '_')
+          dest_uri = "/arches/content/manage/api/document" + this.folder.uri + "/" + file_name
+
+
+          if (file_name.toLowerCase().endsWith('.zip')) {
+            emit_prompt_y_n_cancel_request(
+              MSG_UNPACK_ZIP, 
+              ()=>{
+                this.upload(formData, dest_uri, file_name, 'y')
+              },
+              ()=>{
+                this.upload(formData, dest_uri, file_name, 'n')
+              },
+              ()=>{
+                this.reset_upload()
+              },
+            )
+          } else {
+            this.upload(formData, dest_uri, file_name, 'n')
+          }
+        },
+        reset_upload() {
+          this.upload_file_name = ""
+          this.upload_progress = -1
+          this.$refs.upload_file.value = ""
+        },
+        upload(formData, dest_uri, file_name, unpack_zip) {
+
+          this.upload_in_progress = true
+          my_component = this
+          axios.post(
+                      dest_uri,
+                      formData,
+                      { headers: { "Content-Type": "multipart/form-data" },
+                        params: {'unpack_zip' : unpack_zip},
+                        onUploadProgress(e) {
+                          my_component.upload_progress = Math.round((100 * event.loaded) / event.total)
+                        }
+                      }
+            ).then(
+              (resp)=>{
+                fh = this.create_document_object(file_name)
+                this.reset_upload()
+                this.folder.load_children(null, null)
+              }
+            ).catch(
+              (err)=>{
+                tag = error_processor("GeneralEditor", "upload_file_changed", err)
+                emit_remote_error(tag)
+                this.reset_upload()
+              }
+            )
+        }
+      }
+    }
+
+  </script>

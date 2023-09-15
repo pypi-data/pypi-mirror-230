@@ -1,0 +1,52 @@
+{% extends arches_layout %}
+{% block main_content %}
+
+<table class="table">
+    <tbody>
+        <tr>
+            <th>{% trans %}Promotion Id{% endtrans%}</th>
+            <td>{{ promotion_request.id }}</td>
+        </tr>
+        <tr>
+            <th>{% trans %}Microsite{% endtrans%}</th>
+            <td>{{ promotion_request.microsite }}</td>
+        </tr>
+        <tr>
+            <th>{% trans %}Status{% endtrans%}</th>
+            <td>{{ promotion_status_translations[promotion_request.status] }}</td>
+        </tr>
+        <tr>
+            <th>{% trans %}User{% endtrans%}</th>
+            <td>{{ promotion_request.extended_attributes["user_id"] }}</td>
+        </tr>
+        <tr>
+            <th>{% trans %}Start Time{% endtrans%}</th>
+            <td>{{ promotion_request.start_timestamp|format_datetime('short') }}</td>
+        </tr>
+        <tr>
+            <th>{% trans %}Promotion Direction{% endtrans%}</th>
+            <td>{{ promotion_repo_translations[promotion_request.source_repo] }} -> {{ promotion_repo_translations[promotion_request.dest_repo] }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>{% trans %}Action Time{% endtrans %}</th>
+            <th>{% trans %}Message{% endtrans %}</th>    
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for status_message in promotion_request.status_messages %}
+        <tr>
+            <td>{{ status_message.status_date|format_datetime('hh:mm:ss.SSS') }}</td>
+            <td>{{ promotion_status_message_translations[status_message.message_token] % status_message.message_data }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

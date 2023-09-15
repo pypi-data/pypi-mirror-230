@@ -1,0 +1,81 @@
+  <!--
+  =====================================================================================
+  Y/N/Cancel Dialog
+  =====================================================================================
+  -->
+  <script type="text/html" id="y-n-cancel-template">
+    <div v-if="visible" class="modal is-active">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+
+        <article :class="'message  ' + message.color">
+          <div class="message-header">
+            <p> {{ "{{  message.header  }}" }} </p>
+            <button class="delete" aria-label="delete" v-on:click="hide"></button>
+          </div>
+          <div class="message-body has-background-white">
+
+
+            <div class="field">
+              <label class="label">{{ "{{  message.body  }}" }}</label>
+            </div>
+
+            <div class="buttons">
+                <button v-on:click="execute_y" class="button is-normal">{% trans %}Yes{% endtrans %}</button>
+                <button v-on:click="execute_n" class="button is-normal">{% trans %}No{% endtrans %}</button>
+                <button v-on:click="execute_hide" class="button is-normal">{% trans %}Cancel{% endtrans %}</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </script>
+
+
+  <script type="text/javascript">
+    var PROMPT_Y_N_CANCEL_COMPONENT = {
+      data() {
+        return {
+          message:null,
+          visible:false,
+          callback_y:null,
+          callback_n:null,
+          callback_hide:null
+        }
+      },
+      mounted() {
+        listen_prompt_y_n_cancel_request((payload) => {
+          this.message = payload[0]
+          this.callback_y = payload[1]
+          this.callback_n = payload[2]
+          this.callback_hide = payload[3]
+          this.visible = true
+        })
+      },
+      template : "#y-n-cancel-template",
+      methods : {
+        hide : function() {
+          this.visible = false
+        },
+        execute_y : function() {
+          this.hide()
+          if (this.callback_y != null) {
+            this.callback_y()
+          }
+        },
+        execute_n : function() {
+          this.hide()
+          if (this.callback_n != null) {
+            this.callback_n()
+          }
+        },
+        execute_hide : function() {
+          this.hide()
+          if (this.callback_hide != null) {
+            this.callback_hide()
+          }
+        }
+      }
+    }
+  </script>
+

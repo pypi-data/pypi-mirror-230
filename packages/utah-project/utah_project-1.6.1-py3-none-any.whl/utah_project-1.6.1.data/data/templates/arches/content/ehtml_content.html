@@ -1,0 +1,8 @@
+{% extends arches_layout %}
+{% block main_content %}
+
+{{ doc.text | safe }}
+{% set edit_uri = "/arches/content/edit_doc" + doc.resource_header.uri %}
+{% if arches_nav_bean.is_authorized(edit_uri) %}
+{% endif %}
+{% endblock %}

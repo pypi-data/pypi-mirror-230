@@ -1,0 +1,136 @@
+<nav class="is-info navbar px-0" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        {{ arches_theme_bean.get_last_aux_content_doc("nav_brand").text | safe }}
+    </div>
+    
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+            
+            {% for l1_child_arches_nav_bean in arches_nav_bean.get_children() %}
+            {% if not l1_child_arches_nav_bean.has_children() %}
+            <a class="navbar-item{% if l1_child_arches_nav_bean.is_selected() %} has-text-weight-bold{% endif %}" href="{{ l1_child_arches_nav_bean.get_uri() }}">
+                {{ l1_child_arches_nav_bean.get_description() }}
+            </a>
+            {% else %}
+            <div class="navbar-item has-dropdown is-hoverable">
+                
+                <a class="navbar-link {% if l1_child_arches_nav_bean.is_selected() %} has-text-weight-bold{% endif %}" href="{{ l1_child_arches_nav_bean.get_uri() }}">{{ l1_child_arches_nav_bean.get_description() }}</a>
+                
+                <div class="navbar-dropdown">
+                    {% for l2_child_arches_nav_bean in l1_child_arches_nav_bean.get_children() %}
+                    <a class="navbar-item{% if l2_child_arches_nav_bean.is_selected() %} has-text-weight-bold{% endif %}" href="{{ l2_child_arches_nav_bean.get_uri() }}">{{ l2_child_arches_nav_bean.get_description() }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            
+        </div>
+        
+        
+        
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    
+                    
+                    {% if not "user_id" in session %}
+
+                    {% if not arches_theme_bean.metadata.get_extended_attribute("public_login") == "N" %}
+
+                    {% if arches_nav_bean.is_authorized("/arches/registration/register/public/form") %}
+                    {% if arches_theme_bean.metadata.get_extended_attribute("public_registration") == "Y" %}
+
+                    <a class="button is-info" href="/arches/registration/register/public/form">
+                        <strong>{% trans %}Sign up{% endtrans %}</strong>
+                    </a>
+                    {% endif %}
+                    {% endif %}
+
+                    {% if arches_nav_bean.is_authorized("/arches/authentication/login/form") %}                     
+                    <a class="button is-info" href="/arches/authentication/login/form?go_back=/">
+                        {% trans %}Log in{% endtrans %}
+                    </a>
+                    {% endif %}
+
+                    {% endif %}
+
+                    {% else %}
+                    <a class="button is-light" href="/arches/authentication/logout">
+                        {% trans %}Log out{% endtrans %}
+                    </a>
+                    
+                    
+                    <span id="profile">
+                        <img style="padding-bottom: 7px;" src="/main/images/logged_in.png" width="20" v-bind:title="full_name" v-on:click="show_profile" />
+                        <div v-if="profile_displayed" class="modal" v-bind:class="{'is-active': profile_displayed}">
+                            <div class="modal-background"></div>
+                            <div class="modal-card">
+                                <header class="modal-card-head">
+                                    <p class="modal-card-title">{% trans %}Profile{% endtrans %}</p>
+                                    <button  v-on:click="hide_profile" class="delete" aria-label="close"></button>
+                                </header>
+                                <section class="modal-card-body">
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    <form class="box" action="/arches/registration/profile" method="POST">
+                                        <div class="field">
+                                            <label class="label">{% trans %}First Name{% endtrans %}</label>
+                                            <div class="control">
+                                                <input class="input" type="text" placeholder="John" name="first_name" v-model="first_name">
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        <div class="field">
+                                            <label class="label">{% trans %}Last Name{% endtrans %}</label>
+                                            <div class="control">
+                                                <input class="input" type="text" placeholder="Smith" name="last_name" v-model="last_name">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="field">
+                                            <label class="label">{% trans %}Timezone{% endtrans %} <span v-if="tzfilter > ''" class="tag is-info is-light">filtered: {{ "{{ tzfilter.replace('_', ' ') }}" }}</span></label>
+                                            <div class="control">
+                                                <div style="width:300px;" class="select">
+                                                    <select style="width:300px;" v-if="timezones" v-model="timezone" v-on:keyup="tzfilter_keypress">
+                                                        <option v-for="tz in filtered_timezones" v-bind:value="tz">{{ "{{ tz.replace('_', ' ') }}" }}</option>
+                                                    </select>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                    </form>
+                                    
+                                    
+                                    <!-- Content ... -->
+                                </section>
+                                <footer class="modal-card-foot">
+                                    <button :disabled="ok_to_save" class="button is-info" v-on:click="save_profile">{% trans %}Save changes{% endtrans %}</button>
+                                    <button v-on:click="hide_profile" class="button">{% trans %}Cancel{% endtrans %}</button>
+                                    <a class="button" href="/arches/registration/password_change/form">{% trans %}Change Password{% endtrans %}</a>
+                                    {% if arches_nav_bean.is_authorized("/arches/registration/tokens") %}
+                                    <a class="button" href="/arches/registration/tokens">{% trans %}Manage Tokens{% endtrans %}</a>
+                                    {% endif %}
+                                </footer>
+                            </div>
+                        </div>
+                        
+                    </span>
+                    
+                    <script type="text/javascript" src="/static/arches/javascript/profile.js"></script>
+                    
+                    
+                    {% endif %}
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

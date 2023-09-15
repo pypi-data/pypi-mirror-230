@@ -1,0 +1,158 @@
+  <!--
+  =====================================================================================
+  Folder
+  =====================================================================================
+  -->
+  <script type="text/html" id="folder-template">
+    <span v-on:dragstart="start_move" v-on:dragend="dragend" draggable="true" title="{% trans %}Click folder icon to open and close. Click the text to select.{% endtrans %}">
+      <span  v-bind:class="selected?'has-text-weight-bold':''" >
+        <i v-if="open" class="fa fa-folder-open mr-1" aria-hidden="true" v-on:click="toggle" v-on:drop="finish_move" v-on:dragover="dragover"></i>
+        <i v-else class="fa fa-folder mr-1" aria-hidden="true" v-on:click="toggle" v-on:drop="finish_move" v-on:dragover="dragover"></i>
+        <span v-on:click="select_folder">{{ "{{  folder_mdl.name  }}" }}</span>
+      </span>
+      <ul v-if="open">
+        <li v-for="item in folder_mdl.children">
+          <folder :key="item.uri" v-if="item.is_folder" v-bind:folder_mdl="item"></folder>
+          <file :key="item.uri" v-else v-bind:file_mdl="item"></file>
+        </li>
+      </ul>
+    </span>
+  </script>
+
+
+  <script type="text/javascript">
+
+    var FOLDER_COMPONENT =  {
+      props : ['folder_mdl', 'fixed'],
+      template : "#folder-template",
+      data() {
+        return {
+          'open' : false,
+          'selected' : false
+        }
+      },
+      mounted() {
+        if (this.fixed == "y") {
+          this.folder_mdl.load_children(
+            ()=>{
+              this.open = true
+            },
+            ( error_tag )=>{
+              emit_remote_error( error_tag )
+            }
+          )
+        }
+
+        listen_folder_item_selected((selected_folder_item) => {
+          if (this.folder_mdl == selected_folder_item) {
+            if (! this.selected) {
+              this.selected = true
+            }
+          } else { 
+            if (this.selected) {
+              this.selected = false
+            }
+          }
+        })
+
+        listen_reload_folder_item((uri) => {
+          if (this.folder_mdl.uri.startsWith(uri) && this.folder_mdl.children != null) {
+            this.folder_mdl.load_children(null, null)
+          }
+        })
+      },
+      methods : {
+        toggle(event) {
+          event.stopPropagation()
+          if (this.fixed != "y") {
+            if (this.open) {
+              this.open = false
+            } else {
+              this.open_folder()
+            }
+          }
+
+
+        },
+        select_folder(event) {
+          this.open_folder()
+          if (!this.selected) {
+            emit_request_folder_item_selected(this.folder_mdl)
+          }
+        },
+        open_folder() {
+          if (this.folder_mdl.children) {
+            this.open = true
+          } else {
+            this.folder_mdl.load_children(
+              ()=> {
+                this.open = true
+              }
+              ,
+              ( error_tag ) => {
+                emit_remote_error(error_tag)
+              }
+            )
+          }
+        },
+        start_move(event) {
+          item_to_move = this.folder_mdl
+          event.stopPropagation()
+          event.dataTransfer.setData("old_uri", this.folder_mdl.uri)
+          event.dataTransfer.setData("is_folder", this.folder_mdl.is_folder)
+          event.dataTransfer.setData("text", "<!-- sub='" + this.folder_mdl.uri + "' -->")
+          this.selected = false
+        },
+        finish_move(event) {
+          event.stopPropagation()
+          var old_uri = event.dataTransfer.getData("old_uri")
+          var is_folder = (event.dataTransfer.getData("is_folder").toLowerCase() == "true")
+
+          item_to_move = this.folder_mdl.get_root_folder().find_item_by_uri(old_uri, is_folder)
+
+          var new_parent_uri = this.folder_mdl.uri
+
+          item_to_move.move(this.folder_mdl,
+            ()=> {
+              if (!this.open) {
+                this.toggle(event)
+              }
+
+            },
+            ( error_tag ) => {
+              emit_remote_error(error_tag)
+            }
+          )
+        },
+        dragover(event) {
+          //var old_uri = event.dataTransfer.getData("old_uri")
+          //var is_folder = (event.dataTransfer.getData("is_folder").toLowerCase() == "true")
+          //item_to_move = this.folder_mdl.get_root_folder().find_item_by_uri(old_uri, is_folder)
+
+          // assure we are not dropping into same folder
+          if (!((this.folder_mdl === item_to_move.parent_folder) || (this.folder_mdl === item_to_move))) {
+            event.preventDefault()
+          }
+          event.stopPropagation()
+
+        },
+        select() {
+          //if ((this.fixed != 'y') && (!this.selected)) {
+          if (!this.selected) {
+            this.selected = true
+            this.open_folder()
+            emit_request_folder_item_selected(this.folder_mdl)
+          }
+        },
+        unselect(selected_folder_item) {
+          if ((this !== selected_folder_item) && (this.selected)) {
+            this.selected = false
+          }
+        },
+        dragend(event) {
+          event.stopPropagation()
+          item_to_move = null
+        }
+      }
+    }
+  </script>

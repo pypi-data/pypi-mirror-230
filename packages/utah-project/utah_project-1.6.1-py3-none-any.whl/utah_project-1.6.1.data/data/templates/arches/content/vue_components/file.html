@@ -1,0 +1,63 @@
+  <!--
+  =====================================================================================
+  File
+  =====================================================================================
+  -->
+  <script type="text/html" id="file-template">
+    <span style='white-space: nowrap;' v-bind:class="selected?'has-text-weight-bold':''" v-on:dragstart="start_move" draggable="true"  v-on:dragend="dragend" v-on:click="select">
+      <i class="fa fa-file mr-1" aria-hidden="true"></i>{{ "{{  file_mdl.name  }}" }}
+    </span>
+  </script>
+
+  <script type="text/javascript">
+    var FILE_COMPONENT = {
+      data() {
+        return {
+          'selected' : false
+        }
+      },
+      mounted() {
+
+        listen_folder_item_selected((selected_folder_item) => {
+          if (this.file_mdl !== selected_folder_item) {
+            if (this.selected) {
+                this.selected = false
+            }
+          } else {
+            if (!this.selected) {
+              this.selected = true
+            }
+          }
+        })
+
+      },
+      props : ['file_mdl'],
+      template : "#file-template",
+      methods : {
+        start_move(event) {
+          event.stopPropagation()
+          event.dataTransfer.setData("text", "<!-- sub='" + this.file_mdl.uri + "' -->")
+          event.dataTransfer.setData("old_uri", this.file_mdl.uri)
+          event.dataTransfer.setData("is_folder", this.file_mdl.is_folder)
+          item_to_move = this.file_mdl
+          this.selected = false
+        },
+        select(event) {
+          event.stopPropagation()
+          if (!this.selected) {
+            //this.selected = true
+            emit_request_folder_item_selected(this.file_mdl)
+          }
+        },
+        unselect(selected_folder_item) {
+          if ((this !== selected_folder_item) && (this.selected)) {
+            this.selected = false
+          }
+        },
+        dragend(event) {
+          event.stopPropagation()
+          item_to_move = null
+        }
+      }
+    }
+  </script>

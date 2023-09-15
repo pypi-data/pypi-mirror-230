@@ -1,0 +1,93 @@
+{% extends arches_layout %}
+{% block main_content %}
+
+{% if admin_register %}
+<form class="box" action="/arches/registration/register/admin" method="post">
+{% else %}
+<form class="box" action="/arches/registration/register/public" method="post">
+{% endif %}
+
+
+  {% if message %}
+    {% if error %}
+      {% set tag="is-danger" %}
+    {% else %}
+      {% set tag="is-info" %}
+    {% endif %}
+
+    <div class="notification {{ tag }}">
+      {{ message }}
+    </div>
+  {% endif %}
+
+    <div class="field">
+      <label class="label">{% trans %}Email{% endtrans %}</label>
+      <div class="control">
+        {% if not "user_id" in field_errors %}
+        <input class="input" type="text" placeholder="{% trans %}e.g. alex@example.com{% endtrans %}" name="user_id" value="{{ user_id }}">
+        {% else %}
+        <input class="input is-danger" type="email" placeholder="{% trans %}e.g. alex@example.com{% endtrans %}" name="user_id" value="{{ user_id }}">
+        <p class="help is-danger">{{ field_errors["user_id"] }}</p>
+        {% endif %}
+      </div>
+    </div>
+  
+    
+    <div class="field">
+      <label class="label">{% trans %}Password{% endtrans %}</label>
+      <div class="control">
+        {% if not "password" in field_errors %}
+        <input class="input" type="password" placeholder="**********" name="password" value="{{ password }}">
+        {% else %}
+        <input class="input is-danger" type="password" placeholder="**********" name="password" value="{{ password }}">
+        <p class="help is-danger">{{ field_errors["password"] }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">{% trans %}Repeat Password{% endtrans %}</label>
+      <div class="control">
+        {% if not "repeat_password" in field_errors %}
+        <input class="input" type="password" placeholder="**********" name="repeat_password" value="{{ repeat_password }}">
+        {% else %}
+        <input class="input is-danger" type="password" placeholder="**********" name="repeat_password" value="{{ repeat_password }}">
+        <p class="help is-danger">{{ field_errors["repeat_password"] }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">{% trans %}First Name{% endtrans %}</label>
+      <div class="control">
+        {% if not "first_name" in field_errors %}
+        <input class="input" type="text" placeholder="{% trans %}John{% endtrans %}" name="first_name" value="{{ first_name }}">
+        {% else %}
+        <input class="input is-danger" type="text" placeholder="{% trans %}John{% endtrans %}" name="first_name" value="{{ first_name }}">
+        <p class="help is-danger">{{ field_errors["first_name"] }}</p>
+        {% endif %}
+      </div>
+    </div>
+  
+  
+    <div class="field">
+      <label class="label">{% trans %}Last Name{% endtrans %}</label>
+      <div class="control">
+        {% if not "last_name" in field_errors %}
+        <input class="input" type="text" placeholder="{% trans %}Smith{% endtrans %}" name="last_name" value="{{ last_name }}">
+        {% else %}
+        <input class="input is-danger" type="text" placeholder="{% trans %}Smith{% endtrans %}" name="last_name" value="{{ last_name }}">
+        <p class="help is-danger">{{ field_errors["last_name"] }}</p>
+        {% endif %}
+      </div>
+    </div>
+    
+    <button class="button is-info" name="submit_button" value="submit" >{% trans %}Register{% endtrans %}</button>
+    {% if admin_register %}
+    <a class="button is-info" href="/arches/access_mgmt/users">{% trans %}User List{% endtrans %}</a>
+    {% endif %}
+  </form>
+
+
+
+{% endblock %}

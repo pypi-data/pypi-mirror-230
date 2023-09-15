@@ -1,0 +1,313 @@
+  <!--
+  =====================================================================================
+  Navigation Editor Node
+  =====================================================================================
+  -->
+<script type="text/html" id="navigation-editor-node-template">
+  <span v-if="(nav_node.microsite)" v-bind:draggable='(!is_root_node)' v-on:click="click"  v-on:dragstart="start_move" v-on:dragover="dragover" v-on:drop="drop">
+    <span v-bind:title='nav_node.microsite' class="bubble" v-bind:class="{ 'has-background-info-dark': !lbl_error,'has-text-info-light': !lbl_error,'has-background-danger-dark': lbl_error,'has-background-danger-light': lbl_error }">
+      <i class="fa fa-grip-vertical mr-2"> </i>
+      <i class="fa fa-sitemap mr-2"> </i>
+      {{ "{{nav_node.microsite}}" }}
+      <button class="delete ml-1" aria-label="delete" v-on:click="delete_clicked"></button>
+    </span>
+  </span>
+
+  <span v-if="!(nav_node.microsite)" v-bind:draggable='(!is_root_node)' v-on:click="click"  v-on:dragstart="start_move" v-on:dragover="dragover" v-on:drop="drop">
+    <div v-bind:title='nav_node.uri' class="bubble" style="width:300px;" v-bind:class="{ 'has-background-info-dark': !lbl_error,'has-text-info-light': !lbl_error,'has-background-danger-dark': lbl_error,'has-background-danger-light': lbl_error }">
+      <span v-if="(!is_root_node)">
+        <i class="fa fa-grip-vertical mr-2"> </i>
+        <i v-if="nav_node.uri!='#'" class="fa fa-link mr-2"> </i>
+        <i v-if="nav_node.uri=='#'" class="fa fa-tag mr-2"> </i>
+      </span>
+      <string-editor v-bind:key="(nav_node.uri + ':' + nav_node.description)" error_style="width:70%; border:0;" style="width:70%; border:0;" class="ml-1 has-background-info-dark has-text-info-light" error_class="ml-1 has-background-danger-dark" validation_regex="^.{1,}$" v-model="nav_node.description" v-on:change="true_up_translations"></string-editor>
+      <button v-if="(!is_root_node)" class="delete ml-1" aria-label="delete" v-on:click="delete_clicked"></button>
+    </div>
+
+
+    <ul v-if="(nav_node.children)" class='menu-list has-text-info'>
+      <li>
+        <nav-editor-drop-separator v-bind:root_node="root_node" v-bind:nav_node="nav_node" v-bind:insert_loc="0"></nav-editor-drop-separator>
+      </li>
+
+      <li v-for="(child_nav_node, index) in nav_node.children">
+        <nav-editor-node v-bind:root_node="root_node" v-bind:nav_node="child_nav_node" v-bind:parent_id="node_id" v-bind:is_root_node="false" v-bind:position="index"></nav-editor-node>
+        <nav-editor-drop-separator v-bind:root_node="root_node" v-bind:nav_node="nav_node" v-bind:nav_node_id="(node_id + ':' + index.toString())" v-bind:insert_loc="index+1"></nav-editor-drop-separator>
+      </li>
+    </ul>
+  </span>
+</script>
+
+  <script type="text/javascript">
+    var NAVIGATION_EDITOR_NODE_COMPONENT = {
+      props : ['root_node', 'nav_node', 'is_root_node', 'parent_id', 'position'],
+      template : "#navigation-editor-node-template",
+      data() {
+        return {
+          node_id : "",
+          lbl_error : false
+        }
+      },
+      watch:{
+        nav_node : {
+          deep: true,
+          handler(){
+            this.check_error()
+          }
+        }
+      },
+      created() {
+        if ((this.parent_id != undefined) && (this.parent_id != "")) {
+          this.node_id = this.parent_id + ":" + this.position.toString()
+        } else {
+          if (this.position != undefined) {
+            this.node_id = this.position.toString()
+          }
+        }
+      },
+      mounted() {
+        this.check_error()
+      },
+      methods : {
+        check_error() {
+          if (this.nav_node.description == "") {
+            this.lbl_error = true
+          } else {
+            this.lbl_error = false
+          }
+        },
+        gather_labels(node, list) {
+            if ("description" in node) {
+                list[list.length] = node.description
+            }
+            if ("children" in node) {
+                for (var i=0; i<node.children.length; i++) {
+                    this.gather_labels(node.children[i], list)
+                }
+            }
+        },
+        true_up_translations() {
+
+          var all_labels = []
+          this.gather_labels(this.root_node, all_labels)
+          var all_locales = Object.keys(this.root_node.translations)
+          for (var i=0; i<all_locales.length; i++) {
+            var locale = all_locales[i]
+            var trans_table = this.root_node.translations[locale]
+
+            // Add missing keys
+            for (var j=0; j<all_labels.length; j++) {
+              if (!(all_labels[j] in trans_table)) {
+                trans_table[all_labels[j]] = all_labels[j]
+              }
+            }
+
+            // Remove extraneous keys
+            var all_trans_keys = Object.keys(trans_table)
+            for (var j=0; j<all_trans_keys.length; j++) {
+              if (all_labels.indexOf(all_trans_keys[j]) == -1) {
+                delete trans_table[all_trans_keys[j]]
+              }
+            }
+
+          }
+
+        },
+        start_move(e) {
+          e.stopPropagation()
+          const dataList = e.dataTransfer.items;
+          dataList.clear()
+          dataList.add(this.node_id, "text/nav-node-id");  
+        },
+        delete_clicked(e) {
+          e.stopPropagation()
+          this.delete_node(this.node_id)
+          this.true_up_translations()
+        },
+        dragover(e) {
+          e.preventDefault()
+        },
+        drop_nav_node(nav_node_id) {
+            if (!this.node_id.startsWith(nav_node_id+":")) {
+              var mr = this.find_node_by_id(nav_node_id, this.root_node)
+              var node_to_move = mr[2]
+
+              this.delete_node(nav_node_id)
+              this.add_node(node_to_move)
+            }
+        },
+        drop_plain_text(document_tag) {
+          var uri = null
+
+          const myre = /<\!\-\- sub\=\'((.*)\/([a-z,A-Z,0-9,\-\_]*|(.*)\.html))\' \-\-\>/
+          var matches = document_tag.match(myre)
+
+          if (matches) {
+            uri = matches[1]
+          } else {
+            const straight_url = /^(https?:\/\/[a-z,A-Z,0-9,\.\-\_]*(\:[0-9]{1,5})?)(.*)?$/
+            matches = document_tag.match(straight_url)
+            var uri = matches[0]
+            var mypage_url = window.location.href
+            var mypage_matches = mypage_url.match(straight_url)
+            if (mypage_matches[1] == matches[1]) {
+              if (matches[3] != undefined) {
+                uri = matches[3]
+              } else {
+                uri = "/"
+              }
+            } 
+          }
+
+
+          if (uri != null) {
+            already_in_tree = this.find_node_by_uri(uri, this.root_node)
+            if (already_in_tree==null) {
+              const PROMPT_TEXT = {
+                'header' : "{% trans %}Navigation Editor{% endtrans %}",
+                'body' : "{% trans %}Enter default text for item{% endtrans %}",
+                'color' : "is-info",
+                'can_close':true
+              }
+
+              emit_prompt(PROMPT_TEXT, 
+                (text) => {
+                    new_nav_node = {
+                    uri : uri,
+                    description : text
+                }
+                this.add_node(new_nav_node)
+                this.true_up_translations()
+              })
+            } else {
+              const PROMPT_TEXT = {
+                'header' : "{% trans %}Navigation Editor{% endtrans %}",
+                'body' : "{% trans %}Item is already in navigation tree{% endtrans %}",
+                'color' : "is-warning",
+                'can_close':true
+              }
+
+              emit_message(PROMPT_TEXT)
+            }
+          }
+        },
+        drop_label(placeholder) {
+
+          const PROMPT_LABEL = {
+            'header' : "{% trans %}Navigation Editor{% endtrans %}",
+            'body' : "{% trans %}Enter default label text{% endtrans %}",
+            'color' : "is-info",
+            'can_close':true
+          }
+
+          emit_prompt(PROMPT_LABEL, 
+            (label_text) => {
+              new_nav_node = {
+                uri : '#',
+                description : label_text
+              }
+              this.add_node(new_nav_node)
+              this.true_up_translations()
+          })
+        },
+        drop_microsite(placeholder) {
+          const PROMPT_MICROSITE = {
+            'header' : "{% trans %}Navigation Editor{% endtrans %}",
+            'body' : "{% trans %}Enter new microsite name{% endtrans %}",
+            'color' : "is-info",
+            'can_close':true
+          }
+
+          emit_prompt(PROMPT_MICROSITE, 
+            (microsite) => {
+              new_nav_node = { microsite : microsite }
+              this.add_node(new_nav_node)
+          })
+        },
+        add_node(new_nav_node) {
+          if (!('children' in this.nav_node)) {
+              this.nav_node['children'] = []
+            }
+            this.nav_node.children.splice(0, 0, new_nav_node)
+        },
+        delete_node(id){
+          results = this.find_node_by_id(id, this.root_node)
+          results[0].children.splice(results[1], 1)
+            if (results[0].children.length==0) {
+              delete results[0]['children']
+            }
+        },
+        process_dropped_items(e, func_map) {
+          if (!("microsite" in this.nav_node)) {
+            for (const item of e.dataTransfer.items) {
+                if (item.kind === "string") {
+                    const item_type = item.type
+                    if (item.type in func_map) {
+                        item.getAsString((s) => {
+                            func_map[item_type](s)
+                        })
+                    }
+                }
+            }
+          } else {
+            MSG_MICROSITE_CREATED = {
+              'header' : "{% trans %}Navigation Editor{% endtrans %}",
+              'body' : "{% trans %}Referenced Microsite cannot be altered. Edit the navigation.json in microsite{% endtrans %}" + ":" + this.nav_node.microsite,
+              'color' : "is-warning",
+              'can_close':true
+            }
+            emit_message(MSG_MICROSITE_CREATED)
+          }
+        },
+        drop(e) {
+            e.stopPropagation()
+            e.preventDefault()
+
+            this.process_dropped_items(e, 
+              {
+                'text/plain':this.drop_plain_text, 
+                'text/nav-node-id':this.drop_nav_node, 
+                'text/nav-label':this.drop_label,
+                'text/nav-microsite':this.drop_microsite
+              }
+            )
+
+            this.activated = false
+        },
+        find_node_by_id(id, root_node) {
+          segs = id.split(":")
+          var curr_node = root_node
+          var parent_node = null
+          var pointer = null
+          for (var i=0; i<segs.length; i++) {
+            parent_node = curr_node
+            pointer = parseInt(segs[i])
+            curr_node = curr_node.children[pointer]
+          }
+          return [parent_node, pointer, curr_node]
+        },
+        find_node_by_uri(uri, curr_nav_node) {
+          if (curr_nav_node.uri == uri) {
+                return curr_nav_node
+          }
+
+          if (Object.hasOwn(curr_nav_node, 'children') && curr_nav_node.children.length > 0) {
+            for (i=0; i<curr_nav_node.children.length; i++) {
+              if (curr_nav_node.children[i].uri == uri) {
+                return curr_nav_node
+              }
+            }
+
+            for (i=0; i<curr_nav_node.children.length; i++) {
+              var result = this.find_node_by_uri(uri, curr_nav_node.children[i])
+              if (result != null) {
+                return result
+              }
+            }
+          }
+          return null
+        }
+      }
+    }
+
+  </script>

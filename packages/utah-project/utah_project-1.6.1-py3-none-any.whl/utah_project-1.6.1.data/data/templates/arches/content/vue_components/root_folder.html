@@ -1,0 +1,23 @@
+  <!--
+  =====================================================================================
+  Root folder
+  =====================================================================================
+  -->
+  <script type="text/html" id="root-folder-template">
+    <ul class='menu-list has-text-info'><li>
+      <folder v-if="root_folder" fixed="y" v-bind:folder_mdl="root_folder"></folder>
+    </li></ul>
+  </script>
+
+  <script type="text/javascript">
+    var ROOT_FOLDER_COMPONENT =  {
+      data() {
+        return {"root_folder" : new RootFolder(this.uri)}
+      },
+      mounted() {
+        Vue.nextTick(() => {emit_folder_item_selected(this.root_folder) })
+      },
+      props : ['uri'],
+      template : "#root-folder-template"
+    }
+  </script>

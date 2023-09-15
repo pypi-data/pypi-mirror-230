@@ -1,0 +1,39 @@
+{
+    "version": 1,
+    "disable_existing_loggers": true,
+
+    "formatters": {
+        "default_formatter": {
+            "format": "%(asctime)s %(levelname)s %(name)s %(message)s",
+            "datefmt" : "%Y-%m-%d %H:%M:%S %z"
+        }
+    },
+
+    "handlers": {
+        "stream_handler": {
+            "class": "logging.StreamHandler",
+            "formatter": "default_formatter",
+            "level" : "INFO"
+        },
+        "rotating_file_handler": {
+            "class" : "logging.handlers.RotatingFileHandler",
+            "formatter": "default_formatter",
+            "level" : "INFO",
+            "maxBytes" : 1024000,
+            "backupCount" : 3,
+            "filename" : "${UTAH_VARIABLE_DATA}/logs/arches_app.log"
+        }
+    },
+    "loggers" : {
+        "__main__" : {
+            "level" : "INFO",
+            "handlers":
+                ["stream_handler", "rotating_file_handler"]
+        },
+        "utah" : {
+            "level" : "INFO",
+            "handlers":
+                ["stream_handler", "rotating_file_handler"]
+        }
+    }
+}

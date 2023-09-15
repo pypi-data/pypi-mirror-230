@@ -1,0 +1,22 @@
+{
+    "must_implement": "utah.core.authorize.BaseGroupService",
+    "type": "utah.impl.zion.authorize.GroupService",
+    "load_it": true,
+    "config": {
+        "default_anonymous_groups": [
+            {
+                "name": "{% trans %}__anonymous__{% endtrans %}",
+                "description": "{% trans %}All users who are not logged in{% endtrans %}"
+            }
+        ],
+        "default_logged_in_groups": [
+            {
+                "name": "{% trans %}__logged_in__{% endtrans %}",
+                "description": "{% trans %}All users who are logged in{% endtrans %}"
+            }
+        ],
+        "group_config_path": "${UTAH_VARIABLE_DATA}/data/authorization/groups.json",
+        "enrollments_config_path": "${UTAH_VARIABLE_DATA}/data/authorization/enrollments.json",
+        "cache_timeout_secs": 300
+    }
+}

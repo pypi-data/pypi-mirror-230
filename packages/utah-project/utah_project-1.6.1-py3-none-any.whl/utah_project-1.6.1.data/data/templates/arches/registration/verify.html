@@ -1,0 +1,43 @@
+{% extends arches_layout %}
+{% block main_content %}
+
+<form class="box" action="/arches/authentication/verify" method="POST">
+  {% if message %}
+    {% if error %}
+      {% set tag="is-danger" %}
+    {% else %}
+      {% set tag="is-info" %}
+    {% endif %}
+
+    <div class="notification {{ tag }}">
+      {{ message }}
+    </div>
+  {% endif %}
+
+    <div class="field">
+      <label class="label">{% trans %}Email{% endtrans %}</label>
+      <div class="control">
+        <input disabled class="input" type="text" placeholder="{% trans %}e.g. alex@example.com{% endtrans %}" name="user_id" value="{{ user_id }}">
+        <input type="hidden" name="user_id" value="{{ user_id }}" />
+      </div>
+    </div>
+  
+    
+    <div class="field">
+      <label class="label">{% trans %}Verification Code{% endtrans %}</label>
+      <div class="control">
+        {% if not "verification_code" in field_errors %}
+        <input class="input" type="text" placeholder="123456" name="verification_code" value="{{ verification_code }}">
+        {% else %}
+        <input class="input is-danger" type="text" placeholder="123456" name="verification_code" value="{{ verification_code }}">
+        <p class="help is-danger">{{ field_errors["verification_code"] }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    
+    <button class="button is-info" name="submit_button" value="submit" >{% trans %}Verify{% endtrans %}</button>
+    <a class="button is-info" href="/arches/registration/register/public/verify/resend?user_id={{ user_id }}">{% trans %}Resend{% endtrans %}</a>
+    </form>
+
+{% endblock %}

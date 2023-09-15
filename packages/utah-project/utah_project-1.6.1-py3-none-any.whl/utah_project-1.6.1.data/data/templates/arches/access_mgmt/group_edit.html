@@ -1,0 +1,118 @@
+{% extends arches_layout %}
+{% block main_content %}
+
+{% if function == "add" %}
+<form class="box" action="/arches/access_mgmt/groups/__new" method="POST">  
+{% endif %}
+{% if function == "update" %}
+<form class="box" action="/arches/access_mgmt/groups/{{ group.name }}" method="POST">
+{% endif %}
+
+
+    {% if message %}
+      {% if error %}
+        {% set tag="is-danger" %}
+      {% else %}
+        {% set tag="is-info" %}
+      {% endif %}
+  
+      <div class="notification {{ tag }}">
+        {{ message }}
+      </div>
+    {% endif %}
+  
+
+    <div class="field">
+        <label class="label">{% trans %}Group Name{% endtrans %}</label>
+        <div class="control">
+          {% if not "name" in field_errors %}
+            {% if function=="add" %}
+                <input class="input" type="text" placeholder="{% trans %}admin{% endtrans %}" name="name" value="{{ group.name }}">
+            {% else %}
+                <input class="input" disabled type="text" placeholder="{% trans %}admin{% endtrans %}" name="name" value="{{ group.name }}">
+            {% endif %}
+          {% else %}
+          <input class="input is-danger" type="text" placeholder="{% trans %}admin{% endtrans %}" name="name" value="{{ group.name }}">
+          <p class="help is-danger">{{ field_errors["name"] }}</p>
+          {% endif %}
+        </div>
+      </div>
+
+
+    <div class="field">
+        <label class="label">{% trans %}Description{% endtrans %}</label>
+        <div class="control">
+          {% if not "description" in field_errors %}
+          <input class="input" type="text" placeholder="{% trans %}Administrators{% endtrans %}" name="description" value="{{ group.description }}">
+          {% else %}
+          <input class="input is-danger" type="text" placeholder="{% trans %}Administrators{% endtrans %}" name="description" value="{{ group.description }}">
+          <p class="help is-danger">{{ field_errors["description"] }}</p>
+          {% endif %}
+        </div>
+      </div>
+
+
+
+      <div class="field">
+        <label class="label">{% trans %}Authorized Rights{% endtrans %}</label>
+        <div class="select is-multiple">
+          <select class="input" name="group_authorizations" multiple size="10">
+          {% for authorization in all_authorizations %}
+            <option value="{{ authorization.id }}"{% if authorization.id in group_authorizations %} selected {% endif %}>{{ authorization.category }}::{{ authorization.right_name }}</option>
+          {% endfor %}
+          </select>
+        </div>
+      </div>
+
+
+
+
+{% if members %}
+<label style="padding-top: 30px;" class="label">{% trans %}Group Membership{% endtrans %}</label>
+      <table style="padding-bottom: 30px;" class="table">
+        <thead>
+            <tr>
+                <th>
+                  {% trans %}Email Address{% endtrans %}
+                </th>
+                <th>
+                  {% trans %}First Name{% endtrans %}
+                </th>
+                <th>
+                  {% trans %}Last Name{% endtrans %}
+                </th>
+            </tr>
+        </thead>
+        
+        <tbody>
+        {% for member in members %}
+            <tr>
+                <td>
+                  {{ member.user_id }}
+                </td>
+                <td>
+                  {{ member.first_name }}
+                </td>
+                <td>
+                  {{ member.last_name }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        
+        </table>
+{% endif %}
+
+
+
+    {% if function == "add" %}
+      <button class="button is-info" name="submit_button" value="add" >{% trans %}Add{% endtrans %}</button>
+    {% endif %}
+    {% if function == "update" %}
+      <button class="button is-info" name="submit_button" value="update">{% trans %}Update{% endtrans %}</button>
+      <a  class="button" href="/arches/access_mgmt/groups/{{ group.name }}/__delete">{% trans %}Delete{% endtrans %}</a>
+      {% endif %}
+    <a  class="button" href="/arches/access_mgmt/groups">{% trans %}Cancel{% endtrans %}</a>
+  </form>
+  
+  {% endblock %}

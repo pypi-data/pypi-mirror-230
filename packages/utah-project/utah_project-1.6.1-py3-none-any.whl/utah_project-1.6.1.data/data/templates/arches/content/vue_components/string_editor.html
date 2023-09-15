@@ -1,0 +1,115 @@
+  <!--
+  =====================================================================================
+  String editor
+  =====================================================================================
+  -->
+  <script type="text/html" id="string-editor-template">
+    <input 
+        type="text" 
+        v-bind:size="size" 
+        v-bind:key="key" 
+        v-bind:maxlength="maxlength" 
+        v-bind:class="curr_class" 
+        v-bind:style="curr_style" 
+        v-model="edit_string" 
+        ref="default_input" 
+        v-on:blur="abort_change" 
+        v-on:input="validate" 
+        v-on:keyup.enter="commit_change" 
+        v-on:keyup.escape="abort_change">
+    </input>
+  </script>
+
+  <script type="text/javascript">
+    var STRING_EDITOR_COMPONENT =  {
+        data() {
+            return {
+                edit_string : null,
+                editing : false,
+                my_class: "",
+                my_style: "",
+                my_error_class: "",
+                my_error_style: "",
+                curr_class : "",
+                curr_style : "",
+                validation_error: false,
+                committing: false
+            }
+        },
+        mounted() {
+            this.edit_string = this.modelValue
+
+            if (this.class != undefined) {
+                this.my_class = this.class
+            }
+            if (this.style != undefined) {
+                this.my_style = this.style
+            }
+            if (this.error_class != undefined) {
+                this.my_error_class = this.error_class
+            }
+            if (this.error_style != undefined) {
+                this.my_error_style = this.error_style
+            }
+                
+            this.vr = RegExp(this.validation_regex)
+
+            this.validate()
+        },
+        emits: ['update:modelValue'],
+        props : {
+           key:String, 
+           modelValue:String, 
+           validation_regex:String,
+           class:String,
+           style:String,
+           error_class:String,
+           error_style:String,
+           size:Number,
+           maxlength:Number
+        },
+        template : "#string-editor-template",
+        methods : {
+            start_edit(e) {
+                this.edit_string = this.modelValue
+                this.editing = true
+                this.validate()
+                e.cancelBubble = true
+                Vue.nextTick( ()=> {
+                    this.$refs.default_input.focus()
+                })
+            },
+            commit_change(e) {
+                if (!this.validation_error) {
+                    this.$emit('update:modelValue', this.edit_string)
+                    this.$emit('change', e)
+                    this.editing=false
+                    this.committing = true
+                    this.$refs.default_input.blur()
+                }
+            },
+            abort_change(e) {
+                this.editing=false
+                if (!this.committing) {
+                    this.edit_string = this.modelValue
+                    this.$refs.default_input.blur()
+                    this.curr_class = this.my_class
+                    this.curr_style = this.my_style
+                } else {
+                    this.committing = false
+                }
+            },
+            validate(e) {
+                if (this.edit_string.match(this.vr)) {
+                    this.validation_error = false
+                    this.curr_class = this.my_class
+                    this.curr_style = this.my_style
+                } else { 
+                    this.validation_error = true
+                    this.curr_class = this.my_error_class
+                    this.curr_style = this.my_error_style
+                }
+            }
+        }
+    }
+  </script>

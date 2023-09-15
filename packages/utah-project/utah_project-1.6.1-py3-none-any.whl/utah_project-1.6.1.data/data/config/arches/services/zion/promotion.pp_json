@@ -1,0 +1,12 @@
+{
+    "must_implement":"utah.core.content.BasePromotionService",
+    "type":"utah.impl.zion.content.PromotionService",
+    "load_it": true,
+    "config":{
+        "repo_list":[
+            {"short_name":"local", "description":"Content Repo being used by the running instance", "service_name":"content"},
+            {"short_name":"downstream", "description":"Content Repo being used by the promoted to instance", "service_name":"next_content"}
+        ],
+        "data_path":"${UTAH_VARIABLE_DATA}/data/promotion"
+    }
+}

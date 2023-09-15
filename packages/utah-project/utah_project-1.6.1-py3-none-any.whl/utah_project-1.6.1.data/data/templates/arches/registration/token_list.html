@@ -1,0 +1,105 @@
+{% extends arches_layout %}
+{% block main_content %}
+
+<table class="table">
+    <tr>
+        <th style="width:10ch;">User Id</th>
+        <td style="width:25ch;">{{ session["user_id"] }}</td>
+        <td></td>
+    </tr>
+</table>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width:7ch;"></th>
+            <th style="width:45ch">{% if not id  %}<a  class="has-text-success" href="/arches/registration/tokens/_new"><i class="fa fa-plus-square"></i></a>{% endif %} {% trans %}Token{% endtrans %}</th>
+            <th style="width:30ch">{% trans %}Description{% endtrans %}</th>
+            <th style="width:25ch">{% trans %}Expire Date{% endtrans %}</th>
+            <th style="width:25ch;"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% if key == "_new" %}
+        <form method="POST" action="/arches/registration/tokens/_new">
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    <input class="input" name="description" type="text" value="{{description}}">
+                    {% if field_errors and "description" in field_errors %}
+                    <br/>
+                    <span class="has-text-danger is-size-7">{{ field_errors["description"] }}</span>
+                    {% endif %}                    
+                </td>
+                <td>
+                    <input class="input" type="datetime-local" name="expire_date" value="{{ expire_date|format_datetime_for_input }}" />
+                    {% if field_errors and "expire_date" in field_errors %}
+                    <br/>
+                    <span class="has-text-danger is-size-7">{{ field_errors["expire_date"] }}</span>
+                    {% endif %}
+                </td>
+                <td><button class="button is-warning">Add</button> 
+                    <a class="button" href="/arches/registration/tokens">Cancel</a>
+                </td>
+            </tr>
+        </form>
+        {% endif %}
+        {% for token in authentication_tokens %}
+        {% if not key == token.key %}
+        <tr>
+            <td>
+                <a class="has-text-success" href="/arches/registration/tokens/{{token.key}}"><i class="fa fa-pen"></i></a>
+                <a class="has-text-danger" href="/arches/registration/tokens/{{token.key}}/_delete"><i class="fa fa-trash"></i></a> 
+            </td>
+            <td><input disabled class="input" type="text" value="{{ token.key }}"/></i></td>
+            <td><input disabled class="input" name="description" type="text" value="{{ token.description }}"></td>
+            <td><input disabled class="input" type="datetime-local" name="expire_date" value="{{ token.expire_date|format_datetime_for_input }}" /></td>
+            <td></td>
+        </tr>
+        {% else %}
+        {% if not delete=="y" %}
+        <form method="POST" action="/arches/registration/tokens/{{key}}">
+            <tr>
+                <td></td>
+                <td><input disabled class="input" type="text" value="{{key}}" /></td>
+                <td>
+                    <input class="input" name="description" type="text" value="{{description}}" />
+                    {% if field_errors and "description" in field_errors %}
+                    <br/>
+                    <span class="has-text-danger is-size-7">{{ field_errors["description"] }}</span>
+                    {% endif %}                    
+                </td>
+                <td>
+                    <input class="input" type="datetime-local" name="expire_date" value="{{ expire_date|format_datetime_for_input }}" />
+                    {% if field_errors and "expire_date" in field_errors %}
+                    <br/>
+                    <span class="has-text-danger is-size-7">{{ field_errors["expire_date"] }}</span>
+                    {% endif %}
+                </td>
+                <td><button class="button is-warning">Update</button> 
+                    <a class="button" href="/arches/registration/tokens">Cancel</a>
+                </td>
+            </tr>
+        </form>
+        {% else %}
+        <form method="POST" action="/arches/registration/tokens/{{key}}/_delete">
+            <tr>
+                <td>
+                </td>
+                <td><input disabled class="input" type="text" value="{{token.key}}" /></td>
+                <td><input disabled class="input" type="text" value="{{token.description}}" /></td>
+                <td><input disabled class="input" type="datetime-local" name="expire_date" value="{{ token.expire_date|format_datetime_for_input }}" /></td>
+                <td><button class="button is-danger">Delete</button> <a class="button" href="/arches/registration/tokens">Cancel</a></td>
+            </tr>
+        </form>
+        {% endif %}
+
+        {% endif %}
+        {% endfor %}
+        
+    </tbody>
+</table>
+
+{% endblock %}

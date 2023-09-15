@@ -1,0 +1,70 @@
+{% extends arches_layout %}
+{% block main_content %}
+{% if differences|length > 0 %}
+
+
+<div class="columns">
+    <div class="column is-one-quarter">
+        <table class="table is-bordered is-narrow">
+            <tr>
+                <th>{% trans %}Source Repository{% endtrans %}</th>
+                <td>{{ source_repo_desc }}</td>
+            </tr>
+            <tr>
+                <th>{% trans %}Destination Repository{% endtrans %}</th>
+                <td>{{ dest_repo_desc }}</td>
+            </tr>
+        </table>        
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>{% trans %}Action{% endtrans %}</th>
+            <th>{% trans %}Path{% endtrans %}</th>
+            <th>{% trans %}Local Size{% endtrans %}</th>
+            <th>{% trans %}Local Last Modified{% endtrans %}</th>
+            <th>{% trans %}Downstream Size{% endtrans %}</th>
+            <th>{% trans %}Downstream Last Modified{% endtrans %}</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for difference in differences %}
+    <tr>
+        {% if difference.action == 0 %}
+        <td>{% trans %}Add{% endtrans %}</td>
+        <td>{{ difference.from_inv_item.uri }}</td>
+        <td>{{ difference.from_inv_item.size }}</td>
+        <td>{{ difference.from_inv_item.last_modified_date|format_datetime('short') }}</td>
+        <td></td>
+        <td></td>
+    {% endif %}
+    {% if difference.action == 1 %}
+        <td>{% trans %}Apply Change{% endtrans %}</td>
+        <td>{{ difference.from_inv_item.uri }}</td>
+        <td>{{ difference.from_inv_item.size }}</td>
+        <td>{{ difference.from_inv_item.last_modified_date|format_datetime('short') }}</td>
+        <td>{{ difference.to_inv_item.size }}</td>
+        <td>{{ difference.to_inv_item.last_modified_date|format_datetime('short') }}</td>
+    {% endif %}
+    {% if difference.action == 2 %}
+        <td>{% trans %}Delete{% endtrans %}</td>
+        <td>{{ difference.to_inv_item.uri }}</td>
+        <td></td>
+        <td></td>
+        <td>{{ difference.to_inv_item.size }}</td>
+        <td>{{ difference.to_inv_item.last_modified_date|format_datetime('short') }}</td>
+    {% endif %}
+    </tr>
+
+    {% endfor %}
+    </tbody>
+</table>
+
+<a class="button" href=".">Synchronize</a>
+
+{% else %}
+{% trans %}There were no differences found{% endtrans %}
+{% endif %}
+{% endblock %}

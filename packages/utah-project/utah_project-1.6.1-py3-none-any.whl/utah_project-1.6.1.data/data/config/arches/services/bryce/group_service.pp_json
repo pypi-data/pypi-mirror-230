@@ -1,0 +1,27 @@
+{
+    "must_implement": "utah.core.authorize.BaseGroupService",
+    "type": "utah.impl.bryce.authorize.GroupService",
+    "load_it" : true,
+    "config": {
+        "mongo_db_info": {
+            "connection_url": "${MONGO_LOCAL_CONNECTION_URL}",
+            "db_name": "${MONGO_LOCAL_APP_DB}"
+        },
+        "enrollments_mongo_db_info": {
+            "connection_url": "${MONGO_LOCAL_CONNECTION_URL}",
+            "db_name": "${MONGO_LOCAL_APP_DB}"
+        },
+        "default_anonymous_groups": [
+            {
+                "name": "{% trans %}__anonymous__{% endtrans %}",
+                "description": "{% trans %}All users who are not logged in{% endtrans %}"
+            }
+        ],
+        "default_logged_in_groups": [
+            {
+                "name": "{% trans %}__logged_in__{% endtrans %}",
+                "description": "{% trans %}All users who are logged in{% endtrans %}"
+            }
+        ]
+    }
+}
