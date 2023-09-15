@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: clubbi-utils
+Version: 6.0.5
+Description-Content-Type: text/plain
+License-File: LICENSE
+Requires-Dist: sqlalchemy<1.5,>=1.4
+Requires-Dist: aiobotocore<3,>2
+Provides-Extra: pydantic
+Requires-Dist: pydantic<2,>=1.9.1; extra == "pydantic"
+Provides-Extra: orjson
+Requires-Dist: orjson<4,>=3.6.6; extra == "orjson"
+Provides-Extra: postgresql
+Requires-Dist: sqlalchemy[postgresql_asyncpg]<1.5,>=1.4; extra == "postgresql"
+Provides-Extra: mysql
+Requires-Dist: sqlalchemy[asyncmy]<1.5,>=1.4; extra == "mysql"
+Provides-Extra: slack
+Requires-Dist: slack_sdk<4,>=3.20.0; extra == "slack"
+
+Several helper functions, decorators and layers
