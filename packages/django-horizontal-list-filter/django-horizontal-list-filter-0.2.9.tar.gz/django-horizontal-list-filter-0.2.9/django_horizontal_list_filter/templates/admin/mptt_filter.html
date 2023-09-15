@@ -1,0 +1,10 @@
+{% load i18n %}
+{% load mptt_admin django_horizontal_list_filter %}
+<label>{{ title }} </label>
+<select class="django_horizontal_list_filter_field django_horizontal_list_filter_mptt_field django_horizontal_list_filter_field-{{spec.field.name}}">
+{% for choice in choices %}
+    <option value="{% django_horizontal_list_filter_clean_query_string cl spec choice.query_string %}" {% if choice.selected %} selected="selected"{% endif %}>
+        {% django_horizontal_list_filter_turn_mptt_padding_style_to_padding_string cl spec choice %}{{ choice.display }}
+    </option>
+{% endfor %}
+</select>

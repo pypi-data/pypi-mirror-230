@@ -1,0 +1,83 @@
+# django-horizontal-list-filter
+
+Move list filter to  above of the changelist in django admin site.
+
+
+## Install
+
+```shell
+pip install django-horizontal-list-filter
+```
+
+## Usage
+
+**pro/settings.py**
+
+```python
+INSTALLED_APPS = [
+    ...
+    'django_simple_tags',
+    'django_middleware_global_request',
+    'django_horizontal_list_filter',
+    'mptt', # optional
+    ...
+]
+
+MIDDLEWARE = [
+    ...
+    'django_middleware_global_request.middleware.GlobalRequestMiddleware',
+    ...
+]
+
+DJANGO_HORIZONTAL_LIST_FILTER_USE_SELECT2 = True
+```
+
+- If using mptt, make sure that django_horizontal_list_filter is above mptt, because django_horizontal_list_filter is override mptt's template.
+- If using some other third part app provides customized list filter, you may need to rewrite the filter's template to turn the result html from `ul` to `select`.
+
+## Preview
+
+![django-horizontal-list-filter-preview](https://github.com/zencore-dobetter/pypi-images/raw/main/django-horizontal-list-filter/django-horizontal-list-filter-preview.png)
+
+
+## Releases
+
+### v0.1.0
+
+- First release.
+
+### v0.1.1
+
+- Fix cl context variable not provided problem.
+
+### v0.1.2
+
+- Remove django_static_jquery3 depends. Inject our css&js into ModelAdmin.media in apps.ready step.
+- Add app_requires.
+- Add License file.
+
+### v0.2.0
+
+- Use `DJANGO_HORIZONTAL_LIST_FILTER_USE_SELECT2=True` in `pro/settings.py` to turn all simple-select-box to select2-style-select-box.
+
+### v0.2.2
+
+- Add field name as select box's class name.
+- Fix the problem that the select boxes' width fixed to 150px problem.
+
+### v0.2.4
+
+- Fix filter label style if using tag h3.
+- Add is_using_django_horizontal_list_filter flag into request.
+
+### v0.2.6
+
+- Fix filter block style that using ul tag.
+
+### v0.2.7
+
+- Add max-width css style to select box.
+
+### v0.2.9
+
+- Doc update.
