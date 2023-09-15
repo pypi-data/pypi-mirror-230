@@ -1,0 +1,1116 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>API Documentation &#8212; scores 0.4 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing guide" href="contributing.html" />
+    <link rel="prev" title="Installation Guide" href="installation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">scores 0.4 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Index to Documentation:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="index.html">About the Scores Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start Guide (with Tutorials)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Data Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="maintainer.html">Maintainers Notes</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/api.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>API Documentation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-scores.continuous">scores.continuous</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scores.continuous.mae"><code class="docutils literal notranslate"><span class="pre">mae()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scores.continuous.mse"><code class="docutils literal notranslate"><span class="pre">mse()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scores.continuous.rmse"><code class="docutils literal notranslate"><span class="pre">rmse()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scores-probability">scores.probability</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scores.probability.crps_cdf"><code class="docutils literal notranslate"><span class="pre">crps_cdf()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scores.probability.adjust_fcst_for_crps"><code class="docutils literal notranslate"><span class="pre">adjust_fcst_for_crps()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scores.probability.crps_cdf_brier_decomposition"><code class="docutils literal notranslate"><span class="pre">crps_cdf_brier_decomposition()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scores-categorical">scores.categorical</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scores.categorical.firm"><code class="docutils literal notranslate"><span class="pre">firm()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scores-stats">scores.stats</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scores.stats.tests.diebold_mariano"><code class="docutils literal notranslate"><span class="pre">diebold_mariano()</span></code></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="api-documentation">
+<h1>API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this heading">#</a></h1>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#module-scores.continuous" id="id1">scores.continuous</a></p></li>
+<li><p><a class="reference internal" href="#scores-probability" id="id2">scores.probability</a></p></li>
+<li><p><a class="reference internal" href="#scores-categorical" id="id3">scores.categorical</a></p></li>
+<li><p><a class="reference internal" href="#scores-stats" id="id4">scores.stats</a></p></li>
+</ul>
+</nav>
+<section id="module-scores.continuous">
+<span id="scores-continuous"></span><h2>scores.continuous<a class="headerlink" href="#module-scores.continuous" title="Permalink to this heading">#</a></h2>
+<p>This module contains methods which may be used for continuous scoring</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="scores.continuous.mae">
+<span class="sig-prename descclassname"><span class="pre">scores.continuous.</span></span><span class="sig-name descname"><span class="pre">mae</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fcst</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduce_dims</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preserve_dims</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scores.continuous.mae" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculates the mean absolute error from forecast and observed data.</p>
+<p>A detailed explanation is on [Wikipedia](<a class="reference external" href="https://en.wikipedia.org/wiki/Mean_absolute_error">https://en.wikipedia.org/wiki/Mean_absolute_error</a>)</p>
+<p>Dimensional reduction is not supported for pandas and the user should
+convert their data to xarray to formulate the call to the metric.
+At most one of reduce_dims and preserve_dims may be specified.
+Specifying both will result in an exception.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fcst</strong> (<em>Union</em><em>[</em><em>xr.Dataset</em><em>, </em><em>xr.DataArray</em><em>, </em><em>pd.Dataframe</em><em>, </em><em>pd.Series</em><em>]</em>) – Forecast
+or predicted variables in xarray or pandas.</p></li>
+<li><p><strong>obs</strong> (<em>Union</em><em>[</em><em>xr.Dataset</em><em>, </em><em>xr.DataArray</em><em>, </em><em>pd.Dataframe</em><em>, </em><em>pd.Series</em><em>]</em>) – Observed
+variables in xarray or pandas.</p></li>
+<li><p><strong>reduce_dims</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Iterable</em><em>[</em><em>str</em><em>]</em><em>]</em>) – Optionally specify which dimensions
+to reduce when calculating MAE. All other dimensions will be preserved.</p></li>
+<li><p><strong>preserve_dims</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Iterable</em><em>[</em><em>str</em><em>]</em><em>]</em>) – Optionally specify which
+dimensions to preserve when calculating MAE. All other dimensions
+will be reduced. As a special case, ‘all’ will allow all dimensions
+to be preserved. In this case, the result will be in the same
+shape/dimensionality as the forecast, and the errors will be
+the absolute error at each point (i.e. single-value comparison
+against observed), and the forecast and observed dimensions
+must match precisely.</p></li>
+<li><p><strong>weights</strong> – Not yet implemented. Allow weighted averaging (e.g. by
+area, by latitude, by population, custom).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>By default an xarray DataArray containing
+a single floating point number representing the mean absolute error for the
+supplied data. All dimensions will be reduced.</p>
+<p>Alternatively, an xarray structure with dimensions preserved as appropriate
+containing the score along reduced dimensions</p>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[xr.Dataset, xr.DataArray, pd.Dataframe, pd.Series]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scores.continuous.mse">
+<span class="sig-prename descclassname"><span class="pre">scores.continuous.</span></span><span class="sig-name descname"><span class="pre">mse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fcst</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduce_dims</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preserve_dims</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scores.continuous.mse" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculates the mean squared error from forecast and observed data.</p>
+<p>Dimensional reduction is not supported for pandas and the user should
+convert their data to xarray to formulate the call to the metric. At
+most one of reduce_dims and preserve_dims may be specified.
+Specifying both will result in an exception.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fcst</strong> (<em>Union</em><em>[</em><em>xr.Dataset</em><em>, </em><em>xr.DataArray</em><em>, </em><em>pd.Dataframe</em><em>, </em><em>pd.Series</em><em>]</em>) – Forecast or predicted variables in xarray or pandas.</p></li>
+<li><p><strong>obs</strong> (<em>Union</em><em>[</em><em>xr.Dataset</em><em>, </em><em>xr.DataArray</em><em>, </em><em>pd.Dataframe</em><em>, </em><em>pd.Series</em><em>]</em>) – Observed variables in xarray or pandas.</p></li>
+<li><p><strong>reduce_dims</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Iterable</em><em>[</em><em>str</em><em>]</em>) – Optionally specify which
+dimensions to reduce when calculating MSE. All other dimensions
+will be preserved.</p></li>
+<li><p><strong>preserve_dims</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Iterable</em><em>[</em><em>str</em><em>]</em>) – Optionally specify which
+dimensions to preserve when calculating MSE. All other dimensions
+will be reduced. As a special case, ‘all’ will allow all dimensions
+to be preserved. In this case, the result will be in the same
+shape/dimensionality as the forecast, and the errors will be
+the squared error at each point (i.e. single-value comparison
+against observed), and the forecast and observed dimensions
+must match precisely.</p></li>
+<li><p><strong>weights</strong> – Not yet implemented. Allow weighted averaging (e.g. by
+area, by latitude, by population, custom)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>An object containing</dt><dd><p>a single floating point number representing the mean absolute
+error for the supplied data. All dimensions will be reduced.
+Otherwise: Returns an object representing the mean squared error,
+reduced along the relevant dimensions and weighted appropriately.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[xr.Dataset, xr.DataArray, pd.Dataframe, pd.Series]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scores.continuous.rmse">
+<span class="sig-prename descclassname"><span class="pre">scores.continuous.</span></span><span class="sig-name descname"><span class="pre">rmse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fcst</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduce_dims</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preserve_dims</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scores.continuous.rmse" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculate the Root Mean Squared Error from xarray or pandas objects.</p>
+<p>A detailed explanation is on [Wikipedia](<a class="reference external" href="https://en.wikipedia.org/wiki/Root-mean-square_deviation">https://en.wikipedia.org/wiki/Root-mean-square_deviation</a>)</p>
+<p>Dimensional reduction is not supported for pandas and the user should
+convert their data to xarray to formulate the call to the metric.
+At most one of <cite>reduce_dims</cite> and <cite>preserve_dims</cite> may be specified.
+Specifying both will result in an exception.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Union</strong><strong>[</strong><strong>xr.Dataset</strong> (<em>fcst</em>) – Forecast
+or predicted variables in xarray or pandas.</p></li>
+<li><p><strong>xr.DataArray</strong> – Forecast
+or predicted variables in xarray or pandas.</p></li>
+<li><p><strong>pd.Dataframe</strong> – Forecast
+or predicted variables in xarray or pandas.</p></li>
+<li><p><strong>pd.Series</strong><strong>]</strong> – Forecast
+or predicted variables in xarray or pandas.</p></li>
+<li><p><strong>obs</strong> (<em>Union</em><em>[</em><em>xr.Dataset</em><em>, </em><em>xr.DataArray</em><em>, </em><em>pd.Dataframe</em><em>, </em><em>pd.Series</em><em>]</em>) – Observed
+variables in xarray or pandas.</p></li>
+<li><p><strong>reduce_dims</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Iterable</em><em>[</em><em>str</em><em>]</em>) – Optionally specify which dimensions to reduce when
+calculating RMSE. All other dimensions will be preserved.</p></li>
+<li><p><strong>preserve_dims</strong> – Optionally specify which dimensions to preserve
+when calculating RMSE. All other dimensions will be reduced.
+As a special case, ‘all’ will allow all dimensions to be
+preserved. In this case, the result will be in the same
+shape/dimensionality as the forecast, and the errors will be
+the absolute error at each point (i.e. single-value comparison
+against observed), and the forecast and observed dimensions
+must match precisely.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>An object containing</dt><dd><p>a single floating point number representing the root mean squared
+error for the supplied data. All dimensions will be reduced.
+Otherwise: Returns an object representing the root mean squared error,
+reduced along the relevant dimensions and weighted appropriately.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[xr.Dataset, xr.DataArray, pd.Dataframe, pd.Series]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="scores-probability">
+<h2>scores.probability<a class="headerlink" href="#scores-probability" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="scores.probability.crps_cdf">
+<span class="sig-prename descclassname"><span class="pre">scores.probability.</span></span><span class="sig-name descname"><span class="pre">crps_cdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fcst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataArray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataArray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'threshold'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_weight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataArray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_thresholds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">propagate_nans</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fcst_fill_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'linear'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'step'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'forward'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'backward'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_weight_fill_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'linear'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'step'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'forward'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'backward'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'forward'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integration_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'exact'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'trapz'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'exact'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduce_dims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preserve_dims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scores.probability.crps_cdf" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculates CRPS CDF probabilistic metric.</p>
+<p>Calculates the continuous ranked probability score (CRPS), or the mean CRPS over
+specified dimensions, given forecasts in the form of predictive cumulative
+distribution functions (CDFs). Can also calculate threshold-weighted versions of the
+CRPS by supplying a <cite>threshold_weight</cite>.</p>
+<p>Predictive CDFs here are described by an indexed set of values rather than by
+closed forumulae. As a result, the resolution or number of points at which the CDF
+is realised has an impact on the calculation of areas under and over the curve to
+obtain the CRPS result. The term ‘threshold’ is used to describe the dimension which
+is used as an index for predictive CDF values. Various techniques are used to
+interpolate CDF values between indexed thresholds.</p>
+<dl class="simple">
+<dt>Given</dt><dd><ul class="simple">
+<li><p>a predictive CDF <cite>fcst</cite> indexed at thresholds by variable x,</p></li>
+<li><p>an observation in CDF form <cite>obs_cdf</cite> (i.e., obs_cdf(x) = 0 if x &lt; obs and 1 if x &gt;= obs),</p></li>
+<li><p>a <cite>threshold_weight</cite> array indexed by variable x,</p></li>
+</ul>
+</dd>
+<dt>The threshold-weighted CRPS is given by:</dt><dd><p><cite>CRPS = integral(threshold_weight(x) * (fcst(x) - obs_cdf(x))**2)</cite>, over all thresholds x.</p>
+</dd>
+</dl>
+<p>The usual CRPS is the threshold-weighted CRPS with <cite>threshold_weight(x) = 1</cite> for all x.
+This can be decomposed into an over-forecast penalty</p>
+<blockquote>
+<div><p><cite>integral(threshold_weight(x) * (fcst(x) - obs_cdf(x))**2)</cite>, over all thresholds x where x &gt;= obs</p>
+</div></blockquote>
+<dl class="simple">
+<dt>and an under-forecast penalty</dt><dd><p><cite>integral(threshold_weight(x) * (fcst(x) - obs_cdf(x))**2)</cite>, over all thresholds x where x &lt;= obs.</p>
+</dd>
+</dl>
+<p>Note that the function <cite>crps_cdf</cite> is designed so that the <cite>obs</cite> argument contains
+actual observed values. <cite>crps_cdf</cite> will convert <cite>obs</cite> into CDF form in order to
+calculate the CRPS.</p>
+<dl class="simple">
+<dt>To calculate CRPS, integration is applied over the set of thresholds x taken from</dt><dd><ul class="simple">
+<li><p><cite>fcst[threshold_dim].values</cite>,</p></li>
+<li><p><cite>obs.values</cite>.</p></li>
+<li><p><cite>threshold_weight[threshold_dim].values</cite> if applicable.</p></li>
+<li><p><cite>additional_thresholds</cite> if applicable.</p></li>
+</ul>
+</dd>
+<dt>With NaN values excluded. There are two methods of integration:</dt><dd><ul class="simple">
+<li><p>“exact” gives the exact integral under that assumption that that <cite>fcst</cite> is
+continuous and piecewise linear between its specified values, and that
+<cite>threshold_weight</cite> (if supplied) is piecewise constant and right-continuous
+between its specified values.</p></li>
+<li><p>“trapz” simply uses a trapezoidal rule using the specified values, and so is
+an approximation of the CRPS. To get an accurate approximation, the density
+of threshold values can be increased by supplying <cite>additional_thresholds</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Both methods of calculating CRPS may require adding additional values to the
+<cite>threshold_dim</cite> dimension in <cite>fcst</cite> and (if supplied) <cite>threshold_weight</cite>.
+<cite>fcst_fill_method</cite> and <cite>weight_fill_method</cite> specify how <cite>fcst</cite> and <cite>weight</cite> are to
+be filled at these additional points.</p>
+<p>The function <cite>crps_cdf</cite> calculates the CRPS using forecast CDF values ‘as is’.
+No checks are performed to ensure that CDF values in <cite>fcst</cite> are nondecreasing along
+<cite>threshold_dim</cite>. Checks are conducted on <cite>fcst</cite> and <cite>threshold_weight</cite> (if applicable)
+to ensure that coordinates are increasing along <cite>threshold_dim</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fcst</strong> – array of forecast CDFs, with the threshold dimension given by <cite>threshold_dim</cite>.</p></li>
+<li><p><strong>obs</strong> – array of observations, not in CDF form.</p></li>
+<li><p><strong>threshold_dim</strong> – name of the dimension in <cite>fcst</cite> that indexes the thresholds.</p></li>
+<li><p><strong>threshold_weight</strong> – weight to be applied along <cite>threshold_dim</cite> to calculat
+threshold-weighted CRPS. Must contain <cite>threshold_dim</cite> as a dimension, and may
+also include other dimensions from <cite>fcst</cite>. If <cite>weight=None</cite>, a weight of 1
+is applied everywhere, which gives the usual CRPS.</p></li>
+<li><p><strong>additional_thresholds</strong> – additional thresholds values to add to <cite>fcst</cite> and (if
+applicable) <cite>threshold_weight</cite> prior to calculating CRPS.</p></li>
+<li><p><strong>propagate_nans</strong> – If <cite>True</cite>, propagate NaN values along <cite>threshold_dim</cite> in <cite>fcst</cite>
+and <cite>threshold_weight</cite> prior to calculating CRPS. This will result in CRPS
+being NaN for these cases. If <cite>False</cite>, NaN values in <cite>fcst</cite> and <cite>weight</cite> will
+be replaced, wherever possible, with non-NaN values using the fill method
+specified by <cite>fcst_fill_method</cite> and <cite>threshold_weight_fill_method</cite>.</p></li>
+<li><p><strong>fcst_fill_method</strong> – <p>how to fill values in <cite>fcst</cite> when NaNs have been introduced
+(by including additional thresholds) or are specified to be removed (by
+setting <cite>propagate_nans=False</cite>). Select one of:</p>
+<blockquote>
+<div><ul>
+<li><p>”linear”: use linear interpolation, then replace any leading or
+trailing NaNs using linear extrapolation. Afterwards, all values are
+clipped to the closed interval [0, 1].</p></li>
+<li><p>”step”: apply forward filling, then replace any leading NaNs with 0.</p></li>
+<li><p>”forward”: first apply forward filling, then remove any leading NaNs by
+back filling.</p></li>
+<li><p>”backward”: first apply back filling, then remove any trailing NaNs by
+forward filling.</p></li>
+</ul>
+</div></blockquote>
+<p>In most cases, “linear” is likely the appropriate choice.</p>
+</p></li>
+<li><p><strong>threshold_weight_fill_method</strong> – how to fill values in <cite>threshold_weight</cite> when NaNs
+have been introduced (by including additional thresholds) or are specified
+to be removed (by setting <cite>propagate_nans=False</cite>). Select one of “linear”,
+“step”, “forward” or “backward”. If the weight function is continuous,
+“linear” is probably the best choice. If it is an increasing step function,
+“forward” may be best.</p></li>
+<li><p><strong>integration_method</strong> (<em>str</em>) – one of “exact” or “trapz”.</p></li>
+<li><p><strong>preserve_dims</strong> (<em>Tuple</em><em>[</em><em>str</em><em>]</em>) – dimensions to preserve in the output. All other dimensions are collapsed
+by taking the mean.</p></li>
+<li><p><strong>reduce_dims</strong> (<em>Tuple</em><em>[</em><em>str</em><em>]</em>) – dimensions to reduce in the output by taking the mean. All other dimensions are
+preserved.</p></li>
+<li><p><strong>weights</strong> – Not yet implemented. Allow weighted averaging (e.g. by area, by latitude, by population, custom)</p></li>
+<li><p><strong>include_components</strong> (<em>bool</em>) – if True, include the under and over forecast components of
+the score in the returned dataset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>The following are the produced Dataset variables:</dt><dd><ul class="simple">
+<li><p>”total” the total CRPS.</p></li>
+<li><p>”underforecast_penalty”: the under-forecast penalty contribution of the CRPS.</p></li>
+<li><p>”overforecast_penalty”: the over-forecast penalty contribution of the CRPS.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>xr.Dataset</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – if <cite>threshold_dim</cite> is not a dimension of <cite>fcst</cite>.</p></li>
+<li><p><strong>ValueError</strong> – if <cite>threshold_dim</cite> is not a dimension of <cite>threshold_weight</cite> when
+    <cite>threshold_weight</cite> is not <cite>None</cite>.</p></li>
+<li><p><strong>ValueError</strong> – if <cite>threshold_dim</cite> is a dimension of <cite>obs</cite>.</p></li>
+<li><p><strong>ValueError</strong> – if dimensions of <cite>obs</cite> are not also dimensions of <cite>fcst</cite>.</p></li>
+<li><p><strong>ValueError</strong> – if dimensions of <cite>threshold_weight</cite> are not also dimensions of <cite>fcst</cite>
+    when <cite>threshold_weight</cite> is not <cite>None</cite>.</p></li>
+<li><p><strong>ValueError</strong> – if <cite>dims</cite> is not a subset of dimensions of <cite>fcst</cite>.</p></li>
+<li><p><strong>ValueError</strong> – if <cite>fcst_fill_method</cite> is not one of ‘linear’, ‘step’, ‘forward’ or
+    ‘backward’.</p></li>
+<li><p><strong>ValueError</strong> – if <cite>weight_fill_method</cite> is not one of ‘linear’, ‘step’, ‘forward’ or
+    ‘backward’.</p></li>
+<li><p><strong>ValueError</strong> – if <cite>fcst[threshold_dim]</cite> has less than 2 values.</p></li>
+<li><p><strong>ValueError</strong> – if coordinates in <cite>fcst[threshold_dim]</cite> are not increasing.</p></li>
+<li><p><strong>ValueError</strong> – if <cite>threshold_weight</cite> is not <cite>None</cite> and coordinates in
+    <cite>threshold_weight[threshold_dim]</cite> are not increasing.</p></li>
+<li><p><strong>ValueError</strong> – if <cite>threshold_weight</cite> has negative values.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><cite>scores.probability.crps_cdf_brier_decomposition</cite></p>
+</div>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Matheson, J. E., and R. L. Winkler, 1976: Scoring rules for continuous probability distributions.</dt><dd><p>Manage. Sci.,22, 1087–1095.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Gneiting, T., &amp; Ranjan, R. (2011). Comparing Density Forecasts Using Threshold- and</dt><dd><p>Quantile-Weighted Scoring Rules.
+Journal of Business &amp; Economic Statistics, 29(3), 411–422. <a class="reference external" href="http://www.jstor.org/stable/23243806">http://www.jstor.org/stable/23243806</a></p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scores.probability.adjust_fcst_for_crps">
+<span class="sig-prename descclassname"><span class="pre">scores.probability.</span></span><span class="sig-name descname"><span class="pre">adjust_fcst_for_crps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fcst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataArray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataArray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decreasing_tolerance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_thresholds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fcst_fill_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'linear'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'step'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'forward'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'backward'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integration_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'exact'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'trapz'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'exact'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataArray</span></span></span><a class="headerlink" href="#scores.probability.adjust_fcst_for_crps" title="Permalink to this definition">#</a></dt>
+<dd><p>This function takes a forecast cumulative distribution functions (CDF) <cite>fcst</cite>.
+If <cite>fcst</cite> is not decreasing outside of specified tolerance, it returns <cite>fcst</cite>.
+Otherwise, the CDF envelope for <cite>fcst</cite> is computed, and the CDF from among</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>fcst</cite>,</p></li>
+<li><p>the upper envelope, and</p></li>
+<li><p>the lower envelope</p></li>
+</ul>
+</div></blockquote>
+<p>that has the higher (i.e. worse) CRPS is returned. In the event of a tie,
+preference is given in the order <cite>fcst</cite> then upper.
+See <cite>scores.probability.functions.cdf_envelope</cite> for details about the CDF envelope.</p>
+<p>The use case for this is when, either due to rounding or poor forecast process, the
+forecast CDF <cite>fcst</cite> fails to be nondecreasing. Rather than simply replacing <cite>fcst</cite>
+with NaN, <cite>adjust_fcst_for_crps</cite> returns a CDF for which CRPS can be calculated, but
+possibly with a predictive performance cost as measured by CRPS.</p>
+<p>Whether a CDF is decreasing outside specified tolerance is determined as follows.
+For each CDF in <cite>fcst</cite>, the sum of incremental decreases along the threshold dimension
+is calculated. For example, if the CDF values are</p>
+<blockquote>
+<div><p>[0, 0.4, 0.3, 0.9, 0.88, 1]</p>
+</div></blockquote>
+<p>then the sum of incremental decreases is -0.12. This CDF decreases outside specified
+tolerance if 0.12 &gt; <cite>decreasing_tolerance</cite>.</p>
+<dl class="simple">
+<dt>The adjusted array of forecast CDFs is determined as follows:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>any NaN values in <cite>fcst</cite> are propagated along <cite>threshold_dim</cite> so that in each case</dt><dd><p>the entire CDF is NaN;</p>
+</dd>
+</dl>
+</li>
+<li><p>any CDFs in <cite>fcst</cite> that are decreasing within specified tolerance are unchanged;</p></li>
+<li><dl class="simple">
+<dt>any CDFs in <cite>fcst</cite> that are decreasing outside specified tolerance are replaced with</dt><dd><p>whichever of the upper or lower CDF envelope gives the highest CRPS, unless the original
+values give a higher CRPS in which case original values are kept.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<p>See <cite>scores.probability.functions.cdf_envelope</cite> for a description of the ‘CDF envelope’.
+If propagating NaNs is not desired, the user may first fill NaNs in <cite>fcst</cite> using
+<cite>scores.probability.functions.fill_cdf</cite>.
+The CRPS for each forecast case is calculated using <cite>crps</cite>, with a weight of 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fcst</strong> – DataArray of CDF values with threshold dimension <cite>threshold_dim</cite>.</p></li>
+<li><p><strong>threshold_dim</strong> – name of the threshold dimension in <cite>fcst</cite>.</p></li>
+<li><p><strong>obs</strong> – DataArray of observations.</p></li>
+<li><p><strong>decreasing_tolerance</strong> – nonnegative tolerance value.</p></li>
+<li><p><strong>additional_thresholds</strong> – optional additional thresholds passed on to <cite>crps</cite> when
+calculating CRPS.</p></li>
+<li><p><strong>fcst_fill_method</strong> – <cite>fcst</cite> fill method passed on to <cite>crps</cite> when calculating CRPS.</p></li>
+<li><p><strong>integration_method</strong> – integration method passed on to <cite>crps</cite> when calculating CRPS.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An xarray DataArray of possibly adjusted forecast CDFs, where adjustments are made
+to penalise CDFs that decrease outside tolerance.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ValueError</strong> – If <cite>threshold_dim</cite> is not a dimension of <cite>fcst</cite>.</p></li>
+<li><p><strong>ValueError</strong> – If <cite>decreasing_tolerance</cite> is negative.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scores.probability.crps_cdf_brier_decomposition">
+<span class="sig-prename descclassname"><span class="pre">scores.probability.</span></span><span class="sig-name descname"><span class="pre">crps_cdf_brier_decomposition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fcst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataArray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataArray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'threshold'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_thresholds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fcst_fill_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'linear'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'step'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'forward'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'backward'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduce_dims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preserve_dims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dataset</span></span></span><a class="headerlink" href="#scores.probability.crps_cdf_brier_decomposition" title="Permalink to this definition">#</a></dt>
+<dd><p>Given an array <cite>fcst</cite> of predictive CDF values indexed along <cite>threshold_dim</cite>, and
+an array <cite>obs</cite> of  observations, calculates the mean Brier score for each index along
+<cite>threshold_dim</cite>. Since the mean CRPS is the integral of the mean Brier score over
+all thresholds, this gives a threshold decomposition of the mean CRPS.</p>
+<p>If any there are any NaNs along the threshold dimension of <cite>fcst</cite>, then NaNs are
+propagated along this dimension prior to calculating the decomposition. If
+propagating NaNs is not desired, the user may first fill NaNs in <cite>fcst</cite> using
+<cite>scores.probability.functions.fill_cdf</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fcst</strong> (<em>xr.DataArray</em>) – DataArray of CDF values with threshold dimension <cite>threshold_dim</cite>.</p></li>
+<li><p><strong>obs</strong> (<em>xr.DataArray</em>) – DataArray of observations, not in CDF form.</p></li>
+<li><p><strong>threshold_dim</strong> (<em>str</em>) – name of the threshold dimension in <cite>fcst</cite>.</p></li>
+<li><p><strong>additional_thresholds</strong> (<em>Optional</em><em>[</em><em>Iterable</em><em>[</em><em>float</em><em>]</em><em>]</em>) – additional thresholds
+at which to calculate the mean Brier score.</p></li>
+<li><p><strong>fcst_fill_method</strong> (<em>Literal</em><em>[</em><em>&quot;linear&quot;</em><em>, </em><em>&quot;step&quot;</em><em>, </em><em>&quot;forward&quot;</em><em>, </em><em>&quot;backward&quot;</em><em>]</em>) – <p>How to fill NaN
+values in <cite>fcst</cite> that arise from new user-supplied thresholds or thresholds derived
+from observations.
+- “linear”: use linear interpolation, and if needed also extrapolate linearly.</p>
+<blockquote>
+<div><p>Clip to 0 and 1. Needs at least two non-NaN values for interpolation,
+so returns NaNs where this condition fails.</p>
+</div></blockquote>
+<ul>
+<li><p>”step”: use forward filling then set remaining leading NaNs to 0.
+Produces a step function CDF (i.e. piecewise constant).</p></li>
+<li><p>”forward”: use forward filling then fill any remaining leading NaNs with
+backward filling.</p></li>
+<li><p>”backward”: use backward filling then fill any remaining trailing NaNs with
+forward filling.</p></li>
+</ul>
+</p></li>
+<li><p><strong>dims</strong> – dimensions to preserve in the output. The dimension <cite>threshold_dim</cite> is always
+preserved, even if not specified here.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>“total_penalty”: the mean Brier score for each threshold.</p></li>
+<li><dl class="simple">
+<dt>”underforecast_penalty”: the mean of the underforecast penalties for the Brier score. For a particular</dt><dd><p>forecast case, this component equals 0 if the event didn’t occur and the Brier score if it did.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>”overforecast_penalty”: the mean of the overforecast penalties for the Brier score. For a particular</dt><dd><p>forecast case, this component equals 0 if the event did occur and the Brier score if it did not.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An xarray Dataset with data_vars</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – if <cite>threshold_dim</cite> is not a dimension of <cite>fcst</cite>.</p></li>
+<li><p><strong>ValueError</strong> – if <cite>threshold_dim</cite> is a dimension of <cite>obs</cite>.</p></li>
+<li><p><strong>ValueError</strong> – if dimensions of <cite>obs</cite> are not also among the dimensions of <cite>fcst</cite>.</p></li>
+<li><p><strong>ValueError</strong> – if dimensions in <cite>dims</cite> is not among the dimensions of <cite>fcst</cite>.</p></li>
+<li><p><strong>ValueError</strong> – if <cite>fcst_fill_method</cite> is not one of ‘linear’, ‘step’, ‘forward’ or ‘backward’.</p></li>
+<li><p><strong>ValueError</strong> – if coordinates in <cite>fcst[threshold_dim]</cite> are not increasing.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="scores-categorical">
+<h2>scores.categorical<a class="headerlink" href="#scores-categorical" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="scores.categorical.firm">
+<span class="sig-prename descclassname"><span class="pre">scores.categorical.</span></span><span class="sig-name descname"><span class="pre">firm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fcst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataArray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataArray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">risk_parameter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical_thresholds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DataArray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discount_distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduce_dims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preserve_dims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataArray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dataset</span></span></span><a class="headerlink" href="#scores.categorical.firm" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculates the FIxed Risk Multicategorical (FIRM) score including the
+underforecast and overforecast penalties.</p>
+<p><cite>categorical_thresholds</cite> and <cite>threshold_weights</cite> must be the same length.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fcst</strong> – An array of real-valued forecasts that we want to treat categorically.</p></li>
+<li><p><strong>obs</strong> – An array of real-valued observations that we want to treat categorically.</p></li>
+<li><p><strong>risk_parameter</strong> – Risk parameter (alpha) for the FIRM score. The value must
+satisfy 0 &lt; <cite>risk_parameter</cite> &lt; 1.</p></li>
+<li><p><strong>categorical_thresholds</strong> – Category thresholds (thetas) to delineate the
+categories.</p></li>
+<li><p><strong>threshold_weights</strong> – Weights that specify the relative importance of forecasting on
+the correct side of each category threshold. Either a positive
+float can be supplied for each categorical threshold or an
+xr.DataArray (with no negative values) can be provided for each
+categorical threshold as long as its dims are a subset of <cite>obs</cite> dims.
+NaN values are allowed in the xr.DataArray. For each NaN value at a
+given coordinate, the FIRM score will be NaN at that coordinate,
+before dims are collapsed.</p></li>
+<li><p><strong>discount_distance</strong> – An optional discounting distance parameter which
+satisfies <cite>discount_distance</cite> &gt;= 0 such that the cost of misses and
+false alarms are discounted whenever the observation is within
+distance <cite>discount_distance</cite> of the forecast category. A value of 0
+will not apply any discounting.</p></li>
+<li><p><strong>reduce_dims</strong> – Optionally specify which dimensions to reduce when
+calculating the FIRM score. All other dimensions will be preserved. As a
+special case, ‘all’ will allow all dimensions to be reduced. Only one
+of <cite>reduce_dims</cite> and <cite>preserve_dims</cite> can be supplied. The default behaviour
+if neither are supplied is to reduce all dims.</p></li>
+<li><p><strong>preserve_dims</strong> – Optionally specify which dimensions to preserve
+when calculating FIRM. All other dimensions will be reduced.
+As a special case, ‘all’ will allow all dimensions to be
+preserved. In this case, the result will be in the same
+shape/dimensionality as the forecast, and the errors will be
+the FIRM score at each point (i.e. single-value comparison
+against observed), and the forecast and observed dimensions
+must match precisely. Only one of <cite>reduce_dims</cite> and <cite>preserve_dims</cite> can be
+supplied. The default behaviour if neither are supplied is to reduce all dims.</p></li>
+<li><p><strong>weights</strong> – Optionally provide an array for weighted averaging (e.g. by area, by latitude,
+by population, custom)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>firm_score: A score for a single category for each coord based on
+the FIRM framework.</p></li>
+<li><p>overforecast_penalty: Penalty for False Alarms.</p></li>
+<li><p>underforecast_penalty: Penalty for Misses.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An xarray Dataset with data vars</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – if <cite>len(categorical_thresholds) &lt; 1</cite>.</p></li>
+<li><p><strong>ValueError</strong> – if <cite>categorical_thresholds</cite> and <cite>threshold_weights</cite> lengths
+    are not equal.</p></li>
+<li><p><strong>ValueError</strong> – if <cite>risk_parameter</cite> &lt;= 0 or &gt;= 1.</p></li>
+<li><p><strong>ValueError</strong> – if any values in <cite>threshold_weights</cite> are &lt;= 0.</p></li>
+<li><p><strong>ValueError</strong> – if <cite>discount_distance</cite> is not None and &lt; 0.</p></li>
+<li><p><strong>scores.utils.DimensionError</strong> – if <cite>threshold_weights</cite> is a list of xr.DataArrays
+    and if the dimensions of these xr.DataArrays is not a subset of the <cite>obs</cite> dims.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Setting <cite>discount distance</cite> to None or 0, will mean that no
+discounting is applied. This means that errors will be penalised
+strictly categorically.</p>
+<p>Setting <cite>discount distance</cite> to np.inf means that the cost of a miss
+is always proportional to the distance of the observation from the
+threshold, and similarly for false alarms.</p>
+</div>
+<p class="rubric">References</p>
+<p>Taggart, R., Loveday, N. and Griffiths, D., 2022. A scoring framework for tiered
+warnings and multicategorical forecasts based on fixed risk measures. Quarterly
+Journal of the Royal Meteorological Society, 148(744), pp.1389-1406.</p>
+</dd></dl>
+
+</section>
+<section id="scores-stats">
+<h2>scores.stats<a class="headerlink" href="#scores-stats" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="scores.stats.tests.diebold_mariano">
+<span class="sig-prename descclassname"><span class="pre">scores.stats.tests.</span></span><span class="sig-name descname"><span class="pre">diebold_mariano</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">da_timeseries</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataArray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ts_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h_coord</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'HG'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'HLN'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'HG'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence_level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.95</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statistic_distribution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'normal'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'t'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'normal'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dataset</span></span></span><a class="headerlink" href="#scores.stats.tests.diebold_mariano" title="Permalink to this definition">#</a></dt>
+<dd><p>Given an array of (multiple) timeseries, with each timeseries consisting of score
+differences for h-step ahead forecasts, calculates a modified Diebold-Mariano test
+statistic for each timeseries. Several other statistics are also returned such as
+the confidence that the population mean of score differences is greater than zero
+and confidence intervals for that mean.</p>
+<p>Two methods for calculating the test statistic have been implemented: the “HG”
+method Hering and Genton (2011) and the “HLN” method of Harvey, Leybourne and
+Newbold (1997). The default “HG” method has an advantage of only generating positive
+estimates for the spectral density contribution to the test statistic. For further
+details see <cite>scores.stats.confidence_intervals.impl._dm_test_statistic</cite>.</p>
+<p>Prior to any calculations, NaNs are removed from each timeseries. If there are NaNs
+in <cite>da_timeseries</cite> then a warning will occur. This is because NaNs may impact the
+autocovariance calculation.</p>
+<p>To determine the value of h for each timeseries of score differences of h-step ahead
+forecasts, one may ask ‘How many observations of the phenomenon will be made between
+making the forecast and having the observation that will validate the forecast?’
+For example, suppose that the phenomenon is afternoon precipitation accumulation in
+New Zealand (00z to 06z each day). Then a Day+1 forecast issued at 03z on Day+0 will
+be a 2-ahead forecast, since Day+0 and Day+1 accumulations will be observed before
+the forecast can be validated. On the other hand, a Day+1 forecast issued at 09z on
+Day+0 will be a 1-step ahead forecast. The value of h for each timeseries in the
+array needs to be specified in one of the sets of coordinates.
+See the example below.</p>
+<p>Confidence intervals and “confidence_gt_0” statistics are calculated using the
+test statistic, which is assumed to have either the standard normal distribution
+or Student’s t distribution with n - 1 degrees of freedom (where n is the length of
+the timeseries). The distribution used is specified by <cite>statistic_distribution</cite>. See
+Harvey, Leybourne and Newbold (1997) for why the t distribution may be preferred,
+especially for shorter timeseries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>da_timeseries</strong> – a 2 dimensional array containing the timeseries.</p></li>
+<li><p><strong>ts_dim</strong> – name of the dimension which identifies each timeseries in the array.</p></li>
+<li><p><strong>h_coord</strong> – name of the coordinate specifying, for each timeseries, that the
+timeseries is an h-step ahead forecast. <cite>h_coord</cite> coordinates must be
+indexed by the dimension <cite>ts_dim</cite>.</p></li>
+<li><p><strong>method</strong> – method for calculating the test statistic, one of “HG” or “HLN”.</p></li>
+<li><p><strong>confidence_level</strong> – the confidence level, between 0 and 1 exclusive, at which to
+calculate confidence intervals.</p></li>
+<li><p><strong>statistic_distribution</strong> – the distribution of the test-statistic under the null
+hypothesis of equipredictive skill. Used to calculate the “confidence_gt_0”
+statistic and confidence intervals. One of “normal” or “t” (for Student’s t
+distribution).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>“mean”: the mean value for each timeseries, ignoring NaNs</p></li>
+<li><p>”dm_test_stat”: the modified Diebold-Mariano test statistic for each
+timeseries</p></li>
+<li><p>”timeseries_len”: the length of each timeseries, with NaNs removed.</p></li>
+<li><p>”confidence_gt_0”: the confidence that the mean value of the population is
+greater than zero, based on the specified <cite>statistic_distribution</cite>.
+Precisely, it is the value of the cumululative distribution function
+evaluated at <cite>dm_test_stat</cite>.</p></li>
+<li><p>”ci_upper”: the upper end point of a confidence interval about the mean at
+specified <cite>confidence_level</cite>.</p></li>
+<li><p>”ci_lower”: the lower end point of a confidence interval about the mean at
+specified <cite>confidence_level</cite>.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dataset, indexed by <cite>ts_dim</cite>, with six variables</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – if <cite>method</cite> is not one of “HG” or “HLN”.</p></li>
+<li><p><strong>ValueError</strong> – if <cite>statistic_distribution</cite> is not one of “normal” or “t”.</p></li>
+<li><p><strong>ValueError</strong> – if <cite>0 &lt; confidence_level &lt; 1</cite> fails.</p></li>
+<li><p><strong>ValueError</strong> – if <cite>len(da_timeseries.dims) != 2</cite>.</p></li>
+<li><p><strong>ValueError</strong> – if <cite>ts_dim</cite> is not a dimension of <cite>da_timeseries</cite>.</p></li>
+<li><p><strong>ValueError</strong> – if <cite>h_coord</cite> is not a coordinate of <cite>da_timeseries</cite>.</p></li>
+<li><p><strong>ValueError</strong> – if <cite>ts_dim</cite> is not the only dimension of
+    <cite>da_timeseries[h_coord]</cite>.</p></li>
+<li><p><strong>ValueError</strong> – if <cite>h_coord</cite> values aren’t positive integers.</p></li>
+<li><p><strong>ValueError</strong> – if <cite>h_coord</cite> values aren’t less than the lengths of the
+    timeseries after NaNs are removed.</p></li>
+<li><p><strong>RuntimeWarnning</strong> – if there is a NaN in diffs.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><p>Diebold and Mariano, ‘Comparing predictive accuracy’, Journal of Business and
+Economic Statistics 13 (1995), 253-265.</p></li>
+<li><p>Hering and Genton, ‘Comparing spatial predictions’,
+Technometrics 53 no. 4 (2011), 414-425.</p></li>
+<li><p>Harvey, Leybourne and Newbold, ‘Testing the equality of prediction mean
+squared errors’, International Journal of Forecasting 13 (1997), 281-291.</p></li>
+</ul>
+<p class="rubric">Example</p>
+<p>This array gives three timeseries of score differences.
+Coordinates in the “lead_day” dimension uniquely identify each timeseries.
+Here <cite>ts_dim=”lead_day”</cite>.
+Coordinates in the “valid_date” dimension give the forecast validity timestamp
+of each item in the timeseries.
+The “h” coordinates specify that the timeseries are for 2, 3 and 4-step
+ahead forecasts respectively. Here <cite>h_coord=”h”</cite>.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">da_timeseries</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span>
+<span class="gp">... </span>    <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;lead_day&quot;</span><span class="p">,</span> <span class="s2">&quot;valid_date&quot;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">coords</span><span class="o">=</span><span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;lead_day&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+<span class="gp">... </span>        <span class="s2">&quot;valid_date&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;2020-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-01-02&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-01-03&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-01-04&quot;</span><span class="p">,</span> <span class="s2">&quot;2020-01-05&quot;</span><span class="p">],</span>
+<span class="gp">... </span>        <span class="s2">&quot;h&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;lead_day&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]),</span>
+<span class="gp">... </span>    <span class="p">},</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dm_test_stats</span><span class="p">(</span><span class="n">da_timeseries</span><span class="p">,</span> <span class="s2">&quot;lead_day&quot;</span><span class="p">,</span> <span class="s2">&quot;h&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="installation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Installation Guide</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="contributing.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Contributing guide</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-scores.continuous">scores.continuous</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scores.continuous.mae"><code class="docutils literal notranslate"><span class="pre">mae()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scores.continuous.mse"><code class="docutils literal notranslate"><span class="pre">mse()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scores.continuous.rmse"><code class="docutils literal notranslate"><span class="pre">rmse()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scores-probability">scores.probability</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scores.probability.crps_cdf"><code class="docutils literal notranslate"><span class="pre">crps_cdf()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scores.probability.adjust_fcst_for_crps"><code class="docutils literal notranslate"><span class="pre">adjust_fcst_for_crps()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scores.probability.crps_cdf_brier_decomposition"><code class="docutils literal notranslate"><span class="pre">crps_cdf_brier_decomposition()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scores-categorical">scores.categorical</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scores.categorical.firm"><code class="docutils literal notranslate"><span class="pre">firm()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scores-stats">scores.stats</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scores.stats.tests.diebold_mariano"><code class="docutils literal notranslate"><span class="pre">diebold_mariano()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Australian Bureau of Meteorology
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023, Australian Bureau of Meteorology.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

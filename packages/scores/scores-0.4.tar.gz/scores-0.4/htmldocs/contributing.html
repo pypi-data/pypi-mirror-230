@@ -1,0 +1,574 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Contributing guide &#8212; scores 0.4 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'contributing';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Data Sources" href="data.html" />
+    <link rel="prev" title="API Documentation" href="api.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">scores 0.4 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Index to Documentation:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="index.html">About the Scores Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start Guide (with Tutorials)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Contributing guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Data Sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="maintainer.html">Maintainers Notes</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/contributing.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Contributing guide</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#roadmap">Roadmap</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-reports-and-feature-requests">Bug Reports and Feature Requests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-security-concerns">Handling Security Concerns</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#development-process-for-a-new-score-or-metrics">Development Process for a New Score or Metrics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#development-process-for-a-correction-or-improvement">Development Process for a Correction or Improvement</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-for-development">Setting up for Development</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#venv-based-virtual-environment"><code class="docutils literal notranslate"><span class="pre">venv</span></code>-based virtual environment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conda-based-virtual-environment"><code class="docutils literal notranslate"><span class="pre">conda</span></code>-based virtual environment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-package">Building a package <a name="build"></a></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-pre-commit-optional">Setup <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> (Optional)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-practises">Coding Practises</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#branching-and-merge-requests">Branching and merge requests</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-review-processes">Code review processes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scope-of-a-code-review">Scope of a Code Review</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scope-of-a-science-review">Scope of a Science Review</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="contributing-guide">
+<h1>Contributing guide<a class="headerlink" href="#contributing-guide" title="Permalink to this heading">#</a></h1>
+<p>Thank you for considering contributing to the scores project! Contributions of all kinds are welcome!</p>
+<p>Types of contributions include bug reports, merge requests, feature requests, and code reviews. Contributions of all kinds are welcome from the community. Contributions which are in line with the roadmap will be prioritised and the roadmaps outlines the intentions for this package.</p>
+<p>These guidelines aim to make it clear how to collaborate effectively.</p>
+<section id="roadmap">
+<h2>Roadmap<a class="headerlink" href="#roadmap" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Further development of examples and demonstrations for new users</p></li>
+<li><p>Set up of readthedocs and travis-ci</p></li>
+<li><p>Add further tests for NaNs and missing data</p></li>
+<li><p>Addition of more standard metrics</p></li>
+<li><p>Addition of more novel metrics</p></li>
+<li><p>Performance review and tests for dask</p></li>
+</ol>
+</section>
+<section id="bug-reports-and-feature-requests">
+<h2>Bug Reports and Feature Requests<a class="headerlink" href="#bug-reports-and-feature-requests" title="Permalink to this heading">#</a></h2>
+<p>Please submit bug requests and feature requests through Github as issues. No specific template or approach is requested at this stage. This may evolve, but is currently an open-ended approach.</p>
+</section>
+<section id="handling-security-concerns">
+<h2>Handling Security Concerns<a class="headerlink" href="#handling-security-concerns" title="Permalink to this heading">#</a></h2>
+<p>Please see the information provided in <a class="reference internal" href="SECURITY.html"><span class="std std-doc">SECURITY.md</span></a></p>
+</section>
+<section id="development-process-for-a-new-score-or-metrics">
+<h2>Development Process for a New Score or Metrics<a class="headerlink" href="#development-process-for-a-new-score-or-metrics" title="Permalink to this heading">#</a></h2>
+<p>A new score or metric should be developed on a separate feature branch, rebased against the main branch. Each merge request should include:</p>
+<ul class="simple">
+<li><p>The implementation of the new metric or score in xarray, ideally with support for pandas and dask</p></li>
+<li><p>100% unit test coverage</p></li>
+<li><p>A tutorial notebook showcasing the use of that metric or score, ideally based on the standard sample data</p></li>
+<li><p>API documentation (docstrings) using <a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html">Napoleon (google)</a> style, making sure to clearly explain the use of the metrics</p></li>
+<li><p>A reference to the paper which described the metrics, added to the API documentation</p></li>
+<li><p>For metrics which do not have a paper reference, an online source or reference should be provided</p></li>
+<li><p>For metrics which are still under development or which have not yet had an academic publication, they will be placed in a holding area within the API until the method has been properly published and peer reviewed (i.e. <code class="docutils literal notranslate"><span class="pre">scores.emerging</span></code>). The ‘emerging’ area of the API is subject to rapid change, still of sufficient community interest to include, similar to a ‘preprint’ of a score or metric.</p></li>
+<li><p>Add your score to <code class="docutils literal notranslate"><span class="pre">summary_table_of_scores.md</span></code> in the documentation</p></li>
+</ul>
+<p>All merge requests should comply with the coding standards outlined in this document. Merge requests will undergo both a code review and a science review. The code review will focus on coding style, performance and test coverage. The science review will focus on the mathematical correctness of the implementation and the suitability of the method for inclusion within ‘scores’.</p>
+<p>A github ticket should be created explaining the metric which is being implemented and why it is useful.</p>
+</section>
+<section id="development-process-for-a-correction-or-improvement">
+<h2>Development Process for a Correction or Improvement<a class="headerlink" href="#development-process-for-a-correction-or-improvement" title="Permalink to this heading">#</a></h2>
+<p>Merge requests addressing documentation changes, tutorial improvements, corrections to code or improvements (e.g. performance enhancements, improvements to error messages, greater flexibility) require only a github ticket explaining the goals of the merge request. Merge requests will still undergo both a technical code review and a scientific code review to ensure that the merge request maintains or improves the coding and scientific integrity while achieving the goals set out in the ticket. These are outlined further below.</p>
+</section>
+<section id="setting-up-for-development">
+<h2>Setting up for Development<a class="headerlink" href="#setting-up-for-development" title="Permalink to this heading">#</a></h2>
+<p>There are many ways to set up a development environment, most of which should be okay to adopt. This document sets out just one possible way. Conda based virtual environments are also suitable.</p>
+<section id="venv-based-virtual-environment">
+<h3><code class="docutils literal notranslate"><span class="pre">venv</span></code>-based virtual environment<a class="headerlink" href="#venv-based-virtual-environment" title="Permalink to this heading">#</a></h3>
+<p>Here is a simple setup process for an individual developer, assuming you have cloned the repository in the current working directory.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>&lt;specify<span class="w"> </span>path<span class="w"> </span>to<span class="w"> </span>your<span class="w"> </span>virtual<span class="w"> </span>environment&gt;
+<span class="nb">source</span><span class="w">  </span><span class="nb">source</span><span class="w"> </span>&lt;path<span class="w"> </span>to<span class="w"> </span>virtual<span class="w"> </span>environment&gt;/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span>all<span class="o">]</span>
+pytest
+</pre></div>
+</div>
+</section>
+<section id="conda-based-virtual-environment">
+<h3><code class="docutils literal notranslate"><span class="pre">conda</span></code>-based virtual environment<a class="headerlink" href="#conda-based-virtual-environment" title="Permalink to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># overwrite default name `scores` with `-n &lt;new-name&gt;` if desired</span>
+conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>environment.yml
+conda<span class="w"> </span>activate<span class="w"> </span>scores
+<span class="c1"># re-install as editable if desired</span>
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+pytest
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> file refers to the <code class="docutils literal notranslate"><span class="pre">pip</span></code> package management repositories to utilize the optional dependencies within <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>. Feel free to use <code class="docutils literal notranslate"><span class="pre">conda</span></code> channels, although all required project dependencies will need to be available from <code class="docutils literal notranslate"><span class="pre">PyPI</span></code> sources.</p>
+<p>This process should result in an editable installation with all tests passing.</p>
+<p>An editable installation is recommended. This is deliberate, to make the process more robust and less prone to ‘happy accidents’ during import of packages. If you wish to avoid editable installations then refer to the <a class="reference internal" href="#build"><span class="xref myst">building a package</span></a> section.</p>
+</section>
+<section id="building-a-package">
+<h3>Building a package <a name="build"></a><a class="headerlink" href="#building-a-package" title="Permalink to this heading">#</a></h3>
+<p>Feel free to use a non-editable install if you prefer, however you will need to build new versions of the package to test your changes.
+To do so run the following command in the root folder of the project:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># if you don&#39;t already have the maintainer deps run the cmd below</span>
+pip<span class="w"> </span>install<span class="w"> </span>scores<span class="o">[</span>maintainer<span class="o">]</span>
+python<span class="w"> </span>-m<span class="w"> </span>build
+<span class="c1"># install built distribution (.whl)</span>
+pip<span class="w"> </span>install<span class="w"> </span>dist/&lt;my_latest_package&gt;.whl
+</pre></div>
+</div>
+</section>
+<section id="setup-pre-commit-optional">
+<h3>Setup <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> (Optional)<a class="headerlink" href="#setup-pre-commit-optional" title="Permalink to this heading">#</a></h3>
+<p>To automate linter and fixer checks this project uses <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> which is setup to execute after every local commit. This ensures that code standards are flagged at the development stage rather than in the project CI/CD pipeline. Although it is optional we highly recommended to use the tool before pushing changes to the remote.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pre-commit<span class="w"> </span>install<span class="w"> </span>-t<span class="w"> </span>pre-commit<span class="w"> </span>-t<span class="w"> </span>pre-push
+</pre></div>
+</div>
+</section>
+<section id="coding-practises">
+<h3>Coding Practises<a class="headerlink" href="#coding-practises" title="Permalink to this heading">#</a></h3>
+<p>Pylint and black should be used at all times to ensure a consistent approach to coding. Isort should be used for the ordering of import statements. All merge requests will be checked prior to acceptance. The project will include configuration files which may be used to capture any overrides to convention that may be adoped.</p>
+</section>
+<section id="branching-and-merge-requests">
+<h3>Branching and merge requests<a class="headerlink" href="#branching-and-merge-requests" title="Permalink to this heading">#</a></h3>
+<p>Scores follows the <a class="reference external" href="https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow"> git-flow </a> branching model. This can be summarised as follows:</p>
+<ul class="simple">
+<li><p>Create a github ticket to describe the goals of your change or feature</p></li>
+<li><p>Check out a feature new branch for your work, branching from the ‘develop’ branch</p></li>
+<li><p>When ready, rebase the feature branch against the ‘develop’’ branch and submit your merge request</p></li>
+<li><p>Respond to any feedback left during the review process</p></li>
+<li><p>It is the responsibility of the developer to maintain the feature branch against the main branch and resolve any conflicts within the feature branch prior to it being accepted</p></li>
+<li><p>When accepted, the feature branch will be merged to the main branch and may be ‘squashed’ into a single commit in the process</p></li>
+<li><p>The package maintainer may make changes to the code during the merge process or afterwards, such as resolving last-minute conflicts or making any key technical tweaks that are simple to implement</p></li>
+<li><p>Periodically, a versioned release branch will be taken from the ‘develop’ branch, and any finalisation work for the release undertaken there</p></li>
+<li><p>These release branches will then be finalised, tagged, and merged into main branch. The main branch holds tagged releases.</p></li>
+</ul>
+<p>For most developers, this can be simplified to:</p>
+<ul class="simple">
+<li><p>Make a ticket to describe the goals of your change or feature</p></li>
+<li><p>Make a feature branch from the ‘develop’ branch</p></li>
+<li><p>Create a merge request for your feature when you’re ready</p></li>
+</ul>
+</section>
+<section id="code-review-processes">
+<h3>Code review processes<a class="headerlink" href="#code-review-processes" title="Permalink to this heading">#</a></h3>
+<p>Contributions of code through merge requests are welcomed. Prior to developing a merge request, it is a good idea to create an issue in the tracker to capture what the merge request is trying to achieve, any pertinent details, and how it aligns to the roadmap.</p>
+<p>All code must undergo a review process prior to being included in the main branch in order to ensure both the coding and the statistical and scientific validity of changes. New metrics will undergo an additional statistical and/or scientific review in addition to the code review. All metrics should reference a specific paper or authoratative source. Novel metrics which have not yet undergone an academic peer-review process, but which offer significant value to the community, will be included in a separate part of the API so that they can be used and discussed, but which also clearly flags their nature as emerging metrics.</p>
+<p>The code review process does not differ between the core team and community contributions.</p>
+<p>Code will also be reviewed for test coverage, stylistic conventions, thoroughness and correctness by a team of software specialists.</p>
+</section>
+<section id="scope-of-a-code-review">
+<h3>Scope of a Code Review<a class="headerlink" href="#scope-of-a-code-review" title="Permalink to this heading">#</a></h3>
+<p>A code review is not responsible for scientific correctness, that will be handled by the science review. A code review is responsible for checking the following:</p>
+<ol class="arabic simple">
+<li><p>Unit test coverage is 100% and unit tests cover functionality and robustness</p></li>
+<li><p>Any security issues are resolved and appropriately handled</p></li>
+<li><p>Documentation and tutorials are written</p></li>
+<li><p>Style guidelines are followed, static analysis and lint checking have been done</p></li>
+<li><p>Code is readable and well-structured</p></li>
+<li><p>Code does not to anything unexpected or beyond the scope of the function</p></li>
+<li><p>Any additional dependencies are justified and do not result in bloat</p></li>
+</ol>
+</section>
+<section id="scope-of-a-science-review">
+<h3>Scope of a Science Review<a class="headerlink" href="#scope-of-a-science-review" title="Permalink to this heading">#</a></h3>
+<p>A science review should answer the following questions:</p>
+<ol class="arabic simple">
+<li><p>Does the function work correctly for several ‘central’ or intended common use cases?</p></li>
+<li><p>Are edge cases handled correctly (i.e. null data handling, flat/perfect distributions, large/small number of samples, numerical issues)?</p></li>
+<li><p>Does the implementation look correct if read at face value (i.e. detailed knowledge of libraries not required)?</p></li>
+<li><p>Are any issues of scientific interpretation explained (i.e. if multiple mathematical interpretations of a method are reasonable, is this made clear)?</p></li>
+<li><p>Are the examples contained in the tutorial well-explained and relevant?</p></li>
+</ol>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="api.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">API Documentation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="data.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Data Sources</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#roadmap">Roadmap</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-reports-and-feature-requests">Bug Reports and Feature Requests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-security-concerns">Handling Security Concerns</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#development-process-for-a-new-score-or-metrics">Development Process for a New Score or Metrics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#development-process-for-a-correction-or-improvement">Development Process for a Correction or Improvement</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-for-development">Setting up for Development</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#venv-based-virtual-environment"><code class="docutils literal notranslate"><span class="pre">venv</span></code>-based virtual environment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conda-based-virtual-environment"><code class="docutils literal notranslate"><span class="pre">conda</span></code>-based virtual environment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-package">Building a package <a name="build"></a></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-pre-commit-optional">Setup <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> (Optional)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-practises">Coding Practises</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#branching-and-merge-requests">Branching and merge requests</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-review-processes">Code review processes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scope-of-a-code-review">Scope of a Code Review</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scope-of-a-science-review">Scope of a Science Review</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Australian Bureau of Meteorology
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023, Australian Bureau of Meteorology.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
