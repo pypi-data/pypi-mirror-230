@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cgse-ts"
+description = "PLATO Common-EGSE Test Scripts"
+dynamic = ["version", "readme"]
+requires-python = ">=3.8"
+license = {text = "LGPL-3.0"}
+keywords = ["CGSE", "PLATO", "test scripts"]
+authors = [
+    {name = "Rik Huygen", email = "rik.huygen@kuleuven.be"},
+    {name = "Sara Regibo", email = "sara.regibo@kuleuven.be"},
+]
+maintainers = [
+    {name = "Pierre Royer"},
+    {name = "Nicolas Beraud"},
+    {name = "Sena Gomashie"},
+    {name = "Jesus Saiz"},
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python :: 3.8",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+]
+
+dependencies = [
+    "cgse >= 2023.37.0",
+    "gui-executor >= 0.18.3",
+    "sep",
+    "scikit-image",
+    "scikit-learn",
+]
+
+[project.urls]
+documentation = "https://ivs-kuleuven.github.io/plato-cgse-doc/"
+repository = "https://github.com/IvS-KULeuven/plato-test-scripts"
+
+[project.scripts]
+update_ts = "scripts.update_test_scripts:cli"
+update_ts_old = "scripts.update_test_scripts_old:main"
+
+[project.gui-scripts]
+csl_ui = 'camtest.tasks.csl.__init__:csl_ui'
+inta_ui = 'camtest.tasks.inta.__init__:inta_ui'
+ias_ui = 'camtest.tasks.ias.__init__:ias_ui'
+sron_ui = 'camtest.tasks.sron.__init__:sron_ui'
+
+[tool.setuptools.dynamic]
+version = {attr = "camtest.version.__PYPI_VERSION__"}
+readme = {file = ["README.md"]}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+camtest = [
+    "**/*.yaml",
+    "**/*.png",
+    "**/*.svg",
+]
