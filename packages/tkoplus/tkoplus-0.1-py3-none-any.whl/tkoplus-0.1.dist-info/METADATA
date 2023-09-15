@@ -1,0 +1,32 @@
+Metadata-Version: 2.1
+Name: tkoplus
+Version: 0.1
+Summary: tkoplus
+Author: Vahid
+Author-email: Vahid <vahidpy3@gmail.com>
+Project-URL: Homepage, https://github.com/pypa/sampleproject
+Project-URL: Bug Tracker, https://github.com/pypa/sampleproject/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+A package for Windows 11 users who use the Tkinter framework.
+With the help of this package, you will be able to change the title bar color of your software in Windows 11.
+Example:
+     To change the color of the toolbar:
+     from tkoplus import wind11
+     wind11.titlebar.bg(master,color="cyan")
+
+     To change the color of the text in the title bar:
+     from tkoplus import wind11
+     wind11.titlebar.title(master,color="cyan")
+
+
+Note that color codes cannot be used in the "color" field.
+
+To display the available colors in tkoplus:
+rom tkoplus import colors
+print(colors)
