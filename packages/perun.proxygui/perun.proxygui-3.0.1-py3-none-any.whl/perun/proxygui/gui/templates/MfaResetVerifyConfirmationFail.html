@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block contentwrapper %}
+  <div
+    class="window {% if cfg.css_framework == 'MUNI' %}framework_muni{% else %}framework_bootstrap5 bg-light{% endif %}">
+    <div id="content">
+      {% block content %}
+        <div class="content">
+        <br />
+        {% if cfg.mfa_reset_translations.sections[lang] is not none %}
+          {% if cfg.mfa_reset_translations.format is not none and (cfg.mfa_reset_translations.format == 'HTML' or cfg.mfa_reset_translations.format == 'markdown') %}
+            <h3><span>{{ cfg.mfa_reset_translations.sections[lang].request_fail_title | safe }}</span></h3>
+            <div class="margin-bottom-24 wrap-col"><span>{{ cfg.mfa_reset_translations.sections[lang].request_fail_info | safe }}</span></div>
+          {% else %}
+            <h3><span>{{ cfg.mfa_reset_translations.sections[lang].request_fail_title }}</span></h3>
+            <div class="margin-bottom-24 wrap-col"><span>{{ cfg.mfa_reset_translations.sections[lang].request_fail_info }}</span></div>
+          {% endif %}
+        {% endif %}
+      {% endblock %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
