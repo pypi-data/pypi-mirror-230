@@ -1,0 +1,32 @@
+Metadata-Version: 2.1
+Name: flash-attention-srf
+Version: 0.0.1
+Summary: Softmax-less Flash Attention w/ SRFs
+Home-page: https://github.com/alexjlevenston/flash-attention-srf
+Author: Alexander Levenston
+Author-email: alexlevenston2021@gmail.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: scipy
+Requires-Dist: torch
+Requires-Dist: triton-nightly
+
+# flash-attention-srf
+An implementation of sequence-parallel Flash Attention, sans softmax, with SRFs.\
+Makes [ERPTRI](https://erptri.com) go brrrrr.
+
+```python
+import torch
+from ops.torch.attention import Attention
+
+B, H, L, D = 2, 4, 2 ** 10, 128
+fast_attention = Attention(D, causal = True, device='cuda')
+
+q, k, v = [torch.randn(B, H, L, D, dtype=torch.float16).cuda().requires_grad_() for i in range(3)]
+output = fast_attention(q, k, v)
+
+```
