@@ -1,0 +1,68 @@
+Metadata-Version: 2.1
+Name: browserjquery
+Version: 0.1.0
+Summary: Query using Jquery on selenium driver.
+Home-page: https://github.com/inquilabee/BrowserQuery
+License: MIT
+Keywords: selenium,selenium python,browserquery,browserquery,browser automation,python jquery
+Author: Vishal Kumar Mishra
+Author-email: vishal.k.mishra2@gmail.com
+Requires-Python: >=3.10,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: django-environ (>=0.11.2,<0.12.0)
+Requires-Dist: python-dotenv (>=1.0.0,<2.0.0)
+Requires-Dist: pyyaml (>=6.0.1,<7.0.0)
+Requires-Dist: selenium (>=4.12.0,<5.0.0)
+Project-URL: Repository, https://github.com/inquilabee/BrowserQuery
+Description-Content-Type: text/markdown
+
+# BrowserQuery
+
+Use JQuery on selenium drivers.
+
+A simple, yet powerful package to execute Jquery while working on selenium drivers. It also comes built in with some utility methods built in.
+
+
+# Install
+
+```bash
+pip install browserjquery
+```
+
+# Usage
+
+```python
+    import time
+
+    from selenium.webdriver import Chrome
+    from browserjquery import BrowserJQuery
+
+    driver = Chrome()
+
+    driver.get("https://www.yahoo.com")
+
+    time.sleep(10)
+
+    # create Jquery object
+    jquery = BrowserJQuery(driver)
+
+    # execute script
+    jquery.execute("""return $("div.stream-item")""")
+
+    # call the object as a method to find/select items
+    stream = jquery(".stream-item")
+
+    # call methods/attributes off of the object
+    print(jquery.document)
+
+    print(jquery.find(".stream-item a"))
+
+    print(jquery.find_elements_with_text("Hello"))
+    print(jquery.find_elements_with_text("Hello", element=stream[0]))
+
+    print(jquery.parent(stream[0]))
+```
+
