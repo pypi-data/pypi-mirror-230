@@ -1,0 +1,20 @@
+
+max_date_str = 'max_date'
+min_date_str = 'min_date'
+date_min_col_list = "min_date_list"
+latitude_str = 'latitude'
+longitude_str = 'longitude'
+store_id_str = 'store_id'
+strptime_format = '%Y-%m-%d'
+tavg_str = 'tavg'
+tmin_str = 'tmin'
+tmax_str = 'tmax'
+prcp_str = 'prcp'
+snow_str = 'snow'
+wspd_str = 'wspd'
+pres_str = 'pres'
+tsun_str = 'tsun'
+linear_str = 'linear'
+outside_str = 'outside'
+weather_cols_to_drop = ["tsun", "pres"]  # columns to drop from weather dataset
+weather_columns = ['tavg', 'tmin', 'tmax', 'prcp', 'snow', 'wspd']  # columns to use from weather dataset
