@@ -1,0 +1,22 @@
+# SPDX-FileCopyrightText: 2022 Roman Gilg <subdiff@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
+#
+# Abstract base for common builds with CMake.
+#
+---
+source:
+  plugin: git
+  branch: master
+
+configure:
+  plugin: cmake
+
+build:
+  plugin: ninja
+  threads: max
+
+install:
+  path: /usr/local
+  sudo: false

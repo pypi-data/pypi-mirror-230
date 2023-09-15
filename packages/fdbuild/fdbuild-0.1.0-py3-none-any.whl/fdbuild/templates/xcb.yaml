@@ -1,0 +1,74 @@
+# SPDX-FileCopyrightText: 2022 Roman Gilg <subdiff@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
+#
+# Build of XCB protocol, lib and tooling
+#
+---
+template: default-autoconf
+
+projects:
+  - template xorgproto
+
+  - pthread-stubs:
+      source:
+        origin: https://gitlab.freedesktop.org/xorg/lib/pthread-stubs.git
+
+  - proto:
+      source:
+        origin: https://gitlab.freedesktop.org/xorg/proto/xcbproto.git
+
+  - libxcb:
+      source:
+        origin: https://gitlab.freedesktop.org/xorg/lib/libxcb.git
+      configure:
+        options:
+          - --enable-devel-docs=no
+        host:
+          x86:
+            64:
+              build: true
+            32:
+              build: false
+              pkg-config:
+                path: '/usr/lib32/pkgconfig'
+                prepend: true
+      install:
+        host-suffix: false
+
+  - libxcb-util:
+      source:
+        origin: https://gitlab.freedesktop.org/xorg/lib/libxcb-util.git
+        hooks:
+          post: pwd && cd source && git submodule update --init && cd ..
+
+  - libxcb-image:
+      source:
+        origin: https://gitlab.freedesktop.org/xorg/lib/libxcb-image.git
+        hooks:
+          post: pwd && cd source && git submodule update --init && cd ..
+
+  - libxcb-render-util:
+      source:
+        origin: https://gitlab.freedesktop.org/xorg/lib/libxcb-render-util.git
+        hooks:
+          post: pwd && cd source && git submodule update --init && cd ..
+
+  - libxcb-wm:
+      source:
+        origin: https://gitlab.freedesktop.org/xorg/lib/libxcb-wm.git
+        hooks:
+          post: pwd && cd source && git submodule update --init && cd ..
+
+  - libxcb-keysyms:
+      source:
+        origin: https://gitlab.freedesktop.org/xorg/lib/libxcb-keysyms.git
+        hooks:
+          post: pwd && cd source && git submodule update --init && cd ..
+
+  - libxcb-cursor:
+      source:
+        origin: https://gitlab.freedesktop.org/xorg/lib/libxcb-cursor.git
+        hooks:
+          post: pwd && cd source && git submodule update --init && cd ..

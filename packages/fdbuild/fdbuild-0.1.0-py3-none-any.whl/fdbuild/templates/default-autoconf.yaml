@@ -1,0 +1,22 @@
+# SPDX-FileCopyrightText: 2022 Roman Gilg <subdiff@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
+#
+# Abstract base for common builds.
+#
+---
+source:
+  plugin: git
+  branch: master
+
+configure:
+  plugin: autoconf
+
+build:
+  plugin: make
+  threads: max
+
+install:
+  path: /usr/local
+  sudo: false

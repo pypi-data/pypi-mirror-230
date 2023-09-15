@@ -1,0 +1,22 @@
+[console_scripts]
+fdbuild = fdbuild.main:run
+
+[fdbuild.stages]
+build = fdbuild.plugins.stages.build:Plugin
+configure = fdbuild.plugins.stages.configure:Plugin
+install = fdbuild.plugins.stages.install:Plugin
+source = fdbuild.plugins.stages.source:Plugin
+
+[fdbuild.steps]
+autoconf = fdbuild.plugins.steps.autoconf:Plugin
+cmake = fdbuild.plugins.steps.cmake:Plugin
+git = fdbuild.plugins.steps.git:Plugin
+make = fdbuild.plugins.steps.make:Plugin
+meson = fdbuild.plugins.steps.meson:Plugin
+ninja = fdbuild.plugins.steps.ninja:Plugin
+
+[fdbuild.structurizers]
+kde = fdbuild.plugins.structurizers.kde:Plugin
+
+[fdbuild.templates]
+fdbuild = fdbuild.plugins.templates:paths

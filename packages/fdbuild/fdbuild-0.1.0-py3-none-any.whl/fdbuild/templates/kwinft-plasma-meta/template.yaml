@@ -1,0 +1,42 @@
+# SPDX-FileCopyrightText: 2022 Roman Gilg <subdiff@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
+#
+# Build of KDE Plasma desktop together with KWinFT
+#
+---
+template: default-cmake
+
+projects:
+  - auxiliary:
+      projects:
+        - appstream:
+            source:
+              origin: https://github.com/ximion/appstream.git
+              branch: main
+            configure:
+              plugin: meson
+              options:
+                - qt=true
+        - xsettingsd:
+            source:
+              origin: https://github.com/derat/xsettingsd.git
+  - template wlroots
+  - kde:
+      configure:
+        options:
+          - CMAKE_BUILD_TYPE=Release
+          - QT_MAJOR_VERSION=6
+          - BUILD_WITH_QT6=ON
+      structure:
+        enabled: true
+        plugin: kde
+        branch-group: kf6-qt6
+        git origin update: true
+        selection:
+          - kde/workspace
+          - kde/kdeutils/kwalletmanager
+          - kdeconnect-kde
+  - template kwinft
+  - script kwinft-adapt

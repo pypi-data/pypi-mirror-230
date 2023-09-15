@@ -1,0 +1,26 @@
+# SPDX-FileCopyrightText: 2022 Roman Gilg <subdiff@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
+#
+# Qt5 open source build
+#
+---
+template: default-autoconf
+
+source:
+  origin: https://invent.kde.org/qt/qt/qt5.git
+  branch: kde/5.15
+  hooks:
+    post: pwd && cd source &&
+      perl init-repository -f
+      --module-subset=default,qtx11extras,-qtwebengine,-qtgrpc,-qtquickeffectmaker &&
+      cd ..
+
+configure:
+  options:
+    - -developer-build
+    - -opensource
+    - -confirm-license
+    - -nomake examples
+    - -nomake tests

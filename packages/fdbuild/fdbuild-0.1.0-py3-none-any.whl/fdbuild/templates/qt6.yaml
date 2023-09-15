@@ -1,0 +1,24 @@
+# SPDX-FileCopyrightText: 2023 Roman Gilg <subdiff@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
+#
+# Qt5 open source build
+#
+---
+template: default-cmake
+
+source:
+  origin: https://invent.kde.org/qt/qt/qt5.git
+  branch: dev
+  hooks:
+    post: pwd && cd source &&
+      perl init-repository -f
+      --module-subset=default,-qtwebengine,-qtgrpc,-qtquickeffectmaker,-qt3d &&
+      cd ..
+
+configure:
+  hooks:
+    pre: pwd && cd source &&
+      ./configure -prefix /usr/local -- -DQT_BUILD_TESTS=OFF -B ../build &&
+      cd ..

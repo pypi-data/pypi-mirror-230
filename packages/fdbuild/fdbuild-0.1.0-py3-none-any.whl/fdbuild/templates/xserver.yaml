@@ -1,0 +1,43 @@
+# SPDX-FileCopyrightText: 2022 Roman Gilg <subdiff@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
+#
+# Minimal X.Org XServer build
+#
+---
+template: default-meson
+
+install:
+  hooks:
+    post: 'mkdir -p @{$install$path}/var/log &&
+      mkdir -p @{$install$path}/share/aclocal &&
+      mkdir -p @{$install$path}/share/X11/xkb/rules &&
+      mkdir -p @{$install$path}/bin &&
+      if [ "@{$install$path}" != "/usr" ] && [ "@{$install$path}" != "/usr/" ]; then
+      ln -sf /usr/share/X11/xkb/rules/evdev @{$install$path}/share/X11/xkb/rules/evdev &&
+      ln -sf /usr/bin/xkbcomp @{$install$path}/bin/xkbcomp; fi'
+
+projects:
+  - template xorgproto
+  - template libx
+  - template xcb
+
+  - xserver:
+      source:
+        origin: https://gitlab.freedesktop.org/xorg/xserver.git
+
+      install:
+        hooks:
+          post: sudo chown -v root:root @{$install$path}/bin/Xorg &&
+                sudo chmod -v +s @{$install$path}/bin/Xorg
+
+  - driver:
+      configure:
+        plugin: autoconf
+      build:
+        plugin: make
+      projects:
+        - xf86-input-libinput:
+            source:
+              origin: https://gitlab.freedesktop.org/xorg/driver/xf86-input-libinput.git

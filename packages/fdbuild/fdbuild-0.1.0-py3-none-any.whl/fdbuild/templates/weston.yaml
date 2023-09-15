@@ -1,0 +1,17 @@
+# SPDX-FileCopyrightText: 2022 Roman Gilg <subdiff@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
+#
+# Build of Weston
+#
+---
+template: default-meson
+
+source:
+  origin: https://gitlab.freedesktop.org/wayland/weston.git
+  branch: main
+
+configure:
+  options:
+    - xwayland=false

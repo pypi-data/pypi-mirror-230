@@ -1,0 +1,49 @@
+# SPDX-FileCopyrightText: 2022 Roman Gilg <subdiff@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
+#
+# Build of Mesa
+#
+---
+template: default-meson
+
+projects:
+  - mesa:
+      source:
+        branch: main
+        origin: https://gitlab.freedesktop.org/mesa/mesa.git
+      configure:
+        host:
+          x86:
+            64:
+              build: true
+            32:
+              build: false
+              file: meson-cross-file
+              pkg-config:
+                path: '/usr/lib32/pkgconfig'
+                prepend: true
+        options:
+          - platforms=x11,wayland
+          - dri3=true
+          - gallium-drivers=i915,iris, nouveau, radeonsi, swrast
+          - vulkan-drivers=intel,amd
+          - gles1=true
+          - gles2=true
+          - opengl=true
+          - gbm=true
+          - glx=auto
+          - egl=true
+          - llvm=true
+          - opengl=true
+          - gallium-va=true
+          - gallium-vdpau=true
+          - shared-glapi=true
+          - libunwind=true
+      install:
+        host-suffix: false
+  - epoxy:
+      source:
+        origin: https://github.com/anholt/libepoxy.git
+  - script copy-cross-file
