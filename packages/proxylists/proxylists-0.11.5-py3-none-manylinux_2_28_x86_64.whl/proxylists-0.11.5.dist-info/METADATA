@@ -1,0 +1,74 @@
+Metadata-Version: 2.1
+Name: proxylists
+Version: 0.11.5
+Summary: Package for getting useful proxy servers, can use lists like hidemy or proxydb.
+Home-page: https://github.com/phenobarbital/proxylists
+Author: Jesus Lara
+Author-email: jesuslarag@gmail.com
+License: BSD
+Project-URL: Source, https://github.com/phenobarbital/proxylists
+Project-URL: Funding, https://paypal.me/phenobarbital
+Project-URL: Say Thanks!, https://saythanks.io/to/phenobarbital
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.8.0
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: asyncio (==3.4.3)
+Requires-Dist: uvloop (>=0.16.0)
+Requires-Dist: aiohttp (==3.8.5)
+Requires-Dist: requests (>=2.28.2)
+Requires-Dist: requests[socks] (>=2.28.2)
+Requires-Dist: orjson (==3.8.10)
+Requires-Dist: lxml (==4.9.2)
+
+# proxylists
+
+Proxylists is a simple tool for getting a list of proxy IPs from
+free proxy servers using several providers.
+
+## Supported Providers:
+
+ * free-proxy-list.net
+ * hidemy.name
+ * proxydb.net
+
+can retrieve a list of IPs by provider or from all of them
+using the "get_proxies()" method.
+
+### Download
+
+The list can be tabulated (one proxy by line, to save on .txt, csv, etc)
+or a python dictionary.
+
+## Usage
+
+```python
+
+from proxylist import get_proxies
+
+proxies = get_proxies()
+
+```
+
+Or get the list from a single provider:
+
+```python
+
+from proxylist.proxies import ProxyDB # getting from proxydb.net
+import asyncio
+
+async def get_proxies():
+     return await ProxyDB().get_list()
+
+loop = asyncio.get_event_loop()
+proxies = loop.run_until_complete(get_proxies())
+print(proxies)
+```
+### License ###
+
+Proxylists is licensed under BSD license.
