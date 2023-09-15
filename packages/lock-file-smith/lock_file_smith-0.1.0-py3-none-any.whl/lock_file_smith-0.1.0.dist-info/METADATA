@@ -1,0 +1,86 @@
+Metadata-Version: 2.1
+Name: lock-file-smith
+Version: 0.1.0
+Summary: Simple wrapper for Git LFS (Large File Storage) commands.
+Home-page: https://github.com/hueyyeng/lock-file-smith
+Author: Huey Yeng
+Author-email: Huey Yeng <huey.yeng.mmu@gmail.com>
+Maintainer: Huey Yeng
+Maintainer-email: Huey Yeng <huey.yeng.mmu@gmail.com>
+License: MIT License
+        
+        Copyright (c) 2023 Huey Yeng
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Homepage, https://github.com/hueyyeng/lock-file-smith
+Project-URL: Bug Reports, https://github.com/hueyyeng/lock-file-smith/issues
+Project-URL: Source, https://github.com/hueyyeng/lock-file-smith
+Keywords: python,library,git,lfs
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Operating System :: MacOS
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Operating System :: Microsoft :: Windows :: Windows 10
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# lock-file-smith
+
+Simple wrapper for Git LFS (Large File Storage) commands.
+
+## Quickstart
+
+As there is no API for interacting with Git LFS, this wrapper provides function that
+you can use in your Python application for querying, lock/unlock Git LFS files etc.
+
+The `LockFile` dataclass stores the name, author and ID of a locked file.
+
+Take note that the speed of this library depends on Git. This has not been tested on
+a Git repository with a large number of locked files.
+
+## Usage
+
+```python
+from lockfilesmith.cmds import lock, query
+
+# Use this to verify if Git/Git LFS is presence
+query.is_git_installed()
+query.verify_git_lfs()
+
+# Query for locked files.
+locked_files = query.locked_files()  # Will return empty list if no locked files 
+
+# Lock a file (ensure the file format is tracked as LFS)
+lock.lock_file("foo/bar.uasset")  # True
+
+# Unlock file (you can retrieve the locked object ID using query.locked_files)
+bar = query.locked_files()[0]  # assume bar.uasset is the only locked file
+lock.unlock_file(bar.id)
+```
+
+## Further reading
+
+[https://git-lfs.com/](https://git-lfs.com/)
+
+[https://www.atlassian.com/git/tutorials/git-lfs](https://www.atlassian.com/git/tutorials/git-lfs)

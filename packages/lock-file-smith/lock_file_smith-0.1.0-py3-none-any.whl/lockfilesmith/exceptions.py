@@ -1,0 +1,2 @@
+class LockFileSmithException(Exception):
+    pass
