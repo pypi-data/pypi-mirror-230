@@ -1,0 +1,323 @@
+# python-gitmojis
+
+[![](https://img.shields.io/badge/pre--commit-enabled-brightgreen?style=flat-square&logo=pre-commit)][pre-commit.ci]
+[![](https://img.shields.io/github/actions/workflow/status/paduszyk/python-gitmojis/lint-package.yml?style=flat-square&label=lint&logo=github)][github-lint-package]
+[![](https://img.shields.io/github/actions/workflow/status/paduszyk/python-gitmojis/test-package.yml?style=flat-square&label=test&logo=github)][github-test-package]
+[![](https://img.shields.io/codecov/c/github/paduszyk/python-gitmojis?style=flat-square&logo=codecov&label=codecov)][codecov]
+[![](https://img.shields.io/codefactor/grade/github/paduszyk/python-gitmojis?style=flat-square&logo=codefactor)][codefactor]
+[![](https://img.shields.io/codeclimate/maintainability/paduszyk/python-gitmojis?style=flat-square&logo=code-climate)][code-climate]
+
+[![](https://img.shields.io/badge/%F0%9F%A6%8A-Nox-D85E00.svg?style=flat-square)][nox]
+[![](https://img.shields.io/endpoint?style=flat-square&url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)][ruff]
+[![](https://img.shields.io/badge/type--checked-mypy-blue&?style=flat-square)][mypy]
+[![](https://img.shields.io/badge/code%20style-black-black&?style=flat-square)][black]
+[![](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square)][gitmoji-website]
+
+The project provides a handy way to manage the set of [Gitmojis][gitmoji-website] (available via the public [API][gitmoji-api]) in Python packages.
+It may potentially serve as a helper in projects related to versioning and automatic changelog generation, as well as automation tools for validating commit and pull request titles.
+
+## Installation
+
+To install the package, use `pip`:
+
+```console
+$ pip install python-gitmojis
+```
+
+or any other dependency management tool you like.
+
+## Usage
+
+The package provides two main functionalities:
+
+* `Gitmoji` and `GitmojiList` classes (from `gitmojis.models` module);
+* `gitmojis` object (from `gitmojis.core` module).
+
+The latter can be imported directly from the `gitmojis` package:
+
+```python
+from gitmojis import gitmojis
+```
+
+The classes represent a Pythonic interface to create and manage immutable `Gitmoji` objects and their lists, with some extra features regarding indexing, slicing, and iteration.
+On the other hand, `gitmojis` is simply an instance of `GitmojiList` representing the current state of the Gitmoji [API][gitmoji-api], or its local backup if any issues hindering communication with the API are found.
+
+### `gitmojis.models.Gitmoji` class
+
+The `Gitmoji` is based on a regular Python `@dataclass` (see [PEP 557][pep-557]).
+To create a `Gitmoji` object, just call the constructor and pass the field values as the parameters (either as positional or keyword parameters):
+
+```python
+from gitmojis.models import Gitmoji
+
+dependabot_gitmoji = Gitmoji(
+    emoji="🤖",
+    entity="&#x1f916",
+    code=":robot:",
+    description="Add or update Dependabot configuration.",
+    name="robot",
+    semver=None,
+)
+
+assert isinstance(dependabot_gitmoji, Gitmoji)
+```
+
+The meaning of the respective fields is as follows:
+
+- `emoji` &ndash; the actual emoji character representing the Gitmoji;
+- `entity` &ndash; the HTML entity of the Gitmoji;
+- `code` &ndash; the emoji's code, to be eventually used when rendering Gitmojis in markdown documents (see: the official [GitHub API][github-emoji-api], 3rd party projects like [`emoji`][emoji], or less official [`emoji-cheat-sheet`][emoji-cheat-sheet]);
+- `description` &ndash; a short note on the type of changes the Gitmoji represents;
+- `name` &ndash; the text identifier of the Gitmoji;
+- `semver` &ndash; the level of the [Semantic Version](https://semver.org) affected by the changes marked with the Gitmoji.
+
+> All the fields listed in the example above are optional except `emoji`.
+
+Except for the standard way presented above, `Gitmoji` objects can be created from Python dictionaries and converted to them by using the `from_dict` class method and the `to_dict` instance method, respectively:
+
+```python
+from gitmojis.models import Gitmoji
+
+gitmoji_dict = {
+    "emoji": "🤖",
+    "entity": "&#x1f916",
+    "code": ":robot:",
+    "description": "Add or update Dependabot configuration.",
+    "name": "robot",
+    "semver": None,
+}
+
+gitmoji = Gitmoji(**gitmoji_dict)
+
+assert Gitmoji.from_dict(gitmoji_dict) == gitmoji
+assert gitmoji.to_dict() == gitmoji_dict
+```
+
+By default, the `from_dict` method filters out all the irrelevant items from the source `dict`.
+Passing `strict=True` disables this behavior, which results in raising `TypeError` if keys not representing the data class fields are found.
+Besides, this method raises `TypeError` if the `dict` doesn't contain the key-value pairs needed to create all the required fields.
+
+On the other hand, `to_dict` is a thin wrapper around the `dataclasses.asdict` function.
+It accepts the optional keyword argument `skip_defaults`.
+If `skip_defaults=True`, the output dictionary doesn't account for the fields with default values.
+
+```python
+from gitmojis.models import Gitmoji
+
+gitmoji = Gitmoji(emoji="🤖", semver="patch")
+
+# Including all the fields
+assert gitmoji.to_dict(skip_defaults=False) == {
+    "emoji": "🤖",
+    "entity": None,
+    "code": None,
+    "description": None,
+    "name": None,
+    "semver": "patch",
+}
+
+# Skipping defaults
+assert gitmoji.to_dict(skip_defaults=True) == {
+    "emoji": "🤖",
+    "semver": "patch",
+}
+```
+
+### `gitmojis.models.GitmojiList` class
+
+`GitmojiList` is a subclass of `collections.UserList` designed to store and manage sequences of the `Gitmoji` objects.
+Compared to plain Python lists, `GitmojiList` instances can be:
+
+* indexed by using all the fields of the constituting `Gitmoji` objects except `semver` &ndash; this imposes those fields to have unique values within a list;
+* iterated over a selected `Gitmoji` class field or a subset of the fields at once using the `iter_field` and `iter_fields` methods, respectively.
+
+For example:
+
+```python
+from dataclasses import astuple
+
+from gitmojis.models import Gitmoji, GitmojiList
+
+gitmoji_dicts = [
+    {
+        "emoji": "💥",
+        "entity": "&#x1f4a5;",
+        "code": ":boom:",
+        "description": "Introduce breaking changes.",
+        "name": "boom",
+        "semver": "major",
+    },
+    {
+        "emoji": "✨",
+        "entity": "&#x2728;",
+        "code": ":sparkles:",
+        "description": "Introduce new features.",
+        "name": "sparkles",
+        "semver": "minor",
+    },
+    {
+        "emoji": "🐛",
+        "entity": "&#x1f41b;",
+        "code": ":bug:",
+        "description": "Fix a bug.",
+        "name": "bug",
+        "semver": "patch",
+    },
+]
+
+gitmoji_list = GitmojiList([Gitmoji.from_dict(gitmoji) for gitmoji in gitmoji_dicts])
+
+# Indexing using `index_fields`
+for index, gitmoji in enumerate(gitmoji_list):
+    assert gitmoji_list[index] == gitmoji
+    for index_field in GitmojiList.index_fields:
+        assert gitmoji_list[getattr(gitmoji, index_field)] == gitmoji
+
+# Iterating over a selected field
+assert list(gitmoji_list.iter_field("emoji")) == ["💥", "✨", "🐛"]
+
+# Iterating over a subset of fields
+assert list(gitmoji_list.iter_fields("emoji", "code")) == [
+    ("💥", ":boom:"),
+    ("✨", ":sparkles:"),
+    ("🐛", ":bug:"),
+]
+
+# Iterating over all fields
+for item, gitmoji in zip(gitmoji_list.iter_fields(), gitmoji_list):
+    assert item == astuple(gitmoji)
+```
+
+> The `Gitmoji` class fields to be used in indexing of `GitmojiList` objects can be modified by overriding the latter's `index_fields` attribute.
+
+### `gitmojis.gitmojis` object
+
+`gitmojis.gitmojis` refers to an instance of `GitmojiList` class with the `data` containing `Gitmoji` objects fetched from the official Gitmoji [API][gitmoji-api].
+If there are some issues with connection or API access, the backup data is loaded from the [JSON file][gitmojis-json] installed along with the package.
+
+The data is loaded on the fly as the package is imported.
+If you want to load it at your code's runtime, use the implemented loader class (see `gitmojis.loaders` module for more information) or the core loading function (from the `gitmojis.core` module):
+
+```python
+from gitmojis.core import get_gitmojis
+from gitmojis.loaders import ApiGitmojiLoader
+
+get_gitmojis_api = ApiGitmojiLoader()
+
+# Loading at runtime
+# (may fail due to connection errors)
+gitmojis = get_gitmojis_api()
+
+# Loading from the API or the backup file
+gitmojis = get_gitmojis()
+```
+
+## Utilities
+
+### `dump-gitmojis-api` command
+
+The backup file can be kept up-to-date with the official API by using the `dump-gitmojis-api` command:
+
+```console
+$ dump-gitmojis-api --help
+
+Usage: dump-gitmojis-api [OPTIONS]
+
+  Make a dump of the Gitmojis API to the backup file.
+
+Options:
+  --dry-run  Don't make the dump, just show the backup update summary.
+  --dev      Dump the API to the repo's, not the package's, backup.
+  --help     Show this message and exit.
+```
+
+If no updates are available, the command echoes about that:
+
+```console
+$ dump-gitmojis-api
+😎 The backup file is up-to-date with the Gitmoji API. ✅
+```
+
+If there are some changes (let's say that "🦺" is added to and "🤖" is discarded from the API), the command prints the summary message in the markdown format and actually updates the backup JSON file:
+
+```console
+$ dump-gitmojis-api
+## Gitmoji API dumped! 🎉
+
+The latest version of the official Gitmoji [API][gitmoji-api] has been dumped to the repo's backup file. 🗃️
+
+### ➕ Added
+
+* 🦺 `:safety_vest:` &ndash; Add or update code related to validation.
+
+### ➖ Removed
+
+* 🤖 `:robot:` &ndash; Add or update Dependabot configuration.
+
+[gitmoji-api]: https://github.com/carloscuesta/gitmoji/tree/master/packages/gitmojis#api
+```
+
+Note that the command updates the JSON file which is a part of package *installed* in your environment.
+So, if you (for some reason) want to experiment with it, make sure that you know what you're doing and check whether you have the appropriate permissions.
+
+Alternatively, if you want to just check whether the API has been changed, run the command with the `--dry-run` flag.
+This will echo the notifications without touching the files.
+Finally, if you work with a clone of this repository, you can add the `--dev` flag to update NOT the backup file in the installed package but the backup file, which is an asset of the clone.
+If the API is dumped, except for notification, you should see the changes in the backup file as you call `git status`.
+
+## Automation
+
+The official Gitmoji API state is `cron`-scheduled at the GitHub Actions runner to be periodically compared to the backup file.
+The respective [workflow][github-dump-gitmojis-api] automatically applies the update and opens a pull request commented using the `dump-gitmojis-api` command output message.
+
+Every update to the backup file is going to be followed by a version bump.
+Therefore, to stay tuned with the Gitmoji API backed up by this library, you should update `python-gitmojis` systematically.
+This particularly concerns the developers, who work with local repositories most of the time.
+
+## Contributing
+
+This is an open-source project, so it welcomes all kinds of contributions.
+Feel free to open an issue by filing a bug or proposing new (or enhancing existing) functionality.
+Check out the [Contributing Guide][contributing-guide] for detailed instructions.
+
+All contributors must follow the project's [Code of Conduct][code-of-conduct].
+It's not as complicated as it looks; just be kind and understanding to others! 🙂
+
+## Credits
+
+The idea of Gitmoji was originally proposed, developed, and maintained by [@carloscuesta][github-carlosquesta].
+
+For more information, see the official [repository][gitmoji-repo] and [website][gitmoji-website] of the project.
+
+## Authors
+
+Created by [@paduszyk][github-paduszyk].
+
+## License
+
+Released under the [MIT License][license].
+
+[black]: https://github.com/psf/black
+[code-climate]: https://codeclimate.com/github/paduszyk/python-gitmojis
+[codefactor]: https://www.codefactor.io/repository/github/paduszyk/python-gitmojis
+[code-of-conduct]: https://github.com/paduszyk/python-gitmojis/blob/main/.github/CODE_OF_CONDUCT.md
+[codecov]: https://codecov.io/gh/paduszyk/python-gitmojis
+[contributing-guide]: https://github.com/paduszyk/python-gitmojis/blob/main/.github/CONTRIBUTING.md
+[emoji]: https://github.com/carpedm20/emoji/
+[emoji-cheat-sheet]: https://github.com/ikatyang/emoji-cheat-sheet
+[github-carlosquesta]: https://github.com/carloscuesta
+[github-dump-gitmojis-api]: https://github.com/paduszyk/python-gitmojis/actions/workflows/dump-gitmojis-api.yml
+[github-emoji-api]: https://docs.github.com/en/rest/emojis
+[github-lint-package]: https://github.com/paduszyk/python-gitmojis/actions/workflows/lint-package.yml
+[github-paduszyk]: https://github.com/paduszyk
+[github-test-package]: https://github.com/paduszyk/python-gitmojis/actions/workflows/test-package.yml
+[gitmoji-api]: https://github.com/carloscuesta/gitmoji/tree/master/packages/gitmojis#api
+[gitmoji-repo]: https://github.com/carloscuesta/gitmoji
+[gitmoji-website]: https://gitmoji.dev
+[gitmojis-json]: https://github.com/paduszyk/python-gitmojis/blob/main/src/gitmoji/assets/gitmojis.json
+[license]: https://github.com/paduszyk/python-gitmojis/blob/main/LICENSE
+[mypy]: https://github.com/python/mypy
+[nox]: https://github.com/wntrblm/nox
+[pep-557]: https://peps.python.org/pep-0557/
+[pre-commit.ci]: https://results.pre-commit.ci/latest/github/paduszyk/python-gitmojis/main
+[ruff]: https://github.com/astral-sh/ruff

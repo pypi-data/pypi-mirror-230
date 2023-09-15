@@ -1,0 +1,83 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+# PEP 621 Project metadata
+# https://packaging.python.org/en/latest/specifications/declaring-project-metadata/
+
+[project]
+name = "python-gitmojis"
+description = "😜 A helper package to apply Gitmojis in Python projects 🐍"
+authors = [
+  { name = "Kamil Paduszyński", email = "paduszyk@gmail.com" },
+]
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">= 3.9"
+keywords = [
+  "emoji",
+  "emojis",
+  "git",
+  "gitmoji",
+  "gitmojis",
+  "python",
+]
+classifiers = [
+  "Development Status :: 1 - Planning",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Software Development :: Version Control",
+]
+dynamic = ["dependencies", "version"]
+
+[project.urls]
+"Documentation" = "https://github.com/paduszyk/python-gitmojis#readme"
+"Repository" = "https://github.com/paduszyk/python-gitmojis"
+
+[project.optional-dependencies]
+dev = [
+  "nox",
+  "pre-commit",
+]
+lint = [
+  "black",
+  "mypy",
+  "ruff",
+]
+test = [
+  "pytest",
+  "pytest-cov",
+  "pytest-mock",
+]
+
+[project.scripts]
+dump-gitmojis-api = "gitmojis.dumps:dump_gitmojis_api"
+
+[tool.setuptools.dynamic]
+dependencies = { file = "requirements.txt" }
+version = { attr = "gitmojis.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["gitmojis*"]
+
+[tool.setuptools.package-data]
+gitmojis = [
+  "assets/*",
+  "py.typed",
+]
+
+# Black
+# https://black.readthedocs.io/en/stable/usage_and_configuration/
+
+[tool.black]
+target-version = ["py39", "py310", "py311"]
