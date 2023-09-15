@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68", "setuptools-git-versioning<2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "verma"
+authors = [{ name = "Carlos Colin" }]
+description = "Version Manager. CLI tool to help you manage your package versioning."
+readme = "README.md"
+dynamic = ["version"]
+dependencies = ["click==8.1.7", "gitpython==3.1.35"]
+requires-python = ">=3.11"
+
+[project.scripts]
+verma = "verma.cli:app"
+
+[tool.setuptools]
+packages = ["verma"]
+
+[tool.setuptools-git-versioning]
+enabled = true
