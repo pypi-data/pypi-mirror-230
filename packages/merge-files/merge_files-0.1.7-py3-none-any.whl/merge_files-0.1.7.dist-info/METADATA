@@ -1,0 +1,32 @@
+Metadata-Version: 2.1
+Name: merge_files
+Version: 0.1.7
+Summary: Merge two .env files files together
+Author-email: Gareth Davidson <gaz@bitplane.net>
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: Public Domain
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Dist: chardet
+Requires-Dist: flake8 ; extra == "dev"
+Requires-Dist: pre-commit ; extra == "dev"
+Requires-Dist: pytest ; extra == "dev"
+Requires-Dist: coverage ; extra == "dev"
+Requires-Dist: build ; extra == "dev"
+Requires-Dist: twine ; extra == "dev"
+Project-URL: Bug Tracker, https://github.com/bitplane/merge-files/issues
+Project-URL: Homepage, https://github.com/bitplane/merge-files
+Provides-Extra: dev
+
+# merge\_files
+
+A Python module that merges files together.
+
+Currently supported files:
+
+* `.env` files
+* binary files (concatenates)
+* text files (most encodings, concatenates)
+
