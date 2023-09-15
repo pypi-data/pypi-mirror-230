@@ -1,0 +1,33 @@
+Metadata-Version: 2.1
+Name: sonic-arabic
+Version: 0.2.1
+Summary: анализ арабской речи
+Home-page: https://git.id-network.ru/data-science/sc_ar
+Author: i.karpenko
+Author-email: volgakarp@gmail.com
+Classifier: Programming Language :: Python :: 3.9
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+
+## Установка
+```
+# on Ubuntu or Debian
+sudo apt update && sudo apt install ffmpeg cmake libboost-all-dev
+
+# on MacOS using Homebrew (https://brew.sh/)
+brew install ffmpeg cmake boost
+
+pip install sonic_arabic
+```
+
+## Пример запуска
+```
+from sonic_arabic.audio_pipeline import AudioAnalysisPipeline
+
+path_audio_file = 'data/arabic_1m.m4a'
+analyzer = AudioAnalysisPipeline()
+result = analyzer.predict(path_audio_file)
+print(result['ner'])
+print(result['sentiment'])
+print(result['punctuation'])
+```
