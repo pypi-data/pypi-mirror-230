@@ -1,0 +1,31 @@
+[build-system]
+requires = [
+	"setuptools>=61.0",
+	"github3.py",
+]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "gitrc"
+version = "1.0.1"
+authors = [
+  { name="Mike Ellertson", email="mike@cybertron.ninja" },
+]
+description = "A package to dowload all repos from Github for a given user or organization."
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/mellertson/gitrc.git"
+"Bug Tracker" = "https://github.com/mellertson/gitrc/issues"
+
+
+[project.scripts]
+gitrc = "gitrc.__main__:main"
