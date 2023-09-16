@@ -1,0 +1,67 @@
+#
+# Copyright (c) 2023-present Didier Malenfant
+#
+# This file is part of pfDevTools.
+#
+# pfDevTools is free software: you can redistribute it and/or modify it under the terms of the GNU General
+# Public License as published by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# pfDevTools is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+# License for more details.
+#
+# You should have received a copy of the GNU General Public License along with pfDevTools. If not,
+# see <https://www.gnu.org/licenses/>.
+#
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pf-dev-tools"
+description = "A collection of tools for Project Freedom projects"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "GPL-3.0-or-later"
+keywords = ["openFPGA", "fpga", "analoguepocket", "ProjectFreedom"]
+authors = [
+  { name = "Didier Malenfant", email = "coding@malenfant.net" },
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = ['semver >= 3', 'Pillow', 'scons',
+                'tomli >= 1.1.0 ; python_version < "3.11"']
+dynamic = ["version"]
+
+[project.urls]
+Homepage = "https://didier.malenfant.net/ProjectFreedom/"
+Documentation = "https://github.com/DidierMalenfant/pfDevTools#readme"
+"Bug Tracker" = "https://github.com/DidierMalenfant/pfDevTools/issues"
+"Source Code" = "https://github.com/DidierMalenfant/pfDevTools"
+
+[tool.hatch.version]
+path = "pfDevTools/__about__.py"
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+  "/.github",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["pfDevTools"]
+
+[tool.hatch.envs.default]
+dependencies = [
+  "pytest",
+  "pytest-cov",
+]
+
+[project.scripts]
+pf = "pfDevTools.pfCommand.__main__:main"
