@@ -1,0 +1,1 @@
+Commit eec2ab2. Build and Run scripts for executing the Certora Prover on Solidity smart contracts.
