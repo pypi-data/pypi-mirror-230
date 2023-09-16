@@ -1,0 +1,34 @@
+Metadata-Version: 2.1
+Name: sse-relay-server
+Version: 0.2.0
+Summary: Add your description here
+Author-email: Tobi DEGNON <tobidegnon@proton.me>
+Requires-Python: >=3.8
+Requires-Dist: dj-database-url>=2.1.0
+Requires-Dist: loguru>=0.7.2
+Requires-Dist: psycopg[binary]>=3.1.10
+Requires-Dist: python-dotenv>=1.0.0
+Requires-Dist: redis>=5.0.0
+Requires-Dist: sse-starlette>=1.6.5
+Requires-Dist: starlette>=0.31.1
+Requires-Dist: uvicorn[standard]>=0.23.2
+Description-Content-Type: text/markdown
+
+# sse-relay-server (wip)
+
+For some background https://github.com/Tobi-De/sse_server_postgres_listen_notify
+
+Originally designed for Django, now a simple, standalone Server-Sent Events relay service, ideal for Django projects seeking straightforward real-time capabilities without the need for Daphne and async Django setup.
+
+![SSE relay message transmission diagram](diagram.png)
+
+## Installation
+
+As a package
+```sh
+pip install sse-relay-server
+```
+As a container
+```sh
+docker pull ghcr.io/tobi-de/sse_relay_server:main
+```
