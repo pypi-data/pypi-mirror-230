@@ -1,0 +1,54 @@
+Metadata-Version: 2.1
+Name: retraction-watch-import
+Version: 0.0.1
+Summary: A tool to import Retraction Watch data
+Home-page: https://gitlab.com/crossref/labs/retraction-watch-import
+Author: Martin Paul Eve
+Author-email: meve@crossref.org
+Maintainer-email: Martin Paul Eve <meve@crossref.org>
+Project-URL: homepage, https://labs.crossref.org
+Project-URL: documentation, https://labs.crossref.org
+Project-URL: repository, https://gitlab.com/crossref/labs/preservationDatabase
+Project-URL: changelog, https://gitlab.com/crossref/labs/preservation-data/-/blob/main/CHANGELOG.md
+Keywords: academic,retractions,data,import,crossref
+Classifier: Development Status :: 4 - Beta
+Classifier: Programming Language :: Python
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: boto3
+Requires-Dist: claws>=0.0.20
+Requires-Dist: longsight>=1.0.13
+Requires-Dist: clannotation
+Requires-Dist: tenacity==8.0.1
+Requires-Dist: requests
+
+# Retraction Watch Database Importer
+This Airflow script imports the Retraction Watch database into the annotations system of the Crossref Labs API.
+
+![license](https://img.shields.io/gitlab/license/crossref/labs/retraction-watch-data-import) ![activity](https://img.shields.io/gitlab/last-commit/crossref/labs/retraction-watch-data-import)
+
+![Airflow](https://img.shields.io/badge/Airflow-017CEE?style=for-the-badge&logo=Apache%20Airflow&logoColor=white) ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white) ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black) ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+
+## Input Format
+The script expects an S3 folder that contains CSV files with Retraction Watch data.
+
+The CSV file should have the headings (with this capitalization):
+* `DOI`
+* `RetractionDOI`
+* `Reason`
+* `RetractionNature`
+* `Notes`
+* `URLS`
+
+The first row of the CSV should be the headings. Multiple entries are possible (e.g. an expression of concern and a retraction), but only one type of each, for each DOI, will be imported. (I.e. you cannot have two retractions or two expressions of concern.)
+
+## Idempotency
+The script is idempotent. If you run it multiple times, it will only import new data and the results should be the same after multiple runs.
+
+## Archiving
+After processing a JSON input file, the script will move it to an archive folder in the same S3 bucket.
+
+## Periodic Runs and Missing Input Files
+The script is designed to be run periodically. If it does not find any input files, it will raise an exception and the Airflow DAG will fail. This is by design.
+
+&copy; Crossref 2023

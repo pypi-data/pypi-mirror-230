@@ -1,0 +1,38 @@
+[project]
+name = "retraction-watch-import"
+version = "0.0.1"
+description = "A tool to import Retraction Watch data"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {file = "LICENSE.md"}
+keywords = ["academic", "retractions", "data", "import", "crossref"]
+authors = [
+  {email = "meve@crossref.org"},
+  {name = "Martin Paul Eve"}
+]
+maintainers = [
+  {name = "Martin Paul Eve", email = "meve@crossref.org"}
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python"
+]
+
+dependencies = [
+    "boto3",
+    "claws>=0.0.20",
+    "longsight>=1.0.13",
+    "clannotation",
+    "tenacity==8.0.1",
+    "requests",
+]
+
+[project.urls]
+homepage = "https://labs.crossref.org"
+documentation = "https://labs.crossref.org"
+repository = "https://gitlab.com/crossref/labs/preservationDatabase"
+changelog = "https://gitlab.com/crossref/labs/preservation-data/-/blob/main/CHANGELOG.md"
+
+[build-system]
+requires = ['setuptools>=40.8.0', 'wheel']
+build-backend = 'setuptools.build_meta:__legacy__'
