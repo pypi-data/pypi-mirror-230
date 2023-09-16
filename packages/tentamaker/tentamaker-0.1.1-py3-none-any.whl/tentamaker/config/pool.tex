@@ -1,0 +1,242 @@
+% A.1.1
+Vad kallas en mängd $X$ som uppfyller
+$\Forall x \in X \; \Exists \delta > 0 \Prop{B_{\delta}(x) \subseteq  X}$?
+% Öppen
+%
+
+% A.2.1
+Vad kallas en mängd $X$ som uppfyller
+$\Forall x \in X \; \Exists \delta > 0 \Prop{B_{\delta}(x) \subseteq  X}$?
+% Öppen
+%
+
+% A.3.1
+Vad kallas en mängd $X$ som uppfyller
+$\Forall x \in X \; \Exists \delta > 0 \Prop{B_{\delta}(x) \subseteq  X}$?
+% Öppen
+%
+
+% A.4.1
+Vad kallas en mängd $X$ som uppfyller
+$\Forall x \in X \; \Exists \delta > 0 \Prop{B_{\delta}(x) \subseteq  X}$?
+% Öppen
+%
+
+% B.1.1
+Bestäm dubbelintegralen av funktionen $f(x, y) = 64(x^2 + y^2)/\pi$ över området
+som begränsas av tredje kvadranten av enhets\-cirkeln och $r > \tfrac12$.
+% $\frac{15}{2} = \num{7.5}$
+Polära koordinater ger
+\begin{align*}
+  \int_{\pi}^{3\pi/2}\int_{1/2}^1 \frac{64r^2}{\pi} r\dr\dphi
+  = \frac{64}{\pi}\frac{\pi}{2} \int_{1/2}^1 r^3\dr
+  = 32 \cdot \frac{1}{4} \cdot \left(1 - \frac1{16}\right) = \frac{15}2
+\end{align*}
+%
+
+% B.2.1
+Bestäm dubbelintegralen av funktionen $f(x, y) = 64(x^2 + y^2)/\pi$ över området
+som begränsas av tredje kvadranten av enhets\-cirkeln och $r > \tfrac12$.
+% $\frac{15}{2} = \num{7.5}$
+Polära koordinater ger
+\begin{align*}
+  \int_{\pi}^{3\pi/2}\int_{1/2}^1 \frac{64r^2}{\pi} r\dr\dphi
+  = \frac{64}{\pi}\frac{\pi}{2} \int_{1/2}^1 r^3\dr
+  = 32 \cdot \frac{1}{4} \cdot \left(1 - \frac1{16}\right) = \frac{15}2
+\end{align*}
+%
+
+% B.3.1
+Bestäm dubbelintegralen av funktionen $f(x, y) = 64(x^2 + y^2)/\pi$ över området
+som begränsas av tredje kvadranten av enhets\-cirkeln och $r > \tfrac12$.
+% $\frac{15}{2} = \num{7.5}$
+Polära koordinater ger
+\begin{align*}
+  \int_{\pi}^{3\pi/2}\int_{1/2}^1 \frac{64r^2}{\pi} r\dr\dphi
+  = \frac{64}{\pi}\frac{\pi}{2} \int_{1/2}^1 r^3\dr
+  = 32 \cdot \frac{1}{4} \cdot \left(1 - \frac1{16}\right) = \frac{15}2
+\end{align*}
+%
+
+% B.4.1
+Bestäm dubbelintegralen av funktionen $f(x, y) = 64(x^2 + y^2)/\pi$ över området
+som begränsas av tredje kvadranten av enhets\-cirkeln och $r > \tfrac12$.
+% $\frac{15}{2} = \num{7.5}$
+Polära koordinater ger
+\begin{align*}
+  \int_{\pi}^{3\pi/2}\int_{1/2}^1 \frac{64r^2}{\pi} r\dr\dphi
+  = \frac{64}{\pi}\frac{\pi}{2} \int_{1/2}^1 r^3\dr
+  = 32 \cdot \frac{1}{4} \cdot \left(1 - \frac1{16}\right) = \frac{15}2
+\end{align*}
+%
+
+% B.5.1
+Bestäm dubbelintegralen av funktionen $f(x, y) = 64(x^2 + y^2)/\pi$ över området
+som begränsas av tredje kvadranten av enhets\-cirkeln och $r > \tfrac12$.
+% $\frac{15}{2} = \num{7.5}$
+Polära koordinater ger
+\begin{align*}
+  \int_{\pi}^{3\pi/2}\int_{1/2}^1 \frac{64r^2}{\pi} r\dr\dphi
+  = \frac{64}{\pi}\frac{\pi}{2} \int_{1/2}^1 r^3\dr
+  = 32 \cdot \frac{1}{4} \cdot \left(1 - \frac1{16}\right) = \frac{15}2
+\end{align*}
+%
+
+% B.6.1
+Bestäm dubbelintegralen av funktionen $f(x, y) = 64(x^2 + y^2)/\pi$ över området
+som begränsas av tredje kvadranten av enhets\-cirkeln och $r > \tfrac12$.
+% $\frac{15}{2} = \num{7.5}$
+Polära koordinater ger
+\begin{align*}
+  \int_{\pi}^{3\pi/2}\int_{1/2}^1 \frac{64r^2}{\pi} r\dr\dphi
+  = \frac{64}{\pi}\frac{\pi}{2} \int_{1/2}^1 r^3\dr
+  = 32 \cdot \frac{1}{4} \cdot \left(1 - \frac1{16}\right) = \frac{15}2
+\end{align*}
+%
+
+% C.1.1
+Vilket tal är det tänkt att programmet skall räkna ut (variabeln \texttt{y})? \\
+\begin{python}
+from numpy.linalg import *
+
+x = 1
+y = 1
+
+for k in range(1000):
+    A = [[2*x, 2*y], [-2*x, 1]]
+    b = [x**2 + y**2 - 42, y - x**2]
+    sol = solve(A, b)
+    x = x - sol[0]
+    y = y - sol[1]
+
+print(y)
+\end{python}
+% $6$
+Programmet använder Newtons metod för att beräkna en lösning till ekvationssystemet
+\begin{align*}
+  x^2 + y^2 &= 42 \\
+  y &= x^2
+\end{align*}
+Lösningarna är $(x, y) = (\pm\sqrt{6}, 6)$ och således $y = 6$.
+%
+
+% C.2.1
+Vilket tal är det tänkt att programmet skall räkna ut (variabeln \texttt{y})? \\
+\begin{python}
+from numpy.linalg import *
+
+x = 1
+y = 1
+
+for k in range(1000):
+    A = [[2*x, 2*y], [-2*x, 1]]
+    b = [x**2 + y**2 - 42, y - x**2]
+    sol = solve(A, b)
+    x = x - sol[0]
+    y = y - sol[1]
+
+print(y)
+\end{python}
+% $6$
+Programmet använder Newtons metod för att beräkna en lösning till ekvationssystemet
+\begin{align*}
+  x^2 + y^2 &= 42 \\
+  y &= x^2
+\end{align*}
+Lösningarna är $(x, y) = (\pm\sqrt{6}, 6)$ och således $y = 6$.
+%
+
+% C.3.1
+Vilket tal är det tänkt att programmet skall räkna ut (variabeln \texttt{y})? \\
+\begin{python}
+from numpy.linalg import *
+
+x = 1
+y = 1
+
+for k in range(1000):
+    A = [[2*x, 2*y], [-2*x, 1]]
+    b = [x**2 + y**2 - 42, y - x**2]
+    sol = solve(A, b)
+    x = x - sol[0]
+    y = y - sol[1]
+
+print(y)
+\end{python}
+% $6$
+Programmet använder Newtons metod för att beräkna en lösning till ekvationssystemet
+\begin{align*}
+  x^2 + y^2 &= 42 \\
+  y &= x^2
+\end{align*}
+Lösningarna är $(x, y) = (\pm\sqrt{6}, 6)$ och således $y = 6$.
+%
+
+% D.1.1
+Bestäm flödet av vektorfältet $\bsF(x, y, z) = \frac{1}{\pi} (xy, yz, z^3)$
+genom enhetssfären.
+% $\frac{4}{5} = 0.8$
+Gauss sats ger
+\begin{align*}
+  Q = \iint_{\partial\Omega} \bsF \cdot \Nhat \dS
+  &= \iiint_{\Omega} \nabla \cdot \bsF \dV
+    = \frac{1}{\pi} \iiint_{\Omega} y + z + 3z^2 \dV
+\end{align*}
+Integralen av de första två termerna blir noll pga symmetri. \\
+Sfäriska koordinater och symmetri för den tredje termen ger
+\begin{align*}
+  Q &= \frac{1}{\pi} \iiint_{\Omega} x^2 + y^2 + z^2 \dV \\
+    &= \frac{1}{\pi} \int_0^1 \int_0^{\pi} \int_0^{2\pi} r^2 \cdot
+      r^2\sin(\theta)\dr\dtheta\dphi \\
+    &= \frac{1}{\pi} \int_0^1 r^4 \dr \int_0^{\pi} \sin(\theta)
+      \dtheta \int_0^{2\pi} \dphi \\
+    &= \frac{1}{\pi} \cdot \frac{1}{5} \cdot 2 \cdot 2\pi
+     = \frac{4}{5}
+\end{align*}
+%
+
+% D.2.1
+Bestäm flödet av vektorfältet $\bsF(x, y, z) = \frac{1}{\pi} (xy, yz, z^3)$
+genom enhetssfären.
+% $\frac{4}{5} = 0.8$
+Gauss sats ger
+\begin{align*}
+  Q = \iint_{\partial\Omega} \bsF \cdot \Nhat \dS
+  &= \iiint_{\Omega} \nabla \cdot \bsF \dV
+    = \frac{1}{\pi} \iiint_{\Omega} y + z + 3z^2 \dV
+\end{align*}
+Integralen av de första två termerna blir noll pga symmetri. \\
+Sfäriska koordinater och symmetri för den tredje termen ger
+\begin{align*}
+  Q &= \frac{1}{\pi} \iiint_{\Omega} x^2 + y^2 + z^2 \dV \\
+    &= \frac{1}{\pi} \int_0^1 \int_0^{\pi} \int_0^{2\pi} r^2 \cdot
+      r^2\sin(\theta)\dr\dtheta\dphi \\
+    &= \frac{1}{\pi} \int_0^1 r^4 \dr \int_0^{\pi} \sin(\theta)
+      \dtheta \int_0^{2\pi} \dphi \\
+    &= \frac{1}{\pi} \cdot \frac{1}{5} \cdot 2 \cdot 2\pi
+     = \frac{4}{5}
+\end{align*}
+%
+
+% D.3.1
+Bestäm flödet av vektorfältet $\bsF(x, y, z) = \frac{1}{\pi} (xy, yz, z^3)$
+genom enhetssfären.
+% $\frac{4}{5} = 0.8$
+Gauss sats ger
+\begin{align*}
+  Q = \iint_{\partial\Omega} \bsF \cdot \Nhat \dS
+  &= \iiint_{\Omega} \nabla \cdot \bsF \dV
+    = \frac{1}{\pi} \iiint_{\Omega} y + z + 3z^2 \dV
+\end{align*}
+Integralen av de första två termerna blir noll pga symmetri. \\
+Sfäriska koordinater och symmetri för den tredje termen ger
+\begin{align*}
+  Q &= \frac{1}{\pi} \iiint_{\Omega} x^2 + y^2 + z^2 \dV \\
+    &= \frac{1}{\pi} \int_0^1 \int_0^{\pi} \int_0^{2\pi} r^2 \cdot
+      r^2\sin(\theta)\dr\dtheta\dphi \\
+    &= \frac{1}{\pi} \int_0^1 r^4 \dr \int_0^{\pi} \sin(\theta)
+      \dtheta \int_0^{2\pi} \dphi \\
+    &= \frac{1}{\pi} \cdot \frac{1}{5} \cdot 2 \cdot 2\pi
+     = \frac{4}{5}
+\end{align*}
+%
