@@ -1,0 +1,69 @@
+__default__:
+  job-name: "{rule}"
+  partition: agap_long
+  nodes: '1'
+  cpus-per-task: '1'
+  output: cluster_log/{rule}_%j.out
+  error: cluster_log/{rule}_%j.err
+  time: 10-00:00:00
+  mem: 10G
+  account: agap
+  
+Quality_trimming:
+  partition: agap_long
+  cpus-per-task: '4'
+  
+Map_On_host:
+  partition: agap_long
+  cpus-per-task: '4'
+  mem: 20G
+  
+Map_On_bacteria:
+  partition: agap_long
+  cpus-per-task: '4'
+  mem: 20G
+ 
+bwa_genome_host_mapping:
+  partition: agap_long
+  cpus-per-task: '4'
+  mem: 20G
+  
+Megahit_Assembly:
+  partition: agap_long
+  cpus-per-task: '8'
+  mem: 40G
+  
+Cap3_Assembly:
+  partition: agap_long
+  cpus-per-task: '10'
+  
+Map_On_Assembly:
+  partition: agap_long
+  cpus-per-task: '4'
+  mem: 20G
+  
+Blast_contigs_on_nr:
+  partition: agap_bigmem
+  cpus-per-task: '1'
+  mem: 200G
+  
+complete_taxo:
+  partition: agap_long
+  cpus-per-task: '4'
+  
+Blast_contigs_on_nt:
+  partition: agap_long
+  cpus-per-task: '1'
+  
+merge_depth:
+  partition: agap_long
+  mem: 75G
+  
+range_depth:
+  partition: agap_long
+  mem: 40G
+  
+stats_depth:
+  partition: agap_long
+  mem: 40G
+
