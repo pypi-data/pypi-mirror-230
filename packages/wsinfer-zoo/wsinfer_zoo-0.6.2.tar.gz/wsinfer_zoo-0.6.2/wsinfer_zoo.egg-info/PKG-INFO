@@ -1,0 +1,44 @@
+Metadata-Version: 2.1
+Name: wsinfer-zoo
+Version: 0.6.2
+Summary: A client for model zoo for WSInfer-compatible models.
+Home-page: https://github.com/SBU-BMI/wsinfer-zoo
+Author: Jakub Kaczmarzyk
+Author-email: jakub.kaczmarzyk@stonybrookmedicine.edu
+License: Apache License 2.0
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Healthcare Industry
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Scientific/Engineering :: Image Recognition
+Classifier: Topic :: Scientific/Engineering :: Medical Science Apps.
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: click!=8.1.4,!=8.1.5,<9,>=8.0
+Requires-Dist: huggingface_hub
+Requires-Dist: jsonschema
+Requires-Dist: tabulate
+Provides-Extra: dev
+Requires-Dist: black; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Requires-Dist: isort; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Requires-Dist: pytest; extra == "dev"
+
+# WSInfer Model Zoo
+
+This is a model zoo for WSInfer. Pretrained model weights and their configuration files are hosted with love on the 🤗 Huggingface Hub. This code repository facilitates the download and use of these models.
+
+It is absolutely a work in progress. Please report bugs using the GitHub issues.
