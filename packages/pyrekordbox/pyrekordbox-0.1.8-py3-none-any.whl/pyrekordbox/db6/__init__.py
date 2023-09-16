@@ -1,0 +1,45 @@
+# -*- coding: utf-8 -*-
+# Author: Dylan Jones
+# Date:   2022-05-07
+
+from .tables import (
+    AgentRegistry,
+    CloudAgentRegistry,
+    ContentActiveCensor,
+    ContentCue,
+    ContentFile,
+    DjmdActiveCensor,
+    DjmdAlbum,
+    DjmdArtist,
+    DjmdCategory,
+    DjmdColor,
+    DjmdContent,
+    DjmdCue,
+    DjmdDevice,
+    DjmdGenre,
+    DjmdHistory,
+    DjmdHotCueBanklist,
+    DjmdKey,
+    DjmdLabel,
+    DjmdMenuItems,
+    DjmdMixerParam,
+    DjmdMyTag,
+    DjmdPlaylist,
+    DjmdProperty,
+    DjmdRelatedTracks,
+    DjmdSampler,
+    DjmdSongHistory,
+    DjmdSongHotCueBanklist,
+    DjmdSongMyTag,
+    DjmdSongPlaylist,
+    DjmdSongRelatedTracks,
+    DjmdSongSampler,
+    DjmdSongTagList,
+    DjmdSort,
+    HotCueBanklistCue,
+    ImageFile,
+    SettingFile,
+    UuidIDMap,
+)
+
+from .database import Rekordbox6Database, open_rekordbox_database
