@@ -1,0 +1,11 @@
+services:
+  ms-credentials:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DIRECTORY_BASE: ${DIRECTORY_BASE:-./application}
+        EXPORT_PORT: ${EXPORT_PORT:-5000}
+    ports:
+      - "${EXPORT_PORT:-5000}:${EXPORT_PORT:-5000}"
