@@ -1,0 +1,40 @@
+[package]
+name = "polars-json"
+version = "0.32.0"
+authors = ["Ritchie Vink <ritchie46@gmail.com>"]
+edition = "2021"
+homepage = "https://www.pola.rs/"
+license = "MIT"
+repository = "https://github.com/pola-rs/polars"
+description = "JSON related logic for the Polars DataFrame library"
+resolver = "2"
+
+[dependencies]
+polars-arrow = { version = "0.32.0", path = "../polars-arrow", default-features = false }
+polars-error = { version = "0.32.0", path = "../polars-error" }
+polars-utils = { version = "0.32.0", path = "../polars-utils" }
+fallible-streaming-iterator = { version = "0.1" }
+ahash = "0.8"
+hashbrown = { version = "0.14", features = ["rayon", "ahash"] }
+indexmap = { version = "2", features = ["std"] }
+num-traits = "0.2"
+simd-json = { version = "0.10", features = ["allow-non-simd", "known-key"] }
+
+[dependencies.arrow]
+package = "arrow2"
+git = "https://github.com/jorgecarleitao/arrow2"
+rev = "7c93e358fc400bf3c0c0219c22eefc6b38fc2d12"
+# branch = ""
+# version = "0.17.4"
+default-features = false
+features = [
+  "compute_aggregate",
+  "compute_arithmetics",
+  "compute_boolean",
+  "compute_boolean_kleene",
+  "compute_cast",
+  "compute_comparison",
+  "compute_concatenate",
+  "compute_filter",
+  "compute_if_then_else",
+]

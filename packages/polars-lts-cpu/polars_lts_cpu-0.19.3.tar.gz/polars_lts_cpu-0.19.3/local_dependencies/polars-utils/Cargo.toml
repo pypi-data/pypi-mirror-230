@@ -1,0 +1,28 @@
+[package]
+name = "polars-utils"
+version = "0.32.0"
+authors = ["Ritchie Vink <ritchie46@gmail.com>"]
+edition = "2021"
+homepage = "https://www.pola.rs/"
+license = "MIT"
+repository = "https://github.com/pola-rs/polars"
+description = "Private utils for the Polars DataFrame library"
+resolver = "2"
+
+[dependencies]
+polars-error = { version = "0.32.0", path = "../polars-error" }
+sysinfo = { version = "0.29", default-features = false, optional = true }
+ahash = "0.8"
+bytemuck = { version = "1", features = ["derive", "extern_crate_alloc"] }
+hashbrown = { version = "0.14", features = ["rayon", "ahash"] }
+num-traits = "0.2"
+once_cell = "1"
+rayon = "1.6"
+smartstring = "1"
+
+[build-dependencies]
+version_check = "0.9.4"
+
+[features]
+bigidx = []
+nightly = []

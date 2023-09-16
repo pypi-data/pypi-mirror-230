@@ -1,0 +1,20 @@
+[package]
+name = "polars-algo"
+version = "0.32.0"
+authors = ["Ritchie Vink <ritchie46@gmail.com>"]
+edition = "2021"
+homepage = "https://www.pola.rs/"
+license = "MIT"
+repository = "https://github.com/pola-rs/polars"
+description = "Algorithms built upon Polars primitives"
+resolver = "2"
+
+[dependencies]
+polars-core = { version = "0.32.0", path = "../polars-core", features = ["dtype-categorical", "asof_join"], default-features = false }
+polars-lazy = { version = "0.32.0", path = "../polars-lazy", features = ["asof_join", "concat_str", "strings"] }
+polars-ops = { version = "0.32.0", path = "../polars-ops", features = ["dtype-categorical", "asof_join"], default-features = false }
+
+[package.metadata.docs.rs]
+all-features = true
+# defines the configuration attribute `docsrs`
+rustdoc-args = ["--cfg", "docsrs"]

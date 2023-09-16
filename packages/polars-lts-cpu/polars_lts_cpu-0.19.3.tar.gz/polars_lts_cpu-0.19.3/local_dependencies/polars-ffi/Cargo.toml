@@ -1,0 +1,33 @@
+[package]
+name = "polars-ffi"
+version= "0.32.0"
+authors= ["Ritchie Vink <ritchie46@gmail.com>"]
+edition= "2021"
+homepage= "https://www.pola.rs/"
+license= "MIT"
+repository= "https://github.com/pola-rs/polars"
+resolver = "2"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+polars-core = { version = "0.32.0", path = "../polars-core", default-features = false }
+
+[dependencies.arrow]
+package = "arrow2"
+git = "https://github.com/jorgecarleitao/arrow2"
+rev = "7c93e358fc400bf3c0c0219c22eefc6b38fc2d12"
+# branch = ""
+# version = "0.17.4"
+default-features = false
+features = [
+  "compute_aggregate",
+  "compute_arithmetics",
+  "compute_boolean",
+  "compute_boolean_kleene",
+  "compute_cast",
+  "compute_comparison",
+  "compute_concatenate",
+  "compute_filter",
+  "compute_if_then_else",
+]
