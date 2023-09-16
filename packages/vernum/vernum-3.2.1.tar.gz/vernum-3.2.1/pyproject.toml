@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vernum"
+authors = [
+    {name = "Steampunk Wizard", email = "vernum@steampunkwizard.ca"}
+]
+description = "Easy semantic versioning for projects in Git"
+readme = "README.md"
+requires-python = ">=3.7"
+license = {text = "MIT"}
+dependencies = []
+dynamic = ["version"]
+
+[tool.setuptools.package-dir]
+vernum = "vernum"
+
+[project.scripts]
+vernum = "vernum.handler:main"
+
+[tool.setuptools.dynamic]
+version = {file = [".version"]}

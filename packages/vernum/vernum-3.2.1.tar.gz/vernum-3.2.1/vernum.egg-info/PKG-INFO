@@ -1,0 +1,57 @@
+Metadata-Version: 2.1
+Name: vernum
+Version: 3.2.1
+Summary: Easy semantic versioning for projects in Git
+Author-email: Steampunk Wizard <vernum@steampunkwizard.ca>
+License: MIT
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# VerNum
+
+Version numbering and git tagging for project releases
+
+[Watch the video](https://www.youtube.com/watch?v=JD8WdVNv1ac)
+
+## Installation
+
+Requires Python 3 to run the command; your project can be anything.
+
+```
+pip3 install vernum
+```
+
+## What it does
+
+- Read the Git tags in the repo that match the pattern e.g. "v5.6.1" and pick the highest value
+- Increment the version number for major, minor, or patch releases - patch is the default
+- Write the new version number to a file e.g. "5.6.2"
+- Optionally create and push a git tag with the version number in it
+
+## Usage
+
+Requirements:
+
+- CD to the root of the project before running it
+- Be on the branch that you use for releases (i.e. `master`)
+- Be fully up-to-date in git (i.e. merged, committed, and pushed)
+
+Then run the command:
+
+- `vernum major` to update the major version level, i.e. 5.6.2 -> 6.0.0
+- `vernum minor` to update the minor version level, i.e. 5.6.2 -> 5.7.0
+- `vernum patch` to update the patch version level, i.e. 5.6.2 -> 5.6.3
+
+Note that `patch` is the default so you can just say `vernum` for a patch release
+
+Reference the `.version` file within your code when it needs to know the version.
+
+Use the provided `vernum.gitlab-ci.yml` to use it in GitLab.
+
+VerNum looks at the most recent git tag that fits the format, then increments it appropriately. It also generates the `.version` file.
+
+Options:
+
+- `--push-tag` create a git tag for the version and push it
+- `--dry-run` just output the information; don't do anything
