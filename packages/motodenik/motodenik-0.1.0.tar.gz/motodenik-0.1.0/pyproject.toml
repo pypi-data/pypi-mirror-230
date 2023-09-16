@@ -1,0 +1,28 @@
+[project]
+name = "motodenik"
+version = "0.1.0"
+description = "Demo projekt pro pytest kurz."
+authors = [
+    { name = "Jan Kolomaznik", email = "jan.kolomaznik@gmail.com" },
+]
+dependencies = []
+requires-python = ">=3.11"
+readme = "README.md"
+
+[project.license]
+text = "MIT"
+
+[build-system]
+requires = [
+    "pdm-backend",
+]
+build-backend = "pdm.backend"
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "pytest>=7.4.2",
+    "pytest-mock>=3.11.1",
+]
+
+[tool.pdm.scripts]
+test = "pytest"
