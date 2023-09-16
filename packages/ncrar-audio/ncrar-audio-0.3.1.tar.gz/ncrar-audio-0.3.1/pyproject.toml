@@ -1,0 +1,32 @@
+[project]
+name = "ncrar-audio"
+description = "Audio tools supporting psiexperiment"
+readme = "readme.md"
+requires-python = ">=3.7"
+license = {file = "license.txt"}
+authors = [
+    {name = "Buran Consulting, LLC", email="info@bradburan.com"}
+]
+maintainers = [
+    {name = "Buran Consulting, LLC", email="info@bradburan.com"}
+]
+dependencies = [
+    "numpy",
+    "scipy",
+    "pandas",
+    "python-osc",
+    "sounddevice",
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+docs = ["sphinx", "pydata_sphinx_theme", "pygments-enaml", "sphinx-autobuild", "sphinxcontrib-apidoc", "sphinx-gallery"]
+test = ["pytest", "pytest-benchmark"]
+examples = ["psiaudio", "matplotlib"]
+
+[build-system]
+requires = ["setuptools>=61.2", "wheel", "setuptools_scm[toml]>=3.4.3"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+write_to = "ncrar_audio/version.py"
