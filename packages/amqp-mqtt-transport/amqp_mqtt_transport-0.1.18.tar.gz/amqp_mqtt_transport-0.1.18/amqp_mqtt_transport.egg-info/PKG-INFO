@@ -1,0 +1,34 @@
+Metadata-Version: 2.1
+Name: amqp-mqtt-transport
+Version: 0.1.18
+Summary: Small wrapper for pykka-amqp and paho-mqtt packages. Makes it easier to create consumers/publishers
+Author-email: Igor Toropov <it.cups.54@gmail.com>
+License: MIT
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: tenacity<=8.2.2
+Requires-Dist: aiormq<=6.7.6
+Requires-Dist: aio-pika<=9.1.4
+Requires-Dist: autopep8==2.0.2
+Requires-Dist: gmqtt<=0.6.12
+
+# amqp-mqtt-transport
+
+Пакет враппер для упрощения работы с amqp/mqtt пакетами
+
+## Описание
+
+В пакете есть классы для создания и поддержания подключения AMQPController/MQTTController, а также классы консюмеры и паблишеры. Классы находятся в подмодулях относящихся к соответвующему протоколу.
+
+## Использование
+Для упрощения установки/запуска был сделан Makefile, подробнее можно узнать запустив 
+```
+make help
+```
+Пакет препочтительно устанавливать из репозитория pypi
+
+----
