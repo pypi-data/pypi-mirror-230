@@ -1,0 +1,43 @@
+site_name: ggml-python
+repo_url: https://github.com/abetlen/ggml-python
+
+theme:
+  name: material
+  palette:
+    primary: white
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - toc.integrate
+    - navigation.footer
+
+plugins:
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            members_order: source
+            group_by_category: false
+            signature_crossrefs: true
+            show_signature: true
+            docstring_section_style: list
+            show_root_heading: true
+          import:
+            - https://docs.python.org/3/objects.inv
+            - https://numpy.org/doc/stable/objects.inv
+  - search
+  - social
+
+markdown_extensions:
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true 
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+
+watch:
+  - ggml
