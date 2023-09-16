@@ -1,0 +1,17 @@
+- project:
+    templates:
+      - openstack-cover-jobs-neutron
+      - build-openstack-docs-pti
+      - check-requirements
+      - openstack-python3-jobs-neutron
+    check:
+      jobs:
+        - neutron-tempest-plugin-tap-as-a-service
+    gate:
+      jobs:
+        - neutron-tempest-plugin-tap-as-a-service
+    periodic-weekly:
+      jobs:
+        - openstack-tox-py39
+        - openstack-tox-py39-with-oslo-master
+        - neutron-tempest-plugin-tap-as-a-service
