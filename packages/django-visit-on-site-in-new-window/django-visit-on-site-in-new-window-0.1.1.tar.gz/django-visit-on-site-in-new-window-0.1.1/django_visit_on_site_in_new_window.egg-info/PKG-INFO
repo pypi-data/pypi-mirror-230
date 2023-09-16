@@ -1,0 +1,64 @@
+Metadata-Version: 2.1
+Name: django-visit-on-site-in-new-window
+Version: 0.1.1
+Summary: Turn VISIT-ON-SITE button to open in the new window on Django's admin site.
+Author: Suo Jiang
+Author-email: suojiang@zencore.cn
+Maintainer: Suo Jiang
+Maintainer-email: suojiang@zencore.cn
+License: MIT
+Keywords: django admin extentions,django visit on site in new window
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Description-Content-Type: text/markdown
+
+# django-visit-on-site-in-new-window
+
+Turn VISIT-ON-SITE button to open in the new window on Django's admin site.
+
+## Install
+
+```shell
+pip install django-visit-on-site-in-new-window
+```
+
+## Usage
+
+**pro/settings.py**
+
+```python
+INSTALLED_APPS = [
+    ...
+    'django_static_jquery3',
+    'django_visit_on_site_in_new_window',
+    ...
+]
+```
+
+**app/admin.py**
+
+```python
+from django.contrib import admin
+from django_visit_on_site_in_new_window.admin import DjangoVisitOnSiteInNewWindowAdmin
+from .models import Book
+
+
+class BookAdmin(DjangoVisitOnSiteInNewWindowAdmin, admin.ModelAdmin):
+    list_display = ["name", "author"]
+
+admin.site.register(Book, BookAdmin)
+```
+
+## Releases
+
+### v0.1.0 2020/03/10
+
+- First release.
+
+### v0.1.1 2023/09/15
+
+- Doc update.
