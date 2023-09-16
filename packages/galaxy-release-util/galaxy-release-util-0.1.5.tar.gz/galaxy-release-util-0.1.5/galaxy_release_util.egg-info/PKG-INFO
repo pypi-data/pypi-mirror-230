@@ -1,0 +1,101 @@
+Metadata-Version: 2.1
+Name: galaxy-release-util
+Version: 0.1.5
+Summary: Utlity for various tasks around creating Galaxy releases
+Home-page: https://github.com/galaxyproject/galaxy-release-util
+Author: Galaxy Project and Community
+Author-email: galaxy-committers@lists.galaxyproject.org
+License: AFL
+Keywords: Galaxy
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Academic Free License (AFL)
+Classifier: Natural Language :: English
+Classifier: Operating System :: POSIX
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Software Development
+Classifier: Topic :: Software Development :: Code Generators
+Classifier: Topic :: Software Development :: Testing
+Requires-Python: >=3.7
+Description-Content-Type: text/x-rst
+Requires-Dist: build
+Requires-Dist: click
+Requires-Dist: docutils
+Requires-Dist: packaging
+Requires-Dist: PyGithub
+Requires-Dist: requests
+Requires-Dist: twine
+
+
+.. image:: https://badge.fury.io/py/galaxy-release-utils.svg
+   :target: https://pypi.org/project/galaxy-release-utils/
+
+
+
+Overview
+--------
+
+Scripts to create new Galaxy_ releases.
+
+* Code: https://github.com/galaxyproject/galaxy-release-util
+
+.. _Galaxy: http://galaxyproject.org/
+
+Development
+-----------
+
+Tests can be executed with `tox`.
+
+Release Checklist
+-----------------
+
+* Update HISTORY.rst
+* Update version number in setup.cfg
+* Run `make dist`
+* Tag a new version and create a release from the GitHub interface
+
+History
+-------
+
+.. to_doc
+
+
+
+------------------
+0.1.5 (14-09-2023)
+------------------
+* Bootstrap history fixes for regenerating existing docs
+
+------------------
+0.1.4 (30-06-2023)
+------------------
+* Skip empty prerelease changelog when parsing changelog
+
+------------------
+0.1.3 (28-06-2023)
+------------------
+* Add step/checkbox on updating db revision identifier
+* Bootstrap history fixes
+
+------------------
+0.1.2 (12-06-2023)
+------------------
+* Fix isinstance assertion
+
+------------------
+0.1.1 (12-06-2023)
+------------------
+* Add simplified makefile, development instruction
+* Fix project description
+
+------------------
+0.1.0 (12-06-2023)
+------------------
+
+* Initial import from the Galaxy codebase
