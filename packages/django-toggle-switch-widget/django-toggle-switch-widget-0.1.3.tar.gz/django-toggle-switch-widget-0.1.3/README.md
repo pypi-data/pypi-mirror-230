@@ -1,0 +1,88 @@
+# django-toggle-switch-widget
+
+Display toggle switch in stead of checkbox for BooleanField in django admin site.
+
+## Install
+
+```shell
+pip install django-toggle-switch-widget
+```
+
+## Widget init parameters
+
+- attrs: Inherit from CheckboxInput.
+- check_test: Inherit from CheckboxInput.
+- round: Default to False. If round=True, display round switch. If round=False, display squire switch.
+- klass: Default to empty string "". Pre-setted klass are:
+    - django-toggle-switch-success: Show success color (green, #06ad3d) while toggle on.
+    - django-toggle-switch-warning: Show warning color (orange, #ff6a00) while toggle on.
+    - django-toggle-switch-danger: Show danger color (red, #ba2121) while toggle on.
+    - django-toggle-switch-dark-primary: Show dark primary color (darkcyan, #417690) while toggle on.
+    - django-toggle-switch-primary: Show primary color (cadetblue, #79aec8) while toggle on.
+
+## Usage
+
+**pro/settings.py**
+
+```python
+INSTALLED_APPS = [
+    ...
+    'django_toggle_switch_widget',
+    ...
+]
+```
+
+**app/model.py**
+
+```python
+from django.db import models
+
+class TestModel(models.Model):
+    title = models.CharField(max_length=64, help_text="Please input model title.")
+    published = models.BooleanField(verbose_name="Is this test model published.")
+    is_demo = models.BooleanField(help_text="Is this a demo test model?")
+
+```
+
+**app/admin.py**
+
+```python
+from django.contrib import admin
+from django.forms import ModelForm
+from django_toggle_switch_widget.widgets import DjangoToggleSwitchWidget
+from .models import TestModel
+
+class TestModelForm(ModelForm):
+    class Meta:
+        model = TestModel
+        fields = "__all__"
+        widgets = {
+            "published": DjangoToggleSwitchWidget(klass="django-toggle-switch-dark-primary"),
+            "is_demo": DjangoToggleSwitchWidget(round=True, klass="django-toggle-switch-success"),
+        }
+
+class TestModeldmin(admin.ModelAdmin):
+    form = TestModelForm
+
+admin.site.register(TestModel, TestModeldmin)
+
+```
+
+## Tips
+
+- It's better to use together with django-checkbox-normalize app.
+
+## Release
+
+
+### v0.1.0 2020/03/02
+
+- First release.
+
+### v0.1.1 2020/09/09
+
+- Add License.
+
+### v0.1.3 2023/09/15
+
+- Doc update.
