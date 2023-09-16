@@ -1,0 +1,89 @@
+Metadata-Version: 2.1
+Name: dfm-tools
+Version: 0.14.0
+Summary: dfm_tools are pre- and post-processing tools for Delft3D FM
+Home-page: https://github.com/Deltares/dfm_tools
+Author: Jelmer Veenstra
+Author-email: Jelmer.Veenstra@Deltares.nl
+License: GNU General Public License v3 (GPLv3)
+Keywords: dfm_tools,D-FlowFM,D-HYDRO,post-processing,pre-processing,mapfiles,hisfiles
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+Classifier: License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: scipy <1.10.0
+Requires-Dist: numpy
+Requires-Dist: matplotlib
+Requires-Dist: pandas
+Requires-Dist: shapely >=1.7.0
+Requires-Dist: geopandas
+Requires-Dist: fiona >=1.9
+Requires-Dist: contextily
+Requires-Dist: xarray
+Requires-Dist: dask
+Requires-Dist: netcdf4 >=1.5.3
+Requires-Dist: bottleneck
+Requires-Dist: xugrid >=0.6.4
+Requires-Dist: cdsapi
+Requires-Dist: pydap >=3.3.0
+Requires-Dist: pooch
+Requires-Dist: hydrolib-core >=0.5.1
+Requires-Dist: meshkernel >=2.1.0
+Requires-Dist: pandas <2.0.0 ; python_version <= "3.8"
+Provides-Extra: complete
+Requires-Dist: bump2version >=0.5.11 ; extra == 'complete'
+Requires-Dist: flake8 ; extra == 'complete'
+Requires-Dist: pytest ; extra == 'complete'
+Requires-Dist: pytest-cov ; extra == 'complete'
+Requires-Dist: twine ; extra == 'complete'
+Requires-Dist: jupyter ; extra == 'complete'
+Requires-Dist: notebook ; extra == 'complete'
+Requires-Dist: mkdocs ; extra == 'complete'
+Requires-Dist: mkdocs-material ; extra == 'complete'
+Requires-Dist: mkdocs-jupyter ; extra == 'complete'
+Requires-Dist: mkdocstrings-python ; extra == 'complete'
+Requires-Dist: mkdocs-exclude ; extra == 'complete'
+Provides-Extra: test
+Requires-Dist: bump2version >=0.5.11 ; extra == 'test'
+Requires-Dist: flake8 ; extra == 'test'
+Requires-Dist: pytest ; extra == 'test'
+Requires-Dist: pytest-cov ; extra == 'test'
+Requires-Dist: twine ; extra == 'test'
+Requires-Dist: jupyter ; extra == 'test'
+Requires-Dist: notebook ; extra == 'test'
+Requires-Dist: mkdocs ; extra == 'test'
+Requires-Dist: mkdocs-material ; extra == 'test'
+Requires-Dist: mkdocs-jupyter ; extra == 'test'
+Requires-Dist: mkdocstrings-python ; extra == 'test'
+Requires-Dist: mkdocs-exclude ; extra == 'test'
+
+[![pytest-py38](https://github.com/Deltares/dfm_tools/actions/workflows/pytest-py38.yml/badge.svg?branch=main)](https://github.com/Deltares/dfm_tools/actions/workflows/pytest-py38.yml)
+[![pytest-py39](https://github.com/Deltares/dfm_tools/actions/workflows/pytest-py39.yml/badge.svg?branch=main)](https://github.com/Deltares/dfm_tools/actions/workflows/pytest-py39.yml)
+[![pytest-py310](https://github.com/Deltares/dfm_tools/actions/workflows/pytest-py310.yml/badge.svg?branch=main)](https://github.com/Deltares/dfm_tools/actions/workflows/pytest-py310.yml)
+[![pytest-py311](https://github.com/Deltares/dfm_tools/actions/workflows/pytest-py311.yml/badge.svg?branch=main)](https://github.com/Deltares/dfm_tools/actions/workflows/pytest-py311.yml)
+[![codecov](https://img.shields.io/codecov/c/github/deltares/dfm_tools.svg?style=flat-square)](https://app.codecov.io/gh/deltares/dfm_tools?displayType=list)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Deltares_dfm_tools&metric=alert_status)](https://sonarcloud.io/summary/overall?id=Deltares_dfm_tools)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Deltares/dfm_tools/HEAD?urlpath=/tree/docs/notebooks)
+[![Available on pypi](https://img.shields.io/pypi/v/dfm_tools.svg)](https://pypi.python.org/pypi/dfm_tools)
+[![Supported versions](https://img.shields.io/pypi/pyversions/dfm_tools.svg)](https://pypi.org/project/dfm_tools)
+[![Downloads](https://img.shields.io/pypi/dm/dfm_tools.svg)](https://pypistats.org/packages/dfm_tools)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7857393.svg)](https://doi.org/10.5281/zenodo.7857393)
+
+# dfm_tools
+
+A Python package for pre- and postprocessing D-FlowFM model input and output files. Contains convenience functions built on top of other packages like [xarray](https://github.com/pydata/xarray), [xugrid](https://github.com/Deltares/xugrid), [hydrolib-core](https://github.com/Deltares/HYDROLIB-core) and many more.
+
+## Information
+
+- install with ``pip install dfm_tools -U`` (or [installation guide](https://deltares.github.io/dfm_tools/installation))
+- [online documentation](https://deltares.github.io/dfm_tools) with installation guide, contributing guide, tutorials/examples, API reference and a convenient search box.
+- Bug or feature request? Create a [GitHub issue](https://github.com/Deltares/dfm_tools/issues)
