@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "nonebot-plugin-web-config"
+version = "0.1.3"
+description = "Nonebot的热更新webui的基于pydantic的配置"
+authors = ["canxin <1969730106@qq.com>"]
+readme = "README.md"
+packages = [{ include = "nonebot_plugin_web_config" }]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+fastapi = "^0.101.0"
+fastapi-login = "^1.9.1"
+uvicorn = "^0.23.2"
+nonebot2 = "^2.0.0"
+python-multipart = "^0.0.6"
+
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

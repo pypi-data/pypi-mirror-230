@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #sidebar {
+            width: 200px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: #f6f6f6;
+            overflow-y: auto;
+            transition: width 0.3s ease-in-out;
+        }
+
+        #sidebar.hide {
+            width: 30px;
+        }
+
+        #sidebar.collapsed * {
+            display: none;
+        }
+
+        #sidebar.collapsed .toggle-bar {
+            display: flex;
+        }
+
+        .toggle-bar {
+            height: 30px;
+            background-color: lightgrey;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #42b983;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .menu {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .menu-item {
+            border-bottom: 1px solid #eaecef;
+        }
+
+        .menu-link {
+            display: block;
+            color: #2c3e50;
+            padding: 15px 20px;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .menu-link:hover {
+            background-color: #eaecef;
+        }
+
+        .submenu {
+            list-style: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+
+        .submenu-item {
+            border-bottom: 1px solid #eaecef;
+        }
+
+        .submenu-link {
+            display: block;
+            color: #2c3e50;
+            padding: 15px 40px;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .submenu-link:hover {
+            background-color: #eaecef;
+        }
+
+        .active + .submenu {
+            max-height: 100vh;
+        }
+
+        .menu-link::after {
+            content: '\25B6';
+            float: right;
+            margin-left: 5px;
+            transform-origin: center center;
+            transition-duration: 0.3s;
+            transition-property: transform;
+            color: #42b983;
+            font-size: 12px;
+            line-height: normal;
+            vertical-align: text-top;
+            margin-top: -1px;
+            margin-right: -5px;
+        }
+
+        .active::after {
+            transform: rotate(90deg);
+        }
+
+        .content-box {
+            margin-top: 50px;
+            margin-left: 300px;
+            margin-right: 50px;
+            transition: width 0.5s, margin 0.5s;
+        }
+
+        .card {
+            margin-bottom: 1rem;
+        }
+
+        .control-icon {
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            margin: 0 5px;
+        }
+
+        .add-icon-style {
+            cursor: pointer;
+            width: 35px;
+            height: 35px;
+            margin: 0;
+        }
+
+        .btn-click-effect {
+            transition: transform .2s;
+        }
+
+        .btn-click-effect:active {
+            transform: scale(0.95);
+        }
+
+        .custom-control-input:checked ~ .custom-control-label::before {
+            transform: scale(1.5);
+        }
+
+        .custom-control-label::before {
+            transform: scale(1.5);
+        }
+
+        .custom-switch {
+            text-align: right;
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<div id="sidebar">
+    <div class="toggle-bar" onclick="toggleSidebar()">&#9776;</div>
+    <img src="/static/nonebot_logo.png"
+         alt="Sidebar Image" style="width: 60px; height: auto; margin-left: 30px">
+    <h2 style="padding: 10px; font-size: 18px; font-weight: bold;">Nonebot配置</h2>
+
+    <ul class="menu">
+        {% for item in menu %}
+            <li class="menu-item">
+                {% if item.submenu %}
+                    <a type="buttom" class="menu-link" onclick="toggleSubmenu(this)">{{ item.name }}</a>
+                    <ul class="submenu">
+                        {% for subitem in item.submenu %}
+                            <li class="submenu-item"><a href="/{{ subitem.link }}"
+                                                        class="submenu-link">{{ subitem.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <a href="{{ item.link }}" class="menu-link">{{ item.name }}</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% if data.get('dict') is mapping %}
+
+
+    <div class="dict-box content-box">
+        {% for key, item in data.get('dict').items() %}
+            <div class="card">
+                <div class="card-header">
+                    {{ item.des }}
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center flex-fill">
+                        <h5 class="card-title mb-0 flex-shrink-1 mr-5">{{ key }}</h5>
+
+                        <div class="form-group mb-0 flex-grow-1">
+                            {% if item.value is boolean %}
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="{{ key }}"
+                                           name="{{ key }}"
+                                           value="true" {% if item.value %}checked{% endif %}>
+                                    <label class="custom-control-label" for="{{ key }}">
+                                    </label>
+                                </div>
+                            {% else %}
+                                <textarea class="form-control" id="{{ key }}"
+                                          name="{{ key }}">{{ item.value }}</textarea>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+
+        <button class="btn btn-lg btn-primary save-dict-btn btn-click-effect">Save</button>
+        </form>
+    </div>
+
+{% elif data.get('list-dict') is mapping %}
+
+    <div class="list-dict-box content-box">
+        {% for key, item in data.get('list-dict').items() %}
+            <div class="card">
+                <div class="card-header">
+                    {{ key }}
+                    <div class="float-right">
+                        <img src="/static/delete.png" alt="Delete"
+                             class="control-icon delete-icon btn-click-effect">
+                        <img src="/static/edit.png" alt="Edit" class="control-icon edit-icon btn-click-effect">
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <p class="card-text">{{ item }}</p>
+                </div>
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-lg btn-primary btn-click-effect">Add</button>
+    </div>
+
+{% else %}
+{% endif %}
+
+</body>
+<script>
+    let listBox = document.querySelector(".list-dict-box");
+    if (listBox) {
+        let addButton = document.querySelector(".list-dict-box .btn-primary");
+        if (addButton) {
+            addButton.addEventListener("click", function () {
+                addButton.style.display = 'none';
+                let newCard = document.createElement("div");
+                newCard.innerHTML = `
+            <div class="card new-card">
+                <div class="card-header">
+                    <input type="text" class="form-control" id="newTitle" placeholder="Enter title">
+                </div>
+                <div class="card-body">
+                    <textarea class="form-control" id="newBody" rows="3" placeholder="Enter body"></textarea>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-primary save-btn btn-click-effect">Save</button>
+                    <button class="btn btn-secondary cancel-btn btn-click-effect">Cancel</button>
+                </div>
+            </div>
+        `;
+
+                listBox.appendChild(newCard);
+
+                let saveButton = newCard.querySelector(".save-btn");
+                let cancelButton = newCard.querySelector(".cancel-btn");
+
+                saveButton.addEventListener("click", function () {
+                    let title = document.querySelector("#newTitle").value;
+                    let body = document.querySelector("#newBody").value;
+                    let dataDict = {}
+                    dataDict[title] = body
+                    let requestBody = JSON.stringify(dataDict);
+                    fetch(window.location.href + "/add", {
+                        method: "POST",
+                        body: requestBody
+                    })
+                        .then(function (response) {
+                            if (!response.ok) {
+                                throw new Error("HTTP error " + response.status);
+                            }
+                            alert("添加成功");
+                            location.reload()
+                        })
+                        .catch(function (error) {
+                            alert("添加失败: " + error);
+                        });
+                });
+
+                cancelButton.addEventListener("click", function () {
+                    newCard.remove();
+                    addButton.style.display = 'block';
+                });
+            });
+        }
+
+        let deleteButtons = document.querySelectorAll(".list-dict-box .delete-icon");
+        if (deleteButtons) {
+            deleteButtons.forEach(function (button) {
+                button.addEventListener("click", function () {
+                    let card = button.closest(".card");
+                    let title = card.querySelector(".card-header").textContent.trim();
+                    let body = card.querySelector(".card-body .card-text").textContent.trim();
+                    let dataDict = {}
+                    dataDict[title] = body
+                    let requestBody = JSON.stringify(dataDict);
+
+                    fetch(window.location.href + "/delete", {
+                        method: "POST",
+                        body: requestBody
+                    })
+                        .then(function (response) {
+                            if (!response.ok) {
+                                throw new Error("HTTP error " + response.status);
+                            } else {
+                                card.remove()
+                                alert("删除成功")
+                            }
+                        }).then(function () {
+                        location.reload()
+                    });
+                });
+            });
+        }
+        let editButtons = document.querySelectorAll(".list-dict-box .edit-icon");
+        if (editButtons) {
+            editButtons.forEach(function (button) {
+                button.addEventListener("click", function () {
+                    let card = button.closest(".card");
+                    let title = card.querySelector(".card-header").textContent.trim();
+                    let body = card.querySelector(".card-body .card-text").textContent.trim();
+
+                    let originalHeader = card.querySelector(".card-header").innerHTML;
+                    let originalBody = card.querySelector(".card-body").innerHTML;
+
+                    card.querySelector(".card-header").innerHTML = `<input type="text" class="form-control" id="editTitle" value="${title}">`;
+                    card.querySelector(".card-body").innerHTML = `
+            <textarea class="form-control" id="editBody" rows="3">${body}</textarea>
+            <button class="btn btn-primary save-edit-btn btn-click-effect">Save</button>
+            <button class="btn btn-secondary cancel-edit-btn btn-click-effect">Cancel</button>
+            `;
+
+                    let saveEditButton = card.querySelector(".save-edit-btn");
+                    let cancelEditButton = card.querySelector(".cancel-edit-btn");
+
+                    saveEditButton.addEventListener("click", function () {
+                        let newTitle = document.querySelector("#editTitle").value;
+                        let newBody = document.querySelector("#editBody").value;
+
+                        let dataDict = {}
+                        dataDict["origin_key"] = title
+                        dataDict["new_key"] = newTitle
+                        dataDict['new_value'] = newBody
+                        let requestBody = JSON.stringify(dataDict);
+
+                        fetch(window.location.href + "/edit", {
+                            method: "POST",
+                            body: requestBody
+                        })
+                            .then(function (response) {
+                                if (!response.ok) {
+                                    throw new Error("HTTP error " + response.status);
+                                }
+                                alert("修改成功");
+                                location.reload()
+                            });
+                    });
+
+                    cancelEditButton.addEventListener("click", function () {
+                        location.reload()
+                    });
+                });
+            });
+        }
+    }
+    let dictBox = document.querySelector(".dict-box");
+    if (dictBox) {
+        let saveDictBtn = document.querySelector(".save-dict-btn");
+        if (saveDictBtn) {
+            saveDictBtn.addEventListener('click', function () {
+                let allCards = document.querySelectorAll('.dict-box .card');
+                let dataDict = {};
+
+                allCards.forEach(function (card) {
+                    let cardTitle = card.querySelector(".card-title").textContent.trim();
+                    let cardValue;
+
+                    let checkbox = card.querySelector("input[type='checkbox']");
+                    if (checkbox) {
+                        cardValue = checkbox.checked;
+                    } else {
+                        cardValue = card.querySelector("textarea").value;
+                    }
+
+                    dataDict[cardTitle] = cardValue;
+                });
+
+                let requestBody = JSON.stringify(dataDict);
+
+                fetch(window.location.href + "/save-dict", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: requestBody
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("HTTP error " + response.status);
+                        }
+                        return response.text();
+                    })
+                    .then(() => {
+                        alert("保存成功.");
+                    })
+                    .catch(error => {
+                        alert("保存失败: " + error);
+                    });
+            });
+        }
+    }
+
+    function toggleSidebar() {
+        let sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('hide');
+        sidebar.classList.toggle('collapsed');
+
+        let contentBoxes = document.querySelectorAll('.content-box');
+
+        if (sidebar.classList.contains('hide')) {
+            contentBoxes.forEach(box => {
+                box.style.marginLeft = '50px';
+                setTimeout(() => {
+                    box.style.width = '95%';
+                }, 500);
+            });
+        } else {
+            contentBoxes.forEach(box => {
+                box.style.marginLeft = '300px';
+                box.style.width = '';
+            });
+        }
+    }
+
+    function toggleSubmenu(link) {
+        let submenu = link.nextElementSibling;
+
+        if (link.classList.contains("active")) {
+            link.classList.remove("active");
+        } else {
+            link.classList.add("active");
+        }
+    }
+
+    let links = document.getElementsByTagName("a");
+    for (let i = 0; i < links.length; i++) {
+        let text = links[i].textContent;
+        links[i].textContent = text.replace(/nonebot_|plugin_/g, "");
+    }
+</script>
+</html>
