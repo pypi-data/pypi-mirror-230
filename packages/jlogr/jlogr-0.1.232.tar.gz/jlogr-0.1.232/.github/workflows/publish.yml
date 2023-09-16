@@ -1,0 +1,27 @@
+name: Publish to PyPI
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
+
+      - name: Install maturin
+        run: |
+          python -m pip install maturin
+      - name: Build and publish with maturin
+        env:
+          MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_API_KEY }}
+        run: maturin publish -u ${{ vars.PYPI_USER }} -p ${{ secrets.PYPI_PASSWORD }}
