@@ -1,0 +1,12 @@
+otf2ttf /Users/ansoncar/Desktop/MyProject/pyday/src/pyday/font/Noto_Sans_TC/NotoSansTC-Black.otf
+otf2ttf /Users/ansoncar/Desktop/MyProject/pyday/src/pyday/font/Noto_Sans_TC/NotoSansTC-Bold.otf
+otf2ttf /Users/ansoncar/Desktop/MyProject/pyday/src/pyday/font/Noto_Sans_TC/NotoSansTC-Light.otf
+otf2ttf /Users/ansoncar/Desktop/MyProject/pyday/src/pyday/font/Noto_Sans_TC/NotoSansTC-Medium.otf
+otf2ttf /Users/ansoncar/Desktop/MyProject/pyday/src/pyday/font/Noto_Sans_TC/NotoSansTC-Regular.otf
+otf2ttf /Users/ansoncar/Desktop/MyProject/pyday/src/pyday/font/Noto_Sans_TC/NotoSansTC-Thin.otf
+otf2ttf /Users/ansoncar/Desktop/MyProject/pyday/src/pyday/font/Noto_Sans_SC/NotoSansSC-Black.otf
+otf2ttf /Users/ansoncar/Desktop/MyProject/pyday/src/pyday/font/Noto_Sans_SC/NotoSansSC-Bold.otf
+otf2ttf /Users/ansoncar/Desktop/MyProject/pyday/src/pyday/font/Noto_Sans_SC/NotoSansSC-Light.otf
+otf2ttf /Users/ansoncar/Desktop/MyProject/pyday/src/pyday/font/Noto_Sans_SC/NotoSansSC-Medium.otf
+otf2ttf /Users/ansoncar/Desktop/MyProject/pyday/src/pyday/font/Noto_Sans_SC/NotoSansSC-Regular.otf
+otf2ttf /Users/ansoncar/Desktop/MyProject/pyday/src/pyday/font/Noto_Sans_SC/NotoSansSC-Thin.otf
