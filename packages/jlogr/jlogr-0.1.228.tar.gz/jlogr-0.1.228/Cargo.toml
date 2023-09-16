@@ -1,0 +1,30 @@
+[package]
+name = "jlogr"
+version = "0.1.228"
+edition = "2021"
+exclude = ["/tests"]
+authors = ["Jesse Williams"]
+url = "https://github.com/jesses-code-adventures/jlogr"
+
+[lib]
+lib = "jlogr"
+name = "jlogr"
+crate-type = ["cdylib"]
+
+# [target.x86_64-apple-darwin]
+# rustflags = ["-C", "link-arg=-undefined", "-C", "link-arg=dynamic_lookup"]
+
+[target.aarch64-apple-darwin]
+rustflags = ["-C", "link-arg=-undefined", "-C", "link-arg=dynamic_lookup"]
+
+[profile.dev]
+rpath = true
+
+[dependencies]
+anyhow = "1.0.72"
+chrono = "0.4.26"
+pyo3 = { version = "0.19.2", features = ["extension-module", "abi3-py39", "chrono", "anyhow", "generate-import-lib"]}
+termcolor = "1.2.0"
+
+[build-dependencies]
+pyo3-build-config = { version = "0.19.2", features = ["abi3-py39"]}
