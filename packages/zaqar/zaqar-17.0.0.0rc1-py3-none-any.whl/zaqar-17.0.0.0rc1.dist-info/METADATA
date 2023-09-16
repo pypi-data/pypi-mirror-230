@@ -1,0 +1,139 @@
+Metadata-Version: 2.1
+Name: zaqar
+Version: 17.0.0.0rc1
+Summary: OpenStack Queuing and Notification Service
+Home-page: https://docs.openstack.org/zaqar/latest/
+Author: OpenStack
+Author-email: openstack-discuss@lists.openstack.org
+License: UNKNOWN
+Project-URL: Source, https://opendev.org/openstack/zaqar
+Project-URL: Tracker, https://bugs.launchpad.net/zaqar
+Platform: UNKNOWN
+Classifier: Environment :: OpenStack
+Classifier: Intended Audience :: Information Technology
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Requires-Python: >=3.8
+Requires-Dist: Babel (!=2.4.0,>=2.3.4)
+Requires-Dist: SQLAlchemy (!=1.1.5,!=1.1.6,!=1.1.7,!=1.1.8,>=1.3.19)
+Requires-Dist: WebOb (>=1.7.1)
+Requires-Dist: alembic (>=0.9.6)
+Requires-Dist: autobahn (>=22.3.2)
+Requires-Dist: cryptography (>=2.7)
+Requires-Dist: falcon (>=3.0.0)
+Requires-Dist: futurist (>=1.2.0)
+Requires-Dist: iso8601 (>=0.1.11)
+Requires-Dist: jsonschema (>=3.2.0)
+Requires-Dist: keystonemiddleware (>=9.1.0)
+Requires-Dist: msgpack (>=1.0.0)
+Requires-Dist: oslo.cache (>=1.26.0)
+Requires-Dist: oslo.concurrency (>=5.0.1)
+Requires-Dist: oslo.config (>=8.3.2)
+Requires-Dist: oslo.context (>=2.19.2)
+Requires-Dist: oslo.db (>=11.0.0)
+Requires-Dist: oslo.i18n (>=3.15.3)
+Requires-Dist: oslo.log (>=4.6.1)
+Requires-Dist: oslo.messaging (>=12.5.0)
+Requires-Dist: oslo.policy (>=3.8.1)
+Requires-Dist: oslo.reports (>=2.2.0)
+Requires-Dist: oslo.serialization (>=4.2.0)
+Requires-Dist: oslo.upgradecheck (>=1.3.0)
+Requires-Dist: oslo.utils (>=4.12.1)
+Requires-Dist: osprofiler (>=1.4.0)
+Requires-Dist: pbr (!=2.1.0,>=2.0.0)
+Requires-Dist: python-memcached (>=1.56)
+Requires-Dist: python-swiftclient (>=3.10.1)
+Requires-Dist: requests (>=2.25.0)
+Requires-Dist: stevedore (>=3.2.2)
+
+========================
+Team and repository tags
+========================
+
+.. image:: https://governance.openstack.org/tc/badges/zaqar.svg
+    :target: https://governance.openstack.org/tc/reference/tags/index.html
+
+.. Change things from this point on
+
+=====
+Zaqar
+=====
+
+Zaqar is a multi-tenant cloud messaging and notification service for web
+and mobile developers.
+It combines the ideas pioneered by Amazon's SQS product with additional
+semantics to support event broadcasting.
+
+The service features a fully RESTful API, which developers can use to send
+messages between various components of their SaaS and mobile applications, by
+using a variety of communication patterns. Underlying this API is an efficient
+messaging engine designed with scalability and security in mind.
+
+Other OpenStack components can integrate with Zaqar to surface events to end
+users and to communicate with guest agents that run in the "over-cloud" layer.
+Cloud operators can leverage Zaqar to provide equivalents of SQS and SNS to
+their customers.
+
+General information is available in wiki:
+
+    https://wiki.openstack.org/wiki/Zaqar
+
+The API v2.0 (stable) specification and documentation are available at:
+
+    https://wiki.openstack.org/wiki/Zaqar/specs/api/v2.0
+
+Zaqar's Documentation, the source of which is in ``doc/source/``, is
+available at:
+
+    https://docs.openstack.org/zaqar/latest
+
+Zaqar's Release notes are available at:
+
+    https://docs.openstack.org/releasenotes/zaqar/
+
+Contributors are encouraged to join IRC (``#openstack-zaqar`` channel on
+``OFTC``):
+
+    https://wiki.openstack.org/wiki/IRC
+
+Information on how to run unit and functional tests is available at:
+
+    https://docs.openstack.org/zaqar/latest/contributor/running_tests.html
+
+Information on how to run benchmarking tool is available at:
+
+    https://docs.openstack.org/zaqar/latest/admin/running_benchmark.html
+
+Zaqar's design specifications is tracked at:
+
+    https://specs.openstack.org/openstack/zaqar-specs/
+
+Using Zaqar
+-----------
+
+If you are new to Zaqar and just want to try it, you can set up Zaqar in
+the development environment.
+
+Using Zaqar in production environment:
+
+    Coming soon!
+
+Using Zaqar in development environment:
+
+    The instruction is available at:
+
+        https://docs.openstack.org/zaqar/latest/contributor/development.environment.html
+
+    This will allow you to run local Zaqar server with MongoDB as database.
+
+    This way is the easiest, quickest and most suitable for beginners.
+
+
+
