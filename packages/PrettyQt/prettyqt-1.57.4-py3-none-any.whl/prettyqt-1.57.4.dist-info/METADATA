@@ -1,0 +1,83 @@
+Metadata-Version: 2.1
+Name: PrettyQt
+Version: 1.57.4
+Summary: A pythonic layer on top of PyQt6 / PySide6
+Home-page: https://github.com/phil65/prettyqt
+License: MIT
+Keywords: qt,pyqt,pyside,widgets,components,framework,gui
+Author: phil65
+Author-email: philipptemminghoff@googlemail.com
+Requires-Python: >=3.11,<4.0
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: X11 Applications :: Qt
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Topic :: Desktop Environment
+Classifier: Topic :: Software Development :: User Interfaces
+Classifier: Topic :: Software Development :: Widget Sets
+Provides-Extra: addons
+Provides-Extra: pyqt6
+Provides-Extra: pyside6
+Requires-Dist: PyQt6 (>=6.5,<7.0) ; extra == "pyqt6"
+Requires-Dist: PyQt6-Charts (>=6.5,<7.0) ; extra == "pyqt6"
+Requires-Dist: PyQt6-QScintilla (>=2.0,<3.0) ; extra == "pyqt6"
+Requires-Dist: PyQt6-WebEngine (>=6.5,<7.0) ; extra == "pyqt6"
+Requires-Dist: attrs ; extra == "addons"
+Requires-Dist: bidict (>=0,<1)
+Requires-Dist: comtypes (>=1.1,<2.0) ; sys_platform == "win32"
+Requires-Dist: fsspec (>=2023.1.0,<2024.0.0) ; extra == "addons"
+Requires-Dist: ipython (>=8,<9) ; extra == "addons"
+Requires-Dist: lxml ; extra == "addons"
+Requires-Dist: numpy (>=1,<2) ; extra == "addons"
+Requires-Dist: orjson (>=3,<4) ; (python_version < "3.12") and (extra == "addons")
+Requires-Dist: pillow (>=10,<11) ; extra == "addons"
+Requires-Dist: pygments (>=2.6,<3.0)
+Requires-Dist: pyside6 (>=6.5,<7.0) ; (python_version < "3.12") and (extra == "pyside6")
+Requires-Dist: pywin32 ; sys_platform == "win32"
+Requires-Dist: qstylizer (>=0.2,<0.3)
+Requires-Dist: qtconsole (>=5,<6) ; extra == "addons"
+Requires-Dist: typing-extensions (>=4.5.0,<5.0.0)
+Project-URL: Documentation, https://phil65.github.io/PrettyQt/index.html
+Project-URL: Repository, https://github.com/phil65/prettyqt
+Description-Content-Type: text/markdown
+
+# prettyqt: Pythonic layer on top of PyQt6 / PySide6
+[![PyPI Latest Release](https://img.shields.io/pypi/v/prettyqt.svg)](https://pypi.org/project/prettyqt/)
+[![Package Status](https://img.shields.io/pypi/status/prettyqt.svg)](https://pypi.org/project/prettyqt/)
+[![License](https://img.shields.io/pypi/l/prettyqt.svg)](https://github.com/phil65/PrettyQt/blob/master/LICENSE)
+[![CodeCov](https://codecov.io/gh/phil65/PrettyQt/branch/master/graph/badge.svg)](https://codecov.io/gh/phil65/PrettyQt)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![PyUp](https://pyup.io/repos/github/phil65/PrettyQt/shield.svg)](https://pyup.io/repos/github/phil65/PrettyQt/)
+
+## What is it?
+
+**PrettyQt** is a Python package that provides a pythonic layer on top of the GUI frameworks PyQt6 / PySide6.
+
+## Documentation
+The official documentation is hosted on Github Pages: https://phil65.github.io/PrettyQt/
+
+## Main Features
+  - Subclasses for almost all Qt classes, enriched with helper and __dunder__ methods to give a feel of a native GUI library.
+  - more than 80 pre-defined widgets and layouts for common use cases
+  - more than 30 ItemModels for different data types
+  - more than 25 general-purpose proxy models
+  - 10 ItemDelegates for different purposes
+  - 20 different Validators
+  - much, much more.
+
+## Where to get it
+The source code is currently hosted on GitHub at:
+https://github.com/phil65/PrettyQt
+
+The latest released version are available at the [Python
+package index](https://pypi.org/project/prettyqt).
+
+```sh
+# or PyPI
+pip install prettyqt
+```
+
