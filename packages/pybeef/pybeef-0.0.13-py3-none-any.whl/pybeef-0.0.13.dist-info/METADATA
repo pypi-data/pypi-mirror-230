@@ -1,0 +1,124 @@
+Metadata-Version: 2.1
+Name: pybeef
+Version: 0.0.13
+Summary: Opinionated distributed RPC using AMQP workers
+Project-URL: Homepage, https://github.com/innodatalabs/beef
+Project-URL: Bug Tracker, https://github.com/pypa/innodatalabs/beef
+Author-email: Mike Kroutikov <mkroutikov@innodata.com>
+License-File: LICENSE
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.9
+Requires-Dist: aio-pika~=9.0.5
+Provides-Extra: test
+Requires-Dist: build; extra == 'test'
+Requires-Dist: pytest; extra == 'test'
+Requires-Dist: pytest-aiohttp; extra == 'test'
+Requires-Dist: pytest-asyncio; extra == 'test'
+Requires-Dist: twine; extra == 'test'
+Description-Content-Type: text/markdown
+
+# beef
+
+Beef is good for your health.
+
+An opinionated distributed RPC using AMQP messages (inspired by celery amqp backend).
+
+## Installing
+
+```bash
+pip install pybeef
+```
+
+## Usage
+
+Worker:
+
+```python
+from beef import beef
+
+@beef
+async def add(x: int, y: int) -> int:
+    return x + y
+```
+
+Server:
+
+```python
+async def server():
+    async with add.connect('amqp://localhost/'):
+        await add.serve()  # here server blocks forever, executing incoming tasks
+
+if __name__ == '__main__':
+    import asyncio
+
+    asyncio.run(server())
+```
+
+Client (blocking):
+```python
+async def client():
+    async with add.connect('amqp://localhost/'):
+        task_id = await add.submit(1, 2)  # submits task
+        result = await add.result(task_id)  # waits for completion
+
+if __name__ == '__main__':
+    import asyncio
+
+    asyncio.run(client())
+```
+
+Client (polling):
+
+```python
+import asyncio
+
+async def client():
+    async with add.connect('amqp://localhost/'):
+        task_id = await add.submit(1, 2)  # submits task
+
+        while True:
+            status = await add.get_status(task_id)
+            if status.is_final:
+                break
+            await asyncio.sleep(1)
+        print(f'Task {task_id} completed with status {status})
+
+if __name__ == '__main__':
+    import asyncio
+
+    asyncio.run(client())
+```
+
+## Testing
+
+You need a running RabbitMQ server for testing. For example:
+
+```bash
+docker run -it --network host rabbitmq
+```
+
+Then, make sure that test dependencies are installed:
+
+```bash
+pip install .[test]
+```
+
+Finally, run the tests
+
+```bash
+PYTHONPATH=. pytest beef/test
+```
+
+## Building
+
+```bash
+pip wheel .
+```
+
+## Publishing
+
+```bash
+twine upload dist/pybeef-XXX.whl -u __token__ -p <secret-pipy-token>
+```
