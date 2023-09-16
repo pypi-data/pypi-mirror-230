@@ -1,0 +1,47 @@
+Metadata-Version: 2.1
+Name: cubi-isa-templates
+Version: 0.1.0
+Summary: CUBI ISA-Tab templates
+Home-page: https://github.com/bihealth/cubi-isa-templates
+Author: Berlin Institute of Health, Core Unit Bioinformatics
+Author-email: cubi@bih-charite.de
+License: MIT license
+Project-URL: Changelog, https://github.com/bihealth/cubi-isa-templates/blob/main/CHANGELOG.md
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Topic :: Scientific/Engineering :: Bio-Informatics
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: attrs
+
+# CUBI ISA-Tab Templates
+
+![tests](https://github.com/bihealth/cubi-isa-templates/actions/workflows/main.yml/badge.svg)
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+
+This repository contains [Cookiecutter](https://github.com/cookiecutter/cookiecutter)-based [ISA-Tab](https://isa-tools.org/) templates used at [CUBI](https://www.cubi.bihealth.org/).
+
+Example of simple usage:
+
+```py
+from cookiecutter.main import cookiecutter
+from cubi_isa_templates import TEMPLATES
+
+isa_tpl = TEMPLATES["single_cell_rnaseq"]
+extra_context = {"__output_dir": "template_dir"}
+cookiecutter(
+    template=isa_tpl.path,
+    extra_context=extra_context,
+    output_dir="/template/path/",
+    no_input=True
+)
+```
+
+For proper command line usage, see [cubi-tk](https://github.com/bihealth/cubi-tk).
