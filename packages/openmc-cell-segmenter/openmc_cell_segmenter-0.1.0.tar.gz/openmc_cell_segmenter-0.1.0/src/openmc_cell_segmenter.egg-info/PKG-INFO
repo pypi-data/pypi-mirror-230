@@ -1,0 +1,41 @@
+Metadata-Version: 2.1
+Name: openmc-cell-segmenter
+Version: 0.1.0
+Summary: todo
+Author: The Openmc Cell Segmenter Development Team
+Project-URL: Homepage, https://github.com/fusion-energy/openmc_cell_segmenter
+Project-URL: Bug Tracker, https://github.com/fusion-energy/openmc_cell_segmenter/issues
+Project-URL: Documentation, https://openmc_cell_segmenter.readthedocs.io
+Keywords: python,geometry,openmc
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy>=1.21.1
+Provides-Extra: tests
+Requires-Dist: pytest>=5.4.3; extra == "tests"
+
+[![CI with install](https://github.com/fusion-energy/openmc_cell_segmenter/actions/workflows/ci_with_install.yml/badge.svg)](https://github.com/fusion-energy/openmc_cell_segmenter/actions/workflows/ci_with_install.yml)
+
+# Segments OpenMC cells into smaller cells.
+
+Specify the type of segmentation pane desired (XPlane, YPlane, ZPlane or ZCylinder) and the number of segments and obtain segmented cells.
+
+# Example scripts
+
+Example Python scripts can be found in the [examples folder](https://github.com/fusion-energy/openmc_cell_segmenter/tree/main/example).
+
+# Example outputs
+
+In this animation we see an S shaped cell that has been segmented first with XPlanes, YPlanes, ZPlanes and ZCylinders colored by cell.
+
+
+![openmc cell segmented zplane](https://user-images.githubusercontent.com/8583900/268407842-6e8783b4-1bc6-443e-ab01-ec390ae3dfe2.gif)
+
+
+# Motivation
+
+Cell segmentation has a variety of use cases.
+However, this package was originally made for redefining CSG geometry for cell based shutdown dose rate simulations where separate cells are needed to capture the variation in neutron activation across large cells.
