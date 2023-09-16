@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<object xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    name="imio.smartweb.Page"
+    meta_type="Dexterity FTI"
+    i18n:domain="imio.smartweb">
+
+  <property name="allowed_content_types">
+<!--    <element value="imio.smartweb.SectionContact" />-->
+    <element value="imio.smartweb.SectionExternalContent" />
+    <element value="imio.smartweb.SectionFiles" />
+    <element value="imio.smartweb.SectionGallery" />
+    <element value="imio.smartweb.SectionHTML" />
+    <element value="imio.smartweb.SectionLinks" />
+    <element value="imio.smartweb.SectionMap" />
+    <element value="imio.smartweb.SectionPostit" />
+    <element value="imio.smartweb.SectionSelections" />
+    <element value="imio.smartweb.SectionText" />
+    <element value="imio.smartweb.SectionVideo" />
+  </property>
+
+   <!-- Enabled behaviors -->
+  <property name="behaviors" purge="true">
+    <element value="plone.namefromtitle"/>
+    <element value="plone.excludefromnavigation"/>
+    <element value="plone.shortname"/>
+    <element value="plone.publication"/>
+    <element value="plone.basic"/>
+    <element value="plone.locking"/>
+    <element value="plone.leadimage"/>
+    <element value="plone.imagecropping"/>
+    <element value="imio.smartweb.listing"/>
+    <element value="collective.taxonomy.generated.page_category"/>
+    <element value="imio.smartweb.topics"/>
+    <element value="plone.categorization"/>
+    <element value="collective.autopublishing.behavior.IAutoPublishing"/>
+    <element value="plone.ownership"/>
+  </property>
+</object>
