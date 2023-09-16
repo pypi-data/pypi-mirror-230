@@ -1,0 +1,71 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade build
+          python -m pip install --upgrade twine
+          # pip install pipenv
+          # pip install semver
+          # pip install twine
+          # pip install --upgrade build
+
+      - name: Set up Git
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+
+      # - name: Change Directory to Script Location
+      #   run: cd /home/runner/work/_temp/b00b54ce-761a-4e5b-8785-efa91f6dc561.sh/buildfile/build.py
+
+      - name: Run Release Script
+        run: |
+          # pip install semver  # Replace with your setup
+          python ./buildfile/build.py "${{ github.event.head_commit.message }}"
+
+      - name: Build and Publish
+        run: |
+          python -m build
+          python -m twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
+        env:
+          # TWINE_USERNAME: ${{ secrets.USERNAME }}
+          TWINE_USERNAME: "__token__"
+          TWINE_PASSWORD: ${{ secrets.PASSWORD }}
+
+      - name: Push changes and tags
+        run: |
+          git push --follow-tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      - name: Create Git Tag
+        id: create_tag
+        run: |
+          tag="Build-$(git describe --abbrev=0 --tags)"
+          echo "TAG=$tag" >> $GITHUB_ENV
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.TAG }}
+          files: ./dist/* # Include files to attach to the release
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
