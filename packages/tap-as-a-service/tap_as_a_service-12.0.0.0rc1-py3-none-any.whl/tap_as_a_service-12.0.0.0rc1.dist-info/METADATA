@@ -1,0 +1,52 @@
+Metadata-Version: 2.1
+Name: tap-as-a-service
+Version: 12.0.0.0rc1
+Summary: Tap-as-a-Service (TaaS) is an extension to the OpenStack network service (Neutron), it provides remote port mirroring capability for tenant virtual networks.
+Home-page: http://www.openstack.org/
+Author: OpenStack
+Author-email: openstack-discuss@lists.openstack.org
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Environment :: OpenStack
+Classifier: Intended Audience :: Information Technology
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Requires-Dist: Babel (>=2.8.0)
+Requires-Dist: neutron-lib (>=2.11.0)
+Requires-Dist: neutron (>=16.0.0.0b1)
+Requires-Dist: openstacksdk (>=0.102.0)
+Requires-Dist: osc-lib (>=2.3.0)
+Requires-Dist: pbr (>=5.5.0)
+
+================
+Tap as a Service
+================
+Tap-as-a-Service (TaaS) is an extension to the OpenStack network service (Neutron).
+It provides remote port mirroring capability for tenant virtual networks.
+
+Port mirroring involves sending a copy of packets entering and/or leaving one
+port to another port, which is usually different from the original destinations
+of the packets being mirrored.
+
+
+This service has been primarily designed to help tenants (or the cloud administrator)
+debug complex virtual networks and gain visibility into their VMs, by monitoring the
+network traffic associated with them. TaaS honors tenant boundaries and its mirror
+sessions are capable of spanning across multiple compute and network nodes. It serves
+as an essential infrastructure component that can be utilized for supplying data to a
+variety of network analytics and security applications (e.g. IDS).
+
+* Free software: Apache license
+* API Reference: https://opendev.org/openstack/tap-as-a-service/src/branch/master/API_REFERENCE.rst
+* Source: https://opendev.org/openstack/tap-as-a-service/
+* Bugs: https://bugs.launchpad.net/tap-as-a-service
+
+For installing Tap-as-a-Service with Devstack please read the INSTALL.rst file
+
+
+
