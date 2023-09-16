@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "streamlit-message-passing"
+version = "0.1.1"
+description = "Streamlit component for doing message passing between parent window and server via JS"
+authors = ["Damián Silvani <munshkr@gmail.com>"]
+readme = "README.md"
+packages = [{ include = "msgpassing" }]
+include = ["msgpassing/frontend/build/**/*"]
+exclude = ["msgpassing/frontend/**/*"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+streamlit = ">= 0.63"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
