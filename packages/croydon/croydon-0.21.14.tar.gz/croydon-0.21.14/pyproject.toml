@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "croydon"
+version = "0.21.14"
+authors = [{name = "Pavel Vorobyev", email = "aquavitale@yandex.ru"}]
+description = "a micro webframework based on fastapi and motor"
+requires-python = ">=3.11"
+
+dependencies = [
+    "fastapi[all] == 0.96.0",
+    "pydantic == 1.10.8",
+    "starlette",
+    "motor",
+    "pymongo",
+    "mongomock-motor",
+    "aiomcache",
+    "bcrypt",
+    "ipython",
+    "uvicorn",
+    "deprecation",
+    "jinja2"
+]
+
+keywords = [
+    "fastapi",
+    "pymongo",
+    "mongodb",
+    "motor",
+    "asyncio"
+]
+
+license = {text = "MIT"}
+readme = "README.md"
+
+[tool.setuptools.package-data]
+croydon = ["*.txt", "*.py", "*.tmpl"]
+
+[project.urls]
+Source = "https://gitlab.com/viert/croydon"
+
+[project.scripts]
+croydon = "croydon.command:main"
