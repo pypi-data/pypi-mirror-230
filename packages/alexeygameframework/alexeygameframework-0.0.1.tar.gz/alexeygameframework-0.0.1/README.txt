@@ -1,0 +1,1 @@
+A library that allows to create games easier with built in tile system, screen handler, animation and asset importing and handling, and a basic window.
