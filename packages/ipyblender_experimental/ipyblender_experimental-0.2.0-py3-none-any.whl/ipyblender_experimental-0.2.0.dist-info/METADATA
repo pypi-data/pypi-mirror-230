@@ -1,0 +1,30 @@
+Metadata-Version: 2.1
+Name: ipyblender_experimental
+Version: 0.2.0
+License-File: LICENSE
+Requires-Python: ~=3.10.0
+Requires-Dist: anywidget
+Requires-Dist: bpy
+Requires-Dist: ipykernel
+Requires-Dist: watchfiles
+Description-Content-Type: text/markdown
+
+# ipyblender_experimental
+
+Bringing the blender rendering engine into jupyter notebook.  
+No need to install Blender.  
+Only compatible with **Python 3.10**!
+
+## Installation
+```
+python3.10 -m venv .venv && source .venv/bin/activate
+pip install ipyblender_experimental
+touch hello.ipynb
+```
+
+## Usage
+
+```python
+from ipyblender_experimental import BlenderWidget
+BlenderWidget()
+```
