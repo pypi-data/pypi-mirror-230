@@ -1,0 +1,23 @@
+<odoo>
+    <data>
+
+        <record id="view_hr_attendance_tree_inherit" model="ir.ui.view">
+            <field name="name">hr.attendance.tree.inherit</field>
+            <field name="model">hr.attendance</field>
+            <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="inside">
+                    <field name="is_holiday"/>
+                    <field name="shift_type"/>
+                    <field name="consecutive_days"/>
+                    <field name="is_relevo"/>
+                    <field name="entry_type"/>
+                    <field name="extra_time" widget="float_time"/>
+                    <field name="extra_time_with_factor" widget="float_time"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+   <menuitem id="hr_attendance_mitxelena.hr_entry_type" name="Entry Types" parent="hr_attendance.menu_hr_attendance_root" sequence="30"/>
+</odoo>
