@@ -1,0 +1,7 @@
+set(mobile_message_service_generator_SETUP_PY_SETUP_MODULE "distutils.core")
+set(mobile_message_service_generator_SETUP_PY_VERSION "0.4.0")
+set(mobile_message_service_generator_SETUP_PY_SCRIPTS "scripts/mobile_message_service_generator_message_artifacts")
+set(mobile_message_service_generator_SETUP_PY_PACKAGES "mobile_message_service_generator")
+set(mobile_message_service_generator_SETUP_PY_PACKAGE_DIRS "src/mobile_message_service_generator")
+set(mobile_message_service_generator_SETUP_PY_MODULES "")
+set(mobile_message_service_generator_SETUP_PY_MODULE_DIRS "")
