@@ -1,0 +1,382 @@
+CHANGES
+=======
+
+7.0.0.0rc1
+----------
+
+* Update documentation to reflect newer OpenStack and confspirator
+* Support tox4, update style to match Black 23.1a1
+* Update master for stable/zed
+* setup.cfg: Replace dashes with underscores
+* Update python testing classifier
+* Update master for stable/yoga
+* Fix gates for Antelope and update Django
+
+5.0.0
+-----
+
+* Fix some issues with updating user email defaults
+* Fix an issue with Adjutant's Invite process not checking inherited roles
+* Fix notification overlay not working correctly
+* Change wrong template/subject default for quota update emails
+* Add Python3 yoga unit tests
+* Update master for stable/xena
+* Add Python3 xena unit tests
+
+3.0.0
+-----
+
+* Change default volume API to v3
+* Update master for stable/wallaby
+* Update formatting because of black version
+
+2.0.0
+-----
+
+* remove mysqlclient from requirements
+* Fix a bug with feature set config not being added as expected
+* Rename git-blame-ignore-revs
+* Fix pluralisation of quotas in api-ref
+* Fix an issue when username\_is\_email=False for Quotas
+* Add service helper for trove quota management
+* Make identity interface configurable
+* Fixed typos in nova and neutron quota output
+* Add Victoria release info
+* Add Python3 wallaby unit tests
+* Update master for stable/victoria
+
+1.0.0
+-----
+
+* Allow authenticated token requirement for tasks
+* Ignore blame for Black formatting update
+* Reformat with updated version of black formatter
+* Update CONFspirator with example and toml support
+* Fix pygments style
+* Stop to use the \_\_future\_\_ module
+* Switch to newer openstackdocstheme and reno versions
+* Add py38 package metadata
+* Add pyc cleanup and black check to tox
+* Fix migration ordering issue
+* Community goal contributing docs
+* Add Python3 victoria unit tests
+* Update master for stable/ussuri
+* Update for Python 3
+* Use constraints for installing doc requirements
+* Use unittest.mock instead of third party mock
+* Add tests for Black, and ignore reformat blame
+* Reformat code using the Black style linter
+
+0.5.0
+-----
+
+* Use Django's SECURE\_PROXY\_SSL\_HEADER and add config
+* Add extra notes to EditUserRolesAction
+* Update to Django 2.2, drop py2 support
+* Switch to Ussuri jobs
+* Refactor the plugin layer to use entrypoints
+* Rework Adjutant's config system to use CONFspirator
+* Major refactor of the Adjutant task layer
+* fix issue with iteritems still used in one place
+* Fix issue with lack of libssl in bindep
+* Update api-ref
+* Update docs building
+* Add Python 3 Train unit tests
+* Added support for reno release notes
+* Fix old py2 default value for action model
+* Add bindep.txt file
+* Sync Sphinx requirement
+* Fix lack of package include in pbr patch
+* Dropping the py35 testing
+* Convert setup to use pbr
+* Update requirements files
+* OpenDev Migration Patch
+* Fix sample config quota\_services definition
+* Fix yaml.load(input) deprecation
+* better handle empty notification confs
+* Fixed some unneeded domain\_id handling
+* fix mysqlclient imcompatibility with current django LTS
+* fix pep8 issues because of new pep8 version
+* Fix issues around LDAP backed Keystone
+* Fix an issue with tasks being approved when not yet valid
+* Fix conflicts with tox
+* Temporary fix for user enumeration via password reset API
+* Fix mutiple world in history.rst
+* Spelling mistake, refered -> referred
+* Consistent about using True and False and not true and false
+* Switch to ignoring pep W503
+* Use openstack-tox-cover template
+* recieve spelling error
+* add python 3.6 unit test job
+* import zuul job settings from project-config
+* fix tox python3 overrides
+* fix the project setting in .gitreview
+* Split quota matching functions, and fix percentage
+* Add util for action validation to standardise use
+* fix typos in documentation
+* Fix issues with missing service
+* Move task error handling to function
+* Make datetime strings consistent for future parsing
+* Removed unnessacary code in wsgi.py file
+* Properly use TLS in Django for email
+* Token not cancelled if task is invalid
+* fix typo in history document
+* Add documentation for the project history and guide lines
+* Add a param to control is we include usage in quota data
+* Add notification link in email template
+* update quota completed template with project name
+* Add Octavia (LBaaS) into quota management
+* Smaller Quota changes ignore change history
+* Don't catch exceptions in quota manager
+* Fix more issues around config of quota\_services
+* Add Quota Docs and API references
+* Fix issues in quota manager editing settings module
+* Update the QUOTA\_SERVICES config to be a region mapping
+* Move more quota logic into QuotaManager
+* Fix non-generic email error msg
+* Fix notifications not being auto acknowledged
+* Add pagination for notifications
+* Remove the redundant word
+* Lower quota sizes always in preapproved list
+* List IDs of parent projects
+* Ensure actions are setup before pre\_approve
+* fix doc codeblock missing extra space
+* Add support for Credentials in Identity Manager
+* Fix internal error at preapprove now responds 500
+* Bump keystonemiddleware version due to cache bug
+* Add Project Admin Decorator
+* add the option to disable auto approve for tasks
+* Zero sizes qoutas caused incorrect size matching
+* Users can only edit users with full permission
+* Selectively disable token caching
+* Link to tasks panel in notifications
+* Change assert(Not)Equals to assert(Not)Equal
+* fix cover report tox job
+* rename identity cache for consistency
+* Add link to Read the Docs for project doc
+* Documentation and Api Reference
+* Update IdentityManger and FakeManager
+* fix zuul cover issues
+* Make reset password emails case insensitive
+* Add Version Endpoints
+* be able to disable a given API version
+* Moving clients to common module
+* Remove link to modindex
+* Added UpdateProjectQuota
+
+0.3.0
+-----
+
+* Additional Tests for Notification, Token and Email
+* Notifications in views.py now set error correctly
+* Reapprove now clears old tokens
+* Replace six.iteritems() with .items()
+* Quota setting shouldn't have to be required
+* Task Type in Token response
+* Remove RT Notification code
+* Update test files for openstack-infra
+* Check action validity on submit before returning
+* Additional tests for project actions
+* Fix and tests for modify\_dict\_settings
+* Python3 Compatibility
+* Added basepython to coverage tests
+* Add note to devstack guide about USERNAME\_IS\_EMAIL
+* Updating keystone url to be correct for master devstack
+* Fix keystone v2 command in devstack guide
+* Add note about public networks to devstack guide
+
+0.2.2
+-----
+
+* Version 0.2.2
+* Adding support for code coverage reposting in tests
+* Updating the docs to match current state
+* Slightly saner default duplicate policies
+* Update templates for token reissue case
+* Fix issue with network creation and reapproval
+* Fix bug with signups and disabled users
+* Fixing some minor email templating issues
+* Removing AddDefaultUsersToProjectAction from default conf
+* update version and package name
+* Fix class level settings modification
+* Adjutant version to 0.2.0
+* Remove unused debian folder
+* Renaming StackTask to Adjutant
+* Added Update Email task and action
+* Additional Emails - Additional Action
+* adding license file
+* Fixing two bugs related to approval
+* Pagination for Task List
+* Invited user username shown rather than email
+* Additional tests for USERNAME\_IS\_EMAIL=False
+* Update requirements file
+* Added modify\_dict\_settings test decorator
+* Changes to fake openstack client and caches
+* Added auto approval as part of actions
+* better manageable roles
+* Restructure of the actions configuration
+* Refactor of action structure
+* Fix pbr to version 2.0.0
+* Adding needed cache value for completed templated
+* Fixing error logging issues
+* Fixing Notification Engines
+* Refactor User Mixin to remove boilerplate and duplicated code
+* Adding update\_project to FakeManager
+* Adding tests for user signup
+* updating readme to reflect new tox test args
+* Adding pep8 tests
+* Replaced find\_region with get\_region
+* user state + signup templates
+* Handle disabled users
+* @admin decorator switched to use require\_roles
+* Renamed ResetUserAction to ResetUserPasswordAction
+* Adding plugin settings
+* Refactor action validation functions
+* Adding Quota Update Action
+* We need to cleanly support Tasks when no emails are sent
+* The sign-up endpoint must be unauthenticated
+* Prep the code base for domain support
+* Add duplicate signup test. Make notes response always a list
+* Fix regex for password reset url
+* Refactor action names and structure
+* updating project id to match keystone
+* getting rid of deprecated v2 project.list\_users()
+* Adding '/openstack/sign-up' endpoint
+* Refinements for Signup
+* Email bounce forwarding
+* Removing Odoo (OERP) code from repo
+* Change to fix issues with duplication hash check
+* better default settings
+* return task id if user is admin
+* Core library requirements update
+* Setup StackTask for plugins
+* setting default sort order for lists
+* Fixing an issue with using a deprecated module
+* adding devstack deployment guide
+* Add note about custom templates to README
+
+0.1.4
+-----
+
+* Incrementing package version to 0.1.4
+* Template fix to better reflect initial token expiry
+* Updated email templates and made them configurable in /etc
+
+0.1.3
+-----
+
+* Updating package version to 0.1.3
+* rename stacktask cmd to stacktask-api
+
+0.1.2
+-----
+
+* Updating package details, version to 0.1.2
+* fixing a very stupid index error bug
+* Error clean up, error catching, require django <1.9
+* Changes to html template handling, and NewUser template
+* user list now shows uncompleted invites for existing users
+* Some cleanup of documentation and licenses
+* Renamed role project\_owner to project\_admin
+* fixing a missed rename
+* Replacing Member role with \_member\_ in all tests
+* Roles are case sensitive, no need to blacklist an unused role
+* fixing a minor bug
+* Adding debian packaging with dh-virtualenv
+* conf cleanup to better make use of default task settings
+* Better default email templates for openstack user tasks
+* Minor code cleanup
+* Addressing 4.1 "Django QuerySet Injection"
+* Addressing 4.3 "Admin User Password Reset Permitted"
+* Addressing 4.6 "Internal IP Leakage"
+* Add extra information to user-show to distingish between Keystone('active') and Invited users
+* Addressing 4.8 "Potentially Out Of Date Python Modules"
+* conf settings for ignoring errors
+* notification cleanup, and switch to rtkit
+* Adding /status endpoint
+* Adding admin only endpoint to force password resets
+* Changing task\_settings to be built off defaults
+* adding a conditional status value for invite user tasks
+* changing token/uuid sizes in models for consistency
+* Reworking some aspects of the unit tests
+* Allowing project\_owners/mods to reissue tokens
+* minor change to unify requirements
+* Updating the readme file a bit
+* Hiding action endpoints
+* Allow a classes to have no class settings when notification is created
+* Allow conflict upon add\_user\_role
+* Shifting Role Mapping to conf
+* Allowing different TaskViews to handle Duplicates differently
+* Splitting up API tests
+* Adding filtering for Tasks, Notifications, and Tokens
+* Limiting user detail query to just your project
+* Adding the openstack/forgotpassword endpoint. Inherits from tasks version
+* Making the token expiry time configurable
+* fixing a possible but tiny/rare exploit
+* adding non-admin ability to cancel tasks
+* hashing for comparison of duplicate tasks
+* notification changes
+* Replacing task\_view with task\_type in models.Task
+* Adding support for user role editing
+* Fix a few code issues; config file and syntax
+* refactor and cleanup
+* slight refactor and endpoint merge
+* added some non\_admin options to certain endpoints
+* Setting up more indexable values for Tasks
+* can't update an approved task
+* Adding the ablity to cancel Tasks
+* add user requiries confirm
+* allowed\_roles come from conf
+* Renaming Registration model to Task
+* add created\_on value to tenants in keystone
+* Updated readme to include dev instructions
+* adding debug settings
+* Adding edit user Action and Endpoint
+* adding django rest swagger docs
+* adding tox file and some changes to test setup
+* refactor of api structure
+* reworking of email sending
+* fixing a few tests, and a few missed error messages
+* Ensuring user isn't created until keystone has roles
+* renaming the api endpoint to just "/v1/"
+* Unified error responses a bit and using default region
+* adding in basic default migrations
+* fixing tests, and a bug with default roles for adding a user
+* adding better handling user roles, adding project\_mod role
+* python packaging
+* renaming to Stack Task
+* Adding readme
+* new project reapprove test
+* tests for tenant\_setup actions
+* getting rid of some test setup duplication
+* unit tests for base model actions
+* reworking tests, adding additional user validation
+* renaming for packaging, adding setup file
+* basic email templating
+* adding additional token commands
+* Setup for client tools and sending of emails
+* Notification acknowledgments and tests
+* adding put function for registrations to allow updating
+* Documentation, and cleanup
+* Near Stable Code commit
+* more logging
+* notification, newproject resource failover, docstring cleanup
+* fix error raising, rework validation, clean up tests
+* error encapsulation, tests, notes/logging
+* logging, more tests
+* rework action notes, reset password tests, network defaults
+* tests, various fixes
+* some abstration for testing, further small fixes
+* Removing some code duplication
+* Multi-step actions, action cache, break up validation
+* username is email, and minor fixes
+* network resources, cross-action cache, general fixes
+* adding copyright and removing a couple of useless files
+* Enforce action order, api changes, minor fixes
+* Authentication, Validation, view and model changes
+* breaking up of functionality, some keystone code
+* changing an api endpoint and adding documentation
+* a few test cases for approval flow
+* adding working approval to workflow
+* Initial code commit
+* adding git review file
