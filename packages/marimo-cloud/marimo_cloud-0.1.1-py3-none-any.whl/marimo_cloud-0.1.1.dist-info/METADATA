@@ -1,0 +1,45 @@
+Metadata-Version: 2.1
+Name: marimo-cloud
+Version: 0.1.1
+Project-URL: homepage, https://marimo.io
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: typer ~=0.9.0
+Requires-Dist: rich ~=13.5.2
+Requires-Dist: inquirer ~=3.1.3
+Requires-Dist: httpx ~=0.24.1
+Requires-Dist: toml ~=0.10.2
+Requires-Dist: pydantic ~=1.10.12
+Provides-Extra: dev
+Requires-Dist: click <8.1.4 ; extra == 'dev'
+Requires-Dist: black ~=23.7.0 ; extra == 'dev'
+Requires-Dist: build ~=0.10.0 ; extra == 'dev'
+Requires-Dist: pytest ~=7.4.2 ; extra == 'dev'
+Requires-Dist: mypy ~=1.5.1 ; extra == 'dev'
+Requires-Dist: ruff ~=0.0.287 ; extra == 'dev'
+
+# marimo-cloud
+
+Cloud CLI for [marimo](http://marimo.io/).
+
+## Installation
+
+```sh
+pip install marimo-cloud
+```
+
+This installs a CLI tool called `marimo-cloud` (which is also aliased to
+`mcloud`, for short).
+
+## Usage
+
+```sh
+❯ marimo-cloud --help
+╭─ Commands ───────────────────────────────────────────────────────────────────────────╮
+│ login                                                                                │
+│ logout                                                                               │
+│ publish                                                                              │
+│ version                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────╯
+```
