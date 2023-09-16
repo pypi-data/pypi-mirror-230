@@ -1,0 +1,343 @@
+{
+    "wstl": {
+        "title": "Registry components, properties, and collections",
+        "actions": [
+            {
+                "name": "heaserver-registry-component-duplicate",
+                "type": "safe",
+                "target": "item read cj",
+                "prompt": "Duplicate"
+            },
+            {
+                "name": "heaserver-registry-component-get-properties",
+                "description": "View and edit this component's properties",
+                "type": "unsafe",
+                "target": "item cj-template",
+                "action": "update",
+                "prompt": "Properties",
+                "inputs": [
+                    {
+                        "name": "id",
+                        "prompt": "Id",
+                        "readOnly": true
+                    },
+                    {
+                        "name": "display_name",
+                        "prompt": "Name",
+                        "required": true
+                    },
+                    {
+                        "name": "description",
+                        "prompt": "Description",
+                        "type": "textarea"
+                    },
+                    {
+                        "name": "base_url",
+                        "prompt": "Base URL",
+                        "required": true,
+                        "hea": {
+                            "type": "url"
+                        }
+                    },
+                    {
+                        "hea": {
+                            "section": "resources"
+                        },
+                        "name": "base_path",
+                        "prompt": "Base path",
+                        "required": true
+                    },
+                    {
+                        "hea": {
+                            "section": "resources"
+                        },
+                        "name": "file_system_name",
+                        "prompt": "File system name",
+                        "required": true
+                    },
+                    {
+                        "hea": {
+                            "section": "resources"
+                        },
+                        "name": "resource_type_name",
+                        "prompt": "Resource type name",
+                        "required": true
+                    },
+                    {
+                        "name": "owner",
+                        "prompt": "Owner",
+                        "required": true,
+                        "type": "select",
+                        "hea": {
+                            "optionsFromUrl": {
+                                "path": "/people/",
+                                "value": "id",
+                                "text": "display_name"
+                            }
+                        }
+                    },
+                    {
+                        "name": "created",
+                        "prompt": "Created",
+                        "readOnly": true,
+                        "hea": {
+                            "type": "datetime"
+                        }
+                    },
+                    {
+                        "name": "modified",
+                        "prompt": "Modified",
+                        "readOnly": true,
+                        "hea": {
+                            "type": "datetime"
+                        }
+                    },
+                    {
+                        "name": "source",
+                        "prompt": "Source"
+                    },
+                    {
+                        "hea": {
+                            "section": "shares",
+                            "sectionPrompt": "Shares",
+                            "optionsFromUrl": {
+                                "path": "/people/",
+                                "value": "id",
+                                "text": "display_name"
+                            }
+                        },
+                        "name": "user",
+                        "prompt": "User",
+                        "required": true,
+                        "type": "select"
+                    },
+                    {
+                        "hea": {
+                            "section": "shares",
+                            "cardinality": "multiple"
+                        },
+                        "name": "permissions",
+                        "prompt": "Permissions",
+                        "type": "select",
+                        "suggest": [
+                            {"value":  "COOWNER", "text":  "Co-owner"},
+                            {"value":  "CREATOR", "text":  "Creator"},
+                            {"value":  "DELETER", "text":  "Deleter"},
+                            {"value":  "EDITOR", "text":  "Editor"},
+                            {"value":  "SHARER", "text":  "Sharer"},
+                            {"value":  "VIEWER", "text":  "Viewer"}
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "heaserver-registry-component-duplicate-form",
+                "description": "Duplicate this component",
+                "type": "unsafe",
+                "target": "item cj-template",
+                "action": "update",
+                "prompt": "Duplicate",
+                "inputs": [
+                    {
+                        "name": "display_name",
+                        "prompt": "Name",
+                        "required": true
+                    },
+                    {
+                        "name": "description",
+                        "hea": {
+                            "display": false
+                        }
+                    },
+                    {
+                        "name": "base_url",
+                        "hea": {
+                            "display": false
+                        }
+                    },
+                    {
+                        "hea": {
+                            "section": "resources",
+                            "display": false
+                        },
+                        "name": "base_path"
+                    },
+                    {
+                        "hea": {
+                            "section": "resources",
+                            "display": false
+                        },
+                        "name": "file_system_name"
+                    },
+                    {
+                        "hea": {
+                            "section": "resources",
+                            "display": false
+                        },
+                        "name": "resource_type_name"
+                    },
+                    {
+                        "name": "owner",
+                        "hea": {
+                            "display": false
+                        }
+                    },
+                    {
+                        "name": "created",
+                        "hea": {
+                            "display": false
+                        }
+                    },
+                    {
+                        "name": "modified",
+                        "hea": {
+                            "display": false
+                        }
+                    },
+                    {
+                        "name": "source",
+                        "hea": {
+                            "display": false
+                        }
+                    },
+                    {
+                        "hea": {
+                            "section": "shares",
+                            "display": false
+                        },
+                        "name": "user"
+                    },
+                    {
+                        "hea": {
+                            "section": "shares",
+                            "display": false
+                        },
+                        "name": "permissions"
+                    }
+                ]
+            },
+            {
+                "name": "heaserver-registry-collection-get-properties",
+                "description": "View and edit this collection's properties",
+                "type": "unsafe",
+                "target": "item cj-template",
+                "action": "update",
+                "prompt": "Properties",
+                "inputs": [
+                    {
+                        "name": "id",
+                        "prompt": "Id",
+                        "readOnly": true
+                    },
+                    {
+                        "name": "display_name",
+                        "prompt": "Name",
+                        "required": true
+                    },
+                    {
+                        "name": "description",
+                        "prompt": "Description",
+                        "type": "textarea"
+                    },
+                    {
+                        "name": "url",
+                        "prompt": "URL",
+                        "required": true,
+                        "hea": {
+                            "type": "url"
+                        }
+                    },
+                    {
+                        "name": "owner",
+                        "prompt": "Owner",
+                        "required": true,
+                        "type": "select",
+                        "hea": {
+                            "optionsFromUrl": {
+                                "path": "/people/",
+                                "value": "id",
+                                "text": "display_name"
+                            }
+                        }
+                    },
+                    {
+                        "name": "created",
+                        "prompt": "Created",
+                        "readOnly": true,
+                        "hea": {
+                            "type": "datetime"
+                        }
+                    },
+                    {
+                        "name": "modified",
+                        "prompt": "Modified",
+                        "readOnly": true,
+                        "hea": {
+                            "type": "datetime"
+                        }
+                    },
+                    {
+                        "name": "source",
+                        "prompt": "Source"
+                    },
+                    {
+                        "hea": {
+                            "section": "shares",
+                            "sectionPrompt": "Shares",
+                            "optionsFromUrl": {
+                                "path": "/people/",
+                                "value": "id",
+                                "text": "display_name"
+                            }
+                        },
+                        "name": "user",
+                        "prompt": "User",
+                        "required": true,
+                        "type": "select"
+                    },
+                    {
+                        "hea": {
+                            "section": "shares",
+                            "cardinality": "multiple"
+                        },
+                        "name": "permissions",
+                        "prompt": "Permissions",
+                        "type": "select",
+                        "suggest": [
+                            {"value":  "COOWNER", "text":  "Co-owner"},
+                            {"value":  "CREATOR", "text":  "Creator"},
+                            {"value":  "DELETER", "text":  "Deleter"},
+                            {"value":  "EDITOR", "text":  "Editor"},
+                            {"value":  "SHARER", "text":  "Sharer"},
+                            {"value":  "VIEWER", "text":  "Viewer"}
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "heaserver-registry-collection-get-open-choices",
+                "description": "Open this collection",
+                "type": "safe",
+                "action": "read",
+                "target": "item read cj",
+                "prompt": "Open"
+            },
+            {
+                "name": "heaserver-registry-collection-get-self",
+                "description": "View this collection",
+                "type": "safe",
+                "action": "read",
+                "target": "item read cj",
+                "prompt": "View"
+            },
+            {
+                "name": "heaserver-registry-collection-open",
+                "description": "Open",
+                "type": "safe",
+                "action": "read",
+                "target": "item read cj",
+                "prompt": "Open"
+            }
+        ]
+    }
+}
