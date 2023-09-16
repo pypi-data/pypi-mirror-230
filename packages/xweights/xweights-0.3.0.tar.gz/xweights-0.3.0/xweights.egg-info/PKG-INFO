@@ -1,0 +1,197 @@
+Metadata-Version: 2.1
+Name: xweights
+Version: 0.3.0
+Summary: Python xweights contains functionsto create grid weighted area means
+Home-page: https://github.com/ludwiglierhammer/xweights
+Author: Ludwig Lierhammer
+Author-email: ludwig.lierhammer@hereon.de
+License: MIT license
+Keywords: xweights
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Requires-Python: >=3.6
+License-File: LICENSE
+License-File: AUTHORS.rst
+
+========
+xweights
+========
+
+.. image:: https://github.com/ludwiglierhammer/xweights/actions/workflows/ci.yml/badge.svg
+    :target: https://github.com/ludwiglierhammer/xweights/actions/workflows/ci.yml
+
+.. image:: https://codecov.io/gh/ludwiglierhammer/xweights/branch/main/graph/badge.svg
+    :target: https://codecov.io/gh/ludwiglierhammer/xweights
+
+.. image:: https://img.shields.io/pypi/v/xweights.svg
+    :target: https://pypi.python.org/pypi/xweights
+
+.. image:: https://readthedocs.org/projects/xweights/badge/?version=latest
+    :target: https://xweights.readthedocs.io/en/latest/?version=latest
+    :alt: Documentation Status
+
+.. image:: https://results.pre-commit.ci/badge/github/ludwiglierhammer/xweights/main.svg
+    :target: https://results.pre-commit.ci/latest/github/ludwiglierhammer/xweights/main
+    :alt: pre-commit.ci status
+
+Python "xweights" contains functions to calculate grid weighted area means from predefined regions or from an user-given shapefile. This tool is a wrapper around the python package xESMF_.
+
+* Free software: MIT license
+* Documentation: https://xweights.readthedocs.io
+
+
+Features
+--------
+
+* Calculate grid-weighted-means and save the output as CSV file
+
+* As input you need a dataset dictionary. Values are xarray.Datasets and keys correspondin strings.
+
+
+Installation
+------------
+
+**Note:** Before building `xweights` from source, you nedd **first** install `cartopy` by using conda:
+
+.. code-block:: console
+
+   conda install -c conda-forge cartopy
+
+You can install the package directly with pip:
+
+.. code-block:: console
+
+     pip install xweights
+
+If you want to contribute, I recommend cloning the repository and installing the package in development mode, e.g.
+
+.. code-block:: console
+
+    git clone https://github.com/ludwiglierhammer/xweights.git
+    cd xweights
+    pip install -e .
+
+In additon you have to install xESMF using _Conda:
+
+.. code-block:: console
+
+    conda install -c conda-forge xesmf
+
+This will install the package but you can still edit it and you don't need the package in your :code:`PYTHONPATH`
+
+
+Requirements
+------------
+
+* python3.6 or higher
+
+* numpy
+
+* pandas
+
+* geopandas
+
+* xarray
+
+* py-cordex
+
+* xesmf
+
+
+Contact
+-------
+In cases of any problems, needs or wishes do not hesitate to contact:
+
+ludwig.lierhammer@hereon.de
+
+
+Credits
+-------
+
+This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
+
+.. _Cookiecutter: https://github.com/audreyr/cookiecutter
+.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+.. _Conda: https://docs.conda.io/
+.. _xESMF: https://xesmf.readthedocs.io
+
+
+=======
+History
+=======
+
+0.1.0 (2022-03-04)
+------------------
+
+* First release on PyPI.
+
+0.1.1 (2022-07-01)
+------------------
+
+* adjusted to pre-commit
+* use functions from pyhomogenize
+
+0.1.2 (2022-07-08)
+------------------
+
+* change pyhomogenize version requirements
+
+0.2.0 (2022-07-11)
+------------------
+
+* rename spatial_averager
+* keep geometry attributes
+
+0.2.1 (2022-07-11)
+------------------
+
+* read and write column name to attributes
+
+0.2.2 (2022-07-12)
+------------------
+
+* add data and tables via pip install
+
+0.2.3 (2023-01-26)
+------------------
+
+* remove cartopy from requirements.txt
+
+0.2.4 (2023-03-13)
+------------------
+
+* using pycordex >= 0.5.1
+
+0.2.5 (2023-08-23)
+------------------
+
+* adding new region: counties_merged (merge counties less than 400m2)
+
+0.2.6 (2023-08-30)
+------------------
+
+* optionally: wite variable attributes to dataframe
+
+0.3.0 (2023-09-15)
+------------------
+
+* added new regions: IPCC WG1 Reference Regions v4 from Atlas
+* xweights/_io.py is no longer available
+* xweights/_domains.py is no longer available
+* function `spatial_averager` -> `spatial_averaging`
+* function `compute_weighted_means`:
+
+  * optionally: set `averager_ds` to calculate a general xesmf.SpatialAverager
+  * parameter `shp` -> `gdf`
+  * parameter `input` -> `dataset_dict`
+  * parameter `dataset_dict` has to be a dictionary
+  * parameter `outdir` -> `output`
+
+* function `compute_weighted_means_ds`: parameters are now similar to `compute_weighted_means`
+* command-line interface is no longer available
