@@ -1,0 +1,93 @@
+[tool.poetry]
+
+name = "verchew"
+version = "3.4.2" # also update verchew/script.py
+
+description = "System dependency version checker."
+authors = ["Jace Browning <jacebrowning@gmail.com>"]
+
+license = "MIT"
+readme = "README.md"
+
+homepage = "https://pypi.org/project/verchew"
+documentation = "https://verchew.readthedocs.io"
+repository = "https://github.com/jacebrowning/verchew"
+
+keywords = [
+    "dependencies",
+    "configuration management",
+    "continuous integration",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 2.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Software Development :: Testing",
+    "Topic :: System :: Installation/Setup",
+    "Topic :: Utilities",
+]
+
+[tool.poetry.dependencies]
+
+python = "^3.8"
+
+[tool.poetry.dev-dependencies]
+
+# Formatters
+black = "^23.7"
+isort = "^5.12"
+
+# Linters
+mypy = "*"
+pydocstyle = "^3"
+pylint = "^2"
+
+# Testing
+pytest = "^7.4"
+pytest-cov = "*"
+pytest-describe = "^2.1"
+pytest-expecter = "^3.0"
+pytest-random = "*"
+scripttest = "*"
+
+# Reports
+coveragespace = "^6.0"
+
+# Documentation
+mkdocs = "^1.5.1"
+pygments = "~2.15.0"
+
+# Tooling
+pyinstaller = "*"
+sniffer = "*"
+MacFSEvents = { version = "*", platform = "darwin" }
+pync = { version = "*", platform = "darwin" }
+ipython = "^7.12.0"
+
+[tool.poetry.scripts]
+
+verchew = "verchew.script:main"
+
+[tool.black]
+
+quiet = true
+
+[tool.isort]
+
+profile = "black"
+
+extra_standard_library = "ConfigParser"
+
+[build-system]
+
+requires = ["poetry-core>=1.0"]
+build-backend = "poetry.core.masonry.api"
