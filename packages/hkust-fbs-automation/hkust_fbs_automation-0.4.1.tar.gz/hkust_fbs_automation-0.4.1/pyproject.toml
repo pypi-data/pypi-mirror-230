@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "hkust-fbs-automation"
+version = "0.4.1"
+description = "Auto book facilities through the HKUST FBS."
+authors = ["Poet <the_poet@ust.hk>"]
+packages = [{ include = "*.py" }, { include = "chromedriver.exe" }]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+selenium = "^4.12"
+requests = "^2.31"
+
+[tool.poetry.group.dev.dependencies]
+types-requests = "^2.31"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+hkust-fbs-automation = 'main:main'
