@@ -1,0 +1,64 @@
+Metadata-Version: 2.1
+Name: logng
+Version: 0.1.2
+Summary: A logging library, intending to simplify the use of logger and easy to configure and implements.
+Author-Email: H2Sxxa <h2sxxa0w0@gmail.com>
+License: MIT
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Project-URL: Homepage, https://pypi.org/project/logng/
+Project-URL: Repository, https://github.com/H2Sxxa/logng
+Project-URL: Issues, https://github.com/H2Sxxa/logng/issues
+Requires-Python: >=3.11
+Requires-Dist: colorama
+Description-Content-Type: text/markdown
+
+<div align=center>
+  <img width=200 src="https://raw.githubusercontent.com/H2Sxxa/logng/main/doc/logo.png" alt="[logo](https://raw.githubusercontent.com/H2Sxxa/logng/main/doc/logo.png)"/>
+  <h1 align="center">LogNG</h1>
+</div>
+
+<div align=center>
+  <img src="https://img.shields.io/badge/python-3.8+-blue" alt="python">
+  <img src="https://img.shields.io/github/languages/code-size/H2Sxxa/logng" alt="size">
+  <img src="https://img.shields.io/github/license/H2Sxxa/logng" alt="license">
+</div>
+
+# What's this?
+
+A logging library, intending to simplify the use of logger and easy to configure or implement.
+
+# Install
+
+```shell
+pip install logng
+```
+
+# How to use
+
+## logger
+
+It's a implementation of the `ILogger`, with the high configurability.
+
+```python
+from logng.logger import Logger, LogConfig
+
+lg = Logger()
+lg.info("hello info")
+```
+
+## shared
+
+You can implement `ILogger` yourself and set the logger here.
+
+```python
+from logng.shared import set_logger, info, warn
+from logng.logger import Logger, LogConfig
+
+set_logger(Logger())
+info("hello")
+warn("hello")
+```
