@@ -1,0 +1,34 @@
+Metadata-Version: 2.1
+Name: llqqntinstaller-py
+Version: 0.2.2
+Summary: 
+License: GPL v3
+Author: kaesinol
+Author-email: keiplyer@gmail.com
+Requires-Python: >=3.11,<4.0
+Classifier: License :: Other/Proprietary License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: loguru (>=0.7.1,<0.8.0)
+Requires-Dist: lxml (>=4.9.3,<5.0.0)
+Requires-Dist: pygit2 (>=1.12.2,<2.0.0)
+Requires-Dist: pysocks (>=1.7.1,<2.0.0)
+Requires-Dist: requests (>=2.31.0,<3.0.0)
+Requires-Dist: rich (>=13.5.2,<14.0.0)
+Description-Content-Type: text/markdown
+
+# LLQQNTInstaller.py
+## 安装
+```commandline
+git clone https://github.com/kaixinol/LLQQNTInstaller.py.git
+cd LLQQNTInstaller.py
+pip install poetry
+poetry install
+```
+## 运行
+```commandline
+poetry run python3 -m llqqntinstaller  --proxy socks5://127.0.0.1:7890 # 使用socks5代理
+# 或
+poetry run python3 -m llqqntinstaller  --use-git-proxy # 使用默认git代理
+```
+
