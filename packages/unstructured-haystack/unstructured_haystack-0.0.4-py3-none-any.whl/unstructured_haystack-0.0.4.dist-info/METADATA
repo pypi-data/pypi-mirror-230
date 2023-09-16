@@ -1,0 +1,60 @@
+Metadata-Version: 2.1
+Name: unstructured-haystack
+Version: 0.0.4
+Project-URL: Documentation, https://github.com/unknown/unstructured-haystack#readme
+Project-URL: Issues, https://github.com/unknown/unstructured-haystack/issues
+Project-URL: Source, https://github.com/unknown/unstructured-haystack
+Author-email: Tuana Celik <tuana.celik@deepset.ai>
+License-Expression: MIT
+License-File: LICENSE.txt
+Classifier: Development Status :: 4 - Beta
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Requires-Python: >=3.7
+Requires-Dist: farm-haystack
+Requires-Dist: safetensors==0.3.3.post1
+Requires-Dist: unstructured-inference
+Requires-Dist: unstructured[discord,github,google-drive]
+Description-Content-Type: text/markdown
+
+# Unstructured Haystack
+
+[![PyPI - Version](https://img.shields.io/pypi/v/unstructured-haystack.svg)](https://pypi.org/project/unstructured-haystack)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/unstructured-haystack.svg)](https://pypi.org/project/unstructured-haystack)
+
+-----
+
+## Unstructured Connectors for Haystack
+
+This is an example Haystack 2.0 integration. It's an integration for Unstructured.io connectors. Please contribute 🚀
+
+The current version has 2 available Unstructured connectors:
+- **Discord**: `UnstructuredDiscordConnector`
+- **GitHub**: `UnstructuredGitHubConnector`
+- **Google Drive**: `UnstructuredGoogleDriveConnector`
+
+## How to use in a Haystack 2.0 Pipeline 
+For example, you can write documents fetched from Discord using the `UnstructuredDiscordConnector`:
+
+```python
+from haystack.preview import Pipeline
+from haystack.preview.components.writers import DocumentWriter
+from unstructured_haystack import UnstructuredDiscordConnector
+from chroma_haystack import ChromaDocumentStore
+
+# Chroma is used in-memory so we use the same instances in the two pipelines below
+document_store = ChromaDocumentStore()
+connector = UnstructuredDiscordConnector(api_key="UNSTRUCTURED_API_KEY", discord_token="DISCORD_TOKEN")
+
+indexing = Pipeline()
+indexing.add_component("connector", connector)
+indexing.add_component("writer", DocumentWriter(document_store))
+indexing.connect("connector.documents", "writer.documents")
+indexing.run({"connector": {"channels" : "993539071815200889", "period": 3, "output_dir" : "discord-example"}})
+```
