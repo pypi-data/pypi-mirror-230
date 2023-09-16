@@ -1,0 +1,39 @@
+import setuptools
+
+with open("doc/manpage.rst", "r") as fh:
+	long_description = fh.read()
+long_description += """
+
+ChangeLog
+=========
+
+"""
+with open("ChangeLog.rst", "r") as fh:
+	long_description += fh.read()
+
+print(long_description)
+
+setuptools.setup(
+	name="funtoo-ramdisk",
+	version="1.1.4",
+	author="Daniel Robbins, Funtoo Solutions Inc.",
+	author_email="drobbins@funtoo.org",
+	description="Funtoo framework for creating initial ramdisks.",
+	long_description=long_description,
+	long_description_content_type="text/x-rst",
+	url="https://code.funtoo.org/bitbucket/users/drobbins/repos/funtoo-ramdisk/browse",
+	scripts=["bin/ramdisk"],
+	classifiers=[
+		"Programming Language :: Python :: 3",
+		"License :: OSI Approved :: Apache Software License",
+		"Operating System :: POSIX :: Linux",
+	],
+	python_requires=">=3.7",
+	install_requires=[
+		"rich",
+	],
+	packages=setuptools.find_packages(),
+	include_package_data=True
+)
+
+# vim: ts=4 sw=4 noet
