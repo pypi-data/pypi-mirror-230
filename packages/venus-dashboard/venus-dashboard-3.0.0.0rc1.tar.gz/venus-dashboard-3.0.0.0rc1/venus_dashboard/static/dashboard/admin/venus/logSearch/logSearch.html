@@ -1,0 +1,66 @@
+<link rel="stylesheet" type="text/css" href="/static/dashboard/admin/venus/logSearch/logSearch.css">
+<div ng-controller="LogSearchController as vm">
+    <div>
+        <div>
+            <form class="form-inline pull-right">
+                <div class="form-group">
+                    <input type="datetime-local" class="form-control" ng-model="model.start_time">
+                </div>
+                -
+                <div class="form-group">
+                    <input type="datetime-local" class="form-control" ng-model="model.end_time">
+                </div>
+                <div class="form-group">
+                    <select class="form-control" ng-model="model.condition">
+                        <option value="module_name">模块</option>
+                        <option value="host_name">主机</option>
+                        <option value="program_name">组件</option>
+                        <option value="level">级别</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="model.condition_value">
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-default" ng-click="getData()">筛选</button>
+                </div>
+            </form>
+            <div class="clear"></div>
+        </div>
+        <div class="venus-chart-wrapper">
+            <svg id="svg" class="venus-chart"></svg>
+        </div>
+        <div>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>时间</th>
+                    <th>主机</th>
+                    <th>模块</th>
+                    <th>组件</th>
+                    <th>级别</th>
+                    <th>项目ID</th>
+                    <th>用户ID</th>
+                    <th>描述</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="text-center" ng-if="tableData.length === 0">
+                    <td colspan="8">暂无数据。</td>
+                </tr>
+                <tr ng-repeat="item in tableData">
+                    <td>{$ item.time $}</td>
+                    <td>{$ item.host_name $}</td>
+                    <td>{$ item.module_name $}</td>
+                    <td>{$ item.program_name $}</td>
+                    <td>{$ item.level $}</td>
+                    <td>{$ item.project_id $}</td>
+                    <td>{$ item.user_id $}</td>
+                    <td>{$ item.desc $}</td>
+                </tr>
+                </tbody>
+            </table>
+            <ul uib-pagination total-items="total" ng-model="model.page_num" items-per-page="model.page_size" max-size="5" ng-change="getData()" class="pagination-sm" boundary-link-numbers="true" rotate="false"></ul>
+        </div>
+    </div>
+</div>

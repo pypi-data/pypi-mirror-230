@@ -1,0 +1,34 @@
+<link rel="stylesheet" type="text/css" href="/static/dashboard/admin/venus/logAnalysis/logAnalysis.css">
+<div ng-controller="LogAnalysisController as vm">
+    <div>
+        <div>
+            <form class="form-inline pull-right">
+                <div class="form-group">
+                    <input type="datetime-local" class="form-control" ng-model="model.start_time">
+                </div>
+                -
+                <div class="form-group">
+                    <input type="datetime-local" class="form-control" ng-model="model.end_time">
+                </div>
+                <div class="form-group">
+                    <select class="form-control" ng-model="model.condition">
+                        <option value="module_name">模块</option>
+                        <option value="host_name">主机</option>
+                        <option value="program_name">组件</option>
+                        <option value="level">级别</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="model.condition_value">
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-default" ng-click="getData()">筛选</button>
+                </div>
+            </form>
+            <div class="clear"></div>
+        </div>
+        <div class="venus-chart-wrapper">
+            <svg id="svg" class="venus-chart"></svg>
+        </div>
+    </div>
+</div>
