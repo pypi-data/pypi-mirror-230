@@ -1,0 +1,15 @@
+checks:
+  disk_failure:
+    input:
+      path: 'var/log/kern.log'
+    expr: '.+ critical medium error, dev (\S+), .+'
+conclusions:
+  failing_disk:
+    decision: disk_failure
+    raises:
+      type: KernelError
+      message: >-
+        critical medium error detected in kern.log for device {dev}.
+        This implies that this disk has a hardware issue!
+      format-dict:
+        dev: '@checks.disk_failure.search.results_group_1:comma_join'
