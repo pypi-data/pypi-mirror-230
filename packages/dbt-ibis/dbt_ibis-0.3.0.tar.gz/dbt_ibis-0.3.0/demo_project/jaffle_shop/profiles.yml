@@ -1,0 +1,9 @@
+jaffle_shop:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: db.duckdb
+      attach:
+        - path: sources_db.duckdb
+          read_only: true

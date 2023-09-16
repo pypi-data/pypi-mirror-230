@@ -1,0 +1,6 @@
+from dbt_ibis import depends_on, ref
+
+
+@depends_on(ref("customers"))
+def model(customers):
+    return customers.filter(customers["number_of_orders"] > 1)
