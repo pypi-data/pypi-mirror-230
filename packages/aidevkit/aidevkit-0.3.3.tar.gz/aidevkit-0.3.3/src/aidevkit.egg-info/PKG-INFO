@@ -1,0 +1,72 @@
+Metadata-Version: 2.1
+Name: aidevkit
+Version: 0.3.3
+Summary: 一些ai开发过程中使用到的工具模块
+Home-page: https://github.com/cpcgskill/aidevkit
+Author: cpcgskill
+Author-email: cpcgskill@outlook.com
+License: Apache Software License (Apache 2.0)
+Project-URL: Bug Tracker, https://github.com/cpcgskill/aidevkit/issues
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Requires-Python: >=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# aikit
+
+一些ai开发过程中使用到的工具模块
+
+- [aikit](#aikit)
+    - [安装](#安装)
+    - [使用](#使用)
+        - [aos](#aos)
+
+## 安装
+
+```commandline
+git clone git@github.com:cpcgskill/aikit.git
+```
+
+## 使用
+
+### aos
+
+```python
+import os
+
+# 设置以下环境变量为腾讯云cos的配置
+
+os.environ['COS_Region'] = 'ap-hongkong'
+os.environ['COS_SecretId'] = ''
+os.environ['COS_SecretKey'] = ' '
+os.environ['COS_Bucket'] = ' '
+
+import torch
+from aidevkit.aos import Saver
+
+
+class MyModule(torch.nn.Module):
+    def __init__(self):
+        super(MyModule, self).__init__()
+        self.linear = torch.nn.Linear(10, 10)
+        self.s = 1
+
+    def forward(self, x):
+        return self.linear(x)
+
+
+saver = Saver(lambda: MyModule(), 'test.pt', 3)
+for i in range(10):
+    saver.step()
+```
+
