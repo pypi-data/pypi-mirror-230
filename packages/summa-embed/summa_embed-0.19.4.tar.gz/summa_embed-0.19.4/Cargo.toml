@@ -1,0 +1,24 @@
+[package]
+name = "summa-embed-py"
+version = "0.19.4"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "summa_embed"
+crate-type = ["cdylib"]
+
+[dependencies]
+async-broadcast = "0.5"
+futures = "0.3"
+prost = "0.11"
+pyo3 = { version = "0.19", features = ["serde"] }
+pyo3-asyncio = { version =  "0.19", features = ["attributes", "tokio-runtime"] }
+pyo3-log = "0.8"
+pythonize = "0.19"
+serde_json = "1.0"
+summa-core = { version = "0.19.4", path = "local_dependencies/summa-core", default_features = false, features = ["fs", "hyper-external-request", "tokio-rt"] }
+summa-server = { version = "0.19.4", path = "local_dependencies/summa-server", default_features = false }
+summa-proto = { path = "local_dependencies/summa-proto" }
+tantivy = { package = "izihawa-tantivy", version = "0.20.2", default_features = false, features = ["quickwit", "zstd-compression"] }
+tokio = { version = "1.25", default_features = false }

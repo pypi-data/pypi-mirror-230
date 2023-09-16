@@ -1,0 +1,43 @@
+quote = _{ "\"" | "'" | "`" | "'" | "“" | "”" | "‘" | "«" | "»" | "„" | "`"}
+star = { "*" }
+statement_sep = _{ WHITE_SPACE | "," | "." | ";" | "!" | "?" | (":" ~ WHITE_SPACE) | "(" | ")" | "/" }
+allowed_chars = _{"_" | "+" | "#" | "-"}
+url_end = _{ WHITE_SPACE | "," }
+
+isbn = @{ "978"? ~ ("-"? ~ ASCII_DIGIT){7,10} ~ EOI }
+doi = @{ "10." ~ ASCII_DIGIT{4,9} ~ WHITE_SPACE? ~ ("/" | "%2f") ~ WHITE_SPACE? ~ (!WHITE_SPACE ~ ANY)+ }
+wrapped_doi = _{ ("http" ~ "s"? ~ "://")? ~ "dx."? ~ "doi.org/"? ~ doi }
+// url = _{ ("http" ~ "s"? ~ "://")? ~ (!url_end ~ ANY)+ }
+
+slop = @{ DECIMAL_NUMBER+ }
+boost = { (DECIMAL_NUMBER | ".")+ }
+range = ${ "[" ~ WHITE_SPACE* ~ boundary_word ~ WHITE_SPACE+ ~ ^"to" ~ WHITE_SPACE+ ~ boundary_word ~ WHITE_SPACE* ~ "]" }
+
+field_name = @{ ASCII_ALPHA ~ (ASCII_ALPHANUMERIC | "_" | ".")* }
+word = @{ wrapped_doi | ((LETTER | NUMBER) ~ (LETTER | NUMBER | "_" | "+" | "#" | "-" | "–" | "'")*) }
+
+boundary_word = _{ star | word }
+phrase_internals = { (!PEEK ~ ANY)* }
+phrase = ${ PUSH(quote) ~ phrase_internals? ~ (POP | EOI) ~ ("~" ~ slop)? }
+regex_internals = ${ (!PEEK ~ ANY)* }
+regex = ${ PUSH("/"+) ~ regex_internals ~ POP }
+
+pre_term = _{ phrase | regex | range | word }
+
+positive_term = ${ "+" ~ pre_term }
+negative_term = ${ "-" ~ pre_term }
+default_term = ${ pre_term }
+
+pre_grouping = _{ "(" ~ WHITE_SPACE? ~ term ~ (WHITE_SPACE+ ~ term)* ~ WHITE_SPACE? ~ ")" }
+
+positive_grouping = ${ "+" ~ pre_grouping }
+negative_grouping = ${ "-" ~ pre_grouping }
+default_grouping = ${ pre_grouping }
+
+term = { positive_term | negative_term | default_term }
+grouping = { positive_grouping | negative_grouping | default_grouping }
+search_group = ${ field_name ~ ":" ~ (grouping | term) }
+
+statement = ${ (isbn | wrapped_doi | search_group | term) ~ ("^" ~ boost)? }
+statements = _{ statement_sep* ~ statement? ~ (statement_sep+ ~ statement)* ~ statement_sep* }
+main = _{SOI ~ statements}
