@@ -1,0 +1,64 @@
+Metadata-Version: 2.1
+Name: pyauthorizer
+Version: 0.2.1
+Summary: A simple authorizer for python projects
+License: Apache 2.0
+Project-URL: Documentation, https://github.com/msclock/pyauthorizer.git
+Project-URL: Source, https://github.com/msclock/pyauthorizer.git
+Project-URL: Tracker, https://github.com/msclock/pyauthorizer/issues
+Keywords: license,license-generator
+Classifier: Development Status :: 4 - Beta
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Education
+Classifier: Topic :: Scientific/Engineering
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: click
+Requires-Dist: cryptography>=41.0.0
+Provides-Extra: test
+Requires-Dist: pytest>=5.2; extra == "test"
+Requires-Dist: pytest-mock>=3.8.2; extra == "test"
+Provides-Extra: dev
+Requires-Dist: black>=22.8; extra == "dev"
+Requires-Dist: build>=0.8; extra == "dev"
+Requires-Dist: pip>=21.1; extra == "dev"
+Requires-Dist: twine>=4.0; extra == "dev"
+
+# pyauthorizer
+
+A simple authorizer for python project.
+
+## Install
+
+Package-built has uploaded to pypi and just install with the command:
+
+```bash
+pip install pyauthorizer
+```
+## Usage
+
+### Generate and validate a license
+
+To generate and validate a license, use the command:
+
+```bash
+pyauthorizer create -f simple -C password=1234567890  -O /tmp/license.json
+pyauthorizer validate -f simple -C password=1234567890  -I /tmp/license.json
+```
+More command options can be listed by using `pyauthorizer --help`.
+
+## Documentation
+
+The documentation is coming soon.
