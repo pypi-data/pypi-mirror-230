@@ -1,0 +1,1 @@
+This is a simple package for exploring pandas dataframe to get the initial statistical summary.
