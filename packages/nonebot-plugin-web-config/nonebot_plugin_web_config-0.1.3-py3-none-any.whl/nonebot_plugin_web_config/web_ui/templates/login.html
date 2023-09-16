@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .form {
+            width: 300px;
+            margin: 266px auto;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: none;
+            outline: none;
+        }
+
+        button {
+            background-color: #73AD21;
+            color: white;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: none;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <form class="form" action="/login" method="post">
+        <input type="text" id="username" placeholder="用户名">
+        <input type="password" id="password" placeholder="密码">
+        <button type="button" onclick="login()">登录</button>
+    </form>
+</div>
+<script>
+    function login() {
+        let usernameInput = document.getElementById("username");
+        let passwordInput = document.getElementById("password");
+        let username = usernameInput.value;
+        let password = passwordInput.value;
+        let formData = new FormData();
+        formData.append("username", username);
+        formData.append("password", password);
+        fetch("/login", {
+            method: "POST",
+            body: formData
+        }).then(function (response) {
+            if (response.status == 200) {
+                return response.json();
+            } else {
+                throw new Error("Login failed");
+            }
+        }).then(function (data) {
+            let token = data.access_token;
+            const expiryDate = new Date();
+            expiryDate.setMinutes(expiryDate.getMinutes() + 30);
+            document.cookie = `access-token=${token};expires=${expiryDate.toUTCString()};path=/`;
+            window.location.href = "/";
+        }).catch(function (error) {
+            alert("登陆失败!");
+        });
+    }
+
+</script>
+</body>
+</html>
