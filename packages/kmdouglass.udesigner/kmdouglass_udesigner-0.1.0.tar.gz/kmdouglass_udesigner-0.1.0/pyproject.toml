@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "kmdouglass.udesigner"
+version = "0.1.0"
+description = "Design tools for microscopes"
+authors = ["Kyle M. Douglass <kyle.m.douglass@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/kmdouglass/micro-designer"
+packages = [
+    { include = "kmdouglass", from = "src" }
+]
+
+[tool.poetry.dependencies]
+aenum = "*"
+Jinja2 = "*"
+matplotlib = "*"
+python = "^3.8"
+
+[tool.poetry.scripts]
+udesign = "kmdouglass.udesigner.scripts.udesign:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
