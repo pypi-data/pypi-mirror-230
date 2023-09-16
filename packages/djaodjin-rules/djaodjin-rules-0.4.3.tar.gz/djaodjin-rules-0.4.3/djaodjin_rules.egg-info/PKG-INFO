@@ -1,0 +1,69 @@
+Metadata-Version: 2.1
+Name: djaodjin-rules
+Version: 0.4.3
+Summary: Flexible framework to check permissions to URIs and forward HTTP requests
+Author-email: The DjaoDjin Team <help@djaodjin.com>
+Maintainer-email: The DjaoDjin Team <help@djaodjin.com>
+License: BSD-2-Clause
+Project-URL: repository, https://github.com/djaodjin/djaodjin-rules
+Project-URL: documentation, https://djaodjin-rules.readthedocs.io/
+Project-URL: changelog, https://github.com/djaodjin/djaodjin-rules/changelog
+Keywords: django,security,rules,proxy,rbac
+Classifier: Framework :: Django
+Classifier: Environment :: Web Environment
+Classifier: Programming Language :: Python
+Classifier: License :: OSI Approved :: BSD License
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Requires-Dist: Django>=1.11
+Requires-Dist: djangorestframework>=3.9.4
+Requires-Dist: djaodjin-deployutils>=0.10.3
+Requires-Dist: requests>=2.22.0
+Requires-Dist: python-dateutil>=2.8.0
+
+DjaoDjin-Rules
+==============
+
+[![PyPI version](https://badge.fury.io/py/djaodjin-rules.svg)](https://badge.fury.io/py/djaodjin-rules)
+
+Flexible framework to check permissions to URIs and forward HTTP requests
+
+This project contains bare bone templates. To see it in action, integrated into
+a full-fledged subscription-based session proxy with bootstrap-styled
+dashboards, take a look at [djaoapp](https://github.com/djaodjin/djaoapp/).
+
+Development
+===========
+
+After cloning the repository, create a virtualenv environment and install
+the prerequisites:
+
+    $ python -m venv .venv
+    $ source .venv/bin/activate
+    $ pip install -r testsite/requirements.txt
+
+It remains to create the database and populate it with test data.
+
+    $ python ./manage.py migrate --run-syncdb --noinput
+    $ python ./manage.py loaddata testsite/fixtures/test_data.json
+
+Run the testsite
+
+    $ python ./manage.py runserver
+
+
+Release Notes
+=============
+
+Tested with
+
+- **Python:** 3.7, **Django:** 3.2 ([LTS](https://www.djangoproject.com/download/))
+- **Python:** 3.10, **Django:** 4.2 (latest)
+- **Python:** 2.7, **Django:** 1.11 (legacy) - use testsite/requirements-legacy.txt
+
+0.4.3
+
+  * creates derivative rules when adding a role description
+  * changes default to JWT sessions
+
+[previous release notes](changelog)
