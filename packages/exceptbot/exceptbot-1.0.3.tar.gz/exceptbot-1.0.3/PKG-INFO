@@ -1,0 +1,129 @@
+Metadata-Version: 2.1
+Name: exceptbot
+Version: 1.0.3
+Summary: Exception Logger with AI Suggestions for Django
+Home-page: https://exceptbot.com
+Author: Brian Risk
+Author-email: geneffects@gmail.com
+License: # License
+        
+        Copyright © 2023-present, [D.AT Analytics, LLC](https://d.at/).
+        All rights reserved.
+        
+        Redistribution and use in source and binary forms, with or without
+        modification, are permitted provided that the following conditions are met:
+        
+        * Redistributions of source code must retain the above copyright notice, this
+          list of conditions and the following disclaimer.
+        
+        * Redistributions in binary form must reproduce the above copyright notice,
+          this list of conditions and the following disclaimer in the documentation
+          and/or other materials provided with the distribution.
+        
+        * Neither the name of the copyright holder nor the names of its
+          contributors may be used to endorse or promote products derived from
+          this software without specific prior written permission.
+        
+        THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+        ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+        WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+        DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+        FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+        DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+        SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+        CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+        OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+        OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Classifier: License :: Other/Proprietary License
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE.md
+
+
+<img src="https://d.at/static/exceptbot/github-banner.jpg" width="100%">
+
+# ExceptBot: Django Exception Logger with AI Suggestions for Fixing
+
+**Imagine**: An exception is thrown on your site and it is *critical*.  
+You need a solution *fast*.  
+
+ExceptBot is a Django middleware application that captures 
+and logs exceptions that occur within your Django project. Site admins
+can quickly view exceptions, the code where the problem originated, and 
+with a button-click feed all that info to ChatGPT to get a possible solution.
+
+## Features
+* Automatically logs exceptions, including:
+  * The Python Code and line where the exception occurred
+  * The full stack trace
+  * URL path, Exception type, timestamp, user (if authenticated)
+* Gets AI Suggestions
+  * Sends all relevant info to ChatGPT API:
+    * Stack trace
+    * Source code producing the exception
+    * line causing the exception
+* Superuser-restricted views to:
+  * View a list of unresolved exceptions
+  * Mark exceptions as resolved
+  * View detailed information for each exception
+  * Tracks which superuser resolved an exception and when
+
+## Installation
+1. Install the ExceptBot library
+
+```bash
+pip3 install exceptbot
+```
+
+2. Add 'ExceptBot' to INSTALLED_APPS in your project's `settings.py`:
+
+```python
+INSTALLED_APPS = [
+    # ...
+    'exceptbot',
+    # ...
+]
+```
+
+3. Include the middleware in the MIDDLEWARE list in your `settings.py`:
+
+```python
+MIDDLEWARE = [
+    # ...
+    'exceptbot.middleware.ExceptBotMiddleware',
+    # ...
+]
+```
+
+4. Include the ExceptBot URLs in your project's `urls.py`:
+
+```python
+from django.urls import path, include
+
+urlpatterns = [
+  # ...
+  path('', include('exceptbot.urls')),
+  # ...
+]
+```
+
+Run migrations to create the necessary database tables and set up static files
+
+```bash
+$ python3 manage.py makemigrations exceptbot
+$ python3 manage.py migrate exceptbot
+$ python3 manage.py collectstatic --no-input
+```
+
+## Usage
+Once integrated into your Django project:
+* setup the Chat GPT connection (When you have an account, your [API key is here](https://platform.openai.com/account/api-keys))
+* Any exception that occurs will be automatically logged by the middleware.
+* Superusers can navigate to `/exceptbot/` to view a list of unresolved exceptions.
+* Click on an exception to view its detailed information.
+* Superusers can mark exceptions as resolved, which will also record who resolved it and when.
+
+
