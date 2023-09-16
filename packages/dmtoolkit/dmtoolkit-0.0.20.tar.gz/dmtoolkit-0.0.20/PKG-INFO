@@ -1,0 +1,132 @@
+Metadata-Version: 2.1
+Name: dmtoolkit
+Version: 0.0.20
+Summary: A collection of AI based tools for D&D5e gMs.
+Author-email: Steven A Moore <samoore@binghamton.edu>
+License: MIT License
+        
+        Copyright (c) [2022] Steven Allen Moore
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+Project-URL: homepage, https://github.com/Sallenmoore/dmtoolkit
+Classifier: Programming Language :: Python :: 3.10
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: autonomous-app>=0.1.24
+Requires-Dist: twine
+Requires-Dist: wheel
+Requires-Dist: setuptools
+Requires-Dist: python-dotenv
+Requires-Dist: requests
+Requires-Dist: openai
+Requires-Dist: python-slugify
+Requires-Dist: markdown
+Requires-Dist: dice
+
+# dmtoolkit
+
+!!!!!!!!!!!!!!!!!!!! NOT YET STABLE !!!!!!!!!!!!!!!!!!!!!!!!
+
+![Tests](https://github.com/Sallenmoore/autonomous/actions/workflows/tests.yml/badge.svg)
+
+- **[pypi](https://pypi.org/project/dmtoolkit/)**
+- **[github](https://github.com/Sallenmoore/dmtoolkit)**
+
+## Setup
+
+Add the following to your .env file:
+
+```bash
+#### OpenAI Config
+OPENAI_KEY=
+
+### Cloudinary Config
+CLOUD_NAME=
+CLOUDINARY_KEY=
+CLOUDINARY_SECRET=
+
+### WikiJS Config
+
+WIKIJS_TOKEN = ""
+WIKIJS_URL = ""
+
+# DEV OPTIONS
+
+DEBUG=True
+TESTING=True
+LOG_LEVEL=INFO
+```
+
+## Features
+
+- TBD
+
+## Dependencies
+
+- **Languages**
+  - [Python 3.10](/Dev/language/python)
+- **Frameworks**
+  - [Autonomous](https://github.com/Sallenmoore/autonomous)
+  - [gql](https://github.com/graphql-python/gql)
+- **Containers**
+  - [Docker](https://docs.docker.com/)
+  - [Docker Compose](https://github.com/compose-spec/compose-spec/blob/master/spec.md)
+- **Networking and APIs**
+  - [requests](https://requests.readthedocs.io/en/latest/)
+  - [OpenAI](https://beta.openai.com/docs/api-reference/introduction)
+  - [Cloudinary](https://cloudinary.com/documentation/image_upload_api_reference)
+  - [WikiJS](https://docs.requarks.io/en/api)
+- **Databases**
+  - [TinyDB](https://tinydb.readthedocs.io/en/latest/)
+- **Testing**
+  - [pytest](/Dev/tools/pytest)
+  - [coverage](https://coverage.readthedocs.io/en/6.4.1/cmd.html)
+- **Documentation** - Coming Soon
+  - [pdoc](https://pdoc.dev/docs/pdoc/doc.html)
+  - [highlight.js](https://highlightjs.org/)
+
+---
+
+## Developer Notes
+
+### TODO
+
+- Auto generate API documentation
+
+### Issue Tracking
+
+- None
+
+## Make Commands
+
+### Tests
+
+```sh
+make tests
+```
+
+### package
+
+1. Update version in `/src/dmtoolkit/__init__.py`
+2. ```sh
+   make package
+   ```

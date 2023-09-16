@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dmtoolkit"
+authors = [
+    {name = "Steven A Moore", email = "samoore@binghamton.edu"},
+]
+description = "A collection of AI based tools for D&D5e gMs."
+dynamic = ["version", "dependencies"]
+readme = "README.md"
+requires-python = ">=3.10"
+license={file = "LICENSE"}
+classifiers=[
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+homepage="https://github.com/Sallenmoore/dmtoolkit"
+
+[tool.setuptools.dynamic]
+#https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html#dynamic-metadata
+version = {attr = "dmtoolkit.__version__"}
+dependencies = {file = ["requirements.txt"]}
+
+[tool.setuptools.dynamic.optional-dependencies]
+dev = {file = ["requirements_dev.txt"]}
+
+[tool.setuptools.packages.find]
+# All the following settings are optional:
+where = ["src"]
+include = ["dmtoolkit*"]
+
+[tool.pytest.ini_options]
+addopts = "--cov=dmtoolkit -s -rx -l -x --log-level=INFO --ignore=src -v --no-cov-on-fail --pdb" #   --cov-reset
+testpaths = [
+     "tests",
+]
+pythonpath = [
+    "src/dmtoolkit",
+]
+log_auto_indent = true
