@@ -1,0 +1,52 @@
+Metadata-Version: 2.1
+Name: MingLogUtils
+Version: 1.3.6
+Summary: 自定义相关工具库
+Home-page: http://minglog.hzbmmc.com
+Author: MingLog
+Author-email: 736704198@qq.com
+License: MIT
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# 引言
+在实际工作中一些常见的可视化库(例如:matplotlib, cv2, PIL等)对于部分常用功能支持的不够好，在实际使用的时候往往需要进一步改写封装，本库用于记录一些在实际使用的时候基于现有的一些可视化库，自己改写的一些函数，这些函数会比原有的库兼容性更好。
+
+# 功能描述
+## CVUtils
+包括但是不限于以下功能：<br>
+1. show_image(image, mode="bgr")：展示图片
+2. read_image(filename)：读取中文路径下的图片
+3. resize2gray(image, new_shape)：统一尺寸并修改为灰度图像
+4. cv2AddChineseText(img, text, position, textColor=(0, 255, 0), textSize=30, stroke_width=2)：在图片中添加中文文本
+5. copy_files(all_filepath, output_path)：使用协程技术拷贝文件，支持批量操作（速度极快）
+6. split_rectangle_image_from_imageArray(ori_image, left_top_point, right_bottom_point)：切分矩形区域
+7. image_correction(img)：霍夫变换图片校正
+8. Num2Plate(plate_nums)：针对车牌识别任务，将数值列表还原为中文车牌
+9. save_list2txt(list_, output_file)：将列表中的内容按行存储到指定文件中
+10. train_test_split2txt(filenames, test_size=0.2, output_dir=None)：训练集测试集切分，针对图片
+11. COCOLableAnalyse类：将COCO数据集标签转化为其他常用类型。主要有两种：
+    - a.VOC：coco2voc();
+    - b.YOLO：coco2yolotxt()
+
+## SpiderUtils
+包括但不限于以下功能：<br>
+1. getDouBanComment(url, header)：获取豆瓣短评name, comment_time, comment_location, comment字段
+2. saveListStr2DataFrame(saveExcelPath=None, **kwargs)：将列表字段转化为数据框或存储到Excel文件中
+3. getSinaText(url, header={})：获取新浪微博博文正文。
+4. getSinaComment(url, header={})：获取新浪微博博文评论。
+5. get_stopword()：获取停用词点
+6. Get_Bilibili_Vedio(url)：B站视频下载
+        download()：调用此方法可以下载视频.
+7. concatAV(inputpath='.', outputpath='ConcatResult')：用于合并音频和视频。
+
+更多功能持续开发中~~~
