@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "Enregistrer un compte" %}{% endblock %}
+
+{% block supplementary_css %}
+    <link rel="stylesheet" href="{% static 'django_registration/registration_form.css' %}"/>
+{% endblock %}
+
+
+{% block content %}
+<form class="flex-column register-form" method='post' action=''>{% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}"/>
+    {{form.errors}}
+
+    {{ form.email.label_tag }}
+    {{ form.email }}
+    {{ form.email.errors }}
+
+    {{ form.password1.label_tag }}
+    {{ form.password1 }}
+    {{ form.password1.errors }}
+
+    {{ form.password2.label_tag }}
+    {{ form.password2 }}
+    {{ form.password2.errors }}
+
+    <span class="helptext">{{ form.password2.help_text }}</span>
+    <input class="sib-registration-btn" type="submit" value="{% trans 'Envoyer un e-mail d\'activation' %}"/>
+</form>
+{% endblock %}

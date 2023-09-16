@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Quelqu'un vous a contacté</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/styles/index.css">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700&amp;amp;subset=latin-ext">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+</head>
+
+<body>
+    <div class="container">
+        <main id="content" class="flex-column">
+            <div>
+                Bonjour,
+            </div>
+            <div>
+                {{ from_name }} a souhaité vous inviter à rejoindre ses contacts sur Needle. Son adresse e-mail est {{ from_email }} .
+            </div>
+            <div>
+                {{ message|linebreaksbr }}
+            </div>
+            <div>
+                Pour accepter son invitation, veuillez suivre ce lien ou le copier-coller dans votre navigateur : <a href="{{ link }}" target="_blank">{{ link }}</a>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
+

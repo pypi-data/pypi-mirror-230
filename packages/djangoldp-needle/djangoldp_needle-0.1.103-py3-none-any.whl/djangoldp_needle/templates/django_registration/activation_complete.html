@@ -1,0 +1,15 @@
+{% extends "django_registration/registration_base.html" %}
+{% load i18n %}
+{% load settings_value %}
+
+{% block title %}{% trans "Activation terminée" %}{% endblock %}
+{% block content %}
+    {% settings_value 'INSTANCE_DEFAULT_CLIENT' as front_url %}
+    <h1 class="text-center">{% trans "Merci, l'activation est terminée !" %}</h1>
+    <p class="text-center">
+        {% blocktrans %}
+            Vous pouvez désormais vous <a href="{{front_url}}?auto_login">connecter</a> en utilisant l'email et le mot de passe
+            définis lors de votre enregistrement.
+        {% endblocktrans %}
+    </p>
+{% endblock %}
