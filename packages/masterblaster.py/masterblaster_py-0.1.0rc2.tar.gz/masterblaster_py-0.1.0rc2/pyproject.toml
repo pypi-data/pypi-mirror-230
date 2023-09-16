@@ -1,0 +1,62 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "masterblaster.py"
+version = "0.1.0-rc.2"
+authors = ["Øyvind Nohr <oeyvindnohr@gmail.com>"]
+description = "Python API wrapper for masterblaster.gg"
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+]
+packages = [{ include = "masterblaster" }]
+homepage = "https://github.com/Askepios-ai/masterblaster.py"
+repository = "https://github.com/Askepios-ai/masterblaster.py"
+documentation = "https://masterblasterpy.readthedocs.io/en/latest/"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+aiohttp = "^3.8.5"
+python-dateutil = "^2.8.2"
+
+[tool.poetry.dev-dependencies]
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.2"
+pytest-cov = "^4.1.0"
+jupyter = "^1.0.0"
+sphinx-autoapi = "^2.1.1"
+myst-nb = "^0.17.2"
+pydata-sphinx-theme = "^0.13.3"
+python-semantic-release = "^8.0.8"
+
+[tool.pytest.ini_options]
+asyncio_mode = "strict"
+
+[tool.semantic_release]
+version_variables = [
+    "masterblaster/__init__.py:__version__",
+    "docs/conf.py:version",
+]
+version_toml = ["pyproject.toml:tool.poetry.version"]
+branch = "main"
+changelog_file = "CHANGELOG.md"
+build_command = "pip install poetry && poetry build"
+dist_path = "dist/"
+upload_to_release = true
+upload_to_pypi = false
+remove_dist = false
+patch_without_tag = true
+major_on_zero = false
+
+[tool.semantic_release.branches.main]
+match = "(main|master)"
+prerelease = false
+
+[tool.semantic_release.branches.beta]
+match = "beta"
+prerelease = true
+prerelease_token = "rc"
