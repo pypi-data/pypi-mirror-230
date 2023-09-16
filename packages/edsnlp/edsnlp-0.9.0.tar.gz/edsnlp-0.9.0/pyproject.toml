@@ -1,0 +1,326 @@
+[project]
+name = "edsnlp"
+description = "A set of spaCy components to extract information from clinical notes written in French"
+authors = [
+    { name = "Data Science - DSN APHP", email = "perceval.wajsburt-ext@aphp.fr" }
+]
+license = { file = "LICENSE" }
+readme = "README.md"
+requires-python = ">=3.7.1"
+dynamic = ['version']
+dependencies = [
+    "decorator",
+    "loguru",
+    "pendulum>=2.1.2",
+    "pydantic>=1.10.2,<2.0.0",
+    "pysimstring>=1.2.1",
+    "regex",
+    "rich>=12.0.0",
+    "scikit-learn>=1.0.0",
+    "spacy>=3.1,<3.5.0",
+    "thinc>=8.1.10",
+    "tqdm",
+    "umls-downloader>=0.1.1",
+    "numpy>=1.15.0,<1.23.2; python_version<'3.8'",
+    "numpy>=1.15.0; python_version>='3.8'",
+    "pandas>=1.1.0,<2.0.0; python_version<'3.8'",
+    "pandas>=1.4.0,<2.0.0; python_version>='3.8'",
+    "typing_extensions<4.6.0,>=4.0.0; python_version>='3.8'",  # https://github.com/explosion/spaCy/issues/12659
+    "typing_extensions>=4.0.0; python_version<'3.8'"
+]
+[project.optional-dependencies]
+dev = [
+    "black>=22.3.0,<23.0.0",
+    "fastapi",
+    "flake8==3.9.2",
+    "koalas>=1.8.1; python_version<='3.10'",
+    "pre-commit>=2.0.0; python_version<'3.8'",
+    "pre-commit>=2.21.0; python_version>='3.8'",
+    "pyspark",
+    "pytest>=7.1.0,<8.0.0",
+    "pytest-cov>=3.0.0,<4.0.0",
+    "pytest-html>=3.1.1,<4.0.0",
+    "torch>=1.0.0",
+
+    # docs
+    "mike~=1.1.2",
+    "mkdocs-charts-plugin==0.0.8",
+    "mkdocs-img2fig-plugin==0.9.3",
+    "mkdocs-material~=9.2.0",
+    "mkdocs-section-index==0.3.4",
+    "mkdocs~=1.5.2",
+    "mkdocstrings~=0.20",
+    "mkdocstrings-python~=1.1",
+    "mkdocs-minify-plugin",
+    "pybtex~=0.24.0",
+    "pathspec>=0.11.1",  # required by vendored mkdocs-autorefs PR
+    "astunparse",
+]
+setup = [
+    "mlconjug3<3.9.0",
+    "typer"
+]
+
+[project.urls]
+"Source Code" = "https://github.com/aphp/edsnlp"
+"Documentation" = "https://aphp.github.io/edsnlp"
+"Demo" = "https://aphp.github.io/edsnlp/demo"
+"Bug Tracker" = "https://github.com/aphp/edsnlp/issues"
+
+[tool.setuptools.dynamic]
+version = { attr = "edsnlp.__version__" }
+
+[tool.setuptools.package-data]
+"edsnlp" = [
+    "**/*.pyx",
+    "**/*.pxd",
+    "**/*.pxi",
+    "resources/*.csv",
+    "resources/*.json",
+    "resources/*.csv.gz",
+    "resources/*.json.gz",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[project.entry-points."spacy_factories"]
+# Core
+"eds.accents"                     = "edsnlp.pipelines.core.normalizer.accents.factory:create_component"
+"eds.context"                     = "edsnlp.pipelines.core.context.factory:create_component"
+"eds.contextual_matcher"          = "edsnlp.pipelines.core.contextual_matcher.factory:create_component"
+"eds.endlines"                    = "edsnlp.pipelines.core.endlines.factory:create_component"
+"eds.matcher"                     = "edsnlp.pipelines.core.matcher.factory:create_component"
+"eds.normalizer"                  = "edsnlp.pipelines.core.normalizer.factory:create_component"
+"eds.pollution"                   = "edsnlp.pipelines.core.normalizer.pollution.factory:create_component"
+"eds.quotes"                      = "edsnlp.pipelines.core.normalizer.quotes.factory:create_component"
+"eds.remove_lowercase"            = "edsnlp.pipelines.core.normalizer.remove_lowercase.factory:create_component"
+"eds.sentences"                   = "edsnlp.pipelines.core.sentences.factory:create_component"
+"eds.spaces"                      = "edsnlp.pipelines.core.normalizer.spaces.factory:create_component"
+"eds.terminology"                 = "edsnlp.pipelines.core.terminology.factory:create_component"
+
+# NER
+"eds.adicap"                      = "edsnlp.pipelines.ner.adicap.factory:create_component"
+"eds.ccmu"                        = "edsnlp.pipelines.ner.scores.emergency.ccmu.factory:create_component"
+"eds.charlson"                    = "edsnlp.pipelines.ner.scores.charlson.factory:create_component"
+"eds.cim10"                       = "edsnlp.pipelines.ner.cim10.factory:create_component"
+"eds.covid"                       = "edsnlp.pipelines.ner.covid.factory:create_component"
+"eds.drugs"                       = "edsnlp.pipelines.ner.drugs.factory:create_component"
+"eds.elston_ellis"                = "edsnlp.pipelines.ner.scores.elston_ellis.factory:create_component"
+"eds.gemsa"                       = "edsnlp.pipelines.ner.scores.emergency.gemsa.factory:create_component"
+"eds.priority"                    = "edsnlp.pipelines.ner.scores.emergency.priority.factory:create_component"
+"eds.score"                       = "edsnlp.pipelines.ner.scores.factory:create_component"
+"eds.sofa"                        = "edsnlp.pipelines.ner.scores.sofa.factory:create_component"
+"eds.tnm"                         = "edsnlp.pipelines.ner.tnm.factory:create_component"
+"eds.umls"                        = "edsnlp.pipelines.ner.umls.factory:create_component"
+
+# NER/Comorbidities
+"eds.aids"                        = "edsnlp.pipelines.ner.disorders.aids.factory:create_component"
+"eds.alcohol"                     = "edsnlp.pipelines.ner.behaviors.alcohol.factory:create_component"
+"eds.cerebrovascular_accident"    = "edsnlp.pipelines.ner.disorders.cerebrovascular_accident.factory:create_component"
+"eds.ckd"                         = "edsnlp.pipelines.ner.disorders.ckd.factory:create_component"
+"eds.congestive_heart_failure"    = "edsnlp.pipelines.ner.disorders.congestive_heart_failure.factory:create_component"
+"eds.connective_tissue_disease"   = "edsnlp.pipelines.ner.disorders.connective_tissue_disease.factory:create_component"
+"eds.copd"                        = "edsnlp.pipelines.ner.disorders.copd.factory:create_component"
+"eds.dementia"                    = "edsnlp.pipelines.ner.disorders.dementia.factory:create_component"
+"eds.diabetes"                    = "edsnlp.pipelines.ner.disorders.diabetes.factory:create_component"
+"eds.hemiplegia"                  = "edsnlp.pipelines.ner.disorders.hemiplegia.factory:create_component"
+"eds.leukemia"                    = "edsnlp.pipelines.ner.disorders.leukemia.factory:create_component"
+"eds.liver_disease"               = "edsnlp.pipelines.ner.disorders.liver_disease.factory:create_component"
+"eds.lymphoma"                    = "edsnlp.pipelines.ner.disorders.lymphoma.factory:create_component"
+"eds.myocardial_infarction"       = "edsnlp.pipelines.ner.disorders.myocardial_infarction.factory:create_component"
+"eds.peptic_ulcer_disease"        = "edsnlp.pipelines.ner.disorders.peptic_ulcer_disease.factory:create_component"
+"eds.peripheral_vascular_disease" = "edsnlp.pipelines.ner.disorders.peripheral_vascular_disease.factory:create_component"
+"eds.solid_tumor"                 = "edsnlp.pipelines.ner.disorders.solid_tumor.factory:create_component"
+"eds.tobacco"                     = "edsnlp.pipelines.ner.behaviors.tobacco.factory:create_component"
+
+# Qualifiers
+"eds.family"                      = "edsnlp.pipelines.qualifiers.family.factory:create_component"
+"eds.history"                     = "edsnlp.pipelines.qualifiers.history.factory:create_component"
+"eds.hypothesis"                  = "edsnlp.pipelines.qualifiers.hypothesis.factory:create_component"
+"eds.negation"                    = "edsnlp.pipelines.qualifiers.negation.factory:create_component"
+"eds.reported_speech"             = "edsnlp.pipelines.qualifiers.reported_speech.factory:create_component"
+
+# Misc
+"eds.consultation_dates"          = "edsnlp.pipelines.misc.consultation_dates.factory:create_component"
+"eds.dates"                       = "edsnlp.pipelines.misc.dates.factory:create_component"
+"eds.measurements"                = "edsnlp.pipelines.misc.measurements.factory:create_component"
+"eds.reason"                      = "edsnlp.pipelines.misc.reason.factory:create_component"
+"eds.sections"                    = "edsnlp.pipelines.misc.sections.factory:create_component"
+"eds.tables"                      = "edsnlp.pipelines.misc.tables.factory:create_component"
+
+# Trainable
+"eds.nested_ner"                  = "edsnlp.pipelines.trainable.nested_ner.factory:create_component"
+"eds.span_qualifier"              = "edsnlp.pipelines.trainable.span_qualifier.factory:create_component"
+
+# Deprecated (links to the same factories as above)
+"SOFA"                   = "edsnlp.pipelines.ner.scores.sofa.factory:create_component"
+"accents"                = "edsnlp.pipelines.core.normalizer.accents.factory:create_component"
+"charlson"               = "edsnlp.pipelines.ner.scores.charlson.factory:create_component"
+"consultation_dates"     = "edsnlp.pipelines.misc.consultation_dates.factory:create_component"
+"contextual-matcher"     = "edsnlp.pipelines.core.contextual_matcher.factory:create_component"
+"dates"                  = "edsnlp.pipelines.misc.dates.factory:create_component"
+"eds.AIDS"               = "edsnlp.pipelines.ner.disorders.aids.factory:create_component"
+"eds.CKD"                = "edsnlp.pipelines.ner.disorders.ckd.factory:create_component"
+"eds.COPD"               = "edsnlp.pipelines.ner.disorders.copd.factory:create_component"
+"eds.SOFA"               = "edsnlp.pipelines.ner.scores.sofa.factory:create_component"
+"eds.TNM"                = "edsnlp.pipelines.ner.tnm.factory:create_component"
+"eds.elston-ellis"       = "edsnlp.pipelines.ner.scores.elston_ellis.factory:create_component"
+"eds.elstonellis"        = "edsnlp.pipelines.ner.scores.elston_ellis.factory:create_component"
+"eds.emergency.ccmu"     = "edsnlp.pipelines.ner.scores.emergency.ccmu.factory:create_component"
+"eds.emergency.gemsa"    = "edsnlp.pipelines.ner.scores.emergency.gemsa.factory:create_component"
+"eds.emergency.priority" = "edsnlp.pipelines.ner.scores.emergency.priority.factory:create_component"
+"eds.measures"           = "edsnlp.pipelines.misc.measurements.factory:create_component"
+"eds.remove-lowercase"   = "edsnlp.pipelines.core.normalizer.remove_lowercase.factory:create_component"
+"emergency.ccmu"         = "edsnlp.pipelines.ner.scores.emergency.ccmu.factory:create_component"
+"emergency.gemsa"        = "edsnlp.pipelines.ner.scores.emergency.gemsa.factory:create_component"
+"emergency.priority"     = "edsnlp.pipelines.ner.scores.emergency.priority.factory:create_component"
+"endlines"               = "edsnlp.pipelines.core.endlines.factory:create_component"
+"family"                 = "edsnlp.pipelines.qualifiers.family.factory:create_component"
+"hypothesis"             = "edsnlp.pipelines.qualifiers.hypothesis.factory:create_component"
+"matcher"                = "edsnlp.pipelines.core.matcher.factory:create_component"
+"negation"               = "edsnlp.pipelines.qualifiers.negation.factory:create_component"
+"normalizer"             = "edsnlp.pipelines.core.normalizer.factory:create_component"
+"pollution"              = "edsnlp.pipelines.core.normalizer.pollution.factory:create_component"
+"quotes"                 = "edsnlp.pipelines.core.normalizer.quotes.factory:create_component"
+"reason"                 = "edsnlp.pipelines.misc.reason.factory:create_component"
+"remove-lowercase"       = "edsnlp.pipelines.core.normalizer.remove_lowercase.factory:create_component"
+"reported_speech"        = "edsnlp.pipelines.qualifiers.reported_speech.factory:create_component"
+"rspeech"                = "edsnlp.pipelines.qualifiers.reported_speech.factory:create_component"
+"score"                  = "edsnlp.pipelines.ner.scores.factory:create_component"
+"sections"               = "edsnlp.pipelines.misc.sections.factory:create_component"
+"sentences"              = "edsnlp.pipelines.core.sentences.factory:create_component"
+"spaces"                 = "edsnlp.pipelines.core.normalizer.spaces.factory:create_component"
+"tables"                 = "edsnlp.pipelines.misc.tables.factory:create_component"
+"terminology"            = "edsnlp.pipelines.core.terminology.factory:create_component"
+
+[project.entry-points."spacy_architectures"]
+"eds.stack_crf_ner_model.v1" = "edsnlp.pipelines.trainable.nested_ner.stack_crf_ner:create_model"
+"eds.span_multi_classifier.v1" = "edsnlp.pipelines.trainable.span_qualifier.span_multi_classifier:create_model"
+
+[project.entry-points."spacy_scorers"]
+"eds.nested_ner_scorer.v1" = "edsnlp.pipelines.trainable.nested_ner.nested_ner:make_nested_ner_scorer"
+"eds.span_qualifier_scorer.v1" = "edsnlp.pipelines.trainable.span_qualifier.factory:create_scorer"
+
+[project.entry-points."spacy_misc"]
+"eds.candidate_span_qualifier_getter" = "edsnlp.pipelines.trainable.span_qualifier.factory:create_candidate_getter"
+
+[project.entry-points."spacy_languages"]
+"eds" = "edsnlp.language:EDSLanguage"
+
+[project.entry-points."mkdocs.plugins"]
+"bibtex" = "docs.scripts.bibtex:BibTexPlugin"
+"autorefs" = "docs.scripts.autorefs.plugin:AutorefsPlugin"
+
+[build-system]
+requires = [
+    "setuptools",
+    "cython>=0.25,<3.0",
+    "spacy>=3.2,<4.0",
+    # to update from https://github.com/scipy/oldest-supported-numpy/blob/main/setup.cfg
+    # while setting numpy >= 1.15.0 due to spacy reqs
+    "numpy==1.16.0; python_version=='3.7' and platform_system=='AIX'",
+    "numpy==1.23.3; python_version=='3.9' and platform_system=='OS400'",
+    "numpy==1.19.2; python_version=='3.7' and platform_machine=='aarch64' and platform_python_implementation != 'PyPy'",
+    "numpy==1.19.2; python_version=='3.8' and platform_machine=='aarch64' and platform_python_implementation != 'PyPy'",
+    "numpy==1.21.0; python_version=='3.7' and platform_machine=='arm64' and platform_system=='Darwin'",
+    "numpy==1.21.0; python_version=='3.8' and platform_machine=='arm64' and platform_system=='Darwin'",
+    "numpy==1.21.0; python_version=='3.9' and platform_machine=='arm64' and platform_system=='Darwin'",
+    "numpy==1.17.5; python_version=='3.8' and platform_machine=='s390x' and platform_python_implementation != 'PyPy'",
+    "numpy==1.22.2; platform_machine=='loongarch64' and python_version<'3.11'",
+    "numpy==1.15.0; python_version=='3.7' and platform_machine not in 'arm64|aarch64|loongarch64' and platform_system!='AIX' and platform_python_implementation != 'PyPy'",
+    "numpy==1.17.3; python_version=='3.8' and platform_machine not in 'arm64|aarch64|s390x|loongarch64' and platform_python_implementation != 'PyPy'",
+    "numpy==1.19.3; python_version=='3.9' and platform_system not in 'OS400' and platform_machine not in 'arm64|loongarch64' and platform_python_implementation != 'PyPy'",
+    "numpy==1.21.6; python_version=='3.10' and platform_machine!='loongarch64' and platform_python_implementation != 'PyPy'",
+    "numpy==1.23.2; python_version=='3.11' and platform_python_implementation != 'PyPy'",
+    "numpy==1.20.0; python_version=='3.7' and platform_machine!='loongarch64' and platform_python_implementation=='PyPy'",
+    "numpy==1.22.2; python_version=='3.8' and platform_machine!='loongarch64' and platform_python_implementation=='PyPy'",
+    "numpy; python_version>='3.12'",
+    "numpy; python_version>='3.9' and platform_python_implementation=='PyPy'",
+]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+fix = true
+extend-exclude = [
+    ".git",
+    "__pycache__",
+    "__init__.py",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".venv",
+    "build",
+    "edsnlp/pipelines/factories.py",
+]
+line-length = 88
+select = [
+    "E",
+    "F",
+    "W",
+    "I001"
+]
+
+[tool.ruff.flake8-tidy-imports]
+ban-relative-imports = "parents"
+
+[tool.ruff.extend-per-file-ignores]
+"__init__.py" = ["F401"]
+"edsnlp/pipelines/factories.py" = [ "F401", "E501" ]
+
+[tool.ruff.isort]
+known-first-party = ["edsnlp"]
+order-by-type = true
+
+[tool.interrogate]
+ignore-init-method = true
+ignore-init-module = true
+ignore-magic = false
+ignore-semiprivate = false
+ignore-private = false
+ignore-property-decorators = false
+ignore-module = true
+ignore-nested-functions = false
+ignore-nested-classes = true
+ignore-setters = false
+fail-under = 40
+exclude = ["setup.py", "docs", "build", "tests"]
+verbose = 0
+quiet = false
+whitelist-regex = []
+color = true
+omit-covered-files = false
+# generate-badge = "."
+# badge-format = "svg"
+
+
+[tool.coverage.report]
+exclude_lines = [
+    "def __repr__",
+    "if __name__ == .__main__.:",
+    "@overload",
+    "pragma: no cover",
+    "raise .*Error",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+    "Span.set_extension.*",
+    "Doc.set_extension.*",
+    "Token.set_extension.*",
+]
+
+[tool.cibuildwheel]
+skip = [
+    "*p36-*", # Skip Python 3.6
+    "pp*", # Skip PyPy
+    "*-win32", # Skip 32-bit Windows
+    "*-manylinux_i686", # Skip 32-bit Linux
+    "*-win_arm64", # Skip experimental Windows on ARM
+    "*-musllinux*", # Skip slow Linux
+    "*-manylinux_aarch64", # Skip slow Linux
+    "*-manylinux_ppc64le", # Skip slow Linux
+    "*-manylinux_s390x", # Skip slow Linux
+]
+
+before-test = "pip install pytest"
+test-command = "pytest {project}/tests/pipelines/test_pipelines.py"
