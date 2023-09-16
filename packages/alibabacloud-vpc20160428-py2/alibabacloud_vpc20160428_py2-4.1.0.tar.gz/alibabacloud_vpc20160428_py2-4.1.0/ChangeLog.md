@@ -1,0 +1,38 @@
+2023-09-07 Version: 4.0.2
+- Generated python2 2016-04-28 for Vpc.
+
+2023-08-25 Version: 4.0.1
+- Generated python2 2016-04-28 for Vpc.
+
+2023-08-18 Version: 4.0.0
+- DescribeForwardTables offline.
+
+2023-08-15 Version: 3.1.1
+- Generated python2 2016-04-28 for Vpc.
+
+2023-08-10 Version: 3.1.0
+- Generated python2 2016-04-28 for Vpc.
+
+2023-08-09 Version: 3.0.2
+- Generated python2 2016-04-28 for Vpc.
+
+2023-08-08 Version: 3.0.1
+- Generated python2 2016-04-28 for Vpc.
+
+2023-08-07 Version: 3.0.0
+- DescribeForwardTables offline.
+
+2023-07-04 Version: 2.0.0
+- Interface modification with parameter deletion is incompatible.
+- Remove CreateNatIp remove useless parameter NatIpCidrId, must specify NatIpCidr.
+
+2023-01-31 Version: 1.0.1
+- Supported set high definition monitor log status for eip.
+- Supported batch associate eip to cloud products.
+- Supported VpcDescribeVpcNatGatewayNetworkInterfaceQuota.
+
+2023-01-31 Version: 1.0.0
+- Supported set high definition monitor log status for eip.
+- Supported batch associate eip to cloud products.
+- Supported VpcDescribeVpcNatGatewayNetworkInterfaceQuota.
+
