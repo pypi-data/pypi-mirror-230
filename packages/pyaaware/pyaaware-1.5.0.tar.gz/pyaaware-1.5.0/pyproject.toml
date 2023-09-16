@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "pyaaware"
+version = "1.5.0"
+description = "Aaware Python development libraries"
+authors = ["Jason Calderwood <jason@aaware.com>"]
+maintainers = ["Jason Calderwood <jason@aaware.com>"]
+homepage = "https://aaware.com"
+license = "GPL-3.0-only"
+include = [
+    "pyaaware/pyaaware.cpython-311-arm-linux-gnueabihf.so",
+    "pyaaware/pyaaware.cpython-311-aarch64-linux-gnu.so",
+    "pyaaware/pyaaware.cpython-311-x86_64-linux-gnu.so",
+    "pyaaware/pyaaware.cpython-311-x86_64-darwin.so"
+]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.12"
+torch = "^2"
+#torch = { url = "https://download.pytorch.org/whl/cpu/torch-2.0.1%2Bcpu-cp38-cp38-linux_x86_64.whl" }
+
+[tool.poetry.dev-dependencies]
+h5py = "^3"
+pybind11 = "^2"
+pytest = "^7"
+tensorflow = "^2"
+tf2onnx = "^1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
