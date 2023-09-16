@@ -1,0 +1,44 @@
+<div class="card rounded-0 border-0 shadow-sm mt-3">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-light table-striped table-hover mb-0  fs-5">
+                <thead>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Language</th>
+                    <!-- <th>Updated At</th> -->
+                    <th class="text-center">Actions</th>
+                </thead>
+                <tbody>
+                    {% for project in projects %}
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="">
+                            </div>
+                        </td>
+                        <td>
+                            <a href="{{url_for('project.details', project_id=project.id)}}" class="nav-link">
+                                {{ project['name'] }}
+                            </a>
+                        </td>
+                        <td>
+                            <i class="{{ icons[project.language]}} fa-fw"></i>
+                            <span>{{project['language']}}</span>
+                        </td>
+                        <!-- <td>{{ project['updated_at'] }}</td> -->
+                        <td class="d-flex justify-content-center gap-3">
+                            <a href="{{url_for('project.details', project_id=project.id)}}" class="nav-link">
+                                <i class="far fa-file-alt text-primary"></i>
+                            </a>
+                            <a href="#confirmModal" role="button" class="nav-link"  data-bs-toggle="modal">
+                                <i class="fas fa-trash-alt text-danger"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
