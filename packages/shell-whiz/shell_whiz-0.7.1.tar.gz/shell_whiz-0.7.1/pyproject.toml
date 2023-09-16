@@ -1,0 +1,33 @@
+[tool.black]
+line-length = 80
+
+[tool.isort]
+profile = "black"
+
+[tool.poetry]
+name = "shell-whiz"
+version = "0.7.1"
+description = "Shell Whiz: AI assistant right in your terminal"
+license = "GPL-3.0-only"
+authors = ["Tamerlan Bimzhanov <bimzhanovt.net@gmail.com>"]
+readme = "README.md"
+packages = [{include = "shell_whiz"}]
+
+[tool.poetry.dependencies]
+python = ">=3.9 <4"
+openai = "^0.27.8"
+jsonschema = "^4.19.0"
+rich = "^13.5.2"
+questionary = "^2.0.0"
+
+[tool.poetry.scripts]
+sw = "shell_whiz.cli:run"
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "5.0.4"
+black = "23.3.0"
+isort = {version = "5.11.5", extras = ["colors"]}
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
