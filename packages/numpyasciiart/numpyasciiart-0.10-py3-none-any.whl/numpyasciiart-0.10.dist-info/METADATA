@@ -1,0 +1,53 @@
+Metadata-Version: 2.1
+Name: numpyasciiart
+Version: 0.10
+Summary: Converts an image to ASCII art using numpy / numexpr / cv2
+Home-page: https://github.com/hansalemaos/numpyasciiart
+Author: Johannes Fischer
+Author-email: aulasparticularesdealemaosp@gmail.com
+License: MIT
+Keywords: count,colours,colors,rgb,numpy
+Classifier: Development Status :: 4 - Beta
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Utilities
+Description-Content-Type: text/markdown
+License-File: LICENSE.rst
+Requires-Dist: a-cv-imwrite-imread-plus
+Requires-Dist: numexpr
+Requires-Dist: numpy
+Requires-Dist: opencv-python
+
+
+# Converts an image to ASCII art using numpy / numexpr / cv2
+
+## Tested against Windows 10 / Python 3.11 / Anaconda
+
+### pip install numpyasciiart
+
+
+```python
+Convert an image to ASCII art.
+
+Parameters:
+	img (str or numpy.ndarray): url/path/base64/bin/np.array/PIL.Image representing an image.
+	width (int): Width of the ASCII art output.
+	height_adjust_stretch (float): Vertical stretch factor for the ASCII art.
+	letters (str): The set of characters to use for varying shades in the ASCII art.
+
+Returns:
+	str: ASCII art representation of the input image.
+
+Example:
+	To convert an image and print it as ASCII art:
+	from numpyasciiart import to_ascii
+	pic = to_ascii(
+		img=r"https://www.python.org/static/img/python-logo.png",
+		width=160,
+		height_adjust_stretch=2.5,
+		letters="█▓▓▒▒░░ ",
+	)
+
+	print(pic)
+```
