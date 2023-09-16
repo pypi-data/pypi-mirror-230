@@ -1,0 +1,129 @@
+name: Testing and deployment
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  lint-python:
+    name: Lint Python code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - id: install-python
+        name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          cache: 'pipenv'
+
+      - name: Install pipenv
+        run: curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
+
+      - id: install-python-dependencies
+        name: Install Python dependencies
+        run: pipenv install --dev --python `which python`
+
+      - id: lint
+        name: Lint Python code
+        run: pipenv run flake8 ./ --verbose
+
+  test-python:
+    strategy:
+      matrix:
+        python: ['3.8', '3.9', '3.10']
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - id: install-python
+        name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python }}
+
+      - id: install-python-dependencies
+        name: Install Python dependencies
+        run: pip install requests click python-dateutil pandas
+
+      - id: download-data
+        name: Download download
+        run: python cpi/download.py
+
+      - id: tests
+        name: Run tests
+        run: python tests.py
+
+      - id: update
+        name: Test update
+        run: python cpi/download.py
+
+  test-build:
+    name: Build Python package
+    runs-on: ubuntu-latest
+    needs: [test-python]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - id: install-python
+        name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          cache: 'pipenv'
+
+      - name: Install pipenv
+        run: curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
+
+      - id: install-python-dependencies
+        name: Install Python dependencies
+        run: pipenv install --dev --python `which python`
+        shell: bash
+
+      - id: build
+        name: Build release
+        run: |
+          pipenv run python cpi/download.py
+          pipenv run python setup.py sdist
+          pipenv run python setup.py bdist_wheel
+          ls -l dist
+        shell: bash
+
+      - id: check
+        name: Check release
+        run: pipenv run twine check dist/*
+        shell: bash
+
+      - id: save
+        name: Save artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-${{ github.run_number }}
+          path: ./dist
+          if-no-files-found: error
+
+  tag-release:
+    name: Tagged PyPI release
+    runs-on: ubuntu-latest
+    needs: [test-build]
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+    steps:
+      - id: fetch
+        name: Fetch artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build-${{ github.run_number }}
+          path: ./dist
+
+      - id: publish
+        name: Publish release
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          verbose: true
+          verify_metadata: false
