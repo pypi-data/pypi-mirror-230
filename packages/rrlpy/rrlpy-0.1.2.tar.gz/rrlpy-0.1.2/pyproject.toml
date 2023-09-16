@@ -1,0 +1,78 @@
+[project]
+name = "rrlpy"
+authors = [
+    { name = "Pedro Salas", email = "psalas@nrao.edu" },
+    { name = "astrofle", email = "psalas@nrao.edu" },
+]
+readme = "README.md"
+classifiers = [
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+]
+dynamic = []
+requires-python = ">=3.5"
+dependencies = [
+    "astropy",
+]
+description = "Radio Recombination Lines in Python"
+version = "0.1.2"
+
+[project.license]
+file = "LICENSE"
+
+[project.urls]
+homepage = "https://github.com/astrofle/RRLpy"
+repository = "https://github.com/astrofle/RRLpy"
+
+[tool.pdm.version]
+source = "file"
+path = "src/rrlpy/__init__.py"
+
+[tool.black]
+preview = true
+line-length = 100
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.per-file-ignores]
+"src/rrlpy/rrl/constants.py" = [
+    "F401",
+]
+
+[tool.pyright]
+reportImplicitStringConcatenation = false
+
+[tool.isort]
+profile = "black"
+combine_as_imports = true
+sections = [
+    "FUTURE",
+    "STDLIB",
+    "THIRDPARTY",
+    "FIRSTPARTY",
+    "LOCALFOLDER",
+]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+testpaths = [
+    "tests",
+    "src",
+]
+
+[tool.pyprojectx]
+pdm = "pdm==2.8.2"
+
+[tool.pyprojectx.aliases]
+install = "pdm install"
+run = "pdm run"
+outdated = "pdm update --outdated"
+test = "pdm run pytest"
+
+[tool.pyprojectx.os.win.aliases]
+
+[build-system]
+requires = [
+    "pdm-backend",
+]
+build-backend = "pdm.backend"
