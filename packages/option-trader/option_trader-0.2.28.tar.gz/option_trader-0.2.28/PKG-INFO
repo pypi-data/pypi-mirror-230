@@ -1,0 +1,25 @@
+Metadata-Version: 2.1
+Name: option_trader
+Version: 0.2.28
+Summary: Option Trading Robot package
+Project-URL: Homepage, https://github.com/pypa/OptionTradeproject
+Project-URL: Bug Tracker, https://github.com/pypa/OptionTrader/issues
+Author-email: Jim Huang <jim.huang.taipei@outlook.com>
+License-File: LICENSE
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+
+option trader
+
+# package development
+cd option_trader/src
+pip install e .
+py -m build
+py -m twine upload --repository pypi dist/*
+docker run --restart always -p 8000:8000 docker.io/jihuang/optiontrader
+
+#tests
+https://docs.pytest.org/en/latest/explanation/goodpractices.html
