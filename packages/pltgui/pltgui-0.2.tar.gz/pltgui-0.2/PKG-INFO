@@ -1,0 +1,105 @@
+Metadata-Version: 2.1
+Name: pltgui
+Version: 0.2
+Summary: A GUI with matplotlib, can use on all OS.
+Home-page: https://gitee.com/drjiezheng/pltgui
+Author: Dr Jie Zheng
+Author-email: jiezheng@nao.cas.cn
+License: MIT
+Description: # pltgui
+        
+        > Author: Dr Jie Zheng & Dr Lin-qiao Jiang
+        > v0.1 2022
+        > v0.2 2023R
+        
+        ## 简介
+        
+        一个用matplotlib画按钮到图形界面，用于在科学图像绘制之外额外增加互动操作功能。
+        目前很简单，只提供了按钮，以及按钮的颜色等（可以当复选框用）。
+        
+        由于使用matplotlib，而不是专门的图形界面，因此可以在任何具有交互能力的操作系统上使用，
+        经过实测，在macOS，Linux，Windows上均可以很好地实现互动操作。
+        
+        ## 范例
+        
+        ```python
+        import numpy as np
+        import matplotlib.pyplot as plt
+        import pltgui
+        
+        
+        # 这是一个例子，在图中分为了上下两部分，上面是函数图像，下面是按钮区，选择函数，以及退出
+        # 点击sin或者cos时，会动态改变函数，并且切换按钮的显示状态
+        
+        #################################
+        # 特别注意：使用本程序，必须有专门的退出按钮，如果关闭画图窗口，程序就死在后台了，只能Ctrl-C，或者kill
+        #################################
+        
+        # 把一张图（figure）分为两个部分，上面80%是画图区域，下面20%是按钮区域，具体分布根据需要来
+        fig = plt.figure()
+        axdat = fig.add_axes([0.05, 0.20, 0.90, 0.75])
+        axbtn = fig.add_axes([0.05, 0.01, 0.90, 0.09])
+        
+        # 绘制一条sin曲线作为初始值
+        xx = np.linspace(-5, 5, 1000)
+        yy = np.sin(xx)
+        line_dat = axdat.plot(xx, yy)[0]
+        
+        # 定义sin按钮的事件响应函数，即点了sin按钮之后会调用它
+        def draw_sin():
+            # 重新制造曲线数据
+            xx = np.linspace(-5, 5, 1000)
+            yy = np.sin(xx)
+            # 沿用外部绘制好的曲线，修改其数据即可
+            line_dat.set_data(xx, yy)
+            # 改变按钮状态
+            btn_sin.check()
+            btn_cos.uncheck()
+        
+        # cos按钮的响应函数，同上
+        def draw_cos():
+            xx = np.linspace(-5, 5, 1000)
+            yy = np.cos(xx)
+            line_dat.set_data(xx, yy)
+            btn_sin.uncheck()
+            btn_cos.check()
+        
+        # 退出按钮的响应函数，返回True，表示要退出
+        def bye():
+            return True
+        
+        # 在非按钮的图像区域点击的响应函数，这里简单显示一下点击坐标
+        def img_click(x, y):
+            print(f"Click on ({x:.2f}, {y:.2f})")
+        
+        # 创建按钮管理器对象，把按钮画布指派给它
+        btnctl = pltgui.i_btn_ctl(axbtn)
+        # 添加3个按钮。注意三个按钮之间的布局关系，需要自己先画个布局草图
+        # 特别注意，留出按钮之间的空隙，要不然很难看（操作上无所谓）
+        # 指派处理函数的时候，这里给函数名，不要加括号，否则就成了立刻调用了
+        btn_sin = btnctl.add_btn(10, 1.5, 0.9, 1, "y", "sin", "sin", draw_sin, chk_color="g")
+        btn_cos = btnctl.add_btn(11, 1.5, 0.9, 1, "y", "cos", "cos", draw_cos, chk_color="g")
+        btn_bye = btnctl.add_btn(10.5, 0, 1.9, 1, "r", "bye", "bye", bye)
+        
+        # 添加好按钮后，自动给画布边框初始化
+        btnctl.set_axis_lim()
+        
+        # 开启交互模式，如果不开也行，那么会实际上变成一直在刷新
+        plt.ion()
+        # 操作循环，自动等待鼠标在画布上点击，然后根据点击的按钮去调用函数
+        btnctl.action_loop(image_action=img_click)
+        # 退出前关闭交互模式，不关也行，反正都要退出程序了。但是如果后续还有代码就需要
+        plt.ioff()
+        ```
+        
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Topic :: Scientific/Engineering :: Physics
+Classifier: Topic :: Scientific/Engineering :: Astronomy
+Requires: numpy
+Requires: matplotlib
+Description-Content-Type: text/markdown
