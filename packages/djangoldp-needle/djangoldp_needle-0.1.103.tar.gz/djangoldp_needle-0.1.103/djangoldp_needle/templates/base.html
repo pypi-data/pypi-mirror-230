@@ -1,0 +1,46 @@
+{% block html %}
+{% load settings_value %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Needle - {% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    {% if protocol %}
+    <link rel="stylesheet" href="{{ protocol }}://{{domain}}{% static 'base.css' %}"/>
+    <link rel="stylesheet" href="{{ protocol }}://{{domain}}{% static 'needle.css' %}">
+    {% else %}
+    <link rel="stylesheet" href="{% static 'base.css' %}"/>
+    <link rel="stylesheet" href="{% static 'needle.css' %}">
+    {% endif %}
+    {% block supplementary_css %}
+
+    {% endblock %}
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700&amp;amp;subset=latin-ext">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+</head>
+
+<body>
+<div class="container">
+    <main id="content" class="flex-column">
+        {% block content %}{% endblock %}
+    </main>
+</div>
+<div class="footer">
+    <div style='margin-top:30px;'>
+        <p style='font-size:small;color:#000'>
+
+        </p>
+    </div>
+    <div style='margin-top:30px;'>
+        <img alt="needle" src="{% settings_value 'INSTANCE_DEFAULT_CLIENT' %}/src/img/needle-logo-black.svg"
+             class="logo"/>
+    </div>
+</div>
+</body>
+</html>
+
+{% endblock %}

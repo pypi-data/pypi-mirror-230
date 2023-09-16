@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Quelqu'un vous invite à participer au carnet {{  booklet }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/styles/index.css">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700&amp;amp;subset=latin-ext">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+</head>
+
+<body>
+    <div class="container">
+        <main id="content" class="flex-column">
+            <div>
+                Bonjour,
+
+                {{ from_name }} veut vous inviter à contributer à son carnet <a href="{{ booklet_url }}" target="_blank">{{  booklet }}</a> sur Needle.
+            </div>
+            <div>
+                Pour créer un compte, veuillez suivre ce lien ou le copier-coller dans votre navigateur : <a href="{{ link }}" target="_blank">{{ link }}</a>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
+

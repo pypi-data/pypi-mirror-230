@@ -1,0 +1,10 @@
+{% load i18n %}
+{% load settings_value %}
+{% trans "Activez votre compte sur" %} {% settings_value 'INSTANCE_DEFAULT_CLIENT' %}:
+
+http://{{ site.domain }}{% url 'registration_activate' activation_key %}
+
+{% blocktrans %}Ce lien est valide pendant {{ expiration_days }} jours.{% endblocktrans %}
+
+
+Mentions Légales / CGV /CGU : {% settings_value 'INSTANCE_DEFAULT_CLIENT' %}/cgu

@@ -1,0 +1,41 @@
+body {
+    background-image: url("/static/images/background.png");
+    background-size: cover;
+    position: relative;
+}
+
+main {
+    border-radius: 1em;
+}
+
+input[type="submit"] {
+    background-color: #020248 !important;
+    border: 1px solid #020248 !important;
+}
+
+input[type="submit"]:hover {
+    color: #020248 !important;
+    background-color: transparent !important;
+    border: 1px solid #020248 !important;
+}
+
+label[for="id_email"] {
+    color: transparent;
+    position: relative;
+}
+
+label[for="id_email"]:after {
+    color: var(--text-color);
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: block;
+    content: 'E-mail :';
+}
+
+.logo {
+    max-width: 250px;
+    max-height: 250px;
+    width: auto;
+    height: auto;
+}
