@@ -1,0 +1,109 @@
+{% extends 'diary/day_base.html' %}
+{% load static %}
+
+
+{% block diary_head_extra %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'diary/multi_col.css' %}" />
+{% endblock diary_head_extra %}
+
+{% block diary_nav %}
+    {% url 'diary:multi_day_nav' slug=nav_slug change='next' as diary_nav_next %}
+    {% url 'diary:multi_day_nav' slug=nav_slug change='prev' as diary_nav_prev %}
+    {% url 'diary:month' year=date.year month=date.month as diary_nav_up %}
+    {{ block.super }}
+{% endblock diary_nav %}
+
+
+{% block diary_title %}
+    {{ date.year }} {{ date_start_head }} - {{ date_end_head }}
+{% endblock diary_title %}
+
+
+{% block diary_content %}
+    {{ block.super }}
+
+    <div class="container-fluid">
+        <!-- column headers -->
+        <div class="row">
+            <div class="col-md-1">
+                <i>Time</i>
+            </div>
+            <div class="col-md-11">
+                <div class="row cols-{{ n_cols }}">
+                    {% for date, day_header, date_slug in date_slots %}
+                        <a href="{% url 'diary:day' slug=date_slug %}">
+                            <div class="col-md-1">
+                                <b>
+                                    {{ day_header }}
+                                </b>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- time slot rows -->
+        {% for label, start_time, day_entries in time_slots %}
+            <div class="row">
+                <div class="col-md-1">
+                    <b>{{ label }}</b>
+                </div>
+                <div class="col-md-11">
+                    <div class="row cols-{{ n_cols }}">
+                        {% for datetime_slug, entries, current, trading, historic, advance, allow_dnd in day_entries %}
+                            <div
+                                id="{{ datetime_slug }}"
+class="col-md-1 droptarget
+{% if current %} current{% endif %}
+{% if trading %}
+{% if historic %} historic{% elif advance%} advance{% else %} trading{% endif %}
+{% else %} admin{% endif %}"
+                                {% if request.user.is_staff or allow_dnd %}
+                                    ondragenter="dragenter(event);"
+                                    ondragleave="dragleave(event);"
+                                    ondragover="dragover(event);"
+                                    ondrop="drop(event);"
+                                    ondragend="dragend(event);"
+                                {% endif %}
+                                >
+                {% url 'diary:entry_new' slug=datetime_slug as new_entry %}
+                                <button
+                                    class="btn btn-link new"
+                                    type="button"
+onclick="location.href='{{ new_entry }}?next={{ request.path }}'"
+                                    >
+                                    <span class="glyphicon glyphicon-plus">
+                                    </span>
+                                </button>
+                                {% for entry in entries %}
+                                    <div
+class="entry{% if entry.cancelled %} cancelled{% endif %}{% if entry.no_show %} no_show{% endif %}"
+                                        id="{{ entry.pk }}"
+                                    {% if request.user.is_staff or allow_dnd %}
+                                            draggable="true"
+                                            ondragstart="drag(event);"
+                                    {% endif %}
+                                        >
+                                        <div
+                    data-href="{% url 'diary:entry_modal' pk=entry.pk %}"
+                                            data-toggle="modal"
+                                            data-target="#ajaxModal"
+                                            >
+                                            {% if entry.customer %}
+                                                <b>{{ entry.customer }}</b>
+                                            {% else %}
+                                                <b>{{ entry.creator }}</b>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock diary_content %}
