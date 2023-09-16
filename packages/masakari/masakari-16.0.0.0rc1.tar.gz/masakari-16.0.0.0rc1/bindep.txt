@@ -1,0 +1,19 @@
+# This is a cross-platform list tracking distribution packages needed for install and tests;
+# see https://docs.openstack.org/infra/bindep/ for additional information.
+
+# libpq-dev is needed by openstack-tox-py37 build only.
+libpq-dev [platform:dpkg test]
+python3-dev [platform:dpkg test]
+libmysqlclient-dev [platform:dpkg test !platform:debian]
+libmariadb-dev-compat [platform:debian]
+mysql [platform:rpm test]
+mysql-client [platform:dpkg test !platform:debian]
+mysql-devel [platform:rpm test]
+mysql-server [test !platform:debian]
+mariadb-server [platform:debian]
+postgresql [test]
+postgresql-client [platform:dpkg test]
+postgresql-devel [platform:rpm test]
+postgresql-server [platform:rpm test]
+libsqlite3-dev [platform:dpkg test]
+sqlite-devel [platform:rpm test]

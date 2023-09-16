@@ -1,0 +1,500 @@
+CHANGES
+=======
+
+16.0.0.0rc1
+-----------
+
+* Move functional tests to Jammy; focal unsupported
+* Fix bindep.txt for python 3.11 job(Debian Bookworm)
+* log when set host on maintenance
+* extend wait period for process notification
+* add pre-commit
+* use looping call with timeout
+* releasenote for Masakari VMove
+* Update master for stable/2023.1
+
+15.0.0
+------
+
+* vmoves table purge support
+* add api-ref for masakari vmoves
+* update api microversion for masakari vmoves
+* vm moves for host notification
+* Use new get\_rpc\_client API from oslo.messaging
+* Fix tox4 issues
+* Fix notfication stuck into running status when timeout
+* Handle host notification without host status
+* [CI] Move queue setting to project level
+* Switch to 2023.1 Python3 unit tests and generic template name
+* Update master for stable/zed
+
+14.0.0
+------
+
+* Fix stopping stopped instances
+* add notification\_uuid into log message
+* Cleanup py27 support
+* Replace abc.abstractproperty with property and abc.abstractmethod
+* update zuul jod: add TUNNEL\_IP\_VERSION
+* DLM to fix host notification race
+* Replace python-dev with python3-dev in bindep
+* Update python testing as per zed cycle testing runtime
+* [CI] Install dependencies for docs target
+* Add Python3 zed unit tests
+* Update master for stable/yoga
+
+13.0.0
+------
+
+* Fix compatibility with oslo.context >= 4.0.0 (one more again)
+* Fix compatibility with oslo.context >= 4.0.0 (again)
+* Fix compatibility with oslo.context >= 4.0.0
+* Updating python testing classifier as per Yoga testing runtime
+* Fix auth\_url setting for devstack
+* Add Python3 yoga unit tests
+* Update master for stable/xena
+
+12.0.0
+------
+
+* Enable tls-proxy support for test job
+* Make functional tests consume all config
+* [DevStack] Use xtrace
+* [CI] Let Masakari jobs be used from other projects
+* [CI] Gate on voting jobs
+* [DevStack] Do not use the sample process list
+* Generate PDF documentation
+* Set "disabled reason" for compute service
+* tests: Remove use of 'oslo\_db.sqlalchemy.test\_base'
+* Fix Masakari API to properly return error codes
+* Fix an error in the document
+* Fix a spelling mistakes in unit test
+* [train][goal][CI] Define IPv6-only testing job
+* Fix notification status in notification.inc
+* [CI] Clear an overridden param
+* [CI] Fix the functional job
+* [CI] Update ignored-files
+* Add the functional job to periodic
+* [community goal] Update contributor documentation
+* uuid in log information
+* Replace getargspec with getfullargspec
+* Make unit tests compatible with SQLAlchemy 1.4
+* Ussuri+ is python3 only and update python to python3
+* Drop support for SQLite < 3.7
+* Fix a wrong comment on masakari api
+* setup.cfg: Replace dashes with underscores
+* [TrivialFix] Improve one method's name
+* [CI] Drop external CI
+* Finish switch from http.client to HTTPStatus
+* Use py3 as the default runtime for tox
+* Add Python3 xena unit tests
+* Update master for stable/wallaby
+
+11.0.0
+------
+
+* Fix segment enabled json examples
+* Fix some errors in the document
+* [CI] Run bashate
+* Use oslo.context from\_dict unmodified
+* Assign all aggregates to reserved\_host
+* Fix response of microversions API
+* [devstack] Stop polluting masakarimonitors src dir
+* Fix functional.test\_hosts.test\_list
+* Add support for system-scoped tokens
+* Enable database migration unit tests
+* Fix segment update validation schema for "enabled"
+* Remove duplicated DEFAULT\_API\_VERSION
+* Make "create segment" http api unit tests more thorough
+* Clean up segments http api unit tests
+* Fix versioned schema validation
+* add enabled to segment
+* update docs for enabled to segment
+* Simplify endpoints created by devstack plugin
+* [docs] Add "release notes" contributors' section
+* [docs] Add docs on code structure
+* Allow segment description to be multiline
+* Add missed renos
+* Revert "remove py37"
+* update docs
+* remove unicode from code
+* remove py37
+* add host failure reovery method in Masakari doc
+* Fix endless periodic looping call after failed evacuation
+* Modified recovery flow for stopped instance
+* [goal] Deprecate the JSON formatted policy file
+* [CI] Add periodic jobs
+* Drop lower-constraints
+* Update TOX\_CONSTRAINTS\_FILE
+* Replace deprecated UPPER\_CONSTRAINTS\_FILE variable
+* [docs] Quick fixes around contribution process
+* Import HTTPStatus instead of http\_client
+* Add Python3 wallaby unit tests
+* Update master for stable/victoria
+
+10.0.0
+------
+
+* Search in nova services instead of hypervisors
+* Drop Babel from reqs
+* [CI] Ignore files not relevant for the functional tests
+* [tests] Remove dead code (matchers)
+* [Part7]Remove all usage of six library
+* [Part6]Remove six
+* [Part5]Remove six
+* [Part4]Remove six
+* [goal] Migrate testing to ubuntu focal
+* Constrain docs deps by upper-constraints
+* Use some better linting
+* Fix files to pass linting
+* Fix tox for api-ref
+* Fix tox for py38 and lower-contraints
+* [CI] Fix gate - multiple fixes (Focal/Py38 and policy)
+* remove future from lower-constraints
+* [Part3]Remove six
+* [Part2]Remove six
+* [Part1]Remove six
+* [docs] Add missing control\_attributes
+* Remove the unused coding style modules
+* Add ha\_enabled\_instance\_metadata\_key config option
+* Fix exception notification with no trace
+* Fix CA file for nova client
+* Remove monotonic usage
+* Switch from unittest2 compat methods to Python 3.x methods
+* Use uwsgi binary from path
+* Fix typo in api docs for sort\_key request parameter
+* not wait when instance evacuate error
+* drop mock from lower-constraints
+* Stop to use the \_\_future\_\_ module
+* Switch to newer openstackdocstheme and reno versions
+* Cap jsonschema 3.2.0 as the minimal version
+* Drop python 3.4 constraint on sphinx
+* Check if host belongs to a segment
+* Fix host rest url in api-ref doc
+* Remove translation sections from setup.cfg
+* Fix hacking min version to 3.0.1
+* Monkey patch original current\_thread \_active
+* Bump default tox env from py37 to py38
+* Add py38 package metadata
+* Add Python3 victoria unit tests
+* Update master for stable/ussuri
+* handle duplicate notifications without checking status
+* check expired notifications
+* Update hacking for Python3
+
+9.0.0
+-----
+
+* Use unittest.mock instead of third party mock
+* Ignoring host recovery if host\_status is \`UNKNOWN\`
+* Fix the functional test devstack job
+* Drop use of SQLAlchemy-Utils
+* HostNotFound name->id
+* HypervisorNotFoundByName host\_name->hypervisor\_name
+* Add ignore\_basepython\_conflict in tox.ini
+* fix a typo notiification => notification
+* update segment api doc
+* Correct indentation for spaces for doc files
+* Fix constraints URL enforcement for lower-constraints
+* Sync Sphinx requirement
+* [ussuri][goal] Drop python 2.7 support and testing
+* Reorganize masakari documentation
+* Support noauth2 auth\_strategy
+* Update master for stable/train
+* Cleanup instances test data
+* Notification functional tests fails randomly
+
+8.0.0
+-----
+
+* Remove references of novaclient.exceptions.EndpointNotFound
+* Add Python 3 Train unit tests
+* add libpq-dev and python-dev to build psycopg2
+* Replace git.openstack.org URLs with opendev.org URLs
+* Update api-ref location
+* Resolve functional gate job failure
+* Resolve gate job failure
+* OpenDev Migration Patch
+* Switch from oslosphinx to openstackdocstheme
+* Fix typo for sgement => segment
+* Replace openstack.org git:// URLs with https://
+* Update master for stable/stein
+* Add devstack support for masakari-monitors
+
+7.0.0
+-----
+
+* Updated rh host workflow for recovery workflow details
+* Handle KeyError: 'progress\_details'
+* Migrate multinode jobs to Ubuntu Bionic
+* fix oslo-config-generator conf
+* Functional tests to check recovery workflow details
+* Functional tests for notification APIs
+* Configure taskflow connection
+* Add progress details for recovery workflows
+* Improve logging error messages
+* Functional tests for host APIs
+* Add functional CI job and tests for segments
+* Send notifications for all API changes
+* Add common methods to use for sending notification
+* Define objects used for notification
+* Add necessary constants and methods for RPC notification
+* Run all jobs by default using python3
+* Py3: Ensure wsgi headers are not bytes type
+* Recover resized instance(power\_state=SHUTDOWN) with vm\_state=stopped
+* Fix parsing api version with correct service\_type
+* Update hacking version >1.1.0
+* Allow updating host name only if it exists in nova
+* Add masakari-systemfault-integration-ci to .zuul.yaml
+* Use template for lower-constraints
+* Return 400 if notification payload is incorrect
+* change nova.services.disable use service\_uuid
+* Cleanup testrepository
+* Update coverage environment and use template for cover
+* Uninstall policy.json from openstack\_dashboard correctly
+
+7.0.0.0b1
+---------
+
+* Allow adding host only if it exists in nova
+* Update the HTTP links to HTTPS
+* Change openstack-dev to openstack-discuss
+* Update README
+* Fix datetime microsecond discrepancy issue
+* Add framework for masakari-status upgrade check
+* Fix: TestMasakariAPI tests skipped due to missing \_\_init\_\_.py
+* Increment versioning with pbr instruction
+* fix tox python3 overrides
+* Fix docs create service for masakari Currently openstacksdk use instance-ha type service instead of masakari
+* switch documentation job to new PTI
+* import zuul job settings from project-config
+* Add masakari-custom-recovery-methods.conf in etc/masakari
+* Update reno for stable/rocky
+
+6.0.0.0rc1
+----------
+
+* Add hooks for recovery method customization plugins
+* Added devstack support for masakari-dashboard
+* Fix masakari installation failure for policy.json
+* Register and Document policy in code
+* Removed unnecessary parantheses in yield statements
+* Add line for PyCharm IDE in gitignore file
+
+6.0.0.0b3
+---------
+
+* fix tox python3 overrides
+* Remove testrepository
+* Switch to using stestr
+* Avoid recovery from failure twice
+* Fix Context test cases
+
+6.0.0.0b2
+---------
+
+* Fix module has no attribute 'parse\_args'
+* Remove a sample file of masakari.conf
+* Deploy masakari-api with uwsgi
+* Generalize DB conf group copying
+* Make accept-language tests work with webob 1.8.x
+* Enable mutable config in Masakari
+* Update "auth\_url"
+* Fix typo in api-ref/source/failover-segments.inc file
+
+6.0.0.0b1
+---------
+
+* add lower-constraints job
+* Add db purge support
+* Completely remove mox from Masakari unittest
+* Fix stable branch releasenotes
+* Introspective Instance Monitoring through QEMU Guest Agent
+* Make readme more readable
+* Ship files like other openstack projects
+* Fix the docs page link
+* Use method validate\_integer from oslo.utils
+* Updated from global requirements
+* Updated from global requirements
+* Drop all qpid related explanations
+* Fix for difference in tzinfo.tzname value between py27 and py35
+* Changed default value of 'wait\_period\_after\_power\_off'
+
+5.0.0
+-----
+
+* Fix default value of 'nova\_catalog\_admin\_info'
+* Updated from global requirements
+
+5.0.0.0b3
+---------
+
+* Remove use of unsupported TEMPEST\_SERVICES variable
+* Change masakari service-type from 'ha' to 'instance-ha'
+* Ignore '409 Conflict' when adding reserved\_host to aggregate
+* Stop using deprecated 'message' attribute in Exception
+* Improve the home-page url in setup.cfg
+* Evacuates instances which task\_state is not none
+* Remove unnecessary sleep
+* Updated from global requirements
+* Masakari operator's documentation
+* Masakari developer's documentation
+* Masakari API Specifications
+* Remove setting of version/release from releasenotes
+* Updated from global requirements
+* Updated from global requirements
+* Make eventlet hub use a monotonic clock
+* Fix devstack installation of masakari
+* Modify unit testcases according to oslo.context
+* Use service\_type and service\_name of nova\_catalog\_admin\_info
+* Add ssl support for masakari plugin
+* Hacking: do not translate log messages
+* Upgrade oslo.db and Replace DbMigrationError with DBMigrationError
+* iso8601.is8601.Utc No Longer Exists
+
+4.0.0
+-----
+
+* Make 'error' instances recovery configurable
+* Add missing domain name to novaclient
+* Make provision to evacuate all instances
+* Enable global hacking checks and remove local checks
+* Fix 'host delete' delete's host of another segment
+* conf: Deprecate 'masakari\_topic' RPC options
+* Send global\_request\_id to nova when calls are made
+* Update the documentation link for doc migration
+* Remove 'on\_shared\_storage' parameter from nova evacuate
+* Remove unused methods
+* Remove support for py34
+* Use os-testr instead of testr
+* Enable code coverage report in console output
+* Use get\_rpc\_transport instead of get\_transport
+* Fix race condition between evacuation and its confirmation
+* Updated from global requirements
+* Exclude on maintenance reserved\_hosts for host\_failure recovery
+* Optimize the link address
+* Fix identity\_admin
+* Revert "Fix os\_privileged\_user\_auth\_url"
+* Fix failing test cases
+* Fix os\_privileged\_user\_auth\_url
+* Ignore instance recovery for 'paused' or 'rescued' instance
+* Use DDT to reduce test code duplication
+* Updated from global requirements
+* Remove log translations
+* Implement auto\_priority and rh\_priority recovery\_methods
+* Updated from global requirements
+* Delete the failure host from reserved\_host
+* Don't pass argument sqlite\_db in set\_defaults()
+* Use HostAddressOpt for opts that accept IP and hostnames
+* Add license information in test-requirements.txt
+* Fix test method which has incorrect reference
+* Change nova\_catalog\_admin\_info to default to publicURL
+* Update to a newer hacking library
+* Prevent 404 error when adding reserved\_host to aggregate
+
+3.0.0.0rc1
+----------
+
+* Add reserved\_host to failed\_host's aggregate
+* Add host\_failure workflow for 'reserved\_host' recovery\_method
+* Tolerate jsonschema==2.6.0
+* Fix release notes formatting
+* Release note for \_process\_unfinished\_notifications periodic task
+* Boolean filters are not working for host list api
+* InstanceFailure: Ignore notifications for certain events
+* Set access\_policy for messaging's dispatcher
+* Add ha enabled config options
+* Implement \_process\_unfinished\_notifications periodic tasks
+* Sync tox environment with upper-constraint of requirements
+* Add business rules for host and failover\_segment
+* Bump taskflow version to minimum 2.7.0
+* Added engine manager and rpcapi related unit tests
+* Stop logging unnecessary warning on context create
+* Fix incorrect test class name
+* Update to match latest global-requirements
+* Use dict.items() and dict.values() as per guidelines
+* Add unit tests for notification business rules
+* Remove deps under pep8 section to enable hacking checks
+* Fix bad request error for valid marker in hosts
+* Extracted HTTP response codes to constants
+* Add unit tests for process failure flow
+* Remove unused test\_masakari module
+* [Devstack] Fix devstack plugin compatibility
+* Fix failing gate jobs due to removal of nova\_client.service\_catalog
+* Avoid printing traceback if VM is not HA\_Enabled
+* Stop instance only if it's HA\_Enabled
+* Fix spelling mistake and log message
+* Add database related test cases
+* Fix spelling mistake
+* Change default topic name of masakari-engine
+* Return correct response codes
+* Add unit tests for instance failure flow
+* Add unit tests for host failure workflow
+* Add missing namespaces in masakari-config-generator.conf
+* Add admin role for masakari user
+* Fix invalid port reference in devstack settings
+* Add unit tests for nova support
+* Set admin user as the default policy
+* Fix 500 error while create/update host
+
+2.0.0
+-----
+
+* Add instance and process failure workflow
+* Add host failure workflow
+* Add nova support in masakari
+* Add TaskFlowDriver support to process notifications
+* Add business rule for process\_notification
+* Convert boolean parameters in host api
+* Remove pypy from tox env list
+* Return HTTPBadRequest instead of HTTPNotFound
+* Drop MANIFEST.in - it's not needed by pbr
+* Add process\_notification cast call
+* Add authentication libraries to requirements.txt
+* Add RPC layer for masakari
+* Enable release notes translation
+* Fix 500 if you pass invalid sort\_key and sort\_dir
+* Remove unused method
+* Enable masakari-engine in devstack
+* Add masakari-engine support
+* Add Masakari Object Serializer
+* Add notifications controller for masakari
+* Remove wrong reference to cinder
+* Remove reference of Nova
+* Added host controller for masakari
+* Added failover segments controller for masakari
+* Add notification related objects
+* Remove redundant str typecasting
+* Using assertIsNone() instead of assertIs(None, ..)
+* py33 is no longer supported by Infra's CI
+* Remove unexpected method argument
+* Clean imports in code
+* TrivialFix: Merge imports in code
+* TrivialFix: Remove logging import unused
+* Alter nullable constraint on created\_at column
+* Removed unnecessary sort\_keys and sort\_dirs
+* Add notification db apis and migration script
+* Don't attempt to escalate masakari-manage privileges
+* Dictionary creation could be rewritten with dictionary literal
+* Added masakari objects
+* Refactor: Move post method to APIValidationTestCase base class
+* Add test cases for 'extension\_info' module
+* Correct API Version String format
+* Return NotFound exception for delete db api
+* Cleanup tox.ini: Remove obsolete constraints
+* Add testing for WSGI Framework
+* Add schema framework for masakari
+* Added masakari db apis
+* Update unique constraint of hosts table
+* Add devstack plugin
+* Use %()d for integer substitution
+* Make use of oslo-config-generator
+* Dictionary creation could be rewritten with dictionary literal
+* Add db sync support for masakari
+* Add a hacking rule to enforce use of LOG.warning
+* Add a hacking rule for string interpolation at logging
+* Add hacking checks
+* Add support for wsgi framework
+* Add project description to README.rst
+* Initial Cookiecutter Commit
+* Added .gitreview

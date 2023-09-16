@@ -1,0 +1,100 @@
+---
+- job:
+    name: masakari-functional-devstack
+    parent: devstack
+    description: |
+      Masakari functional tests job based on devstack (single-node).
+    pre-run: playbooks/devstack/pre.yaml
+    run:
+      - playbooks/devstack/run-devstack.yaml
+      - playbooks/devstack/run-tox.yaml
+    post-run: playbooks/devstack/post.yaml
+    required-projects:
+      - openstack/masakari
+      - openstack/masakari-monitors
+    irrelevant-files:
+      - ^api-ref/
+      - ^doc/
+      - ^masakari/tests/unit/
+      - ^releasenotes/
+      - ^\.coveragerc$
+      - ^\.gitignore$
+      - ^\.gitreview$
+      - ^\.mailmap$
+      - ^\.yamllint$
+      - ^\.zuul\.yaml$
+      - ^LICENSE$
+      - ^.*[^/]+\.rst$
+      - ^bindep\.txt$
+    vars:
+      devstack_plugins:
+        masakari: https://opendev.org/openstack/masakari
+      devstack_services:
+        # NOTE(yoctozepto): Disable controller's cinder (c-* services).
+        # It is enabled by default by the parent job (devstack) definition.
+        cinder: false
+        # NOTE(yoctozepto): Disable controller's swift (s-* services).
+        # It is enabled by default by the parent job (devstack) definition.
+        swift: false
+    host-vars:
+      controller:
+        tox_install_siblings: false
+        tox_envlist: functional
+    group-vars:
+      subnode:
+        devstack_services:
+          # Override Masakari services on non-controllers (overrides default
+          # plugin settings in Masakari). Only monitors are left.
+          masakari-api: false
+          masakari-engine: false
+          # NOTE(yoctozepto): Disable compute's cinder (c-* services).
+          # It is enabled by default by the parent job (devstack) definition.
+          cinder: false
+
+- job:
+    name: masakari-functional-devstack-multinode
+    parent: masakari-functional-devstack
+    description: |
+      Masakari functional tests job based on devstack (two-node).
+    nodeset: openstack-two-node-jammy
+
+- job:
+    name: masakari-functional-devstack-ipv6
+    # NOTE(yoctozepto): The devstack job does not support multinode IPv6 yet.
+    parent: masakari-functional-devstack
+    description: |
+      Masakari functional tests job based on devstack (single-node).
+      IPv6 variant.
+    run:
+      - playbooks/devstack/run-devstack.yaml
+      - playbooks/devstack/run-verify-config-is-ipv6-only.yaml
+      - playbooks/devstack/run-tox.yaml
+    vars:
+      devstack_localrc:
+        SERVICE_IP_VERSION: 6
+        TUNNEL_IP_VERSION: 6
+        SERVICE_HOST: ""
+
+- project:
+    queue: masakari
+    templates:
+      - check-requirements
+      - openstack-cover-jobs
+      - openstack-python3-jobs
+      - publish-openstack-docs-pti
+      - release-notes-jobs-python3
+      - periodic-stable-jobs
+      - periodic-jobs-with-oslo-master
+    check:
+      jobs:
+        - openstack-tox-linters
+        - masakari-functional-devstack-multinode
+        - masakari-functional-devstack-ipv6
+    gate:
+      jobs:
+        - openstack-tox-linters
+        - masakari-functional-devstack-multinode
+        - masakari-functional-devstack-ipv6
+    periodic:
+      jobs:
+        - masakari-functional-devstack-multinode
