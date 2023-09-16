@@ -1,0 +1,153 @@
+Metadata-Version: 2.1
+Name: instanovo
+Version: 0.1.4
+Summary: De novo sequencing with InstaNovo
+Home-page: https://githun.com/instadeepai/InstaNovo
+Author: InstaDeep
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: aiobotocore ==2.4.1
+Requires-Dist: boto3 ==1.24.59
+Requires-Dist: botocore ==1.27.59
+Requires-Dist: cloudpathlib ==0.10.0
+Requires-Dist: datasets ==2.14.5
+Requires-Dist: deepspeed ==0.7.2
+Requires-Dist: depthcharge-ms ==0.1.0
+Requires-Dist: fastprogress ==1.0.3
+Requires-Dist: jiwer ==2.5.1
+Requires-Dist: matplotlib ==3.6.0
+Requires-Dist: numpy ==1.23.3
+Requires-Dist: omegaconf ==2.2.3
+Requires-Dist: pandas ==1.5.0
+Requires-Dist: polars ==0.17.8
+Requires-Dist: protobuf ==3.19.6
+Requires-Dist: pyarrow ==11.0.0
+Requires-Dist: python-dotenv ==0.21.0
+Requires-Dist: pytorch-lightning ==1.8.6
+Requires-Dist: scikit-learn ==1.1.2
+Requires-Dist: seaborn ==0.12.0
+Requires-Dist: spectrum-utils ==0.4.1
+Requires-Dist: tensorboard ==2.10.1
+Requires-Dist: tensorboardX ==2.5.1
+Requires-Dist: tensorflow-io ==0.28.0
+Requires-Dist: torch ==1.13.1
+Requires-Dist: tqdm ==4.64.1
+Requires-Dist: triton ==1.0.0
+
+# De novo peptide sequencing with InstaNovo
+
+The official code repository for InstaNovo. This repo contains the code for training and inference
+of InstaNovo and InstaNovo+.
+
+Links:
+
+- bioRxiv: https://www.biorxiv.org/content/10.1101/2023.08.30.555055v1
+
+![Graphical Abstract](https://raw.githubusercontent.com/instadeepai/InstaNovo/main/graphical_abstract.jpeg)
+
+Developed by: [InstaDeep](https://www.instadeep.com/) and the [Department of Biotechnology and Biomedicine](https://orbit.dtu.dk/en/organisations/department-of-biotechnology-and-biomedicine) - [Technical University
+of Denmark](https://www.dtu.dk/)
+
+## Usage
+
+### Installation
+
+To use InstaNovo, we need to install the module via `pip`:
+
+```bash
+pip install instanovo
+```
+
+Note: InstaNovo is built for Python >= 3.8
+
+### Training
+
+To train auto-regressive InstaNovo:
+
+```bash
+usage: python -m instanovo.transformer.train train_path valid_path [-h] [--config CONFIG] [--n_gpu N_GPU] [--n_workers N_WORKERS]
+
+required arguments:
+  train_path        Training data path
+  valid_path        Validation data path
+
+optional arguments:
+  --config CONFIG   file in configs folder
+  --n_workers N_WORKERS
+```
+
+Note: data is expected to be saved as Polars `.ipc` format. See section on data conversion.
+
+To update the InstaNovo model config, modify the config file under
+[configs/instanovo/base.yaml](https://github.com/instadeepai/InstaNovo/blob/main/configs/instanovo/base.yaml)
+
+### Prediction
+
+To evaluate InstaNovo:
+
+```bash
+usage: python -m instanovo.transformer.predict data_path model_path [-h] [--denovo] [--config CONFIG] [--subset SUBSET] [--knapsack_path KNAPSACK_PATH] [--n_workers N_WORKERS]
+
+required arguments:
+  data_path         Evaluation data path
+  model_path        Model checkpoint path
+
+optional arguments:
+  --denovo          evaluate in de novo mode, will not try to compute metrics
+  --output_path OUTPUT_PATH
+                    Save predictions to a csv file (required in de novo mode)
+  --subset SUBSET
+                    portion of set to evaluate
+  --knapsack_path KNAPSACK_PATH
+                    path to pre-computed knapsack
+  --n_workers N_WORKERS
+```
+
+### Converting datasets to Polars
+
+To convert a dataset to polars `.ipc`:
+
+```bash
+usage: python -m instanovo.utils.convert_ipc source target [-h] [--source_type SOURCE_TYPE] [--max_charge MAX_CHARGE]
+
+required arguments:
+  source            source data
+  target            target ipc file
+
+optional arguments:
+  --source_type SOURCE_TYPE
+                    type of input data. currently supports [mgf, csv]
+  --max_charge MAX_CHARGE
+                    maximum charge to filter
+```
+
+## Roadmap
+
+This code repo is currently under construction.
+
+**ToDo:**
+
+- Add diffusion model code
+- Add data preprocessing pipeline
+- Multi-GPU support
+
+## License
+
+Code is licensed under the Apache License, Version 2.0 (see [LICENSE](LICENSE.txt))
+
+The model checkpoints are licensed under Creative Commons Non-Commercial
+([CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/))
+
+## BibTeX entry and citation info
+
+```bibtex
+@article{eloff_kalogeropoulos_2023_instanovo,
+	title = {De novo peptide sequencing with InstaNovo: Accurate, database-free peptide identification for large scale proteomics experiments},
+	author = {Kevin Eloff and Konstantinos Kalogeropoulos and Oliver Morell and Amandla Mabona and Jakob Berg Jespersen and Wesley Williams and Sam van Beljouw and Marcin Skwark and Andreas Hougaard Laustsen and Stan J. J. Brouns and Anne Ljungars and Erwin Marten Schoof and Jeroen Van Goey and Ulrich auf dem Keller and Karim Beguir and Nicolas Lopez Carranza and Timothy Patrick Jenkins},
+	year = {2023},
+	doi = {10.1101/2023.08.30.555055},
+	publisher = {Cold Spring Harbor Laboratory},
+	URL = {https://www.biorxiv.org/content/10.1101/2023.08.30.555055v1},
+	journal = {bioRxiv}
+}
+```
