@@ -1,0 +1,114 @@
+Metadata-Version: 2.1
+Name: youchat-py
+Version: 1.1.5
+Summary: Simple communication with YouChat in python.
+License: BSD 2-Clause License
+        
+        Copyright (c) 2023, Yaroslavik
+        All rights reserved.
+        
+        Redistribution and use in source and binary forms, with or without
+        modification, are permitted provided that the following conditions are met:
+        
+        1. Redistributions of source code must retain the above copyright notice, this
+           list of conditions and the following disclaimer.
+        
+        2. Redistributions in binary form must reproduce the above copyright notice,
+           this list of conditions and the following disclaimer in the documentation
+           and/or other materials provided with the distribution.
+        
+        THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+        AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+        IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+        DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+        FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+        DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+        SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+        CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+        OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+        OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+        
+Project-URL: Homepage, https://github.com/yaroslav4167/youchat-py
+Project-URL: Bug Reports, https://github.com/yaroslav4167/youchat-py/issues
+Project-URL: Source, https://github.com/yaroslav4167/youchat-py
+Keywords: chatbot,youchat
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Education
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: seleniumbase
+Provides-Extra: dev
+Requires-Dist: check-manifest; extra == "dev"
+Provides-Extra: test
+Requires-Dist: coverage; extra == "test"
+
+# youchat-py
+[![yaroslav4167 - youchat-py](https://img.shields.io/static/v1?label=yaroslav4167&message=youchat-py&color=white&logo=github)](https://github.com/yaroslav4167/youchat-py "Go to GitHub repo")
+[![stars - youchat-py](https://img.shields.io/github/stars/yaroslav4167/youchat-py?style=social)](https://github.com/yaroslav4167/youchat-py)
+[![forks - youchat-py](https://img.shields.io/github/forks/yaroslav4167/youchat-py?style=social)](https://github.com/yaroslav4167/youchat-py)
+
+[![GitHub release](https://img.shields.io/github/release/yaroslav4167/youchat-py?include_prereleases=&sort=semver&color=white)](https://github.com/yaroslav4167/youchat-py/releases/)
+[![License](https://img.shields.io/badge/License-BSD--2--Clause_license-white)](https://github.com/yaroslav4167/youchat-py/blob/main/LICENSE)
+[![issues - youchat-py](https://img.shields.io/github/issues/yaroslav4167/youchat-py)](https://github.com/yaroslav4167/youchat-py/issues)
+ 
+ Simple communication with YouChat in python.
+
+## Installation
+> pip install youchat-py
+
+## Usage
+```
+usage: youchat [-h] [-out_type OUT_TYPE] [-timeout TIMEOUT] MESSAGE
+
+positional arguments:
+  MESSAGE               Message to YouChat
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -out_type OUT_TYPE, -ot OUT_TYPE
+                        Output type
+  -timeout TIMEOUT, -t TIMEOUT
+                        Timeout to wait response
+```
+### Example 1
+Use in CLI mode
+```
+youchat hello!
+```
+Returns: `{"generated_text": "Hello! How can I assist you today?"}`
+```
+youchat -out_type string "who are you"
+```
+Returns: `I am YouBot, a large language model developed by You.com. ...`
+
+> **Note**
+> on **zsh** - you must use single quotes `youchat 'who are you?'`
+
+
+### Example 2
+Use in module mode
+test_unit.py:
+```py
+from youchat import you_message
+
+print( you_message(text='Hello, World!', out_type="string") )
+```
+**Returns:** `"Hello, World!" is a common phrase used in ...`
+
+
+## Used library
+- seleniumbase
