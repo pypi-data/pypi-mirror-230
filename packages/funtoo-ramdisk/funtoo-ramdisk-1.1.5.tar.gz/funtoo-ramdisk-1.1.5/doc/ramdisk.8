@@ -1,0 +1,202 @@
+.\" Man page generated from reStructuredText.
+.
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.TH "RAMDISK" 8 "" "1.1.5" "Funtoo Linux"
+.SH NAME
+ramdisk \- create a bootable initial ramdisk
+.SH SYNOPSIS
+.INDENT 0.0
+.INDENT 3.5
+\fBramdisk\fP [build] [\fIOPTION...\fP] \fBinitramfs_outfile\fP
+.sp
+\fBramdisk\fP list kernels
+.sp
+\fBramdisk\fP list plugins
+.UNINDENT
+.UNINDENT
+.SH DESCRIPTION
+.sp
+The Funtoo ramdisk tool, called \fBramdisk\fP is a stand\-alone tool to create an
+initial RAM disk filesystem (initramfs) for booting your Linux system.
+.sp
+The internal initramfs logic is based on the logic found in Gentoo Linux\(aqs
+genkernel tool, but has been rewritten to be simpler and more efficient.
+.sp
+You can use this tool to create an initramfs to boot to a Funtoo Linux root
+ext4 or XFS filesystem, which is what we support in our official installation
+documentation at \fI\%https://www.funtoo.org/Install\fP\&.
+.SH CAPABILITIES
+.INDENT 0.0
+.IP \(bu 2
+genkernel\-style initramfs without the cruft. In comparison to genkernel\(aqs
+initramfs, the shell code is about 10x simpler and a lot cleaner and has
+been modernized. About 100 lines of shell script, with another 215 lines
+of functions in a support file.
+.IP \(bu 2
+Copies over the modules you specify \-\- and automatically figures out any
+kernel module dependencies, so any depended\-upon modules are also copied.
+This eliminates the need to track these dependencies manually.
+.IP \(bu 2
+Rootless operation. You do not need enhanced privileges to create the
+initramfs.
+.IP \(bu 2
+You can read the \fBlinuxrc\fP script and actually understand what it does.
+It is written to be easy to understand and adapt. So it\(aqs not just short,
+but easy to grasp.
+.IP \(bu 2
+Enhanced module loading engine on the initramfs which is significantly
+faster than genkernel. This effectively eliminates the \(dqwatching the
+stream of useless modules being loaded\(dq issue with genkernel. Modern
+systems with NVMe drives will load just a handful of modules to boot
+\-\- all without requiring any special action from the user.
+.IP \(bu 2
+\(dqkpop\(dq functionality allows for building ramdisks with just the modules
+you need. For example, \fBramdisk \-\-kpop=nvme,ext4\fP will create a
+ramdisk that can boot on NVMe ext4 root filesystems, and only include
+these necessary modules, leaving all other modules to be loaded by
+your Funtoo Linux system.
+.IP \(bu 2
+Effective Python\-based command to actually build the ramdisk, which is
+called: \fBramdisk\fP\&. This gives us an extensible platform for the future.
+.IP \(bu 2
+Enhanced ini\-style system for selecting modules to include on your initramfs.
+.IP \(bu 2
+Enhanced ini\-style system for selecting module groups to autoload on the
+initramfs.
+.IP \(bu 2
+Support for xz and zstd compression.
+.UNINDENT
+.SH ACTIONS
+.sp
+The default action is \fBbuild\fP, and can be optionally specified, which will
+instruct \fBramdisk\fP to build an initramfs. Available actions:
+.SS build
+.sp
+Create an initramfs. See \fBOPTIONS\fP below for all options supported. The \fBbuild\fP
+action requires a destination initramfs path. This will be the literal path and
+filename for the output initramfs. Use \fB\-\-force\fP to overwrite any existing file.
+.SS list
+.sp
+List various things \-\- currently supported targets are \fBkernels\fP and \fBplugins\fP\&.
+\fBkernels\fP will show you a list of available installed kernels on your system for
+which you can build a ramdisk, and \fBplugins\fP will show the available boot\-time
+plugins that can be enabled to add more functionality to your ramdisk.
+.SH OPTIONS
+.INDENT 0.0
+.TP
+.B  \-\-debug
+Enable debug output.
+.TP
+.B  \-\-backtrace
+Display full python backtrace/traceback instead of just a
+short error summary.
+.TP
+.B  \-\-force
+Overwrite target initramfs if it exists.
+.TP
+.B  \-\-version
+Show this program\(aqs version number and exit.
+.TP
+.B  \-\-help
+Show this help message and exit.
+.TP
+.BI \-\-fs_foot\fB= <path>
+This defaults to \fB/\fP, and specifies the filesystem root to look at
+for finding both kernel sources (in \fB/usr/src\fP) and kernel modules
+(in \fB/lib/modules\fP). This option also applies to \fBramdisk list
+kernels\fP\&.
+.TP
+.BI \-\-kernel\fB= <kernel>
+Specify what kernel to build a ramdisk for. Use
+\fBramdisk list kernels\fP to display available options. The
+default setting is to use the current value of the
+\fB/usr/src/linux\fP symlink at the filesystem root to determine
+which kernel to build a ramdisk for.
+.TP
+.BI \-\-compression\fB= <method>
+Compression method to use. Default is \fBxz\fP\&. Also supported: \fBzstd\fP\&.
+.TP
+.BI \-\-temp_root\fB= <path>
+Where to create temporary files. Defaults to \fB/var/tmp\fP\&.
+.TP
+.BI \-\-enable\fB= <plugins>
+A comma\-delimited list of plugins to enable. The \fBcore\fP plugin is
+always enabled. Type \fBramdisk list plugins\fP to see a list of available
+plugins.
+.TP
+.BI \-\-kmod_config\fB= <cfg>
+\fBramdisk\fP supports different sets of kernel module configurations, which
+define what kernel modules get copied to the initramfs, and which ones
+get auto\-loaded by the initramfs at boot. Default value: \fBfull\fP\&. This
+is currently the only option unless overridden by \fB\-\-kpop\fP (see below.)
+.TP
+.BI \-\-kpop\fB= <mods>
+A comma\-delimited list of kernel module names that you are sure, if loaded,
+will allow your root block device and filesystem to be mounted. For example,
+\fB\-\-kpop=nvme,ext4\fP will include just the modules required for booting
+NVMe disks and mounting your root ext4 filesystem. When this option is used,
+a special minimal kernel module config is used instead of what is specified
+via \fB\-\-kmod_config\fP (see above).
+.UNINDENT
+.SH USAGE
+.sp
+In its simplest form, the command can be used as follows, as a regular user:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+$ ramdisk /var/tmp/my\-new\-initramfs
+$ sudo cp /var/tmp/my\-new\-initramfs /boot
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+By default, \fBramdisk\fP will use your \fB/usr/src/linux\fP symlink to determine which
+kernel to use to build a ramdisk for. It will parse \fB/usr/src/linux/Makefile\fP,
+extract kernel version information, and then find the appropriate directory in
+\fB/lib/modules/<kernel_name>\fP for copying modules. You can type:
+\fBramdisk list kernels\fP and \fBramdisk \-\-kernel <kernel_name>\fP to build a ramdisk
+for a non\-default kernel.
+.sp
+Since this is brand\-new software, it is highly recommended that you \fBDO NOT OVERWRITE
+YOUR EXISTING, WORKING INITRAMFS THAT YOU CURRENTLY USE TO BOOT YOUR SYSTEM.\fP
+.sp
+Instead \-\- create a \fBNEW BOOT ENTRY\fP to test your initramfs. In GRUB, you can also
+press \(aqe\(aq to edit an entry and type in the name of the new initramfs to give it a try.
+.SH AUTHOR
+Daniel Robbins <drobbins@funtoo.org>
+.SH COPYRIGHT
+Copyright 2023 Daniel Robbins, Funtoo Solutions, Inc.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0.
+.\" Generated by docutils manpage writer.
+.

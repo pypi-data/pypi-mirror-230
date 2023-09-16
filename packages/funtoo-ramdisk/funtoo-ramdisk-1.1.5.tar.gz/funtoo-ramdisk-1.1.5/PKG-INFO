@@ -1,0 +1,390 @@
+Metadata-Version: 2.1
+Name: funtoo-ramdisk
+Version: 1.1.5
+Summary: Funtoo framework for creating initial ramdisks.
+Home-page: https://code.funtoo.org/bitbucket/users/drobbins/repos/funtoo-ramdisk/browse
+Author: Daniel Robbins, Funtoo Solutions Inc.
+Author-email: drobbins@funtoo.org
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: POSIX :: Linux
+Requires-Python: >=3.7
+Description-Content-Type: text/x-rst
+Requires-Dist: rich
+
+=========
+ ramdisk
+=========
+
+--------------------------------------------------
+create a bootable initial ramdisk
+--------------------------------------------------
+
+:Author: Daniel Robbins <drobbins@funtoo.org>
+:Copyright: Copyright 2023 Daniel Robbins, Funtoo Solutions, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0.
+:Version: 1.1.5
+:Manual section: 8
+:Manual group: Funtoo Linux
+
+SYNOPSIS
+========
+
+  ``ramdisk`` [build] [*OPTION...*] ``initramfs_outfile``
+
+  ``ramdisk`` list kernels
+
+  ``ramdisk`` list plugins
+
+DESCRIPTION
+===========
+
+The Funtoo ramdisk tool, called ``ramdisk`` is a stand-alone tool to create an
+initial RAM disk filesystem (initramfs) for booting your Linux system.
+
+The internal initramfs logic is based on the logic found in Gentoo Linux's
+genkernel tool, but has been rewritten to be simpler and more efficient.
+
+You can use this tool to create an initramfs to boot to a Funtoo Linux root
+ext4 or XFS filesystem, which is what we support in our official installation
+documentation at https://www.funtoo.org/Install.
+
+CAPABILITIES
+============
+
+* genkernel-style initramfs without the cruft. In comparison to genkernel's
+  initramfs, the shell code is about 10x simpler and a lot cleaner and has
+  been modernized. About 100 lines of shell script, with another 215 lines
+  of functions in a support file.
+
+* Copies over the modules you specify -- and automatically figures out any
+  kernel module dependencies, so any depended-upon modules are also copied.
+  This eliminates the need to track these dependencies manually.
+
+* Rootless operation. You do not need enhanced privileges to create the
+  initramfs.
+
+* You can read the ``linuxrc`` script and actually understand what it does.
+  It is written to be easy to understand and adapt. So it's not just short,
+  but easy to grasp.
+
+* Enhanced module loading engine on the initramfs which is significantly
+  faster than genkernel. This effectively eliminates the "watching the
+  stream of useless modules being loaded" issue with genkernel. Modern
+  systems with NVMe drives will load just a handful of modules to boot
+  -- all without requiring any special action from the user.
+
+* "kpop" functionality allows for building ramdisks with just the modules
+  you need. For example, ``ramdisk --kpop=nvme,ext4`` will create a
+  ramdisk that can boot on NVMe ext4 root filesystems, and only include
+  these necessary modules, leaving all other modules to be loaded by
+  your Funtoo Linux system.
+
+* Effective Python-based command to actually build the ramdisk, which is
+  called: ``ramdisk``. This gives us an extensible platform for the future.
+
+* Enhanced ini-style system for selecting modules to include on your initramfs.
+
+* Enhanced ini-style system for selecting module groups to autoload on the
+  initramfs.
+
+* Support for xz and zstd compression.
+
+ACTIONS
+=======
+
+The default action is ``build``, and can be optionally specified, which will
+instruct ``ramdisk`` to build an initramfs. Available actions:
+
+build
+-----
+Create an initramfs. See **OPTIONS** below for all options supported. The ``build``
+action requires a destination initramfs path. This will be the literal path and
+filename for the output initramfs. Use ``--force`` to overwrite any existing file.
+
+list
+----
+List various things -- currently supported targets are ``kernels`` and ``plugins``.
+``kernels`` will show you a list of available installed kernels on your system for
+which you can build a ramdisk, and ``plugins`` will show the available boot-time
+plugins that can be enabled to add more functionality to your ramdisk.
+
+OPTIONS
+=======
+
+--debug                 Enable debug output.
+--backtrace             Display full python backtrace/traceback instead of just a
+                        short error summary.
+--force                 Overwrite target initramfs if it exists.
+--version               Show this program's version number and exit.
+--help                  Show this help message and exit.
+--fs_foot=<path>        This defaults to ``/``, and specifies the filesystem root to look at
+                        for finding both kernel sources (in ``/usr/src``) and kernel modules
+                        (in ``/lib/modules``). This option also applies to ``ramdisk list
+                        kernels``.
+--kernel=<kernel>       Specify what kernel to build a ramdisk for. Use
+                        ``ramdisk list kernels`` to display available options. The
+                        default setting is to use the current value of the
+                        ``/usr/src/linux`` symlink at the filesystem root to determine
+                        which kernel to build a ramdisk for.
+--compression=<method>  Compression method to use. Default is ``xz``. Also supported: ``zstd``.
+--temp_root=<path>      Where to create temporary files. Defaults to ``/var/tmp``.
+--enable=<plugins>      A comma-delimited list of plugins to enable. The ``core`` plugin is
+                        always enabled. Type ``ramdisk list plugins`` to see a list of available
+                        plugins.
+--kmod_config=<cfg>     ``ramdisk`` supports different sets of kernel module configurations, which
+                        define what kernel modules get copied to the initramfs, and which ones
+                        get auto-loaded by the initramfs at boot. Default value: ``full``. This
+                        is currently the only option unless overridden by ``--kpop`` (see below.)
+--kpop=<mods>           A comma-delimited list of kernel module names that you are sure, if loaded,
+                        will allow your root block device and filesystem to be mounted. For example,
+                        ``--kpop=nvme,ext4`` will include just the modules required for booting
+                        NVMe disks and mounting your root ext4 filesystem. When this option is used,
+                        a special minimal kernel module config is used instead of what is specified
+                        via ``--kmod_config`` (see above).
+
+USAGE
+=====
+
+In its simplest form, the command can be used as follows, as a regular user::
+
+  $ ramdisk /var/tmp/my-new-initramfs
+  $ sudo cp /var/tmp/my-new-initramfs /boot
+
+By default, ``ramdisk`` will use your ``/usr/src/linux`` symlink to determine which
+kernel to use to build a ramdisk for. It will parse ``/usr/src/linux/Makefile``,
+extract kernel version information, and then find the appropriate directory in
+``/lib/modules/<kernel_name>`` for copying modules. You can type:
+``ramdisk list kernels`` and ``ramdisk --kernel <kernel_name>`` to build a ramdisk
+for a non-default kernel.
+
+Since this is brand-new software, it is highly recommended that you **DO NOT OVERWRITE
+YOUR EXISTING, WORKING INITRAMFS THAT YOU CURRENTLY USE TO BOOT YOUR SYSTEM.**
+
+Instead -- create a **NEW BOOT ENTRY** to test your initramfs. In GRUB, you can also
+press 'e' to edit an entry and type in the name of the new initramfs to give it a try.
+
+
+
+
+ChangeLog
+=========
+
+funtoo-ramdisk 1.1.5
+--------------------
+
+Released on September 15, 2023.
+
+This is a packaging fix for the manpage.
+
+
+funtoo-ramdisk 1.1.4
+--------------------
+
+Released on September 15, 2023.
+
+This release adds a "ramdisk" man page.
+
+
+funtoo-ramdisk 1.1.3
+--------------------
+
+Released on September 14, 2023.
+
+* FL-11606: ``/sbin/blkid`` can't be run as non-root, and will
+  trigger a sandbox violation inside an ebuild. So don't do it --
+  we were just running it to convieniently spit out the UUID for
+  the user to put in their ``/etc/fstab``. Now we instruct the
+  user to run ``blkid`` as root and avoid the sandbox violation.
+
+
+funtoo-ramdisk 1.1.2
+--------------------
+
+Released on September 4, 2023.
+
+* Fix exit code (zero on success.)
+
+
+funtoo-ramdisk 1.1.1
+--------------------
+
+Released on September 4, 2023.
+
+Fix three bugs:
+
+* Allow plugins to be loaded when installed in ``site-packages``.
+
+* Don't assume ``/usr/src/linux`` symlink exists in two places and
+  handle this situation gracefully. This situation may exist during
+  metro builds on incomplete systems. (2 bugs fixed).
+
+
+funtoo-ramdisk 1.1.0
+--------------------
+
+Released on September 3, 2023.
+
+* Add plugin system for ramdisk:
+
+  To use, pass ``--enable=<plugin1>,<plugin2>``. The ``core`` plugin is
+  always enabled and copies ``/sbin/blkid``. There are currently ``btrfs``
+  and ``lvm`` plugins as well -- these are not yet fully-implemented and
+  just ensure necessary binaries are copied over (no extra setup commands
+  are run by the initramfs.)
+
+  This is a starting point for enabling support for advanced
+  features on the initramfs.
+
+* New "module configurations". The default module configuration is "full",
+  which means "make a ramdisk with lots of modules to support a lot of
+  hardware." Different module configurations can be added in the future.
+  Module configurations can be specified via ``--kmod_config=``.
+
+* ``--kpop=`` feature to make minimal module ramdisks by specifying a
+  dynamic module configuration via the command-line, rather than via
+  static config files.
+
+  If you specify ``--kpop=nvme,ext4`` then a ramdisk with just those
+  modules (and their dependencies) will be included. This can dramatically
+  reduce the size of your ramdisk. Note that this doesn't include the
+  necessary modules to allow USB keyboards to work in the rescue shell,
+  so it's only for known-good configurations. Enabling this feature also
+  disables any static module configuration (see above.)
+
+* Change the binary plugin API so lists of binaries can be dynamically
+  created and programmatic decisions can be made. Previously, we used a
+  static list. This allows us to use ``lvm.static`` if available, but
+  fall back to dynamic ``lvm``, for example.
+
+* To support ``kpop`` functionality, the ability to add a module by its
+  basic name, not just via its full path or glob, was added to
+  ``modules.copy``.
+
+* Modules code can now accept ``modules.copy`` and ``modules.autoload``
+  as dynamically-generated line data rather than just as static files
+  that must exist on the filesystem. (Again, used by ``kpop``).
+
+* ``linuxrc`` has been improved/fixed to not have a hard-coded list of
+  module groups to try to load, and instead use the ``modules.autoload``
+  groups to determine these.
+
+* ``ramdisk list kernels`` and ``ramdisk list plugins`` actions added.
+  The former makes use of ``ramdisk --kernel <kv>`` easier because it
+  prints the available kernel names which can be copy/pasted for the
+  ``--kernel`` option.
+
+* Implemented our own argument parsing as ``argparse`` was not worth
+  using.
+
+* Lots of code organized into their own ``.py`` files.
+
+* Make ``/etc/fstab`` sanity check a warning as this file may not be
+  set up at all if doing a metro build.
+
+* Disable colors if we don't have an interactive shell.
+
+
+funtoo-ramdisk 1.0.7
+--------------------
+
+Released on August 22, 2023.
+
+Changes:
+
+* Get rid of ``--modules_root``. Instead, added ``--fs_root`` which
+  specifies where modules *and* the kernel sources will be. This
+  allows the tool to work from an ebuild.
+
+* Improve output and add nice colors. Optimize information to be
+  more useful to users.
+
+
+funtoo-ramdisk 1.0.6
+--------------------
+
+Released on August 21, 2023.
+
+Two new options:
+
+* ``--modules_root`` to set the root filesystem to scan for modules.
+  It defaults to ``/``.
+
+* ``--temp_root`` to set the default path to use for creating a
+   temporary directory. It defaults to ``/var/tmp``.
+
+funtoo-ramdisk 1.0.5
+--------------------
+
+Released on August 21, 2023.
+
+This is a features/maintenance/bug fix release.
+
+In addition to a bunch of minor fixes and clean-ups, which you can
+view in the git history, the following significant changes were
+made:
+
+* Use kmod ``/sbin/modprobe`` instead of busybox's modprobe. Busybox's modprobe
+  may be fine, but for it to work, we must use busybox's ``depmod`` -- and we're
+  not. We're using ``kmod``'s. So for now, let's just copy the right modprobe
+  over. This fixes an issue where we get invalid symbols when loading modules
+  using busybox ``modprobe``. ``modprobe`` is now resolving deps properly! :)
+
+  At some point, we could make a "toggle" to select kmod/busybox mode. The
+  best time to run ``depmod`` for busybox is probably once the ramdisk first
+  boots, since it doesn't have a "root" option, making it hard to call from our
+  ramdisk script.
+
+* Remove unused control character definitions in ``initrd.defaults``.
+
+* Mitigate an issue where ``ash`` shell could start before all USB keyboards
+  have been detected, resulting in lack of input. We now wait 5 seconds
+  before starting a rescue shell, to give the kernel time to enumerate
+  devices on the USB2/3 bus. This isn't a full fix, but should resolve
+  the problem of ``ash`` starting and not having any way to type, because
+  it didn't connect to your main keyboard.
+
+Try to work around issues related to ATA/SCSI disk enumeration which could
+prevent the root filesystem from being mounted (see FL-11532).
+
+* Detect when a user has a ``/dev/sd*`` root block device and warn them that
+  this is not a good idea, and can cause problems if you have multiple
+  disks. Show them how to fix the problem by switching to UUID.
+
+* Remove scsi_debug module which is evil and if we force-load it, will create
+  a new SCSI device 8MB in size and trigger the problem above for anyone
+  with a SATA disk.
+
+* To implement above feature, added a feature to allow masking of modules in
+  ``modules.copy`` via "-mod_shortname" in a specific section. Also added a
+  lot of sanity checking and warnings. If you happen to mask a module in the
+  wrong section, so it still gets included on the initramfs due to other
+  section(s), we will warn you.
+
+
+funtoo-ramdisk 1.0.4
+--------------------
+
+Released on August 18, 2023.
+
+This is a maintenance/bug fix release.
+
+* Fix ability to run from the git repo. This wasn't working.
+
+* Fix issue found by grouche, where if a module is built-in to the
+  kernel but listed in ``modules.autoload``, ``ramdisk`` would throw
+  an error because it would think it's not copied to the initramfs.
+  We now read in the ``modules.builtin`` file and use this in the
+  internal logic -- if a module is built-in to the kernel, we can
+  not worry if it is our ``modules.autoload`` list. We still have it.
+  We will also not worry about trying to load it at boot.
+
+* Add a debug output whenever a module is referenced that is actually
+  a built-in. This helps to audit the behavior of the above
+  functionality and could be useful to users of the tool as well.
+
+* Announce we are in debug mode with ``log.info()`` instead of a
+  warning. Looks a bit nicer.
+

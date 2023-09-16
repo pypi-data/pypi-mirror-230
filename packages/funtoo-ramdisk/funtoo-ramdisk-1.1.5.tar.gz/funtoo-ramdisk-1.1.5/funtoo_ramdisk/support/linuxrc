@@ -1,0 +1,94 @@
+#!/bin/sh
+
+. /etc/initrd.defaults
+. /etc/initrd.scripts
+
+# Clean input/output
+exec >${CONSOLE} <${CONSOLE} 2>&1
+
+[ "$$" != '1' ] && bad_msg "This script must run with a PID of 1; exiting." && exit 1
+
+mount -t proc -o noexec,nosuid,nodev proc /proc >/dev/null 2>&1
+mount -o remount,rw / >/dev/null 2>&1
+
+# Set up symlinks
+/bin/busybox --install -s
+
+mkdir -p /newroot
+
+parse_cmdline
+
+if [ "$DEBUG" = "yes" ]; then
+	echo '6' > /proc/sys/kernel/printk
+else
+	echo '0' > /proc/sys/kernel/printk
+fi
+
+if [ -z "${REAL_ROOT}" ] && [  "${FAKE_ROOT}" != "/dev/ram0" ]
+then
+	REAL_ROOT="${FAKE_ROOT}"
+fi
+
+mount_devfs
+
+mount_sysfs
+
+udev_setup
+
+# if the root filesystem type was specified, load this FS module first:
+if [ ! -b "${REAL_ROOT}" ] && [ "${ROOTFSTYPE}" != "auto" ]; then
+	good_msg "Loading ${ROOTFSTYPE} filesystem..."
+	do_modprobe "$ROOTFSTYPE"
+else
+	modules_scan filesystems
+fi
+
+# If "magic" list of modules was specified, use this and see if this gets us the
+# root block device:
+if [ "$MAGIC" = "1" ]; then
+	good_msg "Loading magic modules..."
+	do_modprobe $MAGIC
+fi
+
+
+# This is here to try the "MAGIC" modules and see if they did the trick.
+# If so, we can skip the modules scan, below:
+if [ "$MAGIC" = "1" ] && determine_root && mount_real_root && sanity_check_root; then
+	good_msg "Use of magic modules allowed us to find the root block device early..."
+fi
+
+if [ "${MOUNTED_ROOT_FS}" != '1' ] && [ "${DETECT}" != '0' ]
+then
+	good_msg "Starting modules scanning..."
+	while read -r section; do
+		modules_scan "${section}"
+		# The "quick" boot option: try to short-circuit module loading if we appear successful:
+		[ -n "$QUICK" ] && determine_root && mount_real_root && sanity_check_root && break
+	done < /etc/modules.autoload
+fi
+
+[ "$DEBUG_SHELL" = "yes" ] && run_shell good 'Debug shell requested, starting prior to mounting root fs'
+
+while [ "${MOUNTED_ROOT_FS}" != "1" ]; do
+	determine_root && mount_real_root && sanity_check_root && break
+	# If we fail, prompt user for root block device.
+	run_shell bad "I was unable to find ${REAL_ROOT}."
+done
+
+[ "$DEBUG" = "no" ] && echo '6' > /proc/sys/kernel/printk
+
+for fs in /dev /sys /proc
+do
+	if mountpoint -q $fs; then
+		if ! mount --move $fs /newroot/$fs
+		then
+			umount $fs || run_shell bad "ERROR: Failed to move and unmount the ramdisk $fs!"
+		fi
+	fi
+done
+
+sanity_check_root postmount || run_shell bad "post-mount sanity check failed."
+
+cd / && exec /sbin/switch_root -c "/dev/console" /newroot "${REAL_INIT:-/sbin/init}" "${INIT_OPTS}"
+
+run_shell bad "Something prevented us from switching into root filesystem."
