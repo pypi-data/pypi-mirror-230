@@ -1,0 +1,76 @@
+Metadata-Version: 2.1
+Name: python-adjutant
+Version: 7.0.0.0rc1
+Summary: An admin task workflow service for openstack.
+Home-page: https://opendev.org/openstack/adjutant
+Author: OpenStack
+Author-email: openstack-discuss@lists.openstack.org
+License: Apache-2
+Project-URL: Bug Tracker, https://storyboard.openstack.org/#!/project/openstack/adjutant
+Project-URL: Documentation, https://docs.openstack.org/adjutant/latest/
+Project-URL: Source Code, https://opendev.org/openstack/adjutant
+Keywords: openstack,keystone,users,tasks,registration,workflow
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Framework :: Django :: 3.2
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Environment :: OpenStack
+Description-Content-Type: text/x-rst; charset=UTF-8
+Requires-Dist: Babel (>=2.6.0)
+Requires-Dist: Django (>=3.2.12)
+Requires-Dist: confspirator (>=0.2.2)
+Requires-Dist: decorator (>=4.4.0)
+Requires-Dist: django-rest-swagger (>=2.2.0)
+Requires-Dist: djangorestframework (>=3.14.0)
+Requires-Dist: jsonfield (>=2.0.2)
+Requires-Dist: keystoneauth1 (>=3.14.0)
+Requires-Dist: keystonemiddleware (>=6.0.0)
+Requires-Dist: pbr (>=5.2.0)
+Requires-Dist: python-cinderclient (>=4.1.0)
+Requires-Dist: python-keystoneclient (>=3.19.0)
+Requires-Dist: python-neutronclient (>=6.12.0)
+Requires-Dist: python-novaclient (>=14.0.0)
+Requires-Dist: python-octaviaclient (>=1.8.0)
+Requires-Dist: python-troveclient (>=6.0.1)
+Requires-Dist: six (>=1.12.0)
+
+Adjutant is a service that sits along Keystone and allows the
+automation and approval of tasks normally requiring a user with an
+admin role. Adjutant allows defining of such tasks as part of a
+workflow which can either be entirely automatic, or require admin
+approval. The goal is to automate business logic, and augment the
+functionality of Keystone and other OpenStack services without getting
+in the way of future OpenStack features or duplicating development
+effort.
+
+Quick Dev Deployment
+====================
+
+To quickly deploy the service for testing you can install via pip,
+setup a default config file, and then run the test Django server.
+
+::
+
+    pip install adjutant
+
+Then running the service will look for a config in either
+**/etc/adjutant/conf.yaml** or it will default to **conf/conf.yaml**
+from the directory you run the command in.
+
+::
+
+    adjutant migrate
+    adjutant runserver <port>
+
+For now you will have to source the default conf from the github repo
+or the library install location itself, but we hope to add an
+additional commandline function which will copy and setup a basic
+default config in **/etc/adjutant/conf.yaml**.
+
+
+
