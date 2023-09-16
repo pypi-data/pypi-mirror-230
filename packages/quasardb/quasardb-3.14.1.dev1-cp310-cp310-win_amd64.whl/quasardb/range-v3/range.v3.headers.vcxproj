@@ -1,0 +1,803 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{45148572-D3CC-3458-A535-7EA420F03FB9}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.20348.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>range.v3.headers</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\TeamCity\work\938b0bdf6727d1ad\quasardb\..\qdb\include;C:\TeamCity\work\938b0bdf6727d1ad\quasardb\..\thirdparty\date\include;C:\TeamCity\work\938b0bdf6727d1ad\quasardb\..\thirdparty\range-v3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\TeamCity\work\938b0bdf6727d1ad\quasardb\..\qdb\include;C:\TeamCity\work\938b0bdf6727d1ad\quasardb\..\thirdparty\date\include;C:\TeamCity\work\938b0bdf6727d1ad\quasardb\..\thirdparty\range-v3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\TeamCity\work\938b0bdf6727d1ad\quasardb\..\qdb\include;C:\TeamCity\work\938b0bdf6727d1ad\quasardb\..\thirdparty\date\include;C:\TeamCity\work\938b0bdf6727d1ad\quasardb\..\thirdparty\range-v3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\TeamCity\work\938b0bdf6727d1ad\quasardb\..\qdb\include;C:\TeamCity\work\938b0bdf6727d1ad\quasardb\..\thirdparty\date\include;C:\TeamCity\work\938b0bdf6727d1ad\quasardb\..\thirdparty\range-v3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/TeamCity/work/938b0bdf6727d1ad/thirdparty/range-v3/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/TeamCity/work/938b0bdf6727d1ad/quasardb -BC:/TeamCity/work/938b0bdf6727d1ad/build/temp.win-amd64-cpython-310/Release --check-stamp-file C:/TeamCity/work/938b0bdf6727d1ad/build/lib.win-amd64-cpython-310/quasardb/range-v3/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.24\Modules\BasicConfigVersion-ExactVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindDoxygen.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindGit.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\WriteBasicConfigVersionFile.cmake;C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\Version.cmake;C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\cmake\ranges_env.cmake;C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\cmake\ranges_flags.cmake;C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\cmake\ranges_options.cmake;C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\version.hpp.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\TeamCity\work\938b0bdf6727d1ad\build\lib.win-amd64-cpython-310\quasardb\range-v3\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/TeamCity/work/938b0bdf6727d1ad/thirdparty/range-v3/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/TeamCity/work/938b0bdf6727d1ad/quasardb -BC:/TeamCity/work/938b0bdf6727d1ad/build/temp.win-amd64-cpython-310/Release --check-stamp-file C:/TeamCity/work/938b0bdf6727d1ad/build/lib.win-amd64-cpython-310/quasardb/range-v3/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.24\Modules\BasicConfigVersion-ExactVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindDoxygen.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindGit.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\WriteBasicConfigVersionFile.cmake;C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\Version.cmake;C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\cmake\ranges_env.cmake;C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\cmake\ranges_flags.cmake;C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\cmake\ranges_options.cmake;C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\version.hpp.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\TeamCity\work\938b0bdf6727d1ad\build\lib.win-amd64-cpython-310\quasardb\range-v3\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/TeamCity/work/938b0bdf6727d1ad/thirdparty/range-v3/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/TeamCity/work/938b0bdf6727d1ad/quasardb -BC:/TeamCity/work/938b0bdf6727d1ad/build/temp.win-amd64-cpython-310/Release --check-stamp-file C:/TeamCity/work/938b0bdf6727d1ad/build/lib.win-amd64-cpython-310/quasardb/range-v3/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.24\Modules\BasicConfigVersion-ExactVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindDoxygen.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindGit.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\WriteBasicConfigVersionFile.cmake;C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\Version.cmake;C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\cmake\ranges_env.cmake;C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\cmake\ranges_flags.cmake;C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\cmake\ranges_options.cmake;C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\version.hpp.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\TeamCity\work\938b0bdf6727d1ad\build\lib.win-amd64-cpython-310\quasardb\range-v3\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/TeamCity/work/938b0bdf6727d1ad/thirdparty/range-v3/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/TeamCity/work/938b0bdf6727d1ad/quasardb -BC:/TeamCity/work/938b0bdf6727d1ad/build/temp.win-amd64-cpython-310/Release --check-stamp-file C:/TeamCity/work/938b0bdf6727d1ad/build/lib.win-amd64-cpython-310/quasardb/range-v3/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.24\Modules\BasicConfigVersion-ExactVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindDoxygen.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindGit.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.24\Modules\WriteBasicConfigVersionFile.cmake;C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\Version.cmake;C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\cmake\ranges_env.cmake;C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\cmake\ranges_flags.cmake;C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\cmake\ranges_options.cmake;C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\version.hpp.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\TeamCity\work\938b0bdf6727d1ad\build\lib.win-amd64-cpython-310\quasardb\range-v3\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\concepts\compare.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\concepts\concepts.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\concepts\swap.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\concepts\type_traits.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\meta\meta.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\meta\meta_fwd.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\action.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\adjacent_remove_if.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\concepts.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\drop.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\drop_while.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\erase.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\insert.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\join.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\push_back.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\push_front.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\remove.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\remove_if.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\reverse.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\shuffle.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\slice.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\sort.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\split.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\split_when.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\stable_sort.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\stride.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\take.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\take_while.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\transform.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\unique.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\action\unstable_remove_if.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\adjacent_find.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\adjacent_remove_if.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\all_of.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\any_of.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\aux_\equal_range_n.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\aux_\lower_bound_n.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\aux_\merge_n.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\aux_\merge_n_with_buffer.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\aux_\partition_point_n.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\aux_\sort_n_with_buffer.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\aux_\upper_bound_n.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\binary_search.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\contains.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\copy.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\copy_backward.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\copy_if.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\copy_n.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\count.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\count_if.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\ends_with.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\equal.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\equal_range.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\fill.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\fill_n.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\find.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\find_end.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\find_first_of.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\find_if.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\find_if_not.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\for_each.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\for_each_n.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\generate.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\generate_n.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\heap_algorithm.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\inplace_merge.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\is_partitioned.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\is_sorted.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\is_sorted_until.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\lexicographical_compare.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\lower_bound.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\max.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\max_element.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\merge.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\min.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\min_element.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\minmax.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\minmax_element.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\mismatch.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\move.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\move_backward.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\none_of.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\nth_element.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\partial_sort.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\partial_sort_copy.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\partition.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\partition_copy.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\partition_point.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\permutation.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\remove.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\remove_copy.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\remove_copy_if.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\remove_if.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\replace.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\replace_copy.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\replace_copy_if.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\replace_if.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\result_types.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\reverse.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\reverse_copy.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\rotate.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\rotate_copy.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\sample.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\search.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\search_n.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\set_algorithm.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\shuffle.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\sort.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\stable_partition.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\stable_sort.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\starts_with.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\swap_ranges.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\tagspec.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\transform.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\unique.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\unique_copy.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\unstable_remove_if.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\algorithm\upper_bound.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\all.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\at.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\back.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\begin_end.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\compare.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\core.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\data.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\detail\adl_get.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\detail\config.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\detail\epilogue.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\detail\prologue.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\detail\range_access.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\detail\satisfy_boost_range.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\detail\variant.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\detail\with_braced_init_args.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\distance.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\empty.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\experimental\utility\generator.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\experimental\view\shared.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\front.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\functional.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\functional\arithmetic.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\functional\bind.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\functional\bind_back.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\functional\comparisons.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\functional\compose.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\functional\concepts.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\functional\identity.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\functional\indirect.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\functional\invoke.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\functional\not_fn.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\functional\on.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\functional\overload.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\functional\pipeable.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\functional\reference_wrapper.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\getlines.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\index.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\istream_range.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\iterator.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\iterator\access.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\iterator\basic_iterator.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\iterator\common_iterator.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\iterator\concepts.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\iterator\counted_iterator.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\iterator\default_sentinel.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\iterator\diffmax_t.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\iterator\insert_iterators.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\iterator\move_iterators.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\iterator\operations.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\iterator\reverse_iterator.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\iterator\stream_iterators.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\iterator\traits.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\iterator\unreachable_sentinel.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\iterator_range.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\numeric.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\numeric\accumulate.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\numeric\adjacent_difference.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\numeric\inner_product.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\numeric\iota.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\numeric\partial_sum.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\range.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\range\access.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\range\concepts.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\range\conversion.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\range\dangling.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\range\operations.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\range\primitives.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\range\traits.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\range_access.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\range_concepts.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\range_for.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\range_fwd.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\range_traits.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\size.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\span.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\to_container.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\addressof.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\any.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\associated_types.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\basic_iterator.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\box.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\common_iterator.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\common_tuple.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\common_type.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\compressed_pair.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\concepts.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\copy.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\counted_iterator.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\dangling.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\functional.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\get.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\in_place.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\infinity.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\invoke.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\iterator.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\iterator_concepts.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\iterator_traits.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\memory.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\move.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\nullptr_v.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\optional.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\polymorphic_cast.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\random.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\scope_exit.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\semiregular.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\semiregular_box.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\static_const.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\swap.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\tagged_pair.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\tagged_tuple.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\tuple_algorithm.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\unreachable.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\utility\variant.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\version.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\adaptor.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\addressof.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\adjacent_filter.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\adjacent_remove_if.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\all.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\any_view.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\bounded.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\c_str.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\cache1.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\cartesian_product.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\chunk.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\common.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\concat.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\const.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\counted.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\cycle.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\delimit.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\drop.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\drop_exactly.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\drop_last.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\drop_while.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\empty.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\enumerate.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\exclusive_scan.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\facade.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\filter.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\for_each.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\generate.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\generate_n.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\getlines.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\group_by.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\indices.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\indirect.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\interface.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\intersperse.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\iota.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\istream.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\join.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\linear_distribute.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\map.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\move.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\partial_sum.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\ref.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\remove.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\remove_if.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\repeat.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\repeat_n.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\replace.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\replace_if.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\reverse.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\sample.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\set_algorithm.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\single.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\slice.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\sliding.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\span.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\split.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\split_when.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\stride.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\subrange.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\tail.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\take.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\take_exactly.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\take_last.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\take_while.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\tokenize.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\transform.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\trim.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\unbounded.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\unique.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\view.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\zip.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view\zip_with.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view_adaptor.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view_facade.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\range\v3\view_interface.hpp">
+    </None>
+    <None Include="C:\TeamCity\work\938b0bdf6727d1ad\thirdparty\range-v3\include\std\detail\associated_types.hpp">
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\TeamCity\work\938b0bdf6727d1ad\build\temp.win-amd64-cpython-310\Release\ZERO_CHECK.vcxproj">
+      <Project>{B9C6B6F2-C0F1-3760-B5A4-E51A61625501}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
