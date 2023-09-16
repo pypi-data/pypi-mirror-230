@@ -1,0 +1,110 @@
+Metadata-Version: 2.1
+Name: mlxploit
+Version: 0.0.0a7
+Summary: AI/ML Exploitation Framework
+License: Apache-2.0
+Author: hdks
+Author-email: hdks.bug@gmail.com
+Requires-Python: >=3.9,<3.10
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Requires-Dist: huggingface-hub (>=0.16.4,<0.17.0)
+Requires-Dist: pandas (>=2.1.0,<3.0.0)
+Requires-Dist: pillow (>=10.0.0,<11.0.0)
+Requires-Dist: scikit-image (>=0.21.0,<0.22.0)
+Requires-Dist: scikit-learn (>=1.3.0,<2.0.0)
+Requires-Dist: scipy (>=1.11.2,<2.0.0)
+Requires-Dist: timm (>=0.9.7,<0.10.0)
+Requires-Dist: torch (>=2.0.0,!=2.0.1)
+Requires-Dist: torchinfo (>=1.8.0,<2.0.0)
+Requires-Dist: torchvision (==0.15.1)
+Requires-Dist: transformers (>=4.32.1,<5.0.0)
+Requires-Dist: typer[all] (>=0.9.0,<0.10.0)
+Description-Content-Type: text/markdown
+
+# MLxploit: AI/ML Exploitation Framework
+
+This is a CLI of an exploitation framework for machine learning models.
+
+## Status
+
+- This project is heavily under development. Existing functionalities may change frequently.
+- It's still alpha, so the result may not be correct.
+
+<br />
+
+## Usage
+
+```sh
+mlx --help
+```
+
+To list attacks, use **`list`** positional argument.
+
+```sh
+mlx list
+```
+
+### :boom: Adversarial Attack
+
+Currently support only **Image Classification** models.  
+Supported techniques are as follow:
+
+- **FGSM (Fast Gradient Sign Method)**
+- **LBFGS**
+
+```sh
+# Attack ML model from file path (`-m`)
+mlx adv -m mymodel.pt
+
+# Attack Hugging Face model (`-hf`)
+mlx adv -hf owner/repo
+```
+
+### :boom: Membership Inference Attack
+
+Currently support only **Image Classification** models.
+
+```sh
+# Attack ML model from file path (`-m`)
+mlx mia -m mymodel.pt
+
+# Attack Hugging Face model (`-hf`)
+mlx mia -hf owner/repo
+```
+
+<br />
+
+## Installation
+
+### Using PIP
+
+It's the easiest way to install **MLxploit** with **`pip`**.
+
+```sh
+pip install mlxploit
+mlx --help
+```
+
+### From Source Code
+
+If you want to install directly from this repository, execute the following commands.
+
+```sh
+git clone https://github.com/hideckies/mlxploit.git
+cd mlxploit
+poetry shell
+poetry install
+mlx --help
+```
+
+<br />
+
+## Recommendations
+
+- If you use **Hugging Face** model (**`--model-hf/-hf`**), the repository will be downloaded under **`~/.cache/huggingface/`** by default. This can put pressure on the space on your system.
+
+If you're worried about the above, it's encourage to use **MLxploit** on **Google Colab**, **SageMaker**, etc.
+
+
