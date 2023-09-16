@@ -1,0 +1,44 @@
+Metadata-Version: 2.1
+Name: igs-toolbox
+Version: 1.3.2
+Summary: A toolbox to check whether files follow a predefined schema.
+Home-page: https://www.rki.de/DE/Content/Infekt/IGS/IGS_node.html
+Author: IMS Developers
+Author-email: IMS-Developers@rki.de
+License: MIT
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: jsonschema >=4.16.0
+Requires-Dist: pandas
+Provides-Extra: test
+Requires-Dist: pytest ; extra == 'test'
+
+# igs-toolbox
+
+## Description
+This repository contains tools to convert files and check whether files follow a predefined schema.
+Currently there is only one converter and formatChecker for one use case is implemented, but the idea is that it can be extended to more applications.
+
+## Installation 
+
+igs-toolbox is pip installable.
+
+```bash
+pip install igs-toolbox
+```
+
+## Usage
+
+All tools can be used as a command line tools.
+
+```bash
+usage: jsonChecker [-h] -i INPUT -s {seqMetadata}
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPUT, --input INPUT
+                        Filepath to json file.
+  -s {seqMetadata}, --schema {seqMetadata}
+                        Schema to test against.
+```
