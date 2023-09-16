@@ -1,0 +1,191 @@
+import abc
+import typing as t
+from suanpan.objects import HasName
+
+if t.TYPE_CHECKING:
+    from suanpan.stypes.trigger import TriggerT
+    from suanpan.stypes.argument import ArgumentT
+
+
+class AppT(HasName):
+    args: t.Annotated[t.Any, 'arguments of app']
+
+    @property
+    @abc.abstractmethod
+    def trigger(self) -> 'TriggerT':
+        """Get a trigger instance that can run task at periodic intervals."""
+        ...
+
+    @abc.abstractmethod
+    def loadNodeArgs(self, funcOrApp=None, *, autoIn=True, autoOut=True, autoParam=True):
+        """Decorate a function to run with autoload node args.
+
+        Arguments:
+            funcOrApp: The function to decorate.
+            autoIn: autoload node input args
+            autoOut: autoload node output args
+            autoParam: autoload node params
+
+        Example:
+            >>> @app.loadNodeArgs
+            >>> def example(context):
+            ...     args = context.args
+        """
+        ...
+
+    @abc.abstractmethod
+    def use(self, handlerClass):
+        """Decorate a class to run.
+
+        Arguments:
+            handlerClass: The handler class to add.
+
+        Example:
+            >>> @app.use
+            >>> class CustomCode(MessageHandler):
+            ...     def run(self, context):
+            ...     print('run ...')
+        """
+        ...
+
+    @abc.abstractmethod
+    def input(self, argument: ArgumentT):
+        """Decorate a function to add an input argument.
+
+        Arguments:
+            argument: The input argument to add.
+
+        Example:
+            >>> @app.input(String(key="formula", default=""))
+            >>> def SPFormula(context):
+            ...     args = context.args
+        """
+        ...
+
+    @abc.abstractmethod
+    def output(self, argument):
+        """Decorate a function to add an output argument.
+
+        Arguments:
+            argument: The output argument to add.
+
+        Example:
+            >>> @app.output(String(key="outputTable", required=True))
+            >>> def SPHiveSql(context):
+            ...     args = context.args
+        """
+        ...
+
+    @abc.abstractmethod
+    def param(self, argument):
+        """Decorate a function to add an param argument.
+
+        Arguments:
+            argument: The param argument to add.
+
+        Example:
+            >>> @app.param(String(key="sql", required=True))
+            >>> def SPHiveSql(context):
+            ...     args = context.args
+        """
+        ...
+
+    @abc.abstractmethod
+    def column(self, argument):
+        """alias name of :meth:`param`"""
+        ...
+
+    @abc.abstractmethod
+    def beforeInit(self, hook):
+        """run the `hook` function before call init function"""
+        ...
+
+    @abc.abstractmethod
+    def afterInit(self, hook):
+        """run the `hook` function after call init function"""
+        ...
+
+    @abc.abstractmethod
+    def beforeCall(self, hook):
+        """run the `hook` function before call stream process function"""
+        ...
+
+    @abc.abstractmethod
+    def afterCall(self, hook):
+        """run the `hook` function after call stream process function"""
+        ...
+
+    @abc.abstractmethod
+    def beforeExit(self, hook):
+        """run the `hook` function before stream process function"""
+        ...
+
+    @abc.abstractmethod
+    def load(self, args, argsDict=None):
+        """load `args` and `argsDict` into a new Arguments
+
+        Returns:
+            Arguments: The return value. True for success, False otherwise.
+        """
+        ...
+
+    @abc.abstractmethod
+    def publish(self, topic: str, payload: dict):
+        """Publish event to other running nodes.
+
+        Arguments:
+            topic: Event topic.
+            payload: Event information
+
+        Example:
+            >>> app.publish("change", {"data": 1})
+        """
+        ...
+
+    @abc.abstractmethod
+    def subscribe(self, topic: str):
+        """Decorate a function to callback when an event with topic received.
+
+        Arguments:
+            topic: Event topic.
+
+        Example:
+            >>> @app.subscribe("change")
+            >>> def on_event_change(event):
+            ...     print("notified by", event)
+        """
+        ...
+
+    @abc.abstractmethod
+    def unsubscribe(self, topic: str):
+        """Unsubscribe event.
+
+        Arguments:
+            topic: Event topic.
+
+        Example:
+            >>> app.unsubscribe("change")
+        """
+        ...
+
+    @abc.abstractmethod
+    def send(self, results, queue=None, message=None, args=None):
+        """send `message` to message queue"""
+        ...
+
+    @abc.abstractmethod
+    def ergo_send(self, results, message=None, args=None):
+        """send `message` to ergo p2p"""
+        ...
+
+    @property
+    @abc.abstractmethod
+    def vars(self):
+        """the variables of app"""
+        ...
+
+    @property
+    @abc.abstractmethod
+    def modules(self):
+        """the modules of app"""
+        ...
