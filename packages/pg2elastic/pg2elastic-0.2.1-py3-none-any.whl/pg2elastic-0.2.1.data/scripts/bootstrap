@@ -1,0 +1,87 @@
+#!python
+
+"""PGSync bootstrap."""
+import click
+
+from pg2elastic.sync import Sync
+from pg2elastic.utils import config_loader, get_config, show_settings
+from pg2elastic.settings import sink_serializer, loguru_filter, SKIP_BOOTSTRAP
+from loguru import logger
+
+logger.remove()
+logger.add(sink_serializer, filter=loguru_filter, format='{level}: {time} [{name}] {message}')
+
+
+@click.command()
+@click.option(
+    "--config",
+    "-c",
+    help="Schema config",
+    type=click.Path(exists=True),
+)
+@click.option("--host", "-h", help="PG_HOST overide")
+@click.option("--password", is_flag=True, help="Prompt for database password")
+@click.option("--port", "-p", help="PG_PORT overide", type=int)
+@click.option(
+    "--teardown",
+    "-t",
+    is_flag=True,
+    help="Teardown database triggers and replication slots",
+)
+@click.option("--user", "-u", help="PG_USER overide")
+@click.option("--schema", "-s", help="PG_SCHEMA overide")
+@click.option(
+    "--verbose",
+    "-v",
+    is_flag=True,
+    default=False,
+    help="Turn on verbosity",
+)
+@click.option(
+    "--skip-bootstrap",
+    "-sb",
+    is_flag=True,
+    default=False,
+    help="Specify if bootstrap should be skipped",
+)
+def main(teardown, config, user, schema, password, host, port, verbose, skip_bootstrap):
+    if skip_bootstrap or SKIP_BOOTSTRAP:
+        return
+
+    """Application onetime Bootstrap."""
+    kwargs: dict = {
+        "user": user,
+        "host": host,
+        "port": port,
+    }
+    if password:
+        kwargs["password"] = click.prompt(
+            "Password",
+            type=str,
+            hide_input=True,
+        )
+    kwargs = {key: value for key, value in kwargs.items() if value is not None}
+
+    config: str = get_config(config)
+
+    show_settings(config)
+
+    validate: bool = False if teardown else True
+
+    for document in config_loader(config):
+        sync: Sync = Sync(
+            document,
+            verbose=verbose,
+            validate=validate,
+            repl_slots=False,
+            **kwargs,
+        )
+        if teardown:
+            sync.teardown()
+            continue
+        sync.setup()
+        logger.info(f"Bootstrap: {sync.database}")
+
+
+if __name__ == "__main__":
+    main()
