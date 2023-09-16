@@ -1,0 +1,8 @@
+__title__ = "pyrtma"
+__description__ = "A Python compiler and client for RTMA/Dragonfly messaging system"
+__url__ = "https://github.com/pitt-rnel/pyrtma"
+__version__ = "2.0.4"
+__author__ = "RNEL"
+__author_email__ = ""
+__license__ = "MIT"
+__copyright__ = "University of Pittsburgh Rehab Neural Engineering Labs, 2023"
