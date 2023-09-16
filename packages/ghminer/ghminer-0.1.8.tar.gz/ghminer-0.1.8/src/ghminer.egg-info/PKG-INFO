@@ -1,0 +1,119 @@
+Metadata-Version: 2.1
+Name: ghminer
+Version: 0.1.8
+Summary: Github mining tool for MSR research
+Author-email: Justin Zhang <schnell18@gmail.com>
+License: Copyright 2023 Justin Zhang
+        
+        Permission is hereby granted, free of charge, to any person obtaining a
+        copy of this software and associated documentation files (the
+        “Software”), to deal in the Software without restriction, including
+        without limitation the rights to use, copy, modify, merge, publish,
+        distribute, sublicense, and/or sell copies of the Software, and to
+        permit persons to whom the Software is furnished to do so, subject to
+        the following conditions:
+        
+        THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS
+        OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+        MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+        IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+        CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+        TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+        SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+        
+Project-URL: Homepage, https://github.com/schnell18/ghminer
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT No Attribution License (MIT-0)
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Requires-Python: >=3.7
+Description-Content-Type: text/x-rst
+License-File: LICENSE
+Requires-Dist: requests==2.31.0
+Requires-Dist: semver==3.0.1
+Requires-Dist: PyGithub==2.0.1-preview
+Requires-Dist: isodate==0.6.1
+Requires-Dist: pandas==2.0.1
+Provides-Extra: dev
+Requires-Dist: bumpver; extra == "dev"
+Requires-Dist: pip-tools; extra == "dev"
+Provides-Extra: test
+Requires-Dist: tox; extra == "test"
+Provides-Extra: doc
+Requires-Dist: sphinx; extra == "doc"
+
+=========
+ ghminer
+=========
+
+A library and toolkit for MSR research.
+
+Mining software repository has been a popular research method for quite
+long time. Although github offers convenient public REST and GraphQL
+API, collecting large scale dataset with long history of information
+such as repository, author, bot, issues, pull request, comment is still
+a non-trivial task. There are three major challenges to be solved in
+order to retrieve large search results from github:
+
+* 1000-limit issue: github API discards records beyond 1000 in the result set
+  of a particular query.
+* rate-limit issue: github API prevents authenticated personal accounts from
+  invoking API more than 5000 times per hour.
+* pagination: User has to issue multiple API calls to retrieve the complete
+  query results over 100 records.
+
+
+When the client exceeds the rate limit, it is disconnected with HTTP status
+code 503. Without proper recover handling, data collection process is subject
+to frequent interruptions.
+
+This library and assoicated scripts are intended to help solve the three
+challenges so that you can focus on the data mining rather than data
+collection.
+
+Requirements
+============
+
+* Python 3.7 over
+
+Features
+========
+
+* Search Github repositories based on stars, fork, language and topic
+* Search a large number of repositories by dividing creation time into small
+  time window
+* Support multiple topics with `OR` relation
+* Build dataset in .csv and .parquet format
+* Retrieve commit, issue comments
+* Golang miner with go.mod retrieval and parsing
+
+Setup
+=====
+
+::
+
+  $ python -m venv /path/to/venv
+  $ /path/to/venv/bin/python -m pip install ghminer
+
+Usage
+=====
+
+To identify repositories for your MSR research, please refer to
+the script `identify-repos.py`. To retrieve commits, use the script
+`retrieve-commits.py`. To mine golang projects, use the script
+`golang-miner`.
+
+::
+
+  >>> from ghminer.retriever import collect_data
+  >>> collect_data(
+          2022, 2023, None, True, 100, 15,
+          "repo.d", "java", trace=trace
+      )
