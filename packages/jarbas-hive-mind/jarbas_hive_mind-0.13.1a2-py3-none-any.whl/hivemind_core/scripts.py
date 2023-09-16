@@ -1,0 +1,163 @@
+import os
+
+import click
+from ovos_utils.xdg_utils import xdg_data_home
+from rich.console import Console
+from rich.prompt import Prompt
+from rich.table import Table
+
+from hivemind_core.database import ClientDatabase
+
+
+@click.group()
+def hmcore_cmds():
+    pass
+
+
+@hmcore_cmds.command(help="add credentials for a client", name="add-client")
+@click.argument("name", required=False, type=str)
+@click.argument("access_key", required=False, type=str)
+@click.argument("password", required=False, type=str)
+@click.argument("crypto_key", required=False, type=str)
+def add_client(name, access_key, password, crypto_key):
+    key = crypto_key
+    if key:
+        print("WARNING: crypto key is deprecated, use password instead if your client supports it")
+        print("WARNING: for security the encryption key should be randomly generated\n"
+              "Defining your own key is discouraged")
+        if len(key) != 16:
+            print("Encryption key needs to be exactly 16 characters!")
+            raise ValueError
+    else:
+        key = os.urandom(8).hex()
+
+    password = password or os.urandom(16).hex()
+
+    access_key = access_key or os.urandom(16).hex()
+    with ClientDatabase() as db:
+        name = name or f"HiveMind-Node-{db.total_clients()}"
+        db.add_client(name, access_key, crypto_key=key, password=password)
+
+        # verify
+        user = db.get_client_by_api_key(access_key)
+        node_id = db.get_item_id(user)
+
+        print("Credentials added to database!\n")
+        print("Node ID:", node_id)
+        print("Friendly Name:", name)
+        print("Access Key:", access_key)
+        print("Password:", password)
+        print("Encryption Key:", key)
+
+        print("WARNING: Encryption Key is deprecated, only use if your client does not support password")
+
+
+@hmcore_cmds.command(help="allow message types sent from a client", name="allow-msg")
+@click.argument("msg_type", required=True, type=str)
+@click.argument("node_id", required=False, type=int)
+def allow_msg(msg_type, node_id):
+    if not node_id:
+        # list clients and prompt for id using rich
+        table = Table(title="HiveMind Clients")
+        table.add_column("ID", justify="right", style="cyan", no_wrap=True)
+        table.add_column("Name", style="magenta")
+        table.add_column("Allowed Msg Types", style="yellow")
+        _choices = []
+        for client in ClientDatabase():
+            if client["client_id"] != -1:
+                table.add_row(str(client["client_id"]),
+                              client["name"],
+                              str(client.get("allowed_types", [])))
+                _choices.append(str(client["client_id"]))
+
+        if not _choices:
+            print("No clients found!")
+            exit()
+        elif len(_choices) > 1:
+            console = Console()
+            console.print(table)
+            _exit = str(max(int(i) for i in _choices) + 1)
+            node_id = Prompt.ask(f"To which client you want to add '{msg_type}'? ({_exit}='Exit')",
+                                 choices=_choices + [_exit])
+            if node_id == _exit:
+                console.print("User exit", style="red")
+                exit()
+        else:
+            node_id = _choices[0]
+
+    with ClientDatabase() as db:
+        for client in db:
+            if client["client_id"] == int(node_id):
+                allowed_types = client.get("allowed_types", [])
+                if msg_type in allowed_types:
+                    print(f"Client {client['name']} already allowed '{msg_type}'")
+                    exit()
+
+                allowed_types.append(msg_type)
+                client["allowed_types"] = allowed_types
+                item_id = db.get_item_id(client)
+                db.update_item(item_id, client)
+                print(f"Allowed '{msg_type}' for {client['name']}")
+                break
+
+
+@hmcore_cmds.command(help="remove credentials for a client (numeric unique ID)",
+                     name="delete-client")
+@click.argument("node_id", required=True, type=int)
+def delete_client(node_id):
+    with ClientDatabase() as db:
+        for x in db:
+            if x["client_id"] == int(node_id):
+                item_id = db.get_item_id(x)
+                db.update_item(item_id, dict(client_id=-1, api_key="revoked"))
+                print(f"Revoked credentials!\n")
+                print("Node ID:", x["client_id"])
+                print("Friendly Name:", x["name"])
+                print("Access Key:", x["api_key"])
+                print("Password:", x["password"])
+                print("Encryption Key:", x["crypto_key"])
+                break
+        else:
+            print("Invalid Node ID!")
+
+
+@hmcore_cmds.command(help="list clients and credentials", name="list-clients")
+def list_clients():
+    console = Console()
+    table = Table(title="HiveMind Credentials:")
+    table.add_column("ID", justify="center")
+    table.add_column("Name", justify="center")
+    table.add_column("Access Key", justify="center")
+    table.add_column("Password", justify="center")
+    table.add_column("Crypto Key", justify="center")
+
+    with ClientDatabase() as db:
+        for x in db:
+            if x["client_id"] != -1:
+                table.add_row(str(x["client_id"]), x["name"], x["api_key"], x["password"], x["crypto_key"])
+
+    console.print(table)
+
+
+@hmcore_cmds.command(help="start listening for HiveMind connections", name="listen")
+@click.option("--port", help="HiveMind port number", type=int, default=5678)
+@click.option("--ssl", help="use wss://", type=bool, default=False)
+@click.option("--cert_dir", help="HiveMind SSL certificate directory", type=str, default=f"{xdg_data_home()}/hivemind")
+@click.option("--cert_name", help="HiveMind SSL certificate file name", type=str, default="hivemind")
+def listen(port: int, ssl: bool, cert_dir: str, cert_name: str):
+    from hivemind_core.service import HiveMindService
+
+    websocket_config = {
+        "host": "0.0.0.0",
+        "port": port,
+        "ssl": ssl,
+        "cert_dir": cert_dir,
+        "cert_name": cert_name
+    }
+
+    service = HiveMindService(websocket_config=websocket_config)
+    service.run()
+
+
+if __name__ == "__main__":
+    hmcore_cmds()
