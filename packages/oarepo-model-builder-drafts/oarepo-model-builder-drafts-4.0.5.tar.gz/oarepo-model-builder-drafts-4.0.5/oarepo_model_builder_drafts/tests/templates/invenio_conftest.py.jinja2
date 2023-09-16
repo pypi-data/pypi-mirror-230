@@ -1,0 +1,18 @@
+from {{ vars.proxy.module }} import {{ vars.service.proxy }}
+{{ vars.record.class|generate_import }}
+
+@pytest.fixture(scope="function")
+def {{ fixtures.sample_record }}(app, db, input_data):
+    with UnitOfWork(db.session) as uow:
+        record = {{ vars.record.class|base_name }}.create(input_data)
+        uow.register(RecordCommitOp(record, {{ vars.service.proxy }}.indexer, True))
+        uow.commit()
+        return record
+
+@pytest.fixture()
+def vocab_cf(app, db, cache):
+    from oarepo_runtime.cf.mappings import prepare_cf_indices
+
+    prepare_cf_indices()
+
+
