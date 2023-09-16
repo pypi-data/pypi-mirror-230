@@ -1,0 +1,130 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mkdocs-code-validator"
+description = "Checks Markdown code blocks in a MkDocs site against user-defined actions"
+readme = "README.md"
+license = "MIT"
+keywords = ["mkdocs", "mkdocs-plugin"]
+authors = [
+    {name = "Oleh Prypin", email = "oleh@pryp.in"},
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Documentation",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Text Processing :: Markup :: Markdown",
+    "Typing :: Typed",
+]
+dynamic = ["version"]
+requires-python = ">=3.7"
+dependencies = [
+    "mkdocs >=1.5.0",
+    "Markdown >=3.3",
+    "pymdown-extensions >=8.0",
+    #min "importlib_metadata >=4.3; python_version < '3.10'",
+    #min "jinja2 >=2.11.1",
+    #min "markupsafe >=2.0.1",
+]
+
+[project.urls]
+Documentation = "https://oprypin.github.io/mkdocs-code-validator/"
+Source = "https://github.com/oprypin/mkdocs-code-validator"
+Issues = "https://github.com/oprypin/mkdocs-code-validator/issues"
+
+[project.entry-points."mkdocs.plugins"]
+code-validator = "mkdocs_code_validator.plugin:CodeValidatorPlugin"
+
+[tool.hatch.version]
+path = "mkdocs_code_validator/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+include = ["/mkdocs_code_validator"]
+
+[tool.hatch.envs.default.scripts]
+all = [
+    "hatch run style:fix",
+    "hatch run types:check",
+    "hatch run test:test",
+]
+
+[tool.hatch.envs.test.scripts]
+test = [
+    "bash .tools/test.sh",
+]
+
+[tool.hatch.envs.types]
+dependencies = [
+    "mypy",
+    "types-Markdown >=3.4.2",
+]
+[tool.hatch.envs.types.scripts]
+check = [
+    "mypy mkdocs_code_validator"
+]
+
+[tool.hatch.envs.style]
+skip-install = true
+dependencies = [
+    "ruff",
+    "isort",
+    "black",
+]
+[tool.hatch.envs.style.scripts]
+fix = [
+    "ruff check --fix mkdocs_code_validator",
+    "format",
+]
+format = [
+    "isort -q mkdocs_code_validator",
+    "black -q mkdocs_code_validator",
+]
+
+[tool.hatch.envs.docs]
+detached = true
+dependencies = [
+    "mkdocs >=1.1.2",
+    "mkdocs-material >=7.1.4",
+    "pymdown-extensions >=8.2",
+]
+
+[tool.black]
+line-length = 100
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.ruff]
+select = [
+    "F", "W", "E", "UP", "YTT", "C4", "FA", "PIE", "T20", "RSE", "TCH", "DTZ",
+    "B002", "B003", "B005", "B007", "B009", "B012", "B013", "B014", "B015", "B018", "B020", "B021", "B023", "B026", "B033", "B034", "B905",
+    "COM818",
+    "PERF101",
+    "PGH002", "PGH004", "PGH005",
+    "PLE", "PLW0120", "PLW0127",
+    "RUF001", "RUF007", "RUF010", "RUF100", "RUF200",
+    "SIM101", "SIM107", "SIM201", "SIM202", "SIM208", "SIM210", "SIM211", "SIM300", "SIM401", "SIM910",
+]
+ignore = ["E501", "E731"]
+[tool.ruff.flake8-comprehensions]
+allow-dict-calls-with-keyword-arguments = true
+
+[tool.mypy]
+ignore_missing_imports = true
+warn_unreachable = true
+no_implicit_optional = true
+show_error_codes = true
