@@ -1,0 +1,75 @@
+[tool.poetry]
+name = "leaptable"
+version = "0.0.1"
+description = "Create, run and manage your intelligent LLM agents on dataframes."
+authors = ["LeapTable Team <pypi@leaptable.us>"]
+packages = [
+    { include = "leaptable" }
+]
+readme = "README.md"
+homepage = "https://leaptable.us/docs/"
+repository = "https://github.com/peterwnjenga/leaptable"
+keywords = ["leaptable", "agents", "dataframes", "client"]
+
+
+[tool.poetry.dependencies]
+bcrypt = "^4.0.1"
+betterproto = { version = "2.0.0b4", allow-prereleases = true }
+black = "^23.3.0"
+bs4 = "^0.0.1"
+cohere = "^4.5.1"
+fastapi = "^0.103.0"
+flake8 = "^6.0.0"
+google-auth = "^2.21.0"
+google-cloud-firestore = "^2.11.1"
+grpcio = { version = "^1.46.0", allow-prereleases = true }
+httpx = { version = "^0.23.0", extras = ["http2"] }
+loguru = "^0.5.3"
+nest-asyncio = "^1.5.5"
+numpy = "^1.21"
+openai = "^0.27.6"
+pdfplumber = "^0.9.0"
+pinecone-client = "^2.2.1"
+prisma = "^0.8.2"
+psychicapi = "^0.8.0"
+uuid6 = "^2023.5.2"
+pydantic = "^2.3.0"
+pyjwt = "^2.7.0"
+pypdf = "^3.8.1"
+python = ">=3.9,<4.0"
+python-decouple = "^3.8"
+python-dotenv = "^1.0.0"
+python-slugify = "^8.0.1"
+requests = "2.29.0"
+redis = "^4.6.0"
+psycopg = "^3.1.9"
+ruff = "^0.0.265"
+sse-starlette = "^1.5.0"
+tabulate = "^0.9.0"
+tiktoken = "^0.4.0"
+tqdm = "^4.56.0"
+transformers = "^4.30.2"
+typing-extensions = "^4.0.0"
+unstructured = "^0.6.4"
+uuid = "^1.30"
+uvicorn = {extras = ["standard"], version = "^0.22.0"}
+wolframalpha = "^5.0.0"
+youtube-transcript-api = "^0.6.1"
+dask = {extras = ["complete"], version = "^2023.7.1"}
+pyarrow = "^12.0.1"
+playwright = "^1.36.0"
+twine = "^4.0.2"
+jinja2 = "^3.1.2"
+validators = "^0.21.2"
+asyncpg = "^0.28.0"
+google-search-results = "^2.4.2"
+
+[tool.poetry.dev-dependencies]
+coverage = "^6.3.3"
+grpcio-tools = "^1.46.0"
+pytest = "^7.1"
+sphinx = "^4.4.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
