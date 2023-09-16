@@ -1,0 +1,55 @@
+[build-system]
+requires = [
+    "setuptools>=65.0.0",
+    "setuptools-scm>=7.1",
+    "wheel"
+]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["google_images_downloader"]
+
+[project]
+name = "google-images-downloader"
+requires-python = ">=3.8"
+description = "Script to download images from Google Images queries"
+dynamic = ["version"]
+authors = [
+    { name = "Harkame" }
+]
+readme = "README.md"
+classifiers = ["Programming Language :: Python"]
+dependencies = [
+    "selenium>=4.11.2",
+    "requests>=2.31.0",
+    "Pillow>=10.0.0",
+    "tqdm>=4.66.1",
+    "psutil>=5.9.5"
+]
+
+[tool.setuptools_scm]
+write_to = "google_images_downloader/__dist_version__.py"
+write_to_template = "__version__ = '{version}'\n"
+version_scheme = "no-guess-dev"
+local_scheme = "no-local-version"
+
+[project.urls]
+repository = "https://github.com/Harkame/google-images-downloader"
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "pytest-cov>=4.1.0"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+log_level = "DEBUG"
+testpaths = ["google_images_downloader/tests"]
+addopts = ""
+
+[tool.coverage.run]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+
+[project.scripts]
+google-images-downloader = "google_images_downloader.__main__:main"
