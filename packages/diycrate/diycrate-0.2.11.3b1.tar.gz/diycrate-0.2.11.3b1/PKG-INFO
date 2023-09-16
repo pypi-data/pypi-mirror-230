@@ -1,0 +1,96 @@
+Metadata-Version: 2.1
+Name: diycrate
+Version: 0.2.11.3b1
+Summary: box.com for linux -- unofficial, based on python SDK
+Home-page: https://github.com/jheld/diycrate
+Author-email: Jason Held <jasonsheld@gmail.com>
+Project-URL: Source, https://github.com/jheld/diycrate/
+Project-URL: Issues, https://github.com/jheld/diycrate/issues
+Keywords: cloud,storage,box.com,sdk,linux,box
+Classifier: Development Status :: 3 - Alpha
+Classifier: Topic :: Utilities
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Environment :: Console
+Classifier: Environment :: Web Environment
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3 :: Only
+Requires-Python: <4,>=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: bottle<=0.13,>=0.12.8
+Requires-Dist: boxsdk<3.0,>=2.0
+Requires-Dist: pyinotify==0.9.6
+Requires-Dist: redis~=3.3.0
+Requires-Dist: httpx==0.22.0
+Requires-Dist: pyopenssl>=16.0.0
+Requires-Dist: cherrypy>=13.0.0
+Requires-Dist: python-dateutil
+Requires-Dist: certbot==1.12.0
+Requires-Dist: Send2Trash==1.8.0
+Requires-Dist: urllib3==1.26.15
+Provides-Extra: dev
+Requires-Dist: ipython; extra == "dev"
+Requires-Dist: check-manifest; extra == "dev"
+Requires-Dist: black; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Requires-Dist: pre-commit; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Provides-Extra: systemd
+Requires-Dist: systemd-python; extra == "systemd"
+Provides-Extra: ci
+Requires-Dist: python-digitalocean; extra == "ci"
+Provides-Extra: test
+Requires-Dist: tox; extra == "test"
+Requires-Dist: check-manifest; extra == "test"
+
+# diycrate
+box.com for linux
+
+[![Build](https://github.com/jheld/diycrate/workflows/Build/badge.svg)](https://github.com/jheld/diycrate/actions?query=workflow%3ABuild+branch%3Amaster)
+
+## Installation on Ubuntu
+```bash
+sudo apt install libffi-dev libssl-dev python3-pip
+# you may want to create a virtual environment
+sudo python3 setup.py install
+```
+## Configuration
+
+Installation will create an empty ~/.config/diycrate/box.ini
+This file will be overwritten and will contain run time specific information!
+
+## Self-signed Certificate
+
+Currently, in order for your machine to operate as a listener/hook against the oauth2 process with Box, you will
+have to run a webserver -- which we provide for you in this application, to handle all of that, automatically.
+
+However, in order for your browser (and your sanity), you will want to create a certificate. When running on your
+local  machine/localhost, you will need to create a self-signed certificate.
+
+Let's Encrypt has a nice write-up on how to do that: https://letsencrypt.org/docs/certificates-for-localhost/#making-and-trusting-your-own-certificates
+
+
+## Install Redis
+
+This application requires the use of redis oauth2 credential "storage" as well as meta data for the caching & states
+of files against box.
+
+```bash
+sudo apt install redis-server
+```
+
+## Run the app
+
+Currently there is no default out-of-the-box working configuration file. This is partly due to currently (should the user not setup their own) using `diycrate.xyz` (I host it) for a part of the oauth2 dance. It isn't "hard" to setup your own, nor is it hard to use the "always running, you can plug into" mine, but it's not exactly documented.
+
+```bash
+diycrate_app --cacert_pem_path /path/to/cert.pem --privkey_pem_path /path/to/privkey.pem
+```
+
+Run `diycrate_app --help` for more CLI information

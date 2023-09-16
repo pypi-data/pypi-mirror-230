@@ -1,0 +1,19 @@
+include pyproject.toml
+
+# Include the README
+include *.md
+
+# Include the license file
+include LICENSE
+
+include *.py
+
+include mypy.ini
+
+exclude Makefile .flake8 .pre-commit-config.yaml
+
+# Include the project's internal logic
+recursive-include diycrate *
+
+global-exclude *.py[cod]
+global-exclude *__pycache__
