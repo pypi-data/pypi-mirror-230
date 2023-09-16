@@ -1,0 +1,100 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "model_dml"
+version = "0.1.0"
+authors = [
+    { name = "Dorian Turba", email = "contact.5oldw@8shield.net" },
+]
+description = "A package for SQLAlchemy models DML mixins."
+readme = "README.md"
+requires-python = ">=3.8,<3.12"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Typing :: Typed",
+]
+dependencies = [
+    "sqlalchemy >= 1.4, < 3.0",
+]
+
+[project.urls]
+"Homepage" = "https://lab.frogg.it/dorianturba/model_dml"
+"Bug Tracker" = "https://lab.frogg.it/dorianturba/model_dml"
+
+[project.optional-dependencies]
+ALL = ["model_dml[QUALITY]", "model_dml[TEST]"]
+QUALITY = [
+    "black",
+    "flake8",
+    "ruff",
+    "isort",
+    "mypy",
+    "pre-commit",
+]
+TEST = [
+    "fake_session_maker >= 0.1.0",
+    "coverage",
+    "pytest",
+    "pydantic[DOTENV]",
+    "pydantic_settings",
+    "pytest_asyncio",
+    "psycopg2 < 3.0",
+    "asyncpg < 1.0",
+]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-rA -q"
+testpaths = [
+    "tests",
+    "integration",
+]
+
+[tool.black]
+line-length = 88
+
+[tool.mypy]
+packages = "model_dml"
+python_version = "3.8"
+disallow_untyped_defs = true
+
+[tool.tox]
+legacy_tox_ini = """
+    [tox]
+    min_version = 4.0
+    env_list =
+        py{310,311,312}
+        black
+        flake8
+        mypy
+    isolated_build = true
+
+    [testenv]
+    deps = pytest
+    commands = pytest
+
+    [testenv:black]
+    deps = black
+    commands = black --check .
+
+    [testenv:flake8]
+    deps = flake8
+    commands = flake8
+
+    [testenv:mypy]
+    deps = mypy
+    commands = mypy src
+"""
+
+[tool.pymarkdown]
+strict-config = true
+plugins.line-length.line_length = 88

@@ -1,0 +1,66 @@
+default:
+    services:
+        - postgres:alpine
+
+stages:
+    - code_quality
+    - test
+
+include:
+    -   remote: 'https://api.r2devops.io/job/r/gitlab/dorianturba/r2devops_catalog/r2_metadata/black@latest.yaml'
+    -   remote: 'https://api.r2devops.io/job/r/gitlab/dorianturba/r2devops_catalog/r2_metadata/ruff@latest.yaml'
+    -   remote: 'https://api.r2devops.io/job/r/gitlab/dorianturba/r2devops_catalog/r2_metadata/pytest@latest.yaml'
+    -   remote: 'https://api.r2devops.io/job/r/gitlab/dorianturba/r2devops_catalog/r2_metadata/flake8@latest.yaml'
+    -   remote: 'https://api.r2devops.io/job/r/gitlab/dorianturba/r2devops_catalog/r2_metadata/mypy@latest.yaml'
+    -   remote: 'https://api.r2devops.io/job/r/gitlab/dorianturba/r2devops_catalog/r2_metadata/python_install@latest.yaml'
+
+variables:
+    PACKAGE_NAME: "model_dml"
+    POSTGRES_DB: test
+    POSTGRES_USER: test
+    POSTGRES_PASSWORD: test
+    POSTGRES_HOST_AUTH_METHOD: trust
+    IMAGE_TAG: "3.11"
+
+black:
+    variables:
+        PYTHON_SETUP: "pip install ${PROJECT_PATH}[QUALITY]"
+
+ruff:
+    variables:
+        PYTHON_SETUP: "pip install ${PROJECT_PATH}[QUALITY]"
+
+flake8:
+    variables:
+        PYTHON_SETUP: "pip install ${PROJECT_PATH}[QUALITY]"
+
+mypy:
+    variables:
+        PYTHON_SETUP: "pip install ${PROJECT_PATH}[QUALITY]"
+    script:
+        - !reference [.python_install, script]
+        - mypy
+
+pytest:
+    variables:
+        PYTHON_SETUP: "pip install ${PROJECT_PATH}[TEST]"
+
+pytest_310:
+    extends: pytest
+    variables:
+        IMAGE_TAG: "3.10"
+
+pytest_39:
+    extends: pytest
+    variables:
+        IMAGE_TAG: "3.9"
+
+pytest_38:
+    extends: pytest
+    variables:
+        IMAGE_TAG: "3.8"
+
+pytest_37:
+    extends: pytest
+    variables:
+        IMAGE_TAG: "3.7"
