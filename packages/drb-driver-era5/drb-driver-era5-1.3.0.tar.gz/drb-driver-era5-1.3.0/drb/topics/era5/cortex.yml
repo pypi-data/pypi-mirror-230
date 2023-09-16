@@ -1,0 +1,8 @@
+id: 4e34eecd-1fd2-40fb-afb1-01ae4060f66e
+label: 'Climate Data Store (ERA5)'
+category: PROTOCOL
+factory: era5
+signatures:
+  - python: |
+      return '+era5' in node.path.scheme or node.path.scheme == 'era5'
+
