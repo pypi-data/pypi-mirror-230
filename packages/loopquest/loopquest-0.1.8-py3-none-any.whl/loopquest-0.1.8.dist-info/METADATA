@@ -1,0 +1,200 @@
+Metadata-Version: 2.1
+Name: loopquest
+Version: 0.1.8
+Summary: A Production Tool for Embodied AI.
+Home-page: https://github.com/LoopMind-AI/loopquest
+Author: LoopMind
+Author-email: contactus@loopmind.ai
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: aiohttp (==3.8.5)
+Requires-Dist: aiosignal (==1.3.1)
+Requires-Dist: annotated-types (==0.5.0)
+Requires-Dist: async-timeout (==4.0.3)
+Requires-Dist: attrs (==23.1.0)
+Requires-Dist: bleach (==6.0.0)
+Requires-Dist: certifi (==2023.7.22)
+Requires-Dist: cffi (==1.15.1)
+Requires-Dist: charset-normalizer (==3.2.0)
+Requires-Dist: cloudpickle (==2.2.1)
+Requires-Dist: cryptography (==41.0.3)
+Requires-Dist: datasets (==2.14.4)
+Requires-Dist: dill (==0.3.7)
+Requires-Dist: docutils (==0.20.1)
+Requires-Dist: Farama-Notifications (==0.0.4)
+Requires-Dist: filelock (==3.12.3)
+Requires-Dist: frozenlist (==1.4.0)
+Requires-Dist: fsspec (==2023.6.0)
+Requires-Dist: gymnasium (==0.29.0)
+Requires-Dist: huggingface-hub (==0.16.4)
+Requires-Dist: idna (==3.4)
+Requires-Dist: importlib-metadata (==6.8.0)
+Requires-Dist: iniconfig (==2.0.0)
+Requires-Dist: jaraco.classes (==3.3.0)
+Requires-Dist: jeepney (==0.8.0)
+Requires-Dist: keyring (==24.2.0)
+Requires-Dist: markdown-it-py (==3.0.0)
+Requires-Dist: mdurl (==0.1.2)
+Requires-Dist: more-itertools (==10.1.0)
+Requires-Dist: multidict (==6.0.4)
+Requires-Dist: multiprocess (==0.70.15)
+Requires-Dist: numpy (==1.25.1)
+Requires-Dist: packaging (==23.1)
+Requires-Dist: pandas (==2.0.3)
+Requires-Dist: Pillow (==10.0.0)
+Requires-Dist: pkginfo (==1.9.6)
+Requires-Dist: pluggy (==1.2.0)
+Requires-Dist: pyarrow (==13.0.0)
+Requires-Dist: pycparser (==2.21)
+Requires-Dist: pydantic (==2.1.1)
+Requires-Dist: pydantic-core (==2.4.0)
+Requires-Dist: pygame (==2.5.0)
+Requires-Dist: Pygments (==2.16.1)
+Requires-Dist: pytest (==7.4.0)
+Requires-Dist: python-dateutil (==2.8.2)
+Requires-Dist: python-dotenv (==1.0.0)
+Requires-Dist: pytz (==2023.3)
+Requires-Dist: PyYAML (==6.0.1)
+Requires-Dist: readme-renderer (==41.0)
+Requires-Dist: requests (==2.31.0)
+Requires-Dist: requests-toolbelt (==1.0.0)
+Requires-Dist: rfc3986 (==2.0.0)
+Requires-Dist: rich (==13.5.2)
+Requires-Dist: SecretStorage (==3.3.3)
+Requires-Dist: shortuuid (==1.0.11)
+Requires-Dist: six (==1.16.0)
+Requires-Dist: tqdm (==4.66.1)
+Requires-Dist: twine (==4.0.2)
+Requires-Dist: typing-extensions (==4.7.1)
+Requires-Dist: tzdata (==2023.3)
+Requires-Dist: urllib3 (==2.0.4)
+Requires-Dist: webencodings (==0.5.1)
+Requires-Dist: xxhash (==3.3.0)
+Requires-Dist: yarl (==1.9.2)
+Requires-Dist: zipp (==3.16.2)
+
+# :scroll:Loopquest
+
+[![Downloads](https://static.pepy.tech/badge/loopquest)](https://pepy.tech/project/loopquest)
+[![Downloads](https://static.pepy.tech/badge/loopquest/month)](https://pepy.tech/project/loopquest)
+[![Downloads](https://static.pepy.tech/badge/loopquest/week)](https://pepy.tech/project/loopquest)
+
+A Production Tool for Embodied AI.
+![loopquest frontend](screenshots/loopquest-screenshot.png)
+
+- :video_camera:[Tutorial Video - Updated 9/4/2023](https://capture.dropbox.com/UXKQxGkwel6VRZJQ), [Dataset Demo](https://capture.dropbox.com/AOF5rGxHWyRb9T58)
+- :house:[Discord](https://discord.gg/FTnFYeSy9r)
+
+# Major features
+
+- Imitation Learning / Offline Reinforcement Learning Oriented MLOps. Log all the observation, action, reward, rendered images into database with only ONE extra line of code.
+
+```python
+env = gymnasium.make("MountainCarContinuous-v0", render_mode="rgb_array")
+```
+
+->
+
+```python
+import loopquest
+env = loopquest.make_env(
+    gymnasium.make("MountainCarContinuous-v0", render_mode="rgb_array")
+)
+```
+
+- Directly trainable data for robotics foundation model. Select and download the (observation, action, reward) data with the dataloader interfaces of the most popular deep learning frameworks (e.g. tensorflow, pytorch, huggingface dataset apis). Check [Dataset Quickstart Example](examples/Dataset%20Quickstart.ipynb) for more details.
+
+```python
+from loopquest.datasets import load_dataset, load_datasets
+# Load data from a single experiment
+ds = load_dataset("your_experiment_id")
+
+# Load data from multiple experiments
+ds = load_datasets(["exp1", "exp2"])
+```
+
+The data schema will look like
+
+```python
+{
+    'id': '34yixvic-0-1',
+    'creation_time': '2023-09-03T20:53:30.603',
+    'update_time': '2023-09-03T20:53:30.965',
+    'experiment_id': '34yixvic',
+    'episode': 0,
+    'step': 1,
+    'observation': [-0.55, 0.00],
+    'action': [0.14],
+    'reward': -0.00,
+    'prev_observation': [-0.55, 0.00],
+    'termnated': False,
+    'truncated': False,
+    'done': False,
+    'info': '{}',
+    'sub_goal': None,
+    'image_urls': ['http://localhost:5667/api/step/34yixvic-0-1/image/0'],
+    'images': [<PIL.JpegImagePlugin.JpegImageFile image mode=RGB size=600x400 at 0x7F8D33094450>]
+}
+```
+
+- All the regular MLOps features are included, e.g. data visualization, simulation rendering, experiment management.
+
+# Installation
+
+For stable version, run
+
+```
+pip install loopquest
+```
+
+For dev version or loopquest project contributors, clone the git to your local machine by running
+
+```
+git clone https://github.com/LoopMind-AI/loopquest.git
+```
+
+Change to the project root folder and install the package
+
+```
+cd loopquest
+pip install -e .
+```
+
+# Usage
+
+Run [quickstart script](examples/quickstart.py),
+
+```sh
+python examples/quickstart.py
+```
+
+The command prompt will ask you to select local or cloud instance. Pick the instance you want and once the script is up and running. You should see "Check your experiment progress on `http://localhost:5667/experiment/<exp_id>` or `https://open.loopquest.ai/experiment/<exp_id`" (depending on the instance you selected).
+
+**Loopquest Developer Only**: to bring up a development server that reflects your local changes in real time, run
+
+```bash
+bash start_dev_server.sh
+```
+
+# Quick Start Example
+
+```python
+import gymnasium
+import loopquest
+
+env = loopquest.make_env(
+    gymnasium.make("MountainCarContinuous-v0", render_mode="rgb_array")
+)
+obs, info = env.reset()
+for i in range(100):
+    action = env.action_space.sample()
+    obs, reward, terminated, truncated, info = env.step(action)
+    rgb_array = env.render()
+    if terminated or truncated:
+        break
+env.close()
+
+```
