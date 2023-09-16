@@ -1,0 +1,64 @@
+Metadata-Version: 2.1
+Name: pytorch-dataset
+Version: 0.0.4
+Summary: Pytorch Dataset - Pytorch
+Home-page: https://github.com/Agora-X/Pytorch-Dataset
+License: MIT
+Keywords: artificial intelligence,deep learning,optimizers,Prompt Engineering
+Author: Kye Gomez
+Author-email: kye@apac.ai
+Requires-Python: >=3.6,<4.0
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Project-URL: Repository, https://github.com/Agora-X/Pytorch-Dataset
+Description-Content-Type: text/markdown
+
+[![Multi-Modality](agorabanner.png)](https://discord.gg/qUtxnK2NMf)
+
+# Pytorch-Dataset
+A PyTorch Code Dataset for Cutting-Edge Fine-tuning
+
+
+
+## Installation
+You can install the package using pip
+
+```bash
+pip install pytorch-dataset
+```
+
+# Usage
+Downloader that downloads and unzips each repository in an account
+```python
+
+from pytorch import GitHubRepoDownloader
+
+downloader = GitHubRepoDownloader(username="lucidrains", download_dir="lucidrains_repositories")
+downloader.download_repositories()
+```
+
+Processor that cleans, formats, and submits the cleaned dataset to huggingface
+```python
+from pytorch import CodeDatasetBuilder
+
+code_builder = CodeDatasetBuilder("lucidrains_repositories")
+code_builder.save_dataset("lucidrains_python_code_dataset")
+code_builder.push_to_hub("lucidrains_python_code_dataset", organization="kye")
+
+```
+# License
+MIT
+
+
+
+
