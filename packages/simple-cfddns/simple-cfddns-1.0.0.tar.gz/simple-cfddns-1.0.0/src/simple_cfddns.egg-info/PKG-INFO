@@ -1,0 +1,96 @@
+Metadata-Version: 2.1
+Name: simple-cfddns
+Version: 1.0.0
+Summary: A simple Cloudflare DDNS service
+Author-email: JCav <micojcav@outlook.com>
+Project-URL: Homepage, https://github.com/GJCav/cfddns
+Project-URL: Bug Tracker, https://github.com/GJCav/cfddns/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: System :: Networking
+Classifier: Topic :: Internet :: Name Service (DNS)
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests
+
+# simple cfddns
+
+A simple that conviently set up a DDNS service based on Cloudflare.
+
+## install 
+
+```
+pip3 install simple-cfddns
+```
+
+## usage
+
+**update** a record, or create if not exist:
+
+``` bash
+cfddns \
+    -z <zone_id>\
+    -t <token>\
+    -n example-ddns.yourdomain\
+    update
+```
+
+**list** all records on a domain:
+
+``` bash
+cfddns \
+    -z <zone_id>\
+    -t <token>\
+    -n example-ddns.yourdomain\
+    list
+```
+
+**delete** all records on a domain:
+``` bash
+cfddns \
+    -z <zone_id> \
+    -t <token> \
+    -n example-ddns.yourdomain \
+    delete
+```
+
+## run as a systemd service
+
+In general, we want this program to run periodically and automatically restart in the event of 
+any exception. To achieve this, we can install "simple-cfddns" as a systemd service.
+
+**install** a new cfddns service:
+
+``` bash
+prog=$(which cfddns)
+sudo $prog \
+    -z <zone_id> \
+    -t <token> \
+    -n example-ddns.yourdomain \
+    install default
+```
+
+this will create a service with name "cfddns-default". you can create 
+multiple cfddns services given that they have different names.
+
+then, start and enable it:
+
+``` bash 
+sudo systemctl start cfddns-default
+sudo systemctl enable cfddns-default
+```
+
+**list** all cfddns services
+
+``` bash
+cfddns services
+```
+
+**uninstall** a service
+
+``` bash
+prog=$(which cfddns)
+sudo $prog uninstall default
+```
