@@ -1,0 +1,61 @@
+Metadata-Version: 2.1
+Name: py3dinterpolations
+Version: 0.4.4
+Summary: quick 3D interpolation with python
+Home-page: https://github.com/giocaizzi/py3dinterpolations
+Author: giocaizzi
+Author-email: giocaizzi@gmail.com
+License: MIT
+Project-URL: Documentation, https://giocaizzi.github.io/py3dinterpolations/
+Project-URL: Bug Reports, https://github.com/giocaizzi/py3dinterpolations/issues
+Project-URL: Source, https://github.com/giocaizzi/py3dinterpolations
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pandas
+Requires-Dist: numpy
+Requires-Dist: matplotlib
+Requires-Dist: plotly
+Requires-Dist: pykrige
+Requires-Dist: scikit-learn
+Provides-Extra: docs
+Provides-Extra: dev
+
+# py3Dinterpolations
+
+|  |  |
+| --- | --- |
+| Distribution | ![PyPI](https://img.shields.io/pypi/v/py3Dinterpolations?color=blue) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/py3Dinterpolations) |
+| Testing | [![Tests](https://github.com/giocaizzi/py3Dinterpolations/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/giocaizzi/py3Dinterpolations/actions/workflows/tests.yml) [![codecov](https://codecov.io/gh/giocaizzi/py3Dinterpolations/branch/main/graph/badge.svg?token=8COIITUR2I)](https://codecov.io/gh/giocaizzi/py3Dinterpolations) |
+|Code style|![Black](https://img.shields.io/badge/code%20style-black-black) [![Flake8 Linting](https://github.com/giocaizzi/py3Dinterpolations/actions/workflows/linting.yml/badge.svg?branch=main)](https://github.com/giocaizzi/py3Dinterpolations/actions/workflows/linting.yml)|
+| Documentation | [![Documentation](https://github.com/giocaizzi/py3Dinterpolations/actions/workflows/documentation.yml/badge.svg?branch=gh-pages)](https://github.com/giocaizzi/py3Dinterpolations/actions/workflows/documentation.yml) |
+
+
+This is a python package to compute **quick 3D interpolations of spatial data**.
+
+Supports the **following interpolation** methods:
+- *Ordinary 3D Kriging* : [`pykrige`](https://github.com/GeoStat-Framework/PyKrige)
+- *Inverse Distance Weighting (IDW)*
+
+Supports **preprocessing** of data:
+- *Downsampling*
+- *Normalization* of X,Y,Z coordinates
+- *Standardization* of signal 
+
+**Visualizations**
+- 2D with [`matplotlib`](https://matplotlib.org/stable/)
+- 3D with [`plotly`](https://plotly.com/).
+
+## Installation
+
+```
+pip install py3Dinterpolations
+```
+
+## Documentation
+
+Documentation with working examples can be found [here](https://giocaizzi.github.io/py3Dinterpolations/).
