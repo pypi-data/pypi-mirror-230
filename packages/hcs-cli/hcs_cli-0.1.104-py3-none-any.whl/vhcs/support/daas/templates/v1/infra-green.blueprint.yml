@@ -1,0 +1,436 @@
+
+default:
+  name: titanlite-${deploymentId}
+  tags:
+    deployment: ${deploymentId}
+  networkNames:
+    mgmt: mgmt
+    dmz: dmz
+    sharedDesktops: shared-desktops
+provider:
+  azure:
+    data: ${var.provider}
+runtime:
+  myRuntime:
+    impl: vhcs.support.daas.infra_green
+    data: ${var}
+    after:
+    - myProvider
+resource:
+  myProvider:
+    kind: hcs/provider
+    conditions:
+      create_new: ${var.provider.applicationId}
+    data:
+      orgId: ${var.orgId}
+      providerLabel: azure
+      name: ${default.name}
+      edgeGatewayNeeded: true
+      providerDetails:
+        method: ByAppRegistration
+        data:
+          subscriptionId: ${var.provider.subscriptionId}
+          directoryId: ${var.provider.directoryId}
+          applicationId: ${var.provider.applicationId}
+          applicationKey: ${var.provider.applicationKey}
+          region: ${var.region}
+  mySite:
+    kind: hcs/site
+    data:
+      orgId: ${var.orgId}
+      name: ${default.name}
+      description: ${var.region}
+  infraRG:
+    kind: azure/resource-group
+    data:
+      name: ${default.name}
+      parameters:
+        name: ${default.name}
+        location: ${var.region}
+        tags: ${default.tags}
+  infraVNet:
+    kind: azure/virtual-network
+    data:
+      name: ${default.name}
+      resourceGroup: ${infraRG.name}
+      parameters:
+        location: ${var.region}
+        address_space:
+          address_prefixes:
+          - ${var.network.cidr}
+  natPublicIp:
+    kind: azure/public-ip
+    data:
+      name: ${default.name}
+      resourceGroup: ${infraRG.name}
+      parameters:
+        location: ${var.region}
+        public_ip_allocation_method: Static
+        idle_timeout_in_minutes: 10
+        sku:
+          name: Standard
+          tier: Regional
+  vnetNAT:
+    kind: azure/nat-gateway
+    data:
+      name: ${default.name}
+      resourceGroup: ${infraRG.name}
+      parameters:
+        location: ${var.region}
+        sku:
+          name: Standard
+        public_ip_addresses:
+        - id: ${natPublicIp.id}
+  nsgDMZ:
+    kind: azure/nsg
+    data:
+      name: ${default.name}-nsg-${default.networkNames.dmz}
+      resourceGroup: ${infraRG.name}
+      parameters:
+        location: ${var.region}
+        tags: ${default.tags}
+  subnetDMZ:
+    kind: azure/subnet
+    data:
+      name: ${default.networkNames.dmz}
+      resourceGroup: ${infraRG.name}
+      vNetName: ${infraVNet.name}
+      parameters:
+        address_prefix: ${myRuntime.cidr.dmz}
+        # network_security_group:
+        #   id: ${nsgDMZ.id}
+    after:
+    - nsgDMZ
+  nsgMgmt:
+    kind: azure/nsg
+    data:
+      name: ${default.name}-nsg-${default.networkNames.mgmt}
+      resourceGroup: ${infraRG.name}
+      parameters:
+        location: ${var.region}
+        tags: ${default.tags}
+  subnetMgmt:
+    kind: azure/subnet
+    data:
+      name: ${default.networkNames.mgmt}
+      resourceGroup: ${infraRG.name}
+      vNetName: ${infraVNet.name}
+      parameters:
+        address_prefix: ${myRuntime.cidr.mgmt}
+        # network_security_group:
+        #   id: ${nsgMgmt.id}
+        nat_gateway:
+          id: ${vnetNAT.id}
+    after:
+    - subnetDMZ
+    - nsgMgmt
+  nsgSharedDesktops:
+    kind: azure/nsg
+    data:
+      name: ${default.name}-nsg-${default.networkNames.sharedDesktops}
+      resourceGroup: ${infraRG.name}
+      parameters:
+        location: ${var.region}
+        tags: ${default.tags}
+  subnetSharedDesktops:
+    kind: azure/subnet
+    data:
+      name: ${default.networkNames.sharedDesktops}
+      resourceGroup: ${infraRG.name}
+      vNetName: ${infraVNet.name}
+      parameters:
+        address_prefix: ${myRuntime.cidr.sharedDesktops}
+        # network_security_group:
+        #   id: ${nsgSharedDesktops.id}
+    after:
+    - subnetMgmt
+    - nsgSharedDesktops
+  myEdge:
+    kind: hcs/edge
+    after:
+    - vnetNAT
+    data:
+      orgId: ${var.orgId}
+      name: ${default.name}
+      description: 'titan-lite regional edge'
+      providerInstanceId: ${myRuntime.providerInstanceId}
+      deploymentModeDetails:
+        type: CLUSTER
+        attributes:
+          numNodes: '1'
+          dnsNamePrefix: westus2-edge-k8s-dns
+          dockerBridgeCidr: 172.17.0.0/26
+          podCidr: 192.170.0.0/21
+          serviceCidr: 192.169.0.0/27
+          outboundType: USER_ASSIGNED_NAT_GATEWAY
+          identityId: ${var.edge.managedIdentityId}
+      enablePrivateEndpoint: false
+      infrastructure:
+        managementNetwork:
+          kind: subnets
+          id: ${infraVNet.id}/subnets/${subnetMgmt.name}
+          data:
+            parent: ${infraVNet.id}
+            name: ${subnetMgmt.name}
+            availableIpAddresses: 251
+            cidr: ${subnetMgmt.address_prefix}
+      siteId: ${mySite.id}
+  myUAG:
+    kind: hcs/uag
+    after:
+    - myEdge
+    data:
+      orgId: ${var.orgId}
+      name: ${default.name}
+      providerInstanceId: ${myRuntime.providerInstanceId}
+      fqdn: ${default.name}-uag.${var.edge.privateDNS}
+      cluster:
+        max: 2
+        min: 2
+      description: ''
+      infrastructure:
+        managementNetwork:
+          kind: subnets
+          id: ${infraVNet.id}/subnets/${subnetMgmt.name}
+          data:
+            parent: ${infraVNet.id}
+            name: ${subnetMgmt.name}
+            availableIpAddresses: 251
+            cidr: ${subnetMgmt.address_prefix}
+        dmzNetwork:
+          kind: subnets
+          id: ${infraVNet.id}/subnets/${subnetDMZ.name}
+          data:
+            parent: ${infraVNet.id}
+            name: ${subnetDMZ.name}
+            availableIpAddresses: 251
+            cidr: ${subnetDMZ.address_prefix}
+        desktopNetwork:
+          kind: subnets
+          id: ${infraVNet.id}/subnets/${subnetSharedDesktops.name}
+          data:
+            parent: ${infraVNet.id}
+            name: ${subnetSharedDesktops.name}
+            availableIpAddresses: 251
+            cidr: ${subnetSharedDesktops.address_prefix}
+        vmSkus:
+          kind: vmSkus
+          id: Standard_A4_v2
+          data:
+            capabilities:
+              MemoryPreservingMaintenanceSupported: true
+              vCPUsAvailable: 4
+              OSVhdSizeMB: 1047552
+              CombinedTempDiskAndCachedReadBytesPerSecond: 83886080
+              CombinedTempDiskAndCachedWriteBytesPerSecond: 41943040
+              EncryptionAtHostSupported: false
+              UncachedDiskBytesPerSecond: 96000000
+              CombinedTempDiskAndCachedIOPS: 4000
+              RdmaEnabled: false
+              MemoryGB: 8
+              PremiumIO: false
+              CapacityReservationSupported: true
+              CpuArchitectureType: x64
+              AcceleratedNetworkingEnabled: false
+              LowPriorityCapable: true
+              HyperVGenerations: ''
+              VMDeploymentTypes: PaaS,IaaS
+              UncachedDiskIOPS: 6400
+              EphemeralOSDiskSupported: false
+              MaxDataDiskCount: 8
+              MaxResourceVolumeMB: 40960
+              vCPUsPerCore: 1
+              MaxNetworkInterfaces: 4
+              ACUs: 100
+              vCPUs: 4
+              SupportsV1: true
+              SupportsV2: false
+            uagAllowed: true
+            tier: Standard
+            templateRecommended: false
+            series: Av2
+            name: A4_v2 (4 CPUs, 8GiB Memory)
+            templateBlocked: false
+            edgeAllowed: false
+            family: standardAv2Family
+            gpuType: NONE
+      numberOfGateways: 2
+      sslCertificate:
+        data:
+          certificate: |
+            -----BEGIN CERTIFICATE-----
+            MIIDhDCCAmwCCQC287rC4LXg9jANBgkqhkiG9w0BAQsFADCBgzELMAkGA1UEBhMC
+            SU4xDDAKBgNVBAgMA0JMUjERMA8GA1UEBwwIQmFuZ2xvcmUxDDAKBgNVBAoMA1ZN
+            VzEMMAoGA1UECwwDRVVDMRswGQYDVQQDDBJoemUuZXVjLnZtd2FyZS5jb20xGjAY
+            BgkqhkiG9w0BCQEWC2F2aUB2bXcuY29tMB4XDTIwMTIxMjA5MjMwN1oXDTI1MTIx
+            MTA5MjMwN1owgYMxCzAJBgNVBAYTAklOMQwwCgYDVQQIDANCTFIxETAPBgNVBAcM
+            CEJhbmdsb3JlMQwwCgYDVQQKDANWTVcxDDAKBgNVBAsMA0VVQzEbMBkGA1UEAwwS
+            aHplLmV1Yy52bXdhcmUuY29tMRowGAYJKoZIhvcNAQkBFgthdmlAdm13LmNvbTCC
+            ASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANBGrpUEmOm2OBPOofGfi3Ex
+            tLCQsHul+mdoj2DFGmT51k65IQD4ch9gj/ttJ/EoEAWVoJtEw6FiN1toI4D5ToMD
+            wyTe2q+RR9WxVt9A45fwq8Uiq4LI2HAXlWU7xSbsUwAbAP9GK8abgHr/QBvd8qSZ
+            6QHBYIgYQpGa9tvcxpZvuh6YN2iL3afkuYFqhhNSeL6ps8BUF0pRISbrPZP3Pe1d
+            4nklKS+pJh6lVEz/bfYmBQykIuUX66EkA3vXrtmQpPuWtr/qtTho79U45bnSEaQw
+            KVR+qYf2SPnUoknB0z64S3PVDDRppdsYkt43bxqHT/0GDKFZscYRuVbGYlkTMScC
+            AwEAATANBgkqhkiG9w0BAQsFAAOCAQEAnmARux3pdXmJknM6LxcOKTl/7NjErYxu
+            Po+6IzWEaNJWuXkPloPdc6OCf9V8sGE+Koow+LLw+RU0WIDsSDzZsXuWk69AmHpA
+            PoTYtHG5KIRm0T50rrZu2DCBXNBbQSKoh1FVLHFiV36S8/qFEN7/mSj8Yx6HmHx+
+            Q+KH8Ye2RqKHnN7WPEyDyzvb6WtYc3bTnZMLSZuhSaKSpzAhfNecdLvNhZte53nT
+            dn1pI+OnAtbJFDy/NK6VhveCIfPaBeAZ5pikWsWp/aAzBCgzvoZQwUmmn+7ec+mv
+            dyFQEUVi7/yvU1jvifqqQSiDa32vpuEFJBCgZwSt56eeNtpU/Kwjtg==
+            -----END CERTIFICATE-----
+            -----BEGIN PRIVATE KEY-----
+            MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDQRq6VBJjptjgT
+            zqHxn4txMbSwkLB7pfpnaI9gxRpk+dZOuSEA+HIfYI/7bSfxKBAFlaCbRMOhYjdb
+            aCOA+U6DA8Mk3tqvkUfVsVbfQOOX8KvFIquCyNhwF5VlO8Um7FMAGwD/RivGm4B6
+            /0Ab3fKkmekBwWCIGEKRmvbb3MaWb7oemDdoi92n5LmBaoYTUni+qbPAVBdKUSEm
+            6z2T9z3tXeJ5JSkvqSYepVRM/232JgUMpCLlF+uhJAN7167ZkKT7lra/6rU4aO/V
+            OOW50hGkMClUfqmH9kj51KJJwdM+uEtz1Qw0aaXbGJLeN28ah0/9BgyhWbHGEblW
+            xmJZEzEnAgMBAAECggEAU6eAKcR98qlI3tPJAfa2GFIBpEWJTTC+YdiCdjjUwCgF
+            Jvt+wRgJJocvbapLN7aCsOuHZbX56ZE8cM9kK0J3gXH6aI3GQmxU8QTYwrUadQWq
+            yHSDdPVc0bD3RYD7UAXt1IYEIYQ6wvvkYAKz6j18XxaemyDjt+YensMiUe7cKMGf
+            xp2bykXBFWGjIfTpkBocvmqZ6WzzrRAiH2iIUJimzLgeHlrd4POPMK+pctFIdmTH
+            GvbpBt3o+ZJxGL4gYKqSbFQ+14sdI28Wnxpx8KESs00ApMekx/ojlwXEPzUS/Vt5
+            uLENF26bY+DtCeQXXTP5SxzAlt9gyWUegt47oAyVWQKBgQDycMzucsxBTXEa/mp2
+            SKNZ+F7nCdpzoHtMs7JzZl45sxUltZXbFDWGQy9QHmBChOJxyi3yZux7RgS+xdDp
+            ng290htJUuEG+/9hKI2wMKgi/Xjhvh8wl03FB5WeRKy/7Xv8enultfz6sIxQqz9N
+            NhoZNnp4CFsuyKMe+wuNXYI1CwKBgQDb7LkVv1vurU3yrcCbya0AaC1AOuWKeYMO
+            RYuYDW+1i819YRnDLr4SDL2fZ026HcKI3aEWhMYXu+eVmEjBc4oby+h+05yB0KdG
+            FS01Dvv6EK0leRjNfHD38FOo87qtMnXI0jT7KQx3ovu9rHnxlWynoKUpNtE24bc7
+            kMsx5VKN1QKBgGo7jUDK4r+WnIIUizfrWlC5KXSZd7SE1KJmd0Jjz9P+qbyNVe3a
+            bB254Mh9lvZu3f64deuqt+LIapnhekpz7FeJ8lTt0RbLYzsClxtmJra2VLquIWKc
+            WgKE8UWZmAy9lj+qt/WDyidbJxDOCP3fQA5eNcnU94eHeRrBLG20VLLDAoGAOshK
+            LErqmqAN3pici8dbC2nM9ocHhXy3D+B80FZ/Dkpg0WtbxHTA7vgi0vF8sAt2TLjY
+            brlsbTmXS7/ZaoOkXYuiCAwtn/ESVMQiQjVQGmXMseBtRbdGRq8g3V7P/a0oGFY/
+            PQaaw3t3yBnKukzTLvbcTmjNgNrR7ATmmt6Ns0UCgYEAs95pYIXVf2aq0pdQcTDg
+            1KKHJpRyi8OQIW0YYZtMCTjDWhxtvVFAP+RWg9/aFOT7lWpPMyRJYbmX5gkx/Rqg
+            nv8SkWWqpNChWqxizPx83AEAP4SWRpjq8fNIGBlNhlyOQ0f2yic4HK8dVlpzc97V
+            zUSOU6LkEaK2gtzRWHatlNU=
+            -----END PRIVATE KEY-----
+          certificatePassword: ''
+        type: PEM
+      type: EXTERNAL
+  myImageDesktop:
+    kind: hcs/image
+    data:
+      import:
+        orgId: ${var.orgId}
+        assetDetails:
+          data:
+            generationType: V1
+            licenseType: Windows_Client
+            offer: windows-10
+            publisher: microsoftwindowsdesktop
+            sku: win10-22h2-ent
+            subNet: ${subnetSharedDesktops.id}
+            version: "19045.3208.230708"
+            vNet: ${infraVNet.id}
+            vmSize: Standard_DS2_v2
+          vmInfo:
+            password: ${myRuntime.image.desktopPassword}
+            username: ${var.desktop.adminUsername}
+          options:
+            createPublicIp: false
+          type: AZURE_VM_IN_RG
+        gpuType: NONE
+        os: Windows 10 Enterprise, 22H2
+        osType: WINDOWS
+        providerInstanceId: ${myRuntime.providerInstanceId}
+        providerLabel: AZURE
+        sourceStreamType: AZURE_MARKET_PLACE
+        streamDescription: ''
+        streamName: ${myRuntime.image.desktopImageName}
+        markers:
+        - name: m1
+        versionSource: '0.0'
+        versionType: MAJOR
+        isMultiSession: 'false'
+      publish:
+        orgId: ${var.orgId}
+        description: ''
+        options:
+          horizonAgent:
+            installHorizonAgent: true
+            features:
+            - DEM
+            - ClientDriveRedirection
+            - PerfTracker
+            - HelpDesk
+            - RTAV
+            - PrintRedir
+          applicationScan:
+            enableAppScan: false
+            appScanDetails:
+              infrastructureResourceList: []
+          publishWithResiliency: false
+          osCustomizations:
+          - DisableWindowsUpdate
+          - RemoveAppXPackages
+          validateImage: false
+          validationInfraResourceDetails:
+            infrastructureResourceList: []
+        replicas: []
+        providerLabel: AZURE
+        versionName: 1.0.0
+  myImageMultiSession:
+    kind: hcs/image
+    data:
+      import:
+        orgId: ${var.orgId}
+        assetDetails:
+          data:
+            generationType: V1
+            licenseType: Windows_Client
+            offer: windows-10
+            publisher: microsoftwindowsdesktop
+            sku: win10-22h2-avd
+            subNet: ${subnetSharedDesktops.id}
+            version: "19045.3208.230708"
+            vNet: ${infraVNet.id}
+            vmSize: Standard_DS2_v2
+          vmInfo:
+            password: ${myRuntime.image.desktopPassword}
+            username: ${var.desktop.adminUsername}
+          options:
+            createPublicIp: false
+          type: AZURE_VM_IN_RG
+        gpuType: NONE
+        os: Windows 10 Enterprise multi-session, 22H2
+        osType: WINDOWS
+        providerInstanceId: ${myRuntime.providerInstanceId}
+        providerLabel: AZURE
+        sourceStreamType: AZURE_MARKET_PLACE
+        streamDescription: ''
+        streamName: ${myRuntime.image.multiSessionImageName}
+        markers:
+        - name: m1
+        versionSource: '0.0'
+        versionType: MAJOR
+        isMultiSession: 'false'
+      publish:
+        orgId: ${var.orgId}
+        description: ''
+        options:
+          horizonAgent:
+            installHorizonAgent: true
+            features:
+            - DEM
+            - ClientDriveRedirection
+            - PerfTracker
+            - HelpDesk
+            - RTAV
+            - PrintRedir
+          applicationScan:
+            enableAppScan: false
+            appScanDetails:
+              infrastructureResourceList: []
+          publishWithResiliency: false
+          osCustomizations:
+          - DisableWindowsUpdate
+          - RemoveAppXPackages
+          validateImage: false
+          validationInfraResourceDetails:
+            infrastructureResourceList: []
+        replicas: []
+        providerLabel: AZURE
+        versionName: 1.0.0
