@@ -1,0 +1,24 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "aevol"
+version = "0.3.0"
+description = "Aevol python package"
+authors = ["David Parsons <david.parsons@inria.fr>"]
+license = "GPL-3.0-or-later"
+readme = "README.md"
+homepage = "https://www.aevol.fr/"
+repository = "https://gitlab.inria.fr/aevol/aevol-ui/aevol-py"
+packages = [
+    { include = "aevol", from = "src" },
+]
+
+[tool.poetry.scripts]
+aevol_ui_build_views = 'aevol.cli:aevol_ui_build_views.main'
+
+[tool.poetry.dependencies]
+python = "^3.9"
+matplotlib = "^3.7.2"
+pandas = "^2.1.0"
