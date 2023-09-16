@@ -1,0 +1,61 @@
+Tokenizer for indic languages.
+
+Tokenizer convert a sentence into word level tokens and return sentence marker for each sentence of input text.
+
+Requirements:
+
+Operating System	: LINUX/UNIX System
+Compiler/Interpreter	: perl
+
+For installation on Linux, please refer to the file INSTALL.
+
+How to use ??
+
+perl  tokenizer_indic.pl --lang=hin --input=input-file --output=output-file
+
+-l, --lang=[ hin | tel|... ]	: select the language 3 letter code (ISO-639)
+-s, --str_input=<input-string>	: give input string
+-i, --input=<input-file>	: give input file
+-o, --output=<output-file>	: give output file
+-j, --jflag=[yes|no]		: give input to print -JOIN in between multiwords. default is yes
+-h --help			: print the detail useage
+
+e.g.
+
+perl tokenizer_indic.pl --lang=hin --input=tests/input_hin_utf.txt
+
+where input_hin.txt is the text input file which need to be tokenized
+output of above command is STDOUT and can be redirect into output file.
+
+NOTE: For better result use UTF input to tokenizer.
+
+Directory Structure:
+
+tokenizer-indic
+     |
+     |---lib (source code of the convertor library)
+     |
+     |---tests (contains the referenece input and output)
+     |
+     |---doc (documentaion)
+     |
+     |---data (acronym data file)
+     |
+     |---tokenizer_indic.pl (main file)
+     |
+     |---INSTALL (How to install the module)
+     |
+     |---README (How to run/use the module)
+     |
+     |---ChangeLog (version information)
+     |
+     |---ISSUES.txt (listed issues still persist)
+     |
+     |---tokenizer_indic_run.sh (How run using shell script)
+
+
+Contact :
+Rashid Ahmad
+Expert Software Ltd.
+rashid101b@gmail.com
+
