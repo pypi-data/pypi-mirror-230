@@ -1,0 +1,99 @@
+Metadata-Version: 2.1
+Name: yv-xtract
+Version: 1.2
+Summary: CLI tool to download YouTube videos
+Author-email: Ricardo Ramirez <ricaiditodev@gmail.com>
+License: MIT License
+        
+        Copyright (c) 2023 Ricardo Arturo
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Repository, https://github.com/Ricaidito/yv-xtract.git
+Project-URL: Bug Tracker, https://github.com/Ricaidito/yv-xtract/issues
+Keywords: python,youtube,video,downloader,cli,mp3,mp4,gif
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pytube
+Requires-Dist: moviepy
+Requires-Dist: termcolor
+
+# YouTube Video Xtractor
+
+A simple CLI tool to download videos from YouTube either in MP4, MP3 or GIF format and with the ability to crop them.
+
+Developed by [Ricaidito](https://github.com/Ricaidito).
+
+## Usage
+
+```console
+yvx [-h] [-mp3] [-gif] [--start-time START_TIME] [--end-time END_TIME] [--path PATH] [--set-path SET_PATH] url
+
+positional arguments:
+  url                   URL of the video to download.
+
+options:
+  -h, --help            show this help message and exit
+  -mp3                  Convert the video to MP3 format.
+  -gif                  Convert the video to GIF format.
+  --start-time START_TIME
+                        Time from where the video will start (Format: HH:MM:SS [e.g., 00:02:30]).
+  --end-time END_TIME   Time where the video will end (Format: HH:MM:SS [e.g., 00:05:00]).
+  --path PATH           Path to store the downloaded file.
+  --set-path SET_PATH   Set the default path to store the downloaded files.
+```
+
+### Examples:
+
+To download a video in MP4 format, execute the following command:
+
+```console
+yvx <video_url>
+```
+
+Download the video in MP3 format:
+
+```console
+yvx <video_url> -mp3
+```
+
+Download the video in GIF format:
+
+```console
+yvx <video_url> -gif
+```
+
+To extract a clip from 2:30 to 5:00:
+
+```console
+yvx <video_url> --start-time 00:02:30 --end-time 00:05:00
+```
+
+You also can specify the end time only. For example, to download the video until 5:00:
+
+```console
+yvx <video_url> --end-time 00:05:00
+```
+
+## License
+
+This project is licensed under the MIT License.
