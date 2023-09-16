@@ -1,0 +1,16 @@
+#!/usr/bin/env python
+
+"""PGSync runtime."""
+from pg2elastic import sync
+from pg2elastic.settings import sink_serializer, loguru_filter
+from loguru import logger
+
+logger.remove()
+logger.add(sink_serializer, filter=loguru_filter, format='{level}: {time} [{name}] {message}')
+
+if __name__ == "__main__":
+    try:
+        sync.main()
+    except Exception as e:
+        logger.exception(f"Sync is in error: {e}")
+        raise e
