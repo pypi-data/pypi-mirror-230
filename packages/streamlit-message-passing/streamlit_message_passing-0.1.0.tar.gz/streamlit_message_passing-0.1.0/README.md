@@ -1,0 +1,60 @@
+# streamlit-message-passing
+
+Streamlit component for doing message passing between parent window and server
+via JS
+
+## Installation instructions
+
+```sh
+pip install streamlit-message-passing
+```
+
+## Usage instructions
+
+```python
+import streamlit as st
+
+from msgpassing import listen_for_parameters
+
+# If parent window is running on http://localhost:8080 ...
+data = listen_for_parameters(web_url="http://localhost:8080")
+
+# We can wait until we have these parameters:
+if not data:
+  st.stop()
+
+st.markdown("Parameters is: ```%s```" % json.dumps(data, indent=2))
+```
+
+On the parent window, you can do something like this:
+
+```html
+<iframe src="http://localhost:8501/" frameborder="0"></iframe>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const messageHandler = (event) => {
+      console.debug("Received message from iframe:", event.data, event.origin)
+
+      // Optional: Check if we're receiving messages from our dashboard only
+      // We assume that the streamlit app is running on http://localhost:8501
+      if (event.origin !== "http://localhost:8501") return;
+
+      if (event.data.type === "ready") {
+        // We are ready to send these parameters to streamlit
+        const msg = { 
+          type: "parameters", 
+          foo: "1", 
+          bar: 2
+        };
+        
+        console.debug("Sending parameters to iframe:", msg);
+        event.source.postMessage(msg, "http://localhost:8501");
+      }
+    };
+
+    window.addEventListener("message", messageHandler, false);
+  });
+</script>
+```
+
+See [`iframe.html`](./iframe.html) for a full example.
