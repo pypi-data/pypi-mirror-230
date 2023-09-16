@@ -1,0 +1,28 @@
+[project]
+name = "authware"
+version = "2.0.1"
+authors = [
+  { name="Authware", email="support@authware.org" },
+]
+description = "Sync & async wrapper/SDK for the Authware API in Python 3.5+"
+readme = "README.md"
+requires-python = ">=3.5"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://authware.org"
+"Bug Tracker" = "https://github.com/AuthwareCloud/python-sdk/issues"
+
+[build-system]
+requires = [
+    "hatchling",
+    "aiohttp",
+    "requests",
+    "wmi",
+    "python-dateutil"
+]
+build-backend = "hatchling.build"
