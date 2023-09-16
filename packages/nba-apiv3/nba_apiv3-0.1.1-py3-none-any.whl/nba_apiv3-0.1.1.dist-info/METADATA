@@ -1,0 +1,88 @@
+Metadata-Version: 2.1
+Name: nba-apiv3
+Version: 0.1.1
+Summary: An API Client package to access the APIs version 3 for NBA.com
+Home-page: https://github.com/shufinskiy/nba_apiv3
+License: MIT
+Keywords: api,basketball,data,nba,sports,stats
+Author: Vladislav Shufinsky
+Author-email: shufinsky.90210@gmail.com
+Maintainer: Vladislav Shufinsky
+Maintainer-email: shufinsky.90210@gmail.com
+Requires-Python: >=3.8,<4.0
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Software Development
+Requires-Dist: numpy (>=1.22.2,<2.0.0)
+Requires-Dist: requests
+Project-URL: Bug Tracker, https://github.com/shufinskiy/nba_apiv3/issues
+Project-URL: Documentation, https://github.com/shufinskiy/nba_apiv3/blob/master/README.md
+Project-URL: Repository, https://github.com/shufinskiy/nba_apiv3
+Description-Content-Type: text/markdown
+
+[![PyPI](https://img.shields.io/pypi/v/nba_apiv3)](https://pypi.python.org/pypi/nba_apiv3)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/shufinskiy/nba_apiv3/blob/master/LICENSE)
+[![Downloads](https://static.pepy.tech/badge/nba_apiv3)](https://pepy.tech/project/nba_apiv3)
+[![Telegram](https://img.shields.io/badge/telegram-write%20me-blue.svg)](https://t.me/brains14482)
+
+# nba_apiv3
+
+## An API Client package to access the APIs version 3 for NBA.com
+
+`nba_apiv3` is an API Client for `www.nba.com`. This package intends to make the APIs of [NBA.com](https://www.nba.com/) easily accessible and provide extensive documentation about them.
+
+`nba_apiv3` is fork `nba_api` [package](https://github.com/swar/nba_api) and contains only endpoints that work with API version 3.
+
+`nba_apiv3` contains two endpoints, which not work in `nba_api`:
+  - [BoxScoreDefensiveV2](https://github.com/shufinskiy/nba_apiv3/blob/master/docs/nba_api/stats/endpoints/boxscoredefensivev2.md)
+  - [BoxScoreMatchupsV3](https://github.com/shufinskiy/nba_apiv3/blob/master/docs/nba_api/stats/endpoints/boxscorematchupsv3.md)
+
+# Getting Started
+
+`nba_apiv3` requires Python 3.7+ along with the `requests` and `numpy` packages. While `pandas` is not required, it is required to work with Pandas DataFrames.
+
+```bash
+pip install nba_apiv3
+```
+
+## NBA 
+
+```python
+from nba_apiv3.stats.endpoints import boxscorematchupsv3
+
+matchups = boxscorematchupsv3.BoxScoreMatchupsV3(game_id='0021700807')
+
+## players stats
+matchups.get_data_frames()[0]
+```
+
+
+# Documentation
+
+- [Endpoints](/docs/nba_api/stats/endpoints)
+
+# Contributing
+
+*See [Contributing to the NBA_APIV3](https://github.com/shufinskiy/nba_apiv3/blob/master/CONTRIBUTING.md) for complete details.*
+
+## Bugs
+
+Encounter a bug, [report a bug](https://github.com/shufinskiy/nba_apiv3/issues).
+
+# License & Terms of Use
+
+## API Client Package
+
+The `nba_apiv3` package is Open Source with an [MIT License](https://github.com/shufinskiy/nba_apiv3/blob/master/LICENSE).
+
+## NBA.com
+
+NBA.com has a [Terms of Use](https://www.nba.com/termsofuse) regarding the use of the NBA’s digital platforms.
+
