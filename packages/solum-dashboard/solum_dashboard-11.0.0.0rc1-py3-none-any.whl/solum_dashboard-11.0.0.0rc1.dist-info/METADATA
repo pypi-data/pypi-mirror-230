@@ -1,0 +1,59 @@
+Metadata-Version: 2.1
+Name: solum-dashboard
+Version: 11.0.0.0rc1
+Summary: Solum Dashboard
+Home-page: https://docs.openstack.org/solum/latest/
+Author: OpenStack
+Author-email: openstack-discuss@lists.openstack.org
+License: Apache Software License
+Platform: UNKNOWN
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Environment :: OpenStack
+Classifier: Intended Audience :: Information Technology
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: POSIX :: Linux
+Requires-Python: >=3.6
+Requires-Dist: PyYAML (>=5.3)
+Requires-Dist: django-compressor (>=2.2)
+Requires-Dist: horizon (>=17.1.0)
+Requires-Dist: oslo.log (>=3.37.0)
+Requires-Dist: oslo.utils (>=3.36.0)
+Requires-Dist: pbr (!=2.1.0,>=3.1.1)
+Requires-Dist: python-keystoneclient (>=3.22.0)
+Requires-Dist: python-solumclient (>=2.6.1)
+
+========================
+Team and repository tags
+========================
+
+.. image:: http://governance.openstack.org/badges/solum-dashboard.svg
+    :target: http://governance.openstack.org/reference/tags/index.html
+
+.. Change things from this point on
+
+solum-dashboard
+===============
+
+Horizon plugin for Solum
+Purpose of this plugin is to add Solum capabilities to the openstack dashboard.
+This plugin requires a working openstack install including solum and horizon.
+
+How to install solum-dashboard into Horizon.
+--------------------------------------------
+
+Enter these commands in your terminal:
+
+ sudo pip install -e /opt/stack/solum-dashboard
+ cd /opt/stack/horizon/openstack_dashboard/local/enabled
+ ln -s /opt/stack/solum-dashboard/solumdashboard/local/enabled/_50_solum.py _50_solum.py
+ sudo service apache2 restart
+
+
+
