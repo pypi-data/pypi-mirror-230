@@ -1,0 +1,154 @@
+==============
+Object Storage
+==============
+
+As introduced in :doc:`file_storage`, Mayan EDMS takes
+ownership of document files and stores them using the configured storage
+backend.
+
+Besides the default filesystem storage backend, another supported one is
+the ``s3boto3`` backend provided by the Django Storages project. This
+backend allows Mayan EDMS to use any S3 (Simple Storage Service) compatible
+service as storage for documents, caches and tempoary files.
+
+This backend works not only with AWS, but any other S3-compatible
+API such as Minio. IBM Cloud Object Storage and others.
+
+Using S3 storage it is possible to scale Mayan EDMS to millions of
+documents without the need to resize the document storage volume.
+
+The following steps will configure Mayan EDMS to use a S3 style storage
+for document file storage.
+
+   .. warning::
+
+       If migrating from a different storage backend, first make a backup
+       before beginning this process.
+
+       Ensure Mayan EDMS is stopped first and that every file from the
+       existing storage directory is copied to the new storage location with
+       the corresponding tool like ``s3cmd``.
+
+   .. note::
+
+       The configuration below only updates the document file storage.
+       You will need to add additional variables if you also want to
+       update the location of the Caches, Temporary location, Shared folders,
+       etc. Anything that is currently configured with
+       the ``django.core.files.storage.FileSystemStorage`` backend
+       can have its backend changed, but this is not advisable
+       for caches and temporary files locations due to performance
+       reasons.
+
+
+Docker Deployments
+==================
+
+Add the following environment variables to your docker-compose.yml file
+in the ``environment`` section:
+
+  .. code-block:: console
+
+    MAYAN_DOCUMENTS_FILE_STORAGE_BACKEND: storages.backends.s3boto3.S3Boto3Storage
+    MAYAN_DOCUMENTS_FILE_STORAGE_BACKEND_ARGUMENTS: "{'access_key':'yourS3accesskey','secret_key':'yourS3secretkey','bucket_name':'yourS3bucketname','default_acl':'private'}"
+
+If deploying Mayan EDMS without Docker Compose, add the
+environment variable to the complete docker run command:
+
+  .. code-block:: console
+
+    -e MAYAN_DOCUMENTS_FILE_STORAGE_BACKEND=storages.backends.s3boto3.S3Boto3Storage \
+    -e MAYAN_DOCUMENTS_FILE_STORAGE_BACKEND_ARGUMENTS="{'access_key':'yourS3accesskey','secret_key':'yourS3secretkey','bucket_name':'yourS3bucketname','default_acl':'private'}"
+
+
+Once added and the values changed to match the desired
+bucket, run:
+
+  .. code-block:: console
+
+    docker-compose restart
+
+For non Compose docker deployments, remove and re-deploy
+the container if not using docker-compose.
+
+   .. note::
+
+       The ``default_acl`` value is needed to prevent the backend
+       from writing to S3 with a public-readable ACL. This is
+       blocked by default on some providers such as AWS resulting
+       in permission denied errors when trying to upload a document
+
+   .. note::
+
+       The ``default_acl`` option has been removed from django-storages
+       in version 1.10 (2020-08-30). Instead use ``object_parameters``
+       with the options mentioned in
+       https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#S3.Client.put_object
+       and update your ``MAYAN_DOCUMENTS_FILE_STORAGE_BACKEND_ARGUMENTS`` setting
+       accordingly.
+
+
+Direct Deployments
+==================
+
+For environments installed using the direct deployment method, edit the
+supervisor file at ``|MAYAN_SUPERVISOR_CONF|``
+and add these two extra settings above the ``MAYAN_DATABASES`` option,
+ensuring that the lines remain indented as before.
+
+An example database option is shown for guidance; do not
+replace the existing ``MAYAN_DATABASES`` line, add the new variables above it.
+
+  .. code-block:: console
+
+    MAYAN_DOCUMENTS_FILE_STORAGE_BACKEND=storages.backends.s3boto3.S3Boto3Storage,
+    MAYAN_DOCUMENTS_FILE_STORAGE_BACKEND_ARGUMENTS="{'access_key':'yourS3accesskey','secret_key':'yourS3secretkey','bucket_name':'yourS3bucketname','default_acl':'private'}",
+    MAYAN_DATABASES="{default: {ENGINE: django.db.backends.postgresql, HOST: 127.0.0.1, NAME: mayan, PASSWORD: mayanuserpass, USER: mayan}}"
+
+
+To complete the change, restart Supervisor on all systems
+running Mayan EDMS:
+
+   .. code-block:: bash
+
+       sudo systemctl restart supervisor
+
+
+Non-AWS S3 Deployments
+======================
+
+If you are using Minio or another non-AWS based S3-compatible
+storage solution (such as Ceph with a S3 Gateway), there will
+need to be additional variables entries needed for the
+``MAYAN_DOCUMENTS_FILE_STORAGE_BACKEND_ARGUMENTS`` line.
+
+The ``default_acl`` configuration may also need to be
+ommitted if the platform does not support AWS-style ACLs,
+but try first with the ``default_acl`` value set for
+security:
+
+   .. code-block:: console
+
+    MAYAN_DOCUMENTS_FILE_STORAGE_BACKEND_ARGUMENTS="{'access_key':'yourS3accesskey','secret_key':'yourS3secretkey','bucket_name':'yourS3bucketname','default_acl':'private','endpoint_url':'https://address-of-s3-server:9000','verify':'False'}"
+
+   .. note::
+
+       The ``verify`` option validates for trusted
+       TLS certificates. Change this to ``True`` if
+       your S3-compatible server is using trusted
+       signed certificates. Leave it at false for
+       self-signed certificates, and don't forget
+       to change the https to http for non-TLS
+       setups
+
+You may also need to add the variables ``region_name``
+and/or ``location`` depending on your S3 server configuration.
+
+endpoint_url: "https://<my internal NAS FQDN>:9000", verify: False
+
+
+Settings
+========
+
+- .. mayan_setting :: DOCUMENTS_FILE_STORAGE_BACKEND
+- .. mayan_setting :: DOCUMENTS_FILE_STORAGE_BACKEND_ARGUMENTS
