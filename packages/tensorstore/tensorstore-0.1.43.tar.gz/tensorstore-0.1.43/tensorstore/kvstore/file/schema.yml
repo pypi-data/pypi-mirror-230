@@ -1,0 +1,87 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: kvstore/file
+allOf:
+- $ref: KvStore
+- type: object
+  properties:
+    driver:
+      const: file
+    path:
+      type: string
+      title: Path to root directory on local filesystem.
+    file_io_concurrency:
+      $ref: ContextResource
+      description: |-
+        Specifies or references a previously defined
+        `Context.file_io_concurrency`.
+    file_io_sync:
+      $ref: ContextResource
+      description: |-
+        Specifies or references a previously defined
+        `Context.file_io_sync`.
+  required:
+  - path
+title: JSON specification of file-backed key-value store.
+definitions:
+  url:
+    $id: KvStoreUrl/file
+    type: string
+    allOf:
+    - $ref: KvStoreUrl
+    - type: string
+    title: |
+      :literal:`file://` KvStore URL scheme
+    description: |
+      File-based key-value stores may be specified using the widely-supported
+      :file:`file://{path}` URL syntax.
+
+      .. admonition:: Examples
+         :class: example
+
+         .. list-table::
+            :header-rows: 1
+            :widths: auto
+
+            * - URL representation
+              - JSON representation
+            * - ``"file:///tmp/dataset/"``
+              - .. code-block:: json
+
+                   {"driver": "file",
+                    "path": "/tmp/dataset/"}
+            * - ``"file://C:/Users/abc/dataset/"``
+              - .. code-block:: json
+
+                   {"driver": "file",
+                    "path": "C:/Users/abc/dataset/"}
+  file_io_concurrency:
+    $id: Context.file_io_concurrency
+    description: |-
+      Specifies a limit on the number of concurrently local filesystem I/O
+      operations.
+    type: object
+    properties:
+      limit:
+        oneOf:
+        - type: integer
+          minimum: 1
+        - const: "shared"
+        description: |-
+          The maximum number of concurrent operations.  If the special value of
+          ``"shared"`` is specified, a shared global limit equal to the number
+          of CPU cores/threads available (or 4 if there are fewer than 4
+          cores/threads available) applies.
+        default: "shared"
+  file_io_sync:
+    $id: Context.file_io_sync
+    title: |
+      Specifies durability of writes.
+    description: |-
+      If ``true``, durability is ensured for local file writes (e.g. by calling
+      :literal:`fsync`).  If ``false``, durability is not guaranteed, and data
+      may be lost in the event of a crash.
+
+      In cases where durability is not required, setting this to ``false`` may
+      make write operations faster.
+    type: boolean
+    default: true

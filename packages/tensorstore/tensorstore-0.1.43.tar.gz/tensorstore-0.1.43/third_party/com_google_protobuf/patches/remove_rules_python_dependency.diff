@@ -1,0 +1,19 @@
+diff -u -ur a/protobuf.bzl b/protobuf.bzl
+--- a/protobuf.bzl	2023-05-16 23:13:59.000000000 +0000
++++ b/protobuf.bzl	2023-05-24 00:38:49.658693970 +0000
+@@ -1,8 +1,13 @@
+ load("@bazel_skylib//lib:versions.bzl", "versions")
+ load("@rules_cc//cc:defs.bzl", "objc_library")
+ load("@rules_proto//proto:defs.bzl", "ProtoInfo")
+-load("@rules_python//python:defs.bzl", "py_library")
+-load("@rules_ruby//ruby:defs.bzl", "ruby_library")
++# load("@rules_python//python:defs.bzl", "py_library")
++# load("@rules_ruby//ruby:defs.bzl", "ruby_library")
++
++py_library = native.py_library
++
++def ruby_library(**kwargs):
++    pass
+ 
+ def _GetPath(ctx, path):
+     if ctx.label.workspace_root:
