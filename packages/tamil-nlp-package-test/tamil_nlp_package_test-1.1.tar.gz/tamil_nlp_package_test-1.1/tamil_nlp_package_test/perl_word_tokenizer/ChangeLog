@@ -1,0 +1,98 @@
+31-12-2015	Sreenivas	<nv.sreenivasulu@gmail.com>
+
+	* Version 1.9
+	1. tam.acr file improved. 
+
+14-Jun-2013	Rashid Ahmad	<rashid101b@gmail.com>
+
+	* Version 1.8
+
+	- Decisions as per 17-19 January 2013 meeting are taken care
+	- 1.1 The following symbols will appear in output as tokens
+	  a) ':-' when colon followed by dash
+	  b) '-JOIN' when dash appears between two words without intervening spaces
+	  c) '-' when dash has a non-alphabetic character (or space) before or after
+
+	- 1.2 The following will appear as single tokens for numbers and dates, for example
+	  '20.1', '3,00,205', '1-1-13', '1:1:13', '1.1.13', '1/1/13', '20vA'
+
+	- 1.3 Colon inside a word will be recognized as visarga e.g. du:kha
+
+	- 1.4 Ambiguity exists between dot as marker for abbreviations and for end of sentence
+	- This Tokenizer has a provision for language specific lists
+	  a)List of acronyms Ex. kimI. ki.mI.
+	  b)List of names: Ex. a.p.j.
+	  c)list of exception (namely single aksharas) Ex. pi(drank in Hindi), ki(did in Hindi) etc.
+
+	- All above decisions are incorporated in this version except 1.4b and 1.4c.
+	- Token sequence start with '1' in this version (earlir was '0').
+	- backupfiles or unnecessary files are removed.
+	- .. and ... exception are handle for FC8.
+	- -- and --- exception are handle for FC8.
+	- In the output ... or --- are printed evenif more than three.
+	- By default -JOIN is there in multiword but you can restrict to - only by specifying -j=no option in tokenizer_indic.pl
+
+12-Jan-2013	Rashid Ahmad	<rashid101b@gmail.com>
+
+	* Version 1.7
+
+	- Urdu language support added.
+	- Punjabi language support added.
+
+08-Jan-2013	Rashid Ahmad	<rashid101b@gmail.com>
+
+	* Version 1.6
+
+	- issue solved sentence end with ..."... ।", ....'...?' 
+	- Acronym (dEY.) issue solved.
+	- issue remain same in case of indic type email and websites.
+
+07-Jan-2013	Rashid Ahmad	<rashid101b@gmail.com>
+
+	* Version 1.5
+
+	- acronym/abbreviation list contain both wx and utf data.
+	- Now working with UTF and wx
+	- Multiword with hyphen is currently split as w1-w2 to w1 - w2.
+	- actual decided is w1 -JOIN w2
+	- currently tested for Hindi in detail and Telugu limited.
+	- In this version Telugu basic support added.
+	- file data/tel.arc and tests/input_tel_wx.txt added.
+
+04-Jan-2013	Rashid Ahmad	<rashid101b@gmail.com>
+
+	* Version 1.4
+
+	- default sentence end marking is new line (\n) in raw text.
+	- currently working on raw text or text file.
+	- Package properly for first release.
+	- other structures support CML, HTML and Document will be added in future
+
+22-Dec-2012	Rashid Ahmad	<rashid101b@gmail.com>
+
+	* Version 1.3
+
+	- input file option added.
+	- fixed some isses.
+
+20-Dec-2012	Rashid Ahmad	<rashid101b@gmail.com>
+
+	* Version 1.2
+
+	- Acronym file updated.
+	- website identification improved.
+	- Code structure.
+
+10-Dec-2012	Rashid Ahmad	<rashid101b@gmail.com>
+
+	* Version 1.1
+
+	- tests cases increase to test.
+	- email identification improved.
+
+12-Nov-2012	Rashid Ahmad	<rashid101b@gmail.com>
+
+	* Version 1.0
+
+	- Base version
+	- This base version take 3-4 months to build
