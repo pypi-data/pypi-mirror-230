@@ -1,0 +1,33 @@
+[package]
+name = "ruff_python_ast"
+version = "0.0.0"
+publish = false
+authors = ["Charlie Marsh <charlie.r.marsh@gmail.com>"]
+edition = "2021"
+rust-version = "1.71"
+homepage = "https://beta.ruff.rs/docs"
+documentation = "https://beta.ruff.rs/docs"
+repository = "https://github.com/astral-sh/ruff"
+license = "MIT"
+resolver = "2"
+
+[lib]
+
+[dependencies]
+ruff_python_trivia = { path = "../ruff_python_trivia" }
+ruff_source_file = { path = "../ruff_source_file" }
+ruff_text_size = { path = "../ruff_text_size" }
+static_assertions = "1.1.0"
+bitflags = { version = "2.3.1" }
+is-macro = { version = "0.3.0" }
+itertools = { version = "0.10.5" }
+memchr = "2.6.3"
+num-bigint = { version = "0.4.3" }
+num-traits = { version = "0.2.15" }
+once_cell = { version = "1.17.1" }
+rustc-hash = { version = "1.1.0" }
+serde = { version = "1.0.152", features = ["derive"] , optional = true }
+smallvec = { version = "1.10.0" }
+
+[features]
+serde = ["dep:serde", "ruff_text_size/serde"]

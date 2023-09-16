@@ -1,0 +1,26 @@
+[package]
+name = "ruff_python_semantic"
+version = "0.0.0"
+publish = false
+authors = ["Charlie Marsh <charlie.r.marsh@gmail.com>"]
+edition = "2021"
+rust-version = "1.71"
+homepage = "https://beta.ruff.rs/docs"
+documentation = "https://beta.ruff.rs/docs"
+repository = "https://github.com/astral-sh/ruff"
+license = "MIT"
+resolver = "2"
+
+[lib]
+
+[dependencies]
+ruff_index = { path = "../ruff_index" }
+ruff_python_ast = { path = "../ruff_python_ast" }
+ruff_python_stdlib = { path = "../ruff_python_stdlib" }
+ruff_source_file = { path = "../ruff_source_file" }
+ruff_text_size = { path = "../ruff_text_size" }
+bitflags = { version = "2.3.1" }
+is-macro = { version = "0.3.0" }
+num-traits = { version = "0.2.15" }
+rustc-hash = { version = "1.1.0" }
+smallvec = { version = "1.10.0" }

@@ -1,0 +1,34 @@
+[package]
+name = "ruff_python_parser"
+version = "0.0.0"
+publish = false
+authors = ["Charlie Marsh <charlie.r.marsh@gmail.com>", "RustPython Team"]
+edition = "2021"
+rust-version = "1.71"
+homepage = "https://beta.ruff.rs/docs"
+documentation = "https://beta.ruff.rs/docs"
+repository = "https://github.com/astral-sh/ruff"
+license = "MIT"
+build = "build.rs"
+resolver = "2"
+
+[lib]
+
+[dependencies]
+ruff_python_ast = { path = "../ruff_python_ast" }
+ruff_text_size = { path = "../ruff_text_size" }
+lalrpop-util = { version = "0.20.0", default-features = false }
+unicode_names2 = { version = "0.6.0", git = "https://github.com/youknowone/unicode_names2.git", rev = "4ce16aa85cbcdd9cc830410f1a72ef9a235f2fde" }
+static_assertions = "1.1.0"
+anyhow = { version = "1.0.69" }
+is-macro = { version = "0.3.0" }
+itertools = { version = "0.10.5" }
+num-bigint = { version = "0.4.3" }
+num-traits = { version = "0.2.15" }
+unicode-ident = "1.0.11"
+rustc-hash = { version = "1.1.0" }
+
+[build-dependencies]
+lalrpop = { version = "0.20.0", default-features = false, optional = true }
+tiny-keccak = { version = "2", features = ["sha3"] }
+anyhow = { version = "1.0.69" }

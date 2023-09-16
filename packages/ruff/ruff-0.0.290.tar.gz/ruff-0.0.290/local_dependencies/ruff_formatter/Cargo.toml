@@ -1,0 +1,27 @@
+[package]
+name = "ruff_formatter"
+version = "0.0.0"
+publish = false
+authors = ["Charlie Marsh <charlie.r.marsh@gmail.com>"]
+edition = "2021"
+rust-version = "1.71"
+homepage = "https://beta.ruff.rs/docs"
+documentation = "https://beta.ruff.rs/docs"
+repository = "https://github.com/astral-sh/ruff"
+license = "MIT"
+resolver = "2"
+
+[dependencies]
+ruff_text_size = { path = "../ruff_text_size" }
+
+drop_bomb = { version = "0.1.5" }
+tracing = { version = "0.1.37", default-features = false, features = ["std"] }
+rustc-hash = { version = "1.1.0" }
+schemars = { version = "0.8.12" , optional = true }
+serde = { version = "1.0.152", features = ["derive"] , optional = true }
+static_assertions = "1.1.0"
+unicode-width = "0.1.10"
+
+[features]
+serde = ["dep:serde", "ruff_text_size/serde"]
+schemars = ["dep:schemars", "ruff_text_size/schemars"]
