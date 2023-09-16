@@ -1,0 +1,68 @@
+[project]
+name = "jmlr"
+version = "0.0.1"
+description = ""
+authors = [
+    { name = "Tohrusky", email = "65994850+Tohrusky@users.noreply.github.com" },
+]
+dependencies = [
+    "opencv-python",
+    "Pathlib",
+]
+requires-python = ">=3.8"
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+
+[project.license]
+text = "MIT"
+
+[project.urls]
+Homepage = "https://github.com/Biu-X/CoverSnap"
+Repository = "https://github.com/Biu-X/CoverSnap"
+
+[project.scripts]
+coversnap = "coversnap.__main__:main"
+
+[tool.pdm.dev-dependencies]
+pytest = [
+    "pytest~=7.3.2",
+    "pytest-cov~=4.1.0",
+]
+lint = [
+    "pre-commit",
+]
+
+[tool.pdm.scripts.dev]
+composite = [
+    "pdm install --dev",
+]
+help = "Install the dev packages"
+
+[tool.pdm.scripts.test]
+cmd = "pytest --cov=src --cov-config=.coveragerc --cov-report=xml --cov-report=html"
+help = "Run tests with coverage"
+
+[tool.pdm.scripts.lint]
+cmd = "pre-commit run --all-files"
+help = "Check code style against linters using pre-commit"
+
+[tool.pdm.scripts.pre_lint]
+composite = [
+    "pre-commit install",
+]
+help = "pre_lint hook: Installs pre-commit hooks"
+
+[tool.mypy]
+ignore_missing_imports = true
+strict = true
+
+[build-system]
+requires = [
+    "pdm-backend",
+]
+build-backend = "pdm.backend"
