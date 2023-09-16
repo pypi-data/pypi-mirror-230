@@ -1,0 +1,27 @@
+# File generated from our OpenAPI spec by Stainless.
+
+from __future__ import annotations
+
+from typing_extensions import Required, Annotated, TypedDict
+
+from .._utils import PropertyInfo
+
+__all__ = ["PositionalParamKitchenSinkParams"]
+
+
+class PositionalParamKitchenSinkParams(TypedDict, total=False):
+    id: Required[str]
+
+    key: Required[str]
+
+    im_a_camel: Required[Annotated[str, PropertyInfo(alias="imACamel")]]
+
+    option1: Required[bool]
+
+    option2: str
+
+    really_cool_snake: str
+
+    bar: float
+
+    options: str
