@@ -1,0 +1,59 @@
+Metadata-Version: 2.1
+Name: amzn-micro-coral
+Version: 1.0.0
+Summary: Minimal Coral interface for when you can't use a prepackaged client.
+Author: Chad Crawford
+Author-email: chadcr@amazon.com
+Requires-Python: >=3.8,<4.0
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Provides-Extra: midway
+Provides-Extra: sigv4
+Requires-Dist: boto3 (>=1.28.37,<2.0.0) ; extra == "sigv4"
+Requires-Dist: cached-property (>=1.5.2,<2.0.0)
+Requires-Dist: requests (>=2.31.0,<3.0.0)
+Requires-Dist: requests-auth-aws-sigv4 (>=0.7,<0.8) ; extra == "sigv4"
+Requires-Dist: requests-kerberos (>=0.14.0,<0.15.0) ; extra == "midway"
+Description-Content-Type: text/markdown
+
+# amzn-micro-coral
+
+A minimalistic implementation of a Coral client, used mainly for
+people who are working in contexts where they may not be able to
+import Coral clients directly.
+
+## Usage
+
+Service calls are entirely unopinionated, so you better be good at
+reading Coral client configs. A regular instantiation of the service
+would be:
+
+    from amzn_micro_coral import CoralService, CoralAuth
+
+    my_service = CoralService(
+        url="https://my-service.amazon.com",
+        auth=CoralAuth.midway(sentry=False),
+    )
+
+    r = my_service.post("MyService.MyOperation", data={"param1": "value1"})
+    result = r.json()
+
+The client does do a basic level of error checking in case the Coral
+service returns the standard error message in the form `{"__type":
+"<message>"}`.
+
+## Samples
+
+This module also provides some very basic classes for interacting with
+generic services:
+
+    from amzn_micro_coral import crux
+
+    r = crux.post(<...>)
+
+Some may provide more features than others but have no guarantee of
+always working into the future.
+
