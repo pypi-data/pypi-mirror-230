@@ -1,0 +1,91 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "devtools-cli"
+version = "0.11.1"
+description = "A toolbox of cross-language utility scripts for efficient software development."
+license = "MIT"
+authors = ["Mattias Aabmets <mattias.aabmets@gmail.com>"]
+readme = "README.md"
+repository = "https://github.com/aabmets/devtools-cli"
+keywords = ["toolbox", "cross-language", "utility", "scripts", "software", "development"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: C",
+    "Programming Language :: C#",
+    "Programming Language :: C++",
+    "Programming Language :: PHP",
+    "Programming Language :: Ruby",
+    "Programming Language :: JavaScript",
+    "Programming Language :: Kotlin",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Libraries"
+]
+packages = [
+    { include = "devtools_cli" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+orjson = "^3.9.7"
+pyyaml = "^6.0.1"
+httpx = "^0.25.0"
+semver = "^3.0.1"
+pydantic = "^2.3.0"
+typer = { extras = ["all"], version = "^0.9.0" }
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.2"
+pytest-cov = "^4.1.0"
+pytest-asyncio = "^0.21.1"
+coverage = "^7.3.1"
+
+[tool.poetry.scripts]
+devtools = "devtools_cli.main:app"
+dtconf = "devtools_cli.commands.config.main:app"
+dtlic = "devtools_cli.commands.license.main:app"
+dtver = "devtools_cli.commands.version.main:app"
+dtlog = "devtools_cli.commands.log.main:app"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+console_output_style = "count"
+filterwarnings = ["ignore::DeprecationWarning"]
+testpaths = ["tests"]
+addopts = [
+    "--cov=devtools_cli",
+    "--cov-report=html",
+    "--no-cov-on-fail",
+    "--import-mode=importlib"
+]
+
+[tool.coverage.run]
+branch = true
+source = ["devtools_cli/*"]
+
+[tool.coverage.report]
+#fail_under = 90
+skip_empty = true
+ignore_errors = true
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "@abstractmethod"
+]
+
+[tool.coverage.html]
+directory = ".htmlcov"
