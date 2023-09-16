@@ -1,0 +1,76 @@
+Metadata-Version: 2.1
+Name: binomialbias
+Version: 1.3.0
+Summary: Quantitative assessment of discrimination based on the binomial distribution
+Home-page: http://binomialbias.sciris.org
+Author: P.A. Robinson, C. C. Kerr
+Author-email: cliff@thekerrlab.com
+Keywords: binomial distribution,discrimination,bias,sexism,racism
+Platform: OS Independent
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: Other/Proprietary License
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy
+Requires-Dist: scipy
+Requires-Dist: matplotlib
+Requires-Dist: sciris
+Provides-Extra: app
+Requires-Dist: shiny ; extra == 'app'
+Requires-Dist: rsconnect-python ; extra == 'app'
+
+# BinomialBias
+
+[![PyPI](https://badgen.net/pypi/v/binomialbias/?color=blue)](https://pypi.org/project/binomialbias)
+[![Tests](https://github.com/thekerrlab/binomialbias/actions/workflows/tests.yaml/badge.svg)](https://github.com/thekerrlab/binomialbias/actions/workflows/tests.yaml?query=workflow)
+
+This library computes and plots quantitative assessments of discrimination within organizations, based on the binomial distribution.
+
+This code supports the following paper:
+
+**Quantitative assessment of discrimination in appointments to senior Australian university positions.** Robinson PA, Kerr CC. *Under review (2023).*
+
+There are several ways to use this library, described below.
+
+
+## Webapp
+
+A live webapp is running at https://binomialbias.sciris.org.
+
+
+## Local installation and usage
+
+### Python
+
+To use locally with Python, run
+
+    pip install binomialbias
+
+This can then be run via e.g.:
+
+    import binomialbias as bb
+    bb.plot_bias(n=20, n_e=10, n_a=7)
+
+This example shows the statistics for the case where there were `n = 20` appointments (e.g., the size of a committee), out of which `n_e = 10` people were expected to belong to a given group (e.g., female), and for which `n_a = 7` actually were.
+
+### Shiny
+
+To run the [Shiny](https://shiny.posit.co/py/) app locally, clone the repository from GitHub, then install with
+
+    pip install -e .[app]
+
+The Shiny app can then be run locally via the `run` script.
+
+
+## Structure
+
+- All code for the Python package is in the `binomialbias` folder.
+- The script for generating the figure in the paper is in the `scripts` folder.
+- Continuous integration tests are in the `tests` folder.
+- Older Jupyter and Matplotlib versions are available in the `archive` folder.
