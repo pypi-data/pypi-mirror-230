@@ -1,0 +1,69 @@
+# This workflow will run the tests every time you push to the repository or create a pull request.
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python#testing-your-code
+
+name: Test on multiple platforms
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  # workflow_dispatch allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  test:
+    # Helps you quickly identify the type of system your job is running on.
+    name: ${{ matrix.platform }} py${{ matrix.python-version }}
+    runs-on: ${{ matrix.platform }}
+
+    # Sets up a matrix for different Python versions and platforms
+    strategy:
+      matrix:
+        platform: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ['3.9', '3.10', "3.11"]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # these libraries enable testing on Qt on linux
+      - uses: tlambert03/setup-qt-libs@v1
+
+      # strategy borrowed from vispy for installing opengl libs on windows
+      - name: Install Windows OpenGL
+        if: runner.os == 'Windows'
+        run: |
+          git clone --depth 1 https://github.com/pyvista/gl-ci-helpers.git
+          powershell gl-ci-helpers/appveyor/install_opengl.ps1
+
+      # note: if you need dependencies from conda, considering using
+      # setup-miniconda: https://github.com/conda-incubator/setup-miniconda
+      # and
+      # tox-conda: https://github.com/tox-dev/tox-conda
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install setuptools tox tox-gh-actions pre-commit
+
+      # this runs the pre-commit hooks declared in .pre-commit-config.yaml
+      - name: Lint with pre-commit
+        run: pre-commit run
+
+      # this runs the platform-specific tests declared in tox.ini
+      - name: Test with tox
+        uses: aganders3/headless-gui@v1
+        with:
+          run: python -m tox
+        env:
+          PLATFORM: ${{ matrix.platform }}
+
+      - name: Coverage
+        uses: codecov/codecov-action@v3
+
+ 

@@ -1,0 +1,90 @@
+Metadata-Version: 2.1
+Name: napari-workshop-plugin
+Version: 1.0.0
+Summary: A plugin to demonstrate some concepts from the 2023 workshop on software development related to napari
+Author: MetaCell
+Author-email: sean.martin@metacell.us
+License: MIT
+Project-URL: Bug Tracker, https://github.com/seankmartin/napari-software-development-workshop/issues
+Project-URL: Documentation, https://seankmartin.github.io/napari-software-development-workshop/
+Project-URL: Source Code, https://github.com/seankmartin/napari-software-development-workshop
+Project-URL: User Support, https://napari.zulipchat.com
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Framework :: napari
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Scientific/Engineering :: Image Processing
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy<2,>=1.23
+Requires-Dist: magicgui
+Requires-Dist: qtpy
+Provides-Extra: testing
+Requires-Dist: tox; extra == "testing"
+Requires-Dist: pytest; extra == "testing"
+Requires-Dist: pytest-cov; extra == "testing"
+Requires-Dist: pytest-qt; extra == "testing"
+Requires-Dist: napari; extra == "testing"
+Requires-Dist: pyqt5; extra == "testing"
+Provides-Extra: docs
+Requires-Dist: mkdocs-material; extra == "docs"
+Requires-Dist: mkdocstrings-python; extra == "docs"
+Requires-Dist: mkdocstrings; extra == "docs"
+
+# napari-workshop-plugin
+
+[![License MIT](https://img.shields.io/pypi/l/napari-workshop-plugin.svg?color=green)](https://github.com/MetaCell/napari-workshop-plugin/raw/main/LICENSE)
+[![PyPI](https://img.shields.io/pypi/v/napari-workshop-plugin.svg?color=green)](https://pypi.org/project/napari-workshop-plugin)
+[![Python Version](https://img.shields.io/pypi/pyversions/napari-workshop-plugin.svg?color=green)](https://python.org)
+[![tests](https://github.com/seankmartin/napari-software-development-workshop/workflows/tests/badge.svg)](https://github.com/seankmartin/napari-software-development-workshop/actions)
+[![codecov](https://codecov.io/gh/seankmartin/napari-software-development-workshop/branch/main/graph/badge.svg)](https://codecov.io/gh/seankmartin/napari-software-development-workshop)
+[![napari hub](https://img.shields.io/endpoint?url=https://api.napari-hub.org/shields/napari-workshop-plugin)](https://napari-hub.org/plugins/napari-workshop-plugin)
+
+The purpose of this repository is to provide a template for a napari plugin that can be used as a starting point for the napari software development workshop 2023.
+It should help you to see the basics of building documentation, testing, and continuous integration for a napari plugin.
+
+This [napari] plugin was generated with [Cookiecutter] using [@napari]'s [cookiecutter-napari-plugin] template.
+The cookiecutter plugin is also a great jumping off point for your own plugin development.
+
+## Check out a template you can use for your own README
+
+[template.md](template.md)
+
+<!--
+Don't miss the full getting started guide to set up your new package:
+https://github.com/napari/cookiecutter-napari-plugin#getting-started
+
+and review the napari docs for plugin developers:
+https://napari.org/stable/plugins/index.html
+-->
+
+## Installation
+
+You can install `napari-workshop-plugin` via [pip]:
+
+    pip install napari-workshop-plugin
+
+## License
+
+Distributed under the terms of the [MIT] license,
+"napari-workshop-plugin" is free and open source software
+
+## Issues
+
+If you encounter any problems, please [file an issue] along with a detailed description.
+
+[napari]: https://github.com/napari/napari
+[Cookiecutter]: https://github.com/audreyr/cookiecutter
+[@napari]: https://github.com/napari
+[MIT]: http://opensource.org/licenses/MIT
+[cookiecutter-napari-plugin]: https://github.com/napari/cookiecutter-napari-plugin
+[pip]: https://pypi.org/project/pip/
