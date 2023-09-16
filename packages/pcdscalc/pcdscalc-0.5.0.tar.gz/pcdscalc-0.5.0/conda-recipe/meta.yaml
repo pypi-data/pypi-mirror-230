@@ -1,0 +1,40 @@
+{% set package_name = "pcdscalc" %}
+{% set import_name = "pcdscalc" %}
+{% set version = load_file_regex(load_file=os.path.join(import_name, "_version.py"), regex_pattern=".*version = '(\S+)'").group(1) %}
+
+package:
+  name: {{ package_name }}
+  version: {{ version }}
+
+source:
+  path: ..
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+  - python >=3.9
+  - setuptools_scm
+  - pip
+  run:
+  - python >=3.9
+  - numpy
+  - ophyd
+  - periodictable
+  - scipy
+  - xraydb
+  - xraylib
+
+test:
+  imports:
+  - pcdscalc
+  requires:
+  - pytest
+
+about:
+  home: https://github.com/pcdshub/pcdscalc
+  license: SLAC Open License
+  summary: PCDS Calculation Routines
