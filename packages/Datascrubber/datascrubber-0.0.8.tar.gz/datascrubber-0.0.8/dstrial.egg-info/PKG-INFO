@@ -1,0 +1,433 @@
+Metadata-Version: 2.1
+Name: dstrial
+Version: 0.0.3
+Summary: A  data cleaning package
+Home-page: https://github.com/muganga-charles/dstrial
+Author: Charles Muganga
+Author-email: Charles Muganga <mugangacharles5@gmail.com>
+License: MIT
+Project-URL: Homepage, https://github.com/muganga-charles
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# dstrial Module Documentation
+## Overview
+This documentation explains the functions available in the ***`Datacleaning`*** module, which is designed to assist in data cleaning and analytics tasks 
+
+## Creating the an instance
+Through this process, we are calling our class which will help us access the various functions to be used.
+
+```python
+from dstrial import Datacleaning
+data_cleaner = Datacleaning()
+```
+So for all the remaining part of our code, we shall be using the data_cleaner.
+## Table of Contents
+- [columns](#columns)
+- [summary](#summary)
+- [read_data](#read_data)
+- [head](#head)
+- [missing_values](#missing_values)
+- [col_missing_value](#col_missing_value)
+- [remove_empty_columns](#remove_empty_columns)
+- [data_types](#data_types)
+- [cat_cols](#cat_cols)
+- [cont_cols](#cont_cols)
+- [distributions](#distributions)
+- [data_types](#data_types)
+- [col_dist](#col_dist)
+- [cat_dist](#cat_dist)
+- [col_cat_dist](#col_cat_dist)
+- [remove_missingvalues](#remove_missingvalues)
+- [drop](#drop)
+- [outliers](#outliers)
+- [outliers_single](#outliers_single)
+- [remove_outliers](#remove_outliers)
+- [corr_matrix](#corr_matrix)
+- [cont_corr](#cont_corr)
+- [cont_to_cont](#cont_to_cont)
+- [cat_to_cat](#cat_to_cat)
+- [countplot](#countplot)
+- [contingency_table](#contingency_table)
+- [Chi_square](#Chi_square)
+- [combined_boplot](#combined_boplot)
+- [singleAnova](#singleAnova)
+- [cont_to_cat](#cont_to_cat)
+- [getdata](#getdata)
+- [data_cleaning](#data_cleaning)
+
+<a name="columns"></a>
+## columns
+### Function Name: columns
+This function returns the columns of the loaded dataset.
+
+#### Parameters
+None
+
+#### Return Value
+- Returns a list of column names in the dataset.
+
+## summary 
+### Function Name: summary
+This function is used to generate summary statistics of the data. It provides valuable information about the distribution, central tendency, and spread of the data. It calculates statistics for each numeric column in the data. 
+
+The statistics provided by the summary function include:
+
+- Count: The number of non-null values in the column.
+- Mean: The arithmetic mean (average) of the values.
+- Standard Deviation: A measure of the spread or dispersion of the values.
+- Minimum: The minimum value in the column.
+- 25th Percentile (Q1): The value below which 25% of the data falls.
+- 50th Percentile (Median or Q2): The middle value of the data.
+- 75th Percentile (Q3): The value below which 75% of the data falls.
+- Maximum: The maximum value in the column.
+
+Then to a `categorical column`, The summary function generates statistics such as:
+
+- Count: The number of non-null values in the column.
+- Unique: The number of unique categories or levels in the column.
+- Top: The most frequent category in the column.
+- Freq: The frequency of the top category.
+#### Parameters
+None
+
+#### Return Value
+- Returns a dataframe containing the summary statistics of the data.
+
+## read_data
+### Function Name: read_data
+This function is used to read data from a file. It supports reading data from a CSV file, Excel file, and a JSON file. The function automatically detects the file type and reads the data accordingly.
+
+#### Parameters
+- `file_path`: The path to the file to be read.
+
+#### Return Value
+- Returns a dataframe containing the data from the file.
+
+## head
+### Function Name: head
+This function is used to display the first few rows of the data. It is useful to get a quick overview of the data.
+
+#### Parameters
+- `number`: The number of rows to display.
+
+#### Return Value
+- Returns a dataframe containing the first few rows of the data.
+
+## missing_values
+### Function Name: missing_values
+This function is used to check for missing values in the data. 
+
+#### Parameters
+None
+
+#### Return Value
+- Returns a dataframe containing the number of missing values in each column.
+
+## col_missing_value
+### Function Name: col_missing_value
+This function is used to check for missing values in a specific column.
+
+#### Parameters
+- `col_name`: The name of the column to check for missing values.
+
+#### Return Value
+- Returns the number of missing values in the specified column.
+
+## remove_empty_columns
+### Function Name: remove_empty_columns
+This function is used to remove columns that have no values. It is useful to remove columns that have no values as they do not provide any useful information.
+
+#### Parameters
+None
+
+#### Return Value
+- Returns a dataframe with the empty columns removed.
+
+## data_types
+### Function Name: data_types
+This function is used to check the data types of the columns and the creates subsets of the data based on the data types. It creates a subset of the data containing only the categorical columns and another subset containing only the numeric columns.
+
+#### Parameters
+None
+
+#### Return Value
+None
+
+## cat_cols
+### Function Name: cat_cols
+This function is used to get the categorical columns in the data.
+
+#### Parameters
+None
+
+#### Return Value
+- Returns a dataframe of the categorical columns in the data.
+
+## cont_cols
+### Function Name: cont_cols
+This function is used to get the numeric columns in the data.
+
+#### Parameters
+None
+
+#### Return Value
+- Returns a dataframe of the numeric columns in the data.
+
+## distributions
+### Function Name: distributions
+This function is used to plot the distribution of the numeric columns in the data. It plots a histogram for each numeric column in the data.
+
+It is useful to get an idea of the distribution of the data. It can be used to identify outliers and skewness in the data.
+
+#### Parameters
+None
+
+#### Return Value
+None
+
+## col_dist
+### Function Name: col_dist
+This function is used to plot the distribution of a specific numeric column in the data.
+
+#### Parameters
+- `col`: The name of the column to plot the distribution for.
+
+#### Return Value
+None
+
+## cat_dist
+### Function Name: cat_dist
+This function is used to plot the distribution of a all categorical columns in the data.
+
+#### Parameters
+None
+
+#### Return Value
+None
+
+## col_cat_dist
+### Function Name: col_cat_dist
+This function is used to plot the distribution of a specific categorical column in the data.
+
+#### Parameters
+- `col`: The name of the column to plot the distribution for.
+
+#### Return Value
+None
+
+## remove_missingvalues
+### Function Name: remove_missingvalues
+This function is used to remove deal with rows that have  missing values (NA). 
+The funcion first removes all the duplicates that are within the data and also automatically removes all the empty columns.
+
+The missing values are then replaced with the mode of the column (`the most occuring value`) for categorical columns.
+
+For numeric columns, the missing values are replaced with either the mean or median of the column depending on the skewness of the data.
+
+
+#### Parameters
+None
+
+#### Return Value
+None
+
+## drop
+### Function Name: drop
+This function is used to drop columns from the data.
+
+#### Parameters
+- `column`: This is a two way parameter. It can either be a string or a list of strings. If it is a string, it is the name of the column to drop. If it is a list of strings, it is a list of columns to drop.
+
+#### Return Value
+None
+
+## outliers
+### Function Name: outliers
+This function is used to plot the outliers in the data. It plots a boxplot for each numeric column in the data.
+
+It is useful to get an idea of the outliers in the data. It can be used to identify outliers in the data.
+
+#### Parameters
+None
+
+#### Return Value
+None
+
+## outliers_single
+### Function Name: outliers_single
+This function is used to plot the outliers in a specific numeric column in the data.
+
+#### Parameters
+- `column`: The name of the numeric column to plot the outliers for.
+
+#### Return Value
+None
+
+## remove_outliers
+### Function Name: remove_outliers
+This function is used to remove outliers from the data. It removes outliers from all the numeric columns in the data.
+
+The concept of outliers is based on the interquartile range (IQR). The IQR is the difference between the 75th percentile (Q3) and the 25th percentile (Q1). The IQR is used to identify outliers by defining limits on the sample values that are a factor k of the IQR below the 25th percentile or above the 75th percentile. The common value for the factor k is the value 1.5. This is the default value used by the function.
+
+#### Parameters
+None
+
+#### Return Value
+None
+
+## corr_matrix
+### Function Name: corr_matrix
+This function is used to plot the correlation matrix of the data. It plots a heatmap of the correlation matrix of the data.
+
+It is useful to get an idea of the correlation between the numeric columns in the data. It can be used to identify highly correlated columns in the data.
+
+#### Parameters
+None
+
+#### Return Value
+
+## cont_corr
+### Function Name: cont_corr
+This function is used to plot a pairplot of the numeric columns in the data.
+
+#### Parameters
+None
+
+#### Return Value
+None
+
+## cont_to_cont
+### Function Name: cont_to_cont
+The function is used to show significant relationship or difference between two numeric columns in the data.
+This is achieved through plotting a scatter plot of two numeric columns in the data.
+The function also goes on to indicate the correlation value between the two columns.
+
+#### Parameters
+- `col1`: This is a two way parameter. It can either be a string or a list of strings. If it is a string, it is the name of the first column to plot. If it is a list of strings, it is a list of columns to plot.
+
+- `col2`: This is a two way parameter. It can either be a string or a list of strings. If it is a string, it is the name of the second column to plot. If it is a list of strings, it is a list of columns to plot.
+
+#### Return Value
+None
+
+
+## cat_to_cat
+### Function Name: cat_to_cat
+The function is used to show significant relationship or difference between two categorical columns in the data.
+The function hence displays a contingency table of the two categorical columns in the data. and also plots a comparative bar graph of the two columns.
+
+#### Parameters
+- `col1`: This is a two way parameter. It can either be a string or a list of strings. If it is a string, it is the name of the first column to plot. If it is a list of strings, it is a list of columns to plot.
+
+- `col2`: This is a two way parameter. It can either be a string or a list of strings. If it is a string, it is the name of the second column to plot. If it is a list of strings, it is a list of columns to plot.
+
+#### Return Value
+None
+
+## countplot
+### Function Name: countplot
+The function is used to plot a countplot of a two categorical columns in the data.
+This is a way of showing the distribution of the two categorical columns in the data.
+
+#### Parameters
+- `col1`: This is a string. It is the name of the first column to plot.
+- `col2`: This is a string. It is the name of the second column to plot.
+
+#### Return Value
+None
+
+## contingency_table
+### Function Name: contingency_table
+The function is used to show significant relationship or difference between two categorical columns in the data.
+The function hence displays a contingency table of the two categorical columns in the data.
+
+#### Parameters
+- `col1`: This is a string. It is the name of the first column to plot.
+- `col2`: This is a string. It is the name of the second column to plot.
+
+#### Return Value
+None
+
+## Chi_square
+### Function Name: Chi_square
+The function tests for a statistically significant relationship between nominal and ordinal variables. In other words, it tells us whether two variables are independent of one another.
+
+#### Parameters
+- `col1`: This is a string. It is the name of the first column categorical column.
+- `col2`: This is a string. It is the name of the second column categorical column.
+
+#### Return Value
+- A string indicating whether the two columns are independent or not.
+
+## combined_boplot
+### Function Name: combined_boplot
+The function is used to plot a set of side by side box plots, one for each of the categories. 
+
+#### Parameters
+- `col1`: This is a string. It is the name of the first column continuous column.
+- `col2`: This is a string. It is the name of the second column categorical column.
+
+#### Return Value
+None
+
+## singleAnova
+### Function Name: singleAnova
+The function is used to test for a statistically significant difference between the means of two or more groups.
+
+#### Parameters
+- `col1`: This is a string. It is the name of the first column continuous column.
+- `col2`: This is a string. It is the name of the second column categorical column.
+
+#### Return Value
+- A string indicating whether the two columns are independent or not.
+
+## cont_to_cat
+### Function Name: cont_to_cat
+The function is used to show significant relationship or difference between a continuous and a categorical column in the data.  
+The function hence displays a side by side boxplot of the continuous column and a categorical column in the data.
+
+#### Parameters
+- `col1`: This is two way parameter. It can either be a string or a list of strings. If it is a string, it is the name of the first column continuous column. If it is a list of strings, it is a list of columns to plot.On the other hand, it can be a a string or a list of strings of categorical columns. 
+
+- `col2`: This is two way parameter. It can either be a string or a list of strings. If it is a string, it is the name of the second column categorical column. If it is a list of strings, it is a list of columns to plot.On the other hand, it can be a a string or a list of strings of continuous columns. 
+
+#### Return Value
+- A string indicating whether the two columns are independent or not.
+
+## getdata
+### Function Name: getdata
+The function returns the data that has been cleaned and preprocessed.
+
+#### Parameters
+None
+
+#### Return Value
+- Returns a dataframe containing the cleaned data.
+
+## data_cleaning
+### Function Name: data_cleaning
+The function is used to clean the data. It performs the following operations:
+- Removes empty columns.
+- Removes duplicate rows.
+- Deals with missing values appropriately.
+- Removes outliers.
+
+#### Parameters
+None
+
+#### Return Value   
+- A dataframe containing the cleaned data.
+
+
+## FUNCTIONS
+#### Usage Example
+```python
+from dstrial1 import Datacleaning
+
+data_cleaner = Datacleaning()
+columns_list = data_cleaner.columns()
