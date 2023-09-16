@@ -1,0 +1,100 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '**'
+  pull_request:
+
+env:
+  MPLBACKEND: Agg
+  PYTEST_ADDOPTS: --color=yes
+  GITHUB_PR_NUMBER: ${{ github.event.number }}
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11"]
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/cache@v3 
+        id: cache-irfs
+        with:
+          path: ./irfs
+          key: irf-cache
+
+      # make sure we have version info
+      - run: git fetch --tags
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python --version
+          pip install -U pip setuptools wheel restructuredtext_lint
+          pip install -e .[all]
+          pip freeze
+
+      - name: Check README
+        run: |
+          rst-lint README.rst
+
+      - name: Get IRF Files
+        if: steps.cache-irfs.outputs.cache-hit != 'true'
+        run: python download_irfs.py
+
+      - name: Tests
+        run: |
+          pytest --cov=pyirf --cov-report=xml
+
+      - uses: codecov/codecov-action@v3
+
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+
+      - name: Install doc dependencies
+        run: |
+          sudo apt update --yes && sudo apt install --yes git build-essential pandoc curl graphviz
+          pip install -U pip setuptools wheel towncrier
+          pip install -e .[docs]
+          git describe --tags
+          python -c 'import pyirf; print(pyirf.__version__)'
+
+      - name: Produce Changelog
+        run: |
+          towncrier build --yes
+
+      - name: Build docs
+        run: cd docs && make html SPHINXOPTS="-W --keep-going -n --color -j auto"
+
+      - name: Deploy to gihub pages
+        # only run on push to main
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: docs/_build/html
+          CLEAN: true
+          SINGLE_COMMIT: true
+

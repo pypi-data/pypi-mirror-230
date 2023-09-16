@@ -1,0 +1,106 @@
+Metadata-Version: 2.1
+Name: pyirf
+Version: 0.10.1
+Summary: A python library to calculate IACT IRFs and Sensitivities
+Home-page: https://github.com/cta-observatory/pyirf
+Author: CTA Consortium, Analysis and Simulation Working Group
+Author-email: maximilian.linhoff@tu-dortmund.de
+License: MIT
+Project-URL: Bug Tracker, https://github.com/cta-observatory/pyirf/issues
+Project-URL: Documentation, https://cta-observatory.github.io/pyirf
+Project-URL: Source Code, https://github.com/cta-observatory/pyirf
+Classifier: Development Status :: 4 - Beta
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering :: Astronomy
+Classifier: Topic :: Scientific/Engineering :: Physics
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.9
+License-File: LICENSE
+Requires-Dist: astropy>=4.0.2
+Requires-Dist: matplotlib
+Requires-Dist: numpy>=1.18
+Requires-Dist: scipy
+Requires-Dist: tqdm
+Provides-Extra: docs
+Requires-Dist: sphinx; extra == "docs"
+Requires-Dist: sphinx_rtd_theme; extra == "docs"
+Requires-Dist: sphinx_automodapi; extra == "docs"
+Requires-Dist: numpydoc; extra == "docs"
+Requires-Dist: nbsphinx; extra == "docs"
+Requires-Dist: uproot; extra == "docs"
+Requires-Dist: awkward1; extra == "docs"
+Requires-Dist: notebook; extra == "docs"
+Requires-Dist: tables; extra == "docs"
+Requires-Dist: towncrier; extra == "docs"
+Requires-Dist: gammapy~=1.0; extra == "docs"
+Provides-Extra: tests
+Requires-Dist: pytest; extra == "tests"
+Requires-Dist: pytest-cov; extra == "tests"
+Requires-Dist: gammapy~=1.0; extra == "tests"
+Requires-Dist: ogadf-schema~=0.2.3; extra == "tests"
+Requires-Dist: uproot~=4.0; extra == "tests"
+Requires-Dist: awkward~=1.0; extra == "tests"
+Provides-Extra: gammapy
+Requires-Dist: gammapy~=1.0; extra == "gammapy"
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: gammapy~=1.0; extra == "dev"
+Requires-Dist: ogadf-schema~=0.2.3; extra == "dev"
+Requires-Dist: uproot~=4.0; extra == "dev"
+Requires-Dist: awkward~=1.0; extra == "dev"
+Requires-Dist: setuptools_scm; extra == "dev"
+Provides-Extra: all
+Requires-Dist: awkward1; extra == "all"
+Requires-Dist: notebook; extra == "all"
+Requires-Dist: uproot; extra == "all"
+Requires-Dist: gammapy~=1.0; extra == "all"
+Requires-Dist: towncrier; extra == "all"
+Requires-Dist: uproot~=4.0; extra == "all"
+Requires-Dist: ogadf-schema~=0.2.3; extra == "all"
+Requires-Dist: sphinx_automodapi; extra == "all"
+Requires-Dist: setuptools_scm; extra == "all"
+Requires-Dist: awkward~=1.0; extra == "all"
+Requires-Dist: sphinx; extra == "all"
+Requires-Dist: nbsphinx; extra == "all"
+Requires-Dist: numpydoc; extra == "all"
+Requires-Dist: sphinx_rtd_theme; extra == "all"
+Requires-Dist: tables; extra == "all"
+Requires-Dist: pytest; extra == "all"
+Requires-Dist: pytest-cov; extra == "all"
+
+==========================================
+pyirf |ci| |codacy| |coverage| |doilatest|
+==========================================
+
+.. |ci| image:: https://github.com/cta-observatory/pyirf/workflows/CI/badge.svg?branch=main
+  :target: https://github.com/cta-observatory/pyirf/actions?query=workflow%3ACI+branch%3Amain
+.. |codacy| image:: https://app.codacy.com/project/badge/Grade/669fef80d3d54070960e66351477e383
+  :target: https://www.codacy.com/gh/cta-observatory/pyirf/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=cta-observatory/pyirf&amp;utm_campaign=Badge_Grade
+.. |coverage| image:: https://codecov.io/gh/cta-observatory/pyirf/branch/main/graph/badge.svg
+  :target: https://codecov.io/gh/cta-observatory/pyirf
+.. |doilatest| image:: https://zenodo.org/badge/DOI/10.5281/zenodo.4740755.svg
+  :target: https://doi.org/10.5281/zenodo.4740755
+
+*pyirf* is a python library for the generation of Instrument Response
+Functions (IRFs) and sensitivities for the
+`Cherenkov Telescope Array (CTA) <https://www.cta-observatory.org/>`_ .
+
+Thanks to its simple input/output and modular function-based structure,
+it can be used to process also data from other Imaging Atmospheric
+Cherenkov Telescopes (IACTs).
+
+- **Source code:** https://github.com/cta-observatory/pyirf
+- **Documentation:** https://cta-observatory.github.io/pyirf/
+
+Citing this software
+--------------------
+If you use a released version of this software for a publication,
+please cite it by using the corresponding DOI:
+
+- latest : |doilatest|
+- all versions: `Please visit Zenodo <https://zenodo.org/record/5833284>`_ and select the correct version
