@@ -1,0 +1,537 @@
+---
+fixtures:
+  - SecureRBACPolicyFixture
+
+vars:
+  - &project_id $ENVIRON['PROJECT_ID']
+  - &admin_project_id $ENVIRON['ADMIN_PROJECT_ID']
+  - &service_project_id $ENVIRON['SERVICE_PROJECT_ID']
+  - &admin_headers
+    x-auth-token: user
+    x-roles: admin
+    x-project-id: admin_project_id
+    accept: application/json
+    content-type: application/json
+    openstack-api-version: placement latest
+  - &service_headers
+    x-auth-token: user
+    x-roles: service
+    x-project-id: service_project_id
+    accept: application/json
+    content-type: application/json
+    openstack-api-version: placement latest
+  - &system_admin_headers
+    x-auth-token: user
+    x-roles: admin,member,reader
+    accept: application/json
+    content-type: application/json
+    openstack-api-version: placement latest
+    openstack-system-scope: all
+  - &system_reader_headers
+    x-auth-token: user
+    x-roles: reader
+    accept: application/json
+    content-type: application/json
+    openstack-api-version: placement latest
+    openstack-system-scope: all
+  - &project_admin_headers
+    x-auth-token: user
+    x-roles: admin,member,reader
+    x-project-id: *project_id
+    accept: application/json
+    content-type: application/json
+    openstack-api-version: placement latest
+  - &project_member_headers
+    x-auth-token: user
+    x-roles: member,reader
+    x-project-id: *project_id
+    accept: application/json
+    content-type: application/json
+    openstack-api-version: placement latest
+  - &project_reader_headers
+    x-auth-token: user
+    x-roles: reader
+    x-project-id: *project_id
+    accept: application/json
+    content-type: application/json
+    openstack-api-version: placement latest
+
+tests:
+
+- name: admin can create resource providers
+  POST: /resource_providers
+  request_headers: *admin_headers
+  data:
+    name: $ENVIRON['RP_NAME']
+    uuid: $ENVIRON['RP_UUID']
+  status: 200
+  response_json_paths:
+    $.uuid: $ENVIRON['RP_UUID']
+
+- name: service can create resource providers
+  POST: /resource_providers
+  request_headers: *service_headers
+  data:
+    name: $ENVIRON['RP_NAME1']
+    uuid: $ENVIRON['RP_UUID1']
+  status: 200
+  response_json_paths:
+    $.uuid: $ENVIRON['RP_UUID1']
+
+- name: project admin can create resource providers
+  POST: /resource_providers
+  request_headers: *project_admin_headers
+  data:
+    name: $ENVIRON['RP_NAME2']
+    uuid: $ENVIRON['RP_UUID2']
+  status: 200
+  response_json_paths:
+    $.uuid: $ENVIRON['RP_UUID2']
+
+- name: admin can list inventories
+  GET: /resource_providers/$ENVIRON['RP_UUID']/inventories
+  request_headers: *admin_headers
+  response_json_paths:
+    $.resource_provider_generation: 0
+    $.inventories: {}
+
+- name: service can list inventories
+  GET: /resource_providers/$ENVIRON['RP_UUID']/inventories
+  request_headers: *service_headers
+  response_json_paths:
+    $.resource_provider_generation: 0
+    $.inventories: {}
+
+- name: system reader cannot list inventories
+  GET: /resource_providers/$ENVIRON['RP_UUID']/inventories
+  request_headers: *system_reader_headers
+  status: 403
+
+- name: project admin can list inventories
+  GET: /resource_providers/$ENVIRON['RP_UUID']/inventories
+  request_headers: *project_admin_headers
+  response_json_paths:
+    $.resource_provider_generation: 0
+    $.inventories: {}
+
+- name: project member cannot list inventories
+  GET: /resource_providers/$ENVIRON['RP_UUID']/inventories
+  request_headers: *project_member_headers
+  status: 403
+
+- name: project reader cannot list inventories
+  GET: /resource_providers/$ENVIRON['RP_UUID']/inventories
+  request_headers: *project_reader_headers
+  status: 403
+
+- name: project admin can create an inventory
+  POST: /resource_providers/$ENVIRON['RP_UUID2']/inventories
+  request_headers: *project_admin_headers
+  data:
+    resource_class: DISK_GB
+    total: 2048
+    reserved: 512
+    min_unit: 10
+    max_unit: 1024
+    step_size: 10
+    allocation_ratio: 1.0
+  status: 201
+  response_headers:
+    location: $SCHEME://$NETLOC/resource_providers/$ENVIRON['RP_UUID2']/inventories/DISK_GB
+
+- name: project member cannot create an inventory
+  POST: /resource_providers/$ENVIRON['RP_UUID']/inventories
+  request_headers: *project_member_headers
+  data:
+    resource_class: DISK_GB
+    total: 2048
+    reserved: 512
+    min_unit: 10
+    max_unit: 1024
+    step_size: 10
+    allocation_ratio: 1.0
+  status: 403
+
+- name: project reader cannot create an inventory
+  POST: /resource_providers/$ENVIRON['RP_UUID']/inventories
+  request_headers: *project_reader_headers
+  data:
+    resource_class: DISK_GB
+    total: 2048
+    reserved: 512
+    min_unit: 10
+    max_unit: 1024
+    step_size: 10
+    allocation_ratio: 1.0
+  status: 403
+
+- name: system reader cannot create an inventory
+  POST: /resource_providers/$ENVIRON['RP_UUID']/inventories
+  request_headers: *system_reader_headers
+  data:
+    resource_class: DISK_GB
+    total: 2048
+    reserved: 512
+    min_unit: 10
+    max_unit: 1024
+    step_size: 10
+    allocation_ratio: 1.0
+  status: 403
+
+- name: system admin cannot create an inventory
+  POST: /resource_providers/$ENVIRON['RP_UUID']/inventories
+  request_headers: *system_admin_headers
+  data:
+    resource_class: DISK_GB
+    total: 2048
+    reserved: 512
+    min_unit: 10
+    max_unit: 1024
+    step_size: 10
+    allocation_ratio: 1.0
+  status: 403
+
+- name: admin can create an inventory
+  POST: /resource_providers/$ENVIRON['RP_UUID']/inventories
+  request_headers: *admin_headers
+  data:
+    resource_class: DISK_GB
+    total: 2048
+    reserved: 512
+    min_unit: 10
+    max_unit: 1024
+    step_size: 10
+    allocation_ratio: 1.0
+  status: 201
+  response_headers:
+    location: $SCHEME://$NETLOC/resource_providers/$ENVIRON['RP_UUID']/inventories/DISK_GB
+
+- name: service can create an inventory
+  POST: /resource_providers/$ENVIRON['RP_UUID1']/inventories
+  request_headers: *service_headers
+  data:
+    resource_class: DISK_GB
+    total: 2048
+    reserved: 512
+    min_unit: 10
+    max_unit: 1024
+    step_size: 10
+    allocation_ratio: 1.0
+  status: 201
+  response_headers:
+    location: $SCHEME://$NETLOC/resource_providers/$ENVIRON['RP_UUID1']/inventories/DISK_GB
+
+- name: project admin can show inventory
+  GET: /resource_providers/$ENVIRON['RP_UUID']/inventories/DISK_GB
+  request_headers: *project_admin_headers
+  status: 200
+
+- name: project member cannot show inventory
+  GET: /resource_providers/$ENVIRON['RP_UUID']/inventories/DISK_GB
+  request_headers: *project_member_headers
+  status: 403
+
+- name: project reader cannot show inventory
+  GET: /resource_providers/$ENVIRON['RP_UUID']/inventories/DISK_GB
+  request_headers: *project_reader_headers
+  status: 403
+
+- name: system reader cannot show inventory
+  GET: /resource_providers/$ENVIRON['RP_UUID']/inventories/DISK_GB
+  request_headers: *system_reader_headers
+  status: 403
+
+- name: system admin cannot show inventory
+  GET: /resource_providers/$ENVIRON['RP_UUID']/inventories/DISK_GB
+  request_headers: *system_admin_headers
+  status: 403
+
+- name: admin can show inventory
+  GET: /resource_providers/$ENVIRON['RP_UUID']/inventories/DISK_GB
+  request_headers: *admin_headers
+  status: 200
+
+- name: service can show inventory
+  GET: /resource_providers/$ENVIRON['RP_UUID']/inventories/DISK_GB
+  request_headers: *service_headers
+  status: 200
+
+- name: project admin can update inventory
+  PUT: /resource_providers/$ENVIRON['RP_UUID2']/inventories/DISK_GB
+  request_headers: *project_admin_headers
+  data:
+    resource_provider_generation: 1
+    total: 2048
+    reserved: 1024
+    min_unit: 10
+    max_unit: 1024
+    step_size: 10
+    allocation_ratio: 1.0
+  status: 200
+
+- name: project member cannot update inventory
+  PUT: $LAST_URL
+  request_headers: *project_member_headers
+  data:
+    resource_provider_generation: 1
+    total: 2048
+    reserved: 1024
+    min_unit: 10
+    max_unit: 1024
+    step_size: 10
+    allocation_ratio: 1.0
+  status: 403
+
+- name: project reader cannot update inventory
+  PUT: $LAST_URL
+  request_headers: *project_reader_headers
+  data:
+    resource_provider_generation: 1
+    total: 2048
+    reserved: 1024
+    min_unit: 10
+    max_unit: 1024
+    step_size: 10
+    allocation_ratio: 1.0
+  status: 403
+
+- name: system reader cannot update inventory
+  PUT: $LAST_URL
+  request_headers: *system_reader_headers
+  data:
+    resource_provider_generation: 1
+    total: 2048
+    reserved: 1024
+    min_unit: 10
+    max_unit: 1024
+    step_size: 10
+    allocation_ratio: 1.0
+  status: 403
+
+- name: system admin cannot update inventory
+  PUT: $LAST_URL
+  request_headers: *system_admin_headers
+  data:
+    resource_provider_generation: 1
+    total: 2048
+    reserved: 1024
+    min_unit: 10
+    max_unit: 1024
+    step_size: 10
+    allocation_ratio: 1.0
+  status: 403
+
+- name: admin can update inventory
+  PUT: /resource_providers/$ENVIRON['RP_UUID']/inventories/DISK_GB
+  request_headers: *admin_headers
+  data:
+    resource_provider_generation: 1
+    total: 2048
+    reserved: 1024
+    min_unit: 10
+    max_unit: 1024
+    step_size: 10
+    allocation_ratio: 1.0
+  status: 200
+
+- name: service can update inventory
+  PUT: /resource_providers/$ENVIRON['RP_UUID1']/inventories/DISK_GB
+  request_headers: *service_headers
+  data:
+    resource_provider_generation: 1
+    total: 2048
+    reserved: 1024
+    min_unit: 10
+    max_unit: 1024
+    step_size: 10
+    allocation_ratio: 1.0
+  status: 200
+
+- name: project admin can update all inventories
+  PUT: /resource_providers/$ENVIRON['RP_UUID2']/inventories
+  request_headers: *project_admin_headers
+  data:
+    resource_provider_generation: 2
+    inventories:
+      DISK_GB:
+        total: 2048
+        reserved: 1024
+        min_unit: 10
+        max_unit: 1024
+        step_size: 10
+        allocation_ratio: 1.0
+      VCPU:
+        total: 8
+  status: 200
+
+- name: project member cannot update all inventories
+  PUT: /resource_providers/$ENVIRON['RP_UUID']/inventories
+  request_headers: *project_member_headers
+  data:
+    resource_provider_generation: 2
+    inventories:
+      DISK_GB:
+        total: 2048
+        reserved: 1024
+        min_unit: 10
+        max_unit: 1024
+        step_size: 10
+        allocation_ratio: 1.0
+      VCPU:
+        total: 8
+  status: 403
+
+- name: project reader cannot update all inventories
+  PUT: /resource_providers/$ENVIRON['RP_UUID']/inventories
+  request_headers: *project_reader_headers
+  data:
+    resource_provider_generation: 2
+    inventories:
+      DISK_GB:
+        total: 2048
+        reserved: 1024
+        min_unit: 10
+        max_unit: 1024
+        step_size: 10
+        allocation_ratio: 1.0
+      VCPU:
+        total: 8
+  status: 403
+
+- name: system reader cannot update all inventories
+  PUT: /resource_providers/$ENVIRON['RP_UUID']/inventories
+  request_headers: *system_reader_headers
+  data:
+    resource_provider_generation: 2
+    inventories:
+      DISK_GB:
+        total: 2048
+        reserved: 1024
+        min_unit: 10
+        max_unit: 1024
+        step_size: 10
+        allocation_ratio: 1.0
+      VCPU:
+        total: 8
+  status: 403
+
+- name: system admin cannot update all inventories
+  PUT: /resource_providers/$ENVIRON['RP_UUID']/inventories
+  request_headers: *system_admin_headers
+  data:
+    resource_provider_generation: 2
+    inventories:
+      DISK_GB:
+        total: 2048
+        reserved: 1024
+        min_unit: 10
+        max_unit: 1024
+        step_size: 10
+        allocation_ratio: 1.0
+      VCPU:
+        total: 8
+  status: 403
+
+- name: admin can update all inventories
+  PUT: /resource_providers/$ENVIRON['RP_UUID']/inventories
+  request_headers: *admin_headers
+  data:
+    resource_provider_generation: 2
+    inventories:
+      DISK_GB:
+        total: 2048
+        reserved: 1024
+        min_unit: 10
+        max_unit: 1024
+        step_size: 10
+        allocation_ratio: 1.0
+      VCPU:
+        total: 8
+  status: 200
+
+- name: service can update all inventories
+  PUT: /resource_providers/$ENVIRON['RP_UUID1']/inventories
+  request_headers: *service_headers
+  data:
+    resource_provider_generation: 2
+    inventories:
+      DISK_GB:
+        total: 2048
+        reserved: 1024
+        min_unit: 10
+        max_unit: 1024
+        step_size: 10
+        allocation_ratio: 1.0
+      VCPU:
+        total: 8
+  status: 200
+
+- name: project admin can delete a specific inventory
+  DELETE: /resource_providers/$ENVIRON['RP_UUID2']/inventories/DISK_GB
+  request_headers: *project_admin_headers
+  status: 204
+
+- name: project member cannot delete a specific inventory
+  DELETE: /resource_providers/$ENVIRON['RP_UUID']/inventories/DISK_GB
+  request_headers: *project_member_headers
+  status: 403
+
+- name: project reader cannot delete a specific inventory
+  DELETE: /resource_providers/$ENVIRON['RP_UUID']/inventories/DISK_GB
+  request_headers: *project_reader_headers
+  status: 403
+
+- name: system reader cannot delete a specific inventory
+  DELETE: /resource_providers/$ENVIRON['RP_UUID']/inventories/DISK_GB
+  request_headers: *system_reader_headers
+  status: 403
+
+- name: system admin cannot delete a specific inventory
+  DELETE: /resource_providers/$ENVIRON['RP_UUID']/inventories/DISK_GB
+  request_headers: *system_admin_headers
+  status: 403
+
+- name: admin can delete a specific inventory
+  DELETE: /resource_providers/$ENVIRON['RP_UUID']/inventories/DISK_GB
+  request_headers: *admin_headers
+  status: 204
+
+- name: service can delete a specific inventory
+  DELETE: /resource_providers/$ENVIRON['RP_UUID1']/inventories/DISK_GB
+  request_headers: *service_headers
+  status: 204
+
+- name: project admin can delete all inventory
+  DELETE: /resource_providers/$ENVIRON['RP_UUID2']/inventories
+  request_headers: *project_admin_headers
+  status: 204
+
+- name: project member cannot delete all inventory
+  DELETE: /resource_providers/$ENVIRON['RP_UUID']/inventories
+  request_headers: *project_member_headers
+  status: 403
+
+- name: project reader cannot delete all inventory
+  DELETE: /resource_providers/$ENVIRON['RP_UUID']/inventories
+  request_headers: *project_reader_headers
+  status: 403
+
+- name: system reader cannot delete all inventory
+  DELETE: /resource_providers/$ENVIRON['RP_UUID']/inventories
+  request_headers: *system_reader_headers
+  status: 403
+
+- name: system admin cannot delete all inventory
+  DELETE: /resource_providers/$ENVIRON['RP_UUID']/inventories
+  request_headers: *system_admin_headers
+  status: 403
+
+- name: admin can delete all inventory
+  DELETE: /resource_providers/$ENVIRON['RP_UUID']/inventories
+  request_headers: *admin_headers
+  status: 204
+
+- name: service can delete all inventory
+  DELETE: /resource_providers/$ENVIRON['RP_UUID1']/inventories
+  request_headers: *service_headers
+  status: 204
