@@ -1,0 +1,72 @@
+[build-system]
+requires = ['setuptools', 'numpy', 'Cython<3.0.0']
+build-backend = 'setuptools.build_meta'
+
+[project]
+name = 'imops'
+dynamic = ['version']
+description = 'Efficient parallelizable algorithms for multidimensional arrays to speed up your data pipelines'
+readme = 'README.md'
+requires-python = '>=3.6'
+license = { file = 'LICENSE' }
+keywords = ['image processing', 'fast', 'ndarray', 'data pipelines']
+authors = [
+    {name = 'maxme1', email = 'maxs987@gmail.com'},
+    {name = 'vovaf709', email = 'vovaf709@yandex.ru'},
+    {name = 'talgat', email = 'saparov2130@gmail.com'},
+]
+classifiers = [
+    'Development Status :: 5 - Production/Stable',
+    'License :: OSI Approved :: MIT License',
+    'Programming Language :: Python :: 3.6',
+    'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+]
+
+[options]
+include_package_data = true
+
+[project.optional-dependencies]
+numba = ['numba']
+
+[project.urls]
+'Homepage' = 'https://github.com/neuro-ml/imops'
+'Issues' = 'https://github.com/neuro-ml/imops/issues'
+'Source' = 'https://github.com/neuro-ml/imops'
+'Docs' = 'https://neuro-ml.github.io/imops'
+
+[tool.black]
+line-length = 120
+skip-string-normalization = true
+
+[tool.pytest.ini_options]
+markers = ['nonumba']
+
+[tool.isort]
+line_length = 120
+lines_after_imports = 2
+profile = 'black'
+combine_as_imports = true
+skip_glob='.asv'
+
+[tool.cython-lint]
+max-line-length = 120
+
+[tool.setuptools]
+py-modules = ['_build_utils']
+
+[tool.setuptools.cmdclass]
+build_py = "_build_utils.PyprojectBuild"
+
+[tool.setuptools.packages.find]
+include = ['imops']
+
+[tool.setuptools.package-data]
+imops = ['py.typed']
+
+[tool.setuptools.dynamic]
+version = {attr = 'imops.__version__.__version__'}
+dependencies = { file = ['requirements.txt'] }
