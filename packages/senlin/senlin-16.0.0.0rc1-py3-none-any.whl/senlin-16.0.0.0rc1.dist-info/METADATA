@@ -1,0 +1,153 @@
+Metadata-Version: 2.1
+Name: senlin
+Version: 16.0.0.0rc1
+Summary: OpenStack Clustering
+Home-page: https://docs.openstack.org/senlin/latest/
+Author: OpenStack
+Author-email: openstack-discuss@lists.openstack.org
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Environment :: OpenStack
+Classifier: Intended Audience :: Information Technology
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Requires-Python: >=3.8
+Requires-Dist: PasteDeploy (>=1.5.0)
+Requires-Dist: PyYAML (>=5.1)
+Requires-Dist: Routes (>=2.3.1)
+Requires-Dist: SQLAlchemy (>=1.4.41)
+Requires-Dist: WebOb (>=1.7.1)
+Requires-Dist: alembic (>=1.6.5)
+Requires-Dist: docker (>=2.4.2)
+Requires-Dist: eventlet (>=0.26.1)
+Requires-Dist: jsonpath-rw (>=1.4.0)
+Requires-Dist: jsonschema (>=3.2.0)
+Requires-Dist: keystoneauth1 (>=3.18.0)
+Requires-Dist: keystonemiddleware (>=4.17.0)
+Requires-Dist: microversion-parse (>=0.2.1)
+Requires-Dist: openstacksdk (>=0.99.0)
+Requires-Dist: oslo.config (>=6.8.0)
+Requires-Dist: oslo.context (>=2.22.0)
+Requires-Dist: oslo.db (>=6.0.0)
+Requires-Dist: oslo.i18n (>=3.20.0)
+Requires-Dist: oslo.log (>=3.36.0)
+Requires-Dist: oslo.messaging (>=14.1.0)
+Requires-Dist: oslo.middleware (>=3.31.0)
+Requires-Dist: oslo.policy (>=3.6.0)
+Requires-Dist: oslo.reports (>=1.18.0)
+Requires-Dist: oslo.serialization (>=2.25.0)
+Requires-Dist: oslo.service (>=1.31.0)
+Requires-Dist: oslo.upgradecheck (>=1.3.0)
+Requires-Dist: oslo.utils (>=4.5.0)
+Requires-Dist: oslo.versionedobjects (>=1.31.2)
+Requires-Dist: osprofiler (>=2.3.0)
+Requires-Dist: pbr (>=3.1.1)
+Requires-Dist: pytz (>=2015.7)
+Requires-Dist: requests (>=2.20.0)
+Requires-Dist: stevedore (>=1.20.0)
+Requires-Dist: tenacity (>=6.0.0)
+
+========================
+Team and repository tags
+========================
+
+.. image:: https://governance.openstack.org/tc/badges/senlin.svg
+    :target: https://governance.openstack.org/tc/reference/tags/index.html
+
+.. Change things from this point on
+
+Senlin
+======
+
+--------
+Overview
+--------
+
+Senlin is a clustering service for OpenStack clouds. It creates and operates
+clusters of homogeneous objects exposed by other OpenStack services. The goal
+is to make the orchestration of collections of similar objects easier.
+
+Senlin provides RESTful APIs to users so that they can associate various
+policies to a cluster.  Sample policies include placement policy, load
+balancing policy, health policy, scaling policy, update policy and so on.
+
+Senlin is designed to be capable of managing different types of objects. An
+object's lifecycle is managed using profile type implementations, which are
+themselves plugins.
+
+---------
+For Users
+---------
+
+If you want to install Senlin for a try out, please refer to the documents
+under the ``doc/source/user/`` subdirectory. User guide online link:
+https://docs.openstack.org/senlin/latest/#user-references
+
+--------------
+For Developers
+--------------
+
+There are many ways to help improve the software, for example, filing a bug,
+submitting or reviewing a patch, writing or reviewing some documents. There
+are documents under the ``doc/source/contributor`` subdirectory. Developer
+guide online link: https://docs.openstack.org/senlin/latest/#developer-s-guide
+
+---------
+Resources
+---------
+
+Launchpad Projects
+------------------
+- Server: https://launchpad.net/senlin
+- Client: https://launchpad.net/python-senlinclient
+- Dashboard: https://launchpad.net/senlin-dashboard
+- Tempest Plugin: https://launchpad.net/senlin-tempest-plugin
+
+Code Repository
+---------------
+- Server: https://opendev.org/openstack/senlin
+- Client: https://opendev.org/openstack/python-senlinclient
+- Dashboard: https://opendev.org/openstack/senlin-dashboard
+- Tempest Plugin: https://opendev.org/openstack/senlin-tempest-plugin
+
+Blueprints
+----------
+- Blueprints: https://blueprints.launchpad.net/senlin
+
+Bug Tracking
+------------
+- Server Bugs: https://bugs.launchpad.net/senlin
+- Client Bugs: https://bugs.launchpad.net/python-senlinclient
+- Dashboard Bugs: https://bugs.launchpad.net/senlin-dashboard
+- Tempest Plugin Bugs: https://bugs.launchpad.net/senlin-tempest-plugin
+
+Weekly Meetings
+---------------
+- Schedule: every Tuesday at 1300 UTC, on #openstack-meeting channel
+- Agenda: https://wiki.openstack.org/wiki/Meetings/SenlinAgenda
+- Archive: http://eavesdrop.openstack.org/meetings/senlin/2015/
+
+IRC
+---
+IRC Channel: #senlin on `OFTC`_.
+
+Mailinglist
+-----------
+Project use http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-discuss
+as the mailinglist. Please use tag ``[Senlin]`` in the subject for new
+threads.
+
+
+.. _OFTC: https://oftc.net/
+
+Release notes
+------------------
+- Release notes: https://docs.openstack.org/releasenotes/senlin/
+
+
+
