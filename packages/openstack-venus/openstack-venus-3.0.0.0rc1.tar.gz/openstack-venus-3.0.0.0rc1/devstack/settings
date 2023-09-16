@@ -1,0 +1,17 @@
+# settings file for venus
+
+VENUS_DEPLOY=mod_wsgi
+
+# API Service
+enable_service venus-api
+
+# Default directories
+VENUS_DIR=$DEST/venus
+VENUS_CONF_DIR=/etc/venus
+VENUS_CONF=$VENUS_CONF_DIR/venus.conf
+VENUS_LOG_DIR=/var/log/venus
+
+# HOST and PORT
+VENUS_SERVICE_PROTOCOL=$SERVICE_PROTOCOL
+VENUS_SERVICE_HOST=$SERVICE_HOST
+VENUS_SERVICE_PORT=${VENUS_SERVICE_PORT:-10010}
