@@ -1,0 +1,26 @@
+name: Build and publish MLFlow docker image
+
+on:
+  push:
+    paths:
+      - mlflow-auth-docker/**
+      - .github/workflows/mlflow-docker.yml
+    branches: [main]
+
+jobs:
+  build-and-publish-docker:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./mlflow-auth-docker
+    env:
+      IMAGE_NAME: ghcr.io/striveworks/radops/mlflow
+    steps:
+      - uses: actions/checkout@v3
+      - name: build
+        run: |
+          docker build . -t $IMAGE_NAME
+      - name: push
+        run: |
+          docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+          docker push $IMAGE_NAME

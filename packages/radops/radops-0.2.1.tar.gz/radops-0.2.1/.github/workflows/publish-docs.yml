@@ -1,0 +1,22 @@
+name: Builds and publishes docs to GitHub pages
+
+on:
+  push:
+    paths:
+      - docs/**
+      - .github/workflows/publish-docs.yml
+      - mkdocs.yml
+    branches: [main]
+
+jobs:
+  build-and-publish-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+      - run: pip install mkdocs-material
+      - run: mkdocs gh-deploy

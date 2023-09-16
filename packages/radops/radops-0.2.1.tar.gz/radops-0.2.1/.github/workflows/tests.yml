@@ -1,0 +1,125 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - "**"
+    paths:
+      - docs/**
+      - radops/**
+      - .github/workflows/tests.yml
+      - pyproject.toml
+      - tests/**
+
+env:
+  email: user@domain.com
+
+jobs:
+  doctest:
+    runs-on: ubuntu-latest
+    env:
+      verbose: false
+      s3_endpoint_url: ""
+      COVERAGE_FILE: .coverage.doctest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+      - run: pip install ".[test]"
+      - run: coverage run --source=radops -m doctest -v docs/serialization.md
+      - run: coverage report
+      - name: upload coverage report as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          path: ${{ env.COVERAGE_FILE }}
+          name: ${{ env.COVERAGE_FILE }}
+  unit-tests:
+    runs-on: ubuntu-latest
+    env:
+      s3_endpoint_url: ""
+      COVERAGE_FILE: .coverage.unit
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+      - run: pip install ".[test]"
+      - run: coverage run --source=radops -m pytest -v tests/unit-tests
+      - run: coverage report
+      - name: upload coverage report as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          path: ${{ env.COVERAGE_FILE }}
+          name: ${{ env.COVERAGE_FILE }}
+  functional-tests:
+    runs-on: ubuntu-latest
+    env:
+      s3_endpoint_url: http://localhost:9000
+      aws_access_key_id: user
+      aws_secret_access_key: password
+      COVERAGE_FILE: .coverage.functional
+    services:
+      minio:
+        image: bitnami/minio # use this instead of official minio image because the latter requires a command which GHA doesn't support
+        ports:
+          - 9000:9000
+        env:
+          MINIO_ROOT_USER: ${{ env.aws_access_key_id }}
+          MINIO_ROOT_PASSWORD: ${{ env.aws_secret_access_key }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+      - run: pip install -e ".[test]" # editable install so we have the correct `repo_root` by default
+      - run: coverage run --source=radops -m pytest -v -s tests/functional-tests
+      - run: coverage report
+      - name: upload coverage report as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          path: ${{ env.COVERAGE_FILE }}
+          name: ${{ env.COVERAGE_FILE }}
+  combine-coverage-report:
+    needs: [doctest, unit-tests, functional-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      - run: pip install coverage
+      - uses: actions/download-artifact@v3
+        with:
+          name: .coverage.doctest
+      - uses: actions/download-artifact@v3
+        with:
+          name: .coverage.unit
+      - uses: actions/download-artifact@v3
+        with:
+          name: .coverage.functional
+      - run: coverage combine
+      - run: coverage report
+      # https://nedbatchelder.com/blog/202209/making_a_coverage_badge.html
+      - run: |
+          coverage json
+          export TOTAL=$(python -c "import json;print(json.load(open('coverage.json'))['totals']['percent_covered_display'])")
+          echo "total=$TOTAL" >> $GITHUB_ENV
+      - name: "Make badge"
+        if: github.ref == 'refs/heads/main'
+        uses: schneegans/dynamic-badges-action@v1.4.0
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: d81291a17ab6b9da379c104040db96f2
+          filename: radops-coverage.json
+          label: Coverage
+          message: ${{ env.total }}%
+          minColorRange: 50
+          maxColorRange: 90
+          valColorRange: ${{ env.total }}
