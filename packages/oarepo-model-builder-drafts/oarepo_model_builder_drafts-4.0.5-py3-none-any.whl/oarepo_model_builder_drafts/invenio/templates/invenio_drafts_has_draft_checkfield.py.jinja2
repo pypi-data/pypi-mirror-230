@@ -1,0 +1,6 @@
+from oarepo_runtime.drafts.systemfields.has_draftcheck import HasDraftCheckField
+
+class {{ vars.record|class_header }}:
+    has_draft = HasDraftCheckField(config_key="HAS_DRAFT_CUSTOM_FIELD")
+
+{{ parent_record.record.class|base_name }}.has_draft = HasDraftCheckField(draft_cls={{ vars.record.class|base_name }}, config_key="HAS_DRAFT_CUSTOM_FIELD")

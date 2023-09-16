@@ -1,0 +1,11 @@
+{% if not vars.draft_parent_record.skip %}
+{{ vars.draft_parent_record_state|generate_import }}
+
+class {{ record|class_header }}:
+    {% if not vars.draft_parent_record_state.skip %}
+    versions_model_cls = {{ vars.draft_parent_record_state.class|base_name }}
+    {% endif %}
+    {% if not vars.draft_parent_record.skip %}
+    parent_record_cls = {{ vars.draft_parent_record.class|base_name }}
+    {% endif %}
+{% endif %}
