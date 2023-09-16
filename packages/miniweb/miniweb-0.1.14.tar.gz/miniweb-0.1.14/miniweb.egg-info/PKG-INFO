@@ -1,0 +1,292 @@
+Metadata-Version: 2.1
+Name: miniweb
+Version: 0.1.14
+Summary: A simple web framework for Python.
+Author: Li Chen
+Author-email: lichen@zencore.cn
+Maintainer: Li Chen
+Maintainer-email: lichen@zencore.cn
+License: MIT
+Keywords: miniweb
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# miniweb
+
+A simple web framework for Python.
+
+## Example 1. Working with gunicorn.
+
+*/path/to/your/project/debugserver.py*
+
+```
+from miniweb import Application
+from miniweb import simplejson_api
+
+@simplejson_api
+def ping(http_request, http_response):
+    return "pong"
+
+@simplejson_api
+def echo(http_request, http_response):
+    return http_request.GET.get("msg", "")
+
+application = Application()
+application.router.add_route("/ping", ping)
+application.router.add_route("/echo", echo)
+```
+
+*/path/to/your/project/wsgi.conf.py*
+
+```
+bind = ["0.0.0.0:9132"]
+workers = 4
+threads = 32
+daemon = True
+errorlog = "logs/gunicorn.error.log"
+keepalive = 300
+timeout = 300
+graceful_timeout = 300
+loglevel = "info"
+```
+
+*start.sh*
+
+```
+#!/bin/bash
+cd /path/to/your/project/
+gunicorn --config=wsgi.conf.py --pidfile=/path/to/your/project/gunicorn.pid debugserver:application
+```
+
+*Test results:*
+
+```
+In [14]: import requests
+
+In [15]: requests.get('http://127.0.0.1:9132/ping').json()
+Out[15]: {'success': True, 'result': 'pong', 'error': {'code': 0, 'message': 'OK'}}
+
+In [16]: requests.get('http://127.0.0.1:9132/echo?msg=hello').json()
+Out[16]: {'success': True, 'result': 'hello', 'error': {'code': 0, 'message': 'OK'}}
+```
+
+## Example 2. Working with gevent.pywsgi.
+
+*/path/to/your/project/debugserver.py*
+
+- Server code is the same with the server code using gunicorn.
+
+*start.sh*
+
+```
+#!/bin/bash
+cd /path/to/your/project/
+python -m gevent.pywsgi -b 0.0.0.0:9132 debugserver:application
+```
+
+*Test results:*
+
+```
+In [14]: import requests
+
+In [15]: requests.get('http://127.0.0.1:9132/ping').json()
+Out[15]: {'success': True, 'result': 'pong', 'error': {'code': 0, 'message': 'OK'}}
+
+In [16]: requests.get('http://127.0.0.1:9132/echo?msg=hello').json()
+Out[16]: {'success': True, 'result': 'hello', 'error': {'code': 0, 'message': 'OK'}}
+```
+
+## Example 3. Working with miniweb.ThreadingWSGIServer.
+
+*debugserver.py*
+
+```
+from miniweb import ThreadingWSGIServer
+from miniweb import Application
+from miniweb import simplejson_api
+
+@simplejson_api
+def ping(http_request, http_response):
+    return "pong"
+
+@simplejson_api
+def echo(http_request, http_response):
+    return http_request.GET.get("msg", "")
+
+def main():
+    app = Application()
+    app.router.add_route("/ping", ping)
+    app.router.add_route("/echo", echo)
+    server = ThreadingWSGIServer(app, listen="127.0.0.1", port=9132)
+    server.serve_forever()
+
+if __name__ == "__main__":
+    main()
+```
+
+*Start debugserver with command `python3 debugserver.py`, and then use ipython to do requests.*
+
+```
+In [1]: import requests
+
+In [2]: requests.get('http://127.0.0.1:9132/ping').content
+Out[2]: b'{"success": true, "result": "pong", "error": {"code": 0, "message": "OK"}}'
+
+In [3]: requests.get('http://127.0.0.1:9132/echo?msg=hi').content
+Out[3]: b'{"success": true, "result": "hi", "error": {"code": 0, "message": "OK"}}'
+
+```
+
+## How to write a request handler?
+
+```
+def ping(http_request:HttpRequest, http_resposne:HttpResponse) -> None:
+    http_resposne.response("pong")
+```
+
+1. A handle is a callable object and always takes two parameters: http_request and http_resposne.
+1. The parameter http_request holds all information about the request, e.g. META, GET, POST, COOKIES and FILES...
+1. The parameter http_resposne is used to handle all response things, e.g. status_code, response_content, response_headers, response_cookies...
+1. The handler returns nothing, and all things returned will be discarded, all response things should done by http_response methods.
+
+## How to use Middlewares?
+
+*By default the wsgi server allows all request methods and doesn't known how to handler OPTIONS request properly. With OptionsHandlerMiddleware, the wsgi server can handle the OPTIONS request and returns allowed methods to client.*
+
+```
+from miniweb import Application
+from miniweb.server import ThreadingWSGIServer
+from miniweb.middlewares import OptionsHandlerMiddleware
+from miniweb.sapi import simplejson_api
+
+
+@simplejson_api
+def ping(http_request, http_response):
+    return "pong"
+
+@simplejson_api
+def echo(http_request, http_response):
+    return http_request.POST.get("msg", "")
+echo.allowed_methods = ["POST"]
+
+application = Application()
+application.router.add_route("/ping", ping)
+application.router.add_route("/echo", echo)
+application.middlewares = [
+    OptionsHandlerMiddleware,
+]
+
+server = ThreadingWSGIServer(application, listen="0.0.0.0", port=9132)
+server.serve_forever()
+
+```
+
+*Test results:*
+
+```
+In [1]: import requests
+
+In [2]: requests.get('http://127.0.0.1:9132/ping').content
+Out[2]: b'{"success": true, "result": "pong", "error": {"code": 0, "message": "OK"}}'
+
+In [3]: requests.post('http://127.0.0.1:9132/echo', data={"msg": "hi"}).content
+Out[3]: b'{"success": true, "result": "hi", "error": {"code": 0, "message": "OK"}}'
+
+In [4]: requests.options('http://127.0.0.1:9132/ping').headers
+Out[4]: {'Date': 'Thu, 03 Mar 2022 08:17:09 GMT', 'Server': 'WSGIServer/0.2 CPython/3.7.9', 'Allow': 'OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT', 'Content-Type': 'text/plain', 'Content-Length': '0'}
+
+In [5]: requests.options('http://127.0.0.1:9132/echo').headers
+Out[5]: {'Date': 'Thu, 03 Mar 2022 08:17:18 GMT', 'Server': 'WSGIServer/0.2 CPython/3.7.9', 'Allow': 'OPTIONS, POST', 'Content-Type': 'text/plain', 'Content-Length': '0'}
+
+```
+
+# What is SAPIs (Simple APIs)?
+
+1. miniweb.sapi decorators help you make a json or jsonp response easily.
+1. Instead of set response content by http_response methods, with miniweb.sapi you just returns response data from the handler function, and the SAPIs decorator will call http_response methods for your. For example:
+    ```
+    # ###################################################################
+    # Inside the handle we just returns the core result "pong",
+    # but simplejson_api will do the result pack for you,
+    # so that you get the final result:
+    # {
+    #     "success": True,
+    #     "result": "pong",
+    #     "error": {
+    #         "code": 0,
+    #         "message": "OK",
+    #     }   
+    # }
+    # ###################################################################
+    @simplejson_api
+    def ping(http_request:HttpRequest, http_resposne:HttpResponse):
+        return "pong"
+
+    ```
+
+## Releases
+
+### v0.1.5 
+
+- First release.
+- Core dispatch and router dispatch are ready.
+- HttpRequest and HttpResponse are ready.
+- SimpleAPI decorators are eady.
+- ~~@TODO: `multipart/form-data` content type is NOT supported yet.~~ Done in v0.1.7.
+
+### v0.1.6
+
+- Fix HttpResponse init problem in core.dispatch.
+- Use ensure_ascii=False while doing json.dumps in miniweb.sapi.
+- Add HttpRequest.content_type and HttpRequest.content_length.
+
+### v0.1.7
+
+- Handler PayloadTooLarge exception.
+- Handler LengthRequired exception.
+- Add `multipart/form-data` content type support.
+- Add file upload support.
+
+### v0.1.8
+
+- Add response file support.
+- Add miniweb.contrib.static_files utils.
+- Add router name support.
+- Add router reverse by the name support.
+- Fix HttpRequest.update_post_data problem.
+- Accept ALL request methods by default.
+
+### v0.1.9
+
+- Add LengthRequired exception handler.
+- Add HttpChunkResponseData response data type and it's handler.
+- Fixed the problem that caused errors when referencing http_request.POST data in GET requests.
+
+### v0.1.10
+
+- Fix problem in python3.7.
+
+### v0.1.11
+
+- Add ThreadingWSGIServer.
+
+### v0.1.12
+
+- Fix wsgi_input.read blocked problem.
+- Add miniweb.middlewares.OptionsHandlerMiddleware.
+- Rename application's global_permitted_methods to global_allowed_methods, to match with the standard header Allow.
+- Set application's default allowed methods to ["OPTIONS", "GET", "HEAD", "POST", "PUT", "DELETE", "TRACE", "CONNECT"].
+
+### v0.1.13
+
+- Add miniweb.server.ThreadingWSGIServer.ready event, so you can start the server in the new thread, and wait for the server to start in the main thread, to ensure that the service is ready, then continue to do other things.
+
+### v0.1.14
+
+- Doc update.
