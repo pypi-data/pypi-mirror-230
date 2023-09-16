@@ -1,0 +1,1 @@
+from hivemind_voice_satellite.service import VoiceClient
