@@ -1,0 +1,137 @@
+[build-system]
+requires = [
+    "pdm",
+    "pdm-pep517",
+    "pybind11<3.0.0,>=2.9.0",
+    "wheel",
+    "build",
+    "twine",
+    "setuptools",
+]
+build-backend = "pdm.pep517.api"
+
+[tool.pdm]
+includes = []
+build = "build_ext.py"
+license-expression = "LGPL-3.0-or-later"
+
+[tool.pdm.license-files]
+paths = [
+    "LICENSE",
+]
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "pytest<7.0.0,>=6.2.5",
+    "pytest-runner<6.0.0,>=5.3.1",
+    "pytest-cov<4.0.0,>=3.0.0",
+]
+
+[tool.pytest]
+addopts = "--verbose --tb=short --junitxml=result.xml -o junit_family=xunit2"
+testpaths = "pyxcp/tests"
+
+[tool.flake8]
+ignore = [
+    "D203",
+    "E203",
+    "E266",
+    "E501",
+    "W503",
+    "F403",
+    "F401",
+    "BLK100",
+]
+exclude = "/(\n    \\.git\n    | __pycache__\n    | __pypackages__\n    | \\.mypy_cache\n    | \\.tox\n    | \\.venv\n    | \\.eggs\n    | _build\n    | build\n    | docs\n    | dist\n    | experimental\n)/\n"
+max-complexity = 10
+count = true
+statistics = true
+show-source = true
+max-line-length = 132
+select = [
+    "B",
+    "C",
+    "E",
+    "F",
+    "W",
+    "T4",
+    "B9",
+]
+
+[tool.black]
+line-length = 132
+include = "\\.pyi?$"
+exclude = "/(\n    \\.git\n    | \\.mypy_cache\n    | \\.tox\n    | \\.venv\n    | _build\n    | build\n    | docs\n    | experimental\n    | __pycache__\n    | __pypackages__\n    | dist\n)/\n"
+
+[tool.cibuildwheel]
+build-verbosity = 3
+build = "cp3{7,8,9,10,11}-*"
+skip = [
+    "*-manylinux_i686",
+    "*-musllinux_x86_64",
+    "*-musllinux_i686",
+]
+build-frontend = "build"
+
+[project]
+authors = [
+    { name = "Christoph Schueler" },
+    { email = "cpu12.gems@googlemail.com" },
+]
+requires-python = ">=3.7"
+dependencies = [
+    "setuptools-cpp<1.0.0,>=0.1.0",
+    "Mako<2.0.0,>=1.1.6",
+    "construct<3.0.0,>=2.10.67",
+    "pyserial<4.0,>=3.5",
+    "pyusb<2.0.0,>=1.2.1",
+    "toml<1.0.0,>=0.10.2",
+    "python-can>=4.0.0",
+    "uptime>=3.0.1",
+    "chardet>=5.2.0",
+    "traitlets>=5.9.0",
+]
+name = "pyxcp"
+version = "0.21.4"
+readme = "README.md"
+description = "Universal Calibration Protocol for Python"
+keywords = [
+    "automotive",
+    "ecu",
+    "xcp",
+    "asam",
+    "autosar",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development",
+    "Topic :: Scientific/Engineering",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+dynamic = [
+    "entry-points",
+]
+
+[project.license]
+file = "LICENSE"
+
+[project.urls]
+homepage = "https://github.com/christoph2/pyxcp"
+
+[project.optional-dependencies]
+doc = [
+    "sphinx",
+    "sphinxcontrib-napoleon",
+]
+
+[project.scripts]
+pyxcp-probe-can-drivers = "pyxcp.scripts.pyxcp_probe_can_drivers:main"
+xcp-id-scanner = "pyxcp.scripts.xcp_id_scanner:main"
+xcp-fetch-a2l = "pyxcp.scripts.xcp_fetch_a2l:main"
+xcp-info = "pyxcp.scripts.xcp_info:main"
