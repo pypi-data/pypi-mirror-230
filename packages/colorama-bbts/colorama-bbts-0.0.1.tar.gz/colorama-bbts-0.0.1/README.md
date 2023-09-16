@@ -1,0 +1,1 @@
+Small package for color print functions

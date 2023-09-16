@@ -1,0 +1,1 @@
+from .fn import printclr, error, warn, success, log
