@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "mypip"
+version = "0.0.2"
+description = "My pip installer"
+authors = ["Tomy <cyaeyz@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+codefast = "^23.8.4.8"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[tool.poetry.scripts]
+mpip = "mypip:pip_install"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
