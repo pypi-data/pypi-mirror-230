@@ -1,0 +1,69 @@
+Metadata-Version: 2.1
+Name: asyncio-anywhere
+Version: 0.1.2
+Summary: Python package that makes it easy to run fast asyncio code
+Home-page: https://github.com/novex-ai/asyncio-anywhere
+License: MIT
+Keywords: python,asyncio,jupyter,trio,curio
+Author: Brad Ito
+Author-email: phlogisticfugu@gmail.com
+Requires-Python: >=3.7,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: uvloop (>=0.17.0,<0.18.0) ; sys_platform == "linux" or sys_platform == "darwin"
+Project-URL: Changelog, https://github.com/novex-ai/asyncio-anywhere/releases
+Project-URL: Issues, https://github.com/novex-ai/asyncio-anywhere/issues
+Project-URL: Repository, https://github.com/novex-ai/asyncio-anywhere
+Description-Content-Type: text/markdown
+
+# asyncio-anywhere
+Python package that makes it easy to run fast asyncio code
+
+[![PyPI version](https://badge.fury.io/py/asyncio-anywhere.svg)](https://badge.fury.io/py/asyncio-anywhere)
+[![Release Notes](https://img.shields.io/github/release/novex-ai/asyncio-anywhere)](https://github.com/novex-ai/asyncio-anywhere/releases)
+[![pytest](https://github.com/novex-ai/asyncio-anywhere/actions/workflows/pytest.yml/badge.svg?branch=main)](https://github.com/novex-ai/asyncio-anywhere/actions/workflows/pytest.yml)
+[![Poetry](https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json)](https://python-poetry.org/)
+
+Are you trying to run async code in Python and getting the error
+`asyncio.run() cannot be called from a running event loop`?
+This package makes it easy to run asyncio-based async code in tricky execution environments:
+
+- [IPython](https://ipython.readthedocs.io/en/stable/)-based notebooks (JupyterLab, AWS Sagemaker, Databricks, etc)
+- [trio](https://trio.readthedocs.io/en/stable/) applications
+- [curio](https://curio.readthedocs.io/en/latest/) applications
+
+Other Features:
+- use [uvloop](https://github.com/MagicStack/uvloop) for faster i/o - but without permanently changing the asyncio event loop policy
+- type hints to support type-aware IDEs
+
+Non Features:
+- asyncio-anywhere does not [monkey-patch](https://github.com/erdewit/nest_asyncio) the asyncio module.  We want to avoid doing this because it may cause problems in future Python versions
+
+## Usage
+
+```sh
+pip install asyncio-anywhere
+```
+
+```python
+import asyncio
+from asyncio_anywhere import asyncio_run
+
+
+async def myfunc():
+    await asyncio.sleep(0.01)
+    return "OK"
+
+
+result = asyncio_run(myfunc())
+
+print(result)
+```
+
+Use `asyncio_run()` anwhere where you would normally have run [asyncio.run()](https://docs.python.org/3/library/asyncio-runner.html#asyncio.run).
+
