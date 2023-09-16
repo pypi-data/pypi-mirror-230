@@ -1,0 +1,56 @@
+[project]
+name = "lancedb"
+version = "0.2.4"
+dependencies = [
+    "pylance==0.7.4",
+    "ratelimiter",
+    "retry",
+    "tqdm",
+    "aiohttp",
+    "pydantic",
+    "attr",
+    "semver>=3.0",
+    "cachetools"
+]
+description = "lancedb"
+authors = [{ name = "LanceDB Devs", email = "dev@lancedb.com" }]
+license = { file = "LICENSE" }
+readme = "README.md"
+requires-python = ">=3.8"
+keywords = [
+    "data-format",
+    "data-science",
+    "machine-learning",
+    "arrow",
+    "data-analytics"
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering",
+]
+
+[project.urls]
+repository = "https://github.com/lancedb/lancedb"
+
+[project.optional-dependencies]
+tests = ["pandas>=1.4", "pytest", "pytest-mock", "pytest-asyncio"]
+dev = ["ruff", "pre-commit", "black"]
+docs = ["mkdocs", "mkdocs-jupyter", "mkdocs-material", "mkdocstrings[python]"]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.isort]
+profile = "black"
