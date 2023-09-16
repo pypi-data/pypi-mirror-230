@@ -1,0 +1,16 @@
+from invenio_users_resources.resolvers import UserResolver
+{{ vars.record|generate_import }}
+{{ vars.record_resolver|generate_import }}
+{% for request_data in vars.requests.values() %}
+{{ request_data.type.class|generate_import }}
+{% endfor %}
+
+
+
+REQUESTS_REGISTERED_TYPES = [{% for request_data in vars.requests.values() %}{{ request_data.type.class|base_name }}, {% endfor %}]
+{% if not vars.record_resolver.skip %}
+REQUESTS_ENTITY_RESOLVERS = [
+        UserResolver(),
+        {{ vars.record_resolver.class|base_name }}(record_cls={{ vars.record.class|base_name }}, service_id="{{ vars.service_config.service_id }}", type_key="{{ vars.module.prefix_snake }}")
+    ]
+{% endif %}

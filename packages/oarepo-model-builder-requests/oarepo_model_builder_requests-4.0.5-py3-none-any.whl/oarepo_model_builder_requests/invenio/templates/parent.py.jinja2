@@ -1,0 +1,8 @@
+from invenio_requests.records import Request
+from invenio_requests.records.systemfields.relatedrecord import RelatedRecord
+
+class {{ vars.draft_parent_record|class_header }}:
+    {{ request_name }} = RelatedRecord(
+        Request,
+        keys=["type", "receiver", "status"],
+    )
