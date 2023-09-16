@@ -1,0 +1,43 @@
+Metadata-Version: 2.1
+Name: qocttools
+Version: 0.0.13
+Summary: "A set of tools to do quantum optimal control calculations"
+Home-page: https://qocttools.readthedocs.io/
+Author: Alberto Castro
+Author-email: alberto.castro.barrigon@gmail.com
+License: GNU General Public License v3 (GPLv3)
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.9
+Description-Content-Type: text/x-rst
+License-File: LICENSE
+Requires-Dist: pytest>=7.4.0
+Requires-Dist: pytest-xdist>=3.3.1
+Requires-Dist: numpy>=1.25.1
+Requires-Dist: jupyter>=1.0.0
+Requires-Dist: scipy>=1.11.1
+Requires-Dist: qutip>=4.7.2
+Requires-Dist: nlopt>=2.7.1
+Requires-Dist: matplotlib>=3.7.2
+Requires-Dist: python-git-info>=0.8.3
+Requires-Dist: mpi4py>=3.1.4
+Requires-Dist: jaxlib>=0.4.13
+Requires-Dist: jax>=0.4.13
+Requires-Dist: sphinx>=6.2.1
+Requires-Dist: nbsphinx>=0.9.2
+Requires-Dist: sphinxcontrib-bibtex>=2.5.0
+Requires-Dist: sphinx-rtd-theme>=1.2.2
+
+
+qocttools is a python package that implements quantum
+optimal control theory (QOCT). 
+
+You may download it from its `gitlab page <https://gitlab.com/acbarrigon/qocttools>`_.
+Documentation `here <https://qocttools.readthedocs.io/>`_.
+
+It solves typical optimization problems defined on generic quantum systems. These
+may be closed (described by the Schrödinger equation) or open (described by Lindblad's equation).
+It relies heavily on the `QuTiP <https://qutip.org/>`_ program to handle internally
+the quantum objects representation, manipulation, etc., and on the `nlopt <https://nlopt.readthedocs.io/en/latest/>`_
+library for function optimization algorithms.
