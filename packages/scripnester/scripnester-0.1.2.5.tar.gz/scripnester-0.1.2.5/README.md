@@ -1,0 +1,1 @@
+generate scrips keys bars
