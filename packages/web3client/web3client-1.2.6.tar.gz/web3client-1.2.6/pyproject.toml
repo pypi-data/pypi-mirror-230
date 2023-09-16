@@ -1,0 +1,112 @@
+[project]
+name = "web3client"
+version = "1.2.6"
+description = "Batteries-included client to interact with blockchains and smart contracts"
+authors = [
+    { name = "coccoinomane", email = "coccoinomane@gmail.com" },
+]
+readme = "README.md"
+keywords = [
+    "web3",
+    "blockchain",
+    "ethereum",
+    "evm",
+]
+requires-python = ">=3.9"
+dependencies = [
+    "web3>=6.0.0",
+    "eth-typing>=2.3.0",
+    "setuptools>=67.2.0",
+    "typing-extensions>=4.4.0",
+    "pre-commit>=2.21.0",
+    "websockets>=10.0",
+]
+
+[project.license]
+text = "MIT"
+
+[project.entry-points.pytest11]
+web3test-ape = "web3test.ape.fixtures"
+web3test-web3client = "web3test.web3client.fixtures"
+web3test-web3factory = "web3test.web3factory.fixtures"
+
+[project.urls]
+homepage = "https://github.com/coccoinomane/web3client"
+repository = "https://github.com/coccoinomane/web3client"
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "mypy>=1.5.1",
+    "eth-ape[recommended-plugins]>=0.6.0",
+    "isort>=5.12.0",
+    "pre-commit>=3.3.3",
+    "autoflake>=2.2.0",
+    "black>=23.3.0",
+    "pytest>=7.0.0",
+]
+
+[tool.pdm.scripts]
+test = "ape test tests --network ::foundry"
+publish_test = "pdm publish -r testpypi -u ${PDM_PUBLISH_TEST_USERNAME} -P ${PDM_PUBLISH_TEST_PASSWORD}"
+release = "gh release create v{args} dist/web3client-{args}.tar.gz dist/web3client-{args}-py3-none-any.whl --generate-notes"
+
+[tool.black]
+line-length = 88
+
+[tool.setuptools.package-data]
+web3client = [
+    "py.typed",
+]
+web3factory = [
+    "py.typed",
+]
+web3test = [
+    "py.typed",
+]
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_incomplete_defs = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+no_implicit_optional = true
+show_error_codes = true
+strict_equality = true
+strict_optional = false
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true
+disallow_any_unimported = false
+disallow_untyped_calls = true
+exclude = [
+    "__pypackages__",
+]
+
+[tool.pytest.ini_options]
+filterwarnings = "ignore::DeprecationWarning"
+markers = [
+    "remote: tests that need an internet connection (deselect with '-m \"not remote\"')",
+    "local: tests that require a local blockchain to be run, e.g. ganache, anvil or hardhat network (deselect with '-m \"not local\"')",
+    "contracts: tests of the ape contracts",
+]
+
+[tool.isort]
+profile = "black"
+src_paths = [
+    "src",
+    "tests",
+]
+
+[tool.autoflake]
+in_place = true
+remove_all_unused_imports = true
+ignore_pass_after_docstring = true
+remove_unused_variables = false
+ignore_init_module_imports = true
+
+[build-system]
+requires = [
+    "pdm-pep517>=1.0.0",
+]
+build-backend = "pdm.pep517.api"
