@@ -1,0 +1,43 @@
+Metadata-Version: 2.1
+Name: env-star
+Version: 2.3.0
+Summary: a minimalist config manager
+Home-page: https://github.com/gustcorrea/env-vars
+License: MIT
+Author: Gustavo Correa
+Author-email: self.gustavocardoso@gmail.com
+Requires-Python: >=3.9,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3 :: Only
+Requires-Dist: gyver-attrs (>=0.7.0,<0.8.0)
+Requires-Dist: lazy-fields (>=1.0.1,<2.0.0)
+Requires-Dist: typing-extensions (>=4.7.1,<5.0.0)
+Project-URL: Repository, https://github.com/gustcorrea/env-vars
+Description-Content-Type: text/markdown
+
+# env-vars
+
+Simplified config for python projects based on starlette config
+
+# Installation
+
+```shell
+pip install env-star
+```
+
+# Usage
+
+```python
+from config import Config
+
+config = Config()
+
+MY_CONST = config(
+    'MY_ENV', cast=my_callable_or_class, default=any_castable)
+```
+
+
