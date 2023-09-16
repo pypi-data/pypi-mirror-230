@@ -1,0 +1,446 @@
+Metadata-Version: 2.1
+Name: snowflake-ml-python
+Author: Snowflake, Inc
+Author-email: support@snowflake.com
+Home-page: https://github.com/snowflakedb/snowflake-ml-python
+License: Apache License, Version 2.0
+Description-Content-Type: text/markdown
+Summary: The machine learning client library that is used for interacting with Snowflake to build machine learning solutions.
+Project-URL: Changelog, https://github.com/snowflakedb/snowflake-ml-python/blob/main/CHANGELOG.md
+Project-URL: Documentation, https://docs.snowflake.com/developer-guide/snowpark-ml
+Project-URL: Issues, https://github.com/snowflakedb/snowflake-ml-python/issues
+Project-URL: Source, https://github.com/snowflakedb/snowflake-ml-python
+Classifier: Development Status :: 3 - Alpha
+Classifier: Environment :: Console
+Classifier: Environment :: Other Environment
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Education
+Classifier: Intended Audience :: Information Technology
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Topic :: Database
+Classifier: Topic :: Software Development
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Software Development :: Libraries :: Application Frameworks
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+Requires-Python: >=3.8,<4
+Requires-Dist: absl-py>=0.15,<2
+Requires-Dist: anyio>=3.5.0,<4
+Requires-Dist: cloudpickle
+Requires-Dist: fsspec[http]>=2022.11,<2024
+Requires-Dist: numpy>=1.23,<2
+Requires-Dist: packaging>=20.9,<24
+Requires-Dist: pandas>=1.0.0,<2
+Requires-Dist: pyyaml>=6.0,<7
+Requires-Dist: s3fs>=2022.11,<2024
+Requires-Dist: scikit-learn>=1.2.1,<1.4
+Requires-Dist: scipy>=1.9,<2
+Requires-Dist: snowflake-connector-python[pandas]>=3.0.4,<4
+Requires-Dist: snowflake-snowpark-python>=1.5.1,<2
+Requires-Dist: sqlparse>=0.4,<1
+Requires-Dist: typing-extensions>=4.1.0,<5
+Requires-Dist: xgboost>=1.7.3,<2
+Provides-Extra: all
+Requires-Dist: lightgbm==3.3.5; extra == 'all'
+Requires-Dist: mlflow>=2.1.0,<2.4; extra == 'all'
+Requires-Dist: sentencepiece>=0.1.95,<0.2; extra == 'all'
+Requires-Dist: tensorflow>=2.9,<3; extra == 'all'
+Requires-Dist: torchdata>=0.4,<1; extra == 'all'
+Requires-Dist: transformers>=4.29.2,<5; extra == 'all'
+Provides-Extra: lightgbm
+Requires-Dist: lightgbm==3.3.5; extra == 'lightgbm'
+Provides-Extra: mlflow
+Requires-Dist: mlflow>=2.1.0,<2.4; extra == 'mlflow'
+Provides-Extra: tensorflow
+Requires-Dist: tensorflow>=2.9,<3; extra == 'tensorflow'
+Provides-Extra: torch
+Requires-Dist: torchdata>=0.4,<1; extra == 'torch'
+Provides-Extra: transformers
+Requires-Dist: sentencepiece>=0.1.95,<0.2; extra == 'transformers'
+Requires-Dist: transformers>=4.29.2,<5; extra == 'transformers'
+Version: 1.0.8
+
+# Snowpark ML
+
+Snowpark ML is a set of tools including SDKs and underlying infrastructure to build and deploy machine learning models.
+With Snowpark ML, you can pre-process data, train, manage and deploy ML models all within Snowflake, using a single SDK,
+ and benefit from Snowflake’s proven performance, scalability, stability and governance at every stage of the Machine
+ Learning workflow.
+
+## Key Components of Snowpark ML
+
+The Snowpark ML Python SDK provides a number of APIs to support each stage of an end-to-end Machine Learning development
+ and deployment process, and includes two key components.
+
+### Snowpark ML Development [Public Preview]
+
+A collection of python APIs to enable efficient model development directly in Snowflake:
+
+1. Modeling API (snowflake.ml.modeling) for data preprocessing, feature engineering and model training in Snowflake.
+This includes snowflake.ml.modeling.preprocessing for scalable data transformations on large data sets utilizing the
+compute resources of underlying Snowpark Optimized High Memory Warehouses, and a large collection of ML model
+development classes based on sklearn, xgboost, and lightgbm. See the private preview limited access docs (Preprocessing,
+ Modeling for more details on these.
+
+1. Framework Connectors: Optimized, secure and performant data provisioning for Pytorch and Tensorflow frameworks in
+their native data loader formats.
+
+### Snowpark ML Ops [Private Preview]
+
+Snowpark MLOps complements the Snowpark ML Development API, and provides model management capabilities along with
+integrated deployment into Snowflake. Currently, the API consists of
+
+1. FileSet API: FileSet provides a Python fsspec-compliant API for materializing data into a Snowflake internal stage
+from a query or Snowpark Dataframe along with a number of convenience APIs.
+
+1. Model Registry: A python API for managing models within Snowflake which also supports deployment of ML models into
+Snowflake Warehouses as vectorized UDFs.
+
+During PrPr, we are iterating on API without backward compatibility guarantees. It is better to recreate your registry
+everytime you update the package. This means, at this time, you cannot use the registry for production use.
+
+- [Documentation](https://docs.snowflake.com/developer-guide/snowpark-ml)
+
+## Getting started
+
+### Have your Snowflake account ready
+
+If you don't have a Snowflake account yet, you can [sign up for a 30-day free trial account](https://signup.snowflake.com/).
+
+### Create a Python virtual environment
+
+Python version 3.8, 3.9 & 3.10 are supported. You can use [miniconda](https://docs.conda.io/en/latest/miniconda.html),
+[anaconda](https://www.anaconda.com/), or [virtualenv](https://docs.python.org/3/tutorial/venv.html) to create a virtual
+ environment.
+
+To have the best experience when using this library, [creating a local conda environment with the Snowflake channel](
+    https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-packages.html#local-development-and-testing)
+is recommended.
+
+### Install the library to the Python virtual environment
+
+```sh
+pip install snowflake-ml-python
+```
+# Release History
+
+## 1.0.8
+
+### Behavior Changes
+
+### New Features
+
+### Bug Fixes
+
+- Model Development: Ordinal encoder can be used with mixed input column types.
+- Model Registry: Fix an issue that incorrect docker executable is used when building images.
+- Model Registry: Fix an issue that specifying `token` argument when using
+`snowflake.ml.model.models.huggingface_pipeline.HuggingFacePipelineModel` with `transformers < 4.32.0` is not effective.
+- Model Registry: Fix an issue that incorrect system function call is used when deploying to SPCS.
+- Model Registry: Fix an issue when using a `transformers.pipeline` that does not have a `tokenizer`.
+- Model Registry: Fix incorrectly-inferred image repository name during model deployment to SPCS.
+- Model Registry: Fix GPU resource retention issue caused by failed or stuck previous deployments in SPCS.
+
+## 1.0.7 (2023-09-05)
+
+### Bug Fixes
+
+- Model Development & Model Registry: Fix an error related to `pandas.io.json.json_normalize`.
+- Allow disabling telemetry.
+
+## 1.0.6 (2023-09-01)
+
+### New Features
+
+- Model Registry: add `create_if_not_exists` parameter in constructor.
+- Model Registry: Added get_or_create_model_registry API.
+- Model Registry: Added support for using GPU inference when deploying XGBoost (`xgboost.XGBModel` and `xgboost.Booster`
+), PyTorch (`torch.nn.Module` and `torch.jit.ScriptModule`) and TensorFlow (`tensorflow.Module` and
+`tensorflow.keras.Model`) models to Snowpark Container Services.
+- Model Registry: When inferring model signature, `Sequence` of built-in types, `Sequence` of `numpy.ndarray`,
+`Sequence` of `torch.Tensor`, `Sequence` of `tensorflow.Tensor` and `Sequence` of `tensorflow.Tensor` can be used
+ instead of only `List` of them.
+- Model Registry: Added `get_training_dataset` API.
+- Model Development: Size of metrics result can exceed previous 8MB limit.
+- Model Registry: Added support save/load/deploy HuggingFace pipeline object (`transformers.Pipeline`) and our wrapper
+(`snowflake.ml.model.models.huggingface_pipeline.HuggingFacePipelineModel`) to it. Using the wrapper to specify
+configurations and the model for the pipeline will be loaded dynamically when deploying. Currently, following tasks
+are supported to log without manually specifying model signatures:
+  - "conversational"
+  - "fill-mask"
+  - "question-answering"
+  - "summarization"
+  - "table-question-answering"
+  - "text2text-generation"
+  - "text-classification" (alias "sentiment-analysis" available)
+  - "text-generation"
+  - "token-classification" (alias "ner" available)
+  - "translation"
+  - "translation_xx_to_yy"
+  - "zero-shot-classification"
+
+### Bug Fixes
+
+- Model Development: Fixed a bug when using simple imputer with numpy >= 1.25.
+- Model Development: Fixed a bug when inferring the type of label columns.
+
+### Behavior Changes
+
+- Model Registry: `log_model()` now return a `ModelReference` object instead of a model ID.
+- Model Registry: When deploying a model with 1 `target method` only, the `target_method` argument can be omitted.
+- Model Registry: When using the snowflake-ml-python with version newer than what is available in Snowflake Anaconda
+Channel, `embed_local_ml_library` option will be set as `True` automatically if not.
+- Model Registry: When deploying a model to Snowpark Container Services and using GPU, the default value of num_workers
+will be 1.
+- Model Registry: `keep_order` and `output_with_input_features` in the deploy options have been removed. Now the
+behavior is controlled by the type of the input when calling `model.predict()`. If the input is a `pandas.DataFrame`,
+the behavior will be the same as `keep_order=True` and `output_with_input_features=False` before. If the input is a
+`snowpark.DataFrame`, the behavior will be the same as `keep_order=False` and `output_with_input_features=True` before.
+- Model Registry: When logging and deploying PyTorch (`torch.nn.Module` and `torch.jit.ScriptModule`) and TensorFlow
+(`tensorflow.Module` and `tensorflow.keras.Model`) models, we no longer accept models whose input is a list of tensor
+and output is a list of tensors. Instead, now we accept models whose input is 1 or more tensors as positional arguments,
+ and output is a tensor or a tuple of tensors. The input and output dataframe when predicting keep the same as before,
+ that is every column is an array feature and contains a tensor.
+
+## 1.0.5 (2023-08-17)
+
+### New Features
+
+- Model Registry: Added support save/load/deploy xgboost Booster model.
+- Model Registry: Added support to get the model name and the model version from model references.
+
+### Bug Fixes
+
+- Model Registry: Restore the db/schema back to the session after `create_model_registry()`.
+- Model Registry: Fixed an issue that the UDF name created when deploying a model is not identical to what is provided
+and cannot be correctly dropped when deployment getting dropped.
+- connection_params.SnowflakeLoginOptions(): Added support for `private_key_path`.
+
+## 1.0.4 (2023-07-28)
+
+### New Features
+
+- Model Registry: Added support save/load/deploy Tensorflow models (`tensorflow.Module`).
+- Model Registry: Added support save/load/deploy MLFlow PyFunc models (`mlflow.pyfunc.PyFuncModel`).
+- Model Development: Input dataframes can now be joined against data loaded from staged files.
+- Model Development: Added support for non-English languages.
+
+### Bug Fixes
+
+- Model Registry: Fix an issue that model dependencies are incorrectly reported as unresolvable on certain platforms.
+
+## 1.0.3 (2023-07-14)
+
+### Behavior Changes
+
+- Model Registry: When predicting a model whose output is a list of NumPy ndarray, the output would not be flattened,
+instead, every ndarray will act as a feature(column) in the output.
+
+### New Features
+
+- Model Registry: Added support save/load/deploy PyTorch models (`torch.nn.Module` and `torch.jit.ScriptModule`).
+
+### Bug Fixes
+
+- Model Registry: Fix an issue that when database or schema name provided to `create_model_registry` contains special
+characters, the model registry cannot be created.
+- Model Registry: Fix an issue that `get_model_description` returns with additional quotes.
+- Model Registry: Fix incorrect error message when attempting to remove a unset tag of a model.
+- Model Registry: Fix a typo in the default deployment table name.
+- Model Registry: Snowpark dataframe for sample input or input for `predict` method that contains a column with
+Snowflake `NUMBER(precision, scale)` data type where `scale = 0` will not lead to error, and will now correctly
+recognized as `INT64` data type in model signature.
+- Model Registry: Fix an issue that prevent model logged in the system whose default encoding is not UTF-8 compatible
+from deploying.
+- Model Registry: Added earlier and better error message when any file name in the model or the file name of model
+itself contains characters that are unable to be encoded using ASCII. It is currently not supported to deploy such a
+model.
+
+## 1.0.2 (2023-06-22)
+
+### Behavior Changes
+
+- Model Registry: Prohibit non-snowflake-native models from being logged.
+- Model Registry: `_use_local_snowml` parameter in options of `deploy()` has been removed.
+- Model Registry: A default `False` `embed_local_ml_library` parameter has been added to the options of `log_model()`.
+With this set to `False` (default), the version of the local snowflake-ml-python library will be recorded and used when
+deploying the model. With this set to `True`, local snowflake-ml-python library will be embedded into the logged model,
+and will be used when you load or deploy the model.
+
+### New Features
+
+- Model Registry: A new optional argument named `code_paths` has been added to the arguments of `log_model()` for users
+to specify additional code paths to be imported when loading and deploying the model.
+- Model Registry: A new optional argument named `options` has been added to the arguments of `log_model()` to specify
+any additional options when saving the model.
+- Model Development: Added metrics:
+  - d2_absolute_error_score
+  - d2_pinball_score
+  - explained_variance_score
+  - mean_absolute_error
+  - mean_absolute_percentage_error
+  - mean_squared_error
+
+### Bug Fixes
+
+- Model Development: `accuracy_score()` now works when given label column names are lists of a single value.
+
+## 1.0.1 (2023-06-16)
+
+### Behavior Changes
+
+- Model Development: Changed Metrics APIs to imitate sklearn metrics modules:
+  - `accuracy_score()`, `confusion_matrix()`, `precision_recall_fscore_support()`, `precision_score()` methods move from
+  respective modules to `metrics.classification`.
+- Model Registry: The default table/stage created by the Registry now uses "_SYSTEM_" as a prefix.
+- Model Registry: `get_model_history()` method as been enhanced to include the history of model deployment.
+
+### New Features
+
+- Model Registry: A default `False` flag named `replace_udf` has been added to the options of `deploy()`. Setting this
+to `True` will allow overwrite existing UDF with the same name when deploying.
+- Model Development: Added metrics:
+  - f1_score
+  - fbeta_score
+  - recall_score
+  - roc_auc_score
+  - roc_curve
+  - log_loss
+  - precision_recall_curve
+- Model Registry: A new argument named `permanent` has been added to the argument of `deploy()`. Setting this to `True`
+allows the creation of a permanent deployment without needing to specify the UDF location.
+- Model Registry: A new method `list_deployments()` has been added to enumerate all permanent deployments originating
+from a specific model.
+- Model Registry: A new method `get_deployment()` has been added to fetch a deployment by its deployment name.
+- Model Registry: A new method `delete_deployment()` has been added to remove an existing permanent deployment.
+
+## 1.0.0 (2023-06-09)
+
+### Behavior Changes
+
+- Model Registry: `predict()` method moves from Registry to ModelReference.
+- Model Registry: `_snowml_wheel_path` parameter in options of `deploy()`, is replaced with `_use_local_snowml` with
+default value of `False`. Setting this to `True` will have the same effect of uploading local SnowML code when executing
+model in the warehouse.
+- Model Registry: Removed `id` field from `ModelReference` constructor.
+- Model Development: Preprocessing and Metrics move to the modeling package: `snowflake.ml.modeling.preprocessing` and
+`snowflake.ml.modeling.metrics`.
+- Model Development: `get_sklearn_object()` method is renamed to `to_sklearn()`, `to_xgboost()`, and `to_lightgbm()` for
+respective native models.
+
+### New Features
+
+- Added PolynomialFeatures transformer to the snowflake.ml.modeling.preprocessing module.
+- Added metrics:
+  - accuracy_score
+  - confusion_matrix
+  - precision_recall_fscore_support
+  - precision_score
+
+### Bug Fixes
+
+- Model Registry: Model version can now be any string (not required to be a valid identifier)
+- Model Deployment: `deploy()` & `predict()` methods now correctly escapes identifiers
+
+## 0.3.2 (2023-05-23)
+
+### Behavior Changes
+
+- Use cloudpickle to serialize and deserialize models throughout the codebase and removed dependency on joblib.
+
+### New Features
+
+- Model Deployment: Added support for snowflake.ml models.
+
+## 0.3.1 (2023-05-18)
+
+### Behavior Changes
+
+- Standardized registry API with following
+  - Create & open registry taking same set of arguments
+  - Create & Open can choose schema to use
+  - Set_tag, set_metric, etc now explicitly calls out arg name as metric_name, tag_name, metric_name, etc.
+
+### New Features
+
+- Changes to support python 3.9, 3.10
+- Added kBinsDiscretizer
+- Support for deployment of XGBoost models & int8 types of data
+
+## 0.3.0 (2023-05-11)
+
+### Behavior Changes
+
+- Big Model Registry Refresh
+  - Fixed API discrepancies between register_model & log_model.
+  - Model can be referred by Name + Version (no opaque internal id is required)
+
+### New Features
+
+- Model Registry: Added support save/load/deploy SKL & XGB Models
+
+## 0.2.3 (2023-04-27)
+
+### Bug Fixes
+
+- Allow using OneHotEncoder along with sklearn style estimators in a pipeline.
+
+### New Features
+
+- Model Registry: Added support for delete_model. Use delete_artifact = False to not delete the underlying model data
+but just unregister.
+
+## 0.2.2 (2023-04-11)
+
+### New Features
+
+- Initial version of snowflake-ml modeling package.
+  - Provide support for training most of scikit-learn and xgboost estimators and transformers.
+
+### Bug Fixes
+
+- Minor fixes in preprocessing package.
+
+## 0.2.1 (2023-03-23)
+
+### New Features
+
+- New in Preprocessing:
+  - SimpleImputer
+  - Covariance Matrix
+- Optimization of Ordinal Encoder client computations.
+
+### Bug Fixes
+
+- Minor fixes in OneHotEncoder.
+
+## 0.2.0 (2023-02-27)
+
+### New Features
+
+- Model Registry
+- PyTorch & Tensorflow connector file generic FileSet API
+- New to Preprocessing:
+  - Binarizer
+  - Normalizer
+  - Pearson correlation Matrix
+- Optimization in Ordinal Encoder to cache vocabulary in temp tables.
+
+## 0.1.3 (2023-02-02)
+
+### New Features
+
+- Initial version of transformers including:
+  - Label Encoder
+  - Max Abs Scaler
+  - Min Max Scaler
+  - One Hot Encoder
+  - Ordinal Encoder
+  - Robust Scaler
+  - Standard Scaler
+
