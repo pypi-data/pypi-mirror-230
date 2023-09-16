@@ -1,0 +1,52 @@
+[project]
+name = "logng"
+description = "A logging library, intending to simplify the use of logger and easy to configure and implements."
+authors = [
+    { name = "H2Sxxa", email = "h2sxxa0w0@gmail.com" },
+]
+dependencies = [
+    "colorama",
+]
+requires-python = ">=3.11"
+readme = "README.md"
+dynamic = []
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+version = "0.1.2"
+
+[project.license]
+text = "MIT"
+
+[project.urls]
+Homepage = "https://pypi.org/project/logng/"
+Repository = "https://github.com/H2Sxxa/logng"
+Issues = "https://github.com/H2Sxxa/logng/issues"
+
+[tool.pdm.version]
+source = "scm"
+write_to = "logng/__version__.py"
+write_template = "__version__ = '{}'"
+
+[tool.pdm.build]
+excludes = [
+    "./**/.git",
+]
+package-dir = "src"
+includes = [
+    "src/logng",
+]
+source-includes = [
+    "LICENSE",
+    "README.md",
+]
+
+[build-system]
+requires = [
+    "pdm-backend",
+]
+build-backend = "pdm.backend"
