@@ -1,0 +1,145 @@
+---
+- job:
+    name: barbican-tox-functional
+    parent: devstack-tox-functional
+    description: Functional testing
+    required-projects:
+      - name: openstack/barbican
+      - name: openstack/castellan
+      - name: openstack/openstacksdk
+    vars:
+      devstack_plugins:
+        barbican: https://opendev.org/openstack/barbican
+      tox_install_siblings: true
+
+- job:
+    name: barbican-dogtag-tox-functional
+    nodeset: devstack-single-node-fedora-latest
+    parent: barbican-tox-functional
+    description: |
+      Functional testing for DogTag backend
+    vars:
+      devstack_services:
+        barbican-dogtag: true
+
+- job:
+    name: barbican-tox-functional-fips
+    nodeset: devstack-single-node-centos-9-stream
+    parent: barbican-tox-functional
+    description: |
+      Functional testing for a FIPS enabled Centos 8 system
+    pre-run: playbooks/enable-fips.yaml
+    vars:
+      nslookup_target: 'opendev.org'
+
+- job:
+    name: barbican-vault-tox-functional
+    parent: barbican-tox-functional
+    description: |
+      Functional testing for Hashicorp Vault backend
+    vars:
+      devstack_services:
+        barbican-vault: true
+      tox_environment:
+        VAULT_PLUGIN_ENABLED: 1
+
+# Temporary job until SQLAlchemy 2.0 is no longer blocked by upper-requirements
+- job:
+    name: barbican-tox-py310-with-sqlalchemy-2x
+    parent: openstack-tox-py310
+    description: |
+      Run unit tests with main branch of SQLAlchemy, alembic and oslo.db.
+      Takes advantage of the base tox job's install-siblings feature.
+    # The job only tests the latest and shouldn't be run on the stable branches
+    branches: ^(?!stable)
+    required-projects:
+      - name: github.com/sqlalchemy/sqlalchemy
+        override-checkout: main
+      - name: github.com/sqlalchemy/alembic
+        override-checkout: main
+      - name: openstack/oslo.db
+
+- job:
+    name: barbican-kmip-tox-functional
+    parent: devstack-tox-functional
+    description: |
+      Functional testing for KMIP backend using PyKMIP
+    vars:
+      devstack_services:
+        kmip: true
+
+- job:
+    name: barbican-simple-crypto-devstack-tempest
+    parent: barbican-tempest-plugin-simple-crypto
+    description: |
+      Compatibility alias for barbican-tempest-plugin-simple-crypto
+
+- job:
+    name: barbican-simple-crypto-devstack-tempest-ipv6-only
+    parent: barbican-tempest-plugin-simple-crypto-ipv6-only
+    description: |
+      Compatibility alias for barbican-tempest-plugin-simple-crypto-ipv6-only
+
+- job:
+    name: barbican-simple-crypto-devstack-tempest-castellan-from-git
+    parent: barbican-tempest-plugin-simple-crypto-castellan-src
+    description: |
+      Compatibility alias for barbican-tempest-plugin-simple-crypto-castellan-src
+
+- job:
+    name: barbican-simple-crypto-devstack-tempest-cursive
+    parent: barbican-tempest-plugin-simple-crypto-cursive
+    description: |
+      Compatibility alias for barbican-tempest-plugin-simple-crypto-cursive
+
+- job:
+    name: barbican-grenade
+    parent: grenade
+    required-projects:
+      - opendev.org/openstack/grenade
+      - opendev.org/openstack/barbican
+      - opendev.org/openstack/barbican-tempest-plugin
+      - opendev.org/openstack/python-barbicanclient
+    vars:
+      devstack_plugins:
+        barbican: https://opendev.org/openstack/barbican
+      devstack_services:
+        barbican-svc: true
+        barbican-retry: true
+      tempest_plugins:
+        - barbican-tempest-plugin
+      tempest_test_regex: '\[.*\bsmoke\b.*\]|^(barbican_tempest_plugin.tests)'
+      tox_envlist: all
+
+- project:
+    queue: barbican
+    templates:
+      - check-requirements
+      - openstack-cover-jobs
+      - openstack-python3-jobs
+      - publish-openstack-docs-pti
+      - release-notes-jobs-python3
+    check:
+      jobs:
+        - barbican-tox-functional
+        - barbican-vault-tox-functional:
+            voting: false
+        - barbican-grenade:
+            voting: false
+        - barbican-tempest-plugin-simple-crypto
+        - barbican-tempest-plugin-simple-crypto-secure-rbac:
+            voting: false
+        - barbican-tempest-plugin-simple-crypto-ipv6-only
+        - barbican-tox-functional-fips:
+            voting: false
+        - octavia-v2-dsvm-tls-barbican
+        - barbican-tox-py310-with-sqlalchemy-2x
+    gate:
+      jobs:
+        - barbican-tox-functional
+        - barbican-tox-py310-with-sqlalchemy-2x
+    experimental:
+      jobs:
+        - barbican-dogtag-tox-functional
+        - barbican-kmip-tox-functional
+
