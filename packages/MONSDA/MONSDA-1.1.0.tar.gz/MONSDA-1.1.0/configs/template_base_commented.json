@@ -1,0 +1,501 @@
+{
+  "comment":{
+    "WORKFLOWS": "Select workflows you want to run, possible values: FETCH, MAPPING, QC, DEDUP, TRIMMING, COUNTING, TRACKS, PEAKS, DE, DEU, DAS, DTU, CIRCS",
+    "BINS": "Where to find the scripts used in the workflow, per default the scripts directory that comes with MONSDA. ONLY CHANGE IF YOU KNOW WHAT YOU ARE DOING!",
+    "MAXTHREADS": "Maximum number of cores to use, make sure this fits your needs, acts as upper cap.",
+    "VERSION": "Version of MONSDA to use, needs to match installed version"
+  },
+  "WORKFLOWS": "",
+  "BINS": "MONSDA/scripts",
+  "MAXTHREADS": "",
+  "VERSION": "",
+  "SETTINGS": {
+    "comment": {
+      "GROUPS": "Please enter a comma separated list of the groups your samples belong to. This does not have to be in any relation with the condition-tree but is used solely to establish contrasts for differential analysis. Each sample needs a matching entry. Can be left blank to run all-vs-all comparison.",
+      "TYPES": "Please enter a comma separated list for this setting matching your sample list, i.e. each sample should have a matching entry. Can be left blank.",
+      "BATCHES": "Please enter a comma separated list for this setting matching your sample list, i.e. each sample should have a matching entry. Can be left blank.",
+      "SEQUENCING": "single or paired or singlecell and stranded info [rf,fr,ff,unstranded (or empty)] comma separated",
+      "REFERENCE": "set path to reference, '.fa.gz' ending expected",
+      "DECOY": "set path to decoy file if tool for mapping/counting needs decoys, like e.g. salmon",
+      "INDEX": "set path to index, default index to use for mapping with this settings",
+      "PREFIX": "if needed, prefix for mapping software can be set here",
+      "GTF": "set path to gtf, '.gtf.gz' ending expected, THIS WILL BE USED WHENEVER POSSIBLE OR NOT DEFINED OTHERWISE",
+      "GFF": "set path to gff, '.gff.gz' ending expected. THIS WILL BE USED WHENEVER POSSIBLE OR NOT DEFINED OTHERWISE",
+      "IP": "OPTIONAL if PEAKS is run and files need specific processing, eg. for iCLIP protocol"
+    },
+    "SAMPLES": [],
+    "GROUPS": [],
+    "TYPES": [],
+    "BATCHES": [],
+    "SEQUENCING": "",
+    "REFERENCE": "",
+    "INDEX": "",
+    "PREFIX": "",
+    "ANNOTATION": {
+      "GTF": "",
+      "GFF": ""
+    },
+    "DECOY": {
+    },
+    "IP": ""
+  },
+  "FETCH": {
+    "TOOLS": {
+      "sra": "sra"
+    },
+    "ENV" : "",
+    "BIN" : "",
+    "sra": {
+      "comment": {
+        "SRA":"SRA options here if any, paired is not required, will be resolved by rules. With the release of version 2.10.3 of sra-toolkit one has to configure to tool before running. Please do so and set the path to your config file as PREFETCH value. See https://github.com/ncbi/sra-tools/issues/291 for more info."
+      },
+      "OPTIONS": {
+        "PREFETCH": "${HOME}/.ncbi/user-settings.mkfg",
+        "DOWNLOAD": ""
+        }
+    }
+  },
+  "BASECALL": {
+    "TOOLS": {
+      "guppy": "~/.local/bin/guppy-cpu/bin/guppy_basecaller"
+    },
+    "ENV" : "",
+    "BIN" : "",
+    "guppy": {
+      "comment": {
+        "BASECALL": "Guppy options here if any, paired is not required, will be resolved by rules"
+      },
+      "OPTIONS": {
+        "BASECALL": ""
+      }
+    }
+  },
+  "QC": {
+    "TOOLS": {
+      "fastqc": "fastqc"
+    },
+    "ENV" : "",
+    "BIN" : "",
+    "fastqc": {
+      "comment": {
+        "QC": "QC options here if any, paired is not required, will be resolved by rules",
+        "MULTI": "MultiQC options here if any, paired is not required, will be resolved by rules"
+      },
+      "OPTIONS": {
+        "QC": "",
+        "MULTI": ""
+      }
+    }
+  },
+  "TRIMMING": {
+    "TOOLS": {
+      "trimgalore": "trim_galore",
+      "cutadapt": "cutadapt",
+      "bbduk": "bbmap"
+    },
+    "ENV" : "",
+    "BIN" : "",
+    "trimgalore": {
+      "comment": {
+        "TRIM": "Trimming options here, --paired is not required, will be resolved by rules"
+      },
+      "OPTIONS": {
+        "TRIM": "-q 15 --length 8 -e 0.15"
+      }
+    },
+    "cutadapt": {
+      "comment": {
+        "TRIM": "Trimming options here, --paired is not required, will be resolved by rules"
+      },
+      "OPTIONS": {
+        "TRIM": "-q 15 --length 8 -e 0.15"
+      }
+    },
+    "bbduk": {
+      "comment": {
+        "TRIM": "Trimming options here, --paired is not required, will be resolved by rules"
+      },
+      "OPTIONS": {
+        "TRIM": "-q 15 --length 8 -e 0.15"
+      }
+    }
+  },
+  "DEDUP": {
+    "TOOLS": {
+      "umitools": "umi_tools"
+    },
+    "ENV" : "",
+    "BIN" : "",
+    "umitools": {
+      "comment": {
+          "WHITELIST" : "umi_tools whitelist options",
+          "EXTRACT": "umi_tools extract options",
+          "DEDUP": "umi_tools dedup options"
+      },
+      "OPTIONS": {
+          "WHITELIST" : "--extract-method string --bc-pattern 'XNNNNX'",
+          "EXTRACT": "--extract-umi-method read_id",
+          "DEDUP": ""
+      }
+    },
+    "picard":{
+      "comment":
+        {
+            "JAVA" : "Options for JRE",
+            "DEDUP": "Dedup options"
+        },
+        "OPTIONS":
+        {
+            "JAVA" : "",
+            "DEDUP": ""
+        }
+    }
+  },
+  "MAPPING": {
+    "TOOLS": {
+      "star": "STAR",
+      "segemehl3": "segemehl.x",
+      "segemehl": "segemehl.x",
+      "hisat2": "hisat2",
+      "bwa": "bwa mem",
+      "bwameth": "bwameth.py",
+      "minimap": "minimap2"
+    },
+    "ENV" : "",
+    "BIN" : "",
+    "star": {
+      "comment": {
+          "INDEX" : "Indexing options",
+          "MAP": "Mapping options",
+          "EXTENSION" : "Prefix for index name, can be left empy."
+      },
+      "OPTIONS": {
+          "INDEX" : "--sjdbGTFfeatureExon exon --sjdbGTFtagExonParentTranscript Parent --genomeSAindexNbases 13",
+          "MAP": "--sjdbGTFfeatureExon exon --sjdbGTFtagExonParentTranscript Parent --outSAMprimaryFlag AllBestScore",
+          "EXTENSION" : ""
+      }
+    },
+    "segemehl3": {
+      "comment": {
+        "INDEX" : "Indexing options",
+        "MAP": "Mapping options",
+        "EXTENSION" : "Prefix for index name, can be left empty."
+      },
+      "OPTIONS": {
+          "INDEX" : "",
+          "MAP": "",
+          "EXTENSION" : ""
+      }
+    },
+    "segemehl": {
+      "comment": {
+        "INDEX" : "Indexing options",
+        "MAP": "Mapping options",
+        "EXTENSION" : "Prefix for index name, can be left empty."
+      },
+      "OPTIONS": {
+          "INDEX" : "",
+          "MAP": "",
+          "EXTENSION" : ""
+      }
+    },
+    "hisat2": {
+      "comment": {
+        "INDEX" : "Indexing options",
+        "MAP": "Mapping options",
+        "EXTENSION" : "Prefix for index name, can be left empty."
+      },
+      "OPTIONS": {
+          "INDEX" : "",
+          "MAP": "",
+          "EXTENSION" : ""
+      }
+    },
+    "bwa": {
+      "comment": {
+        "INDEX" : "Indexing options",
+        "MAP": "Mapping options",
+        "EXTENSION" : "Prefix for index name, can be left empty."
+      },
+      "OPTIONS": {
+          "INDEX" : "",
+          "MAP": "",
+          "EXTENSION" : ""
+      }
+    },
+    "bwameth": {
+      "comment": {
+        "INDEX" : "Indexing options",
+        "MAP": "Mapping options",
+        "EXTENSION" : "Prefix for index name, can be left empty."
+      },
+      "OPTIONS": {
+          "INDEX" : "",
+          "MAP": "",
+          "EXTENSION" : ""
+      }
+    },
+    "minimap": {
+      "comment": {
+        "INDEX" : "Indexing options",
+        "MAP": "Mapping options",
+        "EXTENSION" : "Prefix for index name, can be left empty."
+      },
+      "OPTIONS": {
+          "INDEX" : "",
+          "MAP": "",
+          "EXTENSION" : ""
+      }
+    },
+  },
+  "COUNTING": {
+    "TOOLS": {
+      "countreads": "featureCounts",
+      "salmon": "salmon"
+    },
+    "ENV" : "",
+    "BIN" : "",
+    "FEATURES": {
+      "exon": "Parent",
+      "gene": "ID"
+    },
+    "countreads": {
+      "comment": {
+          "COUNT": "Counting options here, --paired is not required, will be resolved by rules, annotation is resolved from Annotation options, make sure you use correct options depending on gff/gtf input"
+      },
+      "OPTIONS": {
+          "COUNT": "-f --fraction -O -M"
+      }
+    },
+    "salmon": {
+      "comment": {
+          "INDEX": "salmon index options",
+          "QUANT": "salmon quant options"
+      },
+      "OPTIONS":
+        {
+            "INDEX": "-l A --gencode",
+            "QUANT": "--gcBias"
+        }
+    }
+  },
+  "TRACKS": {
+    "TOOLS": {
+      "ucsc": "ucsc"
+    },
+    "ENV" : "",
+    "BIN" : "",
+    "ucsc": {
+      "comment": {
+        "TRACKS":"Set options for naming of tracks"
+      },
+      "OPTIONS":
+        {
+          "TRACKS" : "-n hubname -s short_hubname -l long_trackname -b short_trackname"
+        }
+    }
+  },
+  "PEAKS": {
+    "TOOLS": {
+      "macs": "macs2",
+      "peaks": "peaks",
+      "piranha": "Piranha"
+    },
+    "ENV" : "",
+    "BIN" : "",
+    "COMPARABLE" :
+    {
+        "Condition": "Control"
+    },
+    "ENV" : "",
+    "BIN" : "",
+    "IP": "",
+    "macs": {
+      "CLIP": "",
+      "comment": {
+          "FINDPEAKS": "Set options for peak finding procedure"
+      },
+      "OPTIONS": {
+          "FINDPEAKS": "-g --keep-dup auto --fix-bimodal --extsize 200 --qvalue 0.05 --shift -100"
+      }
+    },
+    "peaks": {
+      "CLIP": "",
+      "comment": {
+          "PREPROCESS": "Preprocessor options",
+          "FINDPEAKS": "Options for peak finder"
+      },
+      "OPTIONS": {
+          "PREPROCESS": "",
+          "FINDPEAKS": "-b 10"
+      }
+    },
+    "piranha": {
+      "CLIP": "",
+      "comment": {
+          "PREPROCESS": "Preprocessor options",
+          "FINDPEAKS": "Options for peak finder"
+      },
+      "OPTIONS": {
+          "PREPROCESS": "",
+          "FINDPEAKS": "-b 10"
+      }
+    }
+  },
+  "DE": {
+    "TOOLS": {
+      "deseq2": "Analysis/DE/DESEQ2.R",
+      "edger": "Analysis/DE/EDGER.R"
+    },
+    "ENV" : "",
+    "BIN" : "",
+    "COMPARABLE": {
+      "WTvsKO": [
+        [],
+        []
+      ]
+    },
+    "CUTOFFS": {
+      "pvalue": "0.05",
+      "lfc": "1.5"
+    },
+    "deseq2": {
+      "comment": {
+          "COUNT": "Options for read counting, independent of COUNTS workflows, utilizes FeatureCounts",
+          "DE": "Options for DE Analysis, e.g. path to spike-in"
+      },
+      "OPTIONS": {
+          "COUNT": "-t gene -g gene_id --fraction -O",
+          "DE": "controlgenes=spike-in.list"
+      }
+    },
+    "edger": {
+      "comment": {
+          "COUNT": "Options for read counting, independent of COUNTS workflows, utilizes FeatureCounts",
+          "DE": "Options for DE Analysis, e.g. path to spike-in"
+      },
+      "OPTIONS": {
+          "COUNT": "-t gene -g gene_id --fraction -O",
+          "DE": "controlgenes=spike-in.list"
+      }
+    }
+  },
+  "DEU": {
+    "TOOLS": {
+      "dexseq": "Analysis/DEU/DEXSEQ.R",
+      "edger": "Analysis/DEU/EDGER.R"
+    },
+    "ENV" : "",
+    "BIN" : "",
+    "COMPARABLE": {
+      "WTvsKO": [
+        [],
+        []
+      ]
+    },
+    "CUTOFFS": {
+      "pvalue": "0.05",
+      "lfc": "1.5"
+    },
+    "dexseq": {
+      "comment": {
+          "COUNT": "Options for read counting, independent of COUNTS workflows, utilizes FeatureCounts",
+          "DEU": "Options for DEU Analysis, leave blank unless you know exactly what you are doing"
+      },
+      "OPTIONS": {
+          "COUNT": "-t exon -g gene_id -f --fraction -O",
+          "DEU": ""
+      }
+    },
+    "edger": {
+      "comment": {
+          "COUNT": "Options for read counting, independent of COUNTS workflows, utilizes FeatureCounts",
+          "DEU": "Options for DEU Analysis, leave blank unless you know exactly what you are doing"
+      },
+      "OPTIONS": {
+          "COUNT": "-t exon -g gene_id -f --fraction -O",
+          "DEU": ""
+      }
+    }
+  },
+  "DAS": {
+    "ENV" : "",
+    "BIN" : "",
+    "TOOLS": {
+      "diego": "Analysis/DAS/DIEGO.py",
+      "edger": "Analysis/DAS/EDGER.R"
+    },
+    "COMPARABLE": {
+      "WTvsKO": [
+        [],
+        []
+      ]
+    },
+    "CUTOFFS": {
+      "pvalue": "0.05",
+      "lfc": "1.5"
+    },
+    "diego": {
+      "comment":{
+          "COUNT": "Options for read counting, independent of COUNTS workflows, utilizes FeatureCounts",
+          "DAS": "Options for DAS Analysis"
+      },
+      "OPTIONS": {
+          "COUNT": "-t exon -g gene_id -f --fraction -O",
+          "DAS": "-c 10 -d 3 -q 0.01 -z 1.0 -r"
+      }
+    },
+    "edger": {
+      "comment": {
+          "COUNT": "Options for read counting, independent of COUNTS workflows, utilizes FeatureCounts",
+          "DAS": "Options for DAS Analysis, leave blank unless you know exactly what you are doing"
+      },
+      "OPTIONS": {
+          "COUNT": "-t exon -g gene_id -f --fraction -O",
+          "DAS": ""
+      }
+    }
+  },
+  "DTU": {
+    "TOOLS": {
+      "dexseq": "Analysis/DTU/DEXSEQ.R",
+      "drimseq": "Analysis/DTU/DRIMSEQ.R"
+    },
+    "ENV" : "",
+    "BIN" : "",
+    "COMPARABLE": {
+      "WTvsKO": [
+        [],
+        []
+      ]
+    },
+    "CUTOFFS": {
+      "pvalue": "0.05",
+      "lfc": "1.5"
+    },
+    "drimseq": {
+      "comment": {
+          "INDEX": "salmon index options, e.g. path to decoy file",
+          "QUANT": "salmon quant options",
+          "DTU": "Options for DTU Analysis, leave blank unless you know exactly what you are doing, can be used to set cutoffs for filtering, e.g. min_samps_feature_expr, min_gene_expr ..."
+      },
+      "OPTIONS": {
+          "INDEX": "-l A --gencode -d GENOMES/salmon_decoy",
+          "QUANT": "--gcBias",
+          "DTU": ""
+      }
+    },
+    "dexseq": {
+      "comment": {
+          "INDEX": "salmon index options, e.g. path to decoy file",
+          "QUANT": "salmon quant options",
+          "DTU": "Options for DTU Analysis, leave blank unless you know exactly what you are doing, , can be used to set cutoffs for filtering, e.g. min_samps_feature_expr, min_gene_expr ..."
+      },
+      "OPTIONS": {
+          "INDEX": "-l A --gencode -d GENOMES/salmon_decoy",
+          "QUANT": "--gcBias",
+          "DTU": ""
+      }
+    }
+  }
+}
