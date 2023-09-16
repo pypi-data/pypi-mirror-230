@@ -1,0 +1,39 @@
+Metadata-Version: 2.1
+Name: glue-plotly
+Version: 0.5.0
+Summary: Experimental plot.ly exporters for glue
+Home-page: https://github.com/glue-viz/glue-plotly
+Author: Thomas Robitaille and Catherine Zucker
+Author-email: glue.viz@gmail.com
+License: BSD 3-Clause License
+Provides: glue_plotly
+Requires-Python: >=3.8
+License-File: LICENSE
+Requires-Dist: glue-core>=1.13.1
+Requires-Dist: plotly
+Requires-Dist: chart-studio
+Provides-Extra: test
+Requires-Dist: pytest; extra == "test"
+Requires-Dist: pytest-cov; extra == "test"
+Requires-Dist: mock; extra == "test"
+Requires-Dist: glue-vispy-viewers; extra == "test"
+Provides-Extra: qt
+Requires-Dist: glue-qt; extra == "qt"
+Requires-Dist: PySide2; python_version == "2" and extra == "qt"
+Requires-Dist: PyQt5; python_version >= "3" and extra == "qt"
+Provides-Extra: jupyter
+Requires-Dist: glue-jupyter; extra == "jupyter"
+Requires-Dist: ipyvuetify; extra == "jupyter"
+Requires-Dist: ipyfilechooser; extra == "jupyter"
+
+|Actions Status| |Coverage Status|
+
+Experimental plot.ly plugin for glue
+------------------------------------
+
+.. |Actions Status| image:: https://github.com/glue-viz/glue-plotly/workflows/ci_workflows.yml/badge.svg
+    :target: https://github.com/glue-viz/glue-plotly/actions
+    :alt: Glue-plotly's GitHub Actions CI Status
+.. |Coverage Status| image:: https://codecov.io/gh/glue-viz/glue-plotly/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/glue-viz/glue-plotly
+    :alt: Glue-plotly's Coverage Status
