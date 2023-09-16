@@ -1,0 +1,65 @@
+Metadata-Version: 2.1
+Name: pendo
+Version: 0.0.5
+Summary: An unofficial client for the Pendo API.
+Author-email: "Galileo Technologies, Inc" <team@rungalileo.io>
+Requires-Python: >=3.9.8
+Description-Content-Type: text/markdown
+Requires-Dist: requests >=2.22.0
+Requires-Dist: pydantic >=1.5.1
+Requires-Dist: flake8 >=3.9.2 ; extra == "dev"
+Requires-Dist: mypy >=0.910 ; extra == "dev"
+Requires-Dist: black >=21.10b0 ; extra == "dev"
+Requires-Dist: isort >=5.9.3 ; extra == "dev"
+Requires-Dist: autoflake >=1.4 ; extra == "dev"
+Requires-Dist: flake8-docstrings >=1.6.0 ; extra == "dev"
+Requires-Dist: pre-commit >=2.17.0 ; extra == "dev"
+Requires-Dist: types-requests >=0.3.2 ; extra == "dev"
+Requires-Dist: pytest >=6.2.5 ; extra == "test"
+Requires-Dist: coverage >=6.1.1 ; extra == "test"
+Requires-Dist: pytest-cov >=3.0.0 ; extra == "test"
+Project-URL: Documentation, https://www.github.com/rungalileo/pendo
+Provides-Extra: dev
+Provides-Extra: test
+
+# pendo
+
+An unofficial Python HTTP client for [Pendo](https://developers.pendo.io/docs).
+
+## Features
+
+* Server Side Track Events
+
+## Requirements
+
+Python 3.9+
+
+## Installation
+
+```shell
+pip install pendo
+```
+
+## Usage
+
+#### [Server Side Track Events](https://support.pendo.io/hc/en-us/articles/360032294291-Track-Events-Configuration#server-side-0-7)
+
+A Pendo Admin can access the `pendo_integration_key` in your app settings via: Subscription Settings > Choose your App > App Details.
+
+```python
+from pendo import Pendo
+
+client = Pendo(pendo_integration_key="<YOUR_INTEGRATION_KEY>")
+response = client.track({
+    "event": "MyEvent",
+    "visitorId": "00000-0000-0000-0000",
+    "accountId": "11111-1111-1111-1111",
+    "timestamp": int(time.time() * 1000),
+})
+assert response.status_code == 200
+```
+
+## Contributing
+
+Read the [contributing guide](CONTRIBUTING.md).
+
