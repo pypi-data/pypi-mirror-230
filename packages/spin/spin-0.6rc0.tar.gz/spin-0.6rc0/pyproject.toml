@@ -1,0 +1,63 @@
+[project]
+name = "spin"
+version = "0.6rc0"
+requires-python = ">=3.7"
+description = "Developer tool for scientific Python libraries"
+readme = "README.md"
+license = {file = "LICENSE"}
+maintainers = [
+  {name = "Scientific Python", email = "spin@discuss.scientific-python.org"}
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: BSD License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3 :: Only",
+]
+dependencies = [
+  "click",
+  "tomli; python_version < '3.11'",
+  "colorama; platform_system == 'Windows'"
+]
+
+[project.scripts]
+spin = "spin.__main__:main"
+
+[project.optional-dependencies]
+lint = ["pre-commit == 3.4.0"]
+dev = ["changelist == 0.1"]
+
+[project.urls]
+homepage = "https://github.com/scientific-python/spin"
+
+[tool.setuptools.packages.find]
+include = ["spin*"]
+
+[tool.pytest.ini_options]
+filterwarnings = [
+  "ignore:cannot collect 'test' because it is not a function:",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py37"
+select = [
+    "C",
+    "E",
+    "F",
+    "W",
+    "B",
+    "I",
+    "UP",
+]
+ignore = ["B006", "C901", "E501", "E722"]
