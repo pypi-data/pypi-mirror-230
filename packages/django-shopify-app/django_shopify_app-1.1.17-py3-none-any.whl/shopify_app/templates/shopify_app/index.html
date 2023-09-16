@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+  </head>
+  <body>
+    <script src="https://unpkg.com/@shopify/app-bridge@3"></script>
+    <script src="https://unpkg.com/@shopify/app-bridge-utils@3"></script>
+    <script>
+      var AppBridge = window["app-bridge"];
+      var AppBridgeUtils = window["app-bridge-utils"];
+      var actions = window["app-bridge"].actions;
+
+      var AppBridge = window["app-bridge"];
+      var createApp = AppBridge.default;
+
+      var app = createApp({
+        apiKey: "{{api_key}}",
+        host: "{{host}}",
+      });
+      var redirect = actions.Redirect.create(app);
+      var redirectUrl = "{{ redirect | safe }}";
+      redirect.dispatch(actions.Redirect.Action.REMOTE, redirectUrl);
+    </script>
+  </body>
+</html>
