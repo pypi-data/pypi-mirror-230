@@ -1,0 +1,2052 @@
+CHANGES
+=======
+
+v1.0.0
+------
+
+* [doc][api][info] Provide machine-independant docstrings
+* [doc][user-guide] Propagate abc/ ref link changes
+* [doc][api] Move util/ to top-level with TOC
+* [doc][api] Move abc/ to top-level with TOC
+* [docs][user-guides] review and add references to API
+* [docs][examples] refactor notebook name for consistency (pt. 2)
+* [docs] change code color in html \`h2\` context This solves issue of not being able to see the [Parameters (\_\_init\_\_ / fit)] title in the Solver API reference
+* [docs][examples] refactor notebook name for consistency
+* [docs][examples] add example on how to use pyxu plugins
+* [docs][fair] small format edits
+* [docs][fair] add warning for pyxu score usage
+* [docs][fair] add overloading example & howto contribute to core Pyxu
+* [docs][partial derivative] use absolute error in example
+* [docs][fair] add catalogue preview
+* [docs] upgrade DiffOps example to user guide
+* [doc] Add all references
+* [doc] Propagate pxu.util.[array\_module, misc] changes
+* [src] Move to\_NUMPY(), compute() to array\_module
+* [entrypoints] linterns reformatting
+* [plugin] capture exception and raise warning if fail to load plugin
+* entrypoints add entrypoints to func, linop, map, blocks and interop
+* [doc][fair] improve documentation on Pyxu score
+* [src] isort corrections
+* [doc] Ignore unfixable warnings
+* [doc][src] Minor rendering fixes
+* [fair][bugfix] fix opt entry points
+* [doc] improve documentation on contributing plugins
+* [doc][api] Granular operator/ structure
+* [util] Re-arrange module functions to match doc structure
+* [doc][api] Granular util/ structure
+* [doc][api] Granular operator.interop structure. (partial?)
+* [doc][api] Granular abc/ structure
+* [doc][api] Sub-categorize top-level namespaces
+* [doc][api] Add TOC
+* [src][linop/base] Explicit-ize autosummary comment
+* [doc][guide] small update HPC Features in Pyxu
+* [doc][guide] HPC Features in Pyxu
+* [src] Merge inspect.py & merge.py
+* [src] Fix minor flake8/black issues
+* [doc] Contact URL changed to contact@pyxu.org
+* [doc][api] Re-order sections to match description order
+* [doc] Homogenize English language use
+* [doc][op] Add missing autodoc entries
+* [doc][abc/] Fix autosummary comment
+* [doc][operator/] Fix autosummary comment
+* [doc][runtime/] Fix autosummary comment
+* [doc][util/] Fix autosummary comment
+* [doc][interop/] Fix autosummary comment
+* [api] Rename torch IO functions to match JAX
+* [doc][info/] Fix autosummary comment
+* [doc][abc/] Fix auto-summary comment
+* [abc] Rename abc.Mode -> abc.SolverMode
+* [doc][api] Describe top-level structure + usage
+* [doc] Show reference in TOC in boldcase
+* [doc] Minor top-level cleanup
+* [doc] API-reference summary
+* [doc] Fix minor reference issues
+* [src] Rewrap lines
+* [src] Use top-level references
+* [SWE] Update working notes
+* [doc][guide] Lipschitz constants + changes to footer and navbar
+* [doc][guide] Small updates
+* [doc][guide] Algorithms
+* [doc][guide] Operator Algebra logic
+* [doc][guide] Loss and regularization functionals
+* [SWE] Update working notes
+* Apply \`black\` to mis-formatted files?
+* [pyxu/op] top-level \_\_init\_\_ only
+* [pyxu] Use top-level imports
+* [pyxu\_tests] Use top-level imports
+* [doc] Use top-level imports
+* [doc] fix wording in pyxu-score for inactive plugins
+* [SWE] Exclude doc, notebooks from src distributions
+* [doc][Bug?] @joan?
+* [doc][fair] Fix wording
+* [doc][dev] Drop performance pitfalls. (Needs better context/explaining.)
+* [doc][dev] Fix part 1
+* [doc][fair] Re-wrap lines
+* [doc][ex/stencil] Fix code blocks
+* [doc][ex/stencil] Re-wrap lines
+* [doc][install] Drop hidden targets
+* [doc][fwdops] Fix wording
+* [doc][fwdops] Fix code errors
+* [doc][fwdops] Re-wrap lines
+* [doc][guide/index] Fix wording
+* [doc][guide/index] Re-wrap lines
+* [asop][BugFix] Correctly forward Lipschitz constants
+* [doc] add KLdiv to doc
+* [asop][BugFix] Correctly forward Lipschitz constants
+* [asop][BugFix] Correctly forward Lipschitz constants
+* [ref] reopen & refactor PR#48 (V2 dev fair)
+* [ref] reopen & refactor PR#49 (V2 dev kldiv)
+* [doc][tomo] Fix English + simplify code blocks when possible
+* [doc][tomo] Re-wrap lines + drop computed cells
+* [doc][primer] Fix wording
+* [doc][primer] Re-wrap lines
+* [doc][comparison] Re-wrap lines
+* [doc][comparison] Re-apply README changes
+* [doc][install] Fix instructions
+* [doc][intro] Re-wrap lines
+* [README] Simplify installation wording
+* [doc][intro] Re-apply README changes
+* [doc][landing-page] Re-wrap lines
+* [doc][landing-page] Fix ecessive "in Python"
+* [doc][landing-page] Fix broken English
+* [doc] Add back dev\_notes.rst (removed during spelling change)
+* [BugFix] asop() should propagate Lipschitz constants
+* [chainrule] Perform safe 0\*inf Lipschitz propagation
+* [BugFix][ChainRule][estimate\_lipschitz] Small bugfix if one of the op has 0 value Lipschitz
+* [doc] Drop trailing whitespace
+* [SWE][adam] Update working notes
+* [test][doc] Fix typo
+* [adam][m\_init] Reorder inits to match signature
+* [doc][adam] Minor refactor
+* [adam][BugFix] Drop \`kwargs\_sub\` remnants
+* [doc][BugFix] Propagate ProxAdam -> Adam changes
+* [adam] default rel error threshold back to 1e-4 instead of 1e-6
+* [adam] doc corrections
+* [adam] from prox\_adam to adam
+* [BugFix] Drop Logos in PyPI long description
+* Remover Jupyter notebooks from language statistics on GitHub
+
+v1.0.0.rc.1
+-----------
+
+* Navbar update
+* Global DOI
+* [FAIR] Typo
+* Update DOI
+* Misc changes
+* Added citing us to README
+* Added Zenodo and PyData badges
+* Update README.rst
+* Update README
+* Update README.rst
+* Added badges to README
+* [README] Updated Readme
+* [README] Updated Readme
+* Update README.rst
+* [README] New readme
+* Updated links to old repo name
+* [doc/misc] Move known\_issues
+* [doc] preliminary auto\_summary. [still needs some work.]
+* [doc/misc] References added + relocation of ipynbs
+* [doc][api] Reflow text
+* [doc][api] adding autosummary (partial)
+* [doc][conf] Drop useless whitespace
+* [doc][api] autosummary [WIP]
+* [doc] More granularity in API + table of contents for dense pages
+* [doc] Enable parallel builds
+* [tox] Replace doc with doc-fast & doc-full
+* [conf] Drop/Reorder stuff
+* [doc][api] /w autosummary
+* [SWE] Increase sphinx minver to show line-numbers
+* [doc][BugFix] Fix inline warning
+* [setup] Drop numpydoc
+* [dev->doc][manual merge] top-level
+* [dev->doc][manual merge] src/
+* [doc] small bugfixes
+* [doc] Added section on Fwd Ops to the User Guide
+* [doc] Added section on PnP priors to tutorial
+* [doc][bugfix] fixed wrong relative path to plugin dev\_status tooltips
+* [doc] Changed colormap to tutorial for matching theme's colors
+* [doc] Tomographic reconstruction tutorial added to the getting started section
+* [doc] Computational imaging in a nutshell
+* [doc] Change copyright
+* [doc] Minor changes
+* [doc] Comparison with other frameworks finalized
+* [doc] Minor updates to getting started
+* [doc][WIP] add examples' gallery & advance pyxu-fair (part 2)
+* [doc][WIP] add examples' gallery & advance pyxu-fair
+* [doc] Installation instructions added
+* [doc] Getting started page written (feedback appreciated)
+* [doc] API Reference in PyData Sphinx theme
+* [doc] Updated conf files incorporating Sepand's additions
+* [doc] Remove old conf file for Sphinx
+* [doc] minor suggestions for the main doc page
+* [doc] remove pyxu-fair external link
+* [doc] add example page on how to contribute pyxu plugins
+* [doc] add Pyxu FAIR pages (catalogue + plugins)
+* [doc] Updates to landing page and theme
+* [doc][hero] Slight changes to landing page
+* [setup][doc] Added dependencies for building the doc
+* [doc] index text revision
+* Change documentation theme to PyData's and create landing page
+* [doc][top-level] Bring back references (partial)
+* [doc][top-level] API-reference
+* [doc][diff][BugFix] Render plots correctly
+* [filter][BugFix] high-sigma must be tuple, not generator
+* [filter][BugFix] Use updated ufunc API
+* [doc][filter][BugFix] Import filters from top-level
+* [doc][BugFix] Avoid same reference name everywhere
+* [doc][filter] Refactor
+* [doc][diff] Refactor (partial)
+* [doc][fft] Refactor
+* [conf] More aliases
+* [doc][kron] Refactor
+* [doc][pad] Refactor
+* [doc][reduce] Refactor
+* [doc][stencil] Refactor
+* [doc][linop/base] Refactor
+* [doc][select] Refactor
+* [doc][blocks] Refactor
+* [SWE] Drop useless files
+* [doc][interop] Refactor
+* [doc][func] Refactor
+* [doc][ufunc] Refactor
+* [doc][sampler] Refactor
+* [API] Move sampler/ to experimental/
+* [API] Move \_dev/ into experimental/
+* [pds][BugWarn] Logic problems?
+* [pds][BugFix] ADMM: tuning strategy undefined?
+* [pds][BugFix] PP: G vs H = 0?
+* [pds][BugFix] H/z0 have wrong dimensions
+* [pds][BugFix] Davis-Yin does not accept f=None?
+* [doc][opt] Refactor
+* [interop][torch] Use new Lipschitz API
+* [doc][opt] Refactor (WIP)
+* [doc][top-level] Bring back references (partial)
+* [WIP] API-reference
+* [SWE] Move imports to scope-start
+* [explicitlinop][BugFix] get\_array\_module() does not work for sparse arrays
+* [solver][pds/tests] update lipschitz calls according to recent refactor
+* [operator][\_ExplicitLinOp] pass op.\_mat's backend to estimate\_lipschitz
+* [operator][QuadraticFunc] add max\_iter stop\_crit in prox's call to CG
+* [WIP] API-reference
+* [doc][util] Refactor
+* [pds] Reformat annotations
+* [doc][math] Refactor
+* [doc][runtime] Refactor
+* [doc][abc] Refactor
+* [doc][info] Refactor
+* [doc] Tentative stripped-down conf.py
+* drop old files
+* [doc] Use Sphinx 7+
+* [doc] Enable nitpicky mode by default
+* [doc][BugFix] Domain-agnostic forbidden
+* [opt] Drop useless \_\_init\_\_.py
+* [SWE] Update working notes
+* [SWE][top-level] pycsou -> pyxu migration
+* [SWE][doc] pycsou -> pyxu migration
+* [SWE][!test] pycsou -> pyxu migration
+* [SWE][tests] pycsou -> pyxu migration
+* [BugFix] Domain-agnostic operators forbidden
+* [BugFix][stencil] Allow no\_eval Lipschitz computation for mode=reflect
+* [deps] SCIPY\_SPARSE arrays are spmatrix only
+* [BugFix] Force diff-Lipschitz() math checks for Quadratics
+* [trace] Let users choose algorithm
+* [SWE] Update working notes
+* [op][part-2] Use new Lipschitz API
+* [pinv/dagger] Refactor API
+* [op] Drop eigvals()
+* [abc] Drop eigvals()
+* [op][part-1] Use new Lipschitz API
+* [opt] Use new Lipschitz API
+* [test] Use new Lipschitz API
+* [abc] Use new Lipschitz API
+* [op][part-1] Refactor core operators pinv/dagger/asarray/svdvals()
+* [!abc] Do not allow domain-agnostic operators
+* [abc] Do not allow domain-agnostic operators
+* Use NDArrayInfo.from\_flag() when applicable
+* [test\_value1D\_svdvals][BugFix] Reduce test flakiness
+* Inline \`coupled\_gpu\_which\`
+* [test][op] Move \_gpu definition
+* [BugFix][test\_interface] Use generic Real type
+* [BugFix][test\_math\_selfadjoint] Exact equality required
+* [conftest] Simplify isclose() def
+* [test][warning] Point pytest to new warning path
+* [warning] Move to info/
+* [warning] Refactor pycsou.util.warning imports
+* [linesearch] ZeroDivisionError impossible if .diff\_lipschitz() returns NDScalar
+* [ptype] Move to info/
+* [ptype] Refactor pycsou.util.ptype imports
+* [deps] Move to info/
+* [deps] Refactor pycsou.util.deps imports
+* [runtime] Hide private objects/attributes
+* [runtime] Refactor \_CWidth to CWidth
+* [black] Update given v23 format changes
+* [flake8] Don't complain about E721 error
+* [SWE] Update minimum dependency versions
+* [test] Detect unsupported backends via helper
+* [test][op][BugFix] disable\_test is optional
+* [op][BugFix] Moreau envelope should not enforce precision
+* [deps] Add from\_flag() to simplify GPU management
+* [deps] Introduce default dense/sparse backends
+* [doc] Fix docstrings
+* [runtime] Move to top-level
+* [misc] Do not auto-load rare-use functions
+* [doc][array\_module] pycd.array\_backend\_info() no longer exists
+* [array\_module] Drop legacy \_delay\_if\_dask() function
+* [SWE] Drop old cruft
+* [fft] Discontinue pyFFTW backend
+* [fft][doc][BugFix] Output index stops at N\_{d}-1
+* [interop] Drop legacy wrappers
+* [SWE] jax/torch installation left to user
+* [tox] Use pip for faster installs
+* [math/hutchpp][BugFix] bug in previous fix, adds scaling + shift
+* [math/hutchpp][BugFix] use alternative for non-existing CuPy function
+* [filter][bugfix] wrong StructureTensor's unravel
+* [torch][bugfix] reference to non-existing \_op & addition of tuple + int
+* [diff][BugFix] wrong Divergence & Laplacian 's unravel
+* [diff][BugFix] wrong Jacobian's unravel
+* [diff][doc] fix typos
+* [diff ops] coherent order of arguments between \_finite\_diff & \_gauss\_der
+* [notebooks][BugFix] Correct index of center of filter in convolution operators
+* [sampler][doc] Error fix in ULA and MYULA documentation
+* Adds [directional differential operators] and [filters] (and tests)
+* [SWE][todo] Update working notes
+* [SWE][todo] Add HTML outline + roadmap
+* [SWE][todo] Drop outdated entries
+* [tests][sampler] Add generic tests for sampler objects and specific tests for ULA and MYULA
+* [sampler][ULA] Minor bug fixes caught by tests
+* [notebooks] Pycsou demo for MU's IP2 course
+* [test][diff][BugFix] Correctly disable CUPY test on unsupported machines
+* [test][diff] Describe why ndi/width defined differently from rest of operator test suite
+* [test][diff] Show all fixtures at top-level. (Helps reader)
+* [test][diff] Fix formatting
+* [doc][diff] Fix math typos
+* [diff] Reflow docstrings to match Pycsou-wide style
+* [diff] Format annotations for easier reading
+* [test][operator] Export \`ndi\` attribute from spec()
+* [misc] Refactor star\_like\_sample()
+* [misc] Refactor peaks()
+* [SWE] Install GPU dependencies via PyPI
+* [tox] Add Python 3.11 runner
+* [CG][BugFix] Protect starting point of CG
+* [interop][torch] Removed arg\_shape and out\_shape arguments that were causing bugs in corner cases. Torch functions should now have 1D inputs/outputs (with optionally a single stacking dimension of arbitrary size)
+* [README] Fix formatting
+* [README] Update install instructions with extra step to install optional CUDA-dependencies with conda
+* [conda][BugFix] Move CUDA-specific requirements to cuda-requirements.txt to avoid installation bugs in tox on MacOs
+* [sampler][ULA] Protect ULA samples by making copies
+* [sampler][doc] Change top-level example of sampler module to code-block to avoid lengthy documentation compilation times
+* [test] Document usage of DisableTestMixin
+* [test][solver] Allow tests to be disabled
+* [test] Refactor module-agnostic code to top-level
+* [test] Refactor \_skip\_if\_disabled() to top-level
+* [linalg][hutchpp] Use Dask's Generator interface
+* [sampler][ULA] Bug fix (protect starting point of ULA)
+* [util][misc] Reformat annotations
+* [util][misc] Correct dangerous import
+* [doc][pds] Fix compilation errors
+* [doc][nufft] Fix compilation errors
+* [fft] Move FFT/NUFFT operators to same directory
+* [doc][fft] Add missing documentation
+* [misc][BugFix] as\_canonical\_shape() should work on NumPy arrays
+* [test] Drop useless init-files
+* [requirements] update Python version
+* [notebooks] Notebook for EMPA presentation
+* [notebooks] Notebook for EMPA presentation
+* [interop][torch][BugFix] Use attribute device instead of get\_device for torch.zeros()
+* [images] Some more images for illustrations
+* [todo] Update Thomas' todo (sampler module not tested!)
+* [sampler] Add top-level example for sampler documentation
+* [sampler] update ULA documentation and remove example.py
+* [sampler] Remove import of deleted util.random module
+* [sampler] Update documentation
+* [sampler] remove default\_rng utility function (no longer needed since Dask now has one) and replace seeds with rng objects in samplers module
+* [sampler] Detailed documentation for ULA and MYULA
+* [statistics] Added numerically stable online centered moments and updated documentation
+* [sampler] Minor updates to MYULA
+* [statistics][bugfix] Fix bug in skew
+* [sampler] Update statistics arithmetic rules and added skew and kurtosis
+* [sampler] Comments. [partial]
+* [statistics] Comments
+* [random] Comments
+* Example of use of Sampler objects
+* Prototype of Sampler architecture
+* [images] Illustrations for introductory notebooks
+* [pds][tests] Disable value fit tests for PDS
+* [images] Illustrations for introductory notebooks
+* [util][misc] Images for testing/documentation purposes
+* [operator] adds differential operators with tests: PartialDerivative Gradient Laplacian Divergence Hessian Jacobian
+* [solver][pds] call diff\_lipschitz() instead of attribute \_diff\_lipschitz
+* adding scikit-image do dev dependencies, needed for including images in doc
+* [notebooks] Compatibility updates to Imaging Lunch notebook (due to recent refactor of diff.py)
+* [notebooks] Notebook for Imaging Lunch
+* [fft] Fallback to scipy.fft if pyFFTW not available
+* [fft][BugFix] Run dask workloads in parallel
+* [stencil] Add see also's + ref to base class docstring for init of Convolve
+* [fft] Add test suite
+* [op] Implement FFT operator
+* [doc] Render FFT in HTML docs
+* [SWE] Add PyFFTW dependecy
+* [test][stencil] Add TestConvolve()
+* [convolve] Inherit from Stencil() to simplify implementation
+* [convolve][doc] Reformat docstrings
+* [stencil] Drop \_\_main\_\_ example
+* [stencil][doc] Fix formatting
+* [flake8][torch] Fix E722 errors. (do not use bare 'except'.)
+* [SWE] Run flake8 on pre-commit
+* [flake8] Fix E741 errors. (Ambiguous variable name.)
+* [flake8] Whitelist safe E721 errors. (Compare types using 'isinstance()'.)
+* [flake8] Fix E712 errors. (T/F comparisons should use 'is'.)
+* [flake8] Fix F821 errors. (Undefined name.)
+* [flake8] Fix E711 errors. (Comparison to None should be done with 'is'.)
+* [flake8] Fix F541 errors. (f-string is missing placeholders.)
+* [flake8] Fix E841 errors. (local variable name is assigned to but never used.)
+* [flake8] Fix E722 errors. (do not use bare 'except'.)
+* [flake8] Fix F401 errors. (module imported but unused.)
+* [flake8] Ignore unwarranted error codes
+* [flake8] Whitelist \_\_init\_\_ files
+* [flake8] Base configuration
+* [SWE] setup.py restores initial setup.cfg config after install
+* [doc][map][BugFix] Ensure correct rendering takes place
+* [solver][doc][BugFix] Indentation issue
+* [util][array\_module] Drop unused function-level import
+* [interop][torch] Code refactoring to match from\_jax's interface and inner structure
+* [doc][torch] Added the torch.py module to the documentation
+* [interop] Torch-realted imports are now performed in the torch.py module
+* [interop][torch] Renamed module to torch.py
+* [setup] Updated setup.cfg with optional PyTorch dependencies
+* [README] Updated instructions for installing JAX with GPU support from ZSH
+* [todo] Todo for Thomas
+* Revert erroneous changes to requirements.txt and setup.cfg
+* [operator][Convolve] Broken ref in doc
+* [operator][stencil] Added Correlate/Convolve operators (piggy-back on Stencil). Not thoroughly tested
+* [stencil][doc] Clarify pad/stencil/trim sequence of computations?
+* [stencil] Refactor plot\_kernel() to visualize()?
+* [stencil][doc] Homogenize docstring style with rest of Pycsou doc. (No changes)
+* [stencil] Refactor relative\_indices() [property]
+* [stencil] Refactor kernel() [property]
+* [stencil] Introduce \`center\` property
+* [operator][stencil][doc] Improved documentation
+* [operator][stencil] New properties/methods to get and pretty-print the stencil's D-dimensional kernel and relative indices
+* [SWE] Update working notes
+* [test][prox\_adam][BugFix] Catch potential 1/0 errors differently
+* [test][pgd][BugFix] Catch potential 1/0 errors differently
+* [test][solver][BugFix] Manually coerce inputs to test transparency
+* [SWE] Bump minimum Dask version
+* [SWE] Update working notes
+* [blocks][doc] Warn users about thread-safety pitfalls
+* [stencil][BugFix] Make implementation thread-safe
+* [nufft] Remove dependence on blocks.\_parallelize()
+* [SWE] Update working notes
+* [test][operator] Drop unused import
+* [test][nufft] Remove now-functional tests from whitelist
+* [test][nufft] Add TestNUFFT3Chunked
+* [nufft][BugFix] Forbid chunked-transforms for degenerate cases
+* [nufft][asarray][BugFix] Reordering must be precision-controlled
+* [nufft] Drop legacy \_scan(), superseded by \_dask\_zip()
+* [\_dask\_zip] Use \_array\_ize() when possible
+* [nufft] Refactor \`\_array\_ize()\` to util/operator.py
+* [util][\_dask\_zip][doc] Be more specific regarding output shape/dtype
+* [nufft][BugFix] Refactor .order('z') instructions
+* [nufft][BugFix] allocate() interface must be homogeneous between HTML docs + class behaviour
+* [test][nufft][BugFix] Force inputs to right backend
+* [nufft][BugFix] Expose .mesh() in type-2 transforms
+* [nufft][BugFix] Special treatment of .to\_sciop() & .lipschitz() no longer necessary
+* [nufft] Show warnings when precision-mismatch occurs
+* [SWE] Update working notes
+* [nufft][BugFix] \`modeord\` should not flip xyz order
+* [test][nufft] Verify \`modeord\` compliance
+* [nufft] Use \_dask\_zip()
+* [nufft][BugFix] Type annotation issue
+* [nufft] Drop unused imports
+* [util][operator][doc] Fix typo
+* [addrule][BugFix] Use correct quadratic parameterization
+* [HomothetyOp] Permute parameter order
+* [stencil][doc] Better illustrate use of seperable kernels
+* [norm][PositiveL1Norm] Simplify internal constants
+* [norm][PositiveL1Norm] Homogenize attribute conventions
+* [norm][PositiveL1Norm][doc] Homogenize docstrings w/ rest of API
+* [PositiveL1Norm][REF-DOC-TEST] homogenize doc, use indicator, add tests
+* Revert "[PosConstraint] Implement a positivity constaint using indicator functon"
+* [PosConstraint] Implement a positivity constaint using indicator functon
+* [PosConstraint] L1 norm functional in combination with positivity constraint (the sum is proximable)
+* [nufft][T3C] Add to test suite. (WIP)
+* [jax][BugFix] Mono-types are not allowed in TypeVar
+* [jax][BugFix] Computing \`t\` in \_quad\_spec() may be backend-specific
+* [linop] Simplify top-level \_\_init\_\_
+* [nufft][doc] Refactor type annotations to be importable even if FINUFFT not available
+* [interop] Simplify top-level \_\_init\_\_
+* [jax][doc] Refactor type annotations to be importable even if JAX not available
+* [SWE] Drop finished components
+* [SWE][jax] Update working notes
+* [test][jax][BugFix] Test outputs at JAX-configured precision
+* [test][operator][BugFix] Run equality tests at user-configurable precision
+* [jax][BugFix] .asarray() does not support xp=DASK by default
+* [jax][BugFix] Allow complex-dtype conversions
+* [jax] Force jax-func execution on array device
+* [jax][BugFix] NUMPY/CUPY zero-copy semantics differ
+* [test][interop] Rename jax/test\_from\_jax.py -> test\_jax.py
+* [test][interop] Rename test\_from\_sciop.py -> test\_sciop.py
+* [test][jax] Update inner-working docs
+* [SWE] Bump minimum CuPy version
+* [SWE] Temporary instructions to install JAX-GPU
+* [test] Add from\_source()
+* [test][quadraticfunc] Fix annotation typo
+* [jax][jacobian][perf] Decrease apply() runtime by ~40%
+* [interop][from\_source][BugFix] Precision can only be enforced on \`ekwargs\`
+* [operator][doc] Fixed wrong indentation in from\_array documentation
+* [jax] Enhance test suite
+* [interop][pytorch] Allow for dtype conversion with enable\_warnings mechanism + minor bug fixes
+* [interop][pytorch][Refactor] Argument base becomes cls for consistency with other wrappers
+* [pds][doc] Update path of QuadraticFunc in documentation
+* [jax] test WIP
+* [jax] Add JAX interop
+* [doc] Add interop.jax
+* [interop] Add JAX module
+* [SWE] Add JAX as optional dependency
+* [from\_source] \_FromSource() does not take default arguments
+* [from\_source][doc] Enhance docstrings
+* [Resilience] Use pycd.NDArrayInfo to access array modules
+* [from\_source][BugFix] Precision can be enforced on (diff\_)lipschitz(), [svd,eig]vals(), trace()
+* [interop.source] Use OO architecture to ease maintenance
+* [DiagonalOp][BugFix] dagger() is not an arithmetic method
+* [HomothetyOp][BugFix] dagger() is not an arithmetic method
+* [\_dask\_zip][BugFix] Functions may have side-effects if parallel=False
+* [from\_source][BugFix] Auto-fill missing vmethod-spec when dict() provided
+* [block,nufft] Rename \_wrap\_if\_dask() -> \_parallelize()
+* [norm] Use vectorize where applicable
+* [notebooks] Deleted relocated notebook
+* [notebooks] Added BIG presentation + relocated all notebooks in notebooks/
+* [doc][images] Updated Pycsou UML diagram
+* [arithmetic] Safeguard: don't do in-place updates of [diff\_]lipschitz()
+* [block][BugFix] [diff\_]lipschitz() should use cheap defaults when applicable
+* [block][BugFix] Do not propagate arithmetic attributes
+* [from\_source][API] Allow FP-precision enforcement
+* [from\_source][API] codim-spec unnecessary
+* [doc][lipschitz] Mention why xp/gpu dropped for certain backends
+* [DiagonalOp][BugFix] lipschitz() must return a CPU float
+* [test][op] Ensure [diff\_]lipschitz() return correct types
+* [from\_source] Allow parameterization of vectorize()
+* [util][operator] Enhance vectorize()
+* [util][operator] Add \_dask\_zip()
+* [SWE] Update working notes
+* [from\_source] auto-vectorize support
+* [from\_source] Allow embedding of extra information
+* Supersede direct use of \`types.MethodType\` by \`interop.source.from\_source\`
+* [from\_source][BugFix] \_expr() defaults to that provided by cls
+* [doc][BugFix] to\_sciop() moved to interop.sciop.py
+* [interop] Moved PyTorch wrapper under operator module with other wrappers
+* [interop][pytorch][BugFix] Fix bug in arguments of \_delayed\_if\_dask decorators
+* [interop][pytorch] First working prototype of a Pycsou Map wrapper for PyTorch with autodiff and adjoint features
+* [interop][pytorch] First working prototype of a Pycsou Map wrapper for PyTorch
+* [util][array\_module] Decorator for wrapping non-Dask functions to make them weakly compatible with Dask (Dask input -> compute (delayed) -> processing (delayed) -> Dask ouput (from delayed)
+* checkpoint commit
+* [doc] Add pycsou.operator.interop
+* [SWE] Update working notes
+* [arithmetic][chainrule][BugFix] Lipschitz constant of LinFuncs is always computed (cheaply)
+* [stencil][BugFix] trace() on GPU must return a scalar
+* [test][lipschitz] Precision bugfix
+* [test][svd] Precision bugFix
+* [test][trace] Precision bugfix
+* [test][BugFix] Allow marking flaky tests inline
+* [test][from\_sciop] Drop rotten disable\_test entries
+* [from\_sciop] Move to pycsou.operator.interop
+* [interop] Add from\_source()
+* [nufft] Conditionally load library
+* [inspect] import\_module() optionally suppresses import failures
+* [SWE] Finufft is an optional dependency (again)
+* [jax] test WIP
+* [jax] Add JAX interop
+* [doc] Add interop.jax
+* [interop] Add JAX module
+* [SWE] Add JAX as optional dependency
+* [from\_source] \_FromSource() does not take default arguments
+* [from\_source][doc] Enhance docstrings
+* [Resilience] Use pycd.NDArrayInfo to access array modules
+* [from\_source][BugFix] Precision can be enforced on (diff\_)lipschitz(), [svd,eig]vals(), trace()
+* [interop.source] Use OO architecture to ease maintenance
+* [DiagonalOp][BugFix] dagger() is not an arithmetic method
+* [HomothetyOp][BugFix] dagger() is not an arithmetic method
+* [\_dask\_zip][BugFix] Functions may have side-effects if parallel=False
+* [from\_source][BugFix] Auto-fill missing vmethod-spec when dict() provided
+* [block,nufft] Rename \_wrap\_if\_dask() -> \_parallelize()
+* [norm] Use vectorize where applicable
+* [pds][bugfix] Update QuadraticFunc references in PDS (changed location)
+* [notebooks] Deleted relocated notebook
+* [notebooks] Added BIG presentation + relocated all notebooks in notebooks/
+* [doc][images] Updated Pycsou UML diagram
+* [arithmetic] Safeguard: don't do in-place updates of [diff\_]lipschitz()
+* [block][BugFix] [diff\_]lipschitz() should use cheap defaults when applicable
+* [block][BugFix] Do not propagate arithmetic attributes
+* [from\_source][API] Allow FP-precision enforcement
+* [from\_source][API] codim-spec unnecessary
+* [doc][lipschitz] Mention why xp/gpu dropped for certain backends
+* [DiagonalOp][BugFix] lipschitz() must return a CPU float
+* [test][op] Ensure [diff\_]lipschitz() return correct types
+* [from\_source] Allow parameterization of vectorize()
+* [util][operator] Enhance vectorize()
+* [util][operator] Add \_dask\_zip()
+* [SWE] Update working notes
+* [from\_source] auto-vectorize support
+* [from\_source] Allow embedding of extra information
+* Supersede direct use of \`types.MethodType\` by \`interop.source.from\_source\`
+* [from\_source][BugFix] \_expr() defaults to that provided by cls
+* [doc][BugFix] to\_sciop() moved to interop.sciop.py
+* [interop] Moved PyTorch wrapper under operator module with other wrappers
+* [interop][pytorch][BugFix] Fix bug in arguments of \_delayed\_if\_dask decorators
+* [interop][pytorch] First working prototype of a Pycsou Map wrapper for PyTorch with autodiff and adjoint features
+* [interop][pytorch] First working prototype of a Pycsou Map wrapper for PyTorch
+* [util][array\_module] Decorator for wrapping non-Dask functions to make them weakly compatible with Dask (Dask input -> compute (delayed) -> processing (delayed) -> Dask ouput (from delayed)
+* checkpoint commit
+* [doc] Add pycsou.operator.interop
+* [SWE] Update working notes
+* [arithmetic][chainrule][BugFix] Lipschitz constant of LinFuncs is always computed (cheaply)
+* [stencil][BugFix] trace() on GPU must return a scalar
+* [test][lipschitz] Precision bugfix
+* [test][svd] Precision bugFix
+* [test][trace] Precision bugfix
+* [test][BugFix] Allow marking flaky tests inline
+* [test][from\_sciop] Drop rotten disable\_test entries
+* [from\_sciop] Move to pycsou.operator.interop
+* [interop] Add from\_source()
+* [nufft] Conditionally load library
+* [inspect] import\_module() optionally suppresses import failures
+* [SWE] Finufft is an optional dependency (again)
+* [pds][tests] Add convergence tests for dual problem
+* [op][stencil] Lift precision-specific constraint (with warning)
+* [test][op] Add precCM tests for [diff\_]lipschitz(), trace()
+* [op] Enforce precision on [diff\_]lipschitz(), trace()
+* [arithmetic][asloss] Propagate only for AddRule/ScaleRule
+* [test][op][lipschitz] Drop hidden attribute checks
+* [transpose] Add dedicated test suite
+* [op][BugFix] Move transpose() logic to arithmetic
+* [op][lipschitz] Interface change for Lin[Op,Func]()
+* [util] Add import\_module() to ease dynamic module loads
+* [test][norm][BugFix] Drop domain-agnostic SquaredL2 instantiation
+* [op][func] Add alias-import of QuadraticFunc
+* [op][stencil] Lift precision-specific constraint (with warning)
+* [test][op] Add precCM tests for [diff\_]lipschitz(), trace()
+* [op] Enforce precision on [diff\_]lipschitz(), trace()
+* [arithmetic][asloss] Propagate only for AddRule/ScaleRule
+* [test][op][lipschitz] Drop hidden attribute checks
+* [transpose] Add dedicated test suite
+* [op][BugFix] Move transpose() logic to arithmetic
+* [op][lipschitz] Interface change for Lin[Op,Func]()
+* [util] Add import\_module() to ease dynamic module loads
+* [test][norm][BugFix] Drop domain-agnostic SquaredL2 instantiation
+* [op][func] Add alias-import of QuadraticFunc
+* Update ADMM tests to to test NLCG scenario
+* Update QuadraticFunc \_\_init\_\_ parameters in ADMM
+* Cleaner definition of dimension of problems in PDS tests
+* [pds][tests] add remaining solvers & fixtures (base and tuning strategy)
+* [pds][BugFix] remove input reshaping and monkey patch PD3O corner case
+* [pds][BugFix] tau for tuning\_strategy==2 must be smaller than 2/beta
+* [pds] update with QuadraticFunc refactoring
+* Updated tests for PD3O and ADMM to conform with new solver mathematical test API. All other PDS algos still need to be updated
+* Update of generate\_funcs : - reduce number of specs by avoiding unnecessary permutation of elements that are summed together - add diff\_lipschitz computation, which is necessary for testing PDS algos
+* Implemented Joan's suggestion to have a superclass for all PDS tests
+* Treat f=None case for ADMM
+* Added tests for all PDS algos
+* Minor updates and performance improvement
+* Rename operators in ADMM example
+* Added example for ADMM
+* Minor documentation changes
+* Big fixes in DouglasRachford and ProximalPoint
+* [argshift][QuadraticFunc][BugFix] Produce backend-agnostic operators when possible
+* [op][QuadraticFunc][prox] Don't print CG progress
+* [SWE] Update todo notes
+* [test][cg] Support CuPy tests
+* [test][solver][BugFix] Ensure NaNs compare equally. (Corner case)
+* [test][solver][doc] Provide better descriptions of test suite methods
+* [test][solver][BugFix] Protect against infinite loops
+* [test][solver] Update initialization points
+* [test][solver] Use updated convergence test
+* [test][solver][BugFix] Enforce max runtime for quick-end tests
+* [test][solver][funcs] Refactor definition for clarity
+* [arith][BugFix] LinFunc \* QuadraticFunc is Quadratic only if LinFunc.asarray() positive
+* [test][op][BugFix] Symmetric ops have real-valued eigenvalues
+* [l2][BugFix] Q must be scaled given quadratic's form
+* [op][test] Add test\_quad\_spec()
+* [prox\_adam][BugFix] L2 norm is no longer domain-agnostic
+* [block] Update to support \_quad\_spec()
+* [op] Arithmetic methods piggy-back on new arithmetic property \_quad\_spec(). [Exception: AddRule]
+* norm
+* [ufunc][perf][softmax] Use implicit definition for jacobian
+* [ufunc][BugFix] CumSum is a SquareOp
+* [test][cg] Tailor math tests to special initialization of CG()
+* [test][solver][BugFix] More robust math convergence tests
+* [test][prox\_adam][BugFix] Non-transparent if unsafe in-place updates performed
+* [test][solver] Refactor stop.py imports to top-level
+* [test][solver][BugFix] Compare dict-values
+* [stencil] use tighter Lipschitz constant
+* [ufunc] update docs
+* [ufunc][tests] Mixin for Map and DiffMap
+* [ufunc] lipschitz + change few DiffMap->Map + Doc + efficiency
+* [test][solver] Speedup tests
+* [test][solver] Format signature lines
+* [test][operator][BugFix] Lookout for NaNs and correct accordingly
+* [stencil] use tighter Lipschitz constant
+* [ufunc][tests] general refactor and add few conditions to test
+* [ufunc][doc] suggestions for doc example
+* [ufunc] remove non-ufunc maps (reductions)
+* [ufunc][BugFix] keepdims=True to allow broadcasting
+* [ufunc] add missing argument
+* [ufunc] drop support for float128 & fix dtype issue
+* [ufunc][BugFix] a couple wrong lipschitz (0 instead of infty)
+* [ufunc][BugFix] support None arguments according to docstring
+* [ufunc] update dtypes and ExplicitLinOp construction
+* [ufunc] remove author, contribution will be acknowledged in Authors file
+* [ufunc][doc] homogenize notation
+* [ufunc] change \`shape\` init arg for \`dim\` (redundancy of shape in ufunc)
+* [operator/map] Fix functional interface in ufunc.py
+* [test/operator/map] Clip and Sign test functions are updated
+* [doc] Documentation for map.ufunc module is updated
+* [operator/map] Update and document ufunc.py
+* [operator/map] Import universal functions from \_\_init\_\_.py
+* [opt/stop] Revert commit [opt/stop] Implement stopping criterions for lsqr/lsmr
+* Revert "[opt/solver/lsqr] Create and implement lsqr."
+* Revert "[opt/solver/lsmr] Create and implement lsmr."
+* [opt/stop] Implement stopping criterions for lsqr/lsmr
+* [opt/solver/lsmr] Create and implement lsmr
+* [opt/solver/lsqr] Create and implement lsqr
+* [test/operator/map] Test activation functions
+* [test/operator/map] Fix test of arccos and sum
+* [operator/map] Fix Softmax and Maxout function
+* [operator/map] Fix lipschitz and diff\_lipschitz of ELU and leakyReLU
+* [operator/map] Implement GELU function
+* [operator/map] Fix diff\_lipschitz of Relu, arccos to Diffmap
+* [operator/map] Fix lipschitz constant of sum and minor changes in prod
+* [test/operator/map] Update converted DiffMap and DiffFunc functions' test classes
+* [operator/map] Implement activation functions
+* [operator/map] Fix Prod, Sum and Cumprod functions
+* [operator/map] Implement grad functions of prod, sum
+* [operator/map] Implement jacobian methods of cumprod and cumsum functions
+* [operator/map] Convert some miscellaneous functions to DiffMap and implement jacobian methods
+* [operator/map] Delete unnecessary get\_array\_module calls  in exponential and logarithm functions
+* [operator/map] Convert map trigonometric and hyperbolic functions to diffmap and implement their jacobian methods
+* [operator/map] Fix error in functional interface to all universal functions
+* [operator/map] Drop Heaviside()
+* [operator/map] Allow base specification for Exp()
+* [operator/map] Fix Clip() interface
+* [operator/map] Add functional interface to miscellaneous functions
+* [operator/map] Add functional interface to exp/log functions
+* [operator/map] Add functional interface to hyperbolic functions
+* [operator/map] Add functional interface to trigonometric functions
+* [operator/map] Drop Log[2/10]
+* [operator/map] Allow base specification for Log()
+* [operator/map] Use DiagonalOp() instead of ExplicitLinOp(diag()) constructs
+* [operator/map][partial] Cleanup sum/product + cumulative counterparts
+* [operator/map] Cleanup exponentials and logarithms
+* [operator/map] Cleanup hyperbolic functions
+* [operator/map] Cleanup trigonometric functions
+* [operator/map] No super() parameters needed for simple inheritance
+* [operator/map] Drop 'obvious' docstrings
+* [operator/map] enforce\_precision(): omit default parameters
+* [operator/map] Don't repeat docstrings from superclass: auto-inherited at runtime
+* [SWE] Apply pre-commit hooks
+* [test/operator] Move ufunc to map/
+* [test/operator] Refactor inline operator code to ufunc.py
+* [operator/map] Fix errors detected during testing
+* [test/operator/map] Test miscellaneous functions like clip, sqrt, cbrt, square, abs, sign and heaviside
+* [test/operator/map] Test sum/product & cumulative counterparts
+* [test/operator/map] Test exponentials and logarithms
+* [test/operator/map] Test hyperbolic functions
+* [test/operator/map] Test trigonometric functions
+* [operator/map] Implement miscellaneous functions like clip, sqrt, cbrt, square, abs, sign and heaviside
+* [operator/map] Implement sum/product & cumulative counterparts
+* [operator/map] Implement exponentials and logarithms
+* [operator/map] Implement hyperbolic functions
+* [operator/map] Implement trigonometric functions
+* [operator/map] create ufunc.py
+* [SWE] Update working notes
+* [test][cg] Update to use math tests
+* [test][prox\_adam] Update to use math tests
+* [test][nlcg] Update to use math tests
+* [test][pgd] Update to use math tests
+* [test][solver] Define global math test for all solvers
+* [l21][apply|prox][perf] Even better performance
+* [l21][apply|prox][perf] Move L2 axes to end of array
+* [l21][\_\_init\_\_] More type-checks + use pycu helpers
+* [l21] Formatting + homogenize annotations
+* Added mixed L21Norm and tests
+* [pds][admm][BugFix] Must initialize \_fit\_kwargs if unspecified
+* [SWE][BugFix] Setuptools 23+ deprecates .\* with >= specifiers
+* [SWE] Update dependencies
+* [nlcg][doc] Be explicit on \`a0\` auto-inferenced value
+* [ADMM] Improved documentation + code restructuration
+* [ADMM][doc] Improved documentation
+* [PDS][ADMM] Fuse ADMM variants in a single class + allow for custom subiterative solvers
+* [SWE] Update todo notes
+* [stencil][perf] Add fast code path for special cases
+* [prox\_adam][perf] Skip PGD sub-problem when g=None
+* [test][operator][BugFix] Lookout for NaNs and correct accordingly
+* [ind] Add ConvexSetIntersection()
+* [ind] Add AffineSet()
+* [ind] Add RangeSet()
+* [ind] Add HyperSlab()
+* [ind] Add PositiveOrthant()
+* [ind] Refactor class hierarchy under \_IndicatorFunction()
+* [ind][doc] Specify prox formulas for inspection
+* [ind] Regroup ball codes under \_NormBall()
+* [ind] Vectorize + piggy-back on norm implementations
+* [ind] Refactor docstrings
+* [ind][l-inf] Rename class
+* [norm][l-inf] Refactor prox()
+* [norm][l-inf] Simplify apply()
+* [norm][l-inf] Rename class + fix docstrings
+* [test][norm][l12] Disable PerformanceWarnings (expected)
+* [norm][l12] Refactor prox()
+* [norm][l12] Format docs + use \_algo internally
+* [norm] Refactor balls into seperate module
+* [norm] Drop/Rename imports
+* Pull Request #34: V2 dev daniele
+* Added to todo list the (nan<np.inf)=False issue, arising from test\_math\_lipschitz on indicator functionals
+* Adding tests for the implemented norms
+* Fixed some bugs in norms
+* Adding documentation
+* Implement Ball Norms
+* Fix L\_infty norm
+* Implement L\_infty norm
+* Implement L^2\_1 norm
+* [test][stencil][BugFix] Skip CuPy tests on unsupported machines
+* [stencil][BugFix][Dask] Use bw stencils for adjoint() calls
+* [stencil][BugFix] Don't override Lipschitz upper bound when pejorative
+* [asloss][BugFix] Protect users from erroneous use in arithmetic
+* [pad][BugFix] Reduce memory footprint
+* [prox\_adam][doc] updated doc regarding stopping criterion
+* [prox\_adam] removed minimum iteration stopping criterion
+* [test][prox\_adam] made test backend agnostic
+* [prox\_adam] Help amsgrad/padam converge to correct solution: alter stopping criterion
+* [prox\_adam] Smarter division-by-zero protection
+* [prox\_adam] Added code and doc to avoid division by (near) zero variance
+* [test][stencil] Add Stencil test suite
+* [\_stencil] Drop strict C-contiguity requirement
+* [math.linalg][hutchpp] Allow execution at user-specified precision
+* [stencil] Overhaul Stencil operator
+* [stencil][doc] Add \_Stencil() to HTML doc
+* [prox\_adam] corrected step size for subproblem
+* [stencil] Replace function-oriented stencil creation routines w/ class-oriented structure
+* [stencil] Relocate all stencil code under linop.stencil/
+* [prox\_adam] factored scale constant out of loop
+* [pad][BugFix] Special treatment of lhs+rhs==0 case not required
+* [pad][BugFix] Enforce tuple form for self.\_pad\_width
+* [prox\_adam][doc] corrected link to paper's implementation
+* [prox\_adam] removed mention of the QuadraticFunc bug
+* [pad] add support for zero-width padding
+* [stencil] add stencil, convolution, and correlation linops and tests
+* [stencil] add math.stencil
+* [nufft][doc] Homogenize doc format with other parts of Pycsou
+* [pad][v2] Provide better Lipschitz upper-bounds + update docs
+* [NUFFT][doc] Improve documentation, add examples, and uniformize notations and variables
+* Revert "[nufft][doc] Make visible public-facing chunked docstrings."
+* [nufft][doc] Make visible public-facing chunked docstrings
+* [pad][cogram] Piggy-back onto Trim()
+* [pad][v2] Overhaul test suite
+* [pad][v2] Implement adjoint()
+* [pad][v2] Implement apply()
+* [pad][v2] Enforce pad\_width upper bounds
+* [pad][v2] Initial version; apply/adjoint missing
+* [pad] Introduce intermediate variable for debugging
+* [pad] Refactor mode detection
+* [pad] Drop use of private NumPy functions
+* [pad] Reformat docstrings (2nd pass)
+* [pad][BugFix] Use correct annotations
+* [pad] Rename PadOp -> Pad
+* [pad] Reformat code + docstrings; no functional change
+* [pad] Split PadOp into dedicated module
+* [padding][test] add test suite for PadOp
+* [padding][add PadOp] operator for ND padding
+* [padding][add \_Pad1D] operator for 1D padding
+* [select][Trim] Use pyct.OpT annotation to keep homogeneity with other annotations
+* [tesselate][opt] Fuse multiple centroids per iteration
+* [nlcg] More convergence results
+* [nlcg] Overhaul example
+* [nlcg][doc] added example and theoretical guarantees to nlcg doc
+* [tesselate][BugFix] avoid revisiting centroid-pairs
+* [prox\_adam][Bug?] Problematic creation of QuadraticFunc
+* [test\_trim] Move/adapt TestTrim code
+* [test\_trim] Refactor common SubSample/Trim() test code to parent Mixin
+* [trim] base.py -> select.py displacement
+* [trimming][test] add test suite for TrimOp
+* [test][sum] Broaden test suite
+* [sum][BugFix] The Lipschitz constant is not an upper bound
+* [sum][style] Embed shape/axis into object to avoid closure effects
+* [sum][doc] Reformat docstring
+* [sum][BugFix] Simplify creation of arg/adjoint\_shape + tile
+* [sum] Annotate function parameters
+* [sum][doc] Use of raw strings mandatory given LaTeX code
+* [sum] Reformat code
+* [ptype] Add NDArrayAxis to homogenize axis annotations
+* [linop] Move Sum() to separate module for reductions
+* [linop/base] Drop unused imports
+* [nufft][T3C][BugFix] Avoid infinite fuse loops when candidate is invalid
+* [dev][NUFFT] Scripts for FFT via NUFFT and NUFFT3 via NUFFT1>iFFT>NUFFT2 fixed
+* [NUFFT] Partial revert of 90a98778 (squeeze needed on line 2116)
+* [NUFFT] Remove squeezing from constructor methods
+* [nufft][T3C] diagnostic\_plot() fixes
+* [dev][NUFFT3] Script for performing a manual NUFFT3 (NUFFT1->iFFT->NUFFT2 = NUFFT3)
+* [NUFFT3] Reformat params doc + modified mesh scaling for NUFFT3 in source mode
+* [NUFFT3] Merge commit
+* [ExplicitLinOp.asarray()][BugFix] Dask arrays may contain sparse chunks
+* Revert "[LinOp.asarray] add support for sparse dask arrays"
+* [SWE] Also update setup.cfg for version requirements
+* [conda] update Dask version requirements
+* [nufft][T1+2] Allow users to choose output order via \`modeord\`
+* [nufft][T3C] Drop potentially-erroneous comment on nthreads
+* [nufft][T3C] Add complexity analysis + enhancement directions
+* [LinOp.asarray] add support for sparse dask arrays
+* [prox\_adam] Overhaul Part 2
+* [prox\_adam] Update x via in-place update
+* [prox\_adam] Add Part 2 delimiters
+* [prox\_adam] Compute mean/variance via in-place updates
+* [prox\_adam] Replace from-imports with canonical imports. (pycsou style)
+* [prox\_adam] \_\_compute\_phi/psi(): do inplace updates
+* [prox\_adam] default\_stop\_crit(): overhaul comments
+* [prox\_adam] Regroup constant hint in one place
+* [prox\_adam] Fix \`a\` type + error strings
+* [prox\_adam] No need to store phi/psi in \`mst\` since not used between iterations
+* [prox\_adam] \`g\` auto-filled to NullFunc() if unspecified
+* [prox\_adam] Bound-check b1/b2
+* [prox\_adam] m0/v0 must broadcast to x0
+* [prox\_adam] Promote p/eps to actual parameters + check bounds
+* [prox\_adam] Overhaul docstrings
+* [NUFFT3][doc] Remove comment on nthreads
+* [doc] Move P-Adam after PGD due to their resemblance
+* [nufft][T3C] Clarify effect of \`nthreads\`
+* [nufft][T3C] Implement order()
+* [nufft][T3C][BugFix] \_tesselate() only works with NP arrays
+* [nufft][T3C][BugFix] \_tesselate() does not depend on self
+* [nufft][T3C][BugFix] \_box\_dim() needs ptp() values as NumPy arrays
+* [nufft][T3C] Make \_sanitize\_kwargs() dask-aware
+* [nufft] Update docs
+* [nufft][T3C] Allow users to silence warnings
+* [\_dev] Update NUFFT test scripts
+* [nufft][T3C] Add class-level notes
+* [nufft][T3C] Warn users if x/z order is incompatible with chunk-order
+* [util][warning] Add PerformanceWarning
+* [nufft][T3C] Update extra methods to work with dask-inputs. (partial)
+* [nufft][T3C][BugFix] allow np.inf direct\_eval\_threshold
+* [nufft][T3C] Allow users to control parallel execution. (As for blocks.)
+* [nufft][T3C] .apply/adjoint() works with NP/DA arrays
+* [nufft][T3C] allocate(): more relaxed re-ordering behavior
+* [nufft][T3C] update annotations. (Precursor to having \_x/\_z as dask arrays.)
+* [nufft][T3C][BugFix] Row/Column(s) must be permuted
+* [nufft][T3C] in/out shuffle added
+* [nufft][T3C] stats(): drop stats which won't apply when blocks are no longer pre-allocated
+* [nufft][T3C] Subclass \_NUFFT3 instead of LinOp directly
+* [nufft][T3C] Reduce default FFT\_mem budget to 10MiB
+* [nufft][T3C] Split diagnostic\_plot() out of \_tesselate()
+* [nufft][T3C] tesselate(): fuzz boxes off uniform grid to cut their headcount
+* [nufft][T3C] tesselate(): draw actual bounding boxes chosen by FINUFFT
+* [nufft][T3C] tesselate(): reverse effect of d83cd8eb
+* [nufft][T3C] allocate(): reverse effect of 75a2bf47
+* [nufft][T3C] Reorder methods: LinOp API first, then extras
+* [nufft][T3C] Add lipschitz(), to\_sciop(), asarray()
+* [nufft][T3C] Track AUXiliary memory consumption
+* [nufft] Allow to optionally skip fw/bw planning
+* [nufft] Split \_scan() into \_scan() + \_array\_ize()
+* [nufft][T3C][BugFix] Cut allocate() memory usage
+* [nufft][aux-methods] Fix formatting
+* [NUFFT] Partial revert of 8b3d8bb and 7369266 (see notes)
+* [operator] Put back abc/\_\_init\_\_.py deleted by mistake in commit 8b3d8bb
+* [NUFFT3][API] Make shift\_coords private instead of super private
+* [NUFFT3][BugFix] Incorrect scaling in target meshgrid,  meshgrid sizes too large by 1 cell and improved notations in doc
+* [NUFFT][BugFix] Incorrect source meshgrid for odd mesh sizes
+* [NUFFT][BugFix] Kernel width inconsistent with FINUFFT paper
+* [DOC] Upload of the Jupyter notebook used for the bi-hub meeting
+* [nufft][T3C][BugFix] Re-center boxes if dimension is even-valued
+* [nufft][T3C] allocate() works with slice()-ed chunks specifiers
+* [nufft][T3C] tesselate() produces slice()-ed chunks when feasible
+* [nufft][T3C][BugFix] Factor \`n\_trans\` into computation of box sizes
+* [nufft][T3C][BugFix] Incorrect memory consumption numbers
+* [nufft][T3C] tesselate example script
+* [nufft][T3C] linprog example script
+* [nufft][T3C] Update example script
+* [nufft][T3C] Implement auto\_chunk()
+* [nufft][T3C] Add stats() for quick access to sub-block summaries
+* [nufft][T3C] apply/adjoint() \_tree\_sum() results before upsampling
+* [nufft][T3C] \_tree\_sum(): update signature + docs
+* [nufft][T3C] Refactor allocate()
+* [\_dev][nufft] Add type-3-chunked example script
+* [nufft] Prototype chunked type-3 transform
+* [dev] Add cusparselt dependency (GPU-only)
+* [co2 stop] Fix formatting + annotations
+* [test][sum] add Sum test suite
+* [sum] add Sum (linop / linfunc) to linop base
+* [prox\_adam] dropped unnecessary wrapper class
+* [test][prox\_adam] test suite for prox\_adam
+* [prox\_adam][doc] documented prox\_adam
+* [prox\_adam] implemented a Proximal Adam solver
+* [co2 stop] move import inside the class
+* [nufft] Implement \_nudft\_CUPY()
+* [nufft][type-3] Implement scale=[source, target]
+* [review] Add SubSample to HTML doc
+* [review] Add test suite
+* [review][extra] Overload LinOp-derived methods for better performance
+* [review][adjoint] Make multi-dim aware
+* [review][apply] Make multi-dim aware
+* [review][\_\_init\_\_] Overhaul docstring
+* [review][\_\_init\_\_] Update signature to allow multiple dimensions
+* [review] Overhaul class-level docstring
+* [review] Rename SubSampling -> SubSample
+* [review] Move to separate module
+* [New LinOp] Implementation of a SubSampling operator. (#32)
+* [SWE][Refactor] Use next\_fast\_len() where applicable
+* [util][misc] Add next\_fast\_len() [5-smooth variant]
+* [SWE][Refactor] Use as\_canonical\_shape() where applicable
+* [util][misc] Add as\_canonical\_shape() convenience function
+* [SWE][Refactor] Use pyct.NDArrayShape where applicable
+* [ptype] Add NDArrayShape
+* [SWE][Refactor] pyct.Shape -> pyct.OpShape
+* [ptype] Rename Shape -> OpShape
+* [nufft] Add (back) GPU support (NUDFT only)
+* [nufft][BugFix] compute x/z parameters only once
+* [nufft][extra] Implement plot\_kernel()
+* [nufft][extras] Expose params() on type2() transforms
+* [nufft][t1] Refactor \_fw/\_bw/ascomplexarray() to use mesh()
+* [nufft][extra] Implement mesh() [@Matthieu: partial]
+* [nufft][extra] Implement \_dilation\_factor()
+* [nufft][extra] Implement \_fft\_shape()
+* [nufft][extra] Implement \_kernel\_beta()
+* [nufft][extra] Implement \_kernel\_width()
+* [nufft][extra] Implement \_upsample\_factor()
+* [nufft][extra] Add params() + hidden internals
+* [nufft][extra] Add ES\_kernel()
+* [nufft][extra] Add ascomplexarray()
+* [nufft] Move common .to\_sciop() to super class
+* [nufft][BugFix] Default Lipschitz constant is analytical Frobenius norm
+* [nufft][doc] Drop erroneous comment on svdvals(which="SM")
+* [nufft][type-2] Add implementation
+* [nufft][type-1] Add implementation
+* [nufft][type-3] Add implementation
+* [test][nufft][type-2] Define test suite
+* [test][nufft][type-1] Define test suite
+* [test][nufft][type-3] Define test suite
+* [test][nufft] Define shared state for type-1/2/3 transforms
+* [\_dev][nufft] Refactor type-2 example script
+* [\_dev][nufft] Refactor type-1 example script
+* [\_dev][nufft] Refactor type-3 example script
+* [nufft] Reformat docs
+* Squash-Rebase \_v2-dev\_nufft [Matthieu/Joan State]
+* [SWE][dev-install] Add graphviz dependency for Dask-graph debugging
+* [SWE] Increase (non-NumPy) minimal-required dependencies
+* [test][operator] Increase data size in for [apply|adjoint|grad|prox]ND applications
+* [nufft|complex][BugFix] Increase NumPy minimal dependency
+* [test][complex] Do not force inputs to be contiguous
+* [complex][optimization] Infer array type via NDArrayInfo.from\_obj()
+* [op\_test] Allow use of arbitrary metrics to compare arithmetic method outputs
+* [op\_test][BugFix] Disable context-manager precision casts to ensure precision-specific operators compute correctly
+* [op\_test][BugFix] Transparency must be assessed for fenchel\_prox()
+* [test][blocks] Restrict parallel tests to coo\_block for speed reasons
+* [PDS] remove args to .super()
+* [PDS][BugFix] init dual and stopcrit differently for cases with \`h=None\`
+* [stop] add MaxCarbon stopping criterion
+* [nlcg][linesearch] Added the non-linear conjugate gradient method to Pycsou. (#30)
+* [SETUP] Fix installation bug on Windows
+* [complex] Drop unnecessary imports
+* [complex] Refactor view\_as\_complex\_mat()
+* [complex] Refactor view\_as\_real\_mat()
+* [complex][doc] Refactor view\_as\_real()
+* [complex][doc] Refactor view\_as\_complex()
+* [complex] Test view\_as\_real|complex\_mat()
+* [util][complex] Added routines for viewing matrix representations of linear operators as real/complex respectively (the routines assume the same convention as view\_as\_[real/complex] which are meant for vectors). Useful for converting complex-valued matrix/vector products into their real counterparts. Improved documentation of the overall module (mathematical defs + examples)
+* [util][operator] Drop infer\_stack\_shape()
+* [NUFFT][dask] NUFFT now natively supports Dask array inputs (with unchunked core dimensions). FINUFFT's nthreads is activated but stacking dimensions are processed in a thread-safe manner by Dask using a lock (only works with dask.distributed scheduler, and requires coercing outputs of dask.compute before passing them to FINUFFT or dtype is not recognised by the latter due to a stringent test they perfrom). Multi-threading works like a charm but multiprocessing does not yet due to a serialization issue (ctypes objects containing pointers cannot be pickled). Examples slightly refactored (test\_nuffti and test\_rnuffti are merged in a signle script)
+* [NUFFT][API/doc] Reformat examples for better clarity
+* [NUFFT][API/doc] Dropped support for keyword center in NUFFT.type3() (FINUFFT already performs this correction in most cases). Improved documentation and added examples for the initialization methods of the three types
+* [NUFFT][API/doc] Format comments to have same style as rest of NUFFT docstrings
+* [WIP NUFFT]
+* [blocks][BugFix] Restrict parallel=True to NUMPY inputs
+* [blocks][BugFix] Lipschitz constant must be evaled for LinOps. (Same as for arithmetic.)
+* [blocks] Add optional parallel execution of sub-operators
+* [test][blocks][BugFix] .asloss() to be tested only for functionals
+* [blocks][dev-doc] Describe code structure for future maintenance
+* [block\_diag] Refactor to piggy-back onto coo\_block()
+* [hstack] Refactor to piggy-back onto coo\_block()
+* [vstack] Refactor to piggy-back on coo\_block()
+* [blocks] Test coo\_block()
+* [blocks] Implement coo\_block()
+* [test][operator][test\_math\_lipschitz] Improve execution time via array-methods
+* [test][operator][BugFix] Relu has unbounded Lipschitz constant
+* [blocks] Test hstack()
+* [blocks] Implement hstack()
+* [blocks] Test vstack()
+* [blocks] Implement vstack()
+* [blocks] Test block\_diag()
+* [blocks] Implement block\_diag()
+* [operator][block] Write-up of block-operator interface: needs implementing/testing
+* [kron][doc] Explicitly state matrix-free aspect of implementation + key relationship
+* [linop][kron] Implement khatri\_rao()
+* [kron][svdvals][BugFix] Cannot piggyback on svdvals()-output of (A, B) for which=SM case
+* [linop][kron] Implement kron()
+* [linop][kron] Write-up of kron/kr interface: needs implementing/testing
+* [arithmetic] Explain why overwrite of \_\_array\_priority\_\_ is required
+* [deps] Use NDArrayInfo to get default modules
+* [test][examples][self-adj|pos-def] Use alternative operators which execute faster
+* [PDS/ADMM][BugFix] Bug in inner CG initialization
+* [PDS/ADMM][BugFix] Invalid sigma in m\_init
+* [PDS/ADMM][BugFix] Superfluous sigma in enforce\_precision decorator
+* [PDS/QuadraticADMM][BugFix] Missing self in super()
+* [PDS] Added QuadraticADMM algorithm for quadratic+prox-composite problems
+* [arithmetic][BugFix] NDArray \* OpT should return OpT
+* [arithmetic] Guarantee precision-agnosticity of scalar multiplication/division/argscale/argshifts
+* [operator] Drop \_\_array\_\_ protocol support for LinOps
+* [util] Introduce to\_NUMPY() method to avoid backend-specific code throughout Pycsou
+* [op][func] Add [Squared]L[12]Norms
+* [solver][doc] How to reduce GPU<>CPU transfer latency
+* [doc] Add missing references
+* [SWE] Update working notes
+* [arithmetic][PowerRule][BugFix] ProjOp.expr() should not recurse indefinitely
+* [ptype] Redefine pyct.Integer to \`int\`
+* [SWE][known\_issues] Enforce column wrap
+* [SWE] Limit Dask install to required subset
+* [SWE] Drop trailing whitespace from line endings
+* [test][solver][BugFix] Disable enforce\_precision() for transparency checks
+* [setup] Finufft is now a core dependency
+* [PDS][BugFix] IdentityOp and NullFunc dimension inference
+* [cg][BugFix] b/x0 must suitably broadcast
+* [test][CG] Add to test suite
+* [test][PGD] Add to test suite
+* [test][solver] Add Solver test suite
+* [PDS][BugFix] Incorrect initalization of dual variable when unspecified is now fixed
+* [PDS] NullFunc inference now relies on \_name attribute
+* [operator] Functionally-defined operators now have correct names
+* [abc/operator] Added attribute \_name for naming operators
+* Use TypeVar in place of Literals
+* [pgd][BugFix] Initialization of unspecified f/g must be postponed to m\_init()
+* [util][warning] Add AutoInferenceWarning
+* [pgd][perf] Do in-place updates where possible
+* [pgd][BugFix] diff-Lipschitz constant should be \*computed\*
+* [cg][BugFix] In-place updates must be safe
+* [cg][perf] Do in-place updates where possible
+* [arithmetic][ArgShiftRule] Allow auto-broadcasted scalar shifts
+* [arithmetic][ChainRule][BugFix] Redefine test\_interface\_asloss()
+* [arithmetic][AddRule][BugFix] Redefine test\_interface\_asloss()
+* [arithmetic][ArgShiftRule][BugFix] Shifting induces loss of domain-agnosticity
+* [arithmetic][ArgShiftRule][BugFix] Redefine test\_interface\_asloss()
+* [arithmetic][ArgScaleRule][BugFix] Redefine test\_interface\_asloss()
+* [arithmetic][ScaleRule][BugFix] Redefine test\_interface\_asloss()
+* [asloss] Incorporate into arithmetic
+* [test][asloss] Define .asloss() for all test operators
+* [operator] Reintroduce .asloss() into API
+* [util][warning] Scope all Pycsou-induced warnings
+* [operator][API] .\_squeeze() promoted to public method
+* [explicitlinop][BugFix] Customize .trace() for different sparse representations
+* [explicitlinop][BugFix] Customize .asarray() for different sparse representations
+* [explicitlinop] Ensure operator uses input matrix as-is
+* [explicitlinop] Test array and matrix interface offered by scipy.spmatrix
+* [deps] Provide extra info for scipy.spmatrix children
+* [deps] Provide safe interface to array linalg modules
+* [SWE] Track known problems from 3rd-party libraries
+* [operator] Add .expr() support to LinOp.[co]gram()
+* [operator] Add .expr() support to LinOp.transpose()
+* [operator][dagger][BugFix] Return SquareOp when possible
+* [operator] Add .expr() support to LinOp.dagger()
+* [operator][pinv|dagger] Simplify rules given ScaleRule properties
+* [operator] Add .expr() support to ProxFunc.moreau\_envelope()
+* [test][operator][BugFix] Add .expr() to list of expected methods
+* [doc][operator] Fix rendering issue
+* [operator] Add .expr()
+* [linop] Move IdentityOp to OrthProjOp
+* [quadratic][BugFix] Use Homothethy in place of a scaled-IdentityOp
+* [arithmetic] Propagate [co]gram()
+* [operator][BugFix] .[co]gram() must return SelfAdjointOp or LinFunc
+* [test][arithmetic] Add rectangular test cases
+* [operator][BugFix] .transpose() now works during operator arithmetic
+* [operator][BugFix] Use \`xp\` to be backend-agnostic
+* [operator][dagger][BugFix] Overwrite \_\_call\_\_ to avoid mis-interpretation during arithmetic
+* [operator] Provide .transpose() in addition to Property[T]
+* [arithmetic] Provide default implementation of arithmetic methods at top-level Rule class
+* [operator] Drop .dagger() from arithmetic
+* [test][operator] Verify double-transpose returns operator of same shape
+* [arithmetic][ChainRule][BugFix] trace() requires explicit \`self\` argument
+* [arithmetic][AddRule][BugFix] trace() should handle case SquareOp() + LinFunc()
+* [operator][LinFunc][asarray] Decrease memory requirements via in-place updates
+* [arithmetic][BugFix] Deepcopy of Python modules illegal
+* [test][operator][BugFix] allclose() needs a dtype parameter, not Width
+* [arithmetic][LinOp][BugFix+Enhancement] Promote some helper methods to arithmetic methods
+* [test][arithmetic] Update to use \`spec()\` in place of manual \`op/xp/width\` specification
+* [arithmetic][AddRule] Refactor for readability
+* [math][linalg] Use pycsou.util.deps tools in place of manual module checks
+* [operator][linop][BugFix] Forward .asarray() for transposed operators
+* [operator] Use pycsou.util.deps tools in place of manual module checks
+* [operator][sciop][BugFix] Simplified due to operator test suite refactor
+* [operator] Drop unused imports + code formatting + fix math/docs
+* [operator][linop][BugFix] Inform user of potential CuPy-specific bug
+* [operator][linop] Refactor \_ExplicitLinOp()
+* [test][operator][BugFix] Safe instantiation for backend-specific operators
+* [test][operator][BugFix] Specify operator backend. (Needed for dask-eval.)
+* [operator][linop] Refactor DiagonalOp()
+* [operator][linop] Refactor HomothethyOp()
+* [operator][linop] Refactor IdentityOp()
+* [operator][linop] Refactor Null[Op|Func]()
+* [operator][map] Refactored ConstantValued()
+* [test][operator][BugFix] Flag [Normal|Unit]Op.eigvals() limitation. (CuPy-only)
+* [test][operator][BugFix] Flag [eig|svdvals] limitation to \`which=LM\` (CuPy-only)
+* [test][operator] Refactor to work with new fixture structure
+* [test][examples] Updated with new fixture structure
+* [test] Code formatting + moving definitions
+* [API][test] Extend isclose|allclose|less\_equal to work with scalars
+* [API][util.deps] Replace array\_backend\_info() with Enums() + Enum-methods
+* [test][linop] Mask expected DenseWarning(s) on some small tests
+* [test][normalop][eigvals] Detect expected failure if gpu=True
+* [operator][linop][BugFix] eig()/svd(): reduce dense evaluation threshold
+* [operator][linop][BugFix] Use svd() in place of svdvals()
+* [operator][linop][BugFix] Correct import path for CuPy backend
+* [operator][BugFix] Customize svdvals() for better performance, in particular for CuPy arrays
+* [explicitlinop][asarray] Improve performance on CuPy arrays
+* [explicitlinop][API] Make class private
+* [explicitlinop][API] Rename underlying array to public
+* [test][explicitlinop] Reduce accepted sparse arrays to COO-like
+* [test][explicitlinop][BugFix] data\_apply must use domain-specific \`\_matrix\`
+* [explicitlinop][trace][BugFix] Now CuPy-compatible
+* [explicitlinop][asarray][BugFix] Now CuPy-compatible
+* [explicitlinop][lipschitz][BugFix] Now CuPy-compatible
+* [test][explicitlinop][BugFix] without GPU array\_initializers, everything works
+* [test][operator][eigvals] Refactor width override
+* [explicitlinop] Rename encapsulated matrix. (Similar to DiagonalOp.)
+* [diagonalop] Improve pinv/dagger performance
+* [diagonalop][BugFix] asarray() now works with xp=CuPy
+* [test][diagonalop][BugFix] Disable [from|to]\_sciop() tests: too difficult to assess with internal state
+* [test][diagonalop][BugFix] Disable [svd|eig]vals() impossible parametrizations
+* [test][diagonalop][BugFix] Disable math tests designed solely for the numpy backend
+* [operator][sciop][BugFix] Do not coerce LinearOperator return types too strictly
+* [test][sciop][BugFix] Protect pytest setup stage from ill-defined operators
+* [diagonalop][BugFix] [svd|eig]vals, trace() now work if \`vec\` is a Dask array
+* [runtime] Drop QUAD-precision
+* [operator][pinv|dagger][API-change] \`damp\` defaults to 0
+* [test][operator] Warn if functions are non-transparent to CuPy inputs
+* [test][operator][normalop] Make base example fully XP-agnostic
+* [test][operator][BugFix] Make test\_transparent() CuPy-compatible
+* [test][operator][BugFix] Refactor \_data\_fenchel\_prox() to be CuPy-compatible
+* [operator][svdvals][BugFix] \`random\_state\` unsupported by CuPy
+* [operator][BugFix] Add missing dependencies
+* [util][array\_module][BugFix] CuPy does not support writeable-flag
+* [tox] Output better logs when running tests
+* [CG][BugFix] Use simplified dual-step "residual" initialization
+* [test][operator][BugFix] Do not compare floats via \`==\`
+* [runtime] Drop QUAD-precision
+* [operator][moreau\_envelope][BugFix] Protect againts read-only arrays
+* [ConstantValue] Save memory on [apply|grad]() calls
+* [arithmetic][ChainRule][BugFix] Improve linop conditioning numbers
+* [arithmetic][AddRule][BugFix] Reduce obliquity factor to improve linop conditioning numbers
+* [arithmetic][ArgScaleRule][BugFix] Do not need to overload data\_pinv[T]()
+* [arithmetic][ScaleRule][BugFix] Do not need to overload data\_pinv[T]()
+* [SWE] Provide better developer installation instructions
+* [SWE] Update working notes
+* [doc][BugFix] Correct some rendering issues
+* [operator][moreau\_envelope] Use in-place computations where possible
+* [operator][moreau\_envelope][BugFix] Compensate for dask.linalg.norm() return-precision bug
+* [operator][BugFix] Avoid accuracy loss for LinFunc.fenchel\_prox()
+* [operator][deprecation] Remove asloss()
+* [test][operator][BugFix] np.half is not a dtype: uniformize isclose() precision types
+* [operator][Quadratic] Use reduced-precision to compare [fenchel\_]prox() outputs
+* [arithmetic][AddRule][BugFix] prox() can be evaluated for (Quadratic + Quadratic)
+* [arithmetic][ChainRule][BugFix] Propagate proximal property for Quadratics
+* [arithmetic][Quadratic] Add \_hessian() arithmetic rules
+* [arithmetic][ChainRule][BugFix] Selectively preserve PROXIMABLE property for case (LinFunc \comp PROXIMABLE)
+* [operator][linop][BugFix] \`fro\`-estimate must be quadratically shrunk
+* [test][operator] Provide some slack when comparing (L\_svds <= L\_fro)
+* [arithmetic][ChainRule][BugFix] Diff-Lipschitz constant cannot be inferred for compositions where one term is non-linear
+* [arithmetic][ChainRule][BugFix] Remove reshape()-ambiguities due to domain-agnosticity
+* [arithmetic][ChainRule][BugFix] Lipschitz constant of (linear \* linear) must by recomputed
+* [DiagonalOp][BugFix] Fallback on universal function float() instead of backend-non-agnostic method \`.item()\`
+* [test][arithmetic][ChainRule][BugFix] Work around QuadraticFunc domain-size limitations
+* [test][arithmetic][setup] Silence DenseWarnings
+* [operator][linop][BugFix] Favor DenseWarning over UserWarning for operations which revert to matrix-based ops
+* [arithmetic][ChainRule][BugFix] LINEAR implies PROXIMABLE
+* [arithmetic][ChainRule][BugFix] QUADRATIC implies PROXIMABLE
+* [arithmetic][ChainRule][BugFix] UNITARY implies NORMAL
+* [operator][BugFix] Must add DIFFERENTIABLE\_FUNCTION property when squeezing DiffMaps
+* [arithmetic][ChainRule] Before 1st test run
+* [test][arithmetic] ScaleRule: also test "/"
+* [arithmetic][AddRule][BugFix] Fail quickly if operand shapes incompatible
+* [arithmetic][AddRule][BugFix] Range-broadcasted addition implies Lipschitz/Diff-Lipschitz/Adjoint pre/post-processing
+* [arithmetic][AddRule][BugFix] .jacobian() is identity for LinOps
+* [arithmetic][AddRule][BugFix] LINEAR\_NORMAL property is lost during additive composition
+* [test][arithmetic] Add
+* [test][arithmetic] Run test\_value1D\_svdvals() at reduced precision
+* [test][operator][BugFix][pinv|dagger] Protect against read-only asarray() outputs for special operators. (ex: NullOp)
+* [test] Use Oblique/Permutation in place of (old) CabinetProjection/Rotation
+* [test][operator][BugFix] dim -> N rename for consistency with other test operators
+* [operator|arithmetic][BugFix] Allow safe in-place updates
+* [test][operator] Replace CabinetProjection with Oblique to test D>3 case
+* [operator][BugFix] Force non-transparent functions to be read-only
+* [util][array\_module] Add read\_only()
+* [util][array\_module] Add copy\_if\_unsafe()
+* [test][operator] Verify referential transparency
+* [test][operator] Replace Rotation by Permutation to test D>3 case
+* arithmetic addrule wip
+* [test][arithmetic] ArgShift
+* [arithmetic][ArgScaleRule][BugFix] .jacobian() is identity for LinOps
+* [test][ArgScaleRule][BugFix] diff\_lipschitz() grows quadratically
+* [test][arithmetic] ArgScale
+* [arithmetic][ScaleRule][BugFix] .jacobian() is identity for LinOps
+* [arithmetic][ScaleRule][BugFix] PROX-property must be preserved for LinFuncs
+* [operator][BugFix][orthproj.pinv] Return solution in Range(Op) for consistency
+* [operator][BugFix][transpose] Force \_\_call\_\_ to be forwarded
+* [test][arithmetic] ScaleRule
+* [test][arithmetic] Initialize test package
+* [arithmetic] Set default arithmetic attributes in Rule()
+* [arithmetic] Enable Quadratic inference
+* [operator][dagger] Simplify use of MethodType
+* [solver][BugFix] Close log file-handlers at exit
+* [nullOp][BugFix] Gram/Cogram must be wrapped as PosDefOp
+* [operator][linfunc][BugFix] Transpose customization required
+* [linop][identity] Drop inheritance from PosDef & OrthProj
+* [operator][pinv] Use HomothethyOp directly for better performance
+* [operator][BugFix] has() is a classmethod
+* [arithmetic] Implement ChainRule
+* [arithmetic] Implement AddRule
+* [arithmetic] Implement PowerRule
+* [arithmetic] Implement ArgShiftRule
+* [arithmetic] Implement ArgScaleRule
+* [operator][map] Add ConstantValue()
+* [arithmetic] Implement ScaleRule
+* [arithmetic] Add base Rule hierarchy
+* [operator][arithmetic] Use Rule classes instead of functions
+* [operator][ProxFunc] Refactor use of MethodType/partial
+* [WIP] Arithmetic Notes
+* [arithmetic][pow] Negative powers are not supported
+* [test][operator.func] QuadraticFunc()
+* [operator][from|to\_sciop][BugFix] Force backend compliance
+* [test][operator.linop.base] ExplicitLinOp()
+* [linalg][BugFix] Missing import
+* [hutchpp][BugFix] Computing via Dask returns incorrect values
+* [operator][BugFix] Set seed in svdvals() for deterministic tests
+* [test][operator][BugFix] Include complex-valued dtypes in isclose()
+* [test][BugFix] DiffMap: update use of ExplicitLinOp
+* [operator][BugFix] Let ExplicitLinOp() cast operator to the right Operator class itself
+* [test][operator] Drop unnecessary Precision-Warnings
+* [test][operator][BugFix] Do not allow casting to domain-agnostic linfuncs
+* [test][operator.linop.base] DiagonalOp()
+* [util] Fine-tune internal Pycsou warnings
+* [test][operator.linop.base] HomothetyOp()
+* [test][operator.linop.base] LinFunc()
+* [test][operator.linop.base] NullOp()
+* [test][operator.linop.base] IdentityOp()
+* [operator.linop.base] Add DiagonalOp
+* [operator.linop.base] Drop unused imports
+* [operator] Specialize HomothethyOp
+* [operator][BugFix] Redefine NullFunc in terms of NullOp
+* [operator] Enhance IdentityOp
+* [operator][BugFix] [co]gram() is a no-op for OrthProjOp
+* [operator][BugFix] Allow squeezing LinOp to SquareOp when possible
+* [operator][BugFix] Avoid double-parentheses
+* [solver][pgd][BugFix] Auto-infer NullFunc() dimension if f/g is domain-agnostic
+* [operator][BugFix] Drop double-defined properties()
+* [operator][BugFix] Handle \`damp\` correctly
+* [operator][BugFix] Domain-Agnostic LinFuncs forbidden
+* [operator][BugFix] Squeezed LinOps must lose LINEAR\_\* properties
+* [arithmetic] Implement argscale()
+* [arithmetic] Implement pow()
+* [arithmetic] Implement scale()
+* [test\_conftest] Drop argshift/argscale tests
+* [operator][BugFix] Override LinFunc implementations where needed
+* [operator][BugFix] LinFunc.from\_array() must reshape 1D inputs to call super()
+* [operator][BugFix] \_squeeze()-ing LinOps requires adding Proximal/Gradient properties
+* [operator] Implement .asop()
+* [operator][BugFix] Use function to gather core operators
+* [abc.operator] Cleanup/Formatting
+* [test\_conftest] Update all OpT test classes
+* [test\_example] Fix Annotations
+* [compound] Update annotations
+* [opt.solver] Update annotations
+* [doc] Change module paths due to use of from-style imports
+* [abc.solver] Formatting/Cleanup
+* [operator.func] Formatting/Cleanup
+* [operator.linop] Formatting/Cleanup
+* [math] Formatting/Cleanup
+* [opt] Formatting/Cleanup
+* [runtime] Drop half-precision
+* [util] Formatting/Cleanup
+* [doc] Reformat README
+* [operator][astype] Temporary until arithmetic + astype fully implemented
+* [operator][linop] T(): shallow-copy to avoid up-cast to LinOp
+* [linop][base] Rewrite ExplicitLin[Op,Func]
+* [operator][linop][\_\_array\_\_] Defer dtype inference to .asarray()
+* [linop][base] Rewrite ExplicitLin[Op,Func]
+* [operator][BugFix] int-ing shape does not allow None-dim
+* [pycsou.operator] Auto-load user-facing classes
+* [test][selfadjointop][BugFix] Must return real-valued eigenvalues
+* [test][map] Rename specialize() -> astype()
+* [operator][refactor]
+* [pycsou.opt.solver] Auto-load user-facing classes
+* [ptype] Rename default type annotations
+* [pycsou.abc] Auto-load user-facing classes
+* [operator][squeeze][doc] Clean-up
+* [test][linop] Reactivate prec-disabled tests
+* [linop][BugFix] Enfore precision for pinv() overrides
+* [test] Drop half-precision for all operator checks
+* [cg][BugFix] input/output precision must match
+* [test][posdefop] Drop explicit .[pinv|dagger]() precision override
+* [test][pinv] Test correctness at low-precision only
+* [pinv][BugFix] Force pseudo-inverse to return
+* [stop][relerr][BugFix] mistyped variable name
+* [cg] Drop explicit residual computation in stop\_crit
+* [cg][BugFix] Explicitly eval residuals in presence of low-amplitudes
+* [cg][BugFix] Restarts are recurrent events
+* [nufft] squeeze instances to Square-ize when possible
+* [nufft-t3] Refactor implementation
+* [nufft-t1] Refactor implementation
+* [nufft][user-facing interface] Refactor docs + annotations
+* [nufft-t3][ex] Update examples
+* [nufft-t2][ex] Update examples
+* [nufft-t1][ex] Update examples
+* [RelError][BugFix] Must work with parallel evaluations
+* [TEMPORARY][ptype] Some extra definitions
+* [operator][BugFix] Force shape to be a tuple
+* [nufft] Added derivation of the upper bounds for the Lipschitz constants in documentation and set them to these values in \_\_init\_\_. Speedup of \_NUFFT3 for poorly centered data via optional pre/post-phasings
+* [nufft] Refactoring of NUFFT3 following the one of NUFFT1/2. \_rNUFFT3 dropped
+* [nufft] Improvement of the documentation, renaming of variables to follow more closely FINUFFT's notations, and refactoring of NUFFT1/2. Real-input transforms of Type 1 and 2 (now available as a transpose) are now defined via the keyword argument real in the class constructors NUFFT.type1() and NUFFT.type2(). The real keyword just affects the shapes of the operators and the way the inputs/outputs to the apply() and adjoint() methods are interpreted (a few if statements). This simplifies the API of NUFFT (less constructors and no need for private class \_rNUFFT1) and allows to define the real NUFFT of Type 2 as a transpose of the Type 1. A similar refactoring needs yet to be performed for the NUFFT of Type 3 (WIP). Computation of the Lipschitz constant should also be detailed in the doc and updated in the code (as per today's discussion)
+* Improvement of the NUFFT documentation
+* [linfunc][BugFix][cogram] Manual specialize to HomothethyOp
+* [test][linop] Ignore svdvals() warnings caused by dense eval
+* [linfunc] data\_grad() is now auto-inferred
+* [linfunc] Add specialized methods
+* [linop][svdvals] Enable fallback to dense-eval mode when required
+* [test][linfunc] Add checks
+* [test][linfunc] Create simple operator
+* [SWE][normalop] Use pytest warning filter in place of Python warnings
+* [test][squareop] Ignore trace() warnings caused by dense eval
+* [operator][square] Add trace() checks
+* [operator][linop][doc] Provide type hints (+ fix doc)
+* [hutchpp] Solidify implementation
+* [linalg][hutchpp] Avoid memory overflow by computing full matrix
+* [hutchpp][BugFix] Not hutchpp()'s job to custom-handle ExplicitLinOps
+* [test][linop][BugFix] argscale(): should return right type
+* [test][linop][BugFix][pinv/dagger] Use lstsq to solve least-squares problem
+* [operator][orthprojop][BugFix] pinv/dagger must handle damp!=None case
+* [test][orthprojop] Create simple operator
+* [test][projop] Drop explicit svd check
+* [test][projop] Create simple operator
+* [test][linop][BugFix] Mark .[svd|eig]vals() as FAIL if SciPy/CuPy change their HALF/QUAD-precision support
+* [test][selfadjointop] Create simple operator
+* [operator][linop][svdvals] Drop unnecessary enforce\_precision()
+* [test][selfadjointop][eigvals] Ensure is real-valued
+* [test][unitop][eigvals] Ensure magnitude is unity
+* [test][normalop][eigvals] Use magnitude tests only
+* [normalop][eigvals][BugFix] Return complex-valued eigenvalues by default
+* [normalop][eigvals][BugFix] Fallback on dense-mode when required
+* [SWE][operator] Rename scipy[.sparse].linalg for clarity
+* [UnitOp][BugFix] \`damp\` now supported
+* [UnitOp][BugFix] Use closed-form known [co]-Gram
+* [identityop][BugFix] Don't inherit from SelfAdjointOp
+* unitop test suite fixes
+* unitop testfile
+* [test][orthprojop] Add checks
+* [test][projop] Add checks
+* [test][posdefop] Add checks
+* [test][selfadjointop] Add checks
+* [test][unitop] Add checks
+* [test][normalop] Silence complex-valued eigenvalue warnings
+* [API][normalop] Return eigenvalue real-parts due to dtype issues
+* [test][normalop] Add .eigvals() checks
+* [normalop][BugFix] eigvals[h] does not exist in SciPy
+* [test][normalop] Create simple operator
+* [test][linop] Refactor .svdvals() tests which can be shared with .eigvals()
+* [test][squareop] Add .shape checks
+* [test][squareop] Create simple operator
+* [test][linop][BugFix] Explicitly compute SVD for comparison with theoretical value
+* [operator][linop] .from\_sciop(): improve code readability
+* [test][linop] Add .from\_sciop() checks
+* [operator][linop] .from\_sciop(): formatting
+* [test][operator] Add \`base\` class attribute to simplify some testing code
+* [operator][linop] .to\_sciop(): formatting
+* [operator][linop][BugFix] to\_sciop() output shapes incorrect
+* [test][linop] Add .to\_sciop() checks
+* [operator][linop] from\_array(): formatting
+* [operator][linop] \_\_array\_\_(): formatting
+* [test][linop] Add \_\_array\_\_() checks
+* [operator][linop][BugFix] asarray() precision now matches dtype parameter
+* [operator][linop] asarray(): formatting
+* [test][linop] Add .asarray() checks
+* [test][linop] Add .[co]gram() checks
+* [test] Add LinOpT subclass stubs
+* [test][linop] Add .T() checks
+* [operator][dagger][BugFix] Unknown kwarg "arr" received
+* [linop] TEMPORARY: disable test\_prec\_pinv() due to CG bug?
+* [test][linop] Add .dagger() checks
+* [linop][pinv][BugFix] Rearrange arithmetic due to unsupported behaviour
+* [linop][pinv] Minor cosmetics
+* [test][linop] Add .pinv() checks
+* [test][argscale] Implemented
+* [test][operator] Add \_\_call\_\_() tests
+* [test][linop][svdvals] xfail unsupported precisions
+* [test][linop] Add .svdvals() checks
+* [test][linop] Add .adjoint() checks
+* [test][linop] Add all tests related to pre-existing interface from parent classes
+* [hutchpp] Code cleanup
+* [hutchpp] Allow warnings to be silenced
+* [test][lipschitz] Drop data\_[diff]\_lipschitz() fixture
+* [enforce\_precision] Drop explicit \`o=True\` which equals default parameter
+* [operator][eigvals] Refactor implementation
+* [operator][svdvals] Refactor implementation
+* Use np.inf in place of np.infty. (NumPy-recommended)
+* [operator][API][lipschitz] Streamline interface
+* [operator][API][to\_sciop] Use \`gpu\` instead of \`cupyx\`
+* [test] Add LinFuncT
+* [test][BugFix] Systematically call .[diff]\_lipschitz() to ensure .[diff]\_lipschitz is set
+* [test] Use shift\_loss() to simplify asloss() body
+* [test] Alphabetically order class public interface
+* [test][argscale] WIP: .adjoint() missing
+* [operator][BugFix] Allow pre-scaling of dim-agnostic operators
+* [operator][argshift][BugFix] Remove unnecessary precision-check
+* [operator] Simplify .shape calls to .dim|codim() where possible
+* [test][linop] Create simple operator
+* [operator][argshift][BugFix] TEMPORARY: \`shift\` loses precision during call?
+* [test][argshift] Add prox() tests
+* [test][argshift] Add grad() tests
+* [test][argshift] Add apply() tests
+* [operator][argshift][BugFix] Multiple "arr" received
+* [test][examples][BugFix] Ensure op.dim matches test case sizes
+* [operator][argshift][BugFix] Custom ops don't necessarily take shape as input
+* [operator][argshift][BugFix] squeeze()-ing fails for (1,) inputs
+* [test][examples] Add asloss()
+* [\_dev][nufft] Updated examples
+* [nufft] Add dask support
+* [linop] Add NUFFT.rtype[13]
+* [doc][nufft] Fix typos
+* [nufft] No limit on number of parallel evals of [apply/adjoint]()
+* [nufft] Allow user to choose eps
+* [complex] move \_CWidth to runtime
+* [complex] Add no-op behavior
+* [QuadraticFunc][BugFix] remove cst in addition with ExplicitLinFunc
+* [\_dev][nufft] Use public interface to construct objects
+* Revert "[operator][BugFix] Linop.T should not forget internal state."
+* [pds/quadraticfunc] Fixed import statements and documentation to reflect post-merge architecural changes in the pycsou library
+* [pds] Enable automatic objective function tracking
+* [pds][init] Use kwargs to avoid cascading Solver.init() changes
+* [opt/pds] Fixed merge issues
+* [opt/pds] Reordering of the various algorithms. Solution can now return the dual variable as well (for primal/dual algorithms). ADMM bugs fixed
+* [operator/func/base] Bug fixes in QuadraticFunc + implemented specific arithmetic for QuadraticFuncs
+* [\_dev][nufft] Some useful test scripts
+* [nufft] type1+2: allow points outside [-pi,pi]
+* [operator][BugFix] Linop.T should not forget internal state
+* [linop] Add NUFFT.type[123]
+* [SWE] Add numba as core dependency
+* [SWE] Add finufft as core dependency
+* [runtime] Add eps()
+* [util] Add complex helpers
+* [test][util] Regroup test classes to match pycsou.util split
+* [util] Split into submodules
+* [util] Enable alternative function/method implementations based on array backend
+* [deps] array\_backend\_info(): introduce short-name for each backend
+* [SWE] Drop Python 3.8 support
+* [todo] Update tox task
+* [tox] Test against Python 3.10
+* [tox][BugFix] Force py{38,39} to use right interpreter
+* [cg] Enable automatic objective function tracking
+* [pgd] Enable automatic objective function tracking
+* [solver][BugFix] Allow arbitrary object types in \_mstate
+* [solver][BugFix] Use Memorize() to track objective function
+* [solver] Auto-set verbosity based on stop\_rate
+* [solver] Enable arbitrary spacing between stop\_crits
+* [solver][BugFix] Print/Export last iteration diagnostics
+* [solver] Enable automatic objective function tracking
+* [pgd][init] Use kwargs to avoid cascading Solver.init() changes
+* [cg][init] Use kwargs to avoid cascading Solver.init() changes
+* [doc][solver] Fix typos
+* [stop][RelError][BugFix] Last cached value must have sufficient dimensions
+* [stop] Rename default var: "primal" -> "x"
+* [doc][stop] Fix class name typo
+* [doc][pgd] Fix typo
+* [cg] Extra robustness in setting restart\_rate
+* [cg] Fix spelling/formatting
+* [SWE] Update requirements
+* [test][stop][BugFix] Rescale eps after fd4997cb RelError changes
+* [operator/pinv] Updated docstring, removed extra verbose, made pinv silent by default. Updated dagger to reflect pinv's new API
+* [PDS] resolve merging conflicts with v2-dev (2)
+* [PDS] resolve merging conflicts with v2-dev
+* [QuadraticFunc] change attributes to private
+* [PDS/ADMM] remove unused argument
+* [PDS/LV][REF] use base class' \_set\_step\_size method
+* [PDS][DOC] improve doc of LV and DY
+* [PDS][\_set\_momentum\_term] move children's method to parent class
+* [LinOp/pinv] coerce damping factor
+* [solver/CG][docstring typo]
+* [LinOp/pinv][handle CG kwargs]
+* [LinOp/pinv] change scipy's CG method for pycsou's
+* [PDS] Small edits
+* [func] Bug fixes and small improvements to QuadraticFunc
+* [operator] Remove the squeeze() fix (already fixed in a more robust way in v2-dev). Revert to NDArray as type annotation for the output of svdvals (think of the case k>1)
+* [operator/arithmetic][BugFix] allow linop subclasses to be squeezed I introduced this bug myself when I added the NonProxLike condition
+* [refs/PDS] add references for ForwardBackward and ProximalPoint methods
+* [operator/func] add QuadraticFunc
+* [solver/PDS] add notimplemented m\_step method in base class
+* [solver/PDS][add ADMM] algorithm 130 of [PSA]\_
+* [solver/LV][\_set\_step\_sizes] overwrite method with LV conditions
+* [solver/DY][\_set\_step\_sizes] overwrite method with DY conditions
+* [solver/PDS][DOC] add doc on tuning\_strategy
+* [solver/FB] instantiate it from Condat-Vu
+* [solver/PDS] typos and small bugs
+* [compound][BugFix] typo preventing lipschitz update
+* [PDS] Updates to the documentation of CP and DR + change in the default parameters of DR
+* [PDS] Implement three strategies for setting the hyperparameters of CondatVu and PD3O (standard, large steps, overrelax) + updated documentation
+* [PD3O][BuxFix] add missing parameters
+* [PD3O][DOC] specify rho param. for convergence rate
+* [PD3O][DOC] remove ergodic remark
+* [PD3O/optimize\_step\_sizes] prevent effect of numerical error
+* [PDS] Remove ergodic variable and revert to old m\_init architecture. More efficient PD3O iterations (one call only to adjoint and grad). PD3o's rho defaults to 1 to have the asymptotic rates of convergence guaranteed
+* [references] add ref to nonlinear Chambolle-Pock
+* [solver/pds] refactor CB/DR/FB/PP // add DY/LV // add DiffMap support Because Chambolle-Pock, Douglas-Rachford and Forward-Backward can be based either on Condat-Vu or PD3O, now they are defined as functions that return an object from the chosen base class. Add DavisYin and LorisVerhoeven algorithms. Also add minimal support composition of H w/ DiffMaps
+* [solver/pds][PD3O] add optimize\_step\_sizes
+* [solver/pds] include option for ergodic estimate
+* [abc/operator][svdvals] return array in svdvals(), get item in lispchitz
+* [\_dev/L1Norm][BugFix] wrong output shape
+* [stop][BugFix] Correct RelErr formulation. (3rd version)
+* [stop][BugFix] Correct RelErr formulation. (2nd version)
+* [stop][BugFix] Correct RelErr formulation
+* [PDS] Changes to the API and documentation
+* [solver/pds] set\_momentum\_term() moved to specific cases (CV/PD3O)"
+* [solver/pds/PD3O][BugFix] fix set\_step\_sizes() bugs
+* [solver/pds][DOC] convergence conditions on parameters (CV/PD3O)
+* [solver/pds] changes to the API and typos
+* [abc/operator][BugFix] svdvals output type hint float instead of NDArray
+* [references] add refs to papers for PD3O convergence conditions
+* [PDS] Changes to the API and small bug fixes
+* [solver/pgd][DOC] add parametrization for \_\_init\_\_
+* Revert "[solver/cg][DOC] add parametrization for \_\_init\_\_ and fit"
+* [solver/cg][DOC] add parametrization for \_\_init\_\_ and fit
+* [solver/pds/pd3o] fix convergence criteria
+* [solver/pds][DOC] clean, update to v2 format and fix typos
+* [solver/pds][clean] remove unused/commented code
+* [runtime][BugFix] In enforce\_precision(), don't call coerce() on None-valued inputs
+* [solver/pds][refactoring] PDS as abstract base class for CVS and PD3O The convergence conditions have been corrected for both CVS and PD3O. Allowing DiffMap instead of LinOp is left for future (marked in the code as #TODO)
+* [References] add PD3O reference, and rename PDS to CVS Now PDS is used for the as the abstract class of solver including CondatVuSplitting (CVS) and PD3O
+* [LinOp/svdvals] return value, not array Otherwise this can modify the shape of parameters when using the Lipschitz for automatic parameter tuning
+* [pre-commit/black][BugFix] update black version Related to this known error
+* [operator/LinOp/lipschitz] improve default behavior for kwargs Made more pythonic the removal of "gpu" and added "xp" in case "gpu" is not defined
+* [operator/LinOp/gram] specialize (co)gram to SelfAdjointOp instead of SquareOp
+* [operator/LinOp] don't change class of squared linop to SquareOp return back to the original init. This was changed in order to have trace() available for squared LinOp. The user should use SquareOp if the intention is to use trace()
+* [lipschitz/hutchpp/trace][DOC] improved documentation
+* [pre-commit/black][BugFix] update black version Related to this known error
+* [pycsou.math][sphinx] add pycsou.math in documentation
+* [test] Reactivate squeeze() tests
+* [SWE] Force dev-dependency install when running tox
+* Revert "[runtime/enforce\_precision][BugFix] allow None as input."
+* Updated todo.txt to reflect current status of things
+* Fixed squeeze() function and refactor package structure. Minor fixes here and there
+* New todos
+* [doc/solver] add pds module to doc
+* [solver/pds][ENH] add PD3O algorithm
+* [solver/pds][BufFix] fix input parameter & defaults for pds subproblems
+* [solver/pds][DOC] add doc for pds subproblems
+* [solver/pds][clear] remove test example
+* [solver/pds][ENH] add short-names for family of PDS algorithms
+* [solver/pds][refactor] change x\_init/z\_init to x0/z0
+* [solver/pds][clean] remove TODOs
+* [solver/pds][refactor] change x\_init/z\_init to x0/z0
+* [solver/pds][DOC] add docstring to PDS algo (reused from v1)
+* [operator/asarray][BugFix] pass arr.mod. as input for cupy compatibility
+* [\_dev/FirstDerivative][BugFix] First derivative had wrong default axis
+* [\_dev/L1Norm/prox][BugFix] mod. agnostic abs() and clip() funcs
+* [operator/LinOp/lipschitz][BugFix] return float instead of np.array (cupy compatibility)
+* [solver/pds/example][BugFix] First derivative had wrong default axis
+* [solver/pds][EXAMPLE] plot observed data
+* [runtime/coerce][BuxFix] Allow None inputs
+* [operator/ProxFunc/\_\_mul\_\_][BugFix] avoid squeezing ProxLike maps ProxLike maps (ProxFunc, ProxDiffFunc) cannot be squeezed, and they are already FuncLike
+* [solver/PDS] Add PDS associated subproblems' algorithms
+* [\_dev] add \_dev module w/ classes used for examples/debugging These classes will be refactored in the future in the appropriate module and format
+* [operator/LinOp][ENH] LinOp automatically specializes to SquareOp
+* [operator/SquareOp][DOC] add few words on trace method
+* [operator/LinOp] specialize (co)gram as SquareOp This will allow accessing the SquareOp method .trace() when computing the Lipschitz
+* [operator/trace] Move 'trace' method from LinOp class to SquareOp class
+* [operator/proxfunc/\_\_mul\_\_][BugFix] class specialization was not returned
+* [operator/specialize][BugFix] typo prevented updating lipschitz
+* [property/mul][BugFix] squeeze needed to define grad() method
+* [operator/properties][BugFix] update lipschitz's attributes, not methods
+* [solver/cg][FixTypos]
+* [operator/properties][BugFix] update lipschitz attributes, not methods
+* [linop/lipschitz/fro][DOC] add example comparing svds, trace, and hutch++
+* [linop/lipschitz/fro] return array with shape (1,), consistency with svds
+* [operator/properties][BugFix] remove underscores in list of properties
+* [operator/properties][BugFix] remove underscores in list of properties
+* [linalg/hutch++][ENH] add support for dask random generator and qr func
+* [linalg/hutch++][ENH] compute trace more efficiently memorywise
+* [linalg/hutch++][ENH] clean array mod agnosticity
+* [linalg/hutch++][DOC] add example stochastic trace estimation
+* [linalg/hutch++][DOC] fix typos
+* [linop/lipschitz][DOC] describe m param in doc
+* [linop/lipschitz][BugFix] check recomputing conidtions before recomputing lipschitz
+* [linop/lipschitz][BugFix] circular dependencies
+* [solver/pgd][DOC] describe default stop\_crit
+* [runtime/enforce\_precision][BugFix] allow None as input
+* [solver/pgd][m\_init] enforce\_precision instead of coerce
+* [solver/cg][restart] add restart and restart\_rate argument
+* [solver/cg][DOC] add doc on restart and stop\_crit
+* [solver/cg][DOC] add example and describe default stop\_crit
+* [solver/cg][m\_init] enforce\_precision instead of coerce
+* [testing][operator] Add as\_loss() to interface
+* [testing][operator][BugFix] test\_squeeze() must check interfaces, not types
+* [operator][BugFix] ProxDiffFunc.diff\_lipschitz() must not raise an exception
+* [operator][BugFix] DiffFunc.diff\_lipschitz() must not raise an exception
+* [testing][operator] set .\_[diff\_]lipschitz in constructors
+* [testing][operator][BugFix] [diff\_]lipschitz() now abide by docstring description
+* [testing] Enable test\_interface\_jacobian()
+* [SWE] Update working notes
+* [testing][refactor] Group random data generation for easier maintenance down the road
+* [testing][BugFix] <= comparisons must be done at a given numerical precision
+* [testing] Ensure in/out dtype invariant holds even when enforce\_precision() is disabled
+* [SWE] Update working notes
+* [testing][refactor] Move has\_interface inside MapT
+* [testing][refactor] Group [value1D,backend,precision] tests to reduce code duplication
+* [testing][refactor] Simplify test disabling code
+* [testing][BugFix] test\_math[12]\_grad now listens to disable\_test
+* [doc][BugFix] .jacobian() output must be a matrix
+* [testing] Implement SquaredL2Norm + TestSquaredL2Norm. (ProxDiffFunc version)
+* [testing] Implement ProxDiffFuncT
+* [testing] Implement L1Norm + TestL1Norm
+* [testing] Implement ProxFuncT
+* [testing][BugFix] Compare .jacobian() with the L2 norm
+* [testing] Implement SquaredL2Norm + TestSquaredL2Norm. (DiffFunc version)
+* [testing] Implement DiffFuncT
+* [testing][Bug] Disable DiffMapT.test\_interface\_jacobian() -> finish LinOpT first
+* [testing] Implement Sin + TestSin
+* [testing] Implement DiffMapT
+* [testing][Bug] Disable FuncT.test\_squeeze() -> needs investigating
+* [testing] Implement Median + TestMedian
+* [testing] Implement FuncT
+* [testing] Initialize examples/
+* [pgd] primal -> x rename
+* [testing] Refactor test\_interface to use has\_interface()
+* [testing] Implement ReLU + TestReLU
+* [testing] Implement MapT
+* [testing] Rename to examples
+* [cg] primal -> x rename
+* [cg] fit() refactor
+* [pgd] fit() refactor
+* [solver] Refactor fit() docstring
+* [util][doc][compute] Enhance docstring
+* [solver][BugFix] Disable m\_state collection traversal
+* [pgd][BugFix] Add proximal threshold
+* [solver][pgd] Incorporate default stopping criterion
+* [solver][cg] Incorporate default stopping criterion
+* [solver] Add default stopping criterion
+* [solver][pgd] Incorporate show\_progress into \_\_init\_\_
+* [solver][cg] Incorporate show\_progress into \_\_init\_\_
+* [solver][API] Allow user to silence progress on stdout if mode=BLOCK
+* [solver][doc] Docstring fixes
+* [doc] Add basic references from pycsou\_v1
+* [pgd][doc] Add to documentation
+* [pgd][doc] Refactor docstring
+* [pgd][API] Add explicit acceleration option
+* [pgd][doc] Fix typo
+* [pgd] Rename APGD -> PGD where applicable
+* [solver][Refactor] Rename apgd.py -> pgd.py
+* Revert "[operator/ProxFunc/\_\_mul\_\_][BugFix] cast to pycsou Map subclass instead of self.\_\_class\_\_"
+* [operator/DiffFunc][FixBug] inherit from DiffMap to overwrite squeeze method from Map super class
+* [operator/ProxFunc/\_\_mul\_\_][BugFix] cast to pycsou Map subclass instead of self.\_\_class\_\_
+* [LinOp/lipschitz/fro][Doc update]
+* [hutch++] Change default to high precision
+* [hutch++][BugFix] Delete 'gpu' key from kwargs
+* [LinOp.trace] add LinOp.trace(), use it for lipschitz computation
+* [hutch++][BugFix] use binomial dist. and default\_rng
+* [operator] add as\_loss()
+* [util][vectorize][BugFix] Now works for all array backends
+* [cg][m\_step] Add note regarding \_mstate parameters
+* [cg] sepand's comments
+* [cg][BugFix] update vars. in mstate, not updating otherwise
+* [cg] use explicit residual for stop\_crit
+* [solver] Swap order of stats() outpu
+* [solver] Swap order of stats() outputs
+* [cg][m\_step] Refactor to guarantee m\_state has RT-precision
+* [cg][m\_init] Refactor to guarantee m\_state has RT-precision
+* [cg] fit() should not do any extensive checks
+* [cg] Interface change: move 'b' definition to fit()
+* [cg][BugFix] Some \_\_init\_\_() params should be kw-only. (See Solver interface.)
+* [cg] Use 'A' for pos-def op
+* [cg][doc][BugFix] Wrong cost function
+* [cg] Use more meaningful variable names
+* [doc][BugFix] Add CG
+* [doc][BugFix] Fix critical error introduced in commit 3078aa32
+* [apgd] Use \_mstate shorthand for conciseness
+* [solver][doc] Be more precise in fit() docstring
+* [solver][BugFix] history initialized to empty list after fit\_init()
+* [solver][BugFix] Return None history if no iterations done
+* [base/HomothetyOp] BUG: wrong identation of \_\_mul\_\_ function return
+* [math/linalg] DOC: add gpu arg in hutch++ docstring
+* [abc/operator] Add 'fro' algorithm for lipschitz computation (hutch++)
+* [runtime][coerce][BugFix] Fix test regression
+* [math/linalg] Add hutchpp
+* [solver/CG] add Sepand's comments
+* [solver/CG] add Sepand's comments
+* [solver/CG] Black formatting
+* [solver/cg] Fix module agnosticity and precision enforcement
+* [solver/cg] Change numpy code to module agnostic based on input data
+* [solver/cg] Change np.einsum to module agnostic funcs (\_\_mul\_\_ & \_\_add\_\_)
+* [abc/solver] add base class initialisation in \_Worker
+* [solver] add conjugate gradient method
+* [util] Refactor vectorize() to use parse\_params()
+* [runtime][BugFix] enforce\_precision() now binds kwargs correctly
+* [SWE][BugFix] conda-forge required in README
+* [SWE][BugFix] Add sphinx\_rtd\_theme dependency
+* [runtime/init] FIX: remove 'casting' argument from coerce function to allow coercing of cupy arrays
+* [SWE] Don't track Dask-created temporaries
+* [testing][util] Implement TestVectorize
+* [util] Implement vectorize() decorator
+* [runtime] Allow enforce\_precision() to be disabled
+* [operator] Rename to\_scipy\_operator() to to\_sciop()
+* [runtime/init] Add module agnosticity for coerce() func
+* [solver/cg] Fix module agnosticity and precision enforcement
+* [solver/cg] Change numpy code to module agnostic based on input data
+* [solver/cg] Change np.einsum to module agnostic funcs (\_\_mul\_\_ & \_\_add\_\_)
+* [tox.ini] add conda-forge channel to be able to install 'sparse' module
+* [abc/solver] add base class initialisation in \_Worker
+* [solver] add conjugate gradient method
+* [operator][BugFix] Fix circular dependency
+* [abc/operator] LinOp.from\_array
+* [abc/operator] LinOp.from\_array
+* [abc/operator] LinOp.from\_sciop
+* [operator,compound] Applied fix to bug isolated by Joan to every susceptible composite method created in the arithmetic and/or stacking
+* [operator/abc] fixed Map.from\_source
+* [abc/operator] upd from\_source() method
+* [abc/operator] add from\_source() method
+* [SWE] Update working notes
+* [SWE] Don't ignore examples/
+* [SWE][todo] Add benchmark suite
+* [abc/operator] Corrections of typo
+* [compound] Implementation of stack routine and correction of various bugs. Updated TODO list
+* [linop/base] Base class ExplicitLinOp implemented
+* [SWE] Update working notes
+* [testing][BugFix] Compare values at input precision
+* Autodoc of Sepand's modules. Refactor of Number-> Real. Change autodoc default options (remove inherited docstrings)
+* [linop/base] Added documentation for IdentityOp
+* [linop/base] Added documentation for ExplicitLinFunc. Added warnings in case of mismatching precisions
+* [abc/operator] Added definition of Lipschitz constants
+* [testing] Add dummy pyco.Map-compliant operator (w/ test instantiation)
+* [test][MapT] Test suite for pyco.Map(s)
+* [SWE] Update working notes
+* [SWE] Let tox install tox-conda itself
+* [SWE] Format tox.ini
+* [SWE] Update black version requirements. (Enables Python3.10 syntax)
+* [SWE] Move tests to src/
+* Initial operator test
+* [abc/operator] Small edits and corrections of typos
+* [abc/operator] Documentation completed, refactoring of input shape types, and small API changes
+* [stop][BugFix] RelError: avoid re-eval of self.\_val in info() calls
+* [stop][BugFix] AbsError: avoid re-eval of self.\_val in info() calls
+* [solver] Force persist() per iteration to avoid re-eval overheads
+* [solver][BugFix] fit\_init() clears m\_state -> must come first
+* [util] Add compute()
+* [stop][doc] Be explicit about form of supported functions
+* [test][stop] Add TestRelError
+* [stop][BugFix] RelError: provide better docstring for callable
+* [stop][BugFix] AbsError now works on scalar-valued functionals
+* [test][stop] Add TestAbsError
+* [stop] Improved code comments
+* [test][stop] Add test\_clear()
+* [stop][RelError] Allow user-provided pre-norm function
+* [stop][AbsError] Allow user-provided pre-norm function
+* [stop][refactor] Rename RelMaxError -> RelError
+* [stop][refactor] Rename AbsMaxError -> AbsError
+* [stop] Add ManualStop()
+* [stop] Enable MinIter()-like functionality
+* [stop][MaxIter] Drop n=None support
+* [solver/stop] Drop superfluous \_\_init\_\_() calls
+* [stop][rel] Improve doc/code comments
+* [stop][abs] Add handling of scalar inputs
+* [util] Cleanup forgotten code which was commented out
+* [linop] Code format (readability)
+* [stop] Add RelMaxError()
+* [stop] Add AbsMaxError()
+* [stop] Move to pycsou.opt
+* [stop] Add MaxDuration()
+* [stop] Add MaxIter()
+* [solver] Add instance constructor
+* [todo] Removed completed items from To Do list
+* [apgd] Call to NullFunc when one f or g is set to None
+* [linop] Added prox method to ExplicitLinFunc. Added NullOp and NullFunc
+* [doc] Documentation of the ProxDiffFunc base class
+* [operator] Added ProxDiffFunc to the class hierarchy and updated the arithmetic accordingly. Fixed a few bugs here and there
+* [linop] Fixed typo in ExplicitLinFunc + post composition formula checked
+* [op/linop] Refactor gradient() -> grad()
+* [operator] Preliminary refactor
+* [linop] Refactor type hints + proof-read
+* [test] cleanup
+* [solver] Doc cleanup
+* [APGD] Doc cleanup
+* [API][runtime] Doc cleanup
+* [API][util] Refactor type-related constructs to separate module
+* [doc] Text refactor
+* [SWE] Update working notes
+* [doc] Refactor imports to match calling conventions throughout pycsou
+* [doc] Auto-format using pre-commit
+* [SWE] Use tox to build documentation
+* [SWE] Add sphinx dependence
+* [SWE][BugFix] Accepting the .\* wildcard on upper-bound version specifiers is deprecated
+* [SWE] Be explicit for matplotlib requirements
+* Documentation improved
+* Documentation of Property class is now completed. Moved HomothetyOp to linop/base.py. Added ArrayModule annotation where needed. Added \_\_all\_\_ variable to specify the behaviour of from pycsou.abc.operator import \*. Documentation of \_\_add\_\_ and \_\_mul\_\_ special methods completed
+* Import all relevant classes from module operator.py when importing package abc
+* Import NDArray in pycsou.util.\_\_init\_\_ and refactor API to point at the new location of NDArray's definition (formerly in pycsou.abc.\_\_init\_\_)
+* Annotated input/output of get\_array\_module() using the new ArrayModule custom type. Import NDArray in pycsou.util.\_\_init\_\_ and refactor API to point at the new location of NDArray's definition (formerly in pycsou.abc.\_\_init\_\_) Added type ArrayModule in deps to annotate functions taking array modules as arguments
+* [APGD]
+* [solver]
+* [Feature request] Add partial array\_module support for Maps
+* [Feature request] Add [Constant,Null]Operator()
+* [runtime][enhancement] Allow None-valued inputs to enforce\_precision()
+* [runtime] Refactor coerce() as standalone function
+* [test][runtime][BugFix] Coercion from complex-valued arrays forbidden
+* Add opt/ sub-package to house implemented solvers/stopping-criterion
+* Redefinition of NDArray
+* Redefinition of NDArray
+* wip to move worker/active to fit(). Should not exist outside
+* solver wip
+* Refactor pycsou.runtime as package instead of module
+* Basic sphinx documentation for docstrings debugging/rendering purposes
+* [test] enforce\_precision()
+* [runtime] Refactor for clarity
+* [runtime][BugFix] enforce\_precision(): docstring/annotations
+* [test] get\_array\_module()
+* [test] Add fixture to force a test on all supported NumPy-like APIs
+* [test] Provide list of tested array backends
+* [test][shape\_inference] Use parameterized tests. (pytest best-practices)
+* [util] get\_array\_module(): better docstrings
+* [BugFix][module inference] Wrong type annotations
+* Documentation of pycsou.abc.operator in progress
+* [abc,linop] Modules operators and base are now module-agnostic
+* [operator][BugFix] wrong identation
+* Methods of abc and basic operators are now decorated to control io types
+* [runtime] Extended decorator  to scalar argument types
+* [BugFix][runtime]
+* [BugFix][runtime] Special treatment of string-valued input to enforce\_precision() decorator
+* Small fixes
+* Drop placeholder test. (Since we have at least one test now.)
+* [test] infer\_compose\_shape
+* [util][BugFix] infer\_composition\_shape
+* [util][BugFix] infer\_sum\_shape
+* [test] infer\_sum\_shape
+* [util] Factor out shape tuple annotation
+* Rename infer\_composition\_shapes -> shape
+* Rename infer\_sum\_shapes -> shape
+* Drop infer\_array\_module()
+* Refactor broadcast\_sum\_shapes() to infer\_sum\_shapes() with support for domain agnostic shapes . Introduce support for domain agnostic operators in arithemtic operations \_\_add\_\_, \_\_mul\_\_, argshift and argscale. Corrected a few bugs in pycsou.abc.operators. Fix too generic type annotations which were making IDE's inspectors complain
+* Auto-module inference via decorator
+* Change to lipschitz() plus drop broadcast\_matmaul\_shapes()
+* Standardize pycsou import aliases to pyc[.\*] form
+* [Enhancement] Incorporate Matthieu comments
+* [Enhancement] Incorporate Matthieu comments
+* [BugFix] Use isinstance() for type checks
+* [BugFix] Repair type annotations
+* runtime: better docstrings
+* runtime: enable precision control via decorator
+* runtime: enable precision manipulation via context manager
+* Implement get\_array\_module()
+* [dev] Explicitly test pycsou against oldest package requirements
+* [dev] Move \`conda\_spec\` to testenv section
+* [dev] No support (yet) for Python3.10
+* [dev] Fix developer install instructions
+* Resolution of a bug in argshift which would incorrectly type shifted linear maps as linear maps while they should have been affine maps (or the closest thing in Pycsou's API differentiable maps)
+* LinOp's API fully implemented (not tested yet)
+* Property prox is now updated in Property.argshift method and the class ProxFunc no longer overrides this method
+* Arithmetic (addition, composition and argshift/scale) fully implemented for classes [Map, DiffMap, Func, DiffFunc, ProxFunc, LinOp, LinFunc]. No tests yet. Drop support for complex maps
+* [dev] Do isolated builds only
+* [dev] Program tox run all pre-commit hooks
+* [dev] Move tox-conda dependency to dev-builds only
+* Encode version information into library
+* Process all files with updated pre-commit hooks
+* [dev] Preliminary test environment setup
+* [dev] Move application code to src/
+* Process all files with updated pre-commit hooks
+* [dev] Add pre-commit hook to automatically sort imports
+* ExplicitLinFunc class
+* Refactor NDArray type to core.\_\_init\_\_
+* Fix code format
+* Dev env bug fixes
+* Refactor shape-deduction helpers
+* [dev] Prepare a development environment
+* Changes post discussion with Sepand
+* Skeleton hierarchy of Pycsou's abstract classes and properties.  Partial support for arithmetic (addition and multiplication by a scalar). No tests yet
+* Small changes in the property API
+* Property classes defining the core astract methods of operators
+* Bug fix in the definitions of the methods RowProjector and ColProjector (from LinearOperator) which were switched
+* Automatic computation of upper bounds on structured operators' Lipscitz constants
+* Updated documentation
+* New class for quadratic forms
+* Fix the implementation of dense/sparse Khatri-Rao product
+* Memory-efficient implementation of Khatri-Rao product when the operators are dense
+* Memory-efficient implementation of Khatri-Rao product when the operators are dense
+* Added method for computing tanspose of a LinearOperator; Added classes for constructing block/block-diagonal LinearOperators; Added classes for Kronecker sums/products and Khatri-Rao products of LinearOperators
+* Requirement on Python 3.6 is now >= rather than strict. Added method apply\_along\_axis to class Map for batch evaluation
+* Requirement on Python 3.6 is now >= rather than strict. Added method apply\_along\_axis to class Map for batch evaluation
+* Fix bug causing repeated entries in Pycsou's API toc
+* Fix bug in doctest of L21norm
+* Pycsou's documentation now lists extensions Pycsou-gsp and Pycsou-sphere
+* Updated requirements and graph routines moved to extension module pycsou-gsp
+* Fixed bugs in doctest
+* Final steps before PR
+* Merging mess
+* Testing, documentation, and last bugs
+* Merging bug fixes
+* Minor bug fixes
+* Minor bug fixes
+* Added some common green functions + extended linear operator MappedDistanceMatrix to non Hilbertian distances induced by arbitrary Minkowski norms
+* Added some common green functions
+* Fix for the computation of Lipschitz constants of operators which are deficient (non diagonalizable). PMYULA implemented but not documented yet (currently being validated). Added a postprocess method to class GenericIterativeAlgorithm
+* Core technical code for L21 norm
+* Removed verbose ipynb files from linguist scope to avoid biasing language statistics
+* Improved documentation and proximal MCMC schemes
+* Modified setup.cfg
+* Removed local reference from README.rst for compatibility with PyPI
+* Removed local reference from README.rst for compatibility with PyPI
+* Added Zenodo DOI for citing the package
+* Update README.rst
+* Added Zenodo DOI link
+* Added logo
+* Added logo
+* Added logo
+* removed .egg-info
+* Update README.rst
+* Add sphinx to requirements
+* Add sphinx to requirements
+* Ref to GlobalBioIm as inspiration
+* Update README.rst
+* Update README.rst
+* Update README.rst
+* Updated README
+* Updated README
+* Delete README.md
+* Updated README
+* v1.0.0 packaged
+* Modified .gitignore
+* Documentation complete
+* Package refactoring
+* Updated documentation structure and algorithms completed
+* Modify requirements
+* Correction of a bug with NullOperator and removes example folder
+* Correction of a bug with NullOperator and removes example folder
+* Removed folder opt/
+* Documentation for pycsou.core.solver is completed (examples/tests still missing)
+* Documentation for pycsou.util.misc is completed
+* Documentation for pycsou.core.functional is completed
+* Documentation for pycsou.core.linop is completed
+* Documentation for pycsou.core.map is completed
+* Help for map
+* Small changes
+* Primal Dual Splitting Algorithm Implemented and test routines added
+* Joblib added to requirements
+* MappedDistanceMatrix Operator implemented. All sampling operators implemented
+* Dense Generalised Vandermonde operator added
+* NNSampling operator implemented
+* Downsampling operator is now implemented as a Masking operator
+* Downsampling operator implemented
+* Implementation of SubSampling and Masking operators
+* Implementation of graph differential operators completed. Documentation updated
+* Implementation of euclidean differential operators completed
+* Partial implementation of most common discrete differential operators
+* Implementation of convolution and smoothing operators for 1D, 2D, and graph signals
+* Updated documentation and tests
+* Modified .gitignore
+* Documentation for penalty fonctionals completed
+* Files for sphinx documentation and automatic install
+* Partial documentation of penalty.py
+* Implementation of most common loss and penalty functionals
+* Removed .DS\_Store and .idea from .gitignore
+* Abstract classes for cost functionals implemented
+* Classes for stacked (vertical and horizontal) maps and linear operators added
+* Update README.md
+* Update README.md
+* Initial commit: classes Map and LinearOperator and their subclasses implemented. Vertical stack of Maps and LinearOperators needs to be impelemented
+* Update README.md
+* Initial commit
