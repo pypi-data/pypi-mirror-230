@@ -1,0 +1,29 @@
+<link rel="stylesheet" type="text/css" href="/static/dashboard/admin/venus/logError/logError.css">
+<div ng-controller="LogErrorController as vm">
+    <div>
+        <div>
+            <form class="form-inline pull-right">
+                <div class="form-group">
+                    <input type="datetime-local" class="form-control" ng-model="model.start_time">
+                </div>
+                -
+                <div class="form-group">
+                    <input type="datetime-local" class="form-control" ng-model="model.end_time">
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-default" ng-click="getData()">查询</button>
+                </div>
+            </form>
+            <div class="clear"></div>
+        </div>
+        <div class="venus-chart-wrapper">
+            <div>
+                <span>主要组件调用错误</span>
+                <select>
+                    <option v-for="obj in compList" value="obj.id">{{ obj.name }}</option>
+                </select>
+            </div>
+            <svg id="svg" class="venus-chart"></svg>
+        </div>
+    </div>
+</div>

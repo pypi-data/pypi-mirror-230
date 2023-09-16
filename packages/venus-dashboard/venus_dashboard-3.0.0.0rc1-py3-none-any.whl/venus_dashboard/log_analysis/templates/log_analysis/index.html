@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}Log Analysis{% endblock %}
+
+{% block page_header %}
+{% include "horizon/common/_page_header.html" with title=_("Log Analysis") %}
+{% endblock page_header %}
+
+{% block main %}
+    <div class="col-sm-12" ng-cloak ng-init="">
+        <ng-include src="'{{ STATIC_URL }}dashboard/admin/venus/logAnalysis/logAnalysis.html'"></ng-include>
+    </div>
+{% endblock %}
