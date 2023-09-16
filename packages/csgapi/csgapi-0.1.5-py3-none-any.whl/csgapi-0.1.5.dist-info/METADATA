@@ -1,0 +1,106 @@
+Metadata-Version: 2.1
+Name: csgapi
+Version: 0.1.5
+Summary: API for interacting with the Computer Systems Genome database.
+Home-page: https://csgenome.org/
+Author: Computer Systems Genome
+Author-email: csgenomevtteam@gmail.com
+License: MIT
+Platform: UNKNOWN
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+Requires-Dist: flask
+Requires-Dist: requests
+
+# Computer Systems Genome API
+## About
+The Mission of the Computer Systems Genome Project (CSGenome) is to conduct the first scientific effort to catalog the lineage of computer system performance over time to enable knowledge discovery and further understanding of the impact of computing innovations on transformative technologies, the knowledge-based economy, and societal change.  
+This is an API to access our database and request computer system information, ranging from RAM, to processors, and even GPUs.  
+Learn more at our website: https://csgenome.org/
+
+## Table of Contents
+- [Computer Systems Genome API](#computer-systems-genome-api)
+  * [About](#about)
+  * [Getting Started and Tutorial](#getting-started-and-tutorial)
+  * [Examples](#examples)
+  * [Contributing](#contributing)
+  * [Credits](#credits)
+
+## Getting Started and Tutorial
+Install through `pip install csgapi`
+
+##### Retrieve the client through the import 
+`from csgapi import client`
+
+##### Connect the client with 
+`cli = client.CSGenome()`
+##### If you have an auth token that allows you more access:
+`cli = client.CSGenome(auth_token='test123')`
+
+##### Accessing a specific table in our database 
+`cli.processors`
+
+##### Getting an entry in a table given UID
+`cli.processors.get(1000)`
+
+##### Retrieving only specific columns of an entry
+`cli.processors.get(uid=1, params={'columns': 'model,uid'})`
+
+##### Getting a list of entries and only specific columns
+`cli.processors.list(columns=['model', 'uid'])`
+
+##### Request entries that satisfy a filter
+Get all processors with clock_speed of 2100\
+`cli.processors.list(clock_speed=2100)`
+
+Get all processors within 2100 to 2500 value for clock_speed\
+`cli.processors.list(clock_speed=[ge(2100), lt(2500)])`
+
+Get all processors wih clock_speed greater than 2100\
+`cli.processors.list(clock_speed=gt(2100))`
+
+`ge()` is used to signify greater than or equal to\
+`gt()` is used to signify greater than\
+`le()` is used to signify less than or equal to\
+`lt()` is used to signify less than
+
+These functions can be imported from `csgapi.base`
+##### Higher authentication capabilities (Post, Put, Delete)
+Create entry\
+`processor_data = {'vdd_high': test}`\
+`res1 = cli.processor.create(data=processor_data)`
+
+Update a entry by UID\
+`updated_data = {'accepted_memory': 'spec2017_test_put'}`\
+`res = cli.spec2017.update(50, updated_data)`
+
+Modify a specific entry\
+`res = cli.spec2017.get(50)`\
+`res.accepted_memory = "test_smart_update"`\
+`res.save()`
+
+
+Delete an entry by UID\
+`cli.processors.delete(50)`
+
+
+
+
+## Examples
+Using the data in our database, you can create meaningful visualizations such as these.
+![Visualization made using data from csgapi](https://i.ibb.co/yf1LW4R/spec2006-integer.png)
+![Visualization made using data from csgapi 2](https://i.ibb.co/XCrhHCC/top500.png)
+
+## Contributing
+If you would like to submit a request for a change, email us at csgenomevtteam@gmail.com
+
+## Credits
+The CSGenome Project is led by Professors Kirk W. Cameron (PI), Godmar Back (co-PI and Technical Advisor), and Margaret Ellis (co-PI and Team Leader) and an extremely talented and highly diverse group of more than a dozen Virginia Tech undergraduate and graduate students.
+
+
+
