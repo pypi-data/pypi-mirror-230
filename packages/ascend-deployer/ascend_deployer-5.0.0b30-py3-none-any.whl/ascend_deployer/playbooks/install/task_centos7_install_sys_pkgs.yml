@@ -1,0 +1,22 @@
+- name: query installed pkgs
+  shell: |
+    rpm -qa
+  register: installed_pkgs
+
+- name: find pkgs not installed
+  set_fact:
+    not_installed_pkgs: "{{ sys_pkgs_without_docker_list | reject('in', installed_pkgs.stdout) | list }}"
+
+- name: yum install system packages
+  shell: |
+    yum clean all &>/dev/null
+    yum makecache --disablerepo="*" --enablerepo=nexus -c ~/nexus/sources.repo &>/dev/null
+    yum install --skip-broken -y {{ not_installed_pkgs | join(' ') }} --disablerepo="*" --enablerepo=nexus -c ~/nexus/sources.repo
+  register: sys_result
+  environment:
+    LD_LIBRARY_PATH: ""
+    http_proxy: ""
+    https_proxy: ""
+    HTTP_PROXY: ""
+    HTTPS_PROXY: ""
+  when: not_installed_pkgs | length > 0
