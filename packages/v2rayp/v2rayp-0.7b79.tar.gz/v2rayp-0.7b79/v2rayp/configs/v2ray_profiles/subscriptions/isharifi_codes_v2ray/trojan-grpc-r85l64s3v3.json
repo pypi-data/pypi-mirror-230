@@ -1,0 +1,89 @@
+{
+  "_comment": {
+    "remark": "trojan-grpc-r85l64s3v3"
+  },
+  "log": {
+    "access": "",
+    "error": "",
+    "loglevel": "error",
+    "dnsLog": false
+  },
+  "inbounds": [
+    {
+      "tag": "in_proxy",
+      "port": 1080,
+      "protocol": "socks",
+      "listen": "127.0.0.1",
+      "settings": {
+        "auth": "noauth",
+        "udp": true,
+        "userLevel": 8
+      },
+      "sniffing": {
+        "enabled": false
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "proxy",
+      "protocol": "trojan",
+      "settings": {
+        "servers": [
+          {
+            "address": "shahryar.ddns.net",
+            "method": "chacha20-poly1305",
+            "ota": false,
+            "password": "o9qIL2MGtR",
+            "port": 49030,
+            "level": 8,
+            "flow": ""
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "grpc",
+        "security": "reality",
+        "realitySettings": {
+          "allowInsecure": true,
+          "serverName": "microsoft.com",
+          "fingerprint": "firefox",
+          "show": false,
+          "publicKey": "tEwI2UUIGMRW8wrWj8pZEREDRDta9EegrwuhLsDXHgk",
+          "shortId": "",
+          "spiderX": "/"
+        },
+        "grpcSettings": {
+          "serviceName": "shahryar.ddns.net",
+          "multiMode": false
+        }
+      },
+      "mux": {
+        "enabled": false,
+        "concurrency": 8
+      }
+    },
+    {
+      "tag": "direct",
+      "protocol": "freedom",
+      "settings": {
+        "domainStrategy": "UseIp"
+      }
+    },
+    {
+      "tag": "blackhole",
+      "protocol": "blackhole",
+      "settings": {}
+    }
+  ],
+  "dns": {
+    "servers": [
+      "8.8.8.8"
+    ]
+  },
+  "routing": {
+    "domainStrategy": "UseIp",
+    "rules": [],
+    "balancers": []
+  }
+}
