@@ -1,0 +1,86 @@
+Metadata-Version: 2.1
+Name: whale-http
+Version: 1.0.1
+Summary: Fork from http-prompt(2.1.0), add ability of project manage.
+Home-page: https://github.com/yuexl/whale-http
+Author: dajing
+Author-email: yueblagon@gmail.com
+License: MIT
+Classifier: Development Status :: 3 - Alpha
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Software Development
+Classifier: Topic :: System :: Networking
+Classifier: Topic :: Terminals
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.8
+Description-Content-Type: text/markdown
+Requires-Dist: click (>=5.0)
+Requires-Dist: httpie (>=2.5.0)
+Requires-Dist: parsimonious (>=0.6.2)
+Requires-Dist: prompt-toolkit (<3.0.0,>=2.0.0)
+Requires-Dist: Pygments (>=2.1.0)
+Requires-Dist: PyYAML (>=3.0)
+Requires-Dist: pydantic (==2.1.1)
+Requires-Dist: pydantic-core (==2.4.0) ; python_version >= "3.7"
+
+## whale-http
+
+Fork from [http-prompt](https://github.com/httpie/http-prompt) which is a interactive http cli tool.
+
+Add project feature. Http requests are organized in project.
+
+Project settings and history are stored in a project directory.
+
+### installation
+
+#### 1. pypi:
+
+```shell
+pip install whale-http
+```
+
+#### 2. source:
+
+clone this repo first,
+
+```shell
+git clone https://github.com/yuexl/whale-http.git
+```
+
+then install
+
+```shell
+cd whale-http
+python setup.py install
+```
+
+### usage
+
+#### Create project:
+
+```shell
+whale-http new -n foo -u http://localhost:8000
+```
+
+The command above will create a project named foo, and auto active into interactive mode.
+
+You can also start cli using command below, if have exited the cli mode.
+
+```shell
+whale-http -p foo
+```
+
+#### Delete project:
+
+```shell
+whale-http delete -n foo
+```
+
+Also can change project with 'cp ' command, when program is running. 
+
+Since whale-http inherate from http-prompt, so all the [http-prompt](https://github.com/httpie/http-prompt) commands are available.
