@@ -1,0 +1,35 @@
+{{ request.parent_marshmallow.imports|generate_import }}
+{{ vars.parent_record_marshmallow.imports|generate_import }}
+
+class {{ vars.parent_record_marshmallow|class_header }}:
+   """"""
+   {{ request.parent_marshmallow.parent_field }} = ma.fields.Nested({{ request.parent_marshmallow.schema_class|base_name }})
+
+   @ma.pre_load
+   def clean(self, data, **kwargs):
+        """Removes dump_only fields.
+
+        Why: We want to allow the output of a Schema dump, to be a valid input
+             to a Schema load without causing strange issues.
+        """
+        for name, field in self.fields.items():
+            if field.dump_only:
+                data.pop(name, None)
+        return data
+
+   @ma.pre_load
+   def clean_{{ request.parent_marshmallow.parent_field }}(self, data, **kwargs):
+        """Clear review if None."""
+        # draft.parent.review returns None when not set, causing the serializer
+        # to dump {'review': None}. As a workaround we pop it if it's none
+        # here.
+        if data.get("{{ request.parent_marshmallow.parent_field }}", None) is None:
+            data.pop("{{ request.parent_marshmallow.parent_field }}", None)
+        return data
+
+   @ma.post_dump()
+   def pop_{{ request.parent_marshmallow.parent_field }}_if_none(self, data, many, **kwargs):
+        """Clear review if None."""
+        if data.get("{{ request.parent_marshmallow.parent_field }}", None) is None:
+            data.pop("{{ request.parent_marshmallow.parent_field }}", None)
+        return data
