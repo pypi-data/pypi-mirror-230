@@ -1,0 +1,20 @@
+[project]
+name = "duplocloud-client"
+dynamic = ["version"]
+[build-system]
+requires = [
+    "setuptools>=42",
+    "setuptools_scm[toml]>=6.2",
+    "wheel",
+    "build",
+    "twine"
+]
+build-backend = "setuptools.build_meta"
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--verbose --cov=src --cov-report term-missing"
+testpaths = [
+    "tests",
+    "integration",
+]
+[tool.setuptools_scm]
