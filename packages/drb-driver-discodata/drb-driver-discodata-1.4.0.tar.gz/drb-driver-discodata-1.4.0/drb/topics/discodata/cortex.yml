@@ -1,0 +1,8 @@
+id: e8d669b6-aa7b-4752-9b1b-72259da25429
+label: 'DISCODATA'
+category: PROTOCOL
+factory: discodata
+signatures:
+  - python: |
+      return '+discodata' in node.path.scheme or node.path.scheme == 'discodata'
+
