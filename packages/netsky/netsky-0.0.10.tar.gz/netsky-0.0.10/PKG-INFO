@@ -1,0 +1,84 @@
+Metadata-Version: 2.1
+Name: netsky
+Version: 0.0.10
+Summary: not skynet, obviously
+Project-URL: Homepage, https://github.com/lostmygithubaccount/netsky
+Project-URL: Bug Tracker, https://github.com/lostmygithubaccount/netsky/issues
+Author-email: Cody <cody@dkdc.dev>
+License-File: LICENSE
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.11
+Requires-Dist: html2text
+Requires-Dist: ibis-framework[deltalake,duckdb,polars]
+Requires-Dist: ipython
+Requires-Dist: marvin[ddg]~=1.3.0
+Requires-Dist: openai
+Requires-Dist: pillow
+Requires-Dist: plotly
+Requires-Dist: python-dotenv
+Requires-Dist: requests
+Requires-Dist: streamlit
+Requires-Dist: toml
+Requires-Dist: typer[all]
+Description-Content-Type: text/markdown
+
+# netsky
+
+not skynet, obviously
+
+## getting started
+
+`pip install netsky`
+
+Create the `~/.netsky/.env` file with valid Marvin environment variables.
+
+### verify installation
+
+`netsky` should now be installed as a CLI tool:
+
+```python
+(venv) cody@dkdcsot netsky % netsky
+
+ Usage: netsky [OPTIONS] COMMAND [ARGS]...
+
+╭─ Options ─────────────────────────────────────────────────╮
+│ --version                     Show version.               │
+│ --install-completion          Install completion for the  │
+│                               current shell.              │
+│ --show-completion             Show completion for the     │
+│                               current shell, to copy it   │
+│                               or customize the            │
+│                               installation.               │
+│ --help                        Show this message and exit. │
+╰───────────────────────────────────────────────────────────╯
+╭─ Commands ────────────────────────────────────────────────╮
+│ ai                            ai                          │
+│ test                          test                        │
+╰───────────────────────────────────────────────────────────╯
+```
+
+Confirm commands work:
+
+```python
+(venv) cody@dkdcsot netsky % netsky test
+testing.ai: done...
+```
+
+And invoke advanced ai commands:
+
+```python
+(venv) cody@dkdcsot netsky % netsky ai
+netsky.ai:
+access to: netsky.ai
+```
+
+## demo
+
+to be linked
+
+## next steps
+
+world domination!
+
