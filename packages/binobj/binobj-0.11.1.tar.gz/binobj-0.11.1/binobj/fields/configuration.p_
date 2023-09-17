@@ -1,0 +1,229 @@
+import weakref
+from typing import Any
+from typing import Generic
+from typing import MutableMapping
+from typing import overload
+from typing import Tuple
+from typing import Type
+from typing import TypeVar
+
+import attr
+
+from binobj.fields.base import Field
+from binobj.structures import Struct
+
+
+T = TypeVar("T")
+S = TypeVar("S", bound=Struct)
+F = TypeVar("F", bound=Field[Any])
+
+
+@attr.s(slots=True, kw_only=True, frozen=True)
+class OverrideableAttribute(Generic[T]):
+    """Marker for a Field attribute or setting that can be overridden at runtime.
+
+    Fields use this to allow "late binding" of an attribute, so it can be overridden at
+    the struct level, either at declaration time or at runtime.
+
+    Runtime changes can get a bit gnarly. To prevent nasty surprises, to override an
+    attribute at the class level you must do it in the class the field was declared in.
+    """
+
+    default_value = attr.ib(type=T)
+    """The default value that Fields referencing this attribute should use.
+
+    This can only be changed at the class level, and changes will affect instances
+    created *after* the change, but not before.
+    """
+
+    _instance_values = attr.ib(
+        type=MutableMapping[Field[Any], T],
+        factory=weakref.WeakKeyDictionary,
+        init=False,
+    )
+    """A dictionary mapping field instances to their own values for this attribute."""
+
+    @overload
+    def __get__(
+        self, instance: None, owner: Type["Field[Any]"]
+    ) -> "OverrideableAttribute[T]":
+        ...
+
+    @overload
+    def __get__(self, instance: "Field[Any]", owner: Type["Field[Any]"]) -> T:
+        ...
+
+    def __get__(self, instance, owner):
+        if instance is not None:
+            return self._instance_values.setdefault(instance, self.default_value)
+        return self
+
+    def __set__(self, instance: Struct, value: T) -> None:
+        self._instance_values[instance] = value
+
+
+def class_has_overrideable_attribute(
+    field_class: Type["Field[Any]"], attribute_name: str
+) -> bool:
+    setting_declaration = getattr(field_class, attribute_name, None)
+    return isinstance(setting_declaration, OverrideableAttribute)
+
+
+def has_overrideable_attribute(field: "Field[Any]", attribute_name: str) -> bool:
+    return class_has_overrideable_attribute(type(field), attribute_name)
+
+
+class override_attributes:
+    """
+    Arguments:
+        instance (Struct):
+            The instance of the struct whose fields we want to modify.
+        unset_only (bool):
+            If True, don't change a field's setting if it has a *non-default* value.
+
+    Usage
+    -----
+
+    You can call this as a simple function, or use it as a context manager to only
+    temporarily change values.
+
+    Temporary Changes
+    ~~~~~~~~~~~~~~~~~
+
+    Using this as a context manager reverts all changes after the context block is
+    exited, regardless of whether an exception was thrown or not.
+
+    .. code-block:: python
+
+        # Read little-endian data and reserialize it as big-endian
+        my_header = Header.from_bytes(data)
+
+        with override_attributes(my_header, endianness="big"):
+            return my_header.to_bytes()
+    """
+
+    def __init__(self, instance: Struct, unset_only: bool = False, **overrides: Any):
+        self.struct_instance = instance
+        self.unset_only = unset_only
+        self.override_values = overrides
+        self.original_values = {}  # type: MutableMapping[Tuple[Field[Any], str], Any]
+        self.do_override()
+
+    def do_override(self) -> None:
+        for field in self.struct_instance.__binobj_struct__.components.values():
+            for setting_name, new_value in self.override_values.items():
+                if has_overrideable_attribute(field, setting_name):
+                    default_value = getattr(type(field), setting_name).default_value
+                    if (
+                        not self.unset_only
+                        or getattr(field, setting_name) != default_value
+                    ):
+                        self.original_values[(field, setting_name)] = getattr(
+                            field, setting_name
+                        )
+                        setattr(field, setting_name, new_value)
+
+    def undo_override(self) -> None:
+        for (
+            field_instance,
+            setting_name,
+        ), original_value in self.original_values.items():
+            setattr(field_instance, setting_name, original_value)
+
+    def __enter__(self) -> "override_attributes":
+        return self
+
+    def __exit__(self, *_args) -> None:
+        self.undo_override()
+
+
+@attr.s(slots=True, kw_only=True)
+class DynamicAttribute(Generic[T]):
+    """A descriptor class for implementing instance and class-level default values.
+
+    For details on use cases, see :func:`dynamic_attribute`.
+    """
+
+    default_value = attr.ib(type=T)
+    """The default value that Fields referencing this attribute should use.
+
+    This can only be changed at the class level, and changes will affect instances
+    created *after* the change, but not before.
+    """
+
+    _instance_values = attr.ib(
+        type=MutableMapping[HashableWrapper, T],
+        factory=weakref.WeakKeyDictionary,
+        init=False,
+    )
+    """A dictionary mapping Struct instances to their own values for this field."""
+
+    @overload
+    def __get__(self, instance: None, owner: Type[Struct]) -> "DynamicAttribute[T]":
+        ...
+
+    @overload
+    def __get__(self, instance: Struct, owner: Type[Struct]) -> T:
+        ...
+
+    def __get__(self, instance, owner):
+        if instance is not None:
+            key = self._make_key(instance)
+            return self._instance_values.setdefault(key, self.default_value)
+        return self.default_value
+
+    def __set__(self, instance: Struct, value: T) -> None:
+        self._instance_values[self._make_key(instance)] = value
+
+    @staticmethod
+    def _make_key(instance: Struct) -> HashableWrapper:
+        return HashableWrapper(weakref.proxy(instance))
+
+
+def dynamic_attribute(*, default_value: T) -> DynamicAttribute[T]:
+    r"""Create an attribute that can be used to change fields' settings at runtime.
+
+    Usage
+    -----
+
+    Suppose we have a CPIO archive::
+
+        class CPIOFileHeader(binobj.Struct):
+            # This will default to little endian on most machines
+            magic: UInt16 = 0o070707
+            device_id: UInt16 = 0
+            inumber: UInt16 = 0
+            mode: UInt16 = 0o644
+            # ... etc.
+
+    We have a problem here -- CPIO archives can be either big endian or little endian.
+    We don't want to be forced to have *two* header declarations because of this. That's
+    super inconvenient. We can use a dynamic attribute that'll allow us to switch::
+
+        class CPIOFileHeader(binobj.Struct):
+            endianness = dynamic_attribute(default_value="little")
+
+            magic: UInt16(endian=endianness) = 0o070707
+            device_id: UInt16(endian=endianness) = 0
+            inumber: UInt16(endian=endianness) = 0
+            mode: UInt16(endian=endianness) = 0o644
+            # ... etc
+
+    With a dynamic attribute we can check at runtime and switch as needed::
+
+        try:
+            magic = fdesc.read(2)
+        finally:
+            fdesc.seek(0)
+
+        if magic == b"\xc7\x71":
+            # Little endian
+            CPIOFileHeader.endianness = "little"
+        else:
+            # Otherwise, assume big endian
+            CPIOFileHeader.endianness = "big"
+
+        # Read the file header with the proper endianness setting.
+        header = CPIOFileHeader.from_stream(fdesc)
+    """
+    return DynamicAttribute(default_value=default_value)
