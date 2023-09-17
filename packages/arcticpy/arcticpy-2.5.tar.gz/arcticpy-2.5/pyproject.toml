@@ -1,0 +1,32 @@
+[build-system]
+requires = [
+    "setuptools_scm==7.0.5",
+    "setuptools >=62",
+    "numpy ~=1.21",
+    "Cython==0.29.36",
+    "pytest-runner",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "arcticpy"
+version= "2.5"
+description = "This is the python module for the arCTIc code"
+authors = [
+    { name = "Richard Massey", email = "r.j.massey@durham.ac.uk" }
+]
+dependencies = [
+    "numpy ~=1.21"
+]
+requires-python = ">=3.8"
+
+[tool.setuptools]
+package-dir = {"" = "python"}
+packages = ["arcticpy"]
+zip-safe = false
+
+[project.optional-dependencies]
+pytest = [
+    "coverage",
+    "pytest",
+]
