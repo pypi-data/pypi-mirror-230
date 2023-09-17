@@ -1,0 +1,102 @@
+Metadata-Version: 2.1
+Name: ingredient_parser_nlp
+Version: 0.1.0b5
+Summary: A Python package to parse structured information from recipe ingredient sentences
+Author-email: Tom Strange <tpstrange@gmail.com>
+License: MIT License
+        
+        Copyright (c) 2023 Tom Strange
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+        
+Project-URL: Homepage, https://github.com/strangetom/ingredient-parser/
+Project-URL: Documentation, https://ingredient-parser.readthedocs.io/en/latest/
+Project-URL: Source, https://github.com/strangetom/ingredient-parser
+Keywords: recipe,ingredient,ingredients,nlp,parsing
+Classifier: Development Status :: 4 - Beta
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Text Processing :: Linguistic
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: nltk
+Requires-Dist: python-crfsuite
+
+# Ingredient Parser
+
+The Ingredient Parser package is a Python package for parsing structured information out of recipe ingredient sentences.
+
+![](docs/source/_static/logo.svg)
+
+## Documentation
+
+Documentation on using the package and training the model can be found at https://ingredient-parser.readthedocs.io/en/latest/.
+
+## Quick Start
+
+Install the package using pip
+
+```bash
+python -m pip install ingredient-parser-nlp
+```
+
+Import the ```parse_ingredient``` function and pass it an ingredient sentence.
+
+```python
+>>> from ingredient_parser import parse_ingredient
+
+>>> parse_ingredient("3 pounds pork shoulder, cut into 2-inch chunks")
+ParsedIngredient(
+    name=IngredientText(text='pork shoulder', 
+                        confidence=0.989491),
+    amount=[IngredientAmount(quantity='3',
+                             unit='pounds',
+                             confidence=0.998649,
+                             APPROXIMATE=False,
+                             SINGULAR=False)],
+    comment=IngredientText(text='cut into 2 inch chunks',
+                           confidence=0.997456),
+    other=None,
+    sentence='3 pounds pork shoulder, cut into 2-inch chunks')
+```
+
+## Model accuracy
+
+The model used for labelling tokens in sentences, provided in the ```ingredient-parser/``` directory, has the following accuracy on a test data set of 25% of the total  data used:
+
+```
+Sentence-level results:
+	Total: 12044
+	Correct: 10834
+	Incorrect: 1210
+	-> 89.95% correct
+
+Word-level results:
+	Total: 76299
+	Correct: 73430
+	Incorrect: 2869
+	-> 96.24% correct
+```
+
+## Development
+
+The development dependencies are in the ```requirements-dev.txt``` file. Details on the training process can be found in the [Model Guide](https://ingredient-parser.readthedocs.io/en/latest/guide/index.html) documentation.
+
+There is a simple webapp for testing the parser with ingredient sentences and showing the parsed output. To run the webapp, run the command
+
+```bash
+>>> flask --app webapp run
+```
+
+This requires the development dependencies to be installed.
+
+The documentation dependencies are in the ```requirement-doc.txt``` file.
