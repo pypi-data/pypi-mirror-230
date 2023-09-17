@@ -1,0 +1,41 @@
+[package]
+name = "libredr-common"
+build = "src/build.rs"
+version= "0.0.12"
+edition= "2021"
+authors= ["Bohan Yu"]
+description= "LibreDR is an open-source ray-tracing differentiable renderer"
+documentation= "https://ybh1998.codeberg.page/LibreDR/libredr/"
+homepage= "https://codeberg.org/ybh1998/LibreDR/"
+readme= "README.md"
+license= "AGPL-3.0-or-later"
+resolver = "2"
+
+[lib]
+name = "libredr_common"
+path = "src/lib.rs"
+
+[target.'cfg(not(target_env = "msvc"))'.dependencies]
+tikv-jemallocator = { version = "0.5", features = ["background_threads", "disable_initial_exec_tls"] , optional = true }
+
+[dependencies]
+anyhow = "1.0"
+chrono = "0.4"
+configparser = "3.0"
+shadow-rs = "0.23"
+hashbrown = { version = "0.14", features = ["serde"] }
+serde = { version = "1.0", features = ["derive"] }
+postcard = { version = "1.0", features = ["use-std"] }
+uuid = { version = "1.4", features = ["v4", "fast-rng", "macro-diagnostics", "serde"] }
+ndarray = { version = "0.15", features = ["serde"] }
+nalgebra = "0.32"
+tokio = { version = "1.32", features = ["full"] }
+tracing = "0.1"
+blake3 = "1.4"
+tobj = "4.0"
+
+[build-dependencies]
+shadow-rs = "0.23"
+
+[features]
+jemalloc = ["tikv-jemallocator"]

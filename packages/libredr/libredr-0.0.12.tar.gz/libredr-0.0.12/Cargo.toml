@@ -1,0 +1,32 @@
+[package]
+name = "libredr-client"
+version= "0.0.12"
+edition= "2021"
+authors= ["Bohan Yu"]
+description= "LibreDR is an open-source ray-tracing differentiable renderer"
+documentation= "https://ybh1998.codeberg.page/LibreDR/libredr/"
+homepage= "https://codeberg.org/ybh1998/LibreDR/"
+readme= "README.md"
+license= "AGPL-3.0-or-later"
+resolver = "2"
+
+[lib]
+name = "libredr"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+common.path = "local_dependencies/common"
+anyhow = "1.0"
+hashbrown = { version = "0.14", features = ["serde"] }
+pyo3 = { version = "0.19", features = ["abi3-py37", "extension-module", "anyhow"] }
+once_cell = "1.18"
+numpy = { version = "0.19", features = ["nalgebra"] }
+ndarray = { version = "0.15", features = ["serde"] }
+nalgebra = "0.32"
+tokio = { version = "1.32", features = ["full"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+[features]
+default = ["jemalloc"]
+jemalloc = ["common/jemalloc"]
