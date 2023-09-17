@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<template id="partner_id">
+    <field
+            name="partner_id"
+            attrs="{'required': [('mixin_partner_partner_id_required','=',True)], 'readonly': [('mixin_partner_partner_id_readonly','=',True)]}"
+        />
+</template>
+
+<template id="allowed_contact_ids">
+    <field name="allowed_contact_ids" widget="many2many_tags" invisible="1" />
+</template>
+
+<template id="contact_id">
+    <field
+            name="contact_partner_id"
+            domain="[('commercial_partner_id','=',partner_id),('id','!=',partner_id')]"
+            attrs="{'required': [('mixin_partner_contact_id_required','=',True)], 'readonly': [('mixin_partner_contact_id_readonly','=',True)]}"
+        />
+</template>
+
+<template id="mixin_partner_setting">
+    <page name="mixin_partner_setting" string="Mixin Partner Setting" invisible="1">
+        <group name="mixin_partner_setting" colspan="4" col="2">
+            <field name="mixin_partner_partner_id_required" />
+            <field name="mixin_partner_partner_id_readonly" />
+            <field name="mixin_partner_contact_id_required" />
+            <field name="mixin_partner_contact_id_readonly" />
+        </group>
+    </page>
+</template>
+
+<template id="tree_partner_id">
+    <field name="partner_id" />
+</template>
+
+<template id="tree_contact_id">
+    <field name="contact_partner_id" />
+</template>
+
+<template id="search_partner_id">
+    <field name="partner_id" />
+</template>
+
+<template id="search_contact_id">
+    <field name="contact_partner_id" />
+</template>
+
+<template id="group_partner_id">
+    <filter name="grp_partner" string="Partner" context="{'group_by':'partner_id'}" />
+</template>
+
+<template id="group_contact_id">
+    <filter
+            name="grp_contact"
+            string="Contact"
+            context="{'group_by':'contact_partner_id'}"
+        />
+</template>
+</odoo>
