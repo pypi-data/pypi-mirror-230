@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "zndraw"
+version = "0.2.1"
+description = ""
+authors = ["zincwarecode <zincwarecode@gmail.com>"]
+license = "Apache-2.0"
+readme = "README.md"
+include = ["zndraw/static/node_modules/**/*"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+ase = "^3.22.1"
+typer = {extras = ["all"], version = "^0.7.0"}
+flask = "^2.2.3"
+tqdm = "^4.65.0"
+znh5md = "^0.1.6"
+flask-socketio = "^5.3.4"
+eventlet = "^0.33.3"
+networkx = "^3.1"
+pydantic = "^2.2.0"
+python-socketio = {extras = ["client"], version = "^5.8.0"}
+plotly = "^5.16.1"
+pandas = "^2.0.3"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.3.3"
+pytest = "^7.4.2"
+coverage = "^7.3.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+zndraw = 'zndraw.cli:cli'
+
+
+[tool.poetry.urls]
+repository = "https://github.com/zincware/ZnDraw"
+
+[tool.ruff]
+line-length = 90
+
+select = ["I", "F"]
