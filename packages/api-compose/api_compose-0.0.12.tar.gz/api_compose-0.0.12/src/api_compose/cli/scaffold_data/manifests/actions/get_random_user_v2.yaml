@@ -1,0 +1,115 @@
+model_name: JsonHttpActionModel
+config:
+  body:
+    format: json
+    template: '{}'
+  headers:
+    format: yaml
+    template: ''
+  method:
+    format: string
+    template: GET
+  params:
+    format: yaml
+    template: |
+      size: [[ actions.get_random_user_v2.size ]]
+  url:
+    format: string
+    template: "[[ globals.base_url_v2 ]]/users"
+description: Get random users
+[% if actions.get_random_user_v2.execution_id is defined %]
+execution_id: [[ actions.get_random_user_v2.execution_id ]]
+[% endif %]
+schemas:
+  - id: "200"
+    schema_ :
+      format: yaml
+      text: |
+        $schema: http://json-schema.org/draft-07/schema#
+        type: object
+        properties:
+          id:
+            type: integer
+          uid:
+            type: string
+            format: uuid
+          password:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          username:
+            type: string
+          email:
+            type: string
+            format: email
+          avatar:
+            type: string
+            format: uri
+          gender:
+            type: string
+          phone_number:
+            type: string
+          social_insurance_number:
+            type: string
+          date_of_birth:
+            type: string
+            format: date
+          employment:
+            type: object
+            properties:
+              title:
+                type: string
+              key_skill:
+                type: string
+            required: [title, key_skill]
+          address:
+            type: object
+            properties:
+              city:
+                type: string
+              street_name:
+                type: string
+              street_address:
+                type: string
+              zip_code:
+                type: string
+              state:
+                type: string
+              country:
+                type: string
+              coordinates:
+                type: object
+                properties:
+                  lat:
+                    type: number
+                  lng:
+                    type: number
+            required: [city, street_name, street_address, zip_code, state, country, coordinates]
+          credit_card:
+            type: object
+            properties:
+              cc_number:
+                type: string
+            required: [cc_number]
+          subscription:
+            type: object
+            properties:
+              plan:
+                type: string
+              status:
+                type: string
+              payment_method:
+                type: string
+              term:
+                type: string
+            required: [plan, status, payment_method, term]
+schema_validators:
+[% if actions.get_random_user_v2.validate_body_200 is defined and actions.get_random_user_v2.validate_body_200 is true %]
+  - id: "200"
+    schema_id: "200"
+    json_path: "$.body"
+[% endif %]
+
+

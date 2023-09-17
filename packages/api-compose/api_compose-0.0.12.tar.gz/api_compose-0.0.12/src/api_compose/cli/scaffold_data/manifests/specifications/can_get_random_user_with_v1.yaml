@@ -1,0 +1,18 @@
+model_name: SpecificationModel
+tags: []
+scenarios:
+  - id: get_random_users_v1
+    model_name: ScenarioModel
+    description: Can get random users
+    functional_testing: HappyPath
+    execution_id_assignment: UserDefined
+    actions:
+      - model_name: RefResolverModel
+        ref: get_random_user_v1
+        context:
+          actions:
+            get_random_user_v1:
+              size: 10
+    assertions:
+      - description: "ID of the random user is greater than one"
+        template: "{{ action('get_random_user_v1')| output_body| jpath('$.id') > 1 }}"

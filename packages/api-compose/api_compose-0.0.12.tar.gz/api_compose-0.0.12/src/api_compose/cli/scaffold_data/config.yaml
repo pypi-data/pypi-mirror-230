@@ -1,0 +1,22 @@
+build_folder: build
+compile_folder: compiled
+run_folder: run
+action: {}
+backend:
+  processor: SimpleBackend
+discovery:
+  functions_folder_path: functions
+  manifests_folder_path: manifests
+  tags: []
+logging:
+  event_filters: []
+  log_file_path: log.jsonl
+  logging_level: 5
+env_files:
+  current_pack: base
+  packs:
+    base:
+    - envs/base-env.yaml
+reporting:
+  processor: HtmlReport
+  reports_folder: reports
