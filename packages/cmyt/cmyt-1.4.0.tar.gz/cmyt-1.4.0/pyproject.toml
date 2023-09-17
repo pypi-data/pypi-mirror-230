@@ -1,0 +1,96 @@
+[build-system]
+requires = ["setuptools>=61.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cmyt"
+description = "A collection of Matplotlib colormaps from the yt project"
+authors = [
+    { name = "The yt project", email = "yt-dev@python.org" },
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Framework :: Matplotlib",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: POSIX :: AIX",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Visualization",
+    "Typing :: Typed",
+]
+keywords = [
+    "visualization",
+]
+requires-python = ">=3.9"
+dependencies = [
+    "matplotlib>=3.5.0",
+    "numpy>=1.19.3",
+]
+dynamic = ["version"]
+
+[project.license]
+text = "BSD 3-Clause"
+
+[project.readme]
+file = "README.md"
+content-type = "text/markdown"
+
+[project.urls]
+Homepage = "https://yt-project.org/"
+Source = "https://github.com/yt-project/cmyt/"
+Tracker = "https://github.com/yt-project/cmyt/issues"
+
+[tool.setuptools.dynamic]
+version = {attr = "cmyt.__version__"}
+
+[tool.setuptools]
+license-files = [
+    "LICENSE",
+]
+include-package-data = false
+
+[tool.setuptools.packages.find]
+namespaces = false
+
+[tool.ruff]
+exclude = ["*__init__.py"]
+ignore = ["E501"]
+select = [
+    "E",
+    "F",
+    "W",
+    "C4",  # flake8-comprehensions
+    "B",   # flake8-bugbear
+    "YTT", # flake8-2020
+    "I",   # isort
+    "UP",  # pyupgrade
+]
+
+[tool.ruff.isort]
+combine-as-imports = true
+
+[tool.mypy]
+python_version = "3.9"
+warn_unused_configs = true
+warn_unused_ignores = true
+warn_unreachable = true
+show_error_context = true
+show_error_codes = true
+disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = true
+ignore_errors = true
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "error",
+    # already patched (but not released) upstream:
+    # https://github.com/dateutil/dateutil/pull/1285
+    'ignore:datetime.datetime.utcfromtimestamp\(\) is deprecated and scheduled for removal in a future version:DeprecationWarning',
+]
+addopts = "--doctest-modules"
+testpaths = ["tests"]
