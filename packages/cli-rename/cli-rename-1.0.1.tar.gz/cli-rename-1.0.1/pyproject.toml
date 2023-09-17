@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cli-rename"
+version = "1.0.1"
+authors = [
+  { name="JCav", email="micojcav@outlook.com" },
+]
+description = "CLI version of PowerRename in PowerToys"
+readme = "readme.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: OS Independent",
+    "Topic :: Text Processing",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Utilities"
+]
+dependencies = [
+    "textual",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/GJCav/cli-rename"
+"Bug Tracker" = "https://github.com/GJCav/cli-rename/issues"
+
+[project.scripts]
+cli-rename = "cli_rename:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
