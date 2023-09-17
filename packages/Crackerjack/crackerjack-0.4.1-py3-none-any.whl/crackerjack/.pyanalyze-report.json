@@ -1,0 +1,92 @@
+[
+  {
+    "description": "Object of type bytes does not support '__setitem__'",
+    "filename": "crackerjack/crackerjack.py",
+    "absolute_filename": "/Users/les/Projects/crackerjack/crackerjack/crackerjack.py",
+    "code": "unsupported_operation",
+    "lineno": 46,
+    "col_offset": 8,
+    "context": "  43:         if self.poetry_pip_env:\n  44:             del pkg_toml_config[\"tool\"][\"poetry\"]\n  45:         pkg_deps = pkg_toml_config[\"tool\"][\"pdm\"][\"dev-dependencies\"]\n  46:         pkg_toml_config[\"tool\"] = our_toml_config[\"tool\"]\n              ^\n  47:         for tool, settings in pkg_toml_config[\"tool\"].items():\n  48:             for setting, value in settings.items():\n  49:                 if isinstance(value, str | list) and \"crackerjack\" in value:\n",
+    "message": "\nObject of type bytes does not support '__setitem__' (code: unsupported_operation)\nIn crackerjack/crackerjack.py at line 46\n  43:         if self.poetry_pip_env:\n  44:             del pkg_toml_config[\"tool\"][\"poetry\"]\n  45:         pkg_deps = pkg_toml_config[\"tool\"][\"pdm\"][\"dev-dependencies\"]\n  46:         pkg_toml_config[\"tool\"] = our_toml_config[\"tool\"]\n              ^\n  47:         for tool, settings in pkg_toml_config[\"tool\"].items():\n  48:             for setting, value in settings.items():\n  49:                 if isinstance(value, str | list) and \"crackerjack\" in value:\n"
+  },
+  {
+    "description": "Cannot call overloaded function",
+    "filename": "crackerjack/crackerjack.py",
+    "absolute_filename": "/Users/les/Projects/crackerjack/crackerjack/crackerjack.py",
+    "code": "incompatible_argument",
+    "lineno": 44,
+    "col_offset": 16,
+    "context": "  41:         our_toml_config = await load.toml(self.our_toml_path)  # type: ignore\n  42:         pkg_toml_config = await load.toml(self.pkg_toml_path)  # type: ignore\n  43:         if self.poetry_pip_env:\n  44:             del pkg_toml_config[\"tool\"][\"poetry\"]\n                      ^\n  45:         pkg_deps = pkg_toml_config[\"tool\"][\"pdm\"][\"dev-dependencies\"]\n  46:         pkg_toml_config[\"tool\"] = our_toml_config[\"tool\"]\n  47:         for tool, settings in pkg_toml_config[\"tool\"].items():\n",
+    "message": "\nCannot call overloaded function (code: incompatible_argument)\n    In overload (self, key: typing_extensions.SupportsIndex (Protocol with members '__index__'), /) -> int\n      Incompatible argument type for key: expected typing_extensions.SupportsIndex (Protocol with members '__index__') but got Literal['tool']\n          Literal['tool'] has no attribute '__index__'\n\n    In overload (self, key: slice, /) -> bytes\n      Incompatible argument type for key: expected slice but got Literal['tool']\n          Cannot assign Literal['tool'] to slice\n\n\nIn crackerjack/crackerjack.py at line 44\n  41:         our_toml_config = await load.toml(self.our_toml_path)  # type: ignore\n  42:         pkg_toml_config = await load.toml(self.pkg_toml_path)  # type: ignore\n  43:         if self.poetry_pip_env:\n  44:             del pkg_toml_config[\"tool\"][\"poetry\"]\n                      ^\n  45:         pkg_deps = pkg_toml_config[\"tool\"][\"pdm\"][\"dev-dependencies\"]\n  46:         pkg_toml_config[\"tool\"] = our_toml_config[\"tool\"]\n  47:         for tool, settings in pkg_toml_config[\"tool\"].items():\n"
+  },
+  {
+    "description": "Cannot call overloaded function",
+    "filename": "crackerjack/crackerjack.py",
+    "absolute_filename": "/Users/les/Projects/crackerjack/crackerjack/crackerjack.py",
+    "code": "incompatible_argument",
+    "lineno": 45,
+    "col_offset": 19,
+    "context": "  42:         pkg_toml_config = await load.toml(self.pkg_toml_path)  # type: ignore\n  43:         if self.poetry_pip_env:\n  44:             del pkg_toml_config[\"tool\"][\"poetry\"]\n  45:         pkg_deps = pkg_toml_config[\"tool\"][\"pdm\"][\"dev-dependencies\"]\n                         ^\n  46:         pkg_toml_config[\"tool\"] = our_toml_config[\"tool\"]\n  47:         for tool, settings in pkg_toml_config[\"tool\"].items():\n  48:             for setting, value in settings.items():\n",
+    "message": "\nCannot call overloaded function (code: incompatible_argument)\n    In overload (self, key: typing_extensions.SupportsIndex (Protocol with members '__index__'), /) -> int\n      Incompatible argument type for key: expected typing_extensions.SupportsIndex (Protocol with members '__index__') but got Literal['tool']\n          Literal['tool'] has no attribute '__index__'\n\n    In overload (self, key: slice, /) -> bytes\n      Incompatible argument type for key: expected slice but got Literal['tool']\n          Cannot assign Literal['tool'] to slice\n\n\nIn crackerjack/crackerjack.py at line 45\n  42:         pkg_toml_config = await load.toml(self.pkg_toml_path)  # type: ignore\n  43:         if self.poetry_pip_env:\n  44:             del pkg_toml_config[\"tool\"][\"poetry\"]\n  45:         pkg_deps = pkg_toml_config[\"tool\"][\"pdm\"][\"dev-dependencies\"]\n                         ^\n  46:         pkg_toml_config[\"tool\"] = our_toml_config[\"tool\"]\n  47:         for tool, settings in pkg_toml_config[\"tool\"].items():\n  48:             for setting, value in settings.items():\n"
+  },
+  {
+    "description": "Cannot call overloaded function",
+    "filename": "crackerjack/crackerjack.py",
+    "absolute_filename": "/Users/les/Projects/crackerjack/crackerjack/crackerjack.py",
+    "code": "incompatible_argument",
+    "lineno": 46,
+    "col_offset": 34,
+    "context": "  43:         if self.poetry_pip_env:\n  44:             del pkg_toml_config[\"tool\"][\"poetry\"]\n  45:         pkg_deps = pkg_toml_config[\"tool\"][\"pdm\"][\"dev-dependencies\"]\n  46:         pkg_toml_config[\"tool\"] = our_toml_config[\"tool\"]\n                                        ^\n  47:         for tool, settings in pkg_toml_config[\"tool\"].items():\n  48:             for setting, value in settings.items():\n  49:                 if isinstance(value, str | list) and \"crackerjack\" in value:\n",
+    "message": "\nCannot call overloaded function (code: incompatible_argument)\n    In overload (self, key: typing_extensions.SupportsIndex (Protocol with members '__index__'), /) -> int\n      Incompatible argument type for key: expected typing_extensions.SupportsIndex (Protocol with members '__index__') but got Literal['tool']\n          Literal['tool'] has no attribute '__index__'\n\n    In overload (self, key: slice, /) -> bytes\n      Incompatible argument type for key: expected slice but got Literal['tool']\n          Cannot assign Literal['tool'] to slice\n\n\nIn crackerjack/crackerjack.py at line 46\n  43:         if self.poetry_pip_env:\n  44:             del pkg_toml_config[\"tool\"][\"poetry\"]\n  45:         pkg_deps = pkg_toml_config[\"tool\"][\"pdm\"][\"dev-dependencies\"]\n  46:         pkg_toml_config[\"tool\"] = our_toml_config[\"tool\"]\n                                        ^\n  47:         for tool, settings in pkg_toml_config[\"tool\"].items():\n  48:             for setting, value in settings.items():\n  49:                 if isinstance(value, str | list) and \"crackerjack\" in value:\n"
+  },
+  {
+    "description": "Cannot call overloaded function",
+    "filename": "crackerjack/crackerjack.py",
+    "absolute_filename": "/Users/les/Projects/crackerjack/crackerjack/crackerjack.py",
+    "code": "incompatible_argument",
+    "lineno": 47,
+    "col_offset": 30,
+    "context": "  44:             del pkg_toml_config[\"tool\"][\"poetry\"]\n  45:         pkg_deps = pkg_toml_config[\"tool\"][\"pdm\"][\"dev-dependencies\"]\n  46:         pkg_toml_config[\"tool\"] = our_toml_config[\"tool\"]\n  47:         for tool, settings in pkg_toml_config[\"tool\"].items():\n                                    ^\n  48:             for setting, value in settings.items():\n  49:                 if isinstance(value, str | list) and \"crackerjack\" in value:\n  50:                     if isinstance(value, str):\n",
+    "message": "\nCannot call overloaded function (code: incompatible_argument)\n    In overload (self, key: typing_extensions.SupportsIndex (Protocol with members '__index__'), /) -> int\n      Incompatible argument type for key: expected typing_extensions.SupportsIndex (Protocol with members '__index__') but got Literal['tool']\n          Literal['tool'] has no attribute '__index__'\n\n    In overload (self, key: slice, /) -> bytes\n      Incompatible argument type for key: expected slice but got Literal['tool']\n          Cannot assign Literal['tool'] to slice\n\n\nIn crackerjack/crackerjack.py at line 47\n  44:             del pkg_toml_config[\"tool\"][\"poetry\"]\n  45:         pkg_deps = pkg_toml_config[\"tool\"][\"pdm\"][\"dev-dependencies\"]\n  46:         pkg_toml_config[\"tool\"] = our_toml_config[\"tool\"]\n  47:         for tool, settings in pkg_toml_config[\"tool\"].items():\n                                    ^\n  48:             for setting, value in settings.items():\n  49:                 if isinstance(value, str | list) and \"crackerjack\" in value:\n  50:                     if isinstance(value, str):\n"
+  },
+  {
+    "description": "Cannot call overloaded function",
+    "filename": "crackerjack/crackerjack.py",
+    "absolute_filename": "/Users/les/Projects/crackerjack/crackerjack/crackerjack.py",
+    "code": "incompatible_argument",
+    "lineno": 56,
+    "col_offset": 8,
+    "context": "  53:                         value.remove(\"crackerjack\")\n  54:                         value.append(self.pkg_name)\n  55:                     settings[setting] = value\n  56:         pkg_toml_config[\"tool\"][\"pdm\"][\"dev-dependencies\"] = pkg_deps\n              ^\n  57:         if self.pkg_path.stem == \"crackerjack\":\n  58:             await dump.toml(pkg_toml_config, self.our_toml_path)  # type: ignore\n  59:         else:\n",
+    "message": "\nCannot call overloaded function (code: incompatible_argument)\n    In overload (self, key: typing_extensions.SupportsIndex (Protocol with members '__index__'), /) -> int\n      Incompatible argument type for key: expected typing_extensions.SupportsIndex (Protocol with members '__index__') but got Literal['tool']\n          Literal['tool'] has no attribute '__index__'\n\n    In overload (self, key: slice, /) -> bytes\n      Incompatible argument type for key: expected slice but got Literal['tool']\n          Cannot assign Literal['tool'] to slice\n\n\nIn crackerjack/crackerjack.py at line 56\n  53:                         value.remove(\"crackerjack\")\n  54:                         value.append(self.pkg_name)\n  55:                     settings[setting] = value\n  56:         pkg_toml_config[\"tool\"][\"pdm\"][\"dev-dependencies\"] = pkg_deps\n              ^\n  57:         if self.pkg_path.stem == \"crackerjack\":\n  58:             await dump.toml(pkg_toml_config, self.our_toml_path)  # type: ignore\n  59:         else:\n"
+  },
+  {
+    "description": "Incompatible argument type for obj: expected Union[str, os.PathLike (Protocol with members '__fspath__'), dict] but got Union[dict, bytes]",
+    "filename": "crackerjack/crackerjack.py",
+    "absolute_filename": "/Users/les/Projects/crackerjack/crackerjack/crackerjack.py",
+    "code": "incompatible_argument",
+    "lineno": 58,
+    "col_offset": 28,
+    "context": "  55:                     settings[setting] = value\n  56:         pkg_toml_config[\"tool\"][\"pdm\"][\"dev-dependencies\"] = pkg_deps\n  57:         if self.pkg_path.stem == \"crackerjack\":\n  58:             await dump.toml(pkg_toml_config, self.our_toml_path)  # type: ignore\n                                  ^\n  59:         else:\n  60:             await dump.toml(pkg_toml_config, self.pkg_toml_path)  # type: ignore\n  61: \n",
+    "message": "\nIncompatible argument type for obj: expected Union[str, os.PathLike (Protocol with members '__fspath__'), dict] but got Union[dict, bytes] (code: incompatible_argument)\n  Cannot assign to Union\n    Cannot assign bytes to str\n    bytes has no attribute '__fspath__'\n    Cannot assign bytes to dict\n\nIn crackerjack/crackerjack.py at line 58\n  55:                     settings[setting] = value\n  56:         pkg_toml_config[\"tool\"][\"pdm\"][\"dev-dependencies\"] = pkg_deps\n  57:         if self.pkg_path.stem == \"crackerjack\":\n  58:             await dump.toml(pkg_toml_config, self.our_toml_path)  # type: ignore\n                                  ^\n  59:         else:\n  60:             await dump.toml(pkg_toml_config, self.pkg_toml_path)  # type: ignore\n  61: \n"
+  },
+  {
+    "description": "Incompatible argument type for obj: expected Union[str, os.PathLike (Protocol with members '__fspath__'), dict] but got Union[dict, bytes]",
+    "filename": "crackerjack/crackerjack.py",
+    "absolute_filename": "/Users/les/Projects/crackerjack/crackerjack/crackerjack.py",
+    "code": "incompatible_argument",
+    "lineno": 60,
+    "col_offset": 28,
+    "context": "  57:         if self.pkg_path.stem == \"crackerjack\":\n  58:             await dump.toml(pkg_toml_config, self.our_toml_path)  # type: ignore\n  59:         else:\n  60:             await dump.toml(pkg_toml_config, self.pkg_toml_path)  # type: ignore\n                                  ^\n  61: \n  62:     async def clean_poetry_pipenv(self) -> None:\n  63:         root_files = [\n",
+    "message": "\nIncompatible argument type for obj: expected Union[str, os.PathLike (Protocol with members '__fspath__'), dict] but got Union[dict, bytes] (code: incompatible_argument)\n  Cannot assign to Union\n    Cannot assign bytes to str\n    bytes has no attribute '__fspath__'\n    Cannot assign bytes to dict\n\nIn crackerjack/crackerjack.py at line 60\n  57:         if self.pkg_path.stem == \"crackerjack\":\n  58:             await dump.toml(pkg_toml_config, self.our_toml_path)  # type: ignore\n  59:         else:\n  60:             await dump.toml(pkg_toml_config, self.pkg_toml_path)  # type: ignore\n                                  ^\n  61: \n  62:     async def clean_poetry_pipenv(self) -> None:\n  63:         root_files = [\n"
+  },
+  {
+    "description": "Variable tool is never accessed",
+    "filename": "crackerjack/crackerjack.py",
+    "absolute_filename": "/Users/les/Projects/crackerjack/crackerjack/crackerjack.py",
+    "code": "unused_variable",
+    "lineno": 47,
+    "col_offset": 12,
+    "context": "  44:             del pkg_toml_config[\"tool\"][\"poetry\"]\n  45:         pkg_deps = pkg_toml_config[\"tool\"][\"pdm\"][\"dev-dependencies\"]\n  46:         pkg_toml_config[\"tool\"] = our_toml_config[\"tool\"]\n  47:         for tool, settings in pkg_toml_config[\"tool\"].items():\n                  ^\n  48:             for setting, value in settings.items():\n  49:                 if isinstance(value, str | list) and \"crackerjack\" in value:\n  50:                     if isinstance(value, str):\n",
+    "message": "\nVariable tool is never accessed (code: unused_variable)\nIn crackerjack/crackerjack.py at line 47\n  44:             del pkg_toml_config[\"tool\"][\"poetry\"]\n  45:         pkg_deps = pkg_toml_config[\"tool\"][\"pdm\"][\"dev-dependencies\"]\n  46:         pkg_toml_config[\"tool\"] = our_toml_config[\"tool\"]\n  47:         for tool, settings in pkg_toml_config[\"tool\"].items():\n                  ^\n  48:             for setting, value in settings.items():\n  49:                 if isinstance(value, str | list) and \"crackerjack\" in value:\n  50:                     if isinstance(value, str):\n"
+  }
+]
