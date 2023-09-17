@@ -1,0 +1,17 @@
+# task
+task: classification
+
+# data
+data: data/fashionmnist.yaml
+
+# model
+model: model/efficientnet_b0.yaml
+
+# configs
+output : ./output/model.pth
+optimizer : AdamW # SGD
+loss : CrossEntropyLoss
+
+# train
+batch_size : 64
+lr : 1e-5
