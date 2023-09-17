@@ -1,0 +1,52 @@
+Metadata-Version: 2.1
+Name: pytest-subunit
+Version: 0.0.10
+Summary: pytest-subunit is a plugin for py.test which outputs testsresult in subunit format.
+Author-email: Łukasz Oleś <loles@mirantis.com>
+Maintainer-email: Jelmer Vernooĳ <jelmer@jelmer.uk>
+License: Apache 2
+Project-URL: Homepage, https://github.com/jelmer/pytest-subunit
+Platform: any
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: POSIX
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Topic :: Software Development :: Testing
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Utilities
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Description-Content-Type: text/x-rst
+License-File: LICENSE
+Requires-Dist: pytest (>=2.3)
+Requires-Dist: python-subunit (>=1.2)
+
+pytest-subunit
+==============
+
+pytest-subunit is a plugin for `py.test <http://pytest.org>`_ that generates output in subunit format.
+
+Requirements
+------------
+
+Plugin was tested on Python 2.7 and 3.5, and requires:
+
+- pytest 2.6.4 or newer
+- python-subunit 1.2 or newer
+
+Installation
+------------
+
+To install pytest-subunit::
+
+    $ pip install pytest-subunit
+
+Then run your tests with subunit output::
+
+    $ py.test --subunit
+
