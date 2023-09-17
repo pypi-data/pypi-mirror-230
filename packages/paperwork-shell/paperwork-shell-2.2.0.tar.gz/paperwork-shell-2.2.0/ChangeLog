@@ -1,0 +1,37 @@
+2023/09/16 - 2.2.0:
+- setup.py has been replaced by pyproject.toml
+- paperwork-cli: Use Python Rich to prettify the output of some commands
+- paperwork-cli export: Make sure export pipelines make sense, otherwise
+  explain to the user why they don't.
+- paperwork-cli export: Fix listing pipes when exporting a single page
+
+2023/01/08 - 2.1.2:
+- import: honor the flag --doc_id.
+- fix 'scanner list'
+
+2022/01/31 - 2.1.1:
+- Make sure Fabulous is not actually a required dependency on Windows.
+
+2021/12/05 - 2.1.0:
+- Use system pager to paginate shell About page (thanks to Elliott Sales de
+  Andrade)
+- doc import: add support for password-protected PDF files
+
+2021/05/24 - 2.0.3:
+- Fix "paperwork-json show": paperwork-json uses document renderers too
+- Fix crash when uising "paperwork-cli rename"
+- Paperwork-cli/-json search: sort the documents by decreasing dates
+- Swedish translations added
+- Add LICENSE file in pypi package
+
+2021/01/01 - 2.0.2:
+- add command 'chkworkdir': Check work directory integrity and fix it
+- import: Fix: Load the labels before importing documents
+
+2020/11/15 - 2.0.1:
+- cmd.import: When many importers match, make it clearer to the user that an
+  input is required.
+- Include tests in Pypi package (thanks to Elliott Sales de Andrade)
+
+2020/10/17 - 2.0:
+- Initial release
