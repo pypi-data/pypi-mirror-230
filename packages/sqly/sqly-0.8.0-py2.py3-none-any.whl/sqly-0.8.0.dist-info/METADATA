@@ -1,0 +1,62 @@
+Metadata-Version: 2.1
+Name: sqly
+Version: 0.8.0
+Summary: Write SQL in SQL
+Home-page: https://github.com/kruxia/sqly
+Author: Sean Harrison
+Author-email: sah@kruxia.com
+License: MPL 2.0
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)
+Classifier: Programming Language :: Python :: 3
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Provides-Extra: dev
+Requires-Dist: black (~=23.3.0) ; extra == 'dev'
+Requires-Dist: ipython (~=8.12.0) ; extra == 'dev'
+Requires-Dist: isort (~=5.12.0) ; extra == 'dev'
+Requires-Dist: twine (~=4.0.2) ; extra == 'dev'
+Provides-Extra: docs
+Requires-Dist: mkdocs-autorefs (~=0.4.1) ; extra == 'docs'
+Requires-Dist: mkdocs-click (~=0.8.0) ; extra == 'docs'
+Requires-Dist: mkdocs-material-extensions (~=1.1.1) ; extra == 'docs'
+Requires-Dist: mkdocs-material (~=9.1.19) ; extra == 'docs'
+Requires-Dist: mkdocstrings-python (~=1.2.1) ; extra == 'docs'
+Requires-Dist: mkdocstrings (~=0.22.0) ; extra == 'docs'
+Requires-Dist: mkdocs (~=1.4.3) ; extra == 'docs'
+Requires-Dist: sqly[migration] ; extra == 'docs'
+Provides-Extra: migration
+Requires-Dist: PyYAML (~=6.0) ; extra == 'migration'
+Requires-Dist: click (~=8.1.3) ; extra == 'migration'
+Requires-Dist: networkx (~=3.1) ; extra == 'migration'
+Provides-Extra: psycopg
+Requires-Dist: psycopg[binary] (~=3.1.9) ; extra == 'psycopg'
+Provides-Extra: test
+Requires-Dist: black (~=23.3.0) ; extra == 'test'
+Requires-Dist: flake8 (~=6.0.0) ; extra == 'test'
+Requires-Dist: mypy ; extra == 'test'
+Requires-Dist: psycopg[binary] (~=3.1.9) ; extra == 'test'
+Requires-Dist: pytest-click (~=1.1.0) ; extra == 'test'
+Requires-Dist: pytest-cov (~=4.0.0) ; extra == 'test'
+Requires-Dist: pytest (~=7.3.1) ; extra == 'test'
+Requires-Dist: sqly[migration] ; extra == 'test'
+
+# SQLY: write SQL in SQL
+
+SQL is a fantastic language — one of the most successful programming languages in the world. We should use it, not try to replace it with a bespoke DSL. 
+
+Yet there are a couple of things that are nice to have help with in constructing SQL queries:
+
+* **dialect-aware safe value substitution**: Every database interface has its own syntax for substituting values safely (not to allow SQL injection) — for example, `$1` or `?` or `:varname`. They also have different requirements for the format of the sql + values argument lists. I want to able to write my queries with the same value substituion syntax, regardless of which database interface I am using, and know that the SQL will be output correctly for my interface, and that the values will be passed to the database engine safely. 
+* **dynamic attributes**: In many applications, I don't know in advance which attributes I am going to select, insert, update, or filter by. I want to SELECT a given list of attributes, or filter WHERE a given key/value mapping, or UPDATE or INSERT particular attributes, without having to rewrite the SQL query.
+* **block composition**: Some SQL queries are very complex. I want to able to compose blocks of SQL into larger queries, so that I can manage this complexity effectively. (Most database query DSLs are unable to deal with complex queries, or they invent a hard-to-learn language for writing those queries. Learning SQL is a better use of our time, but it would be very helpful having some assistance managing/manipulating the different blocks in a query.)
+
+SQLY:
+
+* Dynamic value replacement, rendered in one of the supported dialects: postgres (`$1`), sqlalchemy (`:varname`), embedded (`:varname`), mysql (`%(varname)s`), sqlite (`?`). Default style is embedded / `:varname`.
+* Dynamic attribute/value lists in `SELECT`,  `WHERE`, `INSERT`, and `UPDATE` syntax.
+* Block composition.
+* [DB-API 2.0](https://peps.python.org/pep-0249/) compatibility.
+
