@@ -1,0 +1,1 @@
+SELECT sha512(b'test') AS `tmp`
