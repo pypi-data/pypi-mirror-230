@@ -1,0 +1,56 @@
+Metadata-Version: 2.1
+Name: posedr
+Version: 0.0.1
+Summary: Pose Detection By mediapipe and cv2
+Author: Karthikeyan
+Keywords: Human pose estimation,Body tracking,Image processing
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: opencv-python
+Requires-Dist: mediapipe
+
+
+# Project Title
+
+Pose Detection Python Package
+
+
+## Installation
+
+Install my-project with npm
+
+```bash
+  pip install pose-detection
+```
+    
+## Demo
+
+from posedr import run_pose_detection
+
+# Run pose detection with default parameters
+run_pose_detection()
+
+# You can also customize the parameters
+run_pose_detection(mode=True, smooth=False, detectionCon=0.7, trackCon=0.8)
+
+Parameters:
+
+mode (bool, optional): Set to True for static image mode. Default is False.
+
+smooth (bool, optional): Enable landmark smoothing. Default is True.
+
+detectionCon (float, optional): Minimum detection confidence threshold. Default is 0.5.
+
+trackCon (float, optional): Minimum tracking confidence threshold. Default is 0.5.
+
+
+
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
