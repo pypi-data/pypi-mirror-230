@@ -1,0 +1,102 @@
+[build-system]
+requires = [
+    "setuptools>=42",
+    "wheel"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "redbot"
+dynamic = ["version", "readme"]
+authors = [
+    {name="Mark Nottingham", email="mnot@mnot.net"}
+]
+description = "REDbot is lint for HTTP."
+requires-python = ">=3.9"
+license = {file = "LICENSE.md"}
+classifiers = [
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.9",
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Environment :: Web Environment",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Software Development :: Testing",
+    "Operating System :: Unix",
+    "Operating System :: MacOS :: MacOS X",
+    "License :: OSI Approved :: MIT License"
+]
+dependencies = [
+    "thor >= 0.9.6",
+    "markdown >= 2.6.5",
+    "netaddr >= 0.7.19",
+    "Jinja2 >= 2.11.1",
+    "typing-extensions >= 4.3.0",
+    "MarkupSafe",
+    "importlib_resources"
+]
+
+[project.urls]
+homepage = "https://redbot.org/project/"
+
+[project.optional-dependencies]
+systemd = ["cysystemd"]
+dev = ["mypy", "playwright", "black", "pytest", "pytest-md", "validate-pyproject"]
+
+[project.scripts]
+redbot = "redbot.cli:main"
+redbot_daemon = "redbot.daemon:main"
+
+[tool.setuptools.dynamic]
+version = {attr = "redbot.__version__"}
+readme = {file = ["README.md"], content-type = "text/markdown"}
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.mypy]
+follow_imports = "normal"
+incremental = true
+disallow_untyped_defs = true
+disallow_untyped_calls = true
+disallow_incomplete_defs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = true
+warn_unreachable = true
+strict_optional = false
+show_error_codes = true
+
+
+[tool.pylint.basic]
+function-rgx = "[a-z_][a-z0-9_]{1,30}$"
+variable-rgx = "[a-z_][a-z0-9_]{1,30}$"
+attr-rgx = "[a-z_][a-z0-9_]{1,30}$"
+argument-rgx = "[a-z_][a-z0-9_]{1,30}$"
+class-attribute-rgx = "([A-Za-z_][A-Za-z0-9_]{1,30}|(__.*__))$"
+method-rgx = "[a-z_][a-z0-9_]{1,30}$"
+class-rgx = "[a-zA-Z0-9_]+$"
+
+[tool.pylint.messages_control]
+disable = "C0114,C0115,C0116,W0613"
+
+[tool.pylint.reports]
+reports = false
+
+[tool.pylint.variables]
+dummy-variables-rgx = "response_start|response_body|response_done|error|formatter_done|check_done|_"
+
+[tool.pylint.design]
+max-args=10
+max-locals=35
+max-branches=25
+max-statements=100
+max-attributes=40
+min-public-methods=1
+
+[tool.pylint.similarities]
+min-similarity-lines = 10
