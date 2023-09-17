@@ -1,0 +1,85 @@
+[build-system]
+requires = [
+    "setuptools>=61.2",
+    "Cython>=3.0",
+    "numpy>=1.25, <2.0",
+]
+
+[project]
+name = "ewah_bool_utils"
+version = "1.1.0"
+description = "EWAH Bool Array utils for yt"
+authors = [
+  { name = "Matthew Turk" },
+  { name = "Meagan Lang" },
+  { name = "Navaneeth Suresh" },
+]
+requires-python =">=3.9"
+dependencies = [
+  # match the absolute oldest version of numpy with *any*
+  # level of support for our minimal Python requirement
+  # https://github.com/scipy/oldest-supported-numpy/issues/76#issuecomment-1628865694
+  "numpy>=1.19.3",
+]
+classifiers = [
+    "Intended Audience :: Developers",
+    "Development Status :: 5 - Production/Stable",
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Cython",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+[project.license]
+text = "BSD"
+
+[project.readme]
+file = "README.rst"
+content-type = "text/x-rst"
+
+
+[project.urls]
+Homepage = "https://github.com/yt-project/ewah_bool_utils"
+
+[tool.setuptools]
+license-files = [
+    "LICENSE",
+]
+
+[tool.black]
+line-length = 88
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.ruff]
+exclude = ["*__init__.py"]
+ignore = ["E501"]
+select = [
+    "E",
+    "F",
+    "W",
+    "C4",  # flake8-comprehensions
+    "B",   # flake8-bugbear
+    "YTT", # flake8-2020
+    "I",   # isort
+    "UP",  # pyupgrade
+]
+
+[tool.ruff.isort]
+combine-as-imports = true
