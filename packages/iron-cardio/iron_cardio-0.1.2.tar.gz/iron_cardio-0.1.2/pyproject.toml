@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "iron-cardio"
+version = "0.1.2"
+description = "A CLI tool to create, save, and track progress of Iron Cardio sessions."
+authors = ["Russell Helmstedter <rhelmstedter@gmail.com>"]
+readme = "README.md"
+homepage = "https://github.com/rhelmstedter/iron-cardio/"
+repository = "https://github.com/rhelmstedter/iron-cardio/"
+keywords = ["CLI", "kettlebells"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+typer = "^0.9.0"
+rich = "^13.5.2"
+pytest = "^7.4.0"
+
+[tool.poetry.dev-dependencies]
+
+[tool.poetry.group.dev.dependencies]
+coverage = "^7.3.1"
+pytest-cov = "^4.1.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+iron-cardio = "iron_cardio.__main__:cli"
