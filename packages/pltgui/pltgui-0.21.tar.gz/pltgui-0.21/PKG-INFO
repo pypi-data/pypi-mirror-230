@@ -1,0 +1,150 @@
+Metadata-Version: 2.1
+Name: pltgui
+Version: 0.21
+Summary: A GUI with matplotlib, can use on all OS.
+Home-page: https://gitee.com/drjiezheng/pltgui
+Author: Dr Jie Zheng
+Author-email: jiezheng@nao.cas.cn
+License: MIT
+Description: # pltgui
+        
+        > Author: Dr Jie Zheng & Dr Lin-qiao Jiang
+        > v0.1 2022
+        > v0.2 2023R
+        
+        ## Introduction
+        
+        Working with a GUI, or adding interaction in plotting, will help a lot in data analysis.
+        However, the common GUI of Python is OS-dependent, 
+        while manually adding interactive codes is too complex. 
+        A pseudo-GUI tool is introduced in this work. 
+        It will help to add buttons/checkers in the graph and assign callback functions to them.
+        The remaining problem is that the documents in this package are in Chinese and will be in English in the next version.
+        This program is published to the PyPI, and can be installed by 'pip install pltgui'.
+        
+        This package provides a button class and a button controller  nager class.
+        A button will be drawn on a specified position with a specified size, text and color.
+        A callback function as the click event handler can be bind to the button.
+        The button controller will help to adjust the axes, and control the message loop,
+        call the event handler when the button is clicked.
+        
+        Since we are using the native matplotlib plotting, it is OS-independent.
+        Programs using this package has same behaviour on macOS, Linux, and Windows.
+        
+        Special NOTE: The program must have a quit/exit action. If you close the plotting
+        window directly, you may need to shutdown the program by Ctrl-C or kill command.
+        
+        一个用matplotlib画按钮到图形界面，用于在科学图像绘制之外额外增加互动操作功能。
+        目前很简单，只提供了按钮，以及按钮的颜色等（可以当复选框用）。
+        
+        由于使用matplotlib，而不是专门的图形界面，因此可以在任何具有交互能力的操作系统上使用，
+        经过实测，在macOS，Linux，Windows上均可以很好地实现互动操作。
+        
+        ## Sample 范例
+        
+        ```python
+        import numpy as np
+        import matplotlib.pyplot as plt
+        import pltgui
+        
+        
+        # 这是一个例子，在图中分为了上下两部分，上面是函数图像，下面是按钮区，选择函数，以及退出
+        # 点击sin或者cos时，会动态改变函数，并且切换按钮的显示状态
+        
+        # This is a sample, the figure is divided into two parts.
+        # The upper part works as the main display, and the lower part as the button panel.
+        # When the sin/cos button clicked, the curve of the selected function will be shown.
+        
+        #################################
+        # 特别注意：使用本程序，必须有专门的退出按钮，如果关闭画图窗口，程序就死在后台了，只能Ctrl-C，或者kill
+        #################################
+        
+        # 把一张图（figure）分为两个部分，上面80%是画图区域，下面20%是按钮区域，具体分布根据需要来
+        # Two parts in one fugure, upper 80% as plotting, lower 20% as button
+        # The user can decide the layout, you can use only one panel and place 
+        # the buttons together with the plotting. 
+        fig = plt.figure()
+        axdat = fig.add_axes([0.05, 0.20, 0.90, 0.75])
+        axbtn = fig.add_axes([0.05, 0.01, 0.90, 0.09])
+        
+        # 绘制一条sin曲线作为初始值
+        # Plot a sin curve as the initial display.
+        xx = np.linspace(-5, 5, 1000)
+        yy = np.sin(xx)
+        line_dat = axdat.plot(xx, yy)[0]
+        
+        # 定义sin按钮的事件响应函数，即点了sin按钮之后会调用它
+        # The callback function (click event handler)  of the sin button.
+        # It will be called when the sin button clicked.
+        def draw_sin():
+            # 重新制造曲线数据
+            # Regenerate data
+            xx = np.linspace(-5, 5, 1000)
+            yy = np.sin(xx)
+            # 沿用外部绘制好的曲线，修改其数据即可
+            # Reuse the global curve by set new data
+            line_dat.set_data(xx, yy)
+            # 改变按钮状态
+            # Change ths check status of the buttons
+            btn_sin.check()
+            btn_cos.uncheck()
+        
+        # cos按钮的响应函数，同上
+        # The event handler of the cos button
+        def draw_cos():
+            xx = np.linspace(-5, 5, 1000)
+            yy = np.cos(xx)
+            line_dat.set_data(xx, yy)
+            btn_sin.uncheck()
+            btn_cos.check()
+        
+        # 退出按钮的响应函数，返回True，表示要退出
+        # The event handler of exit button. It returns True to indicate the exit of the message loop.
+        def bye():
+            return True
+        
+        # 在非按钮的图像区域点击的响应函数，这里简单显示一下点击坐标
+        # A handler of click on non button area. In this sample, the x/y is printed.
+        def img_click(x, y):
+            print(f"Click on ({x:.2f}, {y:.2f})")
+        
+        # 创建按钮管理器对象，把按钮画布指派给它
+        # Create the button controller, and the axis is assigned.
+        btnctl = pltgui.i_btn_ctl(axbtn)
+        # 添加3个按钮。注意三个按钮之间的布局关系，需要自己先画个布局草图
+        # 特别注意，留出按钮之间的空隙，要不然很难看（操作上无所谓）
+        # 指派处理函数的时候，这里给函数名，不要加括号，否则就成了立刻调用了
+        # Add 3 buttons, note the layout, in some cases, a manual draft will help
+        # Space between buttons is suggested for a better layout.
+        # When assigning the event handler, no () after the function name
+        btn_sin = btnctl.add_btn(10, 1.5, 0.9, 1, "y", "sin", "sin", draw_sin, chk_color="g")
+        btn_cos = btnctl.add_btn(11, 1.5, 0.9, 1, "y", "cos", "cos", draw_cos, chk_color="g")
+        btn_bye = btnctl.add_btn(10.5, 0, 1.9, 1, "r", "bye", "bye", bye)
+        
+        # 添加好按钮后，自动给画布边框初始化
+        # Init the panel borders automaticly according to the buttons
+        btnctl.set_axis_lim()
+        
+        # 开启交互模式，如果不开也行，那么会实际上变成一直在刷新
+        # Turn on the interactive mode
+        plt.ion()
+        # 操作循环，自动等待鼠标在画布上点击，然后根据点击的按钮去调用函数
+        # Start the action loop, waiting the operations and call proper functions.
+        btnctl.action_loop(image_action=img_click)
+        # 退出前关闭交互模式，不关也行，反正都要退出程序了。但是如果后续还有代码就需要
+        # Turn off the interactive mode.
+        # If this is the last operation of the program, you can omit this step.
+        plt.ioff()
+        ```
+        
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Topic :: Scientific/Engineering :: Physics
+Classifier: Topic :: Scientific/Engineering :: Astronomy
+Requires: numpy
+Requires: matplotlib
+Description-Content-Type: text/markdown
