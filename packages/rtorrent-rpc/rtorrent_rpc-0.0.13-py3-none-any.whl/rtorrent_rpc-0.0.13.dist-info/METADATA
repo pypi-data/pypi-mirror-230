@@ -1,0 +1,55 @@
+Metadata-Version: 2.1
+Name: rtorrent-rpc
+Version: 0.0.13
+Summary: Typed rtorrent rpc client
+Home-page: https://github.com/trim21/rtorrent-rpc
+License: MIT
+Keywords: rtorrent,rpc
+Author: Trim21
+Author-email: i@trim21.me
+Requires-Python: >=3.10,<4.0
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3 :: Only
+Requires-Dist: bencode-py (>=4.0.0,<5.0.0)
+Requires-Dist: typing-extensions (>=4.7.1)
+Project-URL: Repository, https://github.com/trim21/rtorrent-rpc
+Description-Content-Type: text/markdown
+
+# Typed rtorrent rpc client
+
+[![PyPI](https://img.shields.io/pypi/v/rtorrent-rpc)](https://pypi.org/project/rtorrent-rpc/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/rtorrent-rpc)](https://pypi.org/project/rtorrent-rpc/)
+
+`rtorrent-rpc` is a python wrapper on top of rtorrent XML RPC protocol,
+hosted on GitHub at [github.com/trim21/rtorrent-rpc](https://github.com/trim21/rtorrent-rpc)
+
+Document is hosted at https://rtorrent-rpc.readthedocs.io/ by readthedocs.
+
+## Introduction
+
+```console
+pip install rtorrent-rpc -U
+```
+
+## Contributing
+
+All kinds of PRs (docs, feature, bug fixes and eta...) are most welcome.
+
+## Quick Start
+
+```python
+from rtorrent_rpc import RTorrent
+
+client = RTorrent(address='scgi://127.0.0.1:5000')
+unix_client = RTorrent(address='scgi:///home/ubuntu/.local/share/rtorrent.sock')
+```
+
+## License
+
+`rtorrent-rpc` is licensed under the MIT license.
+
