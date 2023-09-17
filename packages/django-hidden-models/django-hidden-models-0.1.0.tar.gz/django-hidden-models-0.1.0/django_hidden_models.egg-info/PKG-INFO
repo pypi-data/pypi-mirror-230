@@ -1,0 +1,84 @@
+Metadata-Version: 2.1
+Name: django-hidden-models
+Version: 0.1.0
+Summary: Simply hiding a useless data from query results
+Home-page: https://github.com/bigcrazyfrog/django-hidden-models
+Author: Nikita Cibin
+Author-email: cibinnikita@gmail.com
+License: BSD
+Keywords: django,hidden,hide,visible,models
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Framework :: Django
+Classifier: Framework :: Django :: 3.2
+Classifier: Framework :: Django :: 4.0
+Classifier: Framework :: Django :: 4.1
+Classifier: Framework :: Django :: 4.2
+Requires-Python: >=3.8
+Description-Content-Type: text/x-rst
+License-File: LICENSE.txt
+License-File: AUTHORS
+Requires-Dist: Django>=3.2
+
+====================
+django-hidden-models
+====================
+
+.. image:: https://github.com/bigcrazyfrog/django-hidden-models/actions/workflows/tests.yaml/badge.svg
+   :target: https://github.com/bigcrazyfrog/django-hidden-models/actions/
+.. image:: https://coveralls.io/repos/bigcrazyfrog/django-hidden-models/badge.png
+    :target: https://coveralls.io/r/bigcrazyfrog/django-hidden-models
+
+Simply hiding a useless data from query results.
+
+Status: developing
+
+Example
+-------
+
+.. code-block:: python
+
+    # imports
+    from hidden_models.models import VisibleModel
+    from django.db import models
+
+    # Models
+    class Article(VisibleModel):
+        name = models.CharField(max_length=100)
+
+
+    # Example of use
+
+    >>> Article.objects.create(name='article1')
+    >>> Article.objects.create(name='article2')
+    
+    >>> Article.objects.all() # Queryset [<Article: (1)>, <Article: (2)>]
+    
+    # This article will be hided, but not deleted from the database
+    >>> Article.objects.filter(name='article1').hide()
+
+    >>> Article.objects.all() # Queryset [<Article: (2)>]
+
+
+Installation
+------------
+
+Installing from pypi (using pip). ::
+
+    pip install django-hidden-models
+
+Add ``hidden_models`` in your ``INSTALLED_APPS``:
+
+.. code-block:: python
+
+    INSTALLED_APPS = [
+        'hidden_models',
+        [...]
+    ]
