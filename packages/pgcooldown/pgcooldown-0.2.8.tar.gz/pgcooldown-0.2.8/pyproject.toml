@@ -1,0 +1,35 @@
+[project]
+name = "pgcooldown"
+description = "A cooldown/counter class to wait for stuff in games"
+version = "0.2.8"
+readme = "README.md"
+
+authors = [
+    { name="Michael Lamertz", email="michael.lamertz@gmail.com" }
+]
+
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Games/Entertainment",
+    "Topic :: Software Development :: Libraries :: pygame",
+]
+
+dependencies = [ ]
+
+[project.urls]
+homepage = "https://github.com/dickerdackel/pgcooldown"
+bugtracker = "https://github.com/DickerDackel/pgcooldown/issues"
+changelog = "https://github.com/dickerdackel/pgcooldown/ChangeLog.md"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+addopts = "-rA -s --cov-report term-missing -s --cov=pgcooldown"
+testpaths = [
+    "tests",
+]
+
