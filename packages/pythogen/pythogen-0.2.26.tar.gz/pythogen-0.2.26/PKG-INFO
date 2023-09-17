@@ -1,0 +1,95 @@
+Metadata-Version: 2.1
+Name: pythogen
+Version: 0.2.26
+Summary: Generator of python HTTP-clients from OpenApi specification.
+Home-page: https://github.com/artsmolin/pythogen
+License: MIT
+Keywords: openapi,openapi-generator,swagger,http-client,generator
+Author: Artur Smolin
+Author-email: artursmolin@outlook.com
+Requires-Python: >=3.10,<4.0
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Software Development :: Code Generators
+Classifier: Topic :: Utilities
+Classifier: Typing :: Typed
+Requires-Dist: autoflake (>=2.2.0,<3.0.0)
+Requires-Dist: black (>=23.3.0,<24.0.0)
+Requires-Dist: inflection (>=0.5.1,<0.6.0)
+Requires-Dist: isort (>=5.12.0,<6.0.0)
+Requires-Dist: jinja2 (>=3.1.1,<4.0.0)
+Requires-Dist: openapi-spec-validator (>=0.6.0,<0.7.0)
+Requires-Dist: pydantic (>=2.0.2,<3.0.0)
+Requires-Dist: pytest-cov (>=4.1.0,<5.0.0)
+Requires-Dist: pyyaml (>=6.0,<7.0)
+Requires-Dist: typer (>=0.9.0,<0.10.0)
+Project-URL: Repository, https://github.com/artsmolin/pythogen
+Description-Content-Type: text/markdown
+
+<h2 align="center">Awesome python HTTP-clients from  OpenAPI</h2>
+
+[![Build Status](https://github.com/artsmolin/pythogen/actions/workflows/main.yml/badge.svg)](https://github.com/artsmolin/pythogen/actions)
+[![codecov](https://codecov.io/gh/artsmolin/pythogen/branch/main/graph/badge.svg?token=6JR6NB8Y9Z)](https://codecov.io/gh/artsmolin/pythogen)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+![downloads](https://img.shields.io/pypi/dm/pythogen)
+[![python](https://img.shields.io/pypi/pyversions/pythogen.svg)](https://pypi.python.org/pypi/pythogen/)
+[![pypi](https://img.shields.io/pypi/v/pythogen.svg)](https://pypi.org/project/pythogen/)
+[![license](https://img.shields.io/github/license/artsmolin/pythogen.svg)](https://github.com/artsmolin/pythogen/blob/master/LICENSE)
+
+---
+
+Generator of python HTTP-clients from OpenApi specification based on <i>httpx</i> and <i>pydantic</i>
+
+## Documentation
+Check documentation to see more details about the features. All documentation is in the "docs" directory and online at [artsmolin.github.io/pythogen](artsmolin.github.io/pythogen)
+
+## Examples
+- [Sync](/examples/petstore/client_sync.py) and [async](/examples/petstore/client_async.py) clients for [Petstore OpenAPI](/examples/petstore/openapi.yaml)
+
+## Installation
+Pip
+```shell
+pip install pythogen
+```
+Docker
+```shell
+docker pull artsmolin/pythogen
+```
+
+## Generation
+- `path/to/input` — path to the directory with openapi.yaml;
+- `path/to/output` — the path to the directory where the generated client will be saved;
+Pip
+```shell
+pythogen path/to/input/openapi.yaml path/to/output/client.py
+```
+Docker
+```shell
+docker run \
+-v ./path/to/input:/opt/path/to/input \
+-v ./path/to/output:/opt/path/to/output \
+artsmolin/pythogen \
+path/to/input/openapi.yaml \
+path/to/output/client.py
+```
+
+## Usage
+```python
+from petstore.client_async import Client
+from petstore.client_async import Pet
+from petstore.client_async import EmptyBody
+from petstore.client_async import FindPetsByStatusQueryParams
+
+client = Client(base_url="http://your.base.url")
+pets: list[Pet] | EmptyBody = await client.findPetsByStatus(
+  query_params=FindPetsByStatusQueryParams(status="available"),
+)
+```
+
