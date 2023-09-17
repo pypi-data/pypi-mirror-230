@@ -1,0 +1,133 @@
+loader:
+  shhs2:
+    dataBase: SHHS2
+    dataBaseVersion: 1.0.0 # needs to be raised every time new data is added
+
+    filePath: ./datasets/SHHS2
+    copyRawDataToLocal: True
+
+    dataset:
+      loaderName: RecordLoaderSHHS
+      fromFiles: True # if the records are read from files or sql-database
+      downloader:
+        type: nsrr
+        listFilter: null
+        # basePath: H:\SHHS\polysomnography
+        basePath: \\vs-grp06.zih.tu-dresden.de\gl4psgdata\shhs\polysomnography\edfs\shhs2
+        extensions: [.edf, -nsrr.xml]
+        basePathExtensionwise:
+          [
+            \\vs-grp06.zih.tu-dresden.de\gl4psgdata\shhs\polysomnography\edfs\shhs2,
+            \\vs-grp06.zih.tu-dresden.de\gl4psgdata\shhs\polysomnography\annotations-events-nsrr\shhs2,
+          ]
+        force: False
+        idPattern: .*/(.*).edf
+      filePattern: "*.edf"
+
+    # the channels that should be extracted from the edf files
+    sourceChannels:
+      - name: SaO2
+        type: sao2
+      - name: PR
+        type: hr
+        optional: True
+      - name: H.R.
+        type: hr
+        optional: True
+      - name: EEG # EEG C3-A2
+        type: eeg
+        minimalSamplingRate: 125
+      - name: EEG(sec)
+        type: eeg
+        optional: True
+      - name: EEG2
+        type: eeg
+        optional: True
+      - name: EEG 2
+        type: eeg
+        optional: True
+      - name: EEG(SEC)
+        type: eeg
+        optional: True
+      - name: EEG sec
+        type: eeg
+        optional: True
+      - name: EEG Ch2 # EEG C4-A1
+        generated: True
+        requiresOne: [EEG(sec), EEG2, EEG 2, EEG(SEC), EEG sec]
+        type: eeg
+        minimalSamplingRate: 125
+      - name: EOG(L)
+        type: eog
+      - name: EOG(R)
+        type: eog
+      - name: EMG
+        type: emg
+        minimalSamplingRate: 125
+      - name: ECG
+        type: ecg
+      - name: POSITION
+        steps: ["resampleSimple"]
+        type: body
+      - name: THOR RES
+        type: effort
+      - name: ABDO RES
+        type: effort
+      - name: AIRFLOW
+        type: flow
+        optional: True
+      - name: NEW AIR
+        type: flow
+        optional: True
+      - name: NEWAIR
+        type: flow
+        optional: True
+      - name: airflow
+        type: flow
+        optional: True
+      - name: new A/F
+        type: flow
+        optional: True
+      - name: New Air
+        type: flow
+        optional: True
+      - name: New A/F
+        type: flow
+        optional: True
+      - name: AUX
+        type: flow
+        optional: True
+      - name: FLOW
+        generated: True
+        requiresOne:
+          [NEW AIR, NEWAIR, new A/F, New Air, New A/F, AUX, airflow, AIRFLOW]
+        type: flow
+      - name: LIGHT
+        type: light
+        optional: True
+      - name: OX STAT # Oximetry Status
+        type: oxstat
+        optional: True
+      - name: SOUND
+        optional: True
+        type: mic
+      - name: CPAP
+        optional: True
+        type: cpap
+      # - name: EPMS
+      #   optional: True
+
+    combineChannels:
+      - name: FLOW
+        type: flow
+        combineType: select
+        channel:
+          [NEW AIR, NEWAIR, new A/F, New Air, New A/F, AUX, airflow, AIRFLOW]
+      - name: EEG Ch2
+        type: eeg
+        combineType: select
+        channel: [EEG(sec), EEG2, EEG 2, EEG(SEC), EEG sec]
+      - name: HR
+        type: hr
+        combineType: select
+        channel: [PR, H.R.]
