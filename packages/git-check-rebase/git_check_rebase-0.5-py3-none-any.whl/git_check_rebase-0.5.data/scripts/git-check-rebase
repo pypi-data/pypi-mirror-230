@@ -1,0 +1,361 @@
+#!python
+
+import os
+import sys
+import shutil
+import subprocess
+from tempfile import mkstemp, mkdtemp
+from typing import Optional, Type, List
+from types import TracebackType
+import tabulate  # type: ignore
+
+from git_check_rebase import text_table_view, html_table_view
+
+from git_check_rebase.check_rebase_meta import Meta
+from git_check_rebase.compare_ranges import MultiRange, \
+    RowsHideLevel, NoBaseError, Column, Table
+from git_check_rebase.compare_commits import interactive_compare_commits, \
+    check_git_clean_branch, eat_numbers
+
+from git_check_rebase.viewable import Span, CompRes
+
+from git_check_rebase.simple_git import git, git_log1
+
+tabulate.PRESERVE_WHITESPACE = True
+
+
+def print_legend(viewer, ranges, html):
+    def_style = (
+        ('Critical bugs', 'bug-critical'),
+        ('Matching, checked automatically', 'matching'),
+        ('Matching, checked by hand', 'checked'),
+        ('Dropped patches', 'drop'),
+        ('Jira issues, non-critical', 'bug')
+    )
+    tab = [[Span(f'███████ - {desc}', style)] for desc, style in def_style]
+    tab += [[r.legend] for r in ranges if r.legend]
+    print(viewer.view_table(tab))
+
+
+class GitCheckRebase:
+    def __init__(self, range_defs, meta_path, html, issue_tracker,
+                 porting_issues, legend,
+                 columns, rows_hide_level, rows_filter, interactive,
+                 export_as_branch, color, ign_commit_messages):
+        self.range_defs = range_defs
+        self.issue_tracker = issue_tracker
+        self.porting_issues = \
+            porting_issues.split(',') if porting_issues else []
+        self.legend = legend
+        self.rows_hide_level = rows_hide_level
+        self.rows_filter = rows_filter
+        self.interactive = interactive
+        self.export_as_branch = export_as_branch
+        self.ign_commit_messages = ign_commit_messages
+        self.ranges = []  # see parse_range_defs
+        self.tab = None  # see main
+
+        self.headers = columns != 'short'
+        if columns is None:
+            self.columns = (Column.COMMITS, Column.SUBJECT)
+        elif columns == 'all':
+            self.columns = [c for c in Column]
+        else:
+            cols = columns.split(',')
+            if 'full' in cols:
+                i = cols.index('full')
+                cols[i:i+1] = 'feature', 'commits', 'date', 'author', \
+                    'subject'
+            if 'short' in cols:
+                i = cols.index('short')
+                cols[i:i+1] = 'commits', 'subject'
+            self.columns = [Column[c.upper()] for c in cols]
+
+        self.html = html
+        if html:
+            self.fmt = 'html'
+        elif color is None:
+            self.fmt = 'colored' if sys.stdout.isatty() else 'plain'
+        else:
+            self.fmt = 'colored' if color else 'plain'
+
+        if self.fmt == 'html':
+            self.viewer = html_table_view.HtmlViewer()
+        else:
+            self.viewer = text_table_view.TextViewer(self.fmt == 'colored')
+
+        self.created_meta = not meta_path
+        if self.created_meta:
+            fd, meta_path = mkstemp()
+            os.close(fd)
+
+        self.meta = Meta(meta_path)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self,
+                 exc_type: Optional[Type[BaseException]],
+                 exc_value: Optional[BaseException],
+                 traceback: Optional[TracebackType]) -> None:
+        if self.created_meta:
+            if os.stat(self.meta.fname).st_size == 0:
+                os.unlink(self.meta.fname)
+            else:
+                print(f"""
+
+Meta file is created: {self.meta.fname}
+You may use it with next run, specifying option --meta {self.meta.fname}""")
+
+    def parse_range_defs(self):
+        """Must be called again, when git history changed"""
+        try:
+            last = MultiRange(self.range_defs[-1], meta=self.meta)
+        except NoBaseError:
+            sys.exit("Last range can't use default-base '..<commit>' syntax")
+
+        try:
+            self.ranges = [MultiRange(r, meta=self.meta,
+                                      default_base=last.base)
+                           for r in self.range_defs[:-1]]
+        except NoBaseError:
+            # last.base is None if last has several sub-ranges
+            sys.exit("Can't use default-base '..<commit>' syntax when last "
+                     "range is multi-range")
+
+        self.ranges.append(last)
+
+    def do_interactive_compare(self, row_ind: int, i1: int,
+                               i2: int, branch: str) -> str:
+        row = self.tab.rows[row_ind]
+        i1, i2 = sorted((i1, i2))
+
+        br = ['', '']
+        if branch:
+            if self.ranges[i1].top in ('HEAD', branch):
+                br[0] = branch
+            if self.ranges[i2].top in ('HEAD', branch):
+                br[1] = branch
+
+        h = [row.commits[i].commit_hash for i in (i1, i2)]
+        res = interactive_compare_commits(h[0], h[1], br[0], br[1],
+                                          c2_ind=row_ind+1,
+                                          comment=row.get_comment())
+        assert not res.equal  # that would be bug in compare_ranges
+        if res.ok:
+            if i1 == 0:
+                row.commits[i1].comp = CompRes.BASE
+                row.commits[i2].comp = CompRes.CHECKED
+            else:
+                row.commits[i2].comp = CompRes.BASE
+                row.commits[i1].comp = CompRes.CHECKED
+        self.meta.update_meta(row.subject, res.comment, h if res.ok else None)
+
+        if res.stop:
+            return 'STOP'
+
+        return res.new_c1 or res.new_c2
+
+    def find_column(self, name: str) -> int:
+        """Find column by name and return its index"""
+        for i, r in enumerate(self.ranges):
+            if r.name == name:
+                return i
+        raise ValueError(f'No "{name}" column')
+
+    def do_export_as_branch(self, branch: str, columns: List[str]) -> None:
+        tempdir = mkdtemp()
+        worktree = os.path.join(tempdir, 'repo')
+
+        git(f'worktree add --detach {worktree}')
+
+        cur_dir = os.getcwd()
+        os.chdir(worktree)
+        try:
+            git(f'checkout --orphan {branch}')
+        except subprocess.CalledProcessError:
+            # assume branch already exists
+            git(f'checkout {branch}')
+
+        for name in columns:
+            ind = self.find_column(name)
+            git('rm -rf .')
+            for row_ind, row in enumerate(self.tab.rows):
+                c = row.commits[ind]
+                if c is None:
+                    continue
+
+                patch = git('show --format=email ' + c.commit_hash)
+                filtered = eat_numbers(patch, ignore_empty_lines=False)
+
+                fname = git_log1(f'{row_ind+1:02}-%f.patch', c.commit_hash)
+                with open(fname, 'w') as f:
+                    f.write(filtered)
+
+            git('add .')
+            git(f'commit -m {self.ranges[ind].name} --allow-empty')
+
+        print(f'Created branch: {branch}')
+
+        os.chdir(cur_dir)
+        shutil.rmtree(tempdir)
+        git('worktree prune')
+
+    def main(self, start_from):
+        if start_from:
+            if not self.interactive:
+                sys.exit('--start_from supported only in --interactive mode')
+
+        self.parse_range_defs()
+
+        self.tab = Table(self.ranges, self.meta)
+        self.tab.do_comparison(self.ign_commit_messages)
+        if self.porting_issues:
+            self.tab.add_porting_issues(self.issue_tracker,
+                                        self.porting_issues)
+
+        if self.export_as_branch:
+            branch, *columns = self.export_as_branch.split(',')
+            self.do_export_as_branch(branch, columns)
+
+        if self.interactive:
+            branch = check_git_clean_branch()
+            for row_ind, row in enumerate(self.tab.rows):
+                if row.commits[0] is None:
+                    base_ind = len(row.commits) - 1
+                    other_inds = range(base_ind)
+                else:
+                    base_ind = 0
+                    other_inds = range(1, len(row.commits))
+
+                base = row.commits[base_ind]
+                assert base is not None
+
+                if start_from == base.commit_hash:
+                    start_from = None
+
+                stop = False
+                for i in other_inds:
+                    c = row.commits[i]
+                    if c is None:
+                        continue
+
+                    if start_from == c.commit_hash:
+                        start_from = None
+                    if start_from is not None:
+                        continue
+
+                    if c.comp != CompRes.NONE:
+                        continue
+
+                    res = self.do_interactive_compare(row_ind, base_ind, i,
+                                                      branch)
+                    if res == 'STOP':
+                        stop = True
+                        break
+
+                    if res:
+                        self.main(start_from=res)
+                        return
+                if stop:
+                    break
+
+        out = self.tab.to_list(columns=self.columns,
+                               headers=self.headers,
+                               rows_hide_level=self.rows_hide_level,
+                               rows_filter=self.rows_filter)
+
+        if self.html:
+            print("""<!DOCTYPE html>
+                  <meta charset="utf-8"/>
+                  <style>
+                  body {
+                     font-family: monospace;
+                  }
+                  </style>
+                  """)
+
+        if self.legend:
+            print_legend(self.viewer, self.ranges, self.html)
+
+        print(self.viewer.view_table(out))
+
+
+if __name__ == '__main__':
+    import argparse
+
+    p = argparse.ArgumentParser(description="Compare git commit ranges")
+
+    p.add_argument('ranges', metavar='range', nargs='+',
+                   help='ranges to compare, '
+                   'in form [<name>:]<git range or ref>')
+    p.add_argument('--meta', help='optional, file with additional metadata')
+    p.add_argument('--html', help='output in html format', action='store_true')
+    p.add_argument('--porting-issues',
+                   help='''optional, comma-separated issues list.
+Issues are recursively searched for commit subjects in descriptions.
+Then, corresponding issue keys are used to fill "new" column if exist''')
+    p.add_argument('--issue-tracker', help='class of issue tracker')
+    p.add_argument('--legend', help='print legend', action='store_true')
+    p.add_argument('--columns',
+                   help='which columns to show in table: "short" is default. '
+                   '"full" adds author and date columns and also column '
+                   'headers', default='short')
+    p.add_argument('--rows-hide-level',
+                   choices=[x.name.lower() for x in RowsHideLevel],
+                   help='which rows to hide in table: "show_all" is default. ',
+                   default=RowsHideLevel.SHOW_ALL.name.lower())
+    p.add_argument('--rows-filter',
+                   help='which rows to show. experimental feature')
+    p.add_argument('--interactive',
+                   help='do interactive comparison of not-equal commits. '
+                   'For each commit to compare, vimdiff is started as a '
+                   'subprocess. User should exit it successfully (by :qa) to '
+                   'mark commits "ok", and with error (by :cq) to don\'t '
+                   'mark commits "ok"', action='store_true')
+    p.add_argument('--color',
+                   help='Highlight results. By default does coloring '
+                   'when stdout is tty', action='store_true')
+    p.add_argument('--no-color',
+                   help='Do not highlight results. By default does coloring '
+                   'when stdout is tty', action='store_true')
+    p.add_argument('--ignore-commit-messages',
+                   help='Ignore commit message when compare commits',
+                   action='store_true')
+    p.add_argument('--start-from', help='hash commit of right column to '
+                   'start from for interactive check.')
+    p.add_argument('--export-as-branch', help='make an orphan branch with '
+                   'two commits showing the difference between two specified '
+                   'columns. Syntax: --export-as-branch '
+                   'BRANCH_NAME,OLD_COLUMN_NAME,NEW_COLUMN_NAME')
+
+    args = p.parse_args()
+
+    # TODO: instead, move to argparse.BooleanOptionalAction in future.
+    # Now python 3.9 (or higher) is still not enough popular
+    if args.color and args.no_color:
+        sys.exit('Using both --color and --no-color is not allowed')
+    color = None if not (args.color or args.no_color) else args.color
+
+    if color:
+        # For termcolor library
+        os.environ['FORCE_COLOR'] = 'yes'
+
+    rows_hide_lvl = RowsHideLevel[args.rows_hide_level.upper()]
+    try:
+        gcr = GitCheckRebase(range_defs=args.ranges, meta_path=args.meta,
+                             html=args.html,
+                             issue_tracker=args.issue_tracker,
+                             porting_issues=args.porting_issues,
+                             legend=args.legend, columns=args.columns,
+                             rows_hide_level=rows_hide_lvl,
+                             rows_filter=args.rows_filter,
+                             interactive=args.interactive,
+                             export_as_branch=args.export_as_branch,
+                             color=color,
+                             ign_commit_messages=args.ignore_commit_messages)
+    except OSError as e:
+        sys.exit(f'Failed to open "{args.meta}": {e.strerror}')
+
+    with gcr:
+        gcr.main(start_from=args.start_from)
