@@ -1,0 +1,23 @@
+= Stag
+:author: Michał Góral
+:icons: font
+
+Stag (abbreviation from "static generator") is a lightweight, customizable
+and easily extensible generator of static web pages. It is format-agnostic,
+but comes bundled with support for Markdown input files.
+
+This site is built with Stag and a simple theme which bases on modified
+https://github.com/sindresorhus/github-markdown-css[github-markdown-css]
+(styles are MIT licensed). You can obtain sources in
+https://git.goral.net.pl/stag.git/tree/doc[Stag's repository].
+
+To view this documentation locally, you should use Stag version from the
+same git repository (because it may use newest, yet unreleased features). You
+can do it with the following commands:
+
+[source,shell]
+----
+$ poetry lock
+$ poetry install
+$ poetry run stag -C doc serve
+----

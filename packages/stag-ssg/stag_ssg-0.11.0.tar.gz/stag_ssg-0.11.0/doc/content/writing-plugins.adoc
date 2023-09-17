@@ -1,0 +1,510 @@
+= Plugins Programmer Manual
+:author: Michał Góral
+:icons: font
+
+Stag heavily uses plugins. By itself it only visits files and writes the
+files to their output destination by either copying them or running through
+Jinja templating engine.footnote:[Technically reading and writing could be
+plugins on their own, but having them outisde of the plugin system brings
+more benefits to the table than the counteroption]. Everything else is
+managed by the plugins.
+
+== How plugins work
+
+Plugins are small pieces of Python code which Stag runs when certain events
+occur. Usually they are used to generate or modify Stag's output, but they
+can do virtually anything.
+
+Do you want to extend Stag's capabilities to read a custom file format? No
+problem. Do you want your plugin to run a GUI program which interactively
+asks users a questions about the Universe? That's also fine.
+
+When Stag visits a file, it doesn't even open it. It only reads its path and
+fills a `Path` object, which is used to create a new `Page` object inside a
+`Site`. Created pages are available e.g. by inspecting `site.pages`, but you
+could also subscribe to the `site.signals.page_added` signal. `Path` created
+by Stag is available as `page.source`.
+
+On the other hand, Jinja templating engine creates files from the
+`page.output`, which is initially uninitialised. It's plugins job to go from
+a mere `page.source` to the page which has its output, metadata and all the
+other blocks created.
+
+IMPORTANT: One thing which must be remembered is this: there are no "virtual"
+files inside your content directory. All the files which Stag finds will be
+used to create a site in one way or the other. If nothing else works, Stag
+will simply copy them.
+
+== Creating a new plugin
+
+=== Registering plugins
+
+Creating a plugin is very simple. Just create a `plugins` directory inside
+your sites's directory and then create a Python file with a function
+`register_plugin()`. This function is the entry point for your plugin. It
+will be called once by Stag after the plugin is imported and it receives an
+initialised `Site` object, which is a central object in Stag. `Site` holds a
+list of pages, handles of signals, site configuration and a bunch of other
+goodies.
+
+Typically, `register_plugin()` is used to initialize the plugin, which
+usually ends up in connecting some of plugin functions to one or more
+available signals.
+
+WARNING: It's best to avoid placing any executable code in plugin's global
+scope. It's possible to fool Python's import system and to import the plugin
+twice, not once. On the other hand, it's guaranteed that Stag will call
+`register_plugin()` only once.
+
+=== Plugin example
+
+Consider the following, not very useful plugin. File structure should look
+like this:
+
+.Site file structure
+----
+content/
+  index.md
+plugins/
+  myplugin.py
+
+config.toml
+----
+
+.myplugin.py
+[source]
+----
+def greet_user(site):
+    print("Hello from the plugin!")
+
+
+def register_plugin(site):
+    site.signals.plugins_loaded.connect(greet_user)
+----
+
+That's it! From now on, every time a site is built, user will be greeted by
+our plugin.
+
+[NOTE]
+.Packages and modules
+====
+Above example keeps a plugin as a Python module. Stag will iterate these and
+try to import them.
+
+Alternatively, you might choose to keep plugins as packages, which results in
+a single directory per plugin:
+
+----
+plugins/
+  myplugin/
+    __init__.py
+    myplugin.py
+----
+
+You might prefer this scheme because it is easier to e.g. clone plugins from
+the internet this way.
+====
+
+=== URLs
+
+URL is probably the most important attribute of every `Page`. It tells Stag
+the expected location of files. For example, when URL doesn't have a file
+part in it (i.e. it is a "pretty" url, like _/post/my-post_), then Stag knows
+that it has to actually create a file like _/post/my-post/index.html_.
+
+Stag has a built-in generic mechanism for determining the URLs of the pages,
+but it'll happily offload this work to the more specilised functions, as it
+avoids doing any deduction by itself.
+
+To register such mechanism you must provide a function which accepts a `Path`
+object and returns a URL, and an optional condition, which must be fulfilled
+to call this function. Consider this implementation from a Markdown plugin:
+
+[source]
+----
+def deduce_url(path):
+    if path.filebase == "index":
+        return path.reldirname
+    return os.path.join(path.reldirname, path.filebase)
+
+
+def register_plugin(site):
+    site.readers.register_reader(deduce_url, lambda p: p.ext == "md")
+----
+
+=== Plugin Configuration
+
+Plugins can have a custom configuration tables in config.toml. Stag will read
+all of the entries inside the `plugins` section of config.toml anyway, and
+you can access them in convenient way, but it's nice to do some validation of
+these. To do so, plugins can register a custom objects, whose attributes
+should reflect the names of keys used in config.toml. These objects might
+also supply other methods to these tables.
+
+NOTE: it is advisable to use attrs module to create such objects. It is a
+dependency of Stag anyway.
+
+[source]
+----
+import attr
+
+@attr.s(auto_attribs=True)
+class MyPluginCfg:
+    myoption: str = "foo"
+    other_option: List[str] = attr.Factory(lambda: ["foo", "bar", "baz"])
+
+
+def register_plugin(site):
+    site.config.update_plugin_table("myplugin", MyPluginCfg())
+----
+
+
+=== Signals
+
+Because `register_plugin()` is called only once and probably there are a
+bunch of things which Stag hasn't initialised, it's not very useful to do
+anything besides plugin's initialisation at that point. That's why we have
+signals!
+
+Built on top of observer pattern (duh!), they are called when certain events
+occur (see: xref:_list_of_signals[List of signals]). Basically, they are mere
+function calls. Once a signal is emitted (`signal.emit(...)`) it goes
+thhrough all of the subscribed observers and calls each one with the
+arguments of `emit()` call.
+
+==== Connecting to signals
+
+To connect a function to the signal, you must have a `signal` object and call
+`connect(fn)` on it.
+
+To simplify things, Stag stores most global signals inside `site.signals`.
+
+[WARNING]
+.Weak references
+====
+By default observers are stored as weak references. It means that
+if they ever are deleted (e.g. temporaries which go out of scope), Stag won't
+call them! It's the best to not connect temporaries, but if you _really_ want
+to do it, use `weak=True` parameter when connecting the observer.
+
+[source]
+----
+def callback(*a):
+    print("callback")
+
+# OK
+some_signal.connect(callback)
+
+# OK
+some_signal.connect((lambda *a: print("lambda 1", *a)), weak=True)
+
+# NOT OK, lambda 2 won't be ever called
+some_signal.connect(lambda *a: print("lambda 2", *a))
+----
+====
+
+In addition to `site.signals`, some signals are sent by `Pages` themselves.
+You can connect to them like this:
+
+[source]
+----
+def input_created(page, inp):
+    assert page.input is inp
+    print(f"input created for page {page.url}")
+
+
+def page_cb(page):
+    page.input_created.connect(input_created)
+
+
+def register_plugin(site):
+    site.signals.page_added.connect(page_cb)
+----
+
+Or more sparse:
+
+[source]
+----
+def input_created(page, inp):
+    assert page.input is inp
+    print(f"input created for page {page.url}")
+
+
+def register_plugin(site)
+    site.signals.page_added.connect(
+        (lambda p: p.input_created.connect(input_created)),
+        weak=False)
+----
+
+==== List of signals
+
+.signals.signals
+[cols="1m,1m,2"]
+|===
+| Signal | Emit Parameters | Description
+
+| signals.plugins_loaded
+|
+| Emitted immediately after all plugins are fully loaded and their
+`register_plugin()` functions are called.
+
+| signals.site_finished
+| Site
+| Called once site is fully generated and Stag is about to quit.
+
+| signals.readers_init
+| Site
+| Called before files visitation.
+
+| signals.readers_finished
+| Site
+| Called after files visitation. Usually at this point it is expected that
+all "reader" plugins are done, i.e. that they have created `input` and
+`metadata` for supported filetypes.
+
+| signals.processors_init
+| Site
+| A trigger for "processors" (plugins which generate pages' `output`)
+
+| signals.processors_finished
+| Site
+| Emitted immediately after `processors_init`, i.e. when all "processors"
+finished their jobs.
+
+| signals.rendering_init
+| Site
+| Emitted before rendering the site (i.e. copying static files and rendering
+templates).
+
+| signals.rendering_finished
+| Site
+| Emitted once after rendering finishes.
+
+| signals.jinja_environment_prepared
+| jinja2.Environment, Site
+| Emitted once Jinja Environment has been created. Environment passed as the
+argument will be used for rendering templates. User plugins might modify it,
+e.g. by adding custom filters or functions. For user convenience, `Site` is
+passed as well.
+|===
+
+.Site signals
+[cols="1m,1m,2"]
+|===
+| Signal | Emit Parameters | Description
+
+| site.page_added
+| Page
+| Emitted after `site` stores a new page (e.g. after `site.make_page()` or
+`site.get_or_make_page()` calls).
+|===
+
+.Page signals
+[cols="1m,1m,2"]
+|===
+| Signal | Emit Parameters | Description
+
+| page.metadata_created
+| Page, Metadata
+| Emitted when a new Metadata is created for this page.
+
+| page.metadata_removed
+| Page, Metadata
+| Emitted when Metadata is removed for this page.
+
+| page.source_created
+| Page, Source
+| Emitted when a new Source is created for this page.
+
+| page.source_removed
+| Page, Source
+| Emitted when Source is removed for this page.
+
+| page.input_created
+| Page, Input
+| Emitted when a new Input is created for this page.
+
+| page.input_removed
+| Page, Input
+| Emitted when Input is removed for this page.
+
+| page.output_created
+| Page, Output
+| Emitted when a new Output is created for this page.
+
+| page.output_removed
+| Page, Output
+| Emitted when Output is removed for this page.
+
+| page.taxonomy_created
+| Page, Taxonomy
+| Emitted when a new Taxonomy is created for this page.
+
+| page.taxonomy_removed
+| Page, Taxonomy
+| Emitted when Taxonomy is removed for this page.
+
+| page.term_created
+| Page, Term
+| Emitted when a new Term is created for this page.
+
+| page.term_removed
+| Page, Term
+| Emitted when Term is removed for this page.
+|===
+
+==== Registering new signals
+
+You can also create new signals and add them to the global scope so they can
+be used by the other plugins. To avoid problems with the order of plugins
+loading, you should access them by name with
+`site.signals.register_signals(name)`. This method, when called
+consecutively, will always return a single instance of the signal. In fact,
+it is used by Stag to create built-in global signals.
+
+Consider this example:
+
+.Emitting plugin: emitter.py
+[source]
+----
+def emitting_plugin_finished(site):
+    pages_no = 123
+    answer_to_everything = 42
+    site.signals.mysignal.emit(pages_no, answer_to_everything)
+
+
+def register_plugin(site):
+    site.signals.register_signal("mysignal")
+    site.signals.processors_finished.connect(emitting_plugin_finished)
+----
+
+.Subscriber plugin: subscriber.py
+[source]
+----
+def print_answer(pages_no, answer):
+    assert answer == 42, "Wait, what?"
+    for i in range(pages_no):
+        print(f"{i}: the answer to life, universe and everything is {answer}.")
+
+
+def register_plugin(site):
+    site.signals.register_signal("mysignal").connect(print_answer)
+----
+
+NOTE: Remember that custom signals won't be called by Stag at any point, so
+you have to subscribe to any of the predefined signals first and emit your
+custom signals from the plugin code.
+
+=== Example: Handling new file type
+
+Suppose that we'd like to use a custom file types and generate our site from
+it. We have to keep in mind about the following things:
+
+. URL scheme of the files
+. reading input and metadata
+. processing input and metadata to the output
+
+We can do all of these things in a single plugin:
+
+[source]
+----
+from stag.ecs import Content, Metadata
+
+
+def is_myft(page):
+    return page.source and page.source.ext == "myft"
+
+
+def is_parsed_myft(page):
+    return page.input and page.input.type == "myft"
+
+
+def deduce_url(path):
+    if path.filebase == "index":
+        return path.reldirname
+    return os.path.join(path.reldirname, path.filebase)
+
+
+def read(page):
+    if not is_myft(page):
+        return
+    if page.input:  # e.g. from cache
+        return
+
+    parsed_content = []
+    with open(page.source.path) as file_:
+        # do reading of file here, for example like this:
+        for line in fd:
+            parsed_content.append(line.strip())
+
+    page.metadata = Metadata(title="mypage", date="2021-09-10")
+    page.input = Content("myft", "\n".join(parsed_content))
+
+
+def generate(site):
+    for page in site.pages:
+        if not is_parsed_myft(page):
+            continue
+        if page.output:  # e.g. from cache
+            return
+
+        # convert() not covered here, because it most likely contains a
+        # parser of your custom format
+        html = convert(page.input.content)
+        page.output = Content("html", html)
+
+
+def register_plugin(site):
+    site.signals.page_added.connect(read)
+    signals.processors_init.connect(generate)
+    site.readers.register_reader(deduce_url, lambda p: p.ext == "myft")
+----
+
+== Using Cache
+
+Normally Stag caches generation results for ordinary pages and plugins can
+(probably should) use this information to skip parts of their work and speed
+up site generation.
+
+Only individual pages are cached. Plugins are thus advised to inspect page
+components and see if they are set. For example, if plugin is a reader, then
+it should check whether `input` entity is empty. If it isn't, then it should
+skip it's work.
+
+NOTE: This behaviour has other advantage. If there are many plugins of
+similar type (e.g. many readers), then well-behaved plugins won't overwrite
+work of their colleagues.
+
+.Example of skipping a reader
+[source]
+----
+def read(page):
+    if page.input:
+        return
+    ...
+
+
+def register_plugin(site):
+    site.signals.page_added.connect(read)
+----
+
+Plugins also have a possibility to explicitly check whether the page is read
+from cache by inspecting a special `cached` entity. This is useful for
+example for "mutator" kind of plugins: the ones which change already set
+entity. Built-in macros plugin work this way.
+
+.Example of sipping work for "mutator" plugin
+[source]
+----
+def mutate(site):
+    for page in site.pages:
+        if page.cached:
+            continue
+        ...
+
+
+def register_plugin(site):
+    site.signals.readers_finished.connect(mutate)
+----
+
+NOTE: Plugins don't have to worry about `--no-cache` flag.

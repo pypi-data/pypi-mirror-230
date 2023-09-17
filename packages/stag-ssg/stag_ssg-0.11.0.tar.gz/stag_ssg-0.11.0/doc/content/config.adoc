@@ -1,0 +1,178 @@
+= Configuration
+:author: Michał Góral
+
+{% from "stag.html" import ref %}
+
+_config.toml_ is a a file which contains a configuration of Stag. It is
+written in https://toml.io/en[TOML] file format.
+
+All configured options are available in link:{{ ref("templates") }}[templates]
+and link:{{ ref("macros") }}[macros] through `{{ "{{" }} site.config }}` variable.
+
+== Example Configuration
+
+[source,toml]
+----
+title = "My Site"
+url = "https://example.com"
+language = "en"
+
+[user]
+latest_pages = 6
+important_pages = 6
+
+[template]
+name = "themes/blog"
+
+[plugins.macros]
+path = "macros"
+
+[plugins.markdown]
+extensions = ["footnotes", "fenced_code", "smarty", "codehilite", "toc", "md_in_html", "tables"]
+
+[[taxonomies]]
+key = "tags"
+singular = "tag"
+plural = "tags"
+
+[[taxonomies]]
+key = "topic"
+singular = "topic"
+plural = "topics"
+possible_terms = ["Thoughts", "Personal", "News"]
+----
+
+== Available options
+
+.Global Section
+[cols="1m,1,1e,2"]
+|===
+| Option | Type | Default | Description
+
+| title
+| string
+| MySite
+| Page title
+
+| url
+| string
+| https://example.com
+| Base URL for page. It is used to construct relative URLs to pages (e.g. by
+  `ref` macro).
+
+| language
+| string
+| en
+| Language code for your page
+
+| timezone
+| string
+| +0000
+| Timezone which is used by some functions to generate localized times.
+
+| plugins_path
+| string
+| plugins
+| Directory where your custom plugins are stored
+
+| plugins_disabled
+| list of strings
+|
+| List of disabled plugins
+
+| content
+| string
+| content
+| Directory where you store sources of your pages
+
+| output
+| string
+| _output
+| Directory stag will generate the site
+
+| cache
+| string
+| .cache
+| Directory where stag will cache some generation results to speed up
+  subsequent builds
+
+| no_cache
+| bool
+| False
+| Disable caching
+|===
+
+.Table: [template]
+[cols="1m,1,1e,2"]
+|===
+| Option | Type | Default | Description
+
+| name
+| string
+| themes/default
+| Directory to currently used theme
+
+| templates
+| table
+a|
+[source, toml]
+----
+[template.templates]
+page = "page"
+list = "list"
+taxonomy = "taxonomy
+----
+| Table which contains a mapping of page types to template names. You can
+  also change page type individually for each page (see
+  link:{{ ref("templates#_template_name_deduction") }}[Template Name Deduction]).
+|===
+
+.Table: [user]
+[cols="1m,1,1e,2"]
+|===
+| Option | Type | Default | Description
+
+| any name
+| string
+| 
+| `[user]` table is a special table where you can place any additional
+  variables useful for your site.
+|===
+
+.List of Tables: \[[taxonomies]]
+[cols="1m,1,1e,2"]
+|===
+| Option | Type | Default | Description
+
+| key
+| string
+|
+| Name of taxonomy
+
+| singular
+| string
+|
+| Singular form of taxonomy name
+
+| plural
+| string
+|
+| Plural form of taxonomy name
+
+| possible_terms
+| list of strings
+|
+| When specified, this limits possible terms for used for this taxonomy (when
+  a term from outside of this list is used, Stag will produce an error)
+
+|===
+
+NOTE: `\[[taxonomies]]` is a list of tables (one table per taxonomy).
+
+=== Plugins
+
+`[plugins]` table contains subtables with options for specific plugins. Each
+plugin defines its own set of options (if any). Please see
+link:{{ ref("plugin-list") }}[Plugin List] for a documentation of options
+available for built-in plugins. If you're using a third-party plugin, please
+refer to its documentation.

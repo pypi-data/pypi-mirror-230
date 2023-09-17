@@ -1,0 +1,107 @@
+= Built-in Macros Reference
+:author: Michał Góral
+:icons: font
+
+Stag ships with several built-in macros. They are available in _stag.html_
+temlpate, which must be imported as all the other ordinary macro templates.
+
+{% raw %}
+[source]
+----
+{% from "stag.html" import ref %}
+
+This is a link to other [page]({{ ref("my-page") }}).
+----
+{% endraw %}
+
+NOTE: _stag.html_ is always loaded as the last template, so in case of name
+      clash, it will be overriden (first found name wins).
+
+== Using macros in theme templates
+
+You can use macros in templates as well, assuming that you can provide all of
+their required arguments. All pages have available `site` and `page`
+variables.
+
+Some built-in macros (like `ref`) expect these to be available _globally_. In
+these cases you can import stag.html with context:
+
+{% raw %}
+[source]
+----
+{% from "stag.html" import ref with context %}
+----
+{% endraw %}
+
+== Available macros
+
+=== figure
+
+[source]
+----
+macro figure(src, class=None, alt="")
+----
+
+Returns a `<figure>` for an image given in a *src* parameter. Produced figure
+will have additional *class* and an `<img>` inside the produced `<figure>`
+will have additional alt-text set from the *alt* parameter.
+
+{% raw %}
+.Example
+[source]
+----
+{{ figure(image.jpg, class="center", alt="image of the cat"}}
+
+<figure class="center">
+    <img src="image.jpg" alt="image of the cat" />
+</figure>
+----
+{% endraw %}
+
+=== ref
+
+[source]
+----
+macro ref(slug, abs=False)
+----
+
+Returns an URL (permalink) to the page whose URL matches the *slug*. `ref`
+macro will look up for the pages whose URL ends with a slug, so it's not
+necessary to include the big parts of the paths.
+
+If two files match the slug, `ref` will raise an exception and refuse to
+produce any URL. In that case it is advisable to give a bigger part of URL.
+
+By default `ref` produces relative URLs in form of _/part/of/url_. if *abs*
+is set to True, `ref` will produce an absolute URL.
+
+`ref` accepts slugs with identifiers (_foo#id_) which can be found on a page. In that
+case, it will add them after finding the appropriate page.
+
+{% raw %}
+.Examples
+[source]
+----
+{{ ref("foo") }} → /post/foo
+{{ ref("foo#my-header") }} → /post/foo#my-header
+{{ ref("foo", abs=True) }} → https://example.com/post/foo#my-header
+----
+{% endraw %}
+
+=== absref
+[source]
+----
+macro absref(slug)
+----
+
+Same as `ref(slug, abs=True)`
+
+=== absurl
+
+[source]
+----
+macro absurl(slug)
+----
+
+Returns an absolute URL to the given resource, without validation of its
+existence. `slug` can point to any resource managed or not managed by stag.

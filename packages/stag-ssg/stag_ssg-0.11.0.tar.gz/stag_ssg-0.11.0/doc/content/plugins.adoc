@@ -1,0 +1,43 @@
+= Plugins
+:author: Michał Góral
+
+{% from "stag.html" import ref %}
+
+Almost every part of stag is a plugin. Plugins are invoked on certain events
+which occur during site generation (e.g. when stag finds a new file, when it
+starts processing input files etc.)
+
+You can easily add custom plugins. Stag reads their path from the
+`pluginspath` setting in config.toml. By default it is _plugins_ directory
+relative to the root directory of the project. You can read more about it in
+link:{{ ref("writing-plugins") }}[Plugins Programmer Manual].
+
+== Disabling Plugins
+
+To disable a certain plugin, put int in `plugins_disabled` list in
+_config.toml_. Plugins are named after their file names, without an
+extension. For example:
+
+.config.toml
+[source]
+----
+plugins_disabled = ["md", "macros"]
+----
+
+== Additional Dependencies
+
+If your plugin needs some additional dependencies, they must be installed
+separately. If Stag is installed in virtualenv, they should be installed to
+that virtualenv, for example:
+
+[source]
+----
+$ path/to/venv/pip3 install <dependency>
+----
+
+or with a tool like pipx:
+
+[source]
+----
+$ pipx inject stag-ssg <dependency>
+----

@@ -1,0 +1,154 @@
+= Template Functions
+:author: Michał Góral
+:filters: https://jinja.palletsprojects.com/en/3.0.x/templates/#list-of-builtin-filters
+:tests: https://jinja.palletsprojects.com/en/3.0.x/templates/#list-of-builtin-tests
+:globals: https://jinja.palletsprojects.com/en/3.0.x/templates/#list-of-global-functions
+:strftime-codes: https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes
+:rfc-822: https://www.rfc-editor.org/rfc/rfc822.html#section-5
+
+Below functions are additional functions available in Jinja templates (but
+not macros), on top of regular Jinja built-in {filters}[filters],
+{tests}[tests], and {globals}[global functions].
+
+== Global Functions
+
+[#sorted_pages]
+sorted_pages(pages, key=None, reverse=False)::
+Returns a sorted copy of list of _pages_. By default pages are sorted
+lexicographically by their paths, unless _reverse_ is set to True. Sorting
+criterion can be changed by passing a "date" or "lastmod" _key_, which then
+sorts pages by their `data` or `lastmod` metadata key.
++
+{% raw %}
+.Example
+[source, jinja]
+----
+<ul>
+{% for page in sorted_pages(site.pages, key="date") %}
+  <li><a href="{{ page.relurl }}">{{ page.md.title }}</a></li>
+{% endfor %}
+</ul>
+----
+{% endraw %}
+
+[#slugify]
+slugify(text, ...)::
+Create slugs from unicode strings.
+https://en.wikipedia.org/wiki/Clean_URL#Slug[Slugs] are URL-friendly texts
+typically composed from ASCII-only characters and without whitespaces.
++
+Stag uses https://github.com/un33k/python-slugify[python-slugify] package.
+See its documentation for description of all parameters which `slugify()`
+accepts.
++
+`slugify()` might be also used as a filter.
++
+{% raw %}
+.Example
+[source, jinja]
+----
+<a href="/tags/{{ tag | lower | slugify  }}">{{ tag }}</a>
+----
+{% endraw %}
+
+[#raise]
+raise(msg)::
+Raises an exception from inside a template, with a given message, which will
+terminate page rendering.
++
+{% raw %}
+.Example
+[source, jinja]
+----
+{% if not found  %}
+  {{ raise("cannot find a page") }}
+{% endif %}
+----
+{% endraw %}
+
+
+== Filters
+
+slugify(text, ...)::
+See xref:slugify[slugify()] in Global Functions.
+
+strftime(datetime, format)::
+Returns a string representing the _datetime_ formatted according to the
+_format_ specification. See
+{strftime-codes}[strftime format codes] for description of codes possible to use in _format_.
++
+{% raw %}
+.Example
+[source, jinja]
+----
+{{ page.md.date | strftime("%B %d, %Y") }}
+----
+{% endraw %}
+
+rfc822format(config)::
+Returns a datetime string in a format defined by {rfc-822}[RFC 822]. It is a
+format used e.g. by RSS feeds.
++
+{% raw %}
+.Example
+[source, jinja]
+----
+<lastBuildDate>{{ page.md.date | rfc822format }}</lastBuildDate>
+
+<pubDate>{{ item.md.lastmod | rfc822format }}</pubDate>
+----
+{% endraw %}
+
+pagetype(pages, *filetypes)::
+Returns pages which desired output type matches any of given filetypes.
++
+{% raw %}
+.Example
+[source, jinja]
+----
+{% for page in (site.pages | pagetype("html", "json") %}
+  {{ page.url }}
+{% endfor %}
+----
+{% endraw %}
+
+mandatory(item, msg)::
+Mandates existence of optional _item_ and returns it. If _item_ isn't
+initialized, `mandatory` will raise an exception with provided message, which
+aborts page rendering.
++
+{% raw %}
+.Example
+[source, jinja]
+----
+{% set page = site.find(url) | mandatory("missing page for url: {}".format(url)) %}
+----
+{% endraw %}
+
+sortby(iterable, *attrs, reverse=False, default=None)::
+Sort elements by a attributes. Each attribute is a string which denotes how a
+a value in each item should be accessed. They can be nested, in which case
+each access level must be separated with a dot, for example:
+`parent.child.grandchild`. If attribute is missing in compared element, then
+the _default_ is used instead.
++
+Items are lexicographically compared against attributes in order in which
+they are provided, so for each item first attributes are compared first, then
+second ones, third ones and so on.
++
+When _reversed_ is True, items are sorted from the biggest element to the
+smallest one.
++
+Sort is stable, which means that relative order of elements which are equal
+is preserved.
++
+{% raw %}
+.Example
+[source, jinja]
+----
+{% for page in (site.ordinary_pages |
+    sortby("md.tag", "md.category", "url", default="", reverse=True))
+  {{ page.url }}
+{% endfor %}
+----
+{% endraw %}

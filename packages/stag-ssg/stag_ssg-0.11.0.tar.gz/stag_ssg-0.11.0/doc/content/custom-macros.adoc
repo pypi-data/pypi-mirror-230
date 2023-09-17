@@ -1,0 +1,42 @@
+= Custom Macros
+:author: Michał Góral
+
+{% from "stag.html" import ref %}
+
+You can add new macros through the link:{{ ref("plugin-list#_macros") }}[macros plugin].
+To do so, you must provide `plugins.macros.path` in your config.toml. It
+should point to a directory where you'll store files with your macros.
+
+{% raw %}
+.config.toml
+[source,toml]
+----
+[plugins.macros]
+path = "macros"
+----
+{% endraw %}
+
+Now create _macros_ directory and put there some file, let's say
+_mymacros.html_. You can define a new macro in this file like this:
+
+{% raw %}
+.macros/mymacros.html
+[source,jinja]
+----
+{% macro bold(text) -%}
+<strong>{{ text }}</strong>
+{%- endmacro %}
+----
+{% endraw %}
+
+From now on you can enable `bold` macro in your files by importing it,
+similar how you'd do it with built-in stag.html:
+
+
+{% raw %}
+[source]
+----
+{% from "mymacros.html" import bold %}
+{% from "mymacros.html" import bold with context %}
+----
+{% endraw %}

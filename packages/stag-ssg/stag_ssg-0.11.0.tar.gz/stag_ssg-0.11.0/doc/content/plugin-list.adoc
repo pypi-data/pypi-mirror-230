@@ -1,0 +1,163 @@
+= Plugin List
+:author: Michał Góral
+
+{% from "stag.html" import ref %}
+
+== markdown (md)
+
+Markdown plugin reads Markdown files, which can have optional front matter
+with metadata, which is also saved by the reader. Front matter is expected to
+be in TOML format, delimited with `+++` (3 plus signs) from the top and
+bottom.
+
+.Example Markdown file with front matter
+[source]
+----
++++
+title = "My First Stag Page!"
+date = 2021-09-02
+lastmod = 2021-10-01
+tags = ["site", "something else"]
++++
+This was a **triumph**!
+----
+
+Markdown generator takes input provided by the Markdown reader and generates
+HTML data from it. It uses https://python-markdown.github.io[Python Markdown] package.
+Its extensions are enabled through `plugins.markdown.extensions` list.
+
+Configuration is stored inside `plugins.markdown` table in config.toml.
+
+.Example markdown configuration
+[source]
+----
+[plugins.markdown]
+extensions = ["sane_list", "smarty", "footnotes"]
+----
+
+== macros
+
+Macros provides input postprocessing. Thanks to it you can use Jinja macros
+inside input files (e.g. in Markdown). It enables a system which resembles
+"shortcodes" known from other static site generators.
+
+To enable macros you must configure path to the directory which contains
+Jinja templates with macros definitions. Macros use `[plugins.macros]` table
+in config.toml to do that.
+
+See also link:{{ ref("custom-macros") }}[Custom Macros] which explains in
+detail how to add new macros
+
+.Example macros configuration
+[source]
+----
+[plugins.macros]
+path = "directory/with/macros"
+----
+
+{% raw %}
+.Example of file which use a macro
+[source]
+----
++++
+title = "My Page"
+++++
+
+{% from "macros.html" import mymacro %}
+
+Ordinary content {{ mymacro(foo="bar") }} rest of ordinary content.
+----
+{% endraw %}
+
+== taxonomies
+
+Taxonomies are automatically generated collections of pages (e.g. tags or
+categories). They must be enabled in config.toml and are generated from
+metadata of content files.
+
+.Enabling 2 taxonomies in config.toml
+[source]
+----
+[[taxonomies]]
+key = "tags"
+singular = "tag"
+plural = "tags"
+
+[[taxonomies]]
+key = "category"
+plural = "categories"
+----
+
+Once defined, stag scans metadata of files and groups files which have the same
+metadata:
+
+.Setting terms of taxonomy on a page
+[source]
+----
+tags = ["foo", "bar"]
+category = "my category"
+----
+
+Each taxonomy generates a taxonomy landing page and a list of term pages.
+(think of _tags/foo_, _tags/bar_ etc.):
+
+Taxonomy Landing Page:::
+  it contains data regarding taxonomy itself and a list of term pages, which
+  can be accessed from `page.taxonomy.terms`.
+Term Pages:::
+  each of them contains a list of ordinary pages, which belong to the term
+  (e.g. which have a specific tag); they can be accessed from
+  `page.term.pages`. Additionaly they have `metadata['taxonomy']` set with a
+  name of parent taxonomy.
+
+=== Rendering taxonomies
+
+Taxonomies are rendered like the ordinary pages (see
+xref:_template_name_deduction[Template name deduction], but they use
+different default templates. Landing taxonomy pages use *taxonomy* template
+(e.g. _taxonomy.html_) and term pages use *term* template
+(e.g. _term.html_). This can be customised in two ways:
+
+. Default templates for all taxonomy/term pages can be changed in
+  `[template.templates]` section.
++
+.Setting different default templates for taxonomy page and terms pages
+[source]
+----
+[template.templates]
+taxonomy = "mytaxonomy"
+list = "mylist"
+----
+. If stag finds a file which would result with the same URL as taxonomy or
+  term page, it incorporates it instead of throwing a usual error:
+.. Metadata of the file is preserved, but missing entries necessary for
+   taxonomies are created: this can be used to pass custom metadata to Jinja
+   and template. For example `type` can be explicitly set, which will result
+   in choosing a different template.
+.. File content is preserved.
+.. page lists and taxonomy data is added to the `page` object and overrides
+   any previous entries.
++
+====
+For example, to add a metadata to the "tags" taxomony, create a file
+_tags.md_ or _tags/index.md_ inside your content, with the following content:
+
+.Page for taxonomy landing page (tags.md)
+[source]
+----
+++++
+title = "List of tags"
+mymetadata = "My Metadata"
+++++
+----
+
+.Page for a single tag (tags/mytag.md)
+[source]
+----
+++++
+title = "Special case of mytag"
+mytagmetadata = "special metadata"
+++++
+----
+====
+

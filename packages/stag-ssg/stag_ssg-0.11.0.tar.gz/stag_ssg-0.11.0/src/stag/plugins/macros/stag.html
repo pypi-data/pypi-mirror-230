@@ -1,0 +1,31 @@
+{%- macro ref(slug, abs=False) -%}
+{% set path, sep, fragment = slug.strip("/").partition("#") %}
+{% set ns = namespace(found=false, page=None) %}
+{% set pathpart = "/{}".format(path) %}
+{%- for page in site.pages if page.url.endswith(pathpart) or (page.source and page.source.path.endswith(pathpart)) -%}
+    {%- if ns.found -%}
+        {{- raise("cannot uniquely resolve ref to {} ({} and {})".format(slug, ns.page.relurl, page.relurl)) -}}
+    {%- endif -%}
+
+    {% set ns.found = true %}
+    {% set ns.page = page %}
+{%- endfor -%}
+{%- if not ns.found -%}
+    {{- raise("ref to {} not found".format(slug)) -}}
+{%- endif -%}
+{% if abs %}{{ ns.page.url }}{% else %}{{ ns.page.relurl }}{% endif %}{{ sep }}{{ fragment }}
+{%- endmacro -%}
+
+{%- macro absref(slug) -%}
+{{- ref(slug, abs=True) -}}
+{%- endmacro -%}
+
+{%- macro figure(src, class=None, alt="") -%}
+<figure{%- if class %} class="{{ class }}"{% endif %}>
+    <img src="{{ src }}"{%- if alt %} alt="{{ alt }}"{% endif %} />
+</figure>
+{%- endmacro -%}
+
+{%- macro absurl(path) -%}
+{{- site.config.url | trim("./ ") -}}/{{ path | trim("./ ") }}
+{%- endmacro -%}

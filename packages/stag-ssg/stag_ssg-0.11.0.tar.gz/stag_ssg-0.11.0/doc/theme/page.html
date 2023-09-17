@@ -1,0 +1,30 @@
+{% from "stag.html" import absurl with context %}
+
+<!DOCTYPE html>
+<html lang="{{ site.config.language }}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>{%block metatitle %}{%- if page.metadata.title and not page.metadata.notitle -%}{{ page.metadata.title }} &middot; {% endif %}{{ site.config.title }}{% endblock %}</title>
+
+<link rel="stylesheet" href="{{ absurl("css/theme.css") }}">
+<link rel="stylesheet" href="{{ absurl("css/layout.css") }}">
+<link rel="stylesheet" href="{{ absurl("css/style.css") }}">
+
+</head>
+
+<body>
+<div class="wrapper">
+  <article class="content">
+      <h1>{{ page.md.title }}</h1>
+      {{ content }}
+  </article>
+
+  <nav class="sidebar">
+      {% include "menu.html" %}
+  </nav>
+
+</div>
+</body>
+</html>

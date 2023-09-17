@@ -1,0 +1,21 @@
+{% from "stag.html" import ref, absurl with context %}
+
+<h3>Table of Contents</h3>
+<ul>
+    <li><a href="{{ absurl("") }}">About</a></li>
+
+    <li class="part-title">User Manual</li>
+    <li><a href="{{ ref("quickstart") }}">Quick Start</a></li>
+    <li><a href="{{ ref("config") }}">Configuration</a></li>
+    <li><a href="{{ ref("plugins") }}">Using Plugins</a></li>
+    <li><a href="{{ ref("templates") }}">Templates</a></li>
+    <li><a href="{{ ref("template-functions") }}">Template Functions</a></li>
+    <li><a href="{{ ref("plugin-list") }}">Plugin List</a></li>
+    <li><a href="{{ ref("macros") }}">Built-in macros Reference</a></li>
+
+    <li class="part-title">Programmer Manual</li>
+    <li><a href="{{ ref("architecture") }}">Stag Architecture</a></li>
+    <li><a href="{{ ref("writing-plugins") }}">Plugins Programmer Manual</a></li>
+    <li><a href="{{ ref("custom-macros") }}">Custom Macros</a></li>
+    <li><a href="{{ ref("custom-template-functions") }}">Custom Template Functions</a></li>
+</ul>

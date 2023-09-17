@@ -1,0 +1,51 @@
+= Custom Template Functions
+:author: Michał Góral
+
+{% from "stag.html" import ref %}
+
+It's possible to add your own tempate functions which can be used in Jinja
+templates. You can do it through a custom plugin which registers to
+`jinja_environment_prepared` link:{{ ref("writing-plugins#_signals") }}[signal].
+
+Any plugin may inject any function to Jinja's environment, but for our
+purposes we'll create a _jinja_injector_ plugin which does only that. To
+create it, we should create a _plugins_ directory. It is the default
+directory name for the plugins, but it can be changed by _plugins_path_
+option in config.toml. Inside this directory we should create a subdirectory
+for our plugin with `pass:[__init__.py]` file inside, which will mark it as a
+Python module which Stag will automatically discover and load.
+
+File structure should look like this:
+
+----
+config.toml
+plugins/
+  jinja_injector/
+    __init__.py
+----
+
+`pass:[__init__.py]` should have the following contents:
+
+
+[source,python]
+----
+def my_filter(values):
+    ...
+
+
+def my_global_function():
+    ...
+
+
+def update_env(env, site):
+    env.filters["my_filter"] = my_filter
+    env.globals["my_global_function"] = my_global_function
+
+
+def register_plugin(site):
+    site.signals.jinja_environment_prepared.connect(update_env)
+----
+
+Here, we have created a filter and a global function. They are now available
+by the names passed to `env.filters` and `env.globals` and they are
+defined in `my_filter` and `my_global_function` functions above.

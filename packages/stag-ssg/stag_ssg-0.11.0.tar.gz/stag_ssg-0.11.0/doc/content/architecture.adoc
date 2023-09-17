@@ -1,0 +1,147 @@
+= Stag Architecture
+:author: Michał Góral
+:icons: font
+
+{% from "stag.html" import ref %}
+
+This document describes internal architecture o Stag. It might be useful
+during Stag development or for plugins authors to better understand the data
+model of Stag.
+
+== Site
+
+The central object to Stag is `Site`, which holds all processed data:
+
+* pages - mapping of pages known by Stag
+* signals - a list of global signals emitted by Site. See
+  link:{{ ref("writing-plugins#_list_of_signals") }}[Plugins Programmer Manual]
+* list of registered readers
+
+== Pages
+
+`Page` is the object which encodes input and output data for generating
+files. It is made of smaller _entities_, which encode a specific data format
+used by plugins.
+
+.Page internal structure (pseudocode)
+[source]
+----
+Page:
+  base: string
+  path: string
+
+  source: Optional[Path]
+  metadata: Optional[Metadata]
+  input: Optional[Content]
+  output: Optional[Content]
+  toc: Optional[Content]
+  taxonomy: Optional[Taxonomy]
+  term: Optional[Term]
+  cached: Optional[Cache]
+----
+
+
+=== Identifying pages
+
+Each page must have a single identifier, which is unique across all the
+pages: _path_, which Stag also uses to decide the path of the output file.
+From _base_ (which is a configured base URL) and _path_ Stag generates
+absolute and relative URLs for any page.
+
+NOTE: Relative URLs are relative to the _base_. It means that when _base_
+points to a directory (e.g. vhost deployment), it is relative _to this
+directory_.
+
+=== Entities
+
+Each page in `site.pages` can have a different type. For example, some are
+typical pages created by user, others aure auto-generated taxonomies and so
+on. Stag detects type of each page by inspecting so called _entities_ inside
+each `Page` object. Each entity is optional, thus their enabled set decides
+the page type and how Stag behaves for it.
+
+NOTE: _Entities_ are called after a well known game development pattern
+called _entity-component-system_.
+
+The following entities can be attached to the page
+
+Source::
+Entity specific for physical files which encodes its path and a root
+directory. All files inside the _content_ directory will have their source
+set.
++
+This entity is typically used by readers to create _Metadata_ and _Input_
+entities.
++
+NOTE: When page has _source_ entity, but doesn't have _input_ entity, it is
+considered a static file, which will be simply copied according to its URL.
+
+Metadata::
+When file parsed by the reader has attached metadata, it is stored in this
+entity as a key-value mapping. Typically metadata, together with _input_ is
+heavily used during later stages when generating the _output_ entity.
++
+Keys stored inside metadata can be accessed as ordinary Python dictionaries
+(`page.metadata["key"]`) or via attributes (`page.metadata.key`).
++
+As a shortcut and for users convenience, metadata can be accessed via
+`page.md`.
++
+Metadata is content-aware. It automatically performs the following
+normalizations:
++
+* `metadata.title` is always set (it is empty if page's metadata doesn't have
+  it)
+* the following fields are considered as dates: _date_, _lastmod_.
+* dates are parsed into Python's `datetime` objects
+* floating-point _timestamp_ and _lastmod_timestamp_ are automatically
+  calculated and set from _date_ and _lastmod_
+* presence of _date, lastmod, timestamp and lastmod_timestamp_ is assured if
+  at least _date_ or _lastmod_ exists in input metadata. In one of them is
+  missing, it is inferred from the other one.
++
+NOTE: Page must have metadata to be considered _outputable_. Outputable pages
+are passed to the templating engine and are subsequently rendered.
+
+Input::
+Contents of the input file, typically returned by the reader. Together with
+_metadata_ it forms a complete information about the source page which can
+transformed into the _output_.
+
+Output::
+Contents of the output file, usually generated from the _input_ and
+_metadata_.
++
+This isn't the same as the output file itself, as this content is typically
+passed to the template engine (Jinja) which creates the source code of the
+output file which will be written to the filesystem.
++
+NOTE: Page must have output to be considered _outputable_. Outputable pages
+are passed to the templating engine and are subsequently rendered.
+
+TOC::
+Source code of the output Table of Contents. Plugins might choose to generate
+it separately to the _output_ because embedding it in the output file might
+be easier and more flexible this way (for example, it allows detecting it in
+templates and wrapping in specific, plugin-agnostic code).
+
+Taxonomy::
+Automatically generated pages which group _term pages_ for a given taxonomy,
+along with some additional metadata. Term pages are also auto-generated and
+they group specific "ordinary" pages.
++
+For example, a tags taxonomy page keeps a list of all tags used in ordinary
+pages, while term pages keep a list of pages which use particular tag.
++
+Taxonomy and term entities are exclusive.
+
+Term::
+Automatically generated page which holds a list of pages which use a
+particular taxonomy term (e.g. a particular tag).
++
+Taxonomy and term entities are exclusive.
+
+Cache::
+Entity set for pages which are saved into the cache and then loaded from it.
+Newly created pages which weren't cached won't have this entity set. Some
+plugins might need this information explicitly.

@@ -1,0 +1,70 @@
+[build-system]
+requires = ["poetry-core>=1.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "stag-ssg"
+version = "0.11.0"
+description = "Deadly simple static site generator"
+authors = ["Michal Goral <dev@goral.net.pl>"]
+license = "GPL-3.0-only"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Natural Language :: English",
+    "Operating System :: POSIX",
+    "Topic :: Internet :: WWW/HTTP :: Site Management",
+    "Topic :: Utilities",
+]
+readme = "README.md"
+packages = [
+    { include = "stag", from = "src" },
+]
+homepage = "https://git.goral.net.pl/stag.git/about"
+repository = "https://git.goral.net.pl/stag.git"
+documentation = "https://pages.goral.net.pl/stag/"
+
+keywords = ["static site generator"]
+
+include = [
+    { path = "tests", format = "sdist" },
+    { path = "doc", format = "sdist" },
+]
+
+
+[tool.poetry.dependencies]
+python = "^3.8"
+attrs ="^21"
+tomli ="^2.0"
+jinja2 = "^3"
+markdown = "^3"
+python-dateutil = "^2.8.0"
+python-slugify = "^5"
+importlib-metadata = {version = "^4.0", python = "<3.8"}
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^6.2.5"
+pytest-cov = "^3.0.0"
+pytest-xdist = "^2.4.0"
+pytest-sugar = ">=0.9"
+black = "^22"
+
+beautifulsoup4 = "^4"
+pygments = "^2"
+
+[tool.poetry.scripts]
+stag = "stag.stag:main"
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore:.*imp module*:DeprecationWarning"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+]

@@ -1,0 +1,95 @@
+= Quick Start
+:author: Michał Góral
+
+{% from "stag.html" import ref %}
+
+== Overview
+
+Stag generates pages and documents from the set of source files. It's
+primarily used to generate web pages from some kind of lightweight markup
+files (e.g. Markdown, Asciidoc), with the help of a set of templates, but it
+isn't limited to that. For simplicity, however, we'll assume in this Manual
+that Stag is used to generate a website.
+
+Stag is configured with link:{{ ref("config") }}[config.toml] file, which is placed in the root
+directory of your project. Typically, Stag's input resides inside the
+_content_ directory and the output is generated to the __output_ directory.
+
+Stag intends to be simple to use and understand. It removes many _magical_
+parts of other static generators have, being more explicit instead about what
+it does.
+
+== Creating the First Page
+
+Let's start with a simple one-page website, which we'll build upon.
+
+=== Installing Stag
+
+Before we even start, Stag must be installed on the system. Stag is released
+to the https://pypi.org/project/stag-ssg[PyPI], so it's easy to install
+it with pip, or tools like pipx:
+
+[source]
+----
+$ pip install --user stag-ssg
+----
+
+Optionally, you can clone its repository and install it from there:
+
+[source]
+----
+$ git clone "https://git.goral.net.pl/stag.git"
+$ pip install --user ./stag
+----
+
+=== Initializing Stag Page
+
+To quickly generate all the necessary files, run:
+
+[source]
+----
+$ stag init
+----
+
+Stag will ask you some questions, like the title of your page or language in
+which you intend to write.
+
+NOTE: `stag init` can be run non-interactively, by passing all the required
+parameters on the command line.
+
+Your newly initialized Stag project has the following items:
+
+config.toml:: link:{{ ref("config") }}[Configuration file].
+content:: Directory where the sources of your website reside.
+themes/default:: A default theme (templates) for your website.
+
+=== Test run
+
+Once you familiar yourself, it's time to test-run Stag. To do that, enter the
+to your projects root and run `stag build`:
+
+[source]
+----
+$ cd stag
+$ stag build
+----
+
+Once run, Stag creates a new directory, __output_, in which it stores the
+whole generated webpage. To view it, point your web browser to the index.html
+file.
+
+=== HTTP Server
+
+Stag also offers a built-in HTTP server, which serves the content of built
+website. HTTP server runs on a random open local port. It prints the chosen
+port to its output and automatically opens web browser with a correct
+address.
+
+To start it, run `stag serve`. In this mode Stag automatically detects when
+files are modified and regenerates the website as necessary, which makes it
+great for example for writing articles, constantly verifying how they look.
+
+By default `stag serve` overwrites the URL of your site in order to correctly
+render it locally. You can disable this behaviour by running `stag serve
+--preserve-url`, or you can provide your own URL by running `stag serve --url
+<address>`.

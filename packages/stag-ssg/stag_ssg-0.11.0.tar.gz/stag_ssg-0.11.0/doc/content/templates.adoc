@@ -1,0 +1,125 @@
+= Templates
+:author: Michał Góral
+
+{% from "stag.html" import ref %}
+
+Stag uses https://jinja.palletsprojects.com/en/3.0.x/templates/[Jinja Template Engine] to create files from
+the output produced by generators.
+
+It is configured in `[template]` table. Most important setting is _name_,
+which is a path to the directory from which templates will be read. Other
+important sub-table is `[template.templates]`, which contains settings
+for default templates used for certain types of pages.
+
+== Template Name Deduction
+
+To produce a page, Stag needs to know which template should be used from the
+available ones. Typically, types of pages are:
+
+* _page_ for ordinary page;
+* _index_ for start pages;
+* _taxonomy_ for pages which hold a list of taxonomy terms;
+* _list_ for pages which hold a list of other pages.
+
+The following procedure is used to determine pages' type:
+
+. if page sets its `metadata.type` field, it is used as a type,
+. otherwise, if page is a taxonomy page, its type will be set to
+  `template.templates.taxonomy` (by default: _taxonomy_),
+. otherwise, if page is a list page, its type will be set to
+  `template.templates.list` (by default: _list_),
+. otherwise, page's type wyll be set to `template.templates.page` (by
+  default: _page_).
+
+To produce the full name of the template, page type will be then combined
+with the output type (usually an extension typical for the kind of output
+produced by the generator plugin, e.g. _html_ or _xml_).
+
+There might be a situation when deduced template isn't available. In such
+case, Stag provides a very basic built-in template and informs users about
+the situation with appropriate error prints.
+
+.Template deduction with user-defined type
+====
+Suppose the following Markdown page:
+
+[source]
+----
++++
+title = ""
+type = "mypage"
++++
+----
+
+This page will use _mypage.html_ template, because the output of Markdown
+rendering is html file and the type selected by the user for this page is
+"mypage".
+====
+
+.Template deduction without user-defined type
+====
+Consider the following Markdown page:
+
+[source]
+----
++++
+title = ""
++++
+----
+
+Here theme must deduce the name, because there's no one provided by the user.
+It is an ordinary page, so it will be taken from
+`template.templates.page`. If this setting wasn't changed, the template
+which will be rendered from _page.html_.
+====
+
+.Name clash?
+====
+Consider the following Markdown page:
+
+[source]
+----
++++
+title = ""
+type = "taxonomy"
++++
+----
+
+and the following configuration:
+
+[source]
+----
+[template.templates]
+taxonomy = "somethingelse"
+----
+
+The output page will be rendered from _taxonomy.html_, *not* from
+_somethingelse.html_, because the _type_ keyword in metadata directly maps to
+the name of the used template, not to the default value from config.toml.
+====
+
+== Cache
+
+Generating sites with a lot of web pages and a lot of plugins can sometimes
+become slow. To fight this, Stag caches the results of page generation and
+uses them when it detects that source pages haven't changed since last run.
+
+You can disable this behaviour and force full rebuilds by passing
+`--no-cache` option to _build_ and _serve_ commands. You can also make it
+persistent by placing `no_cache = true` in _config.toml_.
+
+The default directory used for cache is a hidden _.cache_ directory placed in
+your site's root. You can change it by changing `cache` parameter in
+_config.toml_, for example:
+
+.config.toml
+[source]
+----
+cache = "~/.cache/mysite"
+----
+
+NOTE: Because almost everything in Stag is a plugin, caching is the most
+efficient if you use plugins which are aware of it. All built-in plugins use
+cached results whenever it's possible. To learn how to make your plugins
+cache-friendly, refer to link:{{ ref("plugins") }}[Plugins Programmer Manual].
+

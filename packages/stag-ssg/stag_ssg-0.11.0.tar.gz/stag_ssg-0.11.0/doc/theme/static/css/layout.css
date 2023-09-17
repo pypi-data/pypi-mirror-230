@@ -1,0 +1,13 @@
+.wrapper {
+    display: flex; 
+    flex-direction: column;
+}
+
+.sidebar { order: 2; flex: 100%; }
+.content { order: 1; flex: 100%; }
+
+@media (min-width: 768px) {
+    .wrapper { flex-direction: row;  gap: 20px; }
+    .sidebar { order: 1; flex: 25%; padding-right: 10px; }
+    .content { order: 2; flex: 75%; }
+}
