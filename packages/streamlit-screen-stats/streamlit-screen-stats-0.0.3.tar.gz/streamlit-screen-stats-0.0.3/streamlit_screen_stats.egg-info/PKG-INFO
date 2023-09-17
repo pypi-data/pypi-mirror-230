@@ -1,0 +1,35 @@
+Metadata-Version: 2.1
+Name: streamlit-screen-stats
+Version: 0.0.3
+Summary: Streamlit component that allows you to get simple facts about the screen to provide custom contextual designs
+Home-page: 
+Author: 
+Author-email: 
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Provides-Extra: devel
+License-File: LICENSE
+
+# streamlit-custom-component
+
+Streamlit component that allows you to do X
+
+## Installation instructions
+
+```sh
+pip install streamlit-custom-component
+```
+
+## Usage instructions
+
+```python
+import streamlit as st
+
+from st_screen_stats import st_screen_data
+
+value = st_screen_data(
+    setTime=1000 # this dictates pause until data is received. Done to prevent constant refreshing of app. Default is 1000
+)
+
+st.write(value)
+```
