@@ -1,0 +1,66 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "asyncakinator"
+description="An async API wrapper for Akinator, written in Python."
+readme = "README.rst"
+requires-python = ">=3.9"
+license = {text = "MIT License"}
+dependencies = [
+    "aiohttp>=3.8.1",
+]
+dynamic = ["version"]
+authors = [
+    {name = "avizum", email = "juliusrt@outlook.com"},
+]
+classifiers = [
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Internet",
+    "Topic :: Utilities"
+]
+
+[project.urls]
+"Home Page" = "https://github.com/avizum/asyncakinator"
+"Documentation" = "https://asyncakinator.readthedocs.io/"
+"Repository" = "https://github.com/avizum/asyncakinato"
+
+[project.optional-dependencies]
+docs = [
+    "sphinx==6.1.1",
+    "sphinxcontrib-trio==1.1.2",
+    "sphinx-copybutton==0.5.1",
+    "sphinx-inline-tabs==2022.1.2b11",
+    "furo==2022.12.7",
+    "setuptools==65.6.3"
+]
+
+[tool.setuptools.dynamic]
+version = {attr = "asyncakinator.__version__"}
+
+[tool.black]
+line-length = 125
+
+[tool.isort]
+profile = "black"
+line_length = 125
+force_alphabetical_sort_within_sections = true
+
+[tool.pyright]
+typeCheckingMode = "basic"
+
+[tool.ruff]
+ignore = ["F401", "F402", "F403", "F405"]
+line-length = 125
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+target-version = "py311"
