@@ -1,0 +1,13 @@
+process:
+  process_type: 'interpolated-script-cmd'
+  script: |
+    echo HELLO WORLD
+    echo Hello World > {outputfile}
+    echo WE ARE DONE!!
+publisher:
+  publisher_type: 'frompar-pub'
+  outputmap:
+    output: outputfile
+environment:
+  environment_type: 'docker-encapsulated'
+  image: busybox
