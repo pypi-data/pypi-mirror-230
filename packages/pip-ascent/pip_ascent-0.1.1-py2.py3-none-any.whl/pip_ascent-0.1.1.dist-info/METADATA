@@ -1,0 +1,110 @@
+Metadata-Version: 2.1
+Name: pip-ascent
+Version: 0.1.1
+Summary: A dynamic tool for upgrading pip requirements that seamlessly synchronizes the version changes within your requirements.txt file.
+Home-page: https://github.com/thisisazeez/pip-ascent
+Author: Abdulazeez Sherif
+Author-email: Abdulazeez Sherif <abdoulazeezx@gmail.com>
+License: The MIT License (MIT)
+Project-URL: Homepage, https://github.com/thisisazeez/pip-ascent
+Project-URL: Bug Tracker, https://github.com/thisisazeez/pip-ascent/issues
+Keywords: cli,pip,pypi,requirements,upgrade
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Utilities
+Classifier: License :: Public Domain
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: docopt
+Requires-Dist: packaging
+Requires-Dist: requests
+Requires-Dist: terminaltables
+Requires-Dist: colorclass
+Provides-Extra: test
+Requires-Dist: coverage ; extra == 'test'
+Requires-Dist: pytest ; extra == 'test'
+Requires-Dist: pytest-cov ; extra == 'test'
+Requires-Dist: pytest-pep8 ; extra == 'test'
+Requires-Dist: mock ; extra == 'test'
+Requires-Dist: responses ; extra == 'test'
+
+<a name="readme-top"></a>
+## pip-ascent
+
+A versatile tool for effortlessly updating pip requirements while keeping your requirements.txt file in sync with the latest package versions. No more tedious manual package-by-package upgrades; this tool handles it for you and updates your requirements.txt file accordingly.
+
+## Purpose
+
+This command-line tool allows you to interactively (or non-interactively) upgrade packages from your requirements file. It also enables you to update the pinned version in your requirements file(s). If no requirements are specified, the tool will attempt to detect the requirements file(s) in the current directory.
+
+## Installation
+
+```bash
+pip install pip-ascent
+```
+
+**Note:** This package installs the following dependencies: `'docopt', 'packaging', 'requests', 'terminaltables', 'colorclass'`. To avoid installing these dependencies in your project, you can install `pip-ascent` in your system rather than your virtual environment. If you install it in your system and need to upgrade it, run `pip install -U pip-ascent`.
+
+## Usage
+
+```bash
+pip-ascent [<requirements_file>] ... [--prerelease] [-pk=<package>...] [--dry-run] [--check-greater-equal] [--skip-virtualenv-check] [--skip-package-installation] [--use-default-index]
+```
+
+**Activate your virtual environment** (important because it will also install the new versions of upgraded packages in the current virtual environment).
+
+**Change directory into your project.** Then:
+
+```bash
+$ pip-ascent
+```
+
+Arguments:
+
+- `requirements_file`: Specifies the requirement file or uses a wildcard path to multiple files.
+- `--prerelease`: Includes prerelease versions for upgrades when querying PyPI repositories.
+- `-pk <package>`: Pre-selects packages for an upgrade, bypassing any prompts. You can also utilize regular expressions to filter packages for upgrading.
+- `--dry-run`: Simulates the upgrade but does not perform the actual upgrade.
+- `--check-greater-equal`: Also checks packages with minimum version pinning (package>=version).
+- `--skip-package-installation`: Upgrades the version in requirement files only; it does not install the new package.
+- `--skip-virtualenv-check`: Disables virtual environment check, permitting the installation of new packages outside the virtual environment.
+- `--use-default-index`: Skips searching for a custom index URL in pip configuration file(s).
+
+Examples:
+
+- `pip-ascent`: Automatically discovers the requirements file.
+
+- `pip-ascent requirements.txt`
+
+- `pip-ascent requirements/dev.txt requirements/production.txt`
+
+- `pip-ascent requirements.txt -pk django -pk celery`
+
+- `pip-ascent requirements.txt -pk all`
+
+- `pip-ascent requirements.txt --dry-run`:  Runs everything as a simulation (does not perform the actual upgrade)
+
+
+## 💖 Like this project?
+
+Leave a ⭐ if you find this project cool.
+
+[Share with the world](https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fthisisazeez%2Fpip-ascent&via=sifusherif&text=Check%20out%20this%20awesome%20pip-ascent%20tool%20for%20easily%20upgrading%20your%20pip%20requirements%20and%20keeping%20your%20requirements.txt%20file%20in%20sync%20with%20the%20latest%20package%20versions%21%20%F0%9F%9A%80) ✨
+
+## 👨‍💻 Author
+
+### Abdulazeez Sherif
+
+[Twitter](https://twitter.com/sifusherif "Abdulazeez Sherif")
+## 🍁 License
+
+**MIT**
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
