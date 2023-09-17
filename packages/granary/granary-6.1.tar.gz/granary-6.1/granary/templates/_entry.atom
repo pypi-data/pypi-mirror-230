@@ -1,0 +1,83 @@
+{% set obj = as1.get_object(activity) or activity %}
+{% set actor = activity.actor or as1.get_object(obj, 'author') %}
+{% include "author.atom" %}
+
+  {% if obj.objectType %}
+    <activity:object-type>http://activitystrea.ms/schema/1.0/{{ obj.objectType }}</activity:object-type>
+  {% endif %}
+
+  {% set url = as1.get_url(activity) or as1.get_url(obj) %}
+  <id>{{ activity.id or obj.id or url }}</id>
+  <title>{{ activity.title|safe }}</title>
+
+  {% if obj.summary %}
+    <summary>{{ obj.summary }}</summary>
+  {% endif %}
+
+  <content type="html"><![CDATA[
+{% if obj.actor %}
+  <div>
+  <p>{{ activity.annotation }}</p>
+  <img src="{{ obj.actor.image.url }}" />
+  <a href="{{ as1.get_url(obj.actor) }}">{{ obj.actor.displayName }}</a>
+  originally shared this post:
+  </div>
+{% endif %}
+
+{% for to in obj.to|selectattr('objectType', 'eq', 'person') %}
+  {% if loop.first %}<p>In reply to{% endif %}
+    <a class="h-card p-name u-url" href="{{ to.url }}">{{ to.displayName }}</a>
+  {%- if loop.last %}:</p>{% else %}, {% endif -%}
+{% endfor %}
+
+{{ obj.rendered_content|safe }}
+{% for child in obj.rendered_children %}
+<blockquote>
+{{ child|safe }}
+</blockquote>
+{% endfor %}
+  ]]></content>
+
+  <link rel="alternate" type="text/html" href="{{ url }}" />
+  <link rel="ostatus:conversation" href="{{ url }}" />
+  {% for tag in obj.tags %}
+    {% set url = as1.get_url(tag) %}
+    {% if url and tag.verb not in ('like', 'react', 'share') %}
+      <link rel="ostatus:attention" href="{{ url }}" />
+      <link rel="mentioned" href="{{ url }}" />
+    {% endif %}
+  {% endfor %}
+  {% if activity.verb %}
+    <activity:verb>http://activitystrea.ms/schema/1.0/{{ activity.verb }}</activity:verb>
+  {% else %}
+    <activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
+  {% endif %}
+  {% if activity.verb in VERBS_WITH_OBJECT and (obj.url or obj.id) %}
+    <activity:object>{{ obj.url or obj.id }}</activity:object>
+  {% endif %}
+  {% set base = activity if (activity.verb in VERBS_WITH_OBJECT or obj.objectType == 'bookmark') else obj %}
+  <published>{{ base.published }}</published>
+  <updated>{{ base.updated or base.published }}</updated>
+  {% for orig in obj.inReplyTo or activity.context.inReplyTo %}
+    <thr:in-reply-to ref="{{ orig.id }}" href="{{ orig.url }}" type="text/html" />
+  {% endfor %}
+  {% set location = obj.location or {} %}
+  {% if location.latitude and location.longitude %}
+    <georss:point>{{ location.latitude|round(9) }} {{ location.longitude|round(9) }}</georss:point>
+  {% endif %}
+  {% if location.displayName %}
+    <georss:featureName>{{ location.displayName }}</georss:featureName>
+  {% endif %}
+
+  <link rel="self" href="{{ url }}" />
+
+  {% for att in obj.attachments %}
+    {% if att.objectType in ('audio', 'video') and att.stream.url %}
+      <link rel="enclosure" href="{{ att.stream.url }}" type="{{ mimetypes.guess_type(att.stream.url)[0] or '' }}" />
+    {% elif att.objectType == 'image' %}
+      {% set url = att.image.url or att.url %}
+      {% if url %}
+        <link rel="enclosure" href="{{ url }}" type="{{ mimetypes.guess_type(url)[0] or '' }}" />
+      {% endif %}
+    {% endif %}
+  {% endfor %}

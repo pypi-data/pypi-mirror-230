@@ -1,0 +1,20 @@
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "type": "Invite",
+  "url": "http://example.com/this/invite",
+  "actor": {
+    "type": "Person",
+    "name": "Mr. Host",
+    "url": "http://example.com/host"
+  },
+  "object": {
+    "type": "Person",
+    "name": "Alice",
+    "url": "http://example.com/alice",
+    "attachment": [{
+      "type": "PropertyValue",
+      "name": "Link",
+      "value": "<a rel=\"me\" href=\"http://example.com/alice\"><span class=\"invisible\">http://</span>example.com/alice<span class=\"invisible\"></span></a>"
+    }]
+  }
+}
