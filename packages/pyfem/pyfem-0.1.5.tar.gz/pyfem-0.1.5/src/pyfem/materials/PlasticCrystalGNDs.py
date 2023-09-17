@@ -1,0 +1,490 @@
+# -*- coding: utf-8 -*-
+"""
+
+"""
+from copy import deepcopy
+
+import numpy as np
+from numpy import (pi, zeros, exp, ndarray, sqrt, sign, dot, array, einsum, eye, ones, maximum, abs, transpose, all,
+                   delete, concatenate)
+from numpy.linalg import solve, inv
+
+from pyfem.fem.Timer import Timer
+from pyfem.fem.constants import DTYPE
+from pyfem.io.Material import Material
+from pyfem.io.Section import Section
+from pyfem.materials.BaseMaterial import BaseMaterial
+from pyfem.materials.crystal_slip_system import generate_mn
+from pyfem.utils.colors import error_style
+from pyfem.utils.mechanics import get_transformation, get_voigt_transformation
+
+
+class PlasticCrystalGNDs(BaseMaterial):
+    r"""
+    晶体塑性材料。
+
+    支持的截面属性：('Volume', 'PlaneStrain')
+
+    :ivar tolerance: 误差容限
+    :vartype tolerance: float
+
+    :ivar total_number_of_slips: 总滑移系数量
+    :vartype total_number_of_slips: int
+
+    :ivar elastic: 弹性参数字典
+    :vartype elastic: dict
+
+    :ivar G: 剪切模量
+    :vartype G: float
+
+    :ivar k_b: 玻尔兹曼常数
+    :vartype k_b: float
+
+    :ivar temperature: 温度
+    :vartype temperature: float
+
+    :ivar C: 弹性矩阵
+    :vartype C: ndarray
+
+    :ivar slip_system_name: 滑移系统名称
+    :vartype slip_system_name: list[str]
+
+    :ivar c_over_a: 晶体坐标系的c/a
+    :vartype c_over_a: list[float]
+
+    :ivar theta: 切线系数法参数
+    :vartype theta: float
+
+    :ivar H: 硬化系数矩阵
+    :vartype H: ndarray
+
+    :ivar tau_sol: 固溶强度
+    :vartype tau_sol: ndarray
+
+    :ivar v_0: 位错滑移速度
+    :vartype v_0: ndarray
+
+    :ivar b_s: 位错滑移柏氏矢量长度
+    :vartype b_s: ndarray
+
+    :ivar Q_s: 位错滑移激活能
+    :vartype Q_s: ndarray
+
+    :ivar p_s: 位错滑移阻力拟合参数
+    :vartype p_s: ndarray
+
+    :ivar q_s: 位错滑移阻力拟合参数
+    :vartype q_s: ndarray
+
+    :ivar d_grain: 平均晶粒尺寸
+    :vartype d_grain: ndarray
+
+    :ivar i_slip: 平均位错间隔拟合参数
+    :vartype i_slip: ndarray
+
+    :ivar c_anni: 位错消除拟合参数
+    :vartype c_anni: ndarray
+
+    :ivar Q_climb: 位错攀移激活能
+    :vartype Q_climb: ndarray
+
+    :ivar D_0: 自扩散系数因子
+    :vartype D_0: ndarray
+
+    :ivar Omega_climb: 位错攀移激活体积
+    :vartype Omega_climb: ndarray
+
+    :ivar u_global: 全局坐标系下的1号矢量
+    :vartype u_global: ndarray
+
+    :ivar v_global: 全局坐标系下的2号矢量
+    :vartype v_global: ndarray
+
+    :ivar w_global: 全局坐标系下的3号矢量
+    :vartype w_global: ndarray
+
+    :ivar u_grain: 晶粒坐标系下的1号矢量
+    :vartype u_grain: ndarray
+
+    :ivar v_grain: 晶粒坐标系下的2号矢量
+    :vartype v_grain: ndarray
+
+    :ivar w_grain: 晶粒坐标系下的3号矢量
+    :vartype w_grain: ndarray
+
+    :ivar T: 坐标变换矩阵
+    :vartype T: ndarray
+
+    :ivar T_vogit: Vogit坐标变换矩阵
+    :vartype T_vogit: ndarray
+
+    :ivar m_s: 特征滑移系滑移方向
+    :vartype m_s: ndarray
+
+    :ivar n_s: 特征滑移系滑移面法向
+    :vartype n_s: ndarray
+
+    :ivar MAX_NITER: 最大迭代次数
+    :vartype MAX_NITER: ndarray
+    """
+
+    __slots_dict__: dict = {
+        'tolerance': ('float', '误差容限'),
+        'total_number_of_slips': ('int', '总滑移系数量'),
+        'elastic': ('dict', '弹性参数字典'),
+        'G': ('float', '剪切模量'),
+        'k_b': ('float', '玻尔兹曼常数'),
+        'temperature': ('float', '温度'),
+        'C': ('ndarray', '弹性矩阵'),
+        'slip_system_name': ('list[str]', '滑移系统名称'),
+        'c_over_a': ('list[float]', '晶体坐标系的c/a'),
+        'theta': ('float', '切线系数法参数'),
+        'H': ('ndarray', '硬化系数矩阵'),
+        'tau_sol': ('ndarray', '固溶强度'),
+        'v_0': ('ndarray', '位错滑移速度'),
+        'b_s': ('ndarray', '位错滑移柏氏矢量长度'),
+        'Q_s': ('ndarray', '位错滑移激活能'),
+        'p_s': ('ndarray', '位错滑移阻力拟合参数'),
+        'q_s': ('ndarray', '位错滑移阻力拟合参数'),
+        'd_grain': ('ndarray', '平均晶粒尺寸'),
+        'i_slip': ('ndarray', '平均位错间隔拟合参数'),
+        'c_anni': ('ndarray', '位错消除拟合参数'),
+        'Q_climb': ('ndarray', '位错攀移激活能'),
+        'D_0': ('ndarray', '自扩散系数因子'),
+        'Omega_climb': ('ndarray', '位错攀移激活体积'),
+        'u_global': ('ndarray', '全局坐标系下的1号矢量'),
+        'v_global': ('ndarray', '全局坐标系下的2号矢量'),
+        'w_global': ('ndarray', '全局坐标系下的3号矢量'),
+        'u_grain': ('ndarray', '晶粒坐标系下的1号矢量'),
+        'v_grain': ('ndarray', '晶粒坐标系下的2号矢量'),
+        'w_grain': ('ndarray', '晶粒坐标系下的3号矢量'),
+        'T': ('ndarray', '坐标变换矩阵'),
+        'T_vogit': ('ndarray', 'Vogit坐标变换矩阵'),
+        'm_s': ('ndarray', '特征滑移系滑移方向'),
+        'n_s': ('ndarray', '特征滑移系滑移面法向'),
+        'MAX_NITER': ('ndarray', '最大迭代次数'),
+    }
+
+    __slots__ = BaseMaterial.__slots__ + [slot for slot in __slots_dict__.keys()]
+
+    def __init__(self, material: Material, dimension: int, section: Section) -> None:
+        super().__init__(material, dimension, section)
+        self.allowed_section_types = ('Volume', 'PlaneStrain')
+
+        self.data_keys = []
+
+        if len(self.material.data) != len(self.data_keys):
+            raise NotImplementedError(error_style(self.get_data_length_error_msg()))
+        else:
+            for i, key in enumerate(self.data_keys):
+                self.data_dict[key] = material.data[i]
+
+        # 迭代及收敛参数
+        self.tolerance: float = 1.0e-6
+        self.MAX_NITER = 8
+        self.theta: float = material.data_dict['theta']
+
+        # 弹性参数
+        self.elastic: dict = material.data_dict['elastic']
+        self.C: ndarray = self.create_elastic_stiffness(self.elastic)
+        self.G: float = material.data_dict['G']
+
+        # 物理参数
+        self.temperature: float = material.data_dict['temperature']
+        self.k_b: float = material.data_dict['k_b']
+
+        # 滑移系参数
+        self.total_number_of_slips: int = 0
+        self.slip_system_name: list[str] = material.data_dict['slip_system_name']
+        self.c_over_a: list[float] = material.data_dict['c_over_a']
+
+        # 多滑移系赋值
+        for i, (name, ca) in enumerate(zip(self.slip_system_name, self.c_over_a)):
+            slip_system_number, m_s, n_s = generate_mn('slip', name, ca)
+            self.total_number_of_slips += slip_system_number
+            v_0 = ones((slip_system_number,), dtype=DTYPE) * material.data_dict['v_0'][i]
+            tau_sol = ones((slip_system_number,), dtype=DTYPE) * material.data_dict['tau_sol'][i]
+            b_s = ones((slip_system_number,), dtype=DTYPE) * material.data_dict['b_s'][i]
+            Q_s = ones((slip_system_number,), dtype=DTYPE) * material.data_dict['Q_s'][i]
+            p_s = ones((slip_system_number,), dtype=DTYPE) * material.data_dict['p_s'][i]
+            q_s = ones((slip_system_number,), dtype=DTYPE) * material.data_dict['q_s'][i]
+            d_grain = ones((slip_system_number,), dtype=DTYPE) * material.data_dict['d_grain'][i]
+            i_slip = ones((slip_system_number,), dtype=DTYPE) * material.data_dict['i_slip'][i]
+            c_anni = ones((slip_system_number,), dtype=DTYPE) * material.data_dict['c_anni'][i]
+            Q_climb = ones((slip_system_number,), dtype=DTYPE) * material.data_dict['Q_climb'][i]
+            D_0 = ones((slip_system_number,), dtype=DTYPE) * material.data_dict['D_0'][i]
+            Omega_climb = ones((slip_system_number,), dtype=DTYPE) * b_s ** 3
+            if i == 0:
+                self.m_s: ndarray = m_s
+                self.n_s: ndarray = n_s
+                self.v_0: ndarray = v_0
+                self.tau_sol: ndarray = tau_sol
+                self.b_s: ndarray = b_s
+                self.Q_s: ndarray = Q_s
+                self.p_s: ndarray = p_s
+                self.q_s: ndarray = q_s
+                self.d_grain: ndarray = d_grain
+                self.i_slip: ndarray = i_slip
+                self.c_anni: ndarray = c_anni
+                self.Q_climb: ndarray = Q_climb
+                self.D_0: ndarray = D_0
+                self.Omega_climb: ndarray = Omega_climb
+            else:
+                self.m_s = concatenate((self.m_s, m_s))
+                self.n_s = concatenate((self.n_s, n_s))
+                self.v_0 = concatenate((self.v_0, v_0))
+                self.tau_sol = concatenate((self.tau_sol, tau_sol))
+                self.b_s = concatenate((self.b_s, b_s))
+                self.Q_s = concatenate((self.Q_s, Q_s))
+                self.p_s = concatenate((self.p_s, p_s))
+                self.q_s = concatenate((self.q_s, q_s))
+                self.d_grain = concatenate((self.d_grain, d_grain))
+                self.i_slip = concatenate((self.i_slip, i_slip))
+                self.c_anni = concatenate((self.c_anni, c_anni))
+                self.Q_climb = concatenate((self.Q_climb, Q_climb))
+                self.D_0 = concatenate((self.D_0, D_0))
+                self.Omega_climb = concatenate((self.Omega_climb, Omega_climb))
+
+        self.H: ndarray = ones(shape=(self.total_number_of_slips, self.total_number_of_slips), dtype=DTYPE)
+
+        # 晶粒取向信息
+        self.u_global: ndarray = array(section.data_dict['u_global'])
+        self.v_global: ndarray = array(section.data_dict['v_global'])
+        self.w_global: ndarray = array(section.data_dict['w_global'])
+
+        self.u_grain: ndarray = array(section.data_dict['u_grain'])
+        self.v_grain: ndarray = array(section.data_dict['v_grain'])
+        self.w_grain: ndarray = array(section.data_dict['w_grain'])
+
+        self.T: ndarray = get_transformation(self.u_grain, self.v_grain, self.w_grain, self.u_global, self.v_global, self.w_global)
+        self.T_vogit: ndarray = get_voigt_transformation(self.T)
+
+        # 旋转至全局坐标系
+        self.m_s = dot(self.m_s, self.T)
+        self.n_s = dot(self.n_s, self.T)
+        self.C = dot(dot(self.T_vogit, self.C), transpose(self.T_vogit))
+
+    def create_elastic_stiffness(self, elastic: dict):
+        symmetry = elastic['symmetry']
+        if symmetry == 'isotropic':
+            C11 = elastic['C11']
+            C12 = elastic['C12']
+            C44 = elastic['C44']
+            C = array([[C11, C12, C12, 0, 0, 0],
+                       [C12, C11, C12, 0, 0, 0],
+                       [C12, C12, C11, 0, 0, 0],
+                       [0, 0, 0, C44, 0, 0],
+                       [0, 0, 0, 0, C44, 0],
+                       [0, 0, 0, 0, 0, C44]], dtype=DTYPE)
+        else:
+            raise NotImplementedError(
+                error_style(f'the symmetry type \"{symmetry}\" of elastic stiffness is not supported'))
+        return C
+
+    def get_tangent(self, variable: dict[str, ndarray],
+                    state_variable: dict[str, ndarray],
+                    state_variable_new: dict[str, ndarray],
+                    element_id: int,
+                    iqp: int,
+                    ntens: int,
+                    ndi: int,
+                    nshr: int,
+                    timer: Timer) -> tuple[ndarray, dict[str, ndarray]]:
+
+        strain = variable['strain']
+        dstrain = variable['dstrain']
+
+        if self.section.type == 'PlaneStrain':
+            strain = array([strain[0], strain[1], 0.0, strain[2], 0.0, 0.0])
+            dstrain = array([dstrain[0], dstrain[1], 0.0, dstrain[2], 0.0, 0.0])
+
+        np.set_printoptions(precision=12, linewidth=256, suppress=True)
+
+        dt = timer.dtime
+        theta = self.theta
+        temperature = self.temperature
+        C = self.C
+        G = self.G
+
+        total_number_of_slips = self.total_number_of_slips
+        tau_sol = self.tau_sol
+        v_0 = self.v_0
+        b_s = self.b_s
+        Q_s = self.Q_s
+        p_s = self.p_s
+        q_s = self.q_s
+        k_b = self.k_b
+        d_grain = self.d_grain
+        i_slip = self.i_slip
+        c_anni = self.c_anni
+        Q_climb = self.Q_climb
+        D_0 = self.D_0
+        Omega_climb = self.Omega_climb
+        H = self.H
+        m_s = self.m_s
+        n_s = self.n_s
+
+        d_min = c_anni * b_s
+
+        if state_variable == {} or timer.time0 == 0.0:
+            state_variable['m_s'] = m_s
+            state_variable['n_s'] = n_s
+            m_sxn_s = transpose(array([m_s[:, 0] * n_s[:, 0],
+                                       m_s[:, 1] * n_s[:, 1],
+                                       m_s[:, 2] * n_s[:, 2],
+                                       2.0 * m_s[:, 0] * n_s[:, 1],
+                                       2.0 * m_s[:, 0] * n_s[:, 2],
+                                       2.0 * m_s[:, 1] * n_s[:, 2]]))
+            n_sxm_s = transpose(array([n_s[:, 0] * m_s[:, 0],
+                                       n_s[:, 1] * m_s[:, 1],
+                                       n_s[:, 2] * m_s[:, 2],
+                                       2.0 * n_s[:, 0] * m_s[:, 1],
+                                       2.0 * n_s[:, 0] * m_s[:, 2],
+                                       2.0 * n_s[:, 1] * m_s[:, 2]]))
+            P = 0.5 * (m_sxn_s + n_sxm_s)
+            state_variable['stress'] = zeros(shape=6, dtype=DTYPE)
+            state_variable['tau'] = dot(P, state_variable['stress'])
+            state_variable['gamma'] = zeros(shape=total_number_of_slips, dtype=DTYPE)
+            state_variable['tau_pass'] = zeros(shape=total_number_of_slips, dtype=DTYPE)
+            state_variable['rho_m'] = zeros(shape=total_number_of_slips, dtype=DTYPE) + 1e12
+            state_variable['rho_di'] = zeros(shape=total_number_of_slips, dtype=DTYPE) + 1.0
+
+        rho_m = deepcopy(state_variable['rho_m'])
+        rho_di = deepcopy(state_variable['rho_di'])
+        m_s = deepcopy(state_variable['m_s'])
+        n_s = deepcopy(state_variable['n_s'])
+        gamma = deepcopy(state_variable['gamma'])
+        stress = deepcopy(state_variable['stress'])
+        tau = deepcopy(state_variable['tau'])
+
+        delta_gamma = zeros(shape=total_number_of_slips, dtype=DTYPE)
+
+        is_convergence = False
+
+        for niter in range(self.MAX_NITER):
+            m_sxn_s = transpose(array([m_s[:, 0] * n_s[:, 0],
+                                       m_s[:, 1] * n_s[:, 1],
+                                       m_s[:, 2] * n_s[:, 2],
+                                       2.0 * m_s[:, 0] * n_s[:, 1],
+                                       2.0 * m_s[:, 0] * n_s[:, 2],
+                                       2.0 * m_s[:, 1] * n_s[:, 2]]))
+
+            n_sxm_s = transpose(array([n_s[:, 0] * m_s[:, 0],
+                                       n_s[:, 1] * m_s[:, 1],
+                                       n_s[:, 2] * m_s[:, 2],
+                                       2.0 * n_s[:, 0] * m_s[:, 1],
+                                       2.0 * n_s[:, 0] * m_s[:, 2],
+                                       2.0 * n_s[:, 1] * m_s[:, 2]]))
+
+            P = 0.5 * (m_sxn_s + n_sxm_s)
+            Omega = 0.5 * (m_sxn_s - n_sxm_s)
+            Omega[:, 3:] *= 0.5
+
+            # S = dot(P, C) + Omega * stress - stress * Omega
+            S = dot(P, C)
+
+            rho = rho_di + rho_m
+            tau_pass = G * b_s * sqrt(dot(H, rho))
+
+            X = (abs(tau) - tau_pass) / tau_sol
+            X_bracket = maximum(X, 0.0) + self.tolerance
+            X_heaviside = sign(X_bracket)
+            A_s = Q_s / k_b / temperature
+
+            d_di = 3.0 * G * b_s / (16.0 * pi * (abs(tau) + self.tolerance))
+            one_over_lambda = 1.0 / d_grain + 1.0 / i_slip * tau_pass / G / b_s
+            v_climb = 3.0 * G * D_0 * Omega_climb / (2.0 * pi * k_b * temperature * (d_di + d_min)) \
+                      * exp(-Q_climb / k_b / temperature)
+            gamma_dot = rho_m * b_s * v_0 * exp(-A_s * (1.0 - X_bracket ** p_s) ** q_s) * sign(tau)
+
+            if niter == 0:
+                gamma_dot_t = deepcopy(gamma_dot)
+
+            term1 = dt * theta
+            term2 = A_s * p_s * q_s * gamma_dot * X_bracket ** (p_s - 1.0) * (1.0 - X_bracket ** p_s) ** (q_s - 1.0) \
+                    * sign(tau)
+            term3 = X_heaviside / tau_sol
+            term4 = einsum('ik, jk->ij', S, P)
+            term5 = one_over_lambda / b_s - 2.0 * d_di * rho_m / b_s
+            term6 = one_over_lambda / b_s - 2.0 * d_min * rho / b_s
+            term7 = 4.0 * rho_di * v_climb / (d_di - d_min) * dt
+            term8 = (G * b_s) ** 2 / (2.0 * tau_pass)
+
+            I = eye(total_number_of_slips, dtype=DTYPE)
+            A = deepcopy(I)
+            A -= term1 * term2 * term5 * b_s * v_0 * exp(-A_s * (1.0 - X_bracket ** p_s) ** q_s) * I
+            A += term1 * term2 * term3 * term4 * sign(tau)
+            A += term1 * term2 * term3 * term8 * dot(H, term6 * sign(tau) * I)
+
+            if niter == 0:
+                rhs = dt * gamma_dot + term1 * term2 * term3 * sign(tau) * dot(S, dstrain) \
+                      + term1 * term2 * term3 * term8 * dot(H, term7)
+                # rhs = dt * gamma_dot + term1 * term2 * term3 * sign(tau) * dot(S, dstrain)
+            else:
+                rhs = dt * theta * (gamma_dot - gamma_dot_t) + gamma_dot_t * dt - delta_gamma
+
+            d_delta_gamma = solve(transpose(A), rhs)
+            delta_gamma += d_delta_gamma
+
+            delta_elastic_strain = dstrain - dot(delta_gamma, P)
+            delta_tau = dot(S, delta_elastic_strain)
+            delta_stress = dot(C, delta_elastic_strain)
+            delta_rho_m = (one_over_lambda / b_s - 2.0 * d_di * rho_m / b_s) * abs(delta_gamma)
+            delta_rho_di = 2.0 * (rho_m * (d_di - d_min) - rho_di * d_min) / b_s * abs(delta_gamma) - term7
+            delta_m_s = 0.0
+            delta_n_s = 0.0
+
+            m_s = deepcopy(state_variable['m_s']) + delta_m_s
+            n_s = deepcopy(state_variable['n_s']) + delta_n_s
+            gamma = deepcopy(state_variable['gamma']) + delta_gamma
+            tau = deepcopy(state_variable['tau']) + delta_tau
+            stress = deepcopy(state_variable['stress']) + delta_stress
+            rho_m = deepcopy(state_variable['rho_m']) + delta_rho_m
+            rho_di = deepcopy(state_variable['rho_di']) + delta_rho_di
+
+            X = (abs(tau) - tau_pass) / tau_sol
+            X_bracket = maximum(X, 0.0)
+            gamma_dot = rho_m * b_s * v_0 * exp(-A_s * (1.0 - X_bracket ** p_s) ** q_s) * sign(tau)
+            residual = dt * theta * gamma_dot + dt * (1.0 - theta) * gamma_dot_t - delta_gamma
+
+            # if element_id == 0 and iqp == 0:
+            #     print('residual', residual)
+
+            if all(residual < self.tolerance):
+                is_convergence = True
+                break
+
+        ddgdde = (term1 * term2 * term3 * sign(tau)).reshape((total_number_of_slips, 1)) * S
+        ddgdde = dot(inv(A), ddgdde)
+        ddsdde = C - einsum('ki, kj->ij', S, ddgdde)
+
+        if not is_convergence:
+            timer.is_reduce_dtime = True
+
+        state_variable_new['m_s'] = m_s
+        state_variable_new['n_s'] = n_s
+        state_variable_new['stress'] = stress
+        state_variable_new['gamma'] = gamma
+        state_variable_new['tau'] = tau
+        state_variable_new['rho_m'] = rho_m
+        state_variable_new['rho_di'] = rho_di
+
+        if self.section.type == 'PlaneStrain':
+            ddsdde = delete(delete(ddsdde, [2, 4, 5], axis=0), [2, 4, 5], axis=1)
+            stress = delete(stress, [2, 4, 5])
+
+        output = {'stress': stress}
+
+        return ddsdde, output
+
+
+if __name__ == "__main__":
+    from pyfem.utils.visualization import print_slots_dict
+
+    print_slots_dict(PlasticCrystalGNDs.__slots_dict__)
+
+    # from pyfem.Job import Job
+    #
+    # job = Job(r'..\..\..\examples\mechanical\1element\hex20_crystal_GNDs\Job-1.toml')
+    #
+    # job.run()
