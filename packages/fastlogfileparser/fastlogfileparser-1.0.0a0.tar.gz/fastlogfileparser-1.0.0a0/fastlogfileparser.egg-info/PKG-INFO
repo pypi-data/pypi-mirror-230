@@ -1,0 +1,23 @@
+Metadata-Version: 2.1
+Name: fastlogfileparser
+Version: 1.0.0a0
+Summary: Parse computational chemistry log files, but fast-ly.
+Author: Jackson Burns
+License: MIT
+Project-URL: Homepage, https://github.com/QuantumPioneer/FastLogfileParser
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Provides-Extra: dev
+Requires-Dist: black; extra == "dev"
+Requires-Dist: isort; extra == "dev"
+Requires-Dist: pytest; extra == "dev"
+Provides-Extra: demos
+Requires-Dist: jupyter; extra == "demos"
+
+# FastLogfileParser
+## Parse logfiles from computational chemistry software, but fast-ly
+
+User REGEX and only REGEX to retrieve data from logfiles, spending as much time in Python's excellent C-based REGEX library.
+
+Orders of magnitude faster than `cclib`.
