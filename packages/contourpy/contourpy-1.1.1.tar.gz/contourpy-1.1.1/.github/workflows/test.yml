@@ -1,0 +1,390 @@
+name: Test
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  schedule:
+    - cron: "42 01 * * SUN"
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  pre-commit:
+    name: pre-commit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+      - uses: pre-commit/action@v3.0.0
+
+  codebase:
+    name: codebase
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install contourpy
+        run: |
+          python -m pip install --upgrade pip
+          # Temporarily pin matplotlib until fix typing inconsistencies.
+          python -m pip install -v .[mypy,test] "matplotlib<3.8"
+
+      - name: Install cppcheck
+        run: |
+          CPPCHECK_VERSION=2.9
+          CPPCHECK_TGZ=$CPPCHECK_VERSION.tar.gz
+          cd $RUNNER_TEMP
+          wget --no-verbose https://github.com/danmar/cppcheck/archive/refs/tags/$CPPCHECK_TGZ
+          tar xzf $CPPCHECK_TGZ
+          cd cppcheck-$CPPCHECK_VERSION
+          sudo make install MATCHCOMPILER=yes FILESDIR=/usr/share/cppcheck CXXFLAGS="-O2 -DNDEBUG" -j 2
+
+      - name: Run tests
+        run: |
+          python -m pytest -v --color=yes tests/test_codebase.py
+
+  test:
+    name: "${{ matrix.name }} ${{ matrix.python-version }} ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    env:
+      # Required version of chromium used for Bokeh image tests.
+      CHROME_VER: "110.0.5481.100"
+      CHROME_REV: "chromium_2333"
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
+        name: ["Test"]
+        include:
+          # Debug build including Python and C++ coverage.
+          - os: ubuntu-latest
+            python-version: "3.11"
+            name: "Test debug with coverage"
+            coverage-files: "coverage.lcov,coverage.cpp"
+            debug: true
+          # Bokeh and text tests with Python (not C++) coverage.
+          - os: ubuntu-latest
+            python-version: "3.11"
+            name: "Test bokeh and text tests with coverage"
+            coverage-files: "coverage.lcov"
+            test-text: true
+          # Test against numpy debug build.
+          - os: ubuntu-latest
+            python-version: "3.11"
+            name: "Test numpy debug"
+            build-numpy-debug: true
+          # Compile using C++11.
+          - os: ubuntu-latest
+            python-version: "3.11"
+            name: "Test C++11"
+            extra-install-args: "-C setup-args=-Dcpp_std=c++11"
+          # PyPy only tested on ubuntu for speed, without image tests.
+          - os: ubuntu-latest
+            python-version: "pypy3.8"
+            name: "Test"
+            test-no-images: true
+          - os: ubuntu-latest
+            python-version: "pypy3.9"
+            name: "Test"
+            build-numpy: true
+            test-no-images: true
+          # Pre-release Python 3.12 without image tests.
+          - os: ubuntu-latest
+            python-version: "3.12-dev"
+            name: "Test"
+            test-no-images: true
+          - os: macos-latest
+            python-version: "3.12-dev"
+            name: "Test"
+            test-no-images: true
+          - os: windows-latest
+            python-version: "3.12-dev"
+            name: "Test"
+            test-no-images: true
+          # Win32 test.
+          - os: windows-latest
+            python-version: "3.11"
+            name: "Win32"
+            win32: true
+            extra-install-args: "--only-binary Pillow"
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: ${{ matrix.win32 && 'x86' || 'x64' }}
+
+      - name: Setup MSVC (32-bit)
+        if: matrix.win32
+        uses: bus1/cabuild/action/msdevshell@v1
+        with:
+          architecture: 'x86'
+
+      - name: Fix PATH on win32
+        # Avoid this in GHA: "ERROR: Found GNU link.exe instead of MSVC link.exe"
+        if: matrix.win32
+        run: |
+          rm /c/Program\ Files/Git/usr/bin/link.EXE
+
+      - name: Install OS dependencies
+        if: matrix.debug
+        run: |
+          sudo apt update -yy
+          sudo apt install -yy lcov
+
+      - name: Install chromium for Bokeh tests
+        if: matrix.test-text
+        run: |
+          if [[ "$(chromium --version | cut -d' ' -f2)" = "$CHROME_VER" ]]; then
+            echo "Using pre-installed version of chromium"
+          else
+            URL=https://github.com/bokeh/chromium/raw/main/linux/$CHROME_VER
+            wget --no-verbose $URL/$CHROME_REV.assert
+            wget --no-verbose $URL/$CHROME_REV.snap
+            ls -l $CHROME_REV.*
+            sudo snap ack $CHROME_REV.assert
+            sudo snap install $CHROME_REV.snap
+            snap list chromium
+            snap info chromium
+          fi
+          which chromium
+          chromium --version
+          which chromedriver
+          chromedriver --version
+
+      - name: Build and install numpy from sdist without build isolation
+        if: matrix.build-numpy-no-isolation
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          pip install -v cython
+          pip install -v --no-binary=numpy numpy --no-build-isolation
+
+      - name: Build and install numpy from sdist
+        if: matrix.build-numpy
+        run: |
+          pip install -v --no-binary=numpy numpy
+
+      - name: Build and install numpy from sdist with debug asserts enabled
+        if: matrix.build-numpy-debug
+        run: |
+          CFLAGS=-UNDEBUG pip install -v --no-binary=numpy numpy
+
+      - name: Pre-install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [[ "${{ matrix.debug }}" != "" ]] || [[ "${{ matrix.coverage-files }}" != "" ]]
+          then
+            # Install requirements when not using build isolation.
+            python -m pip install -r build_requirements.txt ninja
+          fi
+          python -m pip list
+
+      - name: Install contourpy
+        run: |
+          if [[ "${{ matrix.debug }}" != "" ]]
+          then
+            echo "Install contourpy in debug editable mode with coverage"
+            python -m pip install -ve .[test] --no-build-isolation -C setup-args=-Dbuildtype=debug -C setup-args=-Db_coverage=true -C builddir=build
+          elif [[ "${{ matrix.coverage-files }}" != "" ]]
+          then
+            echo "Install contourpy in editable mode with bokeh dependencies"
+            python -m pip install -ve .[bokeh,test] --no-build-isolation -C builddir=build
+          elif [[ "${{ matrix.test-no-images }}" != "" ]]
+          then
+            echo "Install contourpy with non-image-generating test dependencies"
+            python -m pip install -v .[test-no-images]
+          else
+            echo "Install contourpy with standard test dependencies"
+            python -m pip install -v .[test] ${{ matrix.extra-install-args }}
+          fi
+          python -m pip list
+          python -c "from contourpy.util import build_config; from pprint import pprint; pprint(build_config())"
+          python -c "import contourpy as c; print('NDEBUG', c._contourpy.NDEBUG)"
+
+      - name: Run tests
+        run: |
+          if [[ "${{ matrix.debug }}" != "" ]]
+          then
+            echo "Run normal tests with coverage"
+            python -m pytest -v --color=yes tests/ --cov=lib --cov-report=lcov
+          elif [[ "${{ matrix.test-text }}" != "" ]]
+          then
+            echo "Run normal and text tests with coverage"
+            python -m pytest -v --color=yes -rP tests/test_bokeh_renderer.py tests/test_renderer.py --runtext --driver-path=/snap/bin/chromium.chromedriver --cov=lib --cov-report=lcov
+          elif [[ "${{ matrix.test-no-images }}" != "" ]]
+          then
+            echo "Run only tests that do not generate images"
+            python -m pytest -v --color=yes tests/ -k "not image"
+          else
+            echo "Run all tests"
+            python -m pytest -v --color=yes tests/
+          fi
+
+      - name: Collect C++ coverage
+        if: matrix.debug
+        run: |
+          lcov --output-file coverage.cpp --capture --directory build
+          lcov --output-file coverage.cpp --extract coverage.cpp $PWD/src/"*"
+
+      - name: Upload coverage
+        if: matrix.coverage-files
+        uses: codecov/codecov-action@v3
+        with:
+          files: ${{ matrix.coverage-files }}
+          verbose: true
+
+      - name: Collect test image failures
+        if: always()
+        run: |
+          if [[ -e result_images ]]
+          then
+            DIR="test-artifacts/${{ matrix.os }}_${{ matrix.python-version }}_${{ github.run_id }}"
+            mkdir -p ${DIR}
+            mv result_images/* ${DIR}/
+          fi
+
+      - name: Upload test artifacts
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-artifacts
+          path: test-artifacts/
+
+  test-in-docker:
+    # In-docker tests are either emulated hardware or musllinux
+    name: In docker ${{ matrix.arch }} ${{ matrix.manylinux_version }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # musllinux: build numpy from source, run non-image tests only
+          - arch: x86_64
+            manylinux_version: musllinux
+            image: musllinux_1_1_x86_64
+            venv: venv
+            test: test-no-images
+          # ppc64le and s390x: dependencies are conda packages, run standard tests.
+          - arch: ppc64le
+            manylinux_version: manylinux2014
+            image: manylinux2014_ppc64le
+            venv: conda
+            test: test
+          - arch: s390x
+            manylinux_version: manylinux2014
+            image: manylinux2014_s390x
+            venv: conda
+            test: test
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up QEMU
+        if: ${{ matrix.arch }} != "x86_64"
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: all
+
+      - name: Run inside docker
+        uses: addnab/docker-run-action@v3
+        with:
+          image: quay.io/pypa/${{ matrix.image }}:latest
+          options: -v ${{ github.workspace }}:/work -e ARCH=${{ matrix.arch }} -e VENV=${{ matrix.venv}} -e TEST=${{ matrix.test }}
+          shell: bash
+          run: |
+            echo "-------------------- start --------------------"
+            set -eu
+            uname -a
+            cd /work
+
+            if [[ $VENV == "venv" ]]
+            then
+              echo "==> Create virtual environment"
+              /opt/python/cp311-cp311/bin/python -m venv venv
+              . venv/bin/activate
+              which python
+              python --version
+            else
+              echo "==> Install conda"
+              cd /tmp
+              curl -LO "http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-$ARCH.sh"
+              bash Miniconda3-latest-Linux-$ARCH.sh -p /work/venv -b
+              rm Miniconda3-latest-Linux-$ARCH.sh
+              cd /work
+
+              echo "==> Activate conda in this shell"
+              . /work/venv/etc/profile.d/conda.sh
+
+              echo "==> Create and activate conda environment"
+              conda create -n my_env -q python=3.11
+              conda activate my_env
+
+              echo "==> Install conda dependencies"
+              conda install -q numpy matplotlib Pillow
+              conda list
+            fi
+
+            echo "==> Install contourpy with test dependencies"
+            python -m pip install --upgrade pip
+            python -m pip install -v .[$TEST]
+            python -m pip list
+            python -c "from contourpy.util import build_config; from pprint import pprint; pprint(build_config())"
+
+            if [[ $TEST == "test-no-images" ]]
+            then
+              echo "==> Run non-image tests"
+              python -m pytest -v --color=yes tests/ -k "not image"
+            else
+              echo "==> Run tests except 'big' ones as on emulated hardware"
+              python -m pytest -v --color=yes tests/ -k "not big"
+            fi
+            echo "-------------------- end --------------------"
+
+      - name: Collect test image failures
+        if: always()
+        run: |
+          if [[ -e result_images ]]
+          then
+            DIR="test-artifacts/docker_${{ matrix.arch }}_${{ matrix.manylinux_version }}"
+            mkdir -p ${DIR}
+            mv result_images/* ${DIR}/
+          fi
+
+      - name: Upload test artifacts
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-artifacts
+          path: test-artifacts/

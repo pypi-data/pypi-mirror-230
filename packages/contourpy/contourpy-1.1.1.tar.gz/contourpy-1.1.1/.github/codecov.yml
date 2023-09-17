@@ -1,0 +1,20 @@
+codecov:
+  notify:
+    after_n_builds: 2
+    wait_for_ci: no
+
+comment: false
+
+coverage:
+  range: 85..95
+  status:
+    patch:
+      default:
+        target: 50%
+    project:
+      default:
+        target: auto
+        threshold: 1%
+
+github_checks:
+    annotations: false
