@@ -1,0 +1,40 @@
+image: archlinux
+packages:
+  - python-build
+  - python-pipx
+  - python-pre-commit
+  - python-setuptools-scm
+  - python-tox
+  - python-wheel
+  - twine
+sources:
+  - https://github.com/pimutils/todoman
+secrets:
+  - 9a8d4d44-96f9-4365-beaa-aaa759c4f1c4
+environment:
+  CODECOV_TOKEN: a4471483-7f55-411a-bf2f-f65a91013dc4
+  CI: true
+tasks:
+  - setup: |
+      pipx install codecov
+      echo "export PATH=/home/build/.local/bin:$PATH" >> $HOME/.buildenv
+  - test: |
+      cd todoman
+      tox -e py
+      codecov
+  - test-pyicu: |
+      cd todoman
+      tox -e pyicu
+      codecov
+  - test-repl: |
+      cd todoman
+      tox -e repl
+      codecov
+  - package: |
+      cd todoman
+      git fetch --tags
+      python -m build --no-isolation
+      git describe --exact-match --tags || complete-build
+  - publish: |
+      cd todoman
+      twine upload dist/*
