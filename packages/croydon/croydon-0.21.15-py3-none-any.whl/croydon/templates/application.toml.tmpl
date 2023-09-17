@@ -1,0 +1,26 @@
+[general]
+documents_per_page = 20
+enable_passwords = true
+
+[logging]
+file = "application.log"
+level = "debug"
+
+[session]
+ttl = "90 00:00:00" # 90 days
+cookie = "_{{ project_name }}_session_id"
+
+[database]
+uri = "mongodb://localhost:27017/{{ project_name }}"
+timeout = 1.1 # 1.1 seconds
+
+[web]
+bind = "127.0.0.1:3000"
+
+[queue]
+type = "mongo"
+
+[mongo_queue]
+tasks_collection = "{{ project_name }}_tasks"
+keep_done_tasks_for = "90 00:00:00" # 90 days
+cleanup_interval = "01:00:00" # 1 hour
