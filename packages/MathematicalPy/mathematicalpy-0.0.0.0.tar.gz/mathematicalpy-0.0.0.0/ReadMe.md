@@ -1,0 +1,3 @@
+# MathematicalPy
+
+Mathematically-focused capabilities.

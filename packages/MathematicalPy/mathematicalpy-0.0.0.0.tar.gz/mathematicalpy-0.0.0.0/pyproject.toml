@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "MathematicalPy"
+version = "0.0.0.0"
+description = "Mathematically-focused capabilities."
+authors = ["David Gayman <drg.developer.2@gmail.com>"]
+readme = "ReadMe.md"
+license = "Apache License 2.0"
+packages = [
+    { include = "mathematical" }
+]
+
+[tool.poetry.scripts]
+main     = "main:main"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+numpy = "^1.25.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
