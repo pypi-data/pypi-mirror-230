@@ -1,0 +1,215 @@
+import asyncio
+import json
+import logging
+from typing import Optional, Literal, Callable, Dict, Any
+
+import websockets
+from websockets.exceptions import WebSocketException, ConnectionClosed
+
+from .packet import (
+    Packet,
+    custom_close_codes,
+    RequestPacket,
+    IdentifyDataPacket,
+    IdentifyPacket,
+)
+from .exceptions import DuplicateRoute
+
+log: logging.Logger = logging.getLogger(__name__)
+deferred_routes: Dict[str, Any] = {}
+
+
+async def exception_aware_scheduler(
+    callee: Callable, *args: Any, retry_count: int = 1, **kwargs: Any
+) -> None:
+    for _ in range(retry_count):
+        done, pending = await asyncio.wait(
+            [asyncio.create_task(callee(*args, **kwargs))],
+            return_when=asyncio.FIRST_EXCEPTION,
+        )
+        for task in done:
+            if task.exception() is not None:
+                log.error("Task exited with exception:")
+                task.print_stack()
+
+
+def route(route_name: Optional[str] = None) -> Callable:
+    def decorator(func: Callable) -> Callable:
+        name = route_name or func.__name__
+        if name in deferred_routes:
+            raise DuplicateRoute
+
+        deferred_routes[name] = func
+        return func
+
+    return decorator
+
+
+class Client:
+    def __init__(
+        self,
+        *,
+        reconnect_attempt_count: int = 1,
+        url: str = "ws://localhost",  # type: ignore
+        port: Optional[int] = None,
+        identifier: str = "DEFAULT",
+        secret_key: str = "",
+        override_key: Optional[str] = None,
+    ) -> None:
+        url: str = f"{url}:{port}" if port else url
+        url: str = (
+            f"ws://{url}"
+            if not url.startswith("ws://") and not url.startswith("wss://")
+            else url
+        )
+        self._url: str = url
+        self.identifier: Optional[str] = identifier
+        self._reconnect_attempt_count: int = reconnect_attempt_count
+        self._connection_future: asyncio.Future = asyncio.Future()
+
+        self._secret_key: str = secret_key
+        self._override_key: str = override_key  # type: ignore
+        self._routes: Dict[str, Callable] = {}
+        self.__is_open: bool = True
+        self.__current_ws = None
+        self.__task: Optional[asyncio.Task] = None
+        self._instance_mapping: Dict[str, Any] = {}
+
+    async def register_class_instance_for_routes(
+        self, instance: Any, *routes: Any
+    ) -> None:
+        for r in routes:
+            self._instance_mapping[r] = instance
+
+    def route(self, route_name: Optional[str] = None) -> Callable:
+        def decorator(func: Callable) -> Callable:
+            name = route_name or func.__name__
+            if name in self._routes:
+                raise DuplicateRoute
+
+            self._routes[name] = func
+            return func
+
+        return decorator
+
+    def load_routes(self) -> None:
+        global deferred_routes
+        for k, v in deferred_routes.items():
+            if k in self._routes:
+                raise DuplicateRoute
+
+            self._routes[k] = v
+        deferred_routes = {}
+
+    async def start(self) -> None:
+        self.load_routes()
+        await exception_aware_scheduler(
+            self._connect, retry_count=self._reconnect_attempt_count
+        )
+        await self._connection_future
+        log.info(
+            "Successfully connected to the server with identifier %s",
+            self.identifier,
+        )
+
+    async def close(self) -> None:
+        if self.__current_ws:
+            try:
+                await self.__current_ws.close()
+            except:
+                pass
+
+        if self.__task:
+            try:
+                self.__task.cancel()
+            except:
+                pass
+
+        self._connection_future = asyncio.Future()
+        log.info("Successfully closed the client")
+
+    async def _connect(self) -> None:
+        try:
+            async with websockets.connect(self._url) as websocket:  # type: ignore
+                self.__current_ws = websocket
+                idp = IdentifyDataPacket(
+                    secret_key=self._secret_key, override_key=self._override_key
+                )
+                await websocket.send(
+                    json.dumps(
+                        IdentifyPacket(
+                            identifier=self.identifier, type="IDENTIFY", data=idp  # type: ignore
+                        )
+                    )
+                )
+
+                while self.__is_open:
+                    d = await websocket.recv()
+                    packet: Packet = json.loads(d)
+                    ws_type: Literal["IDENTIFY", "REQUEST"] = packet["type"]  # type: ignore
+
+                    log.debug("Received %s event", ws_type)
+                    if ws_type == "IDENTIFY":
+                        # We have successfully connected
+                        self._connection_future.set_result(None)
+
+                    elif ws_type == "REQUEST":
+                        data: RequestPacket = packet["data"]
+                        route_name = data["route"]
+                        if route_name not in self._routes:
+                            await websocket.send(
+                                json.dumps(
+                                    Packet(
+                                        identifier=self.identifier,  # type: ignore
+                                        type="FAILURE_RESPONSE",
+                                        data=f"{route_name} is not a valid route name.",
+                                    )
+                                )
+                            )
+                            continue
+
+                        try:
+                            if route_name in self._instance_mapping:
+                                result = await self._routes[route_name](
+                                    self._instance_mapping[route_name],
+                                    **data["arguments"],
+                                )
+                            else:
+                                result = await self._routes[route_name](
+                                    **data["arguments"]
+                                )
+                            await websocket.send(
+                                json.dumps(
+                                    Packet(
+                                        identifier=self.identifier,  # type: ignore
+                                        type="SUCCESS_RESPONSE",
+                                        data=result,
+                                    )
+                                )
+                            )
+                        except Exception as e:
+                            await websocket.send(
+                                json.dumps(
+                                    Packet(
+                                        identifier=self.identifier,  # type: ignore
+                                        type="FAILURE_RESPONSE",
+                                        data=str(e),
+                                    )
+                                )
+                            )
+                            log.error("%s", e)
+
+                    else:
+                        log.warning("Received unhandled event %s", ws_type)
+        except ConnectionClosed as e:
+            code: int = e.code
+            if code in custom_close_codes:
+                raise custom_close_codes[code] from e
+
+            log.error("%s", e)
+            raise e
+        except WebSocketException as e:
+            log.error("%s", e)
+            raise
+        finally:
+            self._connection_future = asyncio.Future()
