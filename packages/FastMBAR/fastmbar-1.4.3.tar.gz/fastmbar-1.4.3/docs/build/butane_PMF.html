@@ -1,0 +1,721 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Example 1. Compute the PMF of a dihedral for butane. &#8212; FastMBAR 1.0-rc documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'butane_PMF';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Example 2. Compute a 2D-PMF of dihedrals for dialanine." href="dialanine_PMF.html" />
+    <link rel="prev" title="Examples" href="examples.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">FastMBAR API</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="examples.html">Examples</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Example 1. Compute the PMF of a dihedral for butane.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialanine_PMF.html">Example 2. Compute a 2D-PMF of dihedrals for dialanine.</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/BrooksResearchGroup-UM/FastMBAR" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/butane_PMF.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Example 1. Compute the PMF of a dihedral for butane.</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#construct-an-openmm-system-of-butane">1. Construct an OpenMM system of butane</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-umbrella-sampling">2. Run umbrella sampling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-and-collect-the-butane-dihedral-values">3. Compute and collect the butane dihedral values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-fastmbar-to-solve-mbar-uwham-equations-and-compute-the-pmf">4. Use FastMBAR to solve MBAR/UWHAM equations and compute the PMF</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="example-1-compute-the-pmf-of-a-dihedral-for-butane">
+<h1>Example 1. Compute the PMF of a dihedral for butane.<a class="headerlink" href="#example-1-compute-the-pmf-of-a-dihedral-for-butane" title="Permalink to this heading">#</a></h1>
+<p>This example includes a step-by-step description on computing the PMF of
+butane dihedral between its four carbon atoms with umbrella sampling and FastMBAR.
+Umbrella sampling is used to exhaustively sample relevant butane configurations
+that are centered around multiple dihedral values.
+FastMBAR is used here to compute the PMF by reweighing the configurations
+sampled from umbrella sampling.</p>
+<p>To run this example in your local computer, you need to clone/download the git repository
+<a class="reference external" href="https://github.com/BrooksResearchGroup-UM/FastMBAR">FastMBAR</a> onto your computer.
+After downloading the <a class="reference external" href="https://github.com/BrooksResearchGroup-UM/FastMBAR">FastMBAR</a> repository, change current working directory to
+<code class="docutils literal notranslate"><span class="pre">FastMBAR/examples/butane</span></code> before starting to run the following script inside
+the <code class="docutils literal notranslate"><span class="pre">Python</span></code> interpreter.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">## import required packages</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">math</span><span class="o">,</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">openmm.app</span>  <span class="k">as</span> <span class="nn">omm_app</span>
+<span class="kn">import</span> <span class="nn">openmm</span> <span class="k">as</span> <span class="nn">omm</span>
+<span class="kn">import</span> <span class="nn">openmm.unit</span> <span class="k">as</span> <span class="nn">unit</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">mdtraj</span>
+<span class="kn">from</span> <span class="nn">FastMBAR</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<section id="construct-an-openmm-system-of-butane">
+<h2>1. Construct an OpenMM system of butane<a class="headerlink" href="#construct-an-openmm-system-of-butane" title="Permalink to this heading">#</a></h2>
+<p>Because we are using OpenMM as our MD engine, we need to setup the
+MD molecular system in the format required by OpenMM. The format/object
+used by OpenMM for a molecular system happens to be a class called
+<a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.openmm.System.html#openmm.openmm.System">System</a>.
+Therefore, we will prepare our MD molecular system as an OpenMM System.
+When we prepare the OpenMM system, we add a
+<a class="reference external" href="http://docs.openmm.org/latest/api-python/generated/openmm.openmm.CustomTorsionForce.html#openmm.openmm.CustomTorsionForce">CustomTorsionForce</a>
+so that we can add biasing potentials to the system in the following umbrella
+sampling.</p>
+<p>Read psf and pdb files of butane: butane.psf and butane.pdb.
+The psf file, butane.psf, contains topology of butane and it is
+the topology file format used by CHARMM.
+The psf file, butane.psf, used here is generated using CHARMM.
+In your study, you usually already have a pdb file of your system.
+You can generate the topology file of your system using various MD
+softwares such as CHARMM, Gromacs and Amber among others.
+Just note that different softwares use different format for topology files and OpenMM has
+several parser for topology files with different format.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">psf</span> <span class="o">=</span> <span class="n">omm_app</span><span class="o">.</span><span class="n">CharmmPsfFile</span><span class="p">(</span><span class="s1">&#39;./data/butane.psf&#39;</span><span class="p">)</span>
+<span class="n">pdb</span> <span class="o">=</span> <span class="n">omm_app</span><span class="o">.</span><span class="n">PDBFile</span><span class="p">(</span><span class="s1">&#39;./data/butane.pdb&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Read CHARMM force field for butane. The CHARMM force field is downloaded from <a class="reference external" href="http://mackerell.umaryland.edu/charmm_ff.shtml">here</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="n">omm_app</span><span class="o">.</span><span class="n">CharmmParameterSet</span><span class="p">(</span><span class="s1">&#39;./data/top_all35_ethers.rtf&#39;</span><span class="p">,</span>
+                                    <span class="s1">&#39;./data/par_all35_ethers.prm&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Create a OpenMM system based on the psf file of butane and the CHARMM force field.
+Then a harmonic biasing potential for butane dihedral (3-6-9-13) is added to the
+system so that we can use the biasing potential in the following umbrella sampling.
+Adding a biasing potential to a system is very easy in OpenMM.
+We don’t have to change any source code of OpenMM. All we need to do is to tell
+OpenMM the formula of the biasing potential and degree of freedom we want to
+add the biasing potential to.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">## create an OpenMM system</span>
+<span class="n">system</span> <span class="o">=</span> <span class="n">psf</span><span class="o">.</span><span class="n">createSystem</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">nonbondedMethod</span><span class="o">=</span><span class="n">omm_app</span><span class="o">.</span><span class="n">NoCutoff</span><span class="p">)</span>
+
+<span class="c1">## add a harmonic biasing potential on butane dihedral to the OpenMM system</span>
+<span class="n">bias_torsion</span> <span class="o">=</span> <span class="n">omm</span><span class="o">.</span><span class="n">CustomTorsionForce</span><span class="p">(</span><span class="s2">&quot;0.5*K*dtheta^2; dtheta = min(diff, 2*Pi-diff); diff = abs(theta - theta0)&quot;</span><span class="p">)</span>
+<span class="n">bias_torsion</span><span class="o">.</span><span class="n">addGlobalParameter</span><span class="p">(</span><span class="s2">&quot;Pi&quot;</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="n">bias_torsion</span><span class="o">.</span><span class="n">addGlobalParameter</span><span class="p">(</span><span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="n">bias_torsion</span><span class="o">.</span><span class="n">addGlobalParameter</span><span class="p">(</span><span class="s2">&quot;theta0&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+<span class="c1">## 3, 6, 9, 13 are indices of the four carton atoms in butane, between which</span>
+<span class="c1">## the dihedral angle is biased.</span>
+<span class="n">bias_torsion</span><span class="o">.</span><span class="n">addTorsion</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>
+<span class="n">system</span><span class="o">.</span><span class="n">addForce</span><span class="p">(</span><span class="n">bias_torsion</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>After constructing the OpenMM system of butane, we can save it in an XML formatted text file,
+which can be used later for simulations. Therefore, if we want to use the same system in
+another script, we can just read the text file in an OpenMM system instead of constructing it again.
+You can even open the XML formatted text file using a text editor and see what information
+about the system is included in the XML file.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">## save the OpenMM system of butane</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;./output/system.xml&quot;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_handle</span><span class="p">:</span>
+    <span class="n">file_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">omm</span><span class="o">.</span><span class="n">XmlSerializer</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">system</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="run-umbrella-sampling">
+<h2>2. Run umbrella sampling<a class="headerlink" href="#run-umbrella-sampling" title="Permalink to this heading">#</a></h2>
+<p>We run umbrella sampling for the butane dihedral (atom indices: 3-6-9-13).
+The dihedral is split into multiple windows and in each window, the dihedral
+is restrained around a center using a harmonic biasing potential. In this
+script, we run simulations in each window sequentially, but they can be run in
+parallel if you have a computer cluster with multiple nodes.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">## read the OpenMM system of butane</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;./output/system.xml&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_handle</span><span class="p">:</span>
+    <span class="n">xml</span> <span class="o">=</span> <span class="n">file_handle</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">system</span> <span class="o">=</span> <span class="n">omm</span><span class="o">.</span><span class="n">XmlSerializer</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">xml</span><span class="p">)</span>
+
+<span class="c1">## read psf and pdb file of butane</span>
+<span class="n">psf</span> <span class="o">=</span> <span class="n">omm_app</span><span class="o">.</span><span class="n">CharmmPsfFile</span><span class="p">(</span><span class="s2">&quot;./data/butane.psf&quot;</span><span class="p">)</span>
+<span class="n">pdb</span> <span class="o">=</span> <span class="n">omm_app</span><span class="o">.</span><span class="n">PDBFile</span><span class="p">(</span><span class="s1">&#39;./data/butane.pdb&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In order to run simulations in OpenMM, we need to construct an OpenMM context,
+which consists of a system, an integrator and a platform.
+The system is just the butane system we have constructed above.
+The integrator specifies what kind integration method we should use.
+Here, we will use Langevin dynamics for NVT ensemble simulation,
+which corresponds to the OpenMM.LangevinMiddleIntegrator.
+The platform specifies what kind of hardware we will run simulation on.
+Here, we choose to use CPUs because the size of the system is quite small.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#### setup an OpenMM context</span>
+
+<span class="c1">## platform</span>
+<span class="n">platform</span> <span class="o">=</span> <span class="n">omm</span><span class="o">.</span><span class="n">Platform</span><span class="o">.</span><span class="n">getPlatformByName</span><span class="p">(</span><span class="s1">&#39;CPU&#39;</span><span class="p">)</span>
+
+<span class="c1">## integrator</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mf">298.15</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">kelvin</span>  <span class="c1">## temperature</span>
+<span class="n">fricCoef</span> <span class="o">=</span> <span class="mi">10</span><span class="o">/</span><span class="n">unit</span><span class="o">.</span><span class="n">picoseconds</span> <span class="c1">## friction coefficient</span>
+<span class="n">stepsize</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">femtoseconds</span> <span class="c1">## integration step size</span>
+<span class="n">integrator</span> <span class="o">=</span> <span class="n">omm</span><span class="o">.</span><span class="n">LangevinMiddleIntegrator</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">fricCoef</span><span class="p">,</span> <span class="n">stepsize</span><span class="p">)</span>
+
+<span class="c1">## construct an OpenMM context</span>
+<span class="n">context</span> <span class="o">=</span> <span class="n">omm</span><span class="o">.</span><span class="n">Context</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">integrator</span><span class="p">,</span> <span class="n">platform</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here we set the force constant and centers for the harmonic biasing potentials on butane dihedral.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">## set force constant K for the biasing potential.</span>
+<span class="c1">## the unit here is kJ*mol^{-1}*nm^{-2}, which is the default unit used in OpenMM</span>
+<span class="n">K</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">context</span><span class="o">.</span><span class="n">setParameter</span><span class="p">(</span><span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+
+<span class="c1">## M centers of harmonic biasing potentials</span>
+<span class="n">M</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">theta0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">endpoint</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s2">&quot;./output/theta0.csv&quot;</span><span class="p">,</span> <span class="n">theta0</span><span class="p">,</span> <span class="n">delimiter</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The following loop is used to run umbrella sampling window by window.
+In each iteration, we first set the center of the harmonic biasing potential.
+Then the configuration of butane is minimized and equilibrated with the biasing potential.
+After initial equilibration, configurations are sampled and saved.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">## the main loop to run umbrella sampling window by window</span>
+<span class="k">for</span> <span class="n">theta0_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sampling at theta0 index: </span><span class="si">{</span><span class="n">theta0_index</span><span class="si">}</span><span class="s2"> out of </span><span class="si">{</span><span class="n">M</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1">## set the center of the biasing potential</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">setParameter</span><span class="p">(</span><span class="s2">&quot;theta0&quot;</span><span class="p">,</span> <span class="n">theta0</span><span class="p">[</span><span class="n">theta0_index</span><span class="p">])</span>
+
+    <span class="c1">## minimize</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">setPositions</span><span class="p">(</span><span class="n">pdb</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">getState</span><span class="p">(</span><span class="n">getEnergy</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">energy</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">getPotentialEnergy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
+        <span class="n">omm</span><span class="o">.</span><span class="n">LocalEnergyMinimizer</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">getState</span><span class="p">(</span><span class="n">getEnergy</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">getPotentialEnergy</span><span class="p">()</span>
+
+    <span class="c1">## initial equilibrium</span>
+    <span class="n">integrator</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span>
+
+    <span class="c1">## sampling production. trajectories are saved in dcd files</span>
+    <span class="n">file_handle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;./output/traj/traj_</span><span class="si">{</span><span class="n">theta0_index</span><span class="si">}</span><span class="s2">.dcd&quot;</span><span class="p">,</span> <span class="s1">&#39;bw&#39;</span><span class="p">)</span>
+    <span class="n">dcd_file</span> <span class="o">=</span> <span class="n">omm_app</span><span class="o">.</span><span class="n">dcdfile</span><span class="o">.</span><span class="n">DCDFile</span><span class="p">(</span><span class="n">file_handle</span><span class="p">,</span> <span class="n">psf</span><span class="o">.</span><span class="n">topology</span><span class="p">,</span> <span class="n">dt</span> <span class="o">=</span> <span class="n">stepsize</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">300</span><span class="p">)):</span>
+        <span class="n">integrator</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">getState</span><span class="p">(</span><span class="n">getPositions</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">getPositions</span><span class="p">()</span>
+        <span class="n">dcd_file</span><span class="o">.</span><span class="n">writeModel</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span>
+    <span class="n">file_handle</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="compute-and-collect-the-butane-dihedral-values">
+<h2>3. Compute and collect the butane dihedral values<a class="headerlink" href="#compute-and-collect-the-butane-dihedral-values" title="Permalink to this heading">#</a></h2>
+<p>For configurations in trajectories sampled using umbrella sampling,
+we compute the butane dihedral and
+save them in csv files. The dihedral is between four atoms with
+indices of 3, 6, 9, and 13.
+Here we use the Python package mdtraj to compute dihedrals.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">topology</span> <span class="o">=</span> <span class="n">mdtraj</span><span class="o">.</span><span class="n">load_psf</span><span class="p">(</span><span class="s2">&quot;./data/butane.psf&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">theta0_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+    <span class="n">traj</span> <span class="o">=</span> <span class="n">mdtraj</span><span class="o">.</span><span class="n">load_dcd</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;./output/traj/traj_</span><span class="si">{</span><span class="n">theta0_index</span><span class="si">}</span><span class="s2">.dcd&quot;</span><span class="p">,</span> <span class="n">topology</span><span class="p">,</span> <span class="n">stride</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">mdtraj</span><span class="o">.</span><span class="n">compute_dihedrals</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="p">[[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">13</span><span class="p">]])</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;./output/dihedral/dihedral_</span><span class="si">{</span><span class="n">theta0_index</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">fmt</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%.5f</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">delimiter</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="use-fastmbar-to-solve-mbar-uwham-equations-and-compute-the-pmf">
+<h2>4. Use FastMBAR to solve MBAR/UWHAM equations and compute the PMF<a class="headerlink" href="#use-fastmbar-to-solve-mbar-uwham-equations-and-compute-the-pmf" title="Permalink to this heading">#</a></h2>
+<p>Two steps are required to compute PMF using FastMBAR based on umbrella sampling.
+Firstly, we need to compute the relative free energies of the biased ensembles used in umbrella sampling,
+i.e., the NVT ensembles with biased potential energies.
+Secondly, samples from umbrella sampling are reweighed to compute the PMF.</p>
+<p>Simulations in umbrella sampling have different biasing potential energies.
+They are viewed as different thermodynamic states.
+Therefore, we have <span class="math notranslate nohighlight">\(M\)</span> states and samples from these states.
+As shown in Usage, we can use FastMBAR to compute the relative free energies of these <span class="math notranslate nohighlight">\(M\)</span> states.
+In order to do it, we need to compute the reduced energy matrix <span class="math notranslate nohighlight">\(A_{M,N}\)</span> as shown in Fig. 1,
+where <span class="math notranslate nohighlight">\(U(x)\)</span> is the potential energy function; <span class="math notranslate nohighlight">\(B_i(x)\)</span> is the biasing potential added
+in the <span class="math notranslate nohighlight">\(i\)</span> th state. In this case, the biasing potential is added to the dihedral (3-6-9-13),
+so <span class="math notranslate nohighlight">\(B_i(x) = 0.5*k*\Delta^2\)</span>, where <span class="math notranslate nohighlight">\(\Delta = min(|\theta(x) - \theta^0_i|, 2\pi - |\theta(x) - \theta^0_i|)\)</span>
+and <span class="math notranslate nohighlight">\(\theta(x)\)</span> is the dihedral (3-6-9-13) calculated based on Cartesian coordinates <span class="math notranslate nohighlight">\(x\)</span> .</p>
+<img alt="_images/Fig_1.png" src="_images/Fig_1.png" />
+<p>Compared to general cases, the reduced potential energy matrix <span class="math notranslate nohighlight">\(A_{M,N}\)</span> in umbrella sampling has a special property.
+The energy functions of the <span class="math notranslate nohighlight">\(M\)</span> states are <span class="math notranslate nohighlight">\(U(x) + B_i(x)\)</span>. They all have the common component <span class="math notranslate nohighlight">\(U(x)\)</span>.
+Removing the common component <span class="math notranslate nohighlight">\(U(x)\)</span> from the energy matrix <span class="math notranslate nohighlight">\(A_{M,N}\)</span> does not affect the relative free
+energies of the <span class="math notranslate nohighlight">\(M\)</span> states. Therefore, we can omitting computing <span class="math notranslate nohighlight">\(U(x)\)</span> when compute the energy matrix <span class="math notranslate nohighlight">\(A_{M,N}\)</span>,
+as shown in Fig. 2</p>
+<img alt="_images/Fig_2.png" src="_images/Fig_2.png" />
+<p>As shown in Fig. 2, we can compute the reduced energy matrix <span class="math notranslate nohighlight">\(A_{M,N}\)</span> just based on dihedral values from umbrella sampling.
+In the following script, we read the dihedral values and compute the reduced energy matrix <span class="math notranslate nohighlight">\(A_{M,N}\)</span>.
+Based on the reduced energy matrix and the number of conformations sampled from each state,
+we can compute the relative free energies of the <span class="math notranslate nohighlight">\(M\)</span> states using FastMBAR.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">## read dihedral values from umbrella sampling</span>
+<span class="n">thetas</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">num_conf</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">theta0_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;./output/dihedral/dihedral_</span><span class="si">{</span><span class="n">theta0_index</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">,</span> <span class="n">delimiter</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="p">)</span>
+    <span class="n">thetas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+    <span class="n">num_conf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
+<span class="n">thetas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">thetas</span><span class="p">)</span>
+<span class="n">num_conf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">num_conf</span><span class="p">)</span>
+<span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">thetas</span><span class="p">)</span>
+
+<span class="c1">## compute reduced energy matrix A</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+<span class="n">K</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mf">298.15</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">kelvin</span>
+<span class="n">kbT</span> <span class="o">=</span> <span class="n">unit</span><span class="o">.</span><span class="n">BOLTZMANN_CONSTANT_kB</span> <span class="o">*</span> <span class="mf">298.15</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">kelvin</span> <span class="o">*</span> <span class="n">unit</span><span class="o">.</span><span class="n">AVOGADRO_CONSTANT_NA</span>
+<span class="n">kbT</span> <span class="o">=</span> <span class="n">kbT</span><span class="o">.</span><span class="n">value_in_unit</span><span class="p">(</span><span class="n">unit</span><span class="o">.</span><span class="n">kilojoule_per_mole</span><span class="p">)</span>
+
+<span class="n">theta0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s2">&quot;./output/theta0.csv&quot;</span><span class="p">,</span> <span class="n">delimiter</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">theta0_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+    <span class="n">current_theta0</span> <span class="o">=</span> <span class="n">theta0</span><span class="p">[</span><span class="n">theta0_index</span><span class="p">]</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">thetas</span> <span class="o">-</span> <span class="n">current_theta0</span><span class="p">)</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">-</span><span class="n">diff</span><span class="p">)</span>
+    <span class="n">A</span><span class="p">[</span><span class="n">theta0_index</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">K</span><span class="o">*</span><span class="n">diff</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">kbT</span>
+
+<span class="c1">## solve MBAR equations using FastMBAR</span>
+<span class="n">fastmbar</span> <span class="o">=</span> <span class="n">FastMBAR</span><span class="p">(</span><span class="n">energy</span> <span class="o">=</span> <span class="n">A</span><span class="p">,</span> <span class="n">num_conf</span> <span class="o">=</span> <span class="n">num_conf</span><span class="p">,</span> <span class="n">cuda</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Relative free energies: &quot;</span><span class="p">,</span> <span class="n">fastmbar</span><span class="o">.</span><span class="n">F</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now we are ready to compute the PMF.
+Solving MBAR equations yields the relative free energies of the <span class="math notranslate nohighlight">\(M\)</span> states,
+all of which have biasing potential energies.
+Knowing the relative free energies of the <span class="math notranslate nohighlight">\(M\)</span> states enables us to compute
+the PMF using an easy reweighing procedure.
+In order to do that, we need to compute the energy matrix <span class="math notranslate nohighlight">\(B_{L,N}\)</span> as shown in Fig. 1 and Fig. 2.</p>
+<p>To represent the PMF of the dihedral, we split the dihedral range, <span class="math notranslate nohighlight">\([-\pi, \pi]\)</span> into <span class="math notranslate nohighlight">\(L\)</span> windows: <span class="math notranslate nohighlight">\([\theta_{l-1}, \theta_l]\)</span> for <span class="math notranslate nohighlight">\(l = 1, ..., L\)</span>.
+Then we can represent the PMF by computing the relative free energies of these $L$ states each of which has a potential energy of <span class="math notranslate nohighlight">\(U(x)\)</span>.
+Because the <span class="math notranslate nohighlight">\(l\)</span> th state is constrained in the dihedral range <span class="math notranslate nohighlight">\([\theta_{l-1}, \theta_l]\)</span>,
+we need to add a biasing potential <span class="math notranslate nohighlight">\(R_l(\theta)\)</span> to enforce the constraint.
+The value of the biasing potential <span class="math notranslate nohighlight">\(R_l(\theta) = R_l(\theta(x))\)</span> is 0 when <span class="math notranslate nohighlight">\(\theta \in [\theta_{l-1}, \theta_l]\)</span>, infinity otherwise.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">## compute the reduced energy matrix B</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">theta_PMF</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">endpoint</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">width</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">L</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">L</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+    <span class="n">theta_center</span> <span class="o">=</span> <span class="n">theta_PMF</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">theta_low</span> <span class="o">=</span> <span class="n">theta_center</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">width</span>
+    <span class="n">theta_high</span> <span class="o">=</span> <span class="n">theta_center</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">width</span>
+
+    <span class="n">indicator</span> <span class="o">=</span> <span class="p">((</span><span class="n">thetas</span> <span class="o">&gt;</span> <span class="n">theta_low</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">thetas</span> <span class="o">&lt;=</span> <span class="n">theta_high</span><span class="p">))</span> <span class="o">|</span> \
+                 <span class="p">((</span><span class="n">thetas</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">&gt;</span> <span class="n">theta_low</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">thetas</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">&lt;=</span> <span class="n">theta_high</span><span class="p">))</span> <span class="o">|</span> \
+                 <span class="p">((</span><span class="n">thetas</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">&gt;</span> <span class="n">theta_low</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">thetas</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">&lt;=</span> <span class="n">theta_high</span><span class="p">))</span>
+
+    <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="o">~</span><span class="n">indicator</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+
+<span class="c1">## compute PMF using the energy matrix B</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">fastmbar</span><span class="o">.</span><span class="n">calculate_free_energies_of_perturbed_states</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+<span class="n">PMF</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;F&#39;</span><span class="p">]</span>
+<span class="n">PMF_uncertainty</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;F_std&#39;</span><span class="p">]</span>
+
+<span class="c1">## plot the PMF</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">theta_PMF</span><span class="o">*</span><span class="mi">180</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">PMF</span><span class="p">,</span> <span class="n">yerr</span> <span class="o">=</span> <span class="n">PMF_uncertainty</span><span class="p">,</span> <span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;-o&#39;</span><span class="p">,</span>
+<span class="n">ecolor</span> <span class="o">=</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">capsize</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">capthick</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">markersize</span> <span class="o">=</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;dihedral&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;reduced free energy&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./output/PMF_fastmbar.pdf&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The PMF saved in the file <code class="docutils literal notranslate"><span class="pre">./output/PMF_fastmbar.pdf</span></code> should be like the following PMF:</p>
+<img alt="_images/PMF.png" src="_images/PMF.png" />
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="examples.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Examples</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="dialanine_PMF.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Example 2. Compute a 2D-PMF of dihedrals for dialanine.</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#construct-an-openmm-system-of-butane">1. Construct an OpenMM system of butane</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-umbrella-sampling">2. Run umbrella sampling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-and-collect-the-butane-dihedral-values">3. Compute and collect the butane dihedral values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-fastmbar-to-solve-mbar-uwham-equations-and-compute-the-pmf">4. Use FastMBAR to solve MBAR/UWHAM equations and compute the PMF</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Xinqiang Ding
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2019 Xinqiang Ding, Jonah Z. Vilseck, and Charles L. Brooks III..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

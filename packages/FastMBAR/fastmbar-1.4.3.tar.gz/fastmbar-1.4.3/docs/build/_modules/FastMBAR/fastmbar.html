@@ -1,0 +1,1064 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FastMBAR.fastmbar &#8212; FastMBAR 1.0-rc documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/FastMBAR/fastmbar';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../API.html">FastMBAR API</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../examples.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../butane_PMF.html">Example 1. Compute the PMF of a dihedral for butane.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../dialanine_PMF.html">Example 2. Compute a 2D-PMF of dihedrals for dialanine.</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/BrooksResearchGroup-UM/FastMBAR" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <h1>Source code for FastMBAR.fastmbar</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.optimize</span> <span class="k">as</span> <span class="nn">optimize</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+
+<div class="viewcode-block" id="FastMBAR"><a class="viewcode-back" href="../../API.html#FastMBAR.FastMBAR">[docs]</a><span class="k">class</span> <span class="nc">FastMBAR</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The FastMBAR class is initialized with an energy matrix and an array</span>
+<span class="sd">    of num of conformations. The corresponding MBAR equation is solved</span>
+<span class="sd">    in the constructor. Therefore, the relative free energies of states</span>
+<span class="sd">    used in the energy matrix is calculated in the constructor. The</span>
+<span class="sd">    method **calculate_free_energies_for_perturbed_states**</span>
+<span class="sd">    can be used to calculated the relative free energies of perturbed states.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="FastMBAR.__init__"><a class="viewcode-back" href="../../API.html#FastMBAR.FastMBAR.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">energy</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span>
+        <span class="n">num_conf</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span>
+        <span class="n">cuda</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">cuda_batch_mode</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">bootstrap</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">bootstrap_block_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="n">bootstrap_num_rep</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Newton&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializer for the class FastMBAR</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        energy : 2D ndarray or 2D tensor</span>
+<span class="sd">            It has a size of (M x N), where M is the number of states</span>
+<span class="sd">            and N is the total number of conformations. The entry energy[i,j]</span>
+<span class="sd">            is the reduced (unitless) energy of conformation j in state i.</span>
+<span class="sd">            If bootstrapping is used to calculate the uncertainty, the order</span>
+<span class="sd">            of conformations matters. Conformations sampled from one state</span>
+<span class="sd">            need to occpy a continuous chunk of collumns. Conformations sampled</span>
+<span class="sd">            from state k need to occupy collumns to the left of conformations</span>
+<span class="sd">            sampled from state l if k &lt; l. If bootstrapping is not used, then</span>
+<span class="sd">            the order of conformation does not matter.</span>
+<span class="sd">        num_conf: 1D int ndarray or 1D tensor</span>
+<span class="sd">            It should have a size of M, where num_conf[i] is the num of</span>
+<span class="sd">            conformations sampled from state i. Therefore, np.sum(num_conf)</span>
+<span class="sd">            has to be equal to N. All entries in num_conf have to be strictly</span>
+<span class="sd">            greater than 0.</span>
+<span class="sd">        cuda: bool, optional (default=False)</span>
+<span class="sd">            If it is set to be True, then the calculation will be run on</span>
+<span class="sd">            a graphical processing unit (GPU) using CUDA.</span>
+<span class="sd">        cuda_batch_mode: bool, optional (default=None)</span>
+<span class="sd">            The batch mode is turned on when the size of the energy matrix is</span>
+<span class="sd">            too large for the memory of a GPU. When cuda_batch_mode is True,</span>
+<span class="sd">            the energy matrix will be split into multiple batches which are used</span>
+<span class="sd">            sequentially. If cuda_batch_mode = None, it will be set automatically</span>
+<span class="sd">            based on the size of energy and the memory of the avaible GPU device.</span>
+<span class="sd">        bootstrap: bool, optional (default=False)</span>
+<span class="sd">            If bootstrap is True, the uncertainty of the calculated free energies</span>
+<span class="sd">            will be estimate using block bootstraping.</span>
+<span class="sd">        bootstrap_block_size: int, optional (default=3)</span>
+<span class="sd">            block size used in block bootstrapping</span>
+<span class="sd">        bootstrap_num_rep: int, optional (default=100)</span>
+<span class="sd">            number of repreats in block bootstrapping</span>
+<span class="sd">        verbose: bool, optional (default=False)</span>
+<span class="sd">            if verbose is true, the detailed information of solving MBAR equations</span>
+<span class="sd">            is printed.</span>
+<span class="sd">        method: str, optional (default=&quot;Newton&quot;)</span>
+<span class="sd">            the method used to solve the MBAR equation. The default is Newton&#39;s method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1">#### check the parameters: energy and num_conf</span>
+        <span class="c1">## Note that both self.energy and self.conf will be on CPUs no matter</span>
+        <span class="c1">## if cuda is True or False.</span>
+
+        <span class="c1">## energy needs to be a 2-D ndarray or a 2-D tensor.</span>
+        <span class="c1">## convert it into double precision if not</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">energy</span> <span class="o">=</span> <span class="n">energy</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="n">energy</span><span class="o">.</span><span class="n">double</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;energy has to be a 2-D ndarray or a 2-D tensor.&quot;</span><span class="p">)</span>
+
+        <span class="c1">## num_conf needs to be a 1-D ndarray or a 1-D tensor.</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">num_conf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">num_conf</span> <span class="o">=</span> <span class="n">num_conf</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">num_conf</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">num_conf</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">num_conf</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">num_conf</span> <span class="o">=</span> <span class="n">num_conf</span><span class="o">.</span><span class="n">double</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;num_conf has to be a 1-D ndarray or a 1-D tensor.&quot;</span><span class="p">)</span>
+
+        <span class="c1">## check the shape of energy and num_conf</span>
+        <span class="k">if</span> <span class="n">energy</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;energy has to be a 2-D ndarray or a 2-D tensor.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">num_conf</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;num_conf has to be a 1-D ndarray or a 1-D tensor.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">energy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">num_conf</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;the number of rows in energy has to be equal to the length of num_conf.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1">## check if the number of conformations sampled from each state is greater than 0</span>
+        <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_conf</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;all entries in num_conf have to be strictly greater than 0.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1">## check if the total number of conformations is equal to the number of columns in energy</span>
+        <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_conf</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;the sum of num_conf has to be equal to the number of columns in energy.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cuda</span> <span class="o">=</span> <span class="n">cuda</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cuda</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cuda</span><span class="p">:</span>
+            <span class="c1">## check if the GPU device has enough memory. If not, cuda_batch_mode is turned on</span>
+
+            <span class="c1">## automatically determine if cuda_batch_mode is on or off</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_total_GPU_memory</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">get_device_properties</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">total_memory</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">numel</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">element_size</span><span class="p">()</span>
+                <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_total_GPU_memory</span> <span class="o">/</span> <span class="mi">10</span>
+            <span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cuda_batch_mode</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cuda_batch_mode</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="c1">## cuda_batch_mode can be enforced by passing the argument cuda_batch_mode</span>
+            <span class="k">if</span> <span class="n">cuda_batch_mode</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cuda_batch_mode</span> <span class="o">=</span> <span class="n">cuda_batch_mode</span>
+
+        <span class="c1">## when cuda_batch_mode is used, we need to decide on the batch_size based on</span>
+        <span class="c1">## both the memory of the GPU device and the size of energy matrix</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cuda</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">cuda_batch_mode</span><span class="p">:</span>
+            <span class="c1">## batch size for seperating conformations</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_total_GPU_memory</span>
+                <span class="o">/</span> <span class="mi">20</span>
+                <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">element_size</span><span class="p">()</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span><span class="p">)</span>
+
+        <span class="c1">## whether to use bootstrap to estimate the uncertainty of the calculated free energies</span>
+        <span class="c1">## bootstrap needs to be a boolean</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bootstrap</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;bootstrap has to be a boolean.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bootstrap</span> <span class="o">=</span> <span class="n">bootstrap</span>
+
+        <span class="c1">## block size used in block bootstrapping</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bootstrap_block_size</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;bootstrap_block_size has to be an integer.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bootstrap_block_size</span> <span class="o">=</span> <span class="n">bootstrap_block_size</span>
+
+        <span class="c1">## number of repeats in block bootstrapping</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bootstrap_num_rep</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;bootstrap_num_rep has to be an integer.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bootstrap_num_rep</span> <span class="o">=</span> <span class="n">bootstrap_num_rep</span>
+
+        <span class="c1">## whether to print the detailed information of solving MBAR equations</span>
+        <span class="c1">## verbose needs to be a boolean</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">verbose</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;verbose has to be a boolean.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+
+        <span class="c1">## method used to solve the MBAR equation</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;method has to be a string.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Newton&quot;</span><span class="p">,</span> <span class="s2">&quot;L-BFGS-B&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;method has to be Newton or L-BFGS-B.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span>
+
+        <span class="c1">## solve the MBAR equation</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bootstrap</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">dF_init</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">new_zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">dF</span> <span class="o">=</span> <span class="n">_solve_mbar</span><span class="p">(</span>
+                <span class="n">dF_init</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">num_conf</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span><span class="p">,</span>
+                <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+
+            <span class="c1">## shift self._F such that \sum_i F[i]*num_conf[i] = 0</span>
+            <span class="n">F</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">dF</span><span class="o">.</span><span class="n">new_zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">dF</span><span class="p">])</span>
+            <span class="n">pi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_conf</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_F</span> <span class="o">=</span> <span class="n">F</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pi</span> <span class="o">*</span> <span class="n">F</span><span class="p">)</span>
+
+            <span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">_F</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_conf</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log_prob_mix</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">logsumexp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">+</span> <span class="n">b</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log_mu</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">log_prob_mix</span>
+
+            <span class="c1">## Compute self._F_cov under the constraint that \sum_i F[i]*num_conf[i] = 0</span>
+
+            <span class="c1">## There are two ways to compute the covariance matrix of self._F</span>
+            <span class="c1">## See equation 4.2 and 6.4 in the following paper for details</span>
+            <span class="c1">## &quot;Kong, A., et al. &quot;A theory of statistical models for Monte Carlo integration.&quot;</span>
+            <span class="c1">## Journal of the Royal Statistical Society Series B: Statistical Methodology 65.3</span>
+            <span class="c1">## (2003): 585-604.&quot; https://doi.org/10.1111/1467-9868.00404</span>
+
+            <span class="c1">## The first way as shown in the following uses equation 4.2</span>
+            <span class="c1">## this method is more general than the following method, meaning that</span>
+            <span class="c1">## it can also be used to compute covariance matrix for perturbed states.</span>
+            <span class="c1">## Therefore it is used here.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">P</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
+                <span class="o">-</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_F</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_prob_mix</span><span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">t</span><span class="p">()</span>
+            <span class="n">W</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_conf</span><span class="p">)</span>
+            <span class="n">Q</span><span class="p">,</span> <span class="n">R</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">qr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">P</span><span class="p">)</span>
+            <span class="n">A</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">W</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="o">-</span> <span class="n">R</span> <span class="o">@</span> <span class="n">W</span> <span class="o">@</span> <span class="n">R</span><span class="o">.</span><span class="n">T</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_F_cov</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">hermitian</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">)</span> <span class="o">@</span> <span class="n">R</span>
+
+            <span class="c1"># # The second way uses equation 6.4</span>
+            <span class="c1"># if self._batch_size is None:</span>
+            <span class="c1">#     H = _compute_hessian_log_likelihood_of_F(</span>
+            <span class="c1">#         self._F, self.energy, self.num_conf</span>
+            <span class="c1">#     )</span>
+            <span class="c1"># else:</span>
+            <span class="c1">#     H = _compute_hessian_log_likelihood_of_F_in_batch(</span>
+            <span class="c1">#         self._F, self.energy, self.num_conf, self._batch_size</span>
+            <span class="c1">#     )</span>
+            <span class="c1"># Hp = H.new_zeros((self.M + 1, self.M + 1)).cpu()</span>
+            <span class="c1"># Hp[0 : self.M, 0 : self.M] = H</span>
+            <span class="c1"># Hp[self.M, 0 : self.M] = -self.num_conf</span>
+            <span class="c1"># Hp[0 : self.M, self.M] = -self.num_conf</span>
+            <span class="c1"># Hp[self.M, self.M] = 0</span>
+            <span class="c1"># self._F_cov = torch.linalg.inv(-Hp)[0 : self.M, 0 : self.M]</span>
+            <span class="c1"># self._F_cov = self._F_cov - torch.diag(1 / self.num_conf) + 1 / self.N</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_F_std</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_F_cov</span><span class="o">.</span><span class="n">diagonal</span><span class="p">()</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_DeltaF</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_F</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_F</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_DeltaF_cov</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_F_cov</span><span class="o">.</span><span class="n">diag</span><span class="p">()[:,</span> <span class="kc">None</span><span class="p">]</span>
+                <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_F_cov</span><span class="o">.</span><span class="n">diag</span><span class="p">()[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+                <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_F_cov</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_DeltaF_std</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_DeltaF_cov</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">bootstrap</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">dFs</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">log_prob_mix</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">dF_init</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">new_zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_conf_idx</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bootstrap_num_rep</span><span class="p">):</span>
+                <span class="n">conf_idx</span> <span class="o">=</span> <span class="n">_bootstrap_conf_idx</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">num_conf</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">bootstrap_block_size</span>
+                <span class="p">)</span>
+                <span class="n">dF</span> <span class="o">=</span> <span class="n">_solve_mbar</span><span class="p">(</span>
+                    <span class="n">dF_init</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="p">[:,</span> <span class="n">conf_idx</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">num_conf</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span><span class="p">,</span>
+                    <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+                <span class="n">dF_init</span> <span class="o">=</span> <span class="n">dF</span>
+                <span class="n">dFs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dF</span><span class="o">.</span><span class="n">clone</span><span class="p">())</span>
+
+                <span class="n">F</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">dF</span><span class="o">.</span><span class="n">new_zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">dF</span><span class="p">])</span>
+                <span class="c1">## shift F such that \sum_i F[i]*num_conf[i] = 0</span>
+                <span class="n">pi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_conf</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span>
+                <span class="n">F</span> <span class="o">=</span> <span class="n">F</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pi</span> <span class="o">*</span> <span class="n">F</span><span class="p">)</span>
+
+                <span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="n">F</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_conf</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+                <span class="n">log_prob_mix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">torch</span><span class="o">.</span><span class="n">logsumexp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="p">[:,</span> <span class="n">conf_idx</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_conf_idx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">conf_idx</span><span class="p">)</span>
+
+            <span class="n">dF</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">dFs</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">F</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">dF</span><span class="o">.</span><span class="n">new_zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">dF</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">dF</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="c1">## shift F such that \sum_i F[i]*num_conf[i] = 0</span>
+            <span class="n">pi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_conf</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_F_bootstrap</span> <span class="o">=</span> <span class="n">F</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pi</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">F</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_F</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_F_bootstrap</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_F_std</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_F_bootstrap</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_F_cov</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_F_bootstrap</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log_prob_mix</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">log_prob_mix</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">DeltaF</span> <span class="o">=</span> <span class="n">dF</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">dF</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_DeltaF</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">DeltaF</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_DeltaF_std</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">DeltaF</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">F</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Free energies of the states under the constraint :math:`\sum_{k=1}^{M} N_k * F_k = 0`,</span>
+<span class="sd">        where :math:`N_k` is the number of conformations sampled from state k.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_F</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">F_std</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Standard deviation of the free energies of the states under the constraint</span>
+<span class="sd">        :math:`\sum_{k=1}^{M} N_k * F_k = 0`,</span>
+<span class="sd">        where :math:`N_k` is the number of conformations sampled from state k.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_F_std</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">F_cov</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Covariance matrix of the free energies of the states under the constraint</span>
+<span class="sd">        :math:`\sum_{k=1}^{M} N_k * F_k = 0`,</span>
+<span class="sd">        where :math:`N_k` is the number of conformations sampled from state k.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_F_cov</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">DeltaF</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Free energy difference between states.</span>
+<span class="sd">        :math:`\mathrm{DeltaF}[i,j]` is the free energy difference between state j and state i,</span>
+<span class="sd">        i.e., :math:`\mathrm{DeltaF}[i,j] = F[j] - F[i]` .</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_DeltaF</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">DeltaF_std</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Standard deviation of the free energy difference between states.</span>
+<span class="sd">        :math:`\mathrm{DeltaF_std}[i,j]` is the standard deviation of the free energy</span>
+<span class="sd">        difference :math:`\mathrm{DeltaF}[i,j]`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_DeltaF_std</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">log_prob_mix</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;the log probability density of conformations in the mixture distribution.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_prob_mix</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+
+<div class="viewcode-block" id="FastMBAR.calculate_free_energies_of_perturbed_states"><a class="viewcode-back" href="../../API.html#FastMBAR.FastMBAR.calculate_free_energies_of_perturbed_states">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_free_energies_of_perturbed_states</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy_perturbed</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;calculate free energies for perturbed states.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        -----------</span>
+<span class="sd">        energy_perturbed: 2-D float ndarray with size of (L,N)</span>
+<span class="sd">            each row of the energy_perturbed matrix represents a state and</span>
+<span class="sd">            the value energy_perturbed[l,n] represents the reduced energy</span>
+<span class="sd">            of the n&#39;th conformation in the l&#39;th perturbed state.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        results: dict</span>
+<span class="sd">            a dictionary containing the following keys:</span>
+
+<span class="sd">            **F** - the free energy of the perturbed states.</span>
+
+<span class="sd">            **F_std** - the standard deviation of the free energy of the perturbed states. </span>
+
+<span class="sd">            **F_cov** - the covariance between the free energies of the perturbed states.</span>
+
+<span class="sd">            **DeltaF** - :math:`\mathrm{DeltaF}[k,l]` is the free energy difference between state            </span>
+<span class="sd">            :math:`k` and state :math:`l`, i.e., :math:`\mathrm{DeltaF}[k,l] = F[l] - F[k]` .</span>
+
+<span class="sd">            **DeltaF_std** - the standard deviation of the free energy difference.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">energy_perturbed</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">energy_perturbed</span> <span class="o">=</span> <span class="n">energy_perturbed</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+            <span class="n">energy_perturbed</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">energy_perturbed</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">energy_perturbed</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+            <span class="n">energy_perturbed</span> <span class="o">=</span> <span class="n">energy_perturbed</span><span class="o">.</span><span class="n">double</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;energy_perturbed has to be a 2-D ndarray or a 2-D tensor.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">energy_perturbed</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;energy_perturbed has to be a 2-D ndarray or a 2-D tensor.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">energy_perturbed</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;the number of columns in energy_perturbed has to be equal to the number of columns in energy.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">L</span> <span class="o">=</span> <span class="n">energy_perturbed</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">F</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">F_cov</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">F_std</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">bootstrap</span><span class="p">:</span>
+            <span class="n">du</span> <span class="o">=</span> <span class="n">energy_perturbed</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_prob_mix</span>
+            <span class="n">F</span> <span class="o">=</span> <span class="o">-</span><span class="n">torch</span><span class="o">.</span><span class="n">logsumexp</span><span class="p">(</span><span class="o">-</span><span class="n">du</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="n">F_ext</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_F</span><span class="p">,</span> <span class="n">F</span><span class="p">])</span>
+            <span class="n">U</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="p">,</span> <span class="n">energy_perturbed</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">t</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_P</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">U</span> <span class="o">-</span> <span class="n">F_ext</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_prob_mix</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]))</span>
+
+            <span class="n">W</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">num_conf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_conf</span><span class="o">.</span><span class="n">new_zeros</span><span class="p">(</span><span class="n">L</span><span class="p">)]))</span>
+            <span class="n">Q</span><span class="p">,</span> <span class="n">R</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">qr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_P</span><span class="p">)</span>
+            <span class="n">A</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="o">+</span> <span class="n">L</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">W</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="o">-</span> <span class="n">R</span> <span class="o">@</span> <span class="n">W</span> <span class="o">@</span> <span class="n">R</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">F_cov</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">hermitian</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">)</span> <span class="o">@</span> <span class="n">R</span>
+
+            <span class="n">F_cov</span> <span class="o">=</span> <span class="n">F_cov</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="p">:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">M</span> <span class="p">:]</span>
+            <span class="n">F_std</span> <span class="o">=</span> <span class="n">F_cov</span><span class="o">.</span><span class="n">diagonal</span><span class="p">()</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()</span>
+
+            <span class="n">DeltaF</span> <span class="o">=</span> <span class="n">F</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">F</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
+            <span class="n">DeltaF_cov</span> <span class="o">=</span> <span class="n">F_cov</span><span class="o">.</span><span class="n">diag</span><span class="p">()[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">F_cov</span><span class="o">.</span><span class="n">diag</span><span class="p">()[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">F_cov</span>
+            <span class="n">DeltaF_std</span> <span class="o">=</span> <span class="n">DeltaF_cov</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">F_list</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bootstrap_num_rep</span><span class="p">):</span>
+                <span class="n">du</span> <span class="o">=</span> <span class="n">energy_perturbed</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conf_idx</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_prob_mix</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                <span class="n">F</span> <span class="o">=</span> <span class="o">-</span><span class="n">torch</span><span class="o">.</span><span class="n">logsumexp</span><span class="p">(</span><span class="o">-</span><span class="n">du</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">F_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
+            <span class="n">F_list</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">F_list</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">F</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">F_list</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">F_std</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">F_list</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">F_cov</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">F_list</span><span class="p">)</span>
+
+            <span class="n">DeltaF</span> <span class="o">=</span> <span class="n">F</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">F</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
+            <span class="n">DeltaF_std</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">F_list</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">F_list</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;F&quot;</span><span class="p">:</span> <span class="n">F</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
+            <span class="s2">&quot;F_std&quot;</span><span class="p">:</span> <span class="n">F_std</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
+            <span class="s2">&quot;F_cov&quot;</span><span class="p">:</span> <span class="n">F_cov</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
+            <span class="s2">&quot;DeltaF&quot;</span><span class="p">:</span> <span class="n">DeltaF</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
+            <span class="s2">&quot;DeltaF_std&quot;</span><span class="p">:</span> <span class="n">DeltaF_std</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">results</span></div></div>
+
+<span class="k">def</span> <span class="nf">_compute_logp_of_F</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">num_conf</span><span class="p">):</span>
+    <span class="n">logp</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">num_conf</span> <span class="o">*</span> <span class="n">F</span><span class="p">)</span>
+        <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">logsumexp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">energy</span><span class="o">.</span><span class="n">T</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">num_conf</span><span class="p">)</span> <span class="o">-</span> <span class="n">F</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">logp</span>
+
+
+<span class="k">def</span> <span class="nf">_compute_loss_and_grad_of_dF</span><span class="p">(</span><span class="n">dF</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">num_conf</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the loss function and the gradient of dF given energy and num_conf.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dF: 1-D float tensor with size (M-1)</span>
+<span class="sd">        The free energy difference between state 0 and other states. The entry</span>
+<span class="sd">        dF[i] is the free energy difference between state 0 and state i+1.</span>
+<span class="sd">    energy: 2-D float tensor with size (M x N)</span>
+<span class="sd">        A 2-D tensor with size of M x N, where M is the number of stats</span>
+<span class="sd">        and N is the total number of conformations. The entry energy[i,j]</span>
+<span class="sd">    num_conf: 1-D int tensor with size (M)</span>
+<span class="sd">        A 1-D tensor with size of M, where num_conf[i] is the num of</span>
+<span class="sd">        conformations sampled from state i. Therefore, torch.sum(num_conf)</span>
+<span class="sd">        has to be equal to N. All entries in num_conf have to be strictly</span>
+<span class="sd">        greater than 0.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># compute the loss function</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">dF</span><span class="o">.</span><span class="n">new_zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">dF</span><span class="p">])</span>
+    <span class="n">logp</span> <span class="o">=</span> <span class="n">_compute_logp_of_F</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">num_conf</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="o">-</span><span class="n">logp</span> <span class="o">/</span> <span class="n">num_conf</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">energy</span> <span class="o">-</span> <span class="n">F</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">num_conf</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
+
+    <span class="c1"># compute the gradient of the loss function</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="o">-</span><span class="n">u</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">grad</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">num_conf</span> <span class="o">/</span> <span class="n">num_conf</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">grad</span> <span class="o">=</span> <span class="n">grad</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">grad</span>
+
+
+<span class="k">def</span> <span class="nf">_compute_loss_and_grad_of_dF_in_batch</span><span class="p">(</span><span class="n">dF</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">num_conf</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This is the batch version of _compute_loss_and_grad_of_dF.</span>
+<span class="sd">    The batch version is used when the size of energy is too large to fit into the</span>
+<span class="sd">    memory of a GPU. The energy matrix is split into multiple batches and the</span>
+<span class="sd">    calculation is done sequentially.</span>
+
+<span class="sd">    The parameters are the same as _compute_loss_and_grad_of_dF.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="n">num_conf</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">n_over_N</span> <span class="o">=</span> <span class="n">n</span> <span class="o">/</span> <span class="n">N</span>
+
+    <span class="k">if</span> <span class="n">energy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">%</span> <span class="n">batch_size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">num_batch</span> <span class="o">=</span> <span class="n">energy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="n">batch_size</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">num_batch</span> <span class="o">=</span> <span class="n">energy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="n">batch_size</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="n">F</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">dF</span><span class="o">.</span><span class="n">new_zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">dF</span><span class="p">])</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="o">-</span><span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">num_conf</span> <span class="o">*</span> <span class="n">F</span><span class="p">)</span>
+    <span class="n">grad</span> <span class="o">=</span> <span class="o">-</span><span class="n">num_conf</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_batch</span><span class="p">):</span>
+        <span class="n">energy_batch</span> <span class="o">=</span> <span class="n">energy</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">*</span> <span class="n">batch_size</span> <span class="p">:</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">batch_size</span><span class="p">]</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">energy_batch</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">num_conf</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">F</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
+        <span class="n">loss</span> <span class="o">+=</span> <span class="n">torch</span><span class="o">.</span><span class="n">logsumexp</span><span class="p">(</span><span class="o">-</span><span class="n">u</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+        <span class="n">p</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="o">-</span><span class="n">u</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">grad</span> <span class="o">+=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span> <span class="o">/</span> <span class="n">N</span>
+    <span class="n">grad</span> <span class="o">=</span> <span class="n">grad</span> <span class="o">/</span> <span class="n">N</span>
+    <span class="n">grad</span> <span class="o">=</span> <span class="n">grad</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">grad</span>
+
+
+<span class="k">def</span> <span class="nf">_compute_hessian_log_likelihood_of_F</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">num_conf</span><span class="p">):</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">energy</span> <span class="o">-</span> <span class="n">F</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">num_conf</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="o">-</span><span class="n">u</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">pp</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">pp</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">H</span>
+
+
+<span class="k">def</span> <span class="nf">_compute_hessian_log_likelihood_of_F_in_batch</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">num_conf</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">energy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">%</span> <span class="n">batch_size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">num_batch</span> <span class="o">=</span> <span class="n">energy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="n">batch_size</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">num_batch</span> <span class="o">=</span> <span class="n">energy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="n">batch_size</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="n">H</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">new_zeros</span><span class="p">((</span><span class="n">F</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">F</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_batch</span><span class="p">):</span>
+        <span class="n">energy_batch</span> <span class="o">=</span> <span class="n">energy</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">*</span> <span class="n">batch_size</span> <span class="p">:</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">batch_size</span><span class="p">]</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">energy_batch</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span> <span class="o">-</span> <span class="n">F</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">num_conf</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
+
+        <span class="n">p</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="o">-</span><span class="n">u</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">pp</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+        <span class="n">H</span> <span class="o">+=</span> <span class="n">pp</span> <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">H</span>
+
+
+<span class="k">def</span> <span class="nf">_compute_hessian_loss_of_dF</span><span class="p">(</span><span class="n">dF</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">num_conf</span><span class="p">):</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">num_conf</span><span class="p">)</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">dF</span><span class="o">.</span><span class="n">new_zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">dF</span><span class="p">])</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">_compute_hessian_log_likelihood_of_F</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">num_conf</span><span class="p">)</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="o">-</span><span class="n">H</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">/</span> <span class="n">N</span>
+    <span class="k">return</span> <span class="n">H</span>
+
+
+<span class="k">def</span> <span class="nf">_compute_hessian_loss_of_dF_in_batch</span><span class="p">(</span><span class="n">dF</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">num_conf</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">num_conf</span><span class="p">)</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">dF</span><span class="o">.</span><span class="n">new_zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">dF</span><span class="p">])</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">_compute_hessian_log_likelihood_of_F_in_batch</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">num_conf</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="o">-</span><span class="n">H</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">/</span> <span class="n">N</span>
+    <span class="k">return</span> <span class="n">H</span>
+
+
+<span class="k">def</span> <span class="nf">_solve_mbar</span><span class="p">(</span><span class="n">dF_init</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">num_conf</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">batch_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;Newton&quot;</span><span class="p">:</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">fmin_newton</span><span class="p">(</span>
+                <span class="n">f</span><span class="o">=</span><span class="n">_compute_loss_and_grad_of_dF_in_batch</span><span class="p">,</span>
+                <span class="n">hess</span><span class="o">=</span><span class="n">_compute_hessian_loss_of_dF_in_batch</span><span class="p">,</span>
+                <span class="n">x_init</span><span class="o">=</span><span class="n">dF_init</span><span class="p">,</span>
+                <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">num_conf</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">),</span>
+                <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span>
+
+        <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;L-BFGS-B&quot;</span><span class="p">:</span>
+            <span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;disp&quot;</span><span class="p">:</span> <span class="n">verbose</span><span class="p">,</span> <span class="s2">&quot;gtol&quot;</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">}</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">optimize</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="n">r</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+                    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">_compute_loss_and_grad_of_dF_in_batch</span><span class="p">(</span>
+                        <span class="n">energy</span><span class="o">.</span><span class="n">new_tensor</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">energy</span><span class="p">,</span> <span class="n">num_conf</span><span class="p">,</span> <span class="n">batch_size</span>
+                    <span class="p">)</span>
+                <span class="p">],</span>
+                <span class="n">dF_init</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
+                <span class="n">jac</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">method</span><span class="o">=</span><span class="s2">&quot;L-BFGS-B&quot;</span><span class="p">,</span>
+                <span class="n">tol</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">,</span>
+                <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;Newton&quot;</span><span class="p">:</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">fmin_newton</span><span class="p">(</span>
+                <span class="n">f</span><span class="o">=</span><span class="n">_compute_loss_and_grad_of_dF</span><span class="p">,</span>
+                <span class="n">hess</span><span class="o">=</span><span class="n">_compute_hessian_loss_of_dF</span><span class="p">,</span>
+                <span class="n">x_init</span><span class="o">=</span><span class="n">dF_init</span><span class="p">,</span>
+                <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">num_conf</span><span class="p">),</span>
+                <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;L-BFGS-B&quot;</span><span class="p">:</span>
+            <span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;disp&quot;</span><span class="p">:</span> <span class="n">verbose</span><span class="p">,</span> <span class="s2">&quot;gtol&quot;</span><span class="p">:</span> <span class="mf">1e-8</span><span class="p">}</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">optimize</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="n">r</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+                    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">_compute_loss_and_grad_of_dF</span><span class="p">(</span>
+                        <span class="n">energy</span><span class="o">.</span><span class="n">new_tensor</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">energy</span><span class="p">,</span> <span class="n">num_conf</span>
+                    <span class="p">)</span>
+                <span class="p">],</span>
+                <span class="n">dF_init</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
+                <span class="n">jac</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">method</span><span class="o">=</span><span class="s2">&quot;L-BFGS-B&quot;</span><span class="p">,</span>
+                <span class="n">tol</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">,</span>
+                <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">])</span>
+
+
+<span class="k">def</span> <span class="nf">_bootstrap_conf_idx</span><span class="p">(</span><span class="n">num_conf</span><span class="p">,</span> <span class="n">bootstrap_block_size</span><span class="p">):</span>
+    <span class="n">num_conf_cumsum</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">num_conf</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">num_conf_cumsum</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">num_conf_cumsum</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">num_conf_cumsum</span>
+    <span class="n">conf_idx</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">num_conf</span><span class="p">)):</span>
+        <span class="n">len_seq</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_conf</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>  <span class="c1">## using circular block bootstrap</span>
+        <span class="n">num_sample_block</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">len_seq</span> <span class="o">/</span> <span class="n">bootstrap_block_size</span><span class="p">))</span>
+        <span class="n">idxs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">len_seq</span><span class="p">,</span> <span class="p">(</span><span class="n">num_sample_block</span><span class="p">,))</span>
+        <span class="n">sample_idx</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">idx</span> <span class="o">+</span> <span class="n">bootstrap_block_size</span><span class="p">)</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">idxs</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">sample_idx</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">remainder</span><span class="p">(</span><span class="n">sample_idx</span><span class="p">,</span> <span class="n">len_seq</span><span class="p">)</span>
+        <span class="n">sample_idx</span> <span class="o">=</span> <span class="n">sample_idx</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">len_seq</span><span class="p">]</span>
+        <span class="n">sample_idx</span> <span class="o">=</span> <span class="n">sample_idx</span> <span class="o">+</span> <span class="n">num_conf_cumsum</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">conf_idx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sample_idx</span><span class="p">)</span>
+    <span class="n">conf_idx</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">conf_idx</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">conf_idx</span>
+
+
+<span class="k">def</span> <span class="nf">fmin_newton</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">hess</span><span class="p">,</span> <span class="n">x_init</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(),</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">300</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Minimize a function with the Newton&#39;s method.</span>
+
+<span class="sd">    For details of the Newton&#39;s method, see Chapter 9.5 of Prof. Boyd&#39;s book</span>
+<span class="sd">    `Convex Optimization &lt;https://web.stanford.edu/~boyd/cvxbook/&gt;`_.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        f (callable): the objective function to be minimized.</span>
+<span class="sd">            f(x:Tensor, *args) -&gt;  (y:Tensor, grad:Tensor), where</span>
+<span class="sd">            y is the function value and grad is the gradient.</span>
+<span class="sd">        hess (callable): the function to compute the Hessian matrix.</span>
+<span class="sd">            hess(x:Tensor, *args) -&gt; a two dimensional tensor.</span>
+<span class="sd">        x_init (Tensor): the initial value.</span>
+<span class="sd">        args (tuple): extra parameters for f and hess.</span>
+<span class="sd">        verbose (bool): whether to print minimizing log information.</span>
+<span class="sd">        eps (float): tolerance for stopping</span>
+<span class="sd">        max_iter (int): maximum number of iterations.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">## constants used in backtracking line search</span>
+    <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.2</span>
+
+    <span class="c1">## Newton&#39;s method for minimizing the function</span>
+    <span class="n">indx_iter</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">N_func</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==================================================================&quot;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;                RUNNING THE NEWTON&#39;S METHOD                     </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;                           * * *                                </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;                    Tolerance EPS = </span><span class="si">{</span><span class="n">eps</span><span class="si">:</span><span class="s2">.5E</span><span class="si">}</span><span class="s2">                  </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1">## check if x_init is a pytorch tensor</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x_init</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x_init</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x_init</span>
+
+    <span class="k">while</span> <span class="n">indx_iter</span> <span class="o">&lt;</span> <span class="n">max_iter</span><span class="p">:</span>
+        <span class="n">loss</span><span class="p">,</span> <span class="n">grad</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="n">N_func</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x_init</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+                <span class="n">H</span> <span class="o">=</span> <span class="n">hess</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">H</span> <span class="o">=</span> <span class="n">hess</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+            <span class="n">newton_direction</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="o">-</span><span class="n">grad</span><span class="p">)</span>
+            <span class="n">newton_decrement_square</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="n">grad</span> <span class="o">*</span> <span class="n">newton_direction</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">newton_direction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="o">-</span><span class="n">grad</span><span class="p">)</span>
+            <span class="n">newton_decrement_square</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="n">grad</span> <span class="o">*</span> <span class="n">newton_direction</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;At iterate </span><span class="si">{</span><span class="n">indx_iter</span><span class="si">:</span><span class="s2">4d</span><span class="si">}</span><span class="s2">; f= </span><span class="si">{</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.5E</span><span class="si">}</span><span class="s2">;&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;|1/2*Newton_decrement^2|: </span><span class="si">{</span><span class="n">newton_decrement_square</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="si">:</span><span class="s2">.5E</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">newton_decrement_square</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">&lt;=</span> <span class="n">eps</span><span class="p">:</span>
+            <span class="k">break</span>
+
+        <span class="c1">## backtracking line search</span>
+        <span class="n">max_ls_iter</span> <span class="o">=</span> <span class="mi">100</span>
+        <span class="n">step_size</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+        <span class="n">indx_ls_iter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">indx_ls_iter</span> <span class="o">&lt;</span> <span class="n">max_ls_iter</span><span class="p">:</span>
+            <span class="n">target_loss</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">step_size</span> <span class="o">*</span> <span class="n">newton_direction</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+            <span class="n">N_func</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">approximate_loss</span> <span class="o">=</span> <span class="n">loss</span> <span class="o">+</span> <span class="n">step_size</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="n">newton_decrement_square</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">target_loss</span> <span class="o">&lt;</span> <span class="n">approximate_loss</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">step_size</span> <span class="o">=</span> <span class="n">step_size</span> <span class="o">*</span> <span class="n">beta</span>
+            <span class="n">indx_ls_iter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">step_size</span> <span class="o">*</span> <span class="n">newton_direction</span>
+        <span class="n">indx_iter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;N_iter   = total number of iterations&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;N_func   = total number of function and gradient evaluations&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;F        = final function value </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;             * * *     </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;N_iter    N_func        F&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">indx_iter</span><span class="o">+</span><span class="mi">1</span><span class="si">:</span><span class="s2">6d</span><span class="si">}</span><span class="s2">    </span><span class="si">{</span><span class="n">N_func</span><span class="si">:</span><span class="s2">6d</span><span class="si">}</span><span class="s2">    </span><span class="si">{</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.6E</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  F = </span><span class="si">{</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.12f</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">newton_decrement_square</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">&lt;=</span> <span class="n">eps</span> <span class="ow">and</span> <span class="n">indx_iter</span> <span class="o">&lt;</span> <span class="n">max_iter</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CONVERGENCE: 1/2*Newton_decrement^2 &lt; EPS&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CONVERGENCE: NUM_OF_ITERATION REACH MAX_ITERATION&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+        <span class="s2">&quot;N_iter&quot;</span><span class="p">:</span> <span class="n">indx_iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;N_func&quot;</span><span class="p">:</span> <span class="n">N_func</span><span class="p">,</span>
+        <span class="s2">&quot;F&quot;</span><span class="p">:</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
+        <span class="s2">&quot;half_newton_decrement_square&quot;</span><span class="p">:</span> <span class="n">newton_decrement_square</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
+    <span class="p">}</span>
+</pre></div>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Xinqiang Ding
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2019 Xinqiang Ding, Jonah Z. Vilseck, and Charles L. Brooks III..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
