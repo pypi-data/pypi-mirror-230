@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "pythrel"
+version = "0.1.1"
+description = "Simple SQL ORM with support for several DB providers"
+authors = ["Dax Harris <matteovh@gmail.com>"]
+readme = "README.md"
+license = "MIT"
+repository = "https://github.com/iTecAI/pythrel"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pydantic = "^2.3.0"
+psycopg = "^3.1.10"
+
+[tool.poetry.scripts]
+test_sqlite = "tests.sqlite:main"
+test_pg = "tests.postgres:main"
+
+
+[tool.poetry.group.dev.dependencies]
+python-dotenv = "^1.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
