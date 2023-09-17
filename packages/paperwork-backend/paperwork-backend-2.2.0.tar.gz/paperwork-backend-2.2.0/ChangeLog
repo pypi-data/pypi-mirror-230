@@ -1,0 +1,232 @@
+2023/09/16 - 2.2.0:
+- By default, use PNG instead of JPEG (See issue #1021 for rationale).
+- setup.py has been replaced by pyproject.toml
+- drop dependency on python-Levenshtein.
+- model.pdf: Fix: When moving an edited PDF page from one document to another,
+  make sure to export the PDF page as the original image page (paper.X.png)
+  instead of the edited one (paper.X.edited.png).
+- cairo.pillow: optimization: use cairo.ImageSurface.create_from_data() now
+  that it's available.
+- beacon: if openpaper.work is unreachable, catch the exception to not bother
+  the user uselessly
+- guesswork.labels.sklearn: store the model on-disk to reload it more quickly
+  as long as nothing has changed.
+- Help documents: Help documents are read-only. Therefore if the user tries
+  to add pages to them, redirect the new pages to a new document.
+- model.thumbnail: handle gracefully corrupted thumbnails.
+- cairo.pillow: do not assume that on-disk images are RGB/RGBA (they may have
+  been optimized by scripts with 'convert' for instance).
+- PDF: Handle gracefully UnicodeDecodeError that happen sometimes on Windows.
+- Handle images too big for pillow as gracefully as possible: do not crash
+  but replace them by a tile with a text explaining the image is too big.
+- Libinsane: Make it possible to specify custom scan option values
+  (thanks to auriocus on forum.openpaper.work)
+- PDF: in case a page_map.csv is corrupted, log which one.
+- PDF: Make the readign of page_map.csv more resilient.
+- chkworkdir: in case page_map.csv is corrupted, fix the document by deleting
+  the page_map.csv and moving the pages around
+
+2023/01/08 - 2.1.2:
+- Cairo renderers (Image/PDF): optimisation: add a cache
+- Cairo image renderer: optimisation: cairo.ImageSurface.create_for_data() has been implemented and can now be used
+- Cairo renderers: cleanup: Move the blurring code to a dedicated plugin
+- autoselect_scanner: workaround: instead of looking for scanners when Paperwork starts, look for a scanner if and only if we failed to find the scanner currently defined in Paperwork's configuration. With some Sane backends, it's much safer to not try listing devices when starting.
+- Fix: TIFF files may have the extension .tiff but also .tif
+- ignore files at the root of the work directory
+- libreoffice converter: fix file descriptor leak
+- guesswork.label.sklearn: fix weird crash based on user logs
+  (original cause is still unclear)
+- fix test failure with recent pillow (thanks to Guillaume Girol)
+
+2022/01/31 - 2.1.1:
+- guesswork.label.sklearn: Fix: Handle gracefully documents without text
+- model.pdf: take into account some PDF may be really really damaged
+
+2021/12/05 - 2.1.0:
+- Support for all document types supported by LibreOffice (requires LibreOffice
+  to be installed)
+- Support for password-protected PDF files
+- Label guessing: replace simplebayes by sklearn (GaussianNB): require more
+  resources but much more accurate
+- Version data files: If the version changes, rebuild them all
+- Fix page export: img: do not use page number in file names
+- Cropping by scanner calibration: Never crop pages that already have text
+  (fix issue where cropping was applied when changing document date / ID)
+- API: rename transaction methods: add_obj() --> add_doc(),
+  upd_obj() --> upd_doc(), del_obj() --> del_doc(),
+  unchanged_obj() --> unchanged_doc()
+
+2021/05/24 - 2.0.3:
+- hOCR: fix page_get_text_by_url(): Do not return the hOCR title in the text
+  (it's always "OCR output").
+- Image loading (used for file import): file extension check must be
+  case-insensitive (".jpeg" and ".JPEG" must be both accepted)
+- OCR: Fix: By default, never run OCR on pages that already have text.
+- Take into account Cairo image size limitations (dimensions can't be higher
+  than 32k). Crop images accordingly if required.
+- PDF: work around possible weird replies from LibPoppler regarding
+  line/word boxes (avoid useless background exception)
+- Swedish translations added
+- Backend: openpaperwork_gtk.fs.gio has been removed from the minimum list of
+  required plugins. fs.python is good enough to load the configuration.
+- Backend: model.labels: Call to callbacks "on_all_labels_loaded" has been
+  removed. It was redundant with the call to callbacks "on_label_loading_end"
+
+2021/01/01 - 2.0.2:
+- beacon.sysinfo: report some extra infos to openpaper.work:
+  CPU max frequency, number of CPU cores, amount of memory, version of Python.
+- add dependency on psutil
+- PyOCR: Fix for people who seem to have no locale configured (?!)
+- PDF: Fix: Write page mapping in the order of original page
+  indexes, as expected when we read it back later.
+  (otherwise, we may get weird behaviours)
+- Labels: When removing labels, don't add extra empty lines
+
+2020/11/15 - 2.0.1:
+- Model: Fix: When the user move a page, they may actually creating a new document.
+- Libinsane + bug report: the file to attach to the bug report should be
+  called 'scanner_*.json', not 'statistics_*.json'
+- Import: Don't use the same name for recursive importer and single importer.
+- Import: If the single file importer has matched a file to import, make sure
+  the recursive one doesn't match it too.
+- Windows: poppler.memory: work around suspected memory leak regarding
+  Gio.MemoryInput.new_from_data()
+- When thumbnail are deleted by user action, never send them to trash, really
+  delete them instead.
+- Include tests in Pypi package (thanks to Elliott Sales de Andrade)
+
+2020/10/17 - 2.0:
+- Full rewrite
+- Use of plugin system of openpaperwork_core to split features
+- PDF can be edited
+- Pages can be reinitialized to their initial states (reset)
+- Multiple languages can be used for OCR
+- Automated tests have been added
+- Features that could be reused in other applications have been move to
+  openpaperwork_core and openpaperwork_gtk
+- Thumbnails are slightly smaller (they will be resized automatically)
+
+2019/12/20 - 1.3.1:
+- Backend: Check if thumbnail file is writable before updating it (thanks to
+  Gregor Godbersen)
+- Backend: Make indexation more resilient to errors (corrupted PDFs, etc).
+- Backend: chkdeps: look for Libinsane (no known package yet)
+
+2019/08/17 - 1.3.0:
+- PDF export: PDFs can now be regenerated when exporting. Regenerated versions
+  will include words from the OCR, but some metadata may be lost.
+- Optimization: Speed up conversions from PIL image to GdkPixbuf (used for
+  export previews and thumbnail display)
+- Disable the use of a dedicated process for index operations: it
+  prevents debugging
+- New dependency: Do not use platform.dist() or platform.linux_distribution()
+  anymore: It's deprecated and will be removed in Python 3.8. Use instead the
+  module 'distro'.
+- paperwork-shell: Add name and label arguments to command 'import' (thanks to
+  Stéphane Brunner)
+- Backend: Fix importing PNG files with transparency (thanks to Balló György)
+- Fix warnings related to regexes escaping + various other cleanups (thanks
+  to Elliott Sales de Andrade)
+
+2018/03/01 - 1.2.4:
+- Import: Remove ambiguity: Importers designed for import of directory
+  will not try to import individual files. They will just let the importers
+  designed for importing single file take care of it.
+- Label guessing: Fix the way bayesian filters are updated (will trigger an
+  index rebuild).
+- paperwork-shell/labels/guessing: return scores as well as labels
+  (useful for testing/debuging)
+- Optim: PDF: Keep in memory the page sizes. It's an information very often
+  requested when rendering and it cannot change with PDFs
+
+2018/02/01 - 1.2.3:
+- Windows: Fix labels handling: Fix CSV file reading
+- Fix global deletion of a label
+- Flatpak: Fix deletion of documents
+- PDF: Fix file descriptor leak
+- Flatpak: Fix support on English systems
+
+2017/11/14 - 1.2.2:
+- PDF: Fix thumbnail sizes. Incorrect thumbnails will be automatically
+  regenerated
+
+2017/08/26 - 1.2.1:
+- paperwork-shell: improve help string of 'paperwork-shell chkdeps'
+- Fix label deletion / renaming
+- Windows: Fix FS.safe() when used for PDF import
+- Windows: Fix FS.unsafe() (used for PDF export)
+
+2017/07/11 - 1.2.0:
+- API: remove methods doc.drop_cache() and page.drop_cache()
+- API: docsearch: add method close()
+- paperwork-shell: Use JSON format for the output (except for 'paperwork-shell
+  dump')
+- Use GIO functions instead of Python functions (open(), read(), close(), etc)
+- Use URIs instead of Unix file paths (file:///...)
+- Index is now managed in a separate process (avoid Python GIL locking + UI
+  freezes)
+- Import: Make it possible to import image folder
+- Importers: provide a list of supported file formats (mime types)
+- Import: To figure out a file type, look at the file extensions but also the
+  mime type in case the extension is not set
+- Import: Make the importers able to handle multiple Files/URIs instead of just
+  one
+- paperwork-shell import: Run OCR on imported pages that have no words
+- paperwork-shell: add command 'ocr'
+- Configuration: [Global]:workdirectory is now an URI encoded in base64
+  (base64 encoding was required due to limitations of Python's ConfigParser)
+- DocSearch: When unable to open the index, destroy it and rebuild it from scratch
+- Add a new document type: ExternalPdfDoc: Used to display PDF that are outside
+  of the work directory (for instance application help manual)
+- Configuration setting [OCR]:lang is now managed by the backend instead of
+  the frontend
+
+2017/02/09 - 1.1.2:
+- PDF: When PdfDoc.drop_cache() is called, make sure *all* the references to
+  the Poppler objects are dropped, including those to the pages of the document
+
+2017/02/05 - 1.1.1:
+- No change. Version created only to match Paperwork-gui version.
+
+2017/01/30 - 1.1.0:
+- Add methods doc.has_ocr() and page.has_ocr() indicating if OCR has already
+  been run on a given doc/page or not yet.
+  Used in GUI for the option "Redo OCR on all documents" as it must act only
+  on documents where OCR has already been done in the past (ie not PDF with
+  text included)
+- Optim: Provides a method page.get_image() returning an already resized
+  Pillow image (PDF rendering optimisation)
+- Export: Report progression
+- Optim: PDF thumbnail rendering: Keep a cached version of the first page only.
+  The other pages can be rendered on the fly
+- Fix: Label directory name use base64 encoding, and this encoding can result
+  in strings containing '/'. Those characters must be replaced (by '_')
+- Fix: util/find_language(): If the system locale is not set properly, pycountry
+  may raise UnicodeDecodeError.
+- paperwork-shell: Add commands 'search', 'dump', 'switch_workdir', 'rescan',
+  'show', 'import', 'delete_doc', 'guess_labels', 'add_label', 'remove_label',
+  'rename'
+- Import: When importing a single PDF, don't import it if it was already
+  previously imported
+- Import: Provides detailed information and statistics regarding what has been
+  imported (return value of Importer.import_doc() has changed)
+
+1.0.6:
+- No change. Version created only to match Paperwork-gui version.
+
+1.0.5:
+- Doc deletion: Drop cache and file descripts *before* deleting document
+(optional on GNU/Linux, but required on Windows)
+
+1.0.4:
+- Windows: Fix image import
+
+1.0.3:
+- Windows: Fix import/export
+
+1.0.2:
+- No change. Version created only to match Paperwork-gui version.
+
+1.0.1:
+- util/find_language(): fix pycountry db lookup
+- Windows: hide ~/.config instead of ~/.config/paperwork.conf
