@@ -1,0 +1,110 @@
+body {
+    margin: 0;
+    padding: 0;
+	background-color: #F5F7FA;
+}
+
+div.block {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	background-color: #5F5055;
+}
+
+div.block:nth-child(odd) {
+	background-color: #FDF6E3;
+}
+
+div.block .block-box {
+	margin: 1em;
+	padding: 1em;
+	text-align: center;
+}
+
+.block-box .highlight {
+	background-color: #F5F7FA;
+	padding: 1.5em;
+	margin: 1em;
+	max-width: 50em;
+	box-shadow: 0 8px 16px 0 #23181C;
+	border-radius: 5em;
+}
+
+div.block:nth-child(odd) .block-box .highlight {
+	box-shadow: 0 8px 16px 0 #352A30;
+}
+
+.block-box img {
+	padding: 10px;
+	max-width: 20em;
+	border-radius: 50%;
+}
+
+div.highlight h1 {
+	font-size: 3em;
+	margin: 5px;
+	padding: 5px;
+}
+
+div.highlight h2 {
+	font-size: 2.5em;
+	margin: 5px;
+	padding: 5px;
+}
+
+div.highlight h3 {
+	font-size: 1.5em;
+	margin: 5px;
+	padding: 5px;
+}
+
+div.highlight p {
+	font-size: 150%;
+	font-family: Arial, sans-serif;
+}
+
+@media (max-width: 600px) {
+
+	div.block .block-box {
+		padding: 0.5em;
+		margin: 0.5em;
+	}
+
+	.block-box img {
+		padding-top: 0;
+	}
+
+}
+
+@media (min-width: 999px) {
+	div.highlight.first h1 {
+		font-size: 5em;
+		margin: 5px;
+		padding: 5px;
+	}
+
+	div.highlight.first h3 {
+		font-size: 3em;
+		margin: 5px;
+		padding: 5px;
+	}
+
+	div.highlight h1 {
+		font-size: 3.5em;
+		margin: 5px;
+		padding: 5px;
+	}
+
+	div.highlight h2 {
+		font-size: 3em;
+		margin: 5px;
+		padding: 5px;
+	}
+
+	div.highlight h3 {
+		font-size: 2em;
+		margin: 5px;
+		padding: 5px;
+	}
+}
