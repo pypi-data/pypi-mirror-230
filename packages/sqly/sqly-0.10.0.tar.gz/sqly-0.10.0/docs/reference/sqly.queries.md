@@ -1,0 +1,2 @@
+# sqly.queries
+::: sqly.queries
