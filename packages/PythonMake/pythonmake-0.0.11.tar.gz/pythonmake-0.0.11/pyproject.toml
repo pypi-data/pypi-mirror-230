@@ -1,0 +1,60 @@
+[tool.poetry]
+name = "PythonMake"
+version = "0.0.11"
+description = "A simple CLI wrapper"
+authors = ["hoangson <lehoangsonsg@gmail.com>"]
+readme = "README.md"
+packages = [
+    {include="PyMake"}
+]
+license = "MIT"
+repository="https://github.com/haryle/PyMake"
+keywords= ["cli", "commands"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: System Administrators",
+    "Operating System :: Unix",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development",
+]
+
+
+[tool.poetry.dependencies]
+python = ">=3.10"
+PyYAML = "^6.0.1"
+pydantic = "^2.3.0"
+paramiko = "^3.3.1"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.1"
+pytest-cov = "^4.1.0"
+ruff = "^0.0.287"
+black = "^23.9.0"
+pre-commit = "^3.4.0"
+
+[tool.poetry.scripts]
+pymake = "PyMake.main:main"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.coverage.report]
+exclude_also = [
+    "def __repr__",
+    "@(abc\\.)?abstractmethod",
+    "def __getattr__",
+    "if TYPE_CHECKING:"
+]
+
+[tool.ruff]
+line-length = 88
+src = ["PyMake"]
+target-version = "py310"
