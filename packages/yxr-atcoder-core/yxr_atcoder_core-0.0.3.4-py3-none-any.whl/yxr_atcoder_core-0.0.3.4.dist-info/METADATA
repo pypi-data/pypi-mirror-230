@@ -1,0 +1,101 @@
+Metadata-Version: 2.1
+Name: yxr-atcoder-core
+Version: 0.0.3.4
+Summary: Simple Atcoder core api
+Project-URL: Homepage, https://github.com/CroMarmot/yxr-atcoder-core
+Project-URL: Bug Tracker, https://github.com/CroMarmot/yxr-atcoder-core/issues
+Author-email: YeXiaoRain <yexiaorain@gmail.com>
+License: MIT License
+        
+        Copyright (c) 2022 陈鼫RWHTYFZ
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+License-File: LICENSE
+Keywords: api,atcoder,yxr
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.8
+Requires-Dist: beautifulsoup4>=4
+Requires-Dist: dataclasses-json
+Requires-Dist: lxml>=4
+Requires-Dist: requests>=2
+Requires-Dist: toml
+Requires-Dist: types-beautifulsoup4
+Provides-Extra: dev
+Requires-Dist: build; extra == 'dev'
+Requires-Dist: yapf>=0.32; extra == 'dev'
+Requires-Dist: yxr-atcoder-core[doc,test]; extra == 'dev'
+Provides-Extra: doc
+Requires-Dist: furo; extra == 'doc'
+Requires-Dist: myst-parser; extra == 'doc'
+Requires-Dist: sphinx>=5; extra == 'doc'
+Provides-Extra: test
+Requires-Dist: coverage>=6; extra == 'test'
+Requires-Dist: mypy; extra == 'test'
+Requires-Dist: pytest>=7; extra == 'test'
+Description-Content-Type: text/markdown
+
+# YeXiaoRain-Atcoder-Core
+
+[![linting: yapf](https://img.shields.io/badge/linting-yapf-green)](https://github.com/google/yapf)
+[![pages-build-deployment](https://github.com/CroMarmot/yxr-atcoder-core/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/CroMarmot/yxr-atcoder-core/actions/workflows/pages/pages-build-deployment)
+[![Unit test](https://github.com/CroMarmot/yxr-atcoder-core/actions/workflows/unit-test.yml/badge.svg)](https://github.com/CroMarmot/yxr-atcoder-core/actions/workflows/unit-test.yml)
+
+![python3.8+](https://shields.io/badge/python-3.8+-green?logo=python)
+![requests](https://shields.io/badge/requests-2-green)
+![BeautifulSoup4](https://shields.io/badge/BeautifulSoup-4-green)
+![lxml](https://shields.io/badge/lxml-4-green)
+![yapf](https://shields.io/badge/yapf-0.32-green)
+![sphinx](https://shields.io/badge/Sphinx-5-green)
+
+## About
+
+Some Atcoder core api with `python >= 3.8`.
+
+Based on this library, you can easily build command-line programs and intermediate services.
+
+## Docs
+
+[User Document](https://cromarmot.github.io/yxr-atcoder-core/usage/index.html)
+
+[Developer Document](https://cromarmot.github.io/yxr-atcoder-core/dev/index.html)
+
+## Currrent Feature List
+
+- ac_core.auth module
+  - fetch_login()
+  - is_logged_in()
+- ac_core.contest module
+  - fetch_standing()
+  - fetch_tasks()
+  - fetch_tasks_meta()
+  - parse_standing()
+  - parse_tasks()
+- ac_core.language module
+  - fetch_language()
+- ac_core.problem module
+  - parse_task()
+- ac_core.result module
+  - fetch_result()
+  - fetch_result_by_url()
+  - parse_result()
+- ac_core.submit module
+  - fetch_submit()
+- ac_core.url module
+  - url_2_contest_id()
