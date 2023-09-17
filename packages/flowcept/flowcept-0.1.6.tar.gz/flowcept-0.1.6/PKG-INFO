@@ -1,0 +1,149 @@
+Metadata-Version: 2.1
+Name: flowcept
+Version: 0.1.6
+Summary: FlowCept is a runtime data integration system that empowers any data processing system to capture and query workflow provenance data using data observability, requiring minimal or no changes in the target system code. It seamlessly integrates data from multiple workflows, enabling users to comprehend complex, heterogeneous, and large-scale data from various sources in federated environments.
+Home-page: https://github.com/ORNL/flowcept
+Author: Oak Ridge National Laboratory
+License: MIT
+Keywords: ai,ml,machine-learning,provenance,lineage,responsible-ai,databases,big-data,provenance,tensorboard,data-integration,scientific-workflows,dask,reproducibility,workflows,parallel-processing,lineage,model-management,mlflow,responsible-ai
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: Natural Language :: English
+Classifier: Topic :: System :: Distributed Computing
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+Classifier: Topic :: System :: Logging
+Classifier: Topic :: System :: Monitoring
+Classifier: Topic :: Database
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: PyYAML==6.0
+Requires-Dist: redis==4.4.2
+Requires-Dist: psutil==5.9.5
+Requires-Dist: nvidia-ml-py==11.525.131
+Provides-Extra: zambeze
+Requires-Dist: pika==1.3.1; extra == "zambeze"
+Provides-Extra: mlflow
+Requires-Dist: mlflow-skinny==2.1.1; extra == "mlflow"
+Requires-Dist: SQLAlchemy==1.4.42; extra == "mlflow"
+Requires-Dist: alembic==1.8.1; extra == "mlflow"
+Requires-Dist: watchdog==2.2.1; extra == "mlflow"
+Provides-Extra: tensorboard
+Requires-Dist: pandas==1.5.1; extra == "tensorboard"
+Requires-Dist: tensorboard==2.13.0; extra == "tensorboard"
+Requires-Dist: tensorflow==2.13.0; extra == "tensorboard"
+Requires-Dist: tbparse==0.0.7; extra == "tensorboard"
+Provides-Extra: mongo
+Requires-Dist: pymongo==4.3.3; extra == "mongo"
+Provides-Extra: dask
+Requires-Dist: tomli==1.1.0; extra == "dask"
+Requires-Dist: dask[distributed]==2022.12.0; extra == "dask"
+Provides-Extra: webserver
+Requires-Dist: flask==2.2.2; extra == "webserver"
+Requires-Dist: requests==2.28.2; extra == "webserver"
+Requires-Dist: flask_restful==0.3.9; extra == "webserver"
+Provides-Extra: full
+Requires-Dist: PyYAML==6.0; extra == "full"
+Requires-Dist: redis==4.4.2; extra == "full"
+Requires-Dist: psutil==5.9.5; extra == "full"
+Requires-Dist: nvidia-ml-py==11.525.131; extra == "full"
+Requires-Dist: pika==1.3.1; extra == "full"
+Requires-Dist: mlflow-skinny==2.1.1; extra == "full"
+Requires-Dist: SQLAlchemy==1.4.42; extra == "full"
+Requires-Dist: alembic==1.8.1; extra == "full"
+Requires-Dist: watchdog==2.2.1; extra == "full"
+Requires-Dist: pandas==1.5.1; extra == "full"
+Requires-Dist: tensorboard==2.13.0; extra == "full"
+Requires-Dist: tensorflow==2.13.0; extra == "full"
+Requires-Dist: tbparse==0.0.7; extra == "full"
+Requires-Dist: pymongo==4.3.3; extra == "full"
+Requires-Dist: tomli==1.1.0; extra == "full"
+Requires-Dist: dask[distributed]==2022.12.0; extra == "full"
+Requires-Dist: flask==2.2.2; extra == "full"
+Requires-Dist: requests==2.28.2; extra == "full"
+Requires-Dist: flask_restful==0.3.9; extra == "full"
+
+[![Build](https://github.com/ORNL/flowcept/actions/workflows/create-release-n-publish.yml/badge.svg)](https://github.com/ORNL/flowcept/actions/workflows/create-release-n-publish.yml)
+[![PyPI](https://badge.fury.io/py/flowcept.svg)](https://pypi.org/project/flowcept)
+[![Tests](https://github.com/ORNL/flowcept/actions/workflows/run-tests.yml/badge.svg)](https://github.com/ORNL/flowcept/actions/workflows/run-tests.yml)
+[![Code Formatting](https://github.com/ORNL/flowcept/actions/workflows/code-formatting.yml/badge.svg)](https://github.com/ORNL/flowcept/actions/workflows/code-formatting.yml)
+[![License: MIT](https://img.shields.io/github/license/ORNL/flowcept)](LICENSE)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
+# FlowCept
+
+FlowCept is a runtime data integration system that empowers any data processing system to capture and query workflow 
+provenance data using data observability, requiring minimal or no changes in the target system code. It seamlessly integrates data from multiple workflows, enabling users to comprehend complex, heterogeneous, and large-scale data from various sources in federated environments.
+
+FlowCept is intended to address scenarios where multiple workflows in a science campaign or in an enterprise run and generate 
+important data to be analyzed in an integrated manner. Since these workflows may use different data manipulation tools (e.g., provenance or lineage capture tools, database systems, performance profiling tools) or can be executed within
+different parallel computing systems (e.g., Dask, Spark, Workflow Management Systems), its key differentiator is the 
+capability to seamless and automatically integrate data from various workflows using data observability.
+It builds an integrated data view at runtime enabling end-to-end exploratory data analysis and monitoring.
+It follows [W3C PROV](https://www.w3.org/TR/prov-overview/) recommendations for its data schema.
+It does not require changes in user codes or systems (i.e., instrumentation). 
+All users need to do is to create adapters for their systems or tools, if one is not available yet. 
+
+Currently, FlowCept provides adapters for: [Dask](https://www.dask.org/), [MLFlow](https://mlflow.org/), [TensorBoard](https://www.tensorflow.org/tensorboard), and [Zambeze](https://github.com/ORNL/zambeze). 
+
+See the [Jupyter Notebooks](notebooks) for utilization examples.
+
+See the [Contributing](CONTRIBUTING.md) file for guidelines to contribute with new adapters. Note that we may use the
+term 'plugin' in the codebase as a synonym to adapter. Future releases should standardize the terminology to use adapter.
+
+
+## Install and Setup:
+
+1. Install FlowCept: 
+
+`pip install .[full]` in this directory (or `pip install flowcept[full]`).
+
+For convenience, this will install all dependencies for all adapters. But it can install
+dependencies for adapters you will not use. For this reason, you may want to install 
+like this: `pip install .[adapter_key1,adapter_key2]` for the adapters we have implemented, e.g., `pip install .[dask]`.
+See [extra_requirements](extra_requirements) if you want to install the dependencies individually.
+ 
+2. Start MongoDB and Redis:
+
+To enable the full advantages of FlowCept, the user needs to run Redis, as FlowCept's message queue system, and MongoDB, as FlowCept's main database system.
+The easiest way to start Redis and MongoDB is by using the [docker-compose file](deployment/compose.yml) for its dependent services: 
+MongoDB and Redis. You only need RabbitMQ if you want to observe Zambeze messages as well.
+
+3. Define the settings (e.g., routes and ports) accordingly in the [settings.yaml](resources/settings.yaml) file.
+
+4. Start the observation using the Controller API, as shown in the [Jupyter Notebooks](notebooks).
+
+5. To use FlowCept's Query API, see utilization examples in the notebooks.
+
+
+## Performance Tuning for Performance Evaluation
+
+In the settings.yaml file, the following variables might impact interception performance:
+
+```yaml
+main_redis:
+  buffer_size: 50
+  insertion_buffer_time_secs: 5
+
+plugin:
+  enrich_messages: false
+```
+
+And other variables depending on the Plugin. For instance, in Dask, timestamp creation by workers add interception overhead.
+
+## See also
+
+- [Zambeze Repository](https://github.com/ORNL/zambeze)
+
+## Acknowledgement
+
+This research uses resources of the Oak Ridge Leadership Computing Facility 
+at the Oak Ridge National Laboratory, which is supported by the Office of 
+Science of the U.S. Department of Energy under Contract No. DE-AC05-00OR22725.
