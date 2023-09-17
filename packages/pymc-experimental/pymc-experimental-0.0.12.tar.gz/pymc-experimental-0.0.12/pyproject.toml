@@ -1,0 +1,27 @@
+[tool.pytest.ini_options]
+minversion = "6.0"
+xfail_strict = true
+addopts = [
+  "-v",
+  "--doctest-modules",
+  "--ignore=pymc_experimental/model_builder.py"
+]
+
+
+[tool.black]
+line-length = 100
+
+[tool.coverage.report]
+exclude_lines = [
+  "pragma: nocover",
+  "raise NotImplementedError",
+  "if TYPE_CHECKING:",
+]
+
+[tool.isort]
+profile = "black"
+
+[tool.nbqa.mutate]
+isort = 1
+black = 1
+pyupgrade = 1
