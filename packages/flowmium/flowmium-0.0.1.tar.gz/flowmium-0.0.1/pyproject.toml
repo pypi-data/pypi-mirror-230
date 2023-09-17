@@ -1,0 +1,40 @@
+[tool.poetry]
+name = "flowmium"
+version = "0.0.1"
+description = "Workflow orchestrator for kubernetes."
+license = "MIT"
+authors = ["RainingComputers <vishnu.vish.shankar@gmail.com>"]
+readme = "README.md"
+homepage = "https://github.com/RainingComputers/Flowmium"
+repository = "https://github.com/RainingComputers/Flowmium"
+keywords = ["flowmium"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Development Status :: 3 - Alpha"
+]
+packages = [
+    { include = "flowmium" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+requests = "^2.31.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.1.0"
+pytest = "^7.2.2"
+flake8 = "^6.0.0"
+mypy = "^1.1.1"
+types-requests = "^2.31.0.1"
+sphinx = "^7.2.5"
+sphinx-markdown-builder = "^0.6.5"
+sphinx-rtd-theme = "^1.3.0"
+sphinx-toolbox = "^3.5.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
