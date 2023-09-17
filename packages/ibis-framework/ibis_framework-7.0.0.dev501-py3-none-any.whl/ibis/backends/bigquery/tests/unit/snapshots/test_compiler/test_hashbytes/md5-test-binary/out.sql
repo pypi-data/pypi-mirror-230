@@ -1,0 +1,1 @@
+SELECT md5(b'test') AS `tmp`
