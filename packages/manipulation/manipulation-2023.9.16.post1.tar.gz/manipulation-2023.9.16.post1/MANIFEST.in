@@ -1,0 +1,18 @@
+include LICENSE.txt README.md pyproject.toml setup.cfg
+recursive-include manipulation *.py
+recursive-include manipulation *.npy
+recursive-include manipulation *.sdf
+recursive-include manipulation *.urdf
+recursive-include manipulation *.xml
+recursive-include manipulation *.yaml 
+
+# Exclude specific files and directories
+exclude *.egg-info/**
+exclude **/__pycache__/**
+exclude *.bazel
+exclude **/test/**
+prune bazel-*
+prune htmlbook
+prune data
+prune solutions
+prune figures
