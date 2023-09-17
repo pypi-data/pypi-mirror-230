@@ -1,0 +1,18 @@
+[package]
+description = "The AST for the PRQL language."
+name = "prql-ast"
+
+edition= "2021"
+license= "Apache-2.0"
+repository= "https://github.com/PRQL/prql"
+rust-version= "1.65.0"
+version= "0.9.5"
+
+[lib]
+doctest = false
+
+[dependencies]
+enum-as-inner = "0.6.0"
+semver = {version = "1.0.18", features = ["serde"]}
+serde = {version = "1.0.188", features = ["derive"]}
+strum = {version = "0.25.0", features = ["std", "derive"]}
