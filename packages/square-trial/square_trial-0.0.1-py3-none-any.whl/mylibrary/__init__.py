@@ -1,0 +1,1 @@
+from square_num import square_number
