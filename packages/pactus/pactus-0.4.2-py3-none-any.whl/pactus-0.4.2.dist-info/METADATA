@@ -1,0 +1,140 @@
+Metadata-Version: 2.1
+Name: pactus
+Version: 0.4.2
+Summary: Framework to evaluate Trajectory Classification Algorithms
+Author-email: Jorge Morgado Vega <jorge.morgadov@gmail.com>, Gustavo Viera-López <gvieralopez@gmail.com>, Alfredo Reyes <areyes@fisica.uh.cu>
+License: MIT License
+        
+        Copyright (c) 2022 yupidevs
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Homepage, https://github.com/yupidevs/pactus
+Keywords: trajectory,classification
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy >=1.23.5
+Requires-Dist: yupi >=0.11.2
+Requires-Dist: tensorflow >=2.12.0
+Requires-Dist: scikit-learn >=1.1.1
+Requires-Dist: xgboost >=1.7.4
+Requires-Dist: GitPython >=3.1.29
+Provides-Extra: dev
+Requires-Dist: mypy ; extra == 'dev'
+Requires-Dist: black ; extra == 'dev'
+Requires-Dist: pylint ; extra == 'dev'
+Requires-Dist: bumpver ; extra == 'dev'
+Requires-Dist: isort ; extra == 'dev'
+Requires-Dist: pytest ; extra == 'dev'
+Requires-Dist: tensor-annotations-tensorflow-stubs ; extra == 'dev'
+
+# pactus
+
+Standing from *Path Classification Tools for Unifying Strategies*, **pactus**
+is a Python library that allows testing different classification methods on
+several trajectory datasets.
+
+It comes with some built-in models and datasets according to the
+state-of-the-art in trajectory classification. However, it is implemented in an
+extensible way, so the users can build their own models and datasets.
+
+> NOTE: Built-in datasets don't contain the raw trajectoy data. When a
+> dataset is loaded for the first time it downloads the necessary data
+> automatically.
+
+## Installation
+
+Make sure you have a Python interpreter newer than version 3.8:
+
+```bash
+❯ python --version
+Python 3.8.0
+```
+
+Then, you can simply install pactus from pypi using pip:
+
+```bash
+pip install pactus
+```
+
+## Getting started
+
+This is quick example of how to test a Random Forest classifier on the Animals dataset:
+
+```python
+from pactus import Dataset, featurizers
+from pactus.models import RandomForestModel
+
+SEED = 0
+
+# Load dataset
+dataset = Dataset.animals()
+
+# Split data into train and test subsets
+train, test = dataset.split(0.9, random_state=SEED)
+
+# Convert trajectories into feature vectors
+ft = featurizers.UniversalFeaturizer()
+
+# Build and train the model
+model = RandomForestModel(featurizer=ft, random_state=SEED)
+model.train(train, cross_validation=5)
+
+# Evaluate the results on the test subset
+evaluation = model.evaluate(test)
+evaluation.show()
+```
+
+It should produce an output as the following:
+
+```text
+General statistics:
+
+Accuracy: 0.885
+F1-score: 0.849
+Mean precision: 0.865
+Mean recall: 0.850
+
+Confusion matrix:
+
+Cattle  Deer    Elk     precision
+================================
+75.0    0.0     0.0     100.0
+25.0    80.0    0.0     66.67
+0.0     20.0    100.0   92.86
+--------------------------------
+75.0    80.0    100.0
+```
+
+> ℹ️ Notice that by setting the random state to a fixed seed, we ensure the
+reproducibility of the results. By changing the seed value, results may be
+slightly different due to the stochastic processes used when splitting the
+dataset and training the model.
+
+## Available datasets
+
+See the whole [list of datasets](https://github.com/yupidevs/trajectory-datasets) compatible with pactus
+
+## Contributing
+
+Follow the guidlines from [pactus documentation](https://pactus.readthedocs.io/en/latest/)
