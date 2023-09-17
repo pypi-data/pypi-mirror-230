@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "MathematicalPy"
+version = "0.0.0.1"
+description = "Mathematically-focused capabilities."
+authors = ["David Gayman <drg.developer.2@gmail.com>"]
+homepage = "https://github.com/dg-developer/MathematicalPy"
+repository = "https://github.com/dg-developer/MathematicalPy"
+documentation = "https://github.com/dg-developer/MathematicalPy"
+readme = "ReadMe.md"
+license = "Apache License 2.0"
+packages = [
+    { include = "mathematical" }
+]
+keywords = ["math", "mathematical", "simple", "geometry", "algebra", "calculus", "vector"]
+classifiers = [
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Software Development :: Libraries"
+]
+
+[tool.poetry.scripts]
+main = "main:main"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+numpy = "^1.25.2"
+marvelouspy = "^0.0.0.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
