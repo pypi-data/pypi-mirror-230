@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "OptimalPy"
+version = "0.0.0.0"
+description = "Optimization capabilities."
+authors = ["David Gayman <drg.developer.2@gmail.com>"]
+readme = "ReadMe.md"
+license = "Apache License 2.0"
+packages = [
+    { include = "optimal" }
+]
+
+[tool.poetry.scripts]
+main     = "main:main"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
