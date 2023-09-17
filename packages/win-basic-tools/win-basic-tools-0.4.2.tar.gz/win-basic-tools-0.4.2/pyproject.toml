@@ -1,0 +1,41 @@
+[build-system]
+requires = ['setuptools']
+build-backend = 'setuptools.build_meta'
+
+[project]
+name = 'win-basic-tools'
+version = '0.4.2'
+authors = [
+  {name = 'Henrique do Val'},
+  {email = 'henrique.val@hotmail.com'}
+]
+
+description = 'Cli tool for listing the directory.'
+readme = {file = "README.md", content-type = 'text/markdown'}
+requires-python = '>=3.6'
+license = {text = 'MIT'}
+dependencies = [
+  'colorama>=0.4.6'
+]
+
+classifiers = [
+  'Programming Language :: Python :: 3 :: Only',
+  'Programming Language :: Python :: Implementation :: CPython',
+  'Programming Language :: Python :: Implementation :: PyPy',
+  'License :: OSI Approved :: MIT License',
+  'Development Status :: 4 - Beta',
+  'Operating System :: Microsoft :: Windows',
+  'Environment :: Console',
+  'Intended Audience :: Developers',
+  'Topic :: System :: Shells',
+  'Topic :: Terminals',
+]
+
+[project.urls]
+Home-page = "https://github.com/HenriquedoVal/win-basic-tools"
+
+[project.scripts]
+win-basic-tools = 'win_basic_tools.setup_cmd:main'
+
+[tool.setuptools.packages.find]
+include = ["win_basic_tools"]
