@@ -1,0 +1,246 @@
+syntax = "proto3";
+package summa.proto;
+
+message TermFieldMapperConfig {
+  repeated string fields = 1;
+}
+
+message MatchQueryBooleanShouldMode {};
+message MatchQueryDisjuctionMaxMode {
+  float tie_breaker = 1;
+};
+message ExactMatchesPromoter {
+  uint32 slop = 1;
+  optional float boost = 2;
+  repeated string fields = 3;
+}
+
+message NerMatchesPromoter {
+  optional float boost = 1;
+  repeated string fields = 2;
+}
+
+message MorphologyConfig {
+  optional float derive_tenses_coefficient = 1;
+}
+
+message QueryParserConfig {
+  map<string, string> field_aliases = 1;
+  map<string, float> field_boosts = 2;
+  map<string, TermFieldMapperConfig> term_field_mapper_configs = 3;
+  uint32 term_limit = 4;
+  repeated string default_fields = 5;
+  oneof default_mode {
+    MatchQueryBooleanShouldMode boolean_should_mode = 6;
+    MatchQueryDisjuctionMaxMode disjuction_max_mode = 7;
+  }
+  ExactMatchesPromoter exact_matches_promoter = 8;
+  repeated string removed_fields = 9;
+  map<string, MorphologyConfig> morphology_configs = 10;
+  optional string query_language = 11;
+}
+
+message SearchResponse {
+  // Time spent inside of `search` handler
+  double elapsed_secs = 1;
+  // An array of collector outputs
+  repeated CollectorOutput collector_outputs = 2;
+}
+
+// Recursive query DSL
+message Query {
+  oneof query {
+    BooleanQuery boolean = 1;
+    MatchQuery match = 2;
+    RegexQuery regex = 3;
+    TermQuery term = 4;
+    PhraseQuery phrase = 5;
+    RangeQuery range = 6;
+    AllQuery all = 7;
+    MoreLikeThisQuery more_like_this = 8;
+    BoostQuery boost = 9;
+    DisjunctionMaxQuery disjunction_max = 10;
+    EmptyQuery empty = 11;
+    ExistsQuery exists = 12;
+  }
+}
+
+message AllQuery {}
+message EmptyQuery {}
+
+message BoostQuery {
+  Query query = 1;
+  string score = 2;
+}
+
+message DisjunctionMaxQuery {
+  repeated Query disjuncts = 1;
+  string tie_breaker = 2;
+}
+
+message MoreLikeThisQuery {
+  string document = 1;
+  optional uint64 min_doc_frequency = 2;
+  optional uint64 max_doc_frequency = 3;
+  optional uint64 min_term_frequency = 4;
+  optional uint64 max_query_terms = 5;
+  optional uint64 min_word_length = 6;
+  optional uint64 max_word_length = 7;
+  optional string boost = 8;
+  repeated string stop_words = 9;
+}
+
+message PhraseQuery {
+  string field = 1;
+  string value = 2;
+  uint32 slop = 3;
+}
+
+message RangeQuery {
+  string field = 1;
+  Range value = 2;
+}
+
+message MatchQuery {
+  string value = 1;
+  optional QueryParserConfig query_parser_config = 2;
+}
+
+message BooleanSubquery {
+  Occur occur = 1;
+  Query query = 2;
+}
+
+message BooleanQuery {
+  repeated BooleanSubquery subqueries = 1;
+}
+
+message RegexQuery {
+  string field = 1;
+  string value = 2;
+}
+
+message TermQuery {
+  string field = 1;
+  string value = 2;
+}
+
+message ExistsQuery {
+  string field = 1;
+}
+
+enum Occur {
+  should = 0;
+  must = 1;
+  must_not = 2;
+}
+
+message Range {
+  string left = 1;
+  string right = 2;
+  bool including_left = 3;
+  bool including_right = 4;
+}
+
+message Score {
+  oneof score {
+    double f64_score = 1;
+    uint64 u64_score = 2;
+  }
+}
+
+message Highlight {
+  uint32 from = 1;
+  uint32 to = 2;
+}
+
+message Snippet {
+  bytes fragment = 1;
+  repeated Highlight highlights = 2;
+  string html = 3;
+}
+
+message ScoredDocument {
+  string document = 1;
+  Score score = 2;
+  uint32 position = 3;
+  map<string, Snippet> snippets = 4;
+  string index_alias = 5;
+}
+
+message Scorer {
+  oneof scorer {
+    string eval_expr = 1;
+    string order_by = 2;
+  }
+}
+
+// Collectors and CollectorOutputs
+message Collector {
+  oneof collector {
+    TopDocsCollector top_docs = 1;
+    ReservoirSamplingCollector reservoir_sampling = 2;
+    CountCollector count = 3;
+    FacetCollector facet = 4;
+    AggregationCollector aggregation = 5;
+  }
+}
+
+message CollectorOutput {
+  oneof collector_output {
+    DocumentsCollectorOutput documents = 1;
+    CountCollectorOutput count = 3;
+    FacetCollectorOutput facet = 4;
+    AggregationCollectorOutput aggregation = 5;
+  }
+}
+
+message CountCollector {}
+
+message CountCollectorOutput { uint32 count = 1; }
+
+message FacetCollector {
+  string field = 1;
+  repeated string facets = 2;
+}
+
+message FacetCollectorOutput {
+  map<string, uint64> facet_counts = 1;
+}
+
+message ReservoirSamplingCollector {
+  uint32 limit = 1;
+  repeated string fields = 2;
+}
+
+message RandomDocument {
+  string document = 1;
+  Score score = 2;
+  string index_alias = 3;
+}
+
+message ReservoirSamplingCollectorOutput {
+  repeated RandomDocument documents = 1;
+}
+
+message TopDocsCollector {
+  uint32 limit = 1;
+  uint32 offset = 2;
+  optional Scorer scorer = 3;
+  map<string, uint32> snippet_configs = 4;
+  bool explain = 5;
+  repeated string fields = 6;
+}
+
+message DocumentsCollectorOutput {
+  repeated ScoredDocument scored_documents = 1;
+  bool has_next = 2;
+}
+
+message AggregationCollector {
+  string aggregations = 1;
+}
+
+message AggregationCollectorOutput {
+  string aggregation_results = 1;
+}
