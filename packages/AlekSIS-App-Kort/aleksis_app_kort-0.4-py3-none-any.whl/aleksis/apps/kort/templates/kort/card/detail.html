@@ -1,0 +1,19 @@
+{# -*- engine:django -*- #}
+
+{% extends "core/base.html" %}
+
+{% load material_form i18n any_js %}
+
+
+{% block browser_title %}{% blocktrans %}Card{% endblocktrans %}{% endblock %}
+{% block page_title %}
+  <a href="{% url "cards" %}" class="btn-flat primary-color-text waves-light waves-effect">
+    <i class="material-icons iconify left" data-icon="mdi:chevron-left"></i> {% trans "Back" %}
+  </a>
+  {% blocktrans with person=object.person %}Card of {{ person }}{% endblocktrans %}
+{% endblock %}
+
+
+{% block content %}
+  {% include "kort/card/detail_content.html" with card=object %}
+{% endblock %}
