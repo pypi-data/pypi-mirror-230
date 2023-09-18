@@ -1,0 +1,63 @@
+Metadata-Version: 2.1
+Name: radiacode
+Version: 0.2.2
+Summary: Library for RadiaCode-101
+Home-page: https://github.com/cdump/radiacode
+License: MIT
+Author: Maxim Andreev
+Author-email: andreevmaxim@gmail.com
+Requires-Python: >=3.8.1,<4.0.0
+Classifier: Development Status :: 3 - Alpha
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3 :: Only
+Provides-Extra: examples
+Requires-Dist: aiohttp (>=3.8,<4.0) ; extra == "examples"
+Requires-Dist: bluepy (>=1.3,<2.0)
+Requires-Dist: matplotlib (>=3.7,<4.0) ; extra == "examples"
+Requires-Dist: prometheus-client (>=0.17,<0.18) ; extra == "examples"
+Requires-Dist: pyusb (>=1.2,<2.0)
+Project-URL: Repository, https://github.com/cdump/radiacode
+Description-Content-Type: text/markdown
+
+## RadiaCode
+
+[Описание на русском языке](README_ru.md)
+
+This is a library to work with the radiation detector and spectrometer [RadiaCode-101](https://scan-electronics.com/dosimeters/radiacode/radiacode-101).
+
+***The project is still under development and not stable. Thus, the API might change in the future.***
+
+Example project ([backend](radiacode-examples/webserver.py), [frontend](radiacode-examples/webserver.html)):
+![radiacode-webserver-example](./screenshot.png)
+
+### Installation and example projects
+```
+# install library together with all the dependencies for the examples, remove [examples] if you don't need them
+$ pip3 install 'radiacode[examples]' --upgrade
+
+# launch the webserver from the screenshot above
+# bluetooth: replace with the address of your device
+$ python3 -m radiacode-examples.webserver --bluetooth-mac 52:43:01:02:03:04
+# or the same, but via usb
+$ sudo python3 -m radiacode-examples.webserver
+
+# simple example for outputting information to the terminal, options are similar to the webserver example
+$ python3 -m radiacode-examples.basic
+
+# send data to the public monitoring project narodmon.ru
+$ python3 -m radiacode-examples.narodmon --bluetooth-mac 52:43:01:02:03:04
+```
+
+### Development
+- install [python poetry](https://python-poetry.org/docs/#installation)
+- clone this repository
+- install and run:
+```
+$ poetry install
+$ poetry run python3 radiacode-examples/basic.py --bluetooth-mac 52:43:01:02:03:04 # or without --bluetooth-mac for USB connection
+```
+
