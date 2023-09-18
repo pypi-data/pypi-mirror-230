@@ -1,0 +1,54 @@
+[tool.poetry]
+name = "py-msgpack-rpc"
+version = "0.1.0a1"
+description = "An RPC library implementing MessagePack RPC in Python."
+authors = ["Kenta Kabashima <kenta_program37@hotmail.co.jp>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://gitlab.com/MusicScience37Projects/utility-libraries/py-msgpack-rpc"
+repository = "https://gitlab.com/MusicScience37Projects/utility-libraries/py-msgpack-rpc.git"
+#documentation = "TODO"
+#keywords = ["TODO"]
+# Classifiers: https://pypi.org/classifiers/
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Framework :: AsyncIO",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: System :: Networking",
+    "Typing :: Typed",
+]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.12"
+msgpack = "^1.0.5"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.9.0"
+pre-commit = "^3.4.0"
+pylint = "^2.17.5"
+mypy = "^1.5.1"
+flake8 = "^6.1.0"
+isort = "^5.12.0"
+pydocstyle = "^6.3.0"
+pydoctest = "^0.1.22"
+pytest = "^7.4.2"
+pytest-cov = "^4.1.0"
+pytest-asyncio = "^0.21.1"
+
+[tool.isort]
+profile = "black"
+
+[tool.pydocstyle]
+convention = "google"
+add-ignore = "D107"
+
+[tool.pylint.main]
+disable = "too-many-instance-attributes,line-too-long,fixme"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
