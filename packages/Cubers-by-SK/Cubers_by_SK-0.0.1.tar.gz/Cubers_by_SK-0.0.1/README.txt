@@ -1,0 +1,1 @@
+This is a basic cube library. You can use generatescramblethreebythree(), generatescramblefourbyfour(), and timer(nameofkeytostoptimer) [nameofkeytostoptimer must be string.] with this library.
