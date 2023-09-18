@@ -1,0 +1,37 @@
+compile_folder: build/compiled
+run_folder: build/run
+action: {}
+backend:
+  processor: SimpleBackend
+discovery:
+  functions_folder_path: functions
+  manifests_folder_path: manifests
+logging:
+  event_filters: []
+  log_file_path: log.jsonl
+  logging_level: 5
+env_files:
+  default: base
+  packs:
+  - name: base
+    paths:
+    - envs/base-env.yaml
+reporting:
+  processor: HtmlReport
+  reports_folder: build/reports
+selectors:
+  default: spec
+  packs:
+  - manifest_file_paths: []
+    models:
+    - SpecificationModel
+    name: spec
+    tags: []
+    type: Include
+  - manifest_file_paths: []
+    models:
+    - JsonHttpActionModel
+    - XmlHttpActionModel
+    name: action
+    tags: []
+    type: Include
