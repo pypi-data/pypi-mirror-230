@@ -1,0 +1,63 @@
+Metadata-Version: 2.1
+Name: sifeng
+Version: 0.2.2
+Summary: Si Feng is a quant research framework.
+Home-page: https://github.com/zty200489/sifeng
+Author: Tianyuan Zhou
+Author-email: zty200489@gmail.com
+License: GPL
+Classifier: Development Status :: 1 - Planning
+Classifier: License :: OSI Approved :: GNU General Public License (GPL)
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Requires-Python: >=3.8.0
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: duckdb >=0.8.1
+Requires-Dist: pandas >=2.0.3
+Requires-Dist: joblib >=1.3.2
+
+
+# Si Feng
+
+Si Feng (思风) is a quant research framework built by our team, SiFeng. It is mainly desinged only to be used within our team but also welcome public useres. Feel free to tell us what features you want to add to this project.
+
+## How to use
+
+The project is posted on [github](https://github.com/zty200489/sifeng). To use this python package, simple use install it from [PyPI](https://pypi.org/project/sifeng/) to your local environment with:
+
+```console
+pip install sifeng
+```
+
+## Features
+
+### Version 0.2.2
+- (Bug fix) Model stat analyzer not outputting correctly with memory useage.
+
+### Version 0.2.1
+- Added torch model stat analyzer. Outputs info about model params and size. Sets the foundation for further analysis.
+
+### Version 0.1.8
+
+- Major update. We gave up the process of maintaining an online database and fetch data every time someone accesses it. Rather, we chose to save parquest files on Cloud Object Storage and fetch the required parquest files instead. Now, a local duckdb OLAP database will be used to process and fetch the data, allowing for much, much lower latency as well as much, much lower maintenance cost.
+- Please note that due to the change in our implementation, previous versions are now deprecated.
+
+### Version 0.1.7 (DEPRECATED)
+
+- Due to limitations on python version, grequests may have excessive warning logs that are quite annoying. So, we switched to a new implementation of parallel fetching with joblib.
+
+### Version 0.1.6 (DEPRECATED)
+
+- (Bug fix) Swapped processing sequence. Parsing data annually avoids running into forced-aborted connections.
+- Ignored index when concating pandas dataframes.
+
+### Version 0.1.5 (DEPRECATED)
+
+- Added partitioned table support. Slicing up requests into year-specific subrequests, speeding up the search.
+
+### Version 0.1.4 (DEPRECATED)
+
+- Thread pooling fetchers based on grequests.
+- kline and indicators updated every day.
+
