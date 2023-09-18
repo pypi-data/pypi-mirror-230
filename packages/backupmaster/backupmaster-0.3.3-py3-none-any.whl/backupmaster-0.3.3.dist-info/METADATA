@@ -1,0 +1,42 @@
+Metadata-Version: 2.1
+Name: backupmaster
+Version: 0.3.3
+Author-email: Quinten Roets <qdr2104@columbia.edu>
+License: MIT
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pyinotify
+Requires-Dist: quinten-cli
+Requires-Dist: rich
+Requires-Dist: superpathlib
+Requires-Dist: tqdm
+Requires-Dist: xattr
+Provides-Extra: dev
+Requires-Dist: pre-commit ; extra == 'dev'
+Provides-Extra: test
+Requires-Dist: pytest ; extra == 'test'
+
+# Backup
+
+A package that enables you to back up all your important data automatically
+- Scales to huge number of files
+- Detailed configuration possibilities to maximize performance
+- Perfect for files that are too volatile for a VCS like GIT and too important to lose
+
+## Installation
+
+Make sure you are using python3.10+
+
+```shell
+pip install backupmaster
+```
+    
+Developed for linux OS
+
+## Usage
+1) Run
+
+```shell
+backup
+```
