@@ -1,0 +1,44 @@
+# redis connection from inside container
+CONTAINER_CELERY_BROKER: redis://redis:6379/0
+CONTAINER_CELERY_RESULT_BACKEND: redis://redis:6379/0
+
+# redis conneection from host
+CELERY_BROKER: redis://localhost:6124/0
+CELERY_RESULT_BACKEND: redis://localhost:6124/0
+
+# path to plex TV show library
+PLEX_LIBRARY_FOLDER: /home/plex
+
+# celery queue config
+CELERY_QUEUE: video_transcode      
+CELERY_WORKER_NAME: celery@brains
+
+# absolute path to comcut binary
+COMCUT_BINARY_PATH: /usr/local/bin/comcut
+
+# absolute path to ffmpeg binary
+FFMPEG_BINARY_PATH: /opt/build/bin/ffmpeg
+
+# ffmpeg options; must include 'i {input_filename}'
+FFMPEG_OPTIONS:
+    - '-hide_banner'
+    - '-loglevel error'
+    - '-vsync 0'
+    - '-hwaccel auto'
+    - '-i {input_filename}'
+    - '-c:v hevc_nvenc'
+    - '-qmin:v 22'
+    - '-qmax:v 30'
+    - '-rc-lookahead 8' 
+    - '-weighted_pred 1'
+
+# transcoding options
+DELETE_SOURCE_AFTER_TRANSCODE: True
+DEFAULT_ACTION: comcut_and_transcode
+# TASK_LIMIT: 
+# hour to start transcoding (24 hr)
+SCHEDULE_START: 0
+# hour to stop transcoding (24 hr)
+SCHEDULE_END: 8
+# Consider year in show name when searching plex library
+IGNORE_YEAR_IN_SHOW_NAME: True
