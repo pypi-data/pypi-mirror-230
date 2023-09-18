@@ -1,0 +1,49 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "telebox"
+version = "0.23.0"
+authors = [
+  { name="Abstract-X", email="abstract-x-mail@protonmail.com" },
+]
+description = "A Python framework for creating Telegram bots."
+readme = "README.md"
+license = { file="LICENSE" }
+requires-python = ">= 3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "dataclass-factory >= 2.16, < 3",
+    "requests >= 2.28.2, < 3",
+    "requests-toolbelt >= 0.10.1",
+    "ujson >= 5.4.0, < 6",
+    "xcept >= 3.1.0, < 4"
+]
+
+[project.optional-dependencies]
+server = [
+    "cherrypy >= 18.8.0, < 19"
+]
+codegen = [
+    "Jinja2 >= 3.1.2, < 4"
+]
+
+[project.scripts]
+telebox = "telebox.utils.console_scripts:process_command"
+
+[project.urls]
+"Homepage" = "https://github.com/Abstract-X/telebox"
+"Bug Tracker" = "https://github.com/Abstract-X/telebox/issues"
+
+[tool.hatch.build]
+include = [
+    "telebox/utils/code_generation/templates"
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["telebox"]
