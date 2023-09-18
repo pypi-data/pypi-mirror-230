@@ -1,0 +1,25 @@
+# https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
+config:
+  line-length:
+    line_length: 88 # needs to match print width defined in .prettierrc
+    tables: false
+  headers:
+    style: atx # leading hashtags indicate headers
+    siblings_only: true # allow duplicate headers in different sections (e.g. in CHANGELOG)
+  first-line-h1: false
+  single-title: false
+  ul:
+    indent: 2
+    style: dash
+  # MD036: no emphasis as header
+  # ~> false positives, e.g. for subtitles
+  MD036: false
+  # ~> quarto renders alt text to final document, which is why we are not including it (yet)
+  no-alt-text: false
+  emphasis-style:
+    # prettier reformats *foo* to _foo_, so we stick with consistent for now
+    style: consistent
+  code-bock-style:
+    style: fenced
+  code-fence-style:
+    style: backtick

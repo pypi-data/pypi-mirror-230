@@ -1,0 +1,65 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.0.278
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix, --config, pyproject.toml]
+  - repo: https://github.com/myint/docformatter
+    rev: v1.7.5
+    hooks:
+      - id: docformatter
+        name: format docstrings (docformatter)
+        args: [--in-place, --wrap-summaries, "120", --wrap-description, "88"]
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+        exclude_types:
+          - zsh
+          - bash
+          - svg
+      # - id: check-yaml
+      - id: check-added-large-files
+      - id: check-shebang-scripts-are-executable
+      - id: check-case-conflict
+  # black should have the final say on python formatting, so it comes last
+  - repo: https://github.com/psf/black
+    rev: 23.7.0
+    hooks:
+      - id: black
+        name: format code (black)
+  # prettier should have the final say on json/yaml formatting, so it comes last
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.0.0
+    hooks:
+      - id: prettier
+        types_or: [json, yaml]
+        args: [--config, .vscode/.prettierrc]
+  - repo: https://github.com/bjd2385/pre-commit-gitlabci-lint
+    rev: v1.3.0
+    hooks:
+      - id: gitlabci-lint
+        args: ["-p", "46207681"] # -b, "https://gitlab.com",
+        entry: env GITLAB_TOKEN=w8i5Q1CaEpF57cqxezvG gitlabci-lint
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.8.1
+    hooks:
+      - id: markdownlint-cli2
+        name: lint markdown files (markdownlint-cli2)
+        additional_dependencies: ["markdown-it-texmath", "katex"]
+  - repo: https://github.com/streetsidesoftware/cspell-cli
+    rev: v6.31.0
+    hooks:
+      - id: cspell
+        name: check spelling (cspell)
+        args:
+          [
+            --show-suggestions,
+            --show-context,
+            --no-must-find-files,
+            --config,
+            .vscode/cspell.json,
+          ]

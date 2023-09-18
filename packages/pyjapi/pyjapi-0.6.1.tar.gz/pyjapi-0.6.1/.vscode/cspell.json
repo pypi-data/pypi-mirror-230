@@ -1,0 +1,60 @@
+{
+  "version": "0.2",
+  "enabled": true,
+  "ignorePaths": [
+    "ext",
+    "Makefile",
+    ".vscode",
+    ".gitignore",
+    ".dockerignore",
+    "Dockerfile",
+    ".gitlab-ci.yml",
+    ".pre-commit-config.yaml",
+    "test/*.mat",
+    "*.prof",
+    "*.svg",
+    "conf.py",
+    ".bumpversion.cfg",
+    "pyproject.toml"
+  ],
+  "dictionaryDefinitions": [
+    {
+      "name": "project-terms",
+      "path": "terms.txt",
+      "description": "Project-related terms",
+      "addWords": true
+    }
+  ],
+  "dictionaries": ["css", "en_us", "python", "softwareTerms", "rst", "project-terms"],
+  "words": [
+    "autoenv",
+    "gaierror",
+    "Jannis",
+    "JAPI",
+    "jformat",
+    "jprint",
+    "libjapi",
+    "Mainczyk",
+    "oneline",
+    "pushsrv",
+    "PYENV",
+    "pyjapi",
+    "pyproject",
+    "pytest",
+    "rformat",
+    "rtype",
+    "secho",
+    "singlehtml",
+    "sockfile",
+    "strconv"
+  ],
+  "language": "en-GB",
+  "useGitignore": true,
+  "overrides": [
+    {
+      // Case sensitive markdown in the docs folder
+      "filename": "docs/source/**/*.md",
+      "caseSensitive": true
+    }
+  ]
+}

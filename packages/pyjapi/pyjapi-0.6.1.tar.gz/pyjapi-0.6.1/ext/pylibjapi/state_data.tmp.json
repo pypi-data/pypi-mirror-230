@@ -1,0 +1,581 @@
+{
+  "temperature": {
+    "DEVICE": {
+      "D1": {
+        "TEMPERATURE": 111
+      },
+      "D2": {
+        "TEMPERATURE": 222
+      },
+      "FPGA": {
+        "TEMPERATURE": 333
+      }
+    }
+  },
+  "swversion": {
+    "SOFTWARE": "2.2.4"
+  },
+  "osversion": {
+    "OS": "0.0.3"
+  },
+  "bootversion": {
+    "BOOT": "0.0.4"
+  },
+  "fwversion": {
+    "FIRMWARE": "0.0.5"
+  },
+  "package_version": {
+    "PACKAGE": {
+      "boot_dac": {
+        "VERSION": "0.0.4"
+      },
+      "dbcd": {
+        "VERSION": "2.2.4"
+      }
+    }
+  },
+  "chip_revision": {
+    "DEVICE": {
+      "1": {
+        "REVISION": 2324
+      },
+      "2": {
+        "REVISION": 2324
+      }
+    }
+  },
+  "product_version": {
+    "DEVICE": {
+      "1": {
+        "VERSION": "EV12AQ605"
+      },
+      "2": {
+        "VERSION": "EV12AQ600"
+      }
+    }
+  },
+  "serialnumbers": {
+    "CIRCUITBOARD": "0102000001",
+    "FPGABOARD": "T485331 ZU15EG",
+    "ASSEMBLY": "A2"
+  },
+  "hwclock_config": {
+    "CLOCKCHAIN": true,
+    "SAMPLECLOCKS": [
+      8000.000,
+      16000.000
+    ],
+    "EXTERNAL": false
+  },
+  "clock_config": {
+    "REFSOURCE": "external",
+    "REFCLOCK_EXT": 0,
+    "SAMPLECLOCK_INT": 10000.123,
+    "SAMPLECLOCK_EXT": 11000.123
+  },
+  "refclock_output": {
+    "OUTPUT": true
+  },
+  "eth_other": {
+    "DEVICE": {
+      "0": {
+        "JAPI_RESPONSE": "success",
+        "DHCP": false,
+        "IP_ADDRESS": "192.168.2.1/11",
+        "GATEWAY": "192.168.0.1",
+        "DNS": "192.168.0.1"
+      },
+      "1": {
+        "JAPI_RESPONSE": "success",
+        "DHCP": false,
+        "IP_ADDRESS": "192.168.2.1/11",
+        "GATEWAY": "192.168.0.1",
+        "DNS": "192.168.0.1"
+      }
+    },
+    "INTERFACE": {
+      "0": {
+        "JAPI_RESPONSE": "success",
+        "DHCP": false,
+        "IP_ADDRESS": "192.168.2.1/11",
+        "GATEWAY": "192.168.0.1",
+        "DNS": "192.168.0.1"
+      },
+      "1": {
+        "JAPI_RESPONSE": "success",
+        "DHCP": false,
+        "IP_ADDRESS": "192.168.2.1/11",
+        "GATEWAY": "192.168.0.1",
+        "DNS": "192.168.0.1"
+      }
+    }
+  },
+  "eth": {
+    "DHCP": false,
+    "IP_ADDRESS": "192.168.0.13/24",
+    "GATEWAY": "192.168.0.1",
+    "DNS": "192.168.0.1"
+  },
+  "controlbits": {
+    "DEVICE": {
+      "1": {
+        "CONTROLBIT": {
+          "1": {
+            "FUNCTIONALITY": "inrange"
+          },
+          "2": {
+            "FUNCTIONALITY": "trig"
+          }
+        }
+      },
+      "2": {
+        "CONTROLBIT": {
+          "1": {
+            "FUNCTIONALITY": "timestamp"
+          },
+          "2": {
+            "FUNCTIONALITY": "parity"
+          }
+        }
+      }
+    }
+  },
+  "all_dac_registers": {
+    "DEVICE": {
+      "1": {
+        "REG_FILE": "QURDIERldmljZSwgUmVnaXN0ZXIgQWRkcmVzcywgUmVnaXN0ZXIgVmFsdWUKMSwgMHgxLCAweDEKMSwgMHgyLCAweDAKMSwgMHg1LCAweDAKMSwgMHg2LCAweDAKMSwgMHg3LCAweDAKMSwgMHg4LCAweDAKMSwgMHg5LCAweDAKMSwgMHhhLCAweDAKMSwgMHhiLCAweDAKMSwgMHhjLCAweDAKMSwgMHhkLCAweDAKMSwgMHhlLCAweDAKMSwgMHgxMSwgMHg5MTQKMSwgMHgxMywgMHgxOAoxLCAweDE0LCAweDE4CjEsIDB4MTUsIDB4ZgoxLCAweDE2LCAweDAKMSwgMHgxNywgMHgyCjEsIDB4MTIyLCAweDc1NAoxLCAweDEyMywgMHhmMAoxLCAweDEyNCwgMHg5OAoxLCAweDEyNSwgMHg3NmEKMSwgMHgxMjYsIDB4ZjcKMSwgMHgxMjcsIDB4OTUKMSwgMHgxMjgsIDB4NzQzCjEsIDB4MTI5LCAweGYwCjEsIDB4MTJhLCAweDk3CjEsIDB4MTJiLCAweDc1NQoxLCAweDEyYywgMHhmNQoxLCAweDEyZCwgMHg5NAoxLCAweDEyZiwgMHgxMDAwCjEsIDB4MzIyLCAweDhhZgoxLCAweDMyMywgMHgxMWMKMSwgMHgzMjQsIDB4OWEKMSwgMHgzMjUsIDB4ODlhCjEsIDB4MzI2LCAweDExNwoxLCAweDMyNywgMHg5NgoxLCAweDMyOCwgMHg4YzAKMSwgMHgzMjksIDB4MTIwCjEsIDB4MzJhLCAweDlhCjEsIDB4MzJiLCAweDhhZQoxLCAweDMyYywgMHgxMWEKMSwgMHgzMmQsIDB4OTUKMSwgMHgzMmYsIDB4MTAwMAoxLCAweDUyMiwgMHg3ZWEKMSwgMHg1MjMsIDB4ZTUKMSwgMHg1MjQsIDB4MTZlCjEsIDB4NTI1LCAweDdlZgoxLCAweDUyNiwgMHhmMQoxLCAweDUyNywgMHgxNzEKMSwgMHg1MjgsIDB4Nzg3CjEsIDB4NTI5LCAweGUxCjEsIDB4NTJhLCAweDE2ZQoxLCAweDUyYiwgMHg3ODkKMSwgMHg1MmMsIDB4ZWYKMSwgMHg1MmQsIDB4MTcxCjEsIDB4NTJmLCAweDEwMDAKMSwgMHg3MjIsIDB4ODMzCjEsIDB4NzIzLCAweDEwMwoxLCAweDcyNCwgMHhhZgoxLCAweDcyNSwgMHg4MzQKMSwgMHg3MjYsIDB4ZmEKMSwgMHg3MjcsIDB4YWEKMSwgMHg3MjgsIDB4N2E5CjEsIDB4NzI5LCAweGZjCjEsIDB4NzJhLCAweGIwCjEsIDB4NzJiLCAweDdhNwoxLCAweDcyYywgMHhmMgoxLCAweDcyZCwgMHhhYgoxLCAweDcyZiwgMHgxMDAwCjEsIDB4OTA1LCAweDE0CjEsIDB4OTA2LCAweDE0CjEsIDB4OTA3LCAweDExCjEsIDB4OTA4LCAweDExCjEsIDB4OTA5LCAweDU1CjEsIDB4OTBhLCAweDU1CjEsIDB4YjA3LCAweDcKMSwgMHhiMGEsIDB4MAoxLCAweGIwYiwgMHg0MDUxCjEsIDB4YjBjLCAweGIyNDQKMSwgMHhiMGUsIDB4N2JjZAoxLCAweGIwZiwgMHhlNThhCjEsIDB4YjI5LCAweDMxY2UKMSwgMHhiMmEsIDB4NzFmZAoxLCAweGIxNCwgMHg0MDUxCjEsIDB4YjE1LCAweGIyNDQKMSwgMHhiMTcsIDB4N2JjZAoxLCAweGIxOCwgMHhlNThhCjEsIDB4YjJiLCAweDMxY2UKMSwgMHhiMmMsIDB4NzFmZAoxLCAweGIwMiwgMHhmZgoxLCAweGIwMywgMHhmZgoxLCAweGIwMCwgMHgzCjEsIDB4YjAxLCAweDMKMSwgMHhiMDQsIDB4MQoxLCAweGIwNSwgMHhmCjEsIDB4YjA2LCAweGYK"
+      },
+      "2": {
+        "REG_FILE": "QURDIERldmljZSwgUmVnaXN0ZXIgQWRkcmVzcywgUmVnaXN0ZXIgVmFsdWUKMSwgMHgxLCAweDEKMSwgMHgyLCAweDAKMSwgMHg1LCAweDAKMSwgMHg2LCAweDAKMSwgMHg3LCAweDAKMSwgMHg4LCAweDAKMSwgMHg5LCAweDAKMSwgMHhhLCAweDAKMSwgMHhiLCAweDAKMSwgMHhjLCAweDAKMSwgMHhkLCAweDAKMSwgMHhlLCAweDAKMSwgMHgxMSwgMHg5MTQKMSwgMHgxMywgMHgxOAoxLCAweDE0LCAweDE4CjEsIDB4MTUsIDB4ZgoxLCAweDE2LCAweDAKMSwgMHgxNywgMHgyCjEsIDB4MTIyLCAweDc1NAoxLCAweDEyMywgMHhmMAoxLCAweDEyNCwgMHg5OAoxLCAweDEyNSwgMHg3NmEKMSwgMHgxMjYsIDB4ZjcKMSwgMHgxMjcsIDB4OTUKMSwgMHgxMjgsIDB4NzQzCjEsIDB4MTI5LCAweGYwCjEsIDB4MTJhLCAweDk3CjEsIDB4MTJiLCAweDc1NQoxLCAweDEyYywgMHhmNQoxLCAweDEyZCwgMHg5NAoxLCAweDEyZiwgMHgxMDAwCjEsIDB4MzIyLCAweDhhZgoxLCAweDMyMywgMHgxMWMKMSwgMHgzMjQsIDB4OWEKMSwgMHgzMjUsIDB4ODlhCjEsIDB4MzI2LCAweDExNwoxLCAweDMyNywgMHg5NgoxLCAweDMyOCwgMHg4YzAKMSwgMHgzMjksIDB4MTIwCjEsIDB4MzJhLCAweDlhCjEsIDB4MzJiLCAweDhhZQoxLCAweDMyYywgMHgxMWEKMSwgMHgzMmQsIDB4OTUKMSwgMHgzMmYsIDB4MTAwMAoxLCAweDUyMiwgMHg3ZWEKMSwgMHg1MjMsIDB4ZTUKMSwgMHg1MjQsIDB4MTZlCjEsIDB4NTI1LCAweDdlZgoxLCAweDUyNiwgMHhmMQoxLCAweDUyNywgMHgxNzEKMSwgMHg1MjgsIDB4Nzg3CjEsIDB4NTI5LCAweGUxCjEsIDB4NTJhLCAweDE2ZQoxLCAweDUyYiwgMHg3ODkKMSwgMHg1MmMsIDB4ZWYKMSwgMHg1MmQsIDB4MTcxCjEsIDB4NTJmLCAweDEwMDAKMSwgMHg3MjIsIDB4ODMzCjEsIDB4NzIzLCAweDEwMwoxLCAweDcyNCwgMHhhZgoxLCAweDcyNSwgMHg4MzQKMSwgMHg3MjYsIDB4ZmEKMSwgMHg3MjcsIDB4YWEKMSwgMHg3MjgsIDB4N2E5CjEsIDB4NzI5LCAweGZjCjEsIDB4NzJhLCAweGIwCjEsIDB4NzJiLCAweDdhNwoxLCAweDcyYywgMHhmMgoxLCAweDcyZCwgMHhhYgoxLCAweDcyZiwgMHgxMDAwCjEsIDB4OTA1LCAweDE0CjEsIDB4OTA2LCAweDE0CjEsIDB4OTA3LCAweDExCjEsIDB4OTA4LCAweDExCjEsIDB4OTA5LCAweDU1CjEsIDB4OTBhLCAweDU1CjEsIDB4YjA3LCAweDcKMSwgMHhiMGEsIDB4MAoxLCAweGIwYiwgMHg0MDUxCjEsIDB4YjBjLCAweGIyNDQKMSwgMHhiMGUsIDB4N2JjZAoxLCAweGIwZiwgMHhlNThhCjEsIDB4YjI5LCAweDMxY2UKMSwgMHhiMmEsIDB4NzFmZAoxLCAweGIxNCwgMHg0MDUxCjEsIDB4YjE1LCAweGIyNDQKMSwgMHhiMTcsIDB4N2JjZAoxLCAweGIxOCwgMHhlNThhCjEsIDB4YjJiLCAweDMxY2UKMSwgMHhiMmMsIDB4NzFmZAoxLCAweGIwMiwgMHhmZgoxLCAweGIwMywgMHhmZgoxLCAweGIwMCwgMHgzCjEsIDB4YjAxLCAweDMKMSwgMHhiMDQsIDB4MQoxLCAweGIwNSwgMHhmCjEsIDB4YjA2LCAweGYK"
+      }
+    }
+  },
+  "converter_prbs": {
+    "DEVICE": {
+      "1": {
+        "PRBS": true
+      },
+      "2": {
+        "PRBS": false
+      }
+    }
+  },
+  "converter_dcbalance": {
+    "DEVICE": {
+      "1": {
+        "DCBALANCE": false
+      },
+      "2": {
+        "DCBALANCE": true
+      }
+    }
+  },
+  "dac_parity": {
+    "DEVICE": {
+      "1": {
+        "PARITY": true
+      },
+      "2": {
+        "PARITY": false
+      }
+    }
+  },
+  "sync_chaining": {
+    "SYNCCHAIN": true
+  },
+  "sync_mode": {
+    "MODE": "manual"
+  },
+  "sync_status": {
+    "DEVICE": {
+      "1": {
+        "SYNC": 1
+      },
+      "2": {
+        "SYNC": 2
+      }
+    }
+  },
+  "syncflag_status": {
+    "DEVICE": {
+      "1": {
+        "STATUS": true
+      },
+      "2": {
+        "STATUS": false
+      }
+    }
+  },
+  "syncedge": {
+    "DEVICE": {
+      "1": {
+        "EDGE": "falling"
+      },
+      "2": {
+        "EDGE": "rising"
+      }
+    }
+  },
+  "sync_delay": {
+    "DELAY": 11
+  },
+  "syncshiftbuffer_delay": {
+    "DEVICE": {
+      "1": {
+        "CORE": {
+          "A": {
+            "DELAY": 1
+          },
+          "B": {
+            "DELAY": 2
+          }
+        }
+      },
+      "2": {
+        "CORE": {
+          "A": {
+            "DELAY": 3
+          },
+          "B": {
+            "DELAY": 4
+          }
+        }
+      }
+    }
+  },
+  "pattern_format": {
+    "DEVICE": {
+      "1": {
+        "CORE": {
+          "A": {
+            "SAMPLEFREQUENCY": 200.0,
+            "SIGNALFORM": "sin",
+            "INTERPOLATION": 1,
+            "AMPLITUDE": 0.75,
+            "SIGNALFREQUENCY": 99.9,
+            "BITNUMBER": 12
+          },
+          "B": {
+            "SAMPLEFREQUENCY": 200.0,
+            "SIGNALFORM": "rect",
+            "INTERPOLATION": 4,
+            "AMPLITUDE": 0.75,
+            "SIGNALFREQUENCY": 99.9,
+            "BITNUMBER": 12
+          }
+        }
+      },
+      "2": {
+        "CORE": {
+          "A": {
+            "SAMPLEFREQUENCY": 200.0,
+            "SIGNALFORM": "ramp",
+            "INTERPOLATION": 8,
+            "AMPLITUDE": 0.75,
+            "SIGNALFREQUENCY": 99.9,
+            "BITNUMBER": 12
+          },
+          "B": {
+            "SAMPLEFREQUENCY": 200.0,
+            "SIGNALFORM": "custom",
+            "INTERPOLATION": 16,
+            "AMPLITUDE": 0.75,
+            "SIGNALFREQUENCY": 99.9,
+            "BITNUMBER": 12
+          }
+        }
+      }
+    }
+  },
+  "pattern": {
+    "DEVICE": {
+      "1": {
+        "CORE": {
+          "A": {
+            "PATTERN": "VGhpcyBpcyBhIHBhdHRlcm4hIChJIGhhdmUgbm8gaWRlYSBob3cgc3VjaCBhIHBhdHRlcm4gbWlnaHQgbG9vayBsaWtlIGJ1dCBpdCBkb2Vzbid0IG1hdHRlciBmb3IgdGhlIG1vbWVudCkK"
+          },
+          "B": {
+            "PATTERN": "VGhpcyBpcyBhIHBhdHRlcm4hIChJIGhhdmUgbm8gaWRlYSBob3cgc3VjaCBhIHBhdHRlcm4gbWlnaHQgbG9vayBsaWtlIGJ1dCBpdCBkb2Vzbid0IG1hdHRlciBmb3IgdGhlIG1vbWVudCkK"
+          }
+        }
+      },
+      "2": {
+        "CORE": {
+          "A": {
+            "PATTERN": "VGhpcyBpcyBhIHBhdHRlcm4hIChJIGhhdmUgbm8gaWRlYSBob3cgc3VjaCBhIHBhdHRlcm4gbWlnaHQgbG9vayBsaWtlIGJ1dCBpdCBkb2Vzbid0IG1hdHRlciBmb3IgdGhlIG1vbWVudCkK"
+          },
+          "B": {
+            "PATTERN": "VGhpcyBpcyBhIHBhdHRlcm4hIChJIGhhdmUgbm8gaWRlYSBob3cgc3VjaCBhIHBhdHRlcm4gbWlnaHQgbG9vayBsaWtlIGJ1dCBpdCBkb2Vzbid0IG1hdHRlciBmb3IgdGhlIG1vbWVudCkK"
+          }
+        }
+      }
+    }
+  },
+  "pattern_playing": {
+    "MASK": "0110",
+    "PLAY": true
+  },
+  "output_mode": {
+    "DEVICE": {
+      "1": {
+        "CORE": {
+          "A": {
+            "MODE": "2RF"
+          },
+          "B": {
+            "MODE": "RF"
+          }
+        }
+      },
+      "2": {
+        "CORE": {
+          "A": {
+            "MODE": "NRZ"
+          },
+          "B": {
+            "MODE": "RF"
+          }
+        }
+      }
+    }
+  },
+  "sinc_compensation": {
+    "DEVICE": {
+      "1": {
+        "CORE": {
+          "A": {
+            "COMPENSATION": true
+          },
+          "B": {
+            "COMPENSATION": false
+          }
+        }
+      },
+      "2": {
+        "CORE": {
+          "A": {
+            "COMPENSATION": false
+          },
+          "B": {
+            "COMPENSATION": true
+          }
+        }
+      }
+    }
+  },
+  "sinc_compensation_config": {
+    "DEVICE": {
+      "1": {
+        "CORE": {
+          "A": {
+            "GAIN": 500,
+            "COEFF1": 2.5,
+            "COEFF2": 1.9
+          },
+          "B": {
+            "GAIN": 400,
+            "COEFF1": 2.4,
+            "COEFF2": 1.8
+          }
+        }
+      },
+      "2": {
+        "CORE": {
+          "A": {
+            "GAIN": 300,
+            "COEFF1": 2.3,
+            "COEFF2": 1.7
+          },
+          "B": {
+            "GAIN": 200,
+            "COEFF1": 2.2,
+            "COEFF2": 1.6
+          }
+        }
+      }
+    }
+  },
+  "output_gain": {
+    "DEVICE": {
+      "1": {
+        "CORE": {
+          "A": {
+            "GAIN": 123,
+            "PLUS10": true
+          },
+          "B": {
+            "GAIN": 321,
+            "PLUS10": false
+          }
+        }
+      },
+      "2": {
+        "CORE": {
+          "A": {
+            "GAIN": 321,
+            "PLUS10": true
+          },
+          "B": {
+            "GAIN": 123,
+            "PLUS10": false
+          }
+        }
+      }
+    }
+  },
+  "sda": {
+    "DEVICE": {
+      "1": {
+        "CORE": {
+          "A": {
+            "DELAY": 123
+          },
+          "B": {
+            "DELAY": 321
+          }
+        }
+      },
+      "2": {
+        "CORE": {
+          "A": {
+            "DELAY": 321
+          },
+          "B": {
+            "DELAY": 123
+          }
+        }
+      }
+    }
+  },
+  "loop_delay": {
+    "DEVICE": {
+      "1": {
+        "CORE": {
+          "A": {
+            "DELAY": 1,
+            "MANUAL": false
+          },
+          "B": {
+            "DELAY": 3,
+            "MANUAL": false
+          }
+        }
+      },
+      "2": {
+        "CORE": {
+          "A": {
+            "DELAY": 5,
+            "MANUAL": false
+          },
+          "B": {
+            "DELAY": 7,
+            "MANUAL": false
+          }
+        }
+      }
+    }
+  },
+  "datawidth": {
+    "DEVICE": {
+      "1": {
+        "EIGHTBIT": true
+      },
+      "2": {
+        "EIGHTBIT": false
+      }
+    }
+  },
+  "interpolation": {
+    "DEVICE": {
+      "1": {
+        "CORE": {
+          "A": {
+            "INTERPOLATION": 1
+          },
+          "B": {
+            "INTERPOLATION": 4
+          }
+        }
+      },
+      "2": {
+        "CORE": {
+          "A": {
+            "INTERPOLATION": 8
+          },
+          "B": {
+            "INTERPOLATION": 16
+          }
+        }
+      }
+    }
+  },
+  "test_mode": {
+    "DEVICE": {
+      "1": {
+        "MODE": "const_val",
+        "FLASH_CFG": "single_max",
+        "VALUE": 1234
+      },
+      "2": {
+        "MODE": "ramp",
+        "FLASH_CFG": "double_bax",
+        "VALUE": 2345
+      }
+    }
+  },
+  "date_time": {
+    "DATETIME": "20200804 13:43:12"
+  },
+  "fubar": {
+    "DEVICE": {
+      "1": {
+        "CONTROLBIT": {
+          "1": {
+            "UNIT": {
+              "KELVIN": {
+                "TEMPERATURE": 111
+              },
+              "CELSIUS": {
+                "TEMPERATURE": 222
+              }
+            }
+          },
+          "2": {
+            "UNIT": {
+              "KELVIN": {
+                "TEMPERATURE": 333
+              },
+              "CELSIUS": {
+                "TEMPERATURE": 444
+              }
+            }
+          }
+        }
+      },
+      "2": {
+        "CONTROLBIT": {
+          "1": {
+            "UNIT": {
+              "KELVIN": {
+                "TEMPERATURE": 555
+              },
+              "CELSIUS": {
+                "TEMPERATURE": 666
+              }
+            }
+          },
+          "2": {
+            "UNIT": {
+              "KELVIN": {
+                "TEMPERATURE": 777
+              },
+              "CELSIUS": {
+                "TEMPERATURE": 888
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

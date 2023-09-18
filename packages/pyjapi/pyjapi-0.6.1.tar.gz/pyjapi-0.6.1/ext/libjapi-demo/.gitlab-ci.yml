@@ -1,0 +1,20 @@
+image: git01.iis.fhg.de:5005/ks-ip-lib/software/libjapi-demo:latest
+
+variables:
+        GIT_SUBMODULE_STRATEGY: recursive
+
+stages:
+        - build
+
+job 1:
+        stage: build
+        script:
+        - "mkdir build && cd build"
+        - "cmake3 ../ 2>&1 | tee cmake.log"
+        - "make 2>&1 | tee build.log"
+        artifacts:
+                when: always
+                expire_in: 1 week
+                paths:
+                        - "build/build.log"
+                        - "build/cmake.log"

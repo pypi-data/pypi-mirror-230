@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# check if socat is installed and available in path
+if ! [ -x "$(command -v socat)" ]; then
+  echo "Error: socat is needed for japi2ws" >&2
+  exit 1
+fi
+
+: ${JAPI_HOST:="localhost"}
+: ${JAPI_PORT:=1234}
+: ${WS_HOST:="0.0.0.0"}
+: ${WS_PORT:=8081}
+
+websocketd --port=$WS_PORT -address $WS_HOST socat - TCP4:$JAPI_HOST:$JAPI_PORT

@@ -1,0 +1,35 @@
+#! /usr/bin/env bash
+
+# check if socat is installed and available in path
+if ! [ -x "$(command -v socat)" ]; then
+  echo "Error: socat is needed for japi2ws" >&2
+  exit 1
+fi
+
+# parse TCP_HOST
+if [ -z "$1" ]
+then
+	echo "Usage: tcp2ws [TCP_ADDR] {WS_ADDR}"
+	echo ""
+	echo "TCP_ADDR	tcp address (e.g. 'localhost:1234')"
+	echo " WS_ADDR	 ws address (default: '0.0.0.0:8081')"
+	exit 1
+else
+	echo "connecting to board $1"
+	: ${TCP_ADDR:=$1}
+fi
+
+# parse WS_ADDR
+if [ -z "$2" ]
+then
+	: ${WS_ADDR:='0.0.0.0:8081'}
+else
+	: ${WS_ADDR:=$2}
+fi
+
+# split WS_ADDR
+IFS=':'
+read -ra WS_ADDR <<< "$WS_ADDR"
+IFS=' '     # reset to default value after usage
+
+websocketd --port=${WS_ADDR[1]} -address ${WS_ADDR[0]} socat - TCP4:$TCP_CONN

@@ -1,0 +1,110 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+urls = { repository = "https://git01.iis.fhg.de/ks-ip-lib/software/pyjapi" }
+name = "pyjapi"
+description = "JAPI client"
+readme = "README.md"
+requires-python = ">=3.6"
+keywords = ["japi", "libjapi", "python", "click"]
+dependencies = ['click>=8.0', 'strconv', 'python-dateutil']
+dynamic = ["version"]
+
+[project.scripts]
+japi = "pyjapi.cli:cli"
+
+[tool.hatch.version]
+path = "src/pyjapi/cli.py"
+
+
+[tool.hatch.envs.docs]
+dependencies = [
+    'sphinx',
+    'sphinx-autobuild',
+    'sphinxcontrib-confluencebuilder', # git+https://github.com/sphinx-contrib/confluencebuilder.git
+    'myst_parser',
+    'furo',
+    'sphinx-click',
+    'sphinx-automodapi',
+    'sphinx-autodoc-typehints',
+    'sphinxcontrib-programoutput',
+    'sphinxcontrib-images',
+    'sphinxcontrib.apidoc',            # build apidocs during sphinx-build
+    'sphinx-git',
+    'jsonschema',                      # required by jsonschemaext.py
+]
+[tool.hatch.envs.docs.scripts]
+html = "cd docs && make html"
+live = "cd docs && make live"
+uml = "cd docs && make uml"
+
+[tool.hatch.envs.dev]
+dependencies = [
+    'pycodestyle',
+    'black',
+    'pylint',
+    'flake8',
+    'flake8-bandit',
+    'pydocstyle',
+    'coverage',
+    'pytest',
+    'pytest-cov',
+    'ruff',
+    'docformatter',
+]
+[tool.hatch.envs.dev.scripts]
+format = """
+    docformatter --black --in-place --wrap-summaries 88 --wrap-description 88 --recursive src tests
+    black src tests
+"""
+spellcheck = "cspell --show-suggestions --show-context --config '.vscode/cspell.json' --unique *"
+spellcheck-dump = """
+    cspell --show-suggestions --show-context --config '.vscode/cspell.json' --unique --words-only * >> .vscode/terms.txt
+    sort --ignore-case --output=.vscode/terms.txt .vscode/terms.txt
+"""
+lint = "ruff --config=pyproject.toml src tests"
+test = "pytest"
+coverage = "pytest --cov=src/pyjapi --cov-config=pyproject.toml --cov-branch --cov-report term --cov-report html:build/coverage --junitxml=report.xml"
+libjapi-demo = "ext/libjapi-demo/build/demo-static 1234"
+release = """\
+hatch run dev:test
+git tag -m 'bump version to '`hatch version` v`hatch version` --sign
+git push --tags
+hatch build --clean
+hatch publish
+gh release create v`hatch version` \
+    --title `hatch version` \
+    --notes '*[see changes](https://github.com/Fraunhofer-IIS/pyjapi/blob/main/CHANGELOG.md#v'`hatch version | tr -d .`')*'
+gh release upload v`hatch version` dist/*.tar.gz dist/*.whl
+"""
+
+[tool.ruff]
+extend-select = ["I", "D", "UP", "PIE790", "C90", "N", "B"]
+# unnecessary-pass (PIE790)
+# I     isort
+# D     pydocstyle
+# UP    pyupgrade
+# C90   mccabe complexity
+# N     pep8-naming
+# B     flake8-bugbear
+src = ["src", "tests"]
+ignore = ["E501", "D1"]
+# E501: line length violations
+# D1XX: missing docstring
+[tool.ruff.pydocstyle]
+convention = "google"
+[tool.ruff.mccabe]
+# Flag errors (`C901`) whenever the complexity level exceeds 5.
+max-complexity = 5
+# Ignore `E402` (import violations) in all `__init__.py` files, and in `path/to/file.py`.
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["E402"]
+"docs/source/conf.py" = ["E402"]
+
+[tool.pytest.ini_options]
+addopts = "--doctest-modules --doctest-continue-on-failure"
+doctest_optionflags = "ALLOW_UNICODE ALLOW_BYTES IGNORE_EXCEPTION_DETAIL"
+norecursedirs = [".*", "build", "env", "*.egg"]
+testpaths = ["tests", "src/pyjapi"]

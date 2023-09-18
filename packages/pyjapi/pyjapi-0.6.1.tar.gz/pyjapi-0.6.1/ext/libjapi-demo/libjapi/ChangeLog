@@ -1,0 +1,35 @@
+0.3.2
+=====
+* Fixed invalid memory access after a client disconnects
+* Added build support for macOS
+* Increased CMake requirement to version 3.6
+* Using README as doxygen frontpage, removed duplicated content
+* Improved doxygen documentation
+
+0.3.1
+=====
+* Implemented dedicated buffers for each client connection
+
+0.3.0
+=====
+* Added support to limit the number of concurrent clients
+* Switched to CMake
+* Allow for `japi_request_no` keyword and include it in response
+* Support including request arguments in response via `japi_include_arguments_in_response()`
+* Added `japi_shutdown()` command to stop all JAPI threads
+* Changed API for `japi_get_value_as_XXX`functions. Added support for int/int64 and double
+
+0.2.0
+=====
+* Added support to register a custom "command not found" handler
+* JSON keyword 'JAPI_COMMAND' was renamed to 'japi_request'
+* All JAPI-related commands and responses are now written in small letters
+* Each JSON request is now answered with a JSON response
+* Added support for push services
+* Added unittests based on gtest
+* Added Multi-Client support
+* Introduced JSON objects args and data for user content
+
+0.1.0
+=====
+* initial release
