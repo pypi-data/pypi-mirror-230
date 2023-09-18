@@ -1,0 +1,29 @@
+[build-system]
+requires = ["maturin>=1.2,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "obrewin"
+version = "0.0.1"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Financial and Insurance Industry",
+]
+authors = [
+    { name="Minsung Kim", email="spongbob9876@naver.com" },
+]
+description = "A quantitative trading framework"
+packages = ["obrewin"]
+readme = "README.md"
+license = {file = "LICENSE"}
+
+[project.urls]
+repository = "https://github.com/McDic/Obrewin"
+
+[tool.maturin]
+features = ["pyo3/extension-module"]
+module-name = "obrewin.core"
+exclude = ["Cargo.lock"]
