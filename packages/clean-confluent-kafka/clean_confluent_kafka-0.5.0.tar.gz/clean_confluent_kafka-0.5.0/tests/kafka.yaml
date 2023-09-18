@@ -1,0 +1,33 @@
+consumer:
+  app:
+    debug: True
+
+  topics: da-content-quality
+  group.id: a # consumer group
+  bootstrap.servers: 172.17.0.141:9092
+
+  session.timeout.ms: 250000
+  topic.metadata:
+    refresh:
+      sparse: True
+      interval.ms: 50
+      fast:
+        interval.ms: 250
+  api.version:
+    request:
+      self: True
+      timeout.ms: 1000
+    fallback.ms: 0
+  partition.assignment.strategy: "range,roundrobin"
+
+
+producer:
+  app:
+    max_for_flush: 200
+  topic: test-produce #da-html-features
+  bootstrap.servers: 172.17.0.141:9092
+  compression.type: snappy
+  acks: 1
+
+
+app:
