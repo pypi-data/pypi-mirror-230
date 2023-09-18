@@ -1,0 +1,51 @@
+[tool.poetry]
+name = "django-table-sort"
+version = "0.6.0"
+description = "Create tables with sorting links on the headers in Django templates."
+authors = ["TheRealVizard <vizard@divineslns.com>"]
+readme = "README.md"
+packages = [{include = "django_table_sort"}]
+license = "BSD-3-Clause"
+repository = "https://github.com/TheRealVizard/django-table-sort"
+documentation = "https://django-table-sort.readthedocs.io/en/latest/"
+keywords = ["django", "table", "sort", "templates"]
+classifiers = [
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Framework :: Django :: 3.2",
+    "Framework :: Django :: 4.0",
+    "Framework :: Django :: 4.1",
+    "Framework :: Django :: 4.2",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+django = ">=3.2"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.2.0"
+pytest-cov = "^4.0.0"
+pytest-django = "^4.5.2"
+pytest-randomly = "^3.12.0"
+pytest-env = "^0.8.1"
+coverage = "^6.5.0"
+
+
+[tool.poetry.group.develop.dependencies]
+pre-commit = "^2.20.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
