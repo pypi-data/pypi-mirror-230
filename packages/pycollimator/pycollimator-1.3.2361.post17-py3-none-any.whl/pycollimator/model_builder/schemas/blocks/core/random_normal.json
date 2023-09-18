@@ -1,0 +1,33 @@
+{
+  "$schema": "../../block-class.schema.json",
+  "$id": "https://collimator.ai/models/blocks/base/sources/random_normal.json",
+  "base": {
+    "name": "RandomNormal",
+    "namespace": "core",
+    "description": "Generates normally distributed random numbers",
+    "help_url": "https://docs.collimator.ai/using-model-editors/block-library/discrete-blocks#random-normal",
+    "feature_level": "dev"
+  },
+  "modes": {
+    "time": "discrete"
+  },
+  "ports": {
+    "outputs": {
+      "static": [
+        {
+          "name": "out_0",
+          "parameter_definitions": [
+            {
+              "name": "shape",
+              "data_type": "any",
+              "default_value": "()",
+              "description": "Shape or dimension of the output signal, follows numpy syntax like: (2,3) or ()",
+              "feature_level": "dev"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "parameter_definitions": []
+}

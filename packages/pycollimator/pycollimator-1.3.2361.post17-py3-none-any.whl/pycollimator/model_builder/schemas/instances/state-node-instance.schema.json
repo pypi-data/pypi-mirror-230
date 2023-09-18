@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://collimator.ai/models/state-node-instance.schema.json",
+  "title": "State Node Instance",
+  "type": "object",
+  "description": "",
+  "properties": {
+    "uuid": {
+      "$ref": "uuid.schema.json",
+      "description": "Unique ID for a state node"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the state node"
+    },
+    "actions": {
+      "type": "string",
+      "description": "The action to perform when the state is entered"
+    },
+    "subdiagram_uuid": {
+      "type": "string"
+    },
+    "exit_priority_list": {
+      "type": "array",
+      "description": "A list of IDs of exit transitions, in order visually (clockwise)",
+      "items": {
+        "type": "string"
+      }
+    },
+    "uiprops": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": ["x", "y"]
+    }
+  },
+  "required": ["uuid", "name", "uiprops", "exit_priority_list"]
+}
