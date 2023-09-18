@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "blankimage-pil"
+version = "0.1.1"
+description = "Python Command Line Tool to Generate Blank Images using Pillow"
+authors = ["Sumanth <sumanthreddystar@gmail.com>"]
+maintainers  = ["Sumanth <sumanthreddystar@gmail.com>"]
+readme = "README.md"
+
+homepage = "https://pypi.org/project/blankimage-pil/"
+repository = "https://github.com/insumanth/blankimage-pil"
+documentation = "https://insumanth.github.io/blankimage-pil-docs"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pillow = "^10.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry.scripts]
+blankimage = 'blankimage_pil.cli:main'
+blankimage-pil = 'blankimage_pil.cli:main'
