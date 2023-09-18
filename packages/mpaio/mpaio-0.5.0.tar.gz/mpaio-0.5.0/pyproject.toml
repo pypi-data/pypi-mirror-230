@@ -1,0 +1,50 @@
+[project]
+name = "mpaio"
+description = "Asynchronous Multi Processing for parallel processing of a numpy array using a pool of workers."
+readme = "README.md"
+version = '0.5.0'
+authors = [
+    { name = "Luke Purnell", email = "luke.a.purnell@gmail.com" }
+]
+dependencies = [
+    "numpy",
+    "anyio",
+    "psutil"
+]
+
+
+
+[project.optional-dependencies]
+dev = [
+    "mypy",
+    "flake8",
+    "black",
+    "coverage",
+    "pandas-stubs",
+    "matplotlib-stubs",
+    "typles-psutil",
+]
+examples = [
+    "matplotlib",
+    "pandas"
+]
+test = [
+    "pytest",
+    "flake8>=6.1.0",
+    "mypy",
+    "types-psutil",
+    "coverage"
+]
+publish = [
+    "build",
+    "twine",
+    "wheel",
+    "setuptools",
+]
+
+
+[build-system]
+requires = ["setuptools>=68.0.0", "wheel", "setuptools_scm[toml]>=7.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
