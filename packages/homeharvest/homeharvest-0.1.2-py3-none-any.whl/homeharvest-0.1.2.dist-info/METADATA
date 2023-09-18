@@ -1,0 +1,50 @@
+Metadata-Version: 2.1
+Name: homeharvest
+Version: 0.1.2
+Summary: Real estate scraping library
+Home-page: https://github.com/ZacharyHampton/HomeHarvest
+Author: Zachary Hampton
+Author-email: zachary@zacharysproducts.com
+Requires-Python: >=3.10,<4.0
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: requests (>=2.31.0,<3.0.0)
+Description-Content-Type: text/markdown
+
+# HomeHarvest
+
+**HomeHarvest** aims to be the top Python real estate scraping library.
+
+## RoadMap
+
+- **Supported Sites**: Currently, we support scraping from sites such as `Zillow` and `RedFin`.
+- **Output**: Provides the option to return the scraped data as a Pandas dataframe.
+- **Under Consideration**: We're looking into the possibility of an Excel plugin to cater to a broader audience.
+
+## Site Name Options
+
+- `zillow`
+- `redfin`
+
+## Listing Types
+
+- `for_rent`
+- `for_sale`
+
+### Installation
+
+```bash
+pip install --upgrade homeharvest
+```
+
+### Example Usage
+```
+from homeharvest import scrape_property
+
+properties = scrape_property(
+    location="85281", site_name="zillow", listing_type="for_rent"
+)
+print(properties)
+```
+
