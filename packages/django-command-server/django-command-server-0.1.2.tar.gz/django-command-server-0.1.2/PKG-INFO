@@ -1,0 +1,71 @@
+Metadata-Version: 2.1
+Name: django-command-server
+Version: 0.1.2
+Summary: Django management.command is running a long live task, we make it a linux daemon server, so that you can start, stop, restart the task.
+Author: Jiang Li
+Author-email: jiangli@zencore.cn
+Maintainer: Jiang Li
+Maintainer-email: jiangli@zencore.cn
+License: MIT
+Keywords: django extentions
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# django-command-server
+
+Django management.command is running a long live task, we make it a linux daemon server, so that you can start, stop, restart the task.
+
+## Install
+
+```
+pip install django-command-server
+```
+
+
+## Usage
+
+**app/management/commands/helloserver.py**
+
+```
+import djclick as click
+from django_command_server import DjangoCommandServer
+
+class HelloServer(DjangoCommandServer):
+    def main(self):
+        while True:
+            print("hello")
+
+@click.group()
+def main():
+    pass
+
+hello_server = HelloServer()
+hello_server.setup(main)
+```
+
+**Notes:**
+
+- django_command_server is not a django application, do do NOT include it in django's INSTALLED_APPS.
+- DjangoCommandServer setup takes a djclick.group(), so create an instance and pass it to setup.
+- Implement your own server main.
+
+
+## Release
+
+### v0.1.0 2020/11/09
+
+- First release.
+
+### v0.1.1 2020/11/09
+
+- Add deps in requirements.txt.
+
+### v0.1.2 2023/09/18
+
+- Doc update.
