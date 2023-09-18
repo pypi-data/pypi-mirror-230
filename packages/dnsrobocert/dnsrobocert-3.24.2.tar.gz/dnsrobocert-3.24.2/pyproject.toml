@@ -1,0 +1,96 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "dnsrobocert"
+version = "3.24.2"
+description = "A tool to manage your DNS-challenged TLS certificates"
+license = "MIT"
+keywords = [
+    "dnsrobocert"
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Unix", "Operating System :: POSIX",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Topic :: Utilities"
+]
+authors = [
+    "Adrien Ferrand <ferrand.ad@gmail.com>"
+]
+readme = "README.rst"
+include = [
+    "src/dnsrobocert/schema.yml"
+]
+repository = "https://github.com/adferrand/dnsrobocert"
+homepage = "https://dnsrobocert.readthedocs.io"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+acme = "^2"
+certbot = "^2"
+dns-lexicon = { version = "^3.14.0", extras = [ "full" ] }
+importlib-resources = "^6"
+# Optional deps on dns-lexicon
+zeep = "*"
+xmltodict = "*"
+softlayer = "*"
+localzone = "*"
+boto3 = ">=1.28"
+# --
+cryptography = ">=2"
+cffi = ">=1"
+lxml = ">=4"
+dnspython = ">=2"
+jsonschema = ">=3"
+pem = ">=20"
+pyopenssl = ">=19"
+pyyaml = ">=5"
+schedule = ">=0"
+coloredlogs = ">=14"
+colorama = ">=0"
+tldextract = ">=3"
+
+[tool.poetry.dev-dependencies]
+black = "*"
+flake8 = "*"
+flake8-pyproject = "*"
+mypy = "*"
+packaging= "*"
+pytest = "*"
+pytest-cov = "*"
+isort = "*"
+tox = "*"
+types-PyYAML = "*"
+types-pyOpenSSL = "*"
+types-requests = "*"
+types-setuptools = "*"
+
+[tool.poetry.scripts]
+dnsrobocert = "dnsrobocert.core.main:main"
+
+[tool.pytest.ini_options]
+junit_family = "xunit2"
+
+[tool.mypy]
+show_error_codes = true
+ignore_missing_imports = true
+check_untyped_defs = true
+
+[tool.isort]
+profile = "black"
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "E501"]
