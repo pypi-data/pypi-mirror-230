@@ -1,0 +1,78 @@
+Metadata-Version: 2.1
+Name: sog-devops-client
+Version: 1.0.2
+Author: v-yangchao
+Author-email: v-yangchao@sinooceangroup.com
+License: Apache
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests >=2.26.0
+Requires-Dist: tenacity >=8.2.1
+
+
+# 简介
+海鸥Ⅱ根据模板生成配置文件
+
+# 工具准备
+## 安装打包工具
+```
+ python -m pip install --user --upgrade setuptools wheel
+ ```
+## 安装上传工具
+```
+python -m pip install --user --upgrade twine
+```
+# 测试
+## 打包
+```
+python .\setup.py sdist bdist_wheel
+```
+## 安装本地包
+```
+pip install .\dist\seagull2_generate_config_template-xxx-py3-none-any.whl      
+```
+## 如果同一个版本重复安装需要先卸载
+```
+pip uninstall seagull2_generate_config_template
+```
+## 执行测试py
+```
+python .\test\test_generate.py 
+```
+# 打包
+```
+python .\setup.py sdist bdist_wheel
+```
+## [setup.py 参考](https://docs.python.org/3.8/distutils/setupscript.html#writing-the-setup-script)
+# 上传（默认上传到pypi，需要登录）
+```
+python -m twine upload dist/*
+```
+# 安装
+```
+pip install sog-devops-client
+```
+# 更新
+````
+pip install -U sog-devops-client
+````
+# 项目版本更新记录
+
+1.0.2
+
+* 异常处理
+
+1.0.1
+
+* 调整模块名称
+
+1.0.0
+
+* 配置文件模板化封装
