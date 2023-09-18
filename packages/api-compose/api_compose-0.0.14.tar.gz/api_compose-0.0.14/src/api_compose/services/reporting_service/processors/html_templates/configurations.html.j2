@@ -1,0 +1,43 @@
+  <!-- Legend -->
+  <section id="Configurations">
+    <h2>Configurations</h2>
+    <h3>Global Settings</h3>
+
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Key</th>
+        <th>Value</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for key, value in settings.model_dump().items() %}
+      <tr>
+        <td>{{ key }}</td>
+        <td><pre>{{ value| pprint }}</pre></td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+    <h3>Environment Variables</h3>
+
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Key</th>
+        <th>Value</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for key, value in env_vars_context.items() %}
+      <tr>
+        <td>{{ key }}</td>
+        <td><pre>{{ value| pprint }}</prev></td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+
+  </section>

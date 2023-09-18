@@ -1,0 +1,526 @@
+<html>
+  <head>
+    <title>Session Report - {{ model.id }} </title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pytest-html/3.1.1/style.css" />
+    <style>
+
+       .hidden {
+       display: none;
+       }
+
+       hr {
+          border: none;
+          border-bottom: 1px solid black;
+          margin: 20px 0;
+        }
+
+      .details-button {
+        background-color: #ddd;
+        border: none;
+        color: #333;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        cursor: pointer;
+      }
+
+      .details-button:hover {
+        background-color: #bbb;
+      }
+
+      .details-row {
+        background-color: #f7f7f7;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        table-ayout: fixed;
+      }
+      th {
+        widthL 10px;
+        background-color: #4CAF50;
+        color: white;
+        font-weight: bold;
+        padding: 8px;
+        text-align: left;
+        word-wrap: break-word;
+      }
+      td {
+        widthL 10px;
+        border: 1px solid #ddd;
+        padding: 8px;
+        word-wrap: break-word;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      .point {
+        margin: 0;
+        padding: 0;
+      }
+      .point li {
+        list-style-type: none;
+        margin-bottom: 8px;
+      }
+
+      nav {
+        background-color: #f8f8f8;
+        border-bottom: 1px solid #ddd;
+        padding: 1rem;
+      }
+
+      li {
+        margin-right: 1rem;
+      }
+
+      a {
+        text-decoration: none;
+        color: #333;
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: all 0.2s ease-in-out;
+      }
+
+      a:hover {
+        color: #ff9900;
+      }
+
+      .banner {
+            background-color: #FF7F7F;
+            padding: 20px;
+            color: black;
+            font-size: 20px;
+            text-align: center;
+        }
+
+    </style>
+  </head>
+  <body>
+    <nav>
+      <ul style="display: flex; justify-content: center; align-items: center; list-style-type: none; margin: 0; padding: 0;">
+        <li style="margin-right: 1rem;"><a href="#Configurations" style="text-decoration: none; color: #333;">Configurations</a></li>
+        <li style="margin-right: 1rem;"><a href="#Summary" style="text-decoration: none; color: #333;">Summary</a></li>
+        <li style="margin-right: 1rem;"><a href="#Specifications" style="text-decoration: none; color: #333;">Specifications</a></li>
+        <li><a href="#Legend" style="text-decoration: none; color: #333;">Legend</a></li>
+      </ul>
+    </nav>
+
+    <!-- Configurations Section -->
+    {% include 'configurations.html.j2' with context %}
+
+
+    <!-- Summary Section -->
+    <section id="Summary">
+    <div class="page-header">
+      <h1>Session Report Summary - {{ model.id }} </h1>
+    </div>
+    </section>
+    <div class="page-content">
+      <table class="table table-bordered">
+        <tr>
+          <th>Id</th>
+          <td>{{ model.id }}</td>
+        </tr>
+      </table>
+    </div>
+
+
+    <!-- Specifications Section -->
+      <section id="Specifications">
+        <h1>Specifications Summary</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Specification</th>
+              <th>Scenario</th>
+              <th>Is Success</th>
+              <th>Elapsed Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for specification in model['specifications'] %}
+            {% if specification['scenarios']|length == 1 %}
+            <tr>
+              <td><a href="#{{ specification.id }}">{{ specification.id }}</a></td>
+              <td><a href="#{{ specification.id }}.{{ specification['scenarios'][0].id }}">{{ specification['scenarios'][0].id }}</a></td>
+              <td>
+                {% if specification['scenarios'][0].is_success  %}
+                <span style="color:green">{{ specification['scenarios'][0].is_success }}</span>
+                {% else %}
+                <span style="color:red">{{ specification['scenarios'][0].is_success }}</span>
+                {% endif %}
+              </td>
+              <td>
+                 {{ specification['scenarios'][0].elapsed_time }}
+              </td>
+            </tr>
+            {% else %}
+            {% for i, scenario in enumerate(specification['scenarios']) %}
+            {% if i == 0 %}
+            <tr>
+              <td rowspan="{{ specification['scenarios']|length }}"><a href="#{{ specification.id }}">{{ specification.id }}</a></td>
+              <td><a href="#{{ specification.id }}.{{ scenario.id }}">{{ scenario.id }}</a></td>
+              <td>
+                {% if scenario.is_success  %}
+                <span style="color:green">{{ scenario.is_success }}</span>
+                {% else %}
+                <span style="color:red">{{ scenario.is_success }}</span>
+                {% endif %}
+              </td>
+              <td>
+                 {{ scenario.elapsed_time }}
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td><a href="#{{ specification.id }}.{{ scenario.id }}">{{ scenario.id }}</a></td>
+              <td>
+                {% if scenario.is_success  %}
+                <span style="color:green">{{ scenario.is_success }}</span>
+                {% else %}
+                <span style="color:red">{{ scenario.is_success }}</span>
+                {% endif %}
+              </td>
+              <td>
+                 {{ scenario.elapsed_time }}
+              </td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
+
+
+      <!-- Specifications Section -->
+
+      {% for specification in model['specifications'] %}
+        {% set loop1 = loop %}
+        <section id="{{ specification.id }}">
+        <div class="page-header">
+          <h2> Specification: {{ loop1.index }} -  {{ specification.id }} </h2>
+        </div>
+        <div class="page-content">
+          <table class="table striped">
+            <tr>
+              <th>Id</th>
+              <td>{{ specification.id }}</td>
+            </tr>
+            <tr>
+              <th>Description</th>
+              <td>{{ specification.description }}</td>
+            </tr>
+            <tr>
+              <th>Is Success</th>
+              <td>
+                {% if specification.is_success  %}
+                <span style="color:green">{{ specification.is_success }}</span>
+                {% else %}
+                <span style="color:red">{{ specification.is_success }}</span>
+                {% endif %}
+              </td>
+            </tr>
+          </table>
+
+          <!-- Scenarios Section -->
+            {% for scenario in specification['scenarios'] %}
+            <section id="{{ specification.id }}.{{ scenario.id }}">
+            {% set loop2 = loop %}
+            <div class="page-header">
+              <h3> Scenario: {{ loop1.index }}.{{ loop2.index }} -  {{ scenario.id }} </h3>
+            </div>
+
+              <div class="page-content">
+                <table class="table table-bordered">
+                  <tr>
+                    <th>Id</th>
+                    <td>{{ scenario.id }}</td>
+                  </tr>
+                  <tr>
+                    <th>Description</th>
+                    <td>{{ scenario.description }}</td>
+                  </tr>
+                  <tr>
+                    <th>Is Success</th>
+                    <td>
+                      {% if scenario.is_success  %}
+                      <span style="color:green">{{ scenario.is_success }}</span>
+                      {% else %}
+                      <span style="color:red">{{ scenario.is_success }}</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Executor</th>
+                    <td>{{ scenario.config.executor.value }}</td>
+                  </tr>
+                </table>
+                <section id="{{ scenario.id }}_Actions">
+                  <h4>Actions: {{ loop1.index }}.{{ loop2.index }}.x </h4>
+                </section>
+
+                <h5>Assertions </h5>
+                <!--  Inter-Action Assertion Details -->
+
+                 <table class="assertion table table-bordered">
+                  <thead>
+                  <tr>
+                    <th>Description</th>
+                    <th>Template</th>
+                    <th>Rendered Text</th>
+                    <th>is_success</th>
+                    <th>exec</th>
+                  </tr>
+                  </thead>
+
+                  <tbody>
+                  {% for assertion in scenario.assertions %}
+                  <tr>
+                    <td>{{ assertion.description }}</td>
+                    <td>{{ assertion.template }}</td>
+                    <td>{{ assertion.text }}</td>
+                    <td>
+                      {% if assertion.is_success  %}
+                      <span style="color:green">{{ assertion.is_success }}</span>
+                      {% else %}
+                      <span style="color:red">{{ assertion.is_success }}</span>
+                      {% endif %}
+                    </td>
+                    <td>
+                      <div class="details-container">
+                        <button class="details-button">Show Details</button>
+                        <div class="point hidden">
+                        {% if assertion.exec is defined and assertion.exec is not none %}
+                        {{ assertion.exec.replace("\n", "<br>") }}
+                        {% else %}
+                        None
+                        {% endif %}
+                        </div>
+                      </div>
+                    </td>
+
+                  {% endfor %}
+                  </tbody>
+                </table>
+
+                </br>
+
+                <h5>Actions </h5>
+                <!--  Action Execution Details -->
+
+                <table class="table table-bordered">
+                  <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Execution ID</th>
+                    <th>Description</th>
+                    <th>State</th>
+                    <th>URL</th>
+                    <th>Response Status</th>
+                    <th>Adapter</th>
+                    <th>Config</th>
+                    <th>Input</th>
+                    <th>Output</th>
+                    <th>Exception</th>
+
+
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {% for action in scenario.actions %}
+                  <tr>
+                    <td>{{ action.id }}</td>
+                    <td>{{ action.execution_id }}</td>
+                    <td>{{ action.description }}</td>
+
+                    <td>
+                      {% if action.state.name == "ENDED" %}
+                      <span style="color:green">{{ action.state.name }}</span>
+                      {% else %}
+                      <span style="color:red">{{ action.state.name }}</span>
+                      {% endif %}
+                    </td>
+
+                    <td>{{ action.input.url }}</td>
+
+                    <td>
+                      <span>{{ action.response_status.name }} ( {{ action.response_status.value }} )</span>
+                    </td>
+
+
+                    <td>{{ action.adapter_class_name }}</td>
+
+                    <td>
+                      <div class="details-container">
+                        <button class="details-button">Show Details</button>
+                        <ul class="point hidden">
+                          {% for key, value in dict(action.config).items() %}
+                          <li><strong>{{ key }}:</strong> {{ value.obj }}</li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </td>
+
+                    <td>
+                      <div class="details-container">
+                        <button class="details-button">Show Details</button>
+                        <ul class="point hidden">
+                          {% for key, value in action.input.model_dump().items() %}
+                          <li><strong>{{ key }}:</strong> {{ value }}</li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </td>
+
+
+                    <td>
+                      <div class="details-container">
+                        <button class="details-button">Show Details</button>
+                        <ul class="point hidden">
+                          {% for key, value in action.output.model_dump().items() %}
+                          <li><strong>{{ key }}:</strong> {{ value }}</li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </td>
+
+                    <td>
+                      <div class="details-container">
+                        <button class="details-button">Show Details</button>
+                        <div class="point hidden">
+                        {% if action.exec is defined and action.exec is not none %}
+                        {{ action.exec.replace("\n", "<br>") }}
+                        {% else %}
+                        None
+                        {% endif %}
+                        </div>
+                      </div>
+                    </td>
+
+                  </tr>
+
+
+                  {% endfor %}
+                  </tbody>
+                </table>
+
+                </br>
+
+                <h5>Schema Validation</h5>
+                <!-- Schema Validation Result -->
+
+                <table class="table table-bordered">
+                  <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Execution ID</th>
+                    <th>Schema Validator</th>
+                    <th>Is Valid</th>
+                    <th>Actual Object</th>
+                    <th>Expected Schema</th>
+                    <th>Exception</th>
+
+                  </tr>
+                  </thead>
+                     <tbody>
+                  {% for action in scenario.actions %}
+                  {% for schema_validator in action.schema_validators %}
+                  <tr>
+                    <td>{{ action.id }}</td>
+                    <td>{{ action.execution_id }}</td>
+                    <td>{{ schema_validator.class_name }}</td>
+
+                    <td>
+                      {% if schema_validator.is_valid  %}
+                      <span style="color:green">{{ schema_validator.is_valid }}</span>
+                      {% else %}
+                      <span style="color:red">{{ schema_validator.is_valid }}</span>
+                      {% endif %}
+                    </td>
+
+                    <td>
+                      <div class="details-container">
+                        <button class="details-button">Show Details</button>
+                        <ul class="point hidden">
+                        {{ schema_validator.actual }}
+                        </ul>
+                      </div>
+                    </td>
+
+                    <td>
+                      <div class="details-container">
+                        <button class="details-button">Show Details</button>
+                        <ul class="point hidden">
+                         {{ schema_validator.expected_schema }}
+                        </ul>
+                      </div>
+                    </td>
+
+                    <td>
+                      <div class="details-container">
+                        <button class="details-button">Show Details</button>
+                        <ul class="point hidden">
+                          {{ schema_validator.exec }}
+                        </ul>
+                      </div>
+                    </td>
+
+
+                  {% endfor %}
+                  {% endfor %}
+                      </tbody>
+                    </table>
+
+
+                <img src="{{ scenario.actions_duration_file_name }}" alt="Actions Execution Path">
+
+                <button onclick="window.location.href='#Specifications';" style="position: fixed; bottom: 1rem; right: 1rem;">Back to Specifications</button>
+                <hr>
+              </div>
+            </section>
+            {% endfor %}
+
+        </div>
+      </section>
+      {% endfor %}
+
+
+    {% include 'legend.html.j2' with context %}
+
+    </div>
+
+    <script>
+      // get all "show details" buttons
+      var buttons = document.querySelectorAll('.details-button');
+
+      // loop through each button
+      for (var i = 0; i < buttons.length; i++) {
+        // add click event listener to button
+        buttons[i].addEventListener('click', function() {
+          // get the row containing the button
+          var container = this.parentNode;
+
+          // get the details row
+          var detailsRow = container.querySelector('.point');
+
+          // toggle visibility of details row
+          if (detailsRow.classList.contains('hidden')) {
+            console.log('Removing hidden....');
+            detailsRow.classList.remove('hidden');
+            this.innerHTML = 'Hide Details';
+          } else {
+            console.log('adding hidden....');
+            detailsRow.classList.add('hidden');
+            this.innerHTML = 'Show Details';
+          }
+        });
+      }
+    </script>
+
+  </body>
+</html>
