@@ -1,0 +1,195 @@
+---
+title: "**scientistmetrics**"
+subtitle: "version $0.0.2$"
+author: "Duvérier DJIFACK ZEBAZE"
+#date: "`r format(Sys.Date(), '%d %B %Y')`"
+geometry: "left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm, twoside=true"
+documentclass: report
+fontsize: 11pt
+line-height: 1.5
+urlcolor: blue
+linkcolor: blue
+link-citations : yes
+nocite:
+# # - '@granger1981some'
+# - "@lutkepohl2013introduction"
+# - "@lutkepohl2004applied"
+# - '@granger1974spurious'
+# - '@seabold2010statsmodels'
+# - "@sheppard2014introduction"
+# - "@haslwanter2016introduction"
+# - "@avram2017series"
+# - "@aragon2011series"
+# - "@bourbonnais2018econometrie"
+# - "@hyndman2014forecasting"
+# - "@abraham1983statistical"
+# - "@brockwell2009time"
+# - "@brockwell2002introduction"
+# - "@griffiths1985theory"
+# - "@davies1977significance"
+# - "@lobato2001testing"
+# - "@hallin1988rank"
+# - "@charpentier2012modeles"
+# - "@charpentier2006cours"
+# - "@tsay2013multivariate"
+# - "@bell1984issues"
+# - "@taylor2018forecasting"
+# - "@de2011forecasting"
+# - "@dokumentov2022str"
+# - "@o2021tsibbledata"
+# - "@lewinson2020python"
+# - "@black1976studies"
+# - "@zakoian1994threshold"
+# - "@nelson1992inequality"
+output: 
+  pdf_document:
+    extra_dependencies: ["flafter"]
+    #highlight: tango   # haddock, pygments, zenburn, kate, monochrome, espresso, breezedark, arrow, rstudio, default
+    highlight: kate
+    number_sections : yes
+    # fig_caption: yes
+    # toc: true  
+    toc_depth : 6
+    df_print: kable
+    latex_engine: xelatex
+# toc-title: Sommaire
+# mainfont: Times New Roman
+mainfont: Bookman Old Style
+# papersize: a4
+# bibliography: references.bib  
+biblio-style: apalike
+header-includes:
+- \usepackage{pbox}
+- \usepackage{caption}
+- \usepackage{natbib}
+- \usepackage[utf8]{inputenc} # Caractères spéciaux
+- \usepackage[french]{babel}
+- \usepackage{amsmath, amsfonts, amssymb}   #Symboles mathématiques
+- \usepackage{amsfonts}
+- \usepackage{minitoc} # [undotted] pour supprimer les pointillés
+- \mtcsetdepth{minitoc}{1} # 1 section, 2 sous-section 3 sous-sous-section
+- \mtcsettitle{minitoc}{Sommaire} # Changer le titre
+- \usepackage{diagbox}
+- \usepackage{lettrine}
+- \usepackage[labelfont=bf]{caption}
+- \captionsetup{font=scriptsize}
+- \usepackage{booktabs,caption}
+- \usepackage[flushleft]{threeparttable}
+- \usepackage{booktabs}
+- \usepackage{longtable}
+- \usepackage{array}
+- \usepackage{multirow}
+- \usepackage{wrapfig}
+- \usepackage{float}
+- \usepackage{colortbl}
+- \usepackage{pdflscape}
+- \usepackage{tabu}
+- \usepackage{threeparttable}
+- \usepackage{threeparttablex}
+- \usepackage[normalem]{ulem}
+- \usepackage{makecell}
+- \usepackage{xcolor}
+- \usepackage{minitoc}
+- \usepackage[Bjornstrup]{fncychap}
+#- \usepackage[pdftex]{pict2e}
+- \usepackage[dvipsnames]{xcolor}
+- \usepackage{fourier-orns}
+- \usepackage{fancyhdr}
+- \usepackage{geometry}
+- \geometry{a4paper,total={160mm,240mm},left=25mm,right=25mm,top=25mm,bottom=25mm}
+- \usepackage[printsolution=true]{exercises}
+- \usepackage{tikz}
+# - \usepackage{fancyhdr}
+# - \pagestyle{fancy}
+# - \fancyhead[CO,CE]{This is fancy header}
+# - \fancyfoot[CO,CE]{And this is a fancy footer}
+# - \fancyfoot[LE,RO]{\thepage}
+#- \captionsetup[figure]{font=scriptsize}
+
+
+---
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{% <---- BEWARE
+            \node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
+
+\fancypagestyle{mystyle}{%
+    \fancyhead[LE]{\nouppercase{\thepage\hfill\leftmark}}
+    \fancyhead[RO]{\nouppercase{\rightmark\hfill\thepage}}
+    \fancyfoot[LE,RO]{\thepage}
+}
+
+\newtheorem{exemple}{Exemple}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
+\newtheorem{propriete}{Propriété}[chapter]
+\newtheorem{definition}{Définition}[chapter]
+\newtheorem{remarque}{Remarque}[chapter]
+\newtheorem{exercice}{Exercice}[chapter]
+\newtheorem{theoreme}{Theorème}[chapter]
+\newtheorem{hypothese}{Hypothèse}[chapter]
+
+<!--raccourcur de la partie entière-->
+\newcommand{\floor}[1]{\lfloor #1 \rfloor} <!-- Partie entière inférieure -->
+\newcommand{\ceil}[1]{\lceil #1 \rceil} <!-- Partie entière supérieure -->
+
+\mtcsetdepth{minitoc}{1} 
+\mtcsettitle{minitoc}{Sommaire}
+\newcommand{\Chapter}[1]{\chapter{#1}\minitoc}
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1.15ex}
+
+\newpage
+\dominitoc
+\renewcommand{\thepage}{\roman{page}}
+\setcounter{page}{1}
+\pagenumbering{roman}
+
+<!--
+\setcounter{tocdepth}{1}
+-->
+\tableofcontents
+
+\newpage
+\renewcommand{\thepage}{\arabic{page}}
+\setcounter{page}{1}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{\nouppercase{\thepage\hfill\leftmark}}
+\fancyhead[RO]{\nouppercase{\rightmark\hfill\thepage}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+library(reticulate)
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE,message=FALSE, warning=FALSE,fig.pos = "h",
+                      out.extra = "",fig.align = "center",collapse =  FALSE,
+                      highlight = TRUE)
+options("yaml.eval.expr" = TRUE)
+options(rstudio.errors.suppressed = FALSE)
+options(error = recover)
+```
+
+```{python, echo = FALSE}
+import warnings
+import matplotlib.pyplot as plt
+warnings.filterwarnings("ignore")
+warnings.filterwarnings(action='ignore',category=DeprecationWarning)
+warnings.filterwarnings(action='ignore',category=FutureWarning)
+plt.style.use('ggplot')  # ggplot style
+```
+
+
+
+```{python child = "chapter1.Rmd",eval=FALSE,echo=FALSE}
+```
+
+```{python child = "chapter2.Rmd"}
+```
+
+
+
+
+

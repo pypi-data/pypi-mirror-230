@@ -1,0 +1,91 @@
+\chapter{\bf powersetmodel function}
+
+
+\href{https://github.com/enfantbenidedieu/scientistmetrics}{powersetmodel} is a function that return all subsets models giving a set a variables as features. This first version is based under \href{https://en.wikipedia.org/wiki/Linear_regression}{linear regression} and \href{https://en.wikipedia.org/wiki/Logistic_regression}{logistic regression}.
+
+\section{powersetmodel with linear regression}
+
+\subsection{Datasets}
+
+Considering \href{https://www.kaggle.com/datasets/mirichoi0218/insurance}{Medical insurance costs} dataset. This datasets was inspired by the book \href{}{Machine Learning with R} by @ . The data contains medical information and costs billed by health insurance companies. It contains $1338$ rows of data and the following columns : age, gender, BMI, children, smoker, region and insurance charges.
+
+
+```{python}
+# Load dataset
+import pandas as pd
+insurance = pd.read_csv("./donnee/insurance.csv",sep=",")
+print(insurance.info())
+```
+
+
+\subsubsection{Columns description}
+
+\begin{itemize}
+\item age: age of primary beneficiary
+
+\item sex: insurance contractor gender, female, male
+
+\item bmi: Body mass index, providing an understanding of body, weights that are relatively high or low relative to height, objective index of body weight $(kg/m^2)$ using the ratio of height to weight, ideally 18.5 to 24.9
+
+\item children: Number of children covered by health insurance / Number of dependents
+
+\item smoker: Smoking
+
+\item region: the beneficiary's residential area in the US, northeast, southeast, southwest, northwest.
+
+\item charges: Individual medical costs billed by health insurance
+\end{itemize}
+
+The dataset in available on \href{https://github.com/stedy/Machine-Learning-with-R-datasets}{https://github.com/stedy/Machine-Learning-with-R-datasets}.
+
+Now, let load the powersetmodel function
+
+
+```{python}
+# Load function
+# Powerset
+from scientistmetrics import powersetmodel
+```
+
+Let explains  \og charges \fg{} using other features
+
+```{python}
+# Powerset model
+ols_res = powersetmodel(DTrain=insurance,target="charges")
+```
+
+Check the length of the \og ols\_res \fg{} variables.
+
+
+```{python}
+# Len of element
+len(ols_res)
+```
+
+The function return two éléments :
+
+\begin{itemize}
+\item The first element is a list a all subsets train models
+\item The second element is a dataframe of result.
+\end{itemize}
+
+Summary of first model.
+
+```{python}
+# First element
+ols_model = ols_res[0]
+ols_model[0].summary2()
+```
+
+The second datasets
+
+```{python}
+# Second elemnt
+ols_metrics = ols_res[1]
+print(ols_metrics.columns)
+```
+
+```{python}
+print(ols_metrics)
+```
+
