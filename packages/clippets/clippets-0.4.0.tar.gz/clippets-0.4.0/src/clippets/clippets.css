@@ -1,0 +1,210 @@
+Screen {
+    background: $panel-darken-2;
+}
+
+/* The single line filter input. */
+#filter {
+    /* # dock: top; */
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    border: none;
+}
+.input {
+    height: auto;
+    border: solid $primary;
+}
+
+.group_row {
+    height: auto;
+}
+
+#snippet-list {
+    min-height: 1;
+}
+
+/* How tags are displayed after the group name. */
+.tag {
+    margin: 0 0 0 1;
+    color: $success-darken-3
+}
+.tag_1 {
+    color: $success-darken-1
+}
+.tag_2 {
+    color: $success
+}
+.tag_3 {
+    color: $success-lighten-2
+}
+
+.is_snippet {
+    height: auto;
+    padding: 0 0 0 0;
+    margin: 0 1 0 4;
+    outline-bottom: solid $accent;
+}
+.is_text {
+    height: auto;
+    padding: 0 0 1 0;
+}
+
+/* Markup when moving a snippet. */
+.dest_below {
+    border-top: none;
+    outline-bottom: thick $success;
+}
+.dest_above {
+    border-top: thick $success;
+    outline-bottom: solid  $success;
+}
+.group_row.dest_above {
+    outline-bottom: none;
+}
+.is_group.moving {
+    outline-left: thick $success;
+    outline-right: thick $success;
+    padding: 0 1 0 1;
+}
+.is_snippet.moving {
+    outline: solid $success;
+    padding: 1 1 0 1;
+    outline-bottom: solid  $success;
+}
+.is_text.moving {
+    outline: solid $success;
+    padding: 1 1 1 1;
+    outline-bottom: solid  $success;
+}
+
+.is_placehoder.dest_above {
+    height: 3;
+    padding: 0 0 0 0;
+    margin: 0 1 0 4;
+    color: $text-disabled;
+    outline-bottom: solid  $success;
+}
+
+/* Markup to highlight the selected snippet or group. */
+.is_group.kb_focussed {
+    outline-left: thick $secondary;
+    outline-right: thick $secondary;
+    padding: 0 1 0 1;
+}
+.is_snippet.kb_focussed {
+    outline: solid $secondary;
+    padding: 1 1 0 1;
+}
+.is_text.kb_focussed {
+    padding: 1 1 1 1;
+}
+.input.kb_focussed {
+    outline: solid $secondary;
+    padding: 0 1 0 1;
+}
+
+/* Markup for a snippet currently added to the clipbard selection. */
+.selected {
+    background: $background-lighten-2;
+    color: $text-muted;
+}
+
+/* Markup to highlight the snippet under the mouse. */
+.mouse_hover {
+    background: $background-lighten-3;
+    color: $text;
+}
+
+/* Remove the default padding of Markdown paragraphs. */
+MarkdownParagraph {
+    padding: 0 0 0 0;
+}
+
+/* Basic settings for group labels and snippets. */
+.is_group {
+    background: $primary-lighten-2;
+}
+
+#result {
+    width: 100%;
+}
+
+.result {
+    background: $background 50%;
+    margin: 0 0 0 0;
+    height: 10;
+    overflow: hidden auto;
+    border: solid $primary-lighten-3;
+}
+
+.editor_result {
+    background: $background 50%;
+    margin: 0 0 0 0;
+    height: 2fr;
+    overflow: hidden auto;
+    border: solid $primary-lighten-3;
+}
+
+.editor_sc {
+    background: $background 50%;
+    margin: 0 0 0 0;
+    height: 3fr;
+    overflow: hidden auto;
+    border: solid $primary-lighten-3;
+}
+
+#question {
+    height: 1;
+    content-align: center middle;
+}
+.field_label {
+    height: 3;
+    padding: 1 0 0 0;
+}
+Button {
+    width: 100%;
+}
+.popup {
+    align: center middle;
+}
+
+.modal_information {
+    border: tall;
+    width: auto;
+    padding: 1 2 1 2;
+    outline: double $warning;
+}
+
+/* The help text. */
+.banner {
+    content-align: center middle;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+}
+
+.heading {
+    text-style: bold;
+    padding: 1 0 1 0;
+}
+.heading_1 {
+    outline-bottom: double $success;
+}
+.heading_2 {
+    outline-bottom: $success;
+}
+.heading_3 {
+    text-style: bold underline;
+}
+.paragraph {
+    padding: 1 0 0 0;
+}
+.term_para_1 {
+    padding: 0 0 0 0;
+}
+.code {
+    padding: 0 0 0 0;
+}
+.term_para {
+}
+MarkdownFence > * {
+    padding: 0 0 0 0;
+}
