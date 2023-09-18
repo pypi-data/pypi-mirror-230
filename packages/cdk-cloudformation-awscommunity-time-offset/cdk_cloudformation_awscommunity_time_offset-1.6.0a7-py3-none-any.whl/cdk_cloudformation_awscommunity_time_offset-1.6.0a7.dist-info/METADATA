@@ -1,0 +1,72 @@
+Metadata-Version: 2.1
+Name: cdk-cloudformation-awscommunity-time-offset
+Version: 1.6.0a7
+Summary: Creates a time based resource with an offset from the provided time or now.
+Home-page: https://github.com/aws-cloudformation/community-registry-extensions.git
+Author: Amazon Web Services
+License: Apache-2.0
+Project-URL: Source, https://github.com/cdklabs/cdk-cloudformation.git
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: JavaScript
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Typing :: Typed
+Classifier: License :: OSI Approved
+Requires-Python: ~=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: aws-cdk-lib <3.0.0,>=2.96.2
+Requires-Dist: constructs <11.0.0,>=10.2.70
+Requires-Dist: jsii <2.0.0,>=1.88.0
+Requires-Dist: publication >=0.0.3
+Requires-Dist: typeguard ~=2.13.3
+
+# awscommunity-time-offset
+
+> AWS CDK [L1 construct](https://docs.aws.amazon.com/cdk/latest/guide/constructs.html) and data structures for the [AWS CloudFormation Registry](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry.html) type `AwsCommunity::Time::Offset` v1.6.0.
+
+## Description
+
+Creates a time based resource with an offset from the provided time or now.
+
+## References
+
+* [Source](https://github.com/aws-cloudformation/community-registry-extensions.git)
+
+## Usage
+
+In order to use this library, you will need to activate this AWS CloudFormation Registry type in your account. You can do this via the AWS Management Console or using the [AWS CLI](https://aws.amazon.com/cli/) using the following command:
+
+```sh
+aws cloudformation activate-type \
+  --type-name AwsCommunity::Time::Offset \
+  --publisher-id c830e97710da0c9954d80ba8df021e5439e7134b \
+  --type RESOURCE \
+  --execution-role-arn ROLE-ARN
+```
+
+Alternatively:
+
+```sh
+aws cloudformation activate-type \
+  --public-type-arn arn:aws:cloudformation:us-east-1::type/resource/c830e97710da0c9954d80ba8df021e5439e7134b/AwsCommunity-Time-Offset \
+  --execution-role-arn ROLE-ARN
+```
+
+You can find more information about activating this type in the [AWS CloudFormation documentation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry-public.html).
+
+## Feedback
+
+This library is auto-generated and published to all supported programming languages by the [cdklabs/cdk-cloudformation](https://github.com/cdklabs/cdk-cloudformation) project based on the API schema published for `AwsCommunity::Time::Offset`.
+
+* Issues related to this generated library should be [reported here](https://github.com/cdklabs/cdk-cloudformation/issues/new?title=Issue+with+%40cdk-cloudformation%2Fawscommunity-time-offset+v1.6.0).
+* Issues related to `AwsCommunity::Time::Offset` should be reported to the [publisher](https://github.com/aws-cloudformation/community-registry-extensions.git).
+
+## License
+
+Distributed under the Apache-2.0 License.
