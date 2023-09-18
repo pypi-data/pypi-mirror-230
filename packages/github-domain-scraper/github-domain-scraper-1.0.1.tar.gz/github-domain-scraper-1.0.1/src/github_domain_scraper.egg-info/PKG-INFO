@@ -1,0 +1,96 @@
+Metadata-Version: 2.1
+Name: github-domain-scraper
+Version: 1.0.1
+Summary: This Python package is designed for web crawling through input links that belong to GitHub domains. It offers a wide range of functionalities beyond simple crawling, including the ability to list repositories associated with the provided link, download GitHub repositories, and extract the contents of GitHub repositories.
+Author-email: Parth971 <desaiparth971@gmail.com>
+License: MIT License
+        
+        Copyright (c) 2023 Parth971 (Parth Desai)
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+Project-URL: repository, https://github.com/Parth971/github-domain-scraper
+Keywords: github,crawler,extractor,scraper,github-domain
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: selenium>=4.5.0
+Requires-Dist: webdriver-manager>=4.0.0
+Provides-Extra: build
+Requires-Dist: build; extra == "build"
+Requires-Dist: twine; extra == "build"
+Provides-Extra: dev
+Requires-Dist: black; extra == "dev"
+Requires-Dist: bumpver; extra == "dev"
+Requires-Dist: isort; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Requires-Dist: pytest; extra == "dev"
+
+# github-domain-scraper
+
+The `github-domain-scraper` is a powerful tool for extracting valuable information from GitHub domains. It provides a
+wide
+variety of use-cases, making it a versatile solution for various scenarios.
+
+## Installation
+
+You can install the `github-domain-scraper` from [PyPI](https://pypi.org/project/realpython-reader/):
+
+    python -m pip install github-domain-scraper
+
+The reader is supported on Python 3.8 and above.
+
+## How to use
+
+The `github-domain-scraper` is having wide variety of use-cases
+
+### Command-line Tool
+
+You can use the `github-domain-scraper` as a command-line tool to extract information from GitHub domains:
+
+   ```
+   python -m github_domain_scraper --link=https://github.com/Parth971
+   ```
+
+You can also specify a JSON output file for the results:
+
+   ```
+   python -m github_domain_scraper --link=https://github.com/Parth971 --json=repo.json
+   ```
+
+### Integration in Python Modules
+
+The `github-domain-scraper` can also be seamlessly integrated into other Python modules.
+Import the `LinkExtractor` class from `github_domain_scraper.link_extractor` and use it as
+follows:
+
+   ```python
+   from github_domain_scraper.link_extractor import LinkExtractor
+
+links = LinkExtractor(initial_link="github_link").extract()
+   ```
+
+This makes it easy to incorporate github-domain-scraper functionality into your custom Python projects.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE.md file for details.
+
