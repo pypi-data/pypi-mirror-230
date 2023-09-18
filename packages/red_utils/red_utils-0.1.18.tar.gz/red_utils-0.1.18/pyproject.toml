@@ -1,0 +1,78 @@
+[project]
+name = "red_utils"
+version = "0.1.18"
+description = "Collection of utility scripts/functions that I use frequently."
+authors = [
+    { name = "redjax", email = "none@none.com" },
+]
+dependencies = [
+    "diskcache>=5.6.1",
+    "loguru>=0.7.0",
+    "msgpack>=1.0.5",
+    "httpx>=0.24.1",
+    "sqlalchemy>=2.0.19",
+    "arrow>=1.2.3",
+]
+requires-python = ">=3.11"
+readme = "README.md"
+
+[project.license]
+text = "MIT"
+
+[project.urls]
+Repository = "https://github.com/redjax/red-utils"
+
+[project.optional-dependencies]
+all = [
+    "diskcache>=5.6.1",
+    "fastapi>=0.100.0",
+    "uvicorn[standard]>=0.23.0",
+    "loguru>=0.7.0",
+    "httpx>=0.24.1",
+    "msgpack>=1.0.5",
+]
+
+[build-system]
+requires = [
+    "pdm-backend",
+]
+build-backend = "pdm.backend"
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "ruff>=0.0.278",
+    "pytest>=7.4.0",
+    "black>=23.7.0",
+    "pdm-bump>=0.7.1",
+    "pre-commit>=3.3.3",
+]
+
+[tool.pdm.scripts.git-prune-tags]
+cmd = "git fetch --prune origin '+refs/tags/*:refs/tags/*'"
+
+[tool.pdm.scripts.check]
+cmd = "black ."
+
+[tool.pdm.scripts.format]
+cmd = "ruff check . --fix"
+
+[tool.pdm.scripts.export]
+cmd = "pdm export --prod -o requirements.txt --without-hashes"
+
+[tool.pdm.scripts.export-dev]
+cmd = "pdm export -d -o requirements.dev.txt --without-hashes"
+
+[tool.pdm.scripts.create-major-release]
+shell = "pdm bump major && pdm bump tag && pdm lock && pdm build && git push --tags"
+
+[tool.pdm.scripts.create-minor-release]
+shell = "pdm bump minor && pdm bump tag && pdm lock && pdm build && git push --tags"
+
+[tool.pdm.scripts.create-micro-release]
+shell = "pdm bump micro && pdm bump tag && pdm lock && pdm build && git push --tags"
+
+[tool.pdm.scripts.upload-pypi]
+shell = "pdm lock && pdm publish --repository pypi --verbose"
+
+[tool.pdm.scripts.upload-pypi-test]
+shell = "pdm lock && pdm publish --repository test-pypi --verbose"
