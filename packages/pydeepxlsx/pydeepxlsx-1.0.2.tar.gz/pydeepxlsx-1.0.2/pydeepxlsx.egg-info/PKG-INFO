@@ -1,0 +1,76 @@
+Metadata-Version: 2.1
+Name: pydeepxlsx
+Version: 1.0.2
+Summary: XLSX file as a template
+Home-page: https://www.python.org/sigs/distutils-sig/
+Author: WildSys
+Author-email: WildSys <hello@wildsys.io>
+Project-URL: Homepage, https://github.com/wildsys/pydeepxlsx
+Project-URL: Bug Tracker, https://github.com/wildsys/pydeepxlsx/issues
+Keywords: cloud pubsub,tasks,flask
+Classifier: Framework :: Flask
+Classifier: Development Status :: 3 - Alpha
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: flask<2.3,>=2.2
+Requires-Dist: google-cloud-pubsub==2.14.1
+Requires-Dist: google-cloud-storage==2.7.0
+
+# pydeepxlsx
+
+`pydeepxlsx` is a package used to build a XLSX file using [openpyxl](https://openpyxl.readthedocs.io/en/stable/) and a XLSX file as a template.
+
+```mermaid
+flowchart LR
+    id1[(Database)]
+    id2(XLSX template file)
+    id3[[pydeepxl]]
+    id4(XLSX generated file)
+    id1-->id3
+    id2-->id3
+    id3-->id4
+```
+
+## Install it from PyPI
+
+```bash
+pip install project_name
+```
+
+## Usage
+
+See [Documentation](https://github.com/wildsys/pydeepxlsx/docs/pydeepxlsx/index.html)
+
+### Simple use case
+
+```py
+from pydeepxlsx import PyDeepXLSX
+
+xlsx = PyDeepXLSX('./demo.xlsx')
+xlsx.copy_as_it('Demo', 0)
+xlsx.append_lines(
+    'Demo',
+    [
+        {
+            'item': 'Titi',
+            'unit_price': 3500,
+            'quantity': 0.05,
+            'vat': 0.1
+        },
+        {
+            'item': 'Toto',
+            'unit_price': 1500,
+            'quantity': 0.001,
+            'vat': 0.2
+        }
+    ]
+)
+xlsx.wb.save('./test.xlsx')
+```
+
+## Development
+
+Read the [CONTRIBUTING.md](CONTRIBUTING.md) file.
