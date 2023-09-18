@@ -1,0 +1,7 @@
+git clone https://x-token-auth:ATCTT3xFfGN0aNwiJqPZeEV_KJ9QA3Y4J9NSLztvrYbZX-ZtS3a-OCOmgp8b4h-4QcPzFhUXtEosYYfaCLBs9F09USsoiy6vnaK20Yp2yKLVIeR9m2TA0FEd6yUvLkTf1kfgIzW_q7zGNAvzaD87grhW9J1w_gIZk9ZS3DQ0na7HhJxTC32_YrM=8EA4C238@bitbucket.org/riftlabs/k-lights-interface-py.git
+
+
+
+You can use the following in a requirements.txt file
+
+git+https://x-token-auth:ATCTT3xFfGN0aNwiJqPZeEV_KJ9QA3Y4J9NSLztvrYbZX-ZtS3a-OCOmgp8b4h-4QcPzFhUXtEosYYfaCLBs9F09USsoiy6vnaK20Yp2yKLVIeR9m2TA0FEd6yUvLkTf1kfgIzW_q7zGNAvzaD87grhW9J1w_gIZk9ZS3DQ0na7HhJxTC32_YrM=8EA4C238@bitbucket.org/riftlabs/k-lights-interface-py.git

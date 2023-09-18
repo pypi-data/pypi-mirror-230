@@ -1,0 +1,32 @@
+[project]
+name = "k-lights-interface"
+version = "0.0.4"
+authors = [{ name = "dev1", email = "developer@riftlabs.com" }]
+description = "A package to control Kelvin lights using a serial interace. Set channel outputs, color outputs and much more."
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = [
+    'numpy',
+    'pyserial',
+    'markupsafe==2.0.1',
+    'betterproto[compiler]==2.0.0b4',
+    'betterproto==2.0.0b4',
+    'grpcio-tools',
+    'python4yahdlc',
+    'ordered_set',
+    'nest-asyncio',
+    'bleak'
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" ="https://github.com/KelvinLights/k-lights-interface-py"
+"Bug Tracker" = "https://github.com/KelvinLights/k-lights-interface-py/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

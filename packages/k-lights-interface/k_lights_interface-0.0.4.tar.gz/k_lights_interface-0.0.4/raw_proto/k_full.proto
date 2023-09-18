@@ -1,0 +1,700 @@
+syntax = "proto3";
+package proto_protocol;
+
+enum RequestTypes {
+  VERSION = 0;
+  CALIBRATION_DATA_CHANNEL_BASIC=1;
+  CALIBRATION_DATA_LIGHT_BASIC=2;
+  COB_DRIVER_STATE=3;
+  COB_DRIVER_VERSION=4;
+  COB_DRIVER_SERIAL_NUMBER=5;
+  SERIAL_NUMBER=6;
+  POWER_STATE=7;
+  SEPERATE_LAMP_HEAD_IMAGE_VERSION=8;
+  DEVICE_STATS=9; // Stats such as device hours, lamp hours etc
+  FAN_DATA=10; // Request data in the form of a FanMessage. Need to specifiy request_param1 to indicate which fan to get data for.
+  DEVICE_TEMPERATURES=11; 
+  CURRENT_LIGHT_OUTPUT = 26;
+  LAMP_HEAD_IMAGE_INFO = 27;
+  DEVICE_ID=28; // Get identifiers for this device, including name. Used to identify rl usb devices.
+  DEVICE_HW_CODE=29; 
+  BATTERY=30;
+  POWER_SUPPLY=31;
+  CURRENT_MODE=32; // Should populate a drivermessage with intensity config and current mode data
+}
+
+enum RGBColorSpace {
+  LEDS_ON_LIGHT = 0;
+  S_RGB = 1;
+  ADOBE_1988 = 2;
+  ADOBE_WIDE = 3;
+  PRO_PHOTO = 4;
+  DCI_P3 = 5;
+  REC_2020 = 6;
+}
+
+message RequestMessage {
+  optional RequestTypes requestType = 1;
+  optional int32 request_param1 = 2; // Used to indicate which calibration channel basic data to fetch. Can mean different things  
+}
+message DeviceIdMessage {
+  optional string name = 1;
+}
+
+enum CommandType {
+  SAVE_CALIBRATION_DATA_TO_FLASH = 0;
+  LOAD_CALIBRATION_DATA_FROM_FLASH = 1;
+  CLEAR_CALIBRATION_DATA_FROM_FLASH = 2;
+  RESET_MCU = 3;
+  CLEAR_WHOLE_EXTERNAL_FLASH =4;
+  SAVE_MODE_PARAMETERS_TO_FLASH = 5;
+  LOAD_MODE_PARAMETERS_FROM_FLASH = 6;
+  CLEAR_MODE_PARAMETERS_FROM_FLASH = 7;
+  TURN_OFF_BTLE_ADVERTISING = 8;
+  TURN_ON_BTLE_ADVERTISING = 9;
+  FLASH_LIGHT_FOR_IDENTIFICATION =10;
+  // Set the driver to ignore the controller box
+  DRIVER_IGNORE_CONTROLLER=11;
+  // Use this to reset all stats such as device hours, lamp hours etc
+  RESET_DEVICE_STATS=12;
+  /* The app will send this command before it tells mcumgr to reset. The light can f.ex display "Running bootloader"
+     before it is reset.
+  */
+  DFU_NOTFICATION_RESET=13;
+  ENABLE_BOOSTER=14;
+  DISABLE_BOOSTER=15;
+  ENABLE_CHARGE_PORT=16;
+  DISABLE_CHARGE_PORT=17;
+  FACTORY_RESET=18;
+  CRMX_UNLINK=19;
+}
+message CommandMessage {
+  optional CommandType command = 1;
+  optional uint32 passwd = 2;
+}
+
+message DeviceStatsMessage {
+    // How many hours has this device been on?
+    optional float deviceHours = 1;
+    // How many hours has this device had brightness > 1 % 
+    optional float lampHours = 2;
+    // How many times has this device been turned on/off
+    optional uint32 powerCycles= 3;
+}
+
+enum EmitterOutputType {
+  PWM_OUTPUT = 0;
+  DAC_OUTPUT = 1;
+}
+message EmitterOutputMessage {
+  optional EmitterOutputType outputType = 1;
+}
+////////////////////////
+// Power related 
+////////////////////////
+enum BatteryPosition {
+  FRONT=0;
+  REAR=1;
+}
+message BatteryMessage {
+  optional BatteryPosition position=1;
+  optional uint32 remainingRuntimeInMinutes=2;
+  optional float remainingCapacityPct=3;
+  optional float voltage=4;
+  optional bool isConnected=5;
+  optional bool isSmart=6;
+  optional float read_voltage=7;
+  optional float currentLoad_mA=8;
+  optional int32 timeSinceLastPull_ms=9;
+}
+message PowerSupplyMessage {
+  optional float voltage=1;
+  optional bool isConnected=2;
+}
+message Epos300PowerStateMessage {
+  oneof active_power_source {
+    BatteryMessage battery=1;
+    PowerSupplyMessage powerSupply=2;
+  }
+  optional float maxPowerDraw=3;
+  optional bool boosterEnabled=4;
+  optional bool boosterPowerGood=5;
+  optional bool chargePortEnabled=6;
+}
+message PlayPowerStateMessage {
+  optional BatteryMessage battery=1;
+  optional float maxPowerDraw=2;
+  optional bool isCharging =3;
+}
+
+
+message PowerStateMessage {
+ oneof message_type {
+   Epos300PowerStateMessage epos300PowerStateMessage=1;
+   PlayPowerStateMessage playPowerStateMessage=2;
+ }
+}
+
+
+message Epos300ControllerTemperaturesMessage {
+  optional float ui_pcb_temperature = 1;
+  optional float power_pcb_temperature = 2;
+}
+message Epos600ControllerTemperaturesMessage {
+  optional float ui_pcb_temperature = 1;
+  optional float power_pcb_temperature = 2;
+}
+message Epos300LampheadTemperaturesMessage {
+  optional float emitter_temperature = 1;
+  optional float pcb_temperature = 2;
+}
+message Epos600LampheadTemperaturesMessage {
+  optional float emitter_temperature = 1;
+  optional float pcb_temperature = 2;
+}
+message PlayTemperaturesMessage {
+  optional float emitterTemperature = 1;
+  optional float driverTransistorTemperature = 2;
+  optional float batteryTemperature = 3;
+}
+message DeviceTemperaturesMessage {
+  oneof message_type {
+    Epos300ControllerTemperaturesMessage epos300ControllerTemperaturesMessage=1;
+    PlayTemperaturesMessage playTemperaturesMessage=2;
+    Epos300LampheadTemperaturesMessage epos300LampheadTemperaturesMessage=3;
+    Epos600LampheadTemperaturesMessage epos600LampheadTemperaturesMessage=4;
+    Epos600ControllerTemperaturesMessage epos600ControllerTemperaturesMessage=5;
+  }
+}
+
+
+
+message SerialNumberMessage {
+  optional bytes data = 1;
+}
+
+message CalibrationDataChannelBasicMessage {
+  optional int32 channelIndex = 1;
+  optional float x = 2;
+  optional float y = 3;
+  optional float Ynorm = 4;
+  optional float luxMeasuredDuringCalibration = 5;
+  optional float wattDrawAtMeasuredOutput = 6;
+  optional float outputValueWhenMeasured = 7;
+  optional float emitterTemperatureWhenMeasured = 8;
+  optional int32 numberOfOutputVsLuxMeasurements = 9;
+
+  optional bool temperatureCompensationEnabled = 10;
+  optional bool x_xyDriftTemperatureCompensationEnabled = 11;
+  optional bool y_xyDriftTemperatureCompensationEnabled = 12;
+  optional float currentPerOutput = 13;
+  optional float transistorTemperatureWhenMeasured = 14;
+}
+
+message CalibrationDataLightBasicMessage {
+  optional int32 version = 11;
+  optional int32 numberOfChannels = 1;
+  optional float distanceToSensorInCm = 2;
+  optional float whiteLightConstantLightLevelMaxY = 3;
+  optional float coloredLightConstantLightLevelMaxY = 4;
+  optional float maximumWattDrawForLight = 5;
+  optional int32 indexOfRedChannel = 6;
+  optional int32 indexOfGreenChannel = 7;
+  optional int32 indexOfBlueChannel = 8;
+  optional int32 indexOfChannelUsedInOptimizedLookup = 9;
+  optional float boosterVoltageDivEfficiency = 10;
+  optional float idleWattage = 12;
+}
+
+
+message CubicSplineMessage {
+  enum CubicSplineFactorId {
+      SPLINE = 0;
+      C1 = 1;
+      C2 = 2;
+      C3 = 3;
+      C4 = 4;
+  }
+  optional CubicSplineFactorId cubicSplineFactorId = 1;
+  optional uint32 offset = 2;
+  repeated float data = 3;
+}
+
+message LinearInterpolationMessage {
+  enum LinearInterpolationAxisId {
+    X_AXIS = 0;
+    Y_AXIS = 1;
+  }
+  optional LinearInterpolationAxisId linearInterpolationAxisId = 1;
+  optional int32 functionIndex = 2;
+  optional uint32 offset = 3;
+  repeated float data = 4; 
+}
+
+enum CDataLinearInterpolationId {
+  NON_LIN_COMP = 0;
+  TEMP_COMP = 1;
+  X_XY_DRIFT_TEMP =2;
+  Y_XY_DRIFT_TEMP = 3;
+  X_XY_DRIFT_DUTY_CYCLE = 4;
+  Y_XY_DRIFT_DUTY_CYCLE = 5;
+  MATRIX_FACTORS = 6;
+  WATT_DRAW= 7;
+  TRANSISTOR_TEMP_COMP=8;
+}
+
+message CalibrationDataLinearInterpolationMessage {
+  optional CDataLinearInterpolationId id=1;
+  optional int32 channelIndex=2;
+  optional LinearInterpolationMessage linearInterpolationMessage=3;
+}
+
+
+message CalibrationDataChannelArrayMessage {
+  enum CalibrationDataChannelArrayId {
+    OUTPUT_MEASUREMENTS = 0;
+    LUX_MEASUREMENTS = 1;
+    LED_SPECTRUM = 2;
+  }
+  optional int32 channelIndex = 1;
+  optional CalibrationDataChannelArrayId cDataChannelArrayId = 2;
+  optional ArrayMessage array = 3;
+}
+message ArrayMessage {
+  optional uint32 offset = 1;
+  repeated float data = 2;
+}
+
+message CalibrationDataFlashMessage {
+  optional bool flashContainsValidCalibrationData = 1;
+  optional int32 numberOfChannels = 2;
+}
+
+message VersionMessage {
+  optional uint32 major = 1;
+  optional uint32 minor = 2;
+  optional uint32 revision = 3;
+  optional uint32 build = 4;
+}
+message ImageInfoMessage {
+  optional bool imageExists = 1;
+  optional int32 imageSlot = 2;
+  optional VersionMessage version = 3; 
+  optional bytes hash = 4;
+
+  optional bool isPending = 5;
+  optional bool isActive = 6;
+  optional bool isConfirmed = 7;
+}
+message DriverStateMessage {
+  optional float pcb_temperature_c = 1;
+  optional float emitter_temperature_c = 2;
+  optional bool isEmitterEnabled = 3;
+  optional bool isEmitterOverheated = 4;
+  // sessionId is used by the controller to determine if the driver has rebooted inbetween two driverstate messages
+  // sessionId must always be updated on booting
+  optional int32 sessionId = 5;
+  optional bool isConnected = 6;
+  optional float input_voltage = 7;
+}
+
+message IntensityMessage {
+  optional float intensity = 1;
+  enum LightOutputType {
+    STABLE = 0;
+    MAXIMUM = 1;
+  }
+  optional LightOutputType lightOutputType = 2;
+  optional bool updateLightOutput = 3; // Will emit light with updated intensity if true, if false it will just set new itensity config
+  optional bool smoothIntensity = 4; // Emitter should smoothly change intensity to new value by adding intermediate outputs
+  optional int32 smoothIntensityDurationMs = 5; // Duration of smooth intensity change in milliseconds
+}
+
+message FlashEmitterMessage {
+  optional float intensity = 1;
+  optional uint32 delayBeforeApplyingFlashMs = 2;
+  optional uint32 durationOfLightOn = 3;
+  optional float x = 4;
+  optional float y = 5;
+}
+
+message CCTMessage {
+  optional uint32 cct = 1;
+  optional float tint = 2; // [-0.027, 0.027] duv
+}
+
+message RGBMessage {
+  optional float red = 1;   // [0.0, 255.0]
+  optional float green = 2; // [0.0, 255.0]
+  optional float blue = 3;  // [0.0, 255.0]
+  optional RGBColorSpace color_space = 4;
+  optional uint32 white_point = 5;
+}
+
+message HSIMessage {
+  optional float hue = 1; // [0, 360]
+  optional float saturation = 2; // [0.0, 1.0]
+  optional float intensity = 3; // [0.0, 1.0]
+  optional RGBColorSpace color_space = 4;
+  optional uint32 white_point = 5;
+}
+message XYMessage {
+  optional float x = 1;
+  optional float y = 2;
+}
+
+message RGBACLMessage {
+  optional float red = 1;   // [0.0, 100.0]
+  optional float green = 2; // [0.0, 100.0]
+  optional float blue = 3;  // [0.0, 100.0]
+  optional float amber = 4; // [0.0, 100.0]
+  optional float cyan = 5;  // [0.0, 100.0]
+  optional float lime = 6;  // [0.0, 100.0]
+}
+
+message GelFileMessage {
+  optional string brandName = 1;
+  optional string categoryName = 2;
+  optional string gelName = 3;
+  optional string gelSwatchNumber = 4;
+  optional uint32 indexInCategory = 5;
+  repeated float linInterpCCTS = 6;
+  repeated float linInterpXCoeffs = 7;
+  repeated float linInterpYCoeffs = 8;
+  optional uint32 displayRGBRed = 9;
+  optional uint32 displayRGBGreen = 10;
+  optional uint32 displayRGBBlue = 11;
+}
+
+message GelStateMessage {
+  optional string brandName = 1;
+  optional string categoryName = 2;
+  optional string gelFileName = 3;
+  optional uint32 gel_index = 4;
+  optional uint32 category_page = 5;
+  optional uint32 cct = 6;
+}
+
+enum  GelBrandCategory { 
+ROSCO_CALCOLOR = 0;
+ROSCO_CINELUX = 1;
+ROSCO_COLOR_CORRECTION = 2;
+LEE_0_SERIES = 3;
+LEE_100_SERIES = 4;
+LEE_200_AND_300_SERIES = 5;
+LEE_500_SERIES = 6;
+LEE_700_SERIES = 7;
+LEE_COLOR_CORRECTION = 8;
+
+}
+
+message GelSetMessage {
+  optional GelBrandCategory gelBrandCategory = 1;
+  optional uint32 gelIndex = 2;
+  optional uint32 cct = 3;
+}
+
+message CrossfadeCCTHSIMessage {
+  optional float crossfade = 1;  // [0,1]
+  optional CCTMessage cct = 2;
+  optional HSIMessage hsi =3;
+}
+
+message CrossfadeCCTRGBMessage {
+  optional float crossfade = 1; // [0,1]
+  optional CCTMessage cct = 2;
+  optional RGBMessage rgb =3;
+}
+
+message CCTAndRGBMessage {
+  // This sets a cct with a certain intensity and adds r,g,b leds to that cct
+  optional CCTMessage cct = 1; //[2000,20000]
+  optional float cctIntensity = 2; //[0,100] percent
+  optional float red=3;  //[0,100] percent
+  optional float green=4; //[0,100] percent
+  optional float blue=5; //[0,100] percent
+}
+
+message SetEmitterChannelsMessage {
+  repeated float outputValue = 1; // [0,100] percent
+  optional bool verifyOutputs = 2; // Whether to verify that outputs are within saturation and max watt draw
+}
+message FanMessage {
+  optional int32 id = 1;
+  optional bool isOn = 2;
+  optional float speed_percent = 3;
+  optional int32 speed_rpm = 4;
+  optional int32 min_rpm = 5;
+  optional int32 max_rpm = 6;
+
+}
+
+enum FanControllerMode {
+  MANUAL = 0;
+  FAN_SILENT = 1;
+  FAN_CURVE_QUIET = 2;
+  FAN_CURVE_REGULAR = 3;
+  FAN_CURVE_HIGH = 4;
+}
+message FanControllerMessage {
+  optional FanControllerMode mode = 1;
+  optional float manualFanDutyCycle = 2; // [0,100] percent. Fancontroller will use this value if fan mode == manual
+}
+
+message UploadFirmwareChunkMessage {
+  optional uint32 address = 1; // 32-bit aligned address
+  optional uint32 number_of_bytes = 2; // number of bytes in data
+  repeated uint32 data = 3;
+}
+enum McuMgrMessageTypes {
+  SWAP_IMAGE = 0;
+  CONFIRM_IMAGE = 1;
+   // This is the normal external flash partition for firmware images used by mcuboot
+  ERASE_EXTERNAL_FLASH_IMAGE_0_SLOT1 = 2;
+  /* This is an extra partition used to store firmware images. For example when epos 300 stores a driver image in its external flash  */
+  ERASE_EXTERNAL_FLASH_IMAGE_1_SLOT1 = 3; 
+}
+// Tell Driver to swap images and reboot.
+message McuMgrMessage {
+  optional McuMgrMessageTypes messageType = 1;
+}
+
+message LightCompensationMessage {
+  optional bool temperatureCompensationState = 1;
+  optional bool nonlinearityCompensationState = 2;
+  optional bool xyDriftDutyCycleCompensationState = 3;
+  optional bool xyDriftTemperatureCompensationState = 4;
+
+}
+message MaxWattDrawMessage {
+  optional float maximumWattDraw = 1;
+}
+message CurrentLightOutputMessage {
+  optional float maxY = 1;
+  repeated float currentAbsoluteOutputs = 2;
+  repeated float currentRelativeOutputs = 3;
+  optional float x = 4;
+  optional float y = 5;
+  optional IntensityMessage intensityMessage = 6;
+  optional float currentEmitterTemperature = 7;
+  optional MaxWattDrawMessage currentMaxWattDrawMessage = 8;
+  optional LightCompensationMessage currentLightCompensationMessage = 9; 
+  optional float estimatedWattDraw = 10;
+}
+
+enum EffectLoopType {
+  NO_LOOP = 0;
+  // continue from start
+  NORMAL_LOOP = 1;
+  // play to end, then back to start
+  BACK_AND_FORTH = 2;
+}
+
+message FireEffectParams {
+  enum FireType {
+    CANDLE = 0;
+    CAMP_FIRE = 1;
+    BON_FIRE = 2;
+  }
+  enum WindType {
+    NO_WIND = 0;
+    BREEZE = 1;
+    WINDY =2;
+    STORMY = 3;
+  }
+  optional FireType fireType=1;
+  optional WindType windType=2;
+}
+message CCTChaseEffectParams {
+  optional CCTMessage cctStart =1;
+  optional CCTMessage cctStop =2;
+  optional float durationMinutes = 3;
+  optional float durationSeconds = 4;
+  optional EffectLoopType loopType =5;
+}
+message ColorChaseEffectParams {
+  optional float hue1 = 1; // [0, 360]
+  optional float hue2 = 2; // [0, 360]
+  optional float saturation = 3; // [0.0, 1.0]
+  optional float intensity = 4; // [0.0, 1.0]
+  optional RGBColorSpace color_space = 5;
+  optional uint32 white_point = 6;
+  optional float durationMinutes = 7;
+  optional float durationSeconds = 8;
+  optional EffectLoopType loopType =9;
+}
+
+enum SirenColorCombination {
+  RED_AND_BLUE=0;
+  BLUE =1;
+  BLUE_AND_WHITE=2;
+  RED_BLUE_AND_WHITE=3;
+  RED_AND_WHITE=4;
+  RED=5;
+  AMBER=6;
+}
+
+message SirenEffectParams {
+  optional SirenColorCombination colorCombo=1;
+  optional uint32 nrOfFlashesPerColor = 2; // [1, 4]
+  optional uint32 flashDuration = 3; // [5,95]
+  optional uint32 speed = 4; // [0, 10]
+}
+
+
+enum PulseType {
+  SINUSOIDAL=0;
+  LOGARITHMIC=1;
+  EXPONENTIAL=2;
+  TRIANGLE=3;
+  //SAWTOOTH=4;
+}
+
+enum ColorType {
+  CCT = 0;
+  RGB = 1;
+  HSI = 2;
+  XY = 3;
+}
+
+message MultiColorMessage {
+  optional ColorType selectedColorType = 1;
+  optional CCTMessage cct = 2;
+  optional RGBMessage rgb = 3;
+  optional HSIMessage hsi = 4;
+  optional XYMessage xy = 5;
+}
+
+message PulseEffectParams {
+  optional MultiColorMessage color = 1;
+  optional uint32 pulsesPerMinute = 2; // [1, 300]
+  optional PulseType pulseType = 3;
+}
+
+message StrobeEffectParams {
+  // oneof color_type {
+  //   CCTMessage cct = 1;
+  //   RGBMessage rgb = 2;
+  //   HSIMessage hsi = 3;
+  //   XYMessage xy = 4;
+  // }
+  optional MultiColorMessage color = 1;
+  optional uint32 strobesPerMinute = 2; // [1, 1200]
+  optional uint32 flashDuration =3; // [5, 95]
+}
+
+
+message LightEffectParamMessage {
+  oneof param_type {
+    FireEffectParams fireParams = 1;
+    CCTChaseEffectParams cctChaseParams = 2;
+    ColorChaseEffectParams colorChaseParams = 3;
+    SirenEffectParams sirenParams = 4;
+    PulseEffectParams pulseParams = 5;
+    StrobeEffectParams strobeParams = 6;
+  }
+}
+enum LightEffectType {
+  NONE = 0;
+  FIRE = 1;
+  CCT_CHASE = 2;
+  COLOR_CHASE = 3;
+  PULSE = 4;
+  STROBE = 5;
+  SIREN = 6;
+  LightEffectType_count = 7;
+}
+
+enum LightEffectState {
+  PLAY = 0;
+  STOP = 1;
+}
+message LightEffectMessage {
+  optional LightEffectType lightEffect = 1;
+  optional LightEffectState controlState = 2;
+  optional LightEffectParamMessage params = 3;
+}
+
+
+enum EffectNavigationState {
+  CHOOSE_EFFECT_SCREEN = 0;
+  EFFECT_SCREEN = 1;
+  EffectNavigationState_count = 2;
+}
+
+
+message LightEffectModeStateMessage {
+  optional EffectNavigationState navigationState = 1;
+  optional LightEffectType selectedEffect = 2;
+  optional LightEffectState controlState = 3;
+
+  
+
+  optional uint32 fireEffectSelectedVariable = 7;
+  optional uint32 cctChaseEffectSelectedVariable = 8;
+  optional uint32 colorChaseEffectSelectedVariable = 9;
+  optional uint32 sirenEffectSelectedVariable = 10;  
+  optional uint32 pulseEffectSelectedVariable = 11;
+  optional uint32 strobeEffectSelectedVariable = 12;  
+
+}
+
+message DeviceHwCodeMessage {
+  optional uint32 hardwareCode = 1;
+}
+
+message NackMessage {
+  optional uint32 nackHackId =1;
+  optional int32 reason = 2;
+}
+
+
+
+
+message DriverMessage {
+  // Epos 300: used to pass a message through the controller to the lamphead
+  // The controller will send the contained driverMessage to the lamphead, and reply with
+  // the response.
+  optional bool relayToLampHead = 150;
+  // The sender expects the receiver of the driver message to reply if this is true. Reply can be either data + ack or only ack
+  optional bool expectsResponse = 151;
+  optional IntensityMessage intensityConfig = 1;
+  oneof message_type {
+    RequestMessage request = 2;   
+    CCTMessage cct = 3;
+    RGBMessage rgb = 4;
+    HSIMessage hsi = 5;
+    XYMessage xy = 6;
+    GelSetMessage gel = 7;
+    LightEffectMessage effect = 8;
+    CrossfadeCCTHSIMessage crossfadeCCTHSI = 9;
+    CrossfadeCCTRGBMessage crossfadeCCTRGB = 10;
+    CCTAndRGBMessage cctAndRgb = 11;
+    RGBACLMessage rgbacl = 12;
+
+    CommandMessage commandMessage = 15;
+
+    // -- Less used messages should have tags > 15 -- //
+    SetEmitterChannelsMessage setEmitterChannels = 16;
+
+
+    UploadFirmwareChunkMessage firmwareChunk = 25;
+    McuMgrMessage mcuMgr = 26;
+
+    LightCompensationMessage lightCompensationMessage = 27;
+    MaxWattDrawMessage maxWattDrawMessage = 28;
+
+    FanMessage fanMessage = 35;
+    FanControllerMessage fanControllerMessage = 36;
+    FlashEmitterMessage flashEmitterMessage = 37;
+
+    EmitterOutputMessage emitterOutputMessage = 38;
+
+    // Calibration related messages
+    CalibrationDataChannelBasicMessage cDataChannelBasicMessage = 100;
+    CalibrationDataLightBasicMessage cDataLightBasicMessage = 101;
+    CalibrationDataChannelArrayMessage cDataChannelArrayMessage = 102;
+    CalibrationDataLinearInterpolationMessage cDataLinInterpMessage=103;
+  }
+
+}
