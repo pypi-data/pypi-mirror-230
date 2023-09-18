@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nalpy"
+authors = [
+    { name = "Niko Leinonen" }
+]
+requires-python = ">=3.11"
+description = "An experimental portable package for different types of projects."
+version = "0.4.0"
+dynamic = ["readme"]
+
+[tool.setuptools.dynamic]
+readme = {file = ["README.md"], content-type = "text/markdown"}
