@@ -1,0 +1,39 @@
+[tool.poetry]
+name = "alacorder"
+version = "81.2.1"
+description = "Alacorder retrieves case detail PDFs from Alacourt.com and processes them into data tables suitable for research purposes."
+authors = ["Sam Robson <sbrobson@crimson.ua.edu>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+typer = {extras = ["all"], version = "^0.9.0"}
+selenium = "^4.10.0"
+pymupdf = "^1.22.5"
+bs4 = "^0.0.1"
+xlsxwriter = "^3.1.2"
+xlsx2csv = "^0.8.1"
+polars = "^0.19.2"
+rich = "^13.5.2"
+brotli = "^1.1.0"
+
+[tool.poetry.scripts]
+alacorder = "alacorder.__main__:app"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+select = ["B", "D", "E", "F", "I", "UP", "SIM", "FA", "ANN", "S", "C4", "EM", "RUF"]
+fixable = ["B", "E", "F", "I"]
+ignore = ["ANN101", "D212", "D205", "RUF001", "B008", "S101", "D400", "SIM102", "E711", "F403", "D415", "D203", "SIM105", "F401"]
+line-length = 88
+target-version = "py310"
+
+[tool.black]
+line-length = 88
+preview = true
+
+[tool.mypy]
+ignore_missing_imports = true
