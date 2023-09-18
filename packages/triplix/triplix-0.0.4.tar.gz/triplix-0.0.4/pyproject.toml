@@ -1,0 +1,46 @@
+[build-system]
+requires = [
+    'setuptools>=65.0.0',
+    'wheel'
+]
+build-backend = 'setuptools.build_meta'
+
+
+[project]
+name = 'triplix'
+version = '0.0.4'
+description = 'A python package to efficiently process, store and retrieve spatial genomics multi-contact data'
+readme = 'README.md'
+authors = [{ name = 'Amin Allahyar', email = 'amin.allahyar@gmail.com' }]
+license = { file = 'LICENSE' }
+classifiers = [
+    'License :: OSI Approved :: MIT License',
+    'Programming Language :: Python',
+    'Programming Language :: Python :: 3',
+]
+keywords = ['Bioinformatics', 'Genome', '3D Genome Conformation', 'Multi-contact']
+dependencies = [
+    'numpy >= 1.22.2',
+    'pandas >= 1.5.1',
+    'matplotlib >= 3.5.1',
+    'pysam >= 0.21.0',
+    'h5py >= 3.7.0',
+    'joblib >= 1.1.0',
+    'scipy >= 1.7.3',
+    'scikit-learn >= 1.1.2',
+    'tomli; python_version < "3.11"',
+    'pypairix >= 0.3.7',
+    'igraph >= 0.9.10',
+    'fasteners >= 0.18',
+]
+requires-python = '>=3.9'
+
+# [project.optional-dependencies]
+# dev = ['black', 'bumpver', 'isort', 'pip-tools', 'pytest']
+
+[project.urls]
+Homepage = 'https://github.com/deLaatLab/triplix'
+
+[project.scripts]
+triplix = 'triplix.__main__:main'
+
