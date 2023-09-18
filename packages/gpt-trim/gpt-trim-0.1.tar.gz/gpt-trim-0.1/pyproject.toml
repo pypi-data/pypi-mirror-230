@@ -1,0 +1,32 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "gpt-trim"
+version = "0.1"
+description = "Trims the messages array for ChatGPT API"
+keywords = ["gpt", "trim", "gpt-trim", "chatgpt", "token", "tiktoken"]
+authors = [
+  { name = "AWeirdDev", email = "aweirdscratcher@gmail.com" },
+]
+license = { file = "LICENSE" }
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+requires-python = ">=3"
+dependencies = [
+  "tiktoken"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/AWeirdScratcher/gpt-trim"
+"Bug Tracker" = "https://github.com/AWeirdScratcher/gpt-trim/issues"
+
+[tool.setuptools]
+packages = [
+    "gpt_trim"
+]
