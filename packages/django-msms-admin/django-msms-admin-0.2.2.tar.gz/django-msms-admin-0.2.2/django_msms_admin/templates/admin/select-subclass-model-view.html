@@ -1,0 +1,80 @@
+{% extends "admin/base_site.html" %}
+{% load static i18n admin_urls django_simple_tags %}
+
+{% block extrastyle %}
+{{ block.super }}
+{{media.css}}
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+{{ media.js }}
+{% endblock %}
+
+{% if not is_popup %}
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+&rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
+&rsaquo; <a href="{% url opts|admin_urlname:'changelist' %}">{{opts.verbose_name}}</a>
+&rsaquo; {{title}}
+</div>
+{% endblock %}
+{% endif %}
+
+
+{% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+
+{% block content %}
+{% block object-tools %}{% endblock %}
+<div id="content-main">
+    <form>
+        <div>
+            <fieldset class="module aligned">
+                <div class="form-row cascade-select-field-subclass_model">
+                    {% if error_message %}<ul class="errorlist"><li>{{error_message}}</li></ul>{% endif %}
+                    <div class="cascade-select">
+                        <label class="required" for="id_subclass_model">{% trans "Type" %}</label>
+                        {% if subclasses|length > 1 %}
+                        <select class="cascade-select-level-1">
+                            <option value="0">--------</option>
+                            {% for item in subclasses %}
+                            <option value="{{forloop.counter}}">{{item.title}}</option>
+                            {% endfor %}
+                        </select>
+                        {% endif %}
+                        {% for item1 in subclasses %}
+                        <select class="cascade-select-level-2 cascade-select-level-2-{{forloop.counter}}" name="subclass_model">
+                            <option value="0">--------</option>
+                            {% for item2 in item1.children %}
+                            {% if item1.children|length > 1%}<optgroup label="{{item2.title}}">{% endif %}
+                                {% for item3 in item2.children %}
+                                <option value="{{item3|get_model_fullname}}" description="{{item3.msms_description}}" image="{% if item3.msms_image %}{% static item3.msms_image %}{% endif %}">{{item3|get_model_verbose_name}}</option>
+                                {% endfor %}
+                            {% if item1.children|length > 1%}</optgroup>{% endif %}
+                            {% endfor %}
+                        </select>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-row cascade-select-field-description">
+                    <div>
+                        <label for="id_subclass_model">{% trans "Description" %}</label>
+                        <p class="cascade-select-field-description-content"></p>
+                    </div>
+                </div>
+                <div class="form-row cascade-select-field-image">
+                    <div>
+                        <label for="id_subclass_model">{% trans "Preview Image" %}</label>
+                        <img class="cascade-select-field-image-content" src="" />
+                    </div>
+                </div>
+                <div class="submit-row">
+                    <input type="submit" value="{% trans "Create" %}" class="default" name="_save">
+                </div>
+            </fieldset>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
