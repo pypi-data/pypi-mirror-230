@@ -1,0 +1,32 @@
+Metadata-Version: 2.1
+Name: mpzinke
+Version: 0.4.3
+Summary: Python libraries for MPZinke.
+Author: Mathew Zinke
+Project-URL: Homepage, https://github.com/MPZinke/Python
+Project-URL: Bug Tracker, https://github.com/MPZinke/Python/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# Python
+Python libraries for MPZinke.
+Includes
+
+A Flask server class for simple routing by HTTP method.
+
+
+## Build Commands
+FROM: https://packaging.python.org/en/latest/tutorials/packaging-projects/
+
+`python3 -m pip install --upgrade build`
+`python3 -m pip install --upgrade twine`
+`python3 -m build`
+`python3 -m twine upload --repository testpypi dist/*`
+- username: `__token__`
+- password: `<API KEY>`
+
+`python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps python_server_MPZinke`
