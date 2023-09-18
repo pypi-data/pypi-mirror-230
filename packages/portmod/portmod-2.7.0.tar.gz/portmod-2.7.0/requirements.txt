@@ -1,0 +1,19 @@
+# Note: should not generally be used,
+# but is kept as the dependency auditing tools don't support setup.py
+colorama
+GitPython
+progressbar2>=3.7
+pywin32; platform_system == "Windows"
+RestrictedPython>=4.0
+redbaron
+# RC2+minicard is broken in these versions
+python-sat>=0.1.5.dev0,!=0.1.7.dev22,!=0.1.7.dev23,!=0.1.7.dev24
+python-sat>=0.1.5.dev12; platform_system == "Windows"
+requests
+importlib_metadata; python_version < "3.8"
+packaging
+fasteners>=0.16
+# Deprecated. Only needed by Pybuild1
+chardet
+patool
+PySide6-Essentials!=6.5.*

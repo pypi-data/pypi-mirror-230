@@ -1,0 +1,18 @@
+[build-system]
+# Minimum requirements for the build system to execute.
+requires = ["setuptools!=50.0", "wheel", "setuptools-rust"]
+
+[tool.black]
+line-length = 88
+target-version = ['py37']
+
+[tool.coverage.run]
+source = ["portmod", "portmodlib", "pybuild"]
+
+[tool.pylint.main]
+extension-pkg-whitelist = ["portmodlib.portmod"]
+py-version = "3.7"
+suggestion-mode = true
+
+[tool.pylint.basic]
+good-names = ["i", "j", "k", "_", "x", "y"]

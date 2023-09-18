@@ -1,0 +1,482 @@
+.\" Man page generated from reStructuredText.
+.
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.TH "PORTMOD" "7" "Sep 17, 2023" "Portmod 2.7.0" "Portmod"
+.SH NAME
+portmod \- Portmod Concepts
+.sp
+These are various concepts relevant to understanding how portmod works. It is recommended that you familiarise yourself with them before using Portmod.
+.TS
+center;
+|l|l|.
+_
+T{
+\fI\%Keywords\fP
+T}	T{
+Keywords indicate the stability of game engines (architectures) for a given package.
+T}
+_
+T{
+\fI\%Sets\fP
+T}	T{
+Sets are short forms for collections of packages.
+T}
+_
+T{
+\fI\%Use Flags\fP
+T}	T{
+Use flags are the primary method of configuring portmod’s packages.
+T}
+_
+T{
+\fI\%Profiles\fP
+T}	T{
+Profiles are default game configurations for portmod.
+T}
+_
+T{
+\fI\%Sandbox\fP
+T}	T{
+The portmod sandbox allows safe access to dangerous functions such as
+\fBshutil.rmtree\fP while still allowing pybuilds to be as pythonic as
+possible.
+T}
+_
+T{
+\fI\%Configuration Protection\fP
+T}	T{
+For certain files in the prefix, and all files outside the prefix, portmod will not blindly overwrite them when installing, and will not allow modules to overwrite them. This helps nicely handle changes to files the user has manually modified.
+T}
+_
+T{
+\fI\%Modules\fP
+T}	T{
+Modules can be used to run global updates after package installation has been completed.
+This is often used to update configuration files to inform game engines of the locations
+of the mods which have been installed,
+T}
+_
+.TE
+.SH KEYWORDS
+.sp
+Keywords indicate the stability of game engines (architectures) for a given package.
+.sp
+Most packages declare one of the following engine\-specific keywords in
+their KEYWORDS field:
+.INDENT 0.0
+.IP 1. 3
+Stable: \fBarch\fP (E.g. \fBopenmw\fP) \- This version of the mod
+and the pybuild are tested and not known to have any serious issues
+with the given platform.
+.IP 2. 3
+Testing: \fB~arch\fP (E.g. \fB~openmw\fP) \- The version of the
+mod and the pybuild are believed to work and do not have any known
+serious bugs, but more testing should be performed before being
+considered stable.
+.IP 3. 3
+No keyword: If a package has no keyword for a given arch, it means it
+is not known whether the package will work, or that insufficient
+testing has occurred for ~arch.
+.IP 4. 3
+Masked: \fB\-arch\fP (E.g. \fB\-openmw\fP) The package version will
+not work on the arch. This likely means it relies on a feature not
+supported by the engine, or contains serious bugs that make it
+unusable.
+.UNINDENT
+.sp
+By default, only stable versions of packages are installed. For unstable
+versions you will need to accept the keyword.
+.sp
+You can enable testing packages by default by overriding the default
+\fBACCEPT_KEYWORDS\fP in \fI\%portmod.conf\fP with the testing keyword appropriate
+for your engine.
+.sp
+You can accept keywords for specific packages by adding the mod version
+and keyword to \fI\%package.accept_keywords\fP\&. E.g:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+=base/patch\-for\-purists\-3.2.1 ~openmw
+# To ignore keywords and make the package visible regardless of keywords
+>=base/patch\-for\-purists\-3.1.3 **
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SS Versioned Keywords
+.sp
+New in version 2.6.
+
+.sp
+Keywords can also be versioned. This is an optional feature, and may not be set up for every engine, but it allows packages to be marked as stable/testing/masked on specific versions, in addition to generally.
+.sp
+E.g.
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+# Stable on 0.48 and later
+KEYWORDS = \(dqopenmw{>=0.48}\(dq
+# Masked on 0.47.0, but stable on all other versions
+KEYWORDS = \(dqopenmw \-openmw{==0.47.0}\(dq
+# Stable on 0.47 and related patch versions, but only testing on 0.48 and newer and older versions
+KEYWORDS = \(dq~openmw openmw{0.47*}\(dq
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+When versioning is set up in the profile, \fBACCEPT_KEYWORDS\fP can also be versioned.
+Usually it will default to use the \fBARCH_VERSION\fP profile variable.
+.sp
+E.g. in \fBportmod.conf\fP
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+ACCEPT_KEYWORDS = \(dqopenmw{==0.48.0}\(dq
+# If you want to accept packages testing on your version
+# Note that when using f\-strings, literal \(aq{\(aq has to be escaped as \(aq{{\(aq,
+# so there end up being three
+ACCEPT_KEYWORDS = f\(dq~openmw{{=={ARCH_VERSION}}}\(dq
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+See \fI\%Architecture Versioning\fP in the development guide for further details.
+.SH SETS
+.sp
+Sets are short forms for collections of packages.
+.sp
+They are roughly equivalent to specifying that same list of packages on
+the command line, however packages within a set will not be selected if
+installing using a set, and the set itself will be selected.
+.sp
+You can refer to a set using \fB@\fP, followed by the set name.
+.sp
+E.g. \fBportmod <prefix> merge \-uDN @world\fP, or
+\fBportmod <prefix> merge @rebuild\fP\&.
+.sp
+The builtin sets include:
+.INDENT 0.0
+.IP \(bu 2
+\fBworld\fP: Equivalent to \fBselected\fP + \fBsystem\fP\&. This is usually the
+only set you need to interact with. It includes all packages that
+you want or need, not including their dependencies.
+.IP \(bu 2
+\fBsystem\fP: Packages required by the profile which cannot be removed.
+.IP \(bu 2
+\fBselected\fP: Equivalent to \fBselected\-sets\fP + \fBselected\-packages\fP
+.IP \(bu 2
+\fBselected\-sets\fP: User\-selected sets (not including builtin sets).
+.IP \(bu 2
+\fBselected\-packages\fP: The user\-selected list of packages. This
+includes any package you have explicitly installed (i.e.\ installed
+without the \fB\-\-oneshot/\-1\fP option). It does not include
+dependencies which were installed implicitly.
+.IP \(bu 2
+\fBmodules\fP: This is an internal convenience set which is used to
+refer to portmod \fI\%Modules\fP\&.
+.IP \(bu 2
+\fBrebuild\fP: Packages are added to this set automatically for certain
+unusual packages when they are determined to need to be rebuilt. A
+warning message will be displayed when you need to use this set.
+.UNINDENT
+.sp
+You can also create custom \fI\%User Sets\fP
+.SS Module Sets
+.sp
+New in version 2.4.
+
+.sp
+Sets created in the \fBvar/sets\fP directory within the prefix will be
+used first when looking up sets. This allows \fI\%Modules\fP to create
+and manage their own sets. Module\-created sets always have priority
+over \fI\%User Sets\fP\&.
+.SH USE FLAGS
+.sp
+Use flags are the primary method of configuring portmod’s packages.
+.SS Global Flags
+.sp
+Global use flags are enabled by default for all packages (unless
+explicitly disabled for a specific package). You can enable or disable a
+use flag by including it in the \fBUSE\fP variable in \fI\%portmod.conf\fP\&. If
+prefixed by a \fB\-\fP, the flag will be considered disabled, otherwise it
+will be considered enabled.
+.sp
+E.g. \fI\%portmod.conf\fP
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+USE = \(dqtribunal \-bloodmoon\(dq
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+You can also enable a global use flag using
+\fBportmod <prefix> use \-E <flag>\fP, and explicitly disable a flag using
+\fBportmod <prefix> use \-D <flag>\fP\&.
+.sp
+You should note that explicitly disabling a flag is not the same as
+unsetting the flag. When explicitly disabled (e.g.\ \fB\-tribunal\fP), all
+packages using the flag will disable it. You can unset a use flag using
+\fBportmod <prefix> use \-R <flag>\fP, which will remove the flag from the
+\fBUSE\fP variable in \fBportmod.conf\fP if it’s been either enabled or
+disabled, and will make packages revert to their default behaviour for
+that flag (individual packages declare whether a flag is enabled or
+disabled by default).
+.SS Local Flags
+.sp
+Local flags are similar to global flags, but only apply to a specific
+package. Local flags are declared in the file \fI\%package.use\fP in the
+\fBCONFIG_DIR\fP\&.
+.sp
+Each line in this file should begin with a package specifier, and end
+with a (space separated) list of flags.
+.sp
+E.g. \fI\%package.use\fP
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+base/morrowind tribunal \-bloodmoon
+>=landmasses/tamriel\-rebuilt\-19.12 travels music \-preview
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+You can also enable or disable local flags using the \fB\-m\fP argument to
+the \fBuse\fP subcommand, with the atom for the package you want to
+disable. E.g. \fBportmod <prefix> use \-E <flag> \-m <atom>\fP\&.
+.SS Temporary use flags
+.sp
+You can temporarily set flags using the \fBUSE\fP environment variable.
+.sp
+E.g. in bash
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+USE=\-tribunal portmod <prefix> merge \-uDN @world
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SS After changing use flags
+.sp
+After making changes to your use flag configuration, you should always
+run an update ( \fBportmod <prefix> merge \-uD @world\fP) to make sure that
+any packages are rebuilt if they need to be. Just changing a use flag
+will not modify your installed mod packages.
+.SH PROFILES
+.sp
+Profiles are default game configurations for portmod.
+.sp
+They are used to set default values for various settings. Certain user\-relevant settings can be viewed with the \fBportmod <prefix> info\fP subcommand.
+.sp
+They also specify the mandatory packages in the \fBsystem\fP set (see \fI\%Sets\fP), and can provide other metadata such as default \fI\%Use Flags\fP and masked packages (in the same manner as \fI\%package.mask\fP).
+.SH SANDBOX
+.sp
+The portmod sandbox allows safe access to dangerous functions such as
+\fBshutil.rmtree\fP while still allowing pybuilds to be as pythonic as
+possible.
+.sp
+This is achieved through the use of RestrictedPython for loading package
+metadata in an environment without access to file i/o or any dangerous
+commands. During package installation and removal where file i/o is
+necessary, package functions are run through the use of a sandbox
+program such as
+\fI\%bubblewrap\fP on Linux
+and sandbox\-exec on OSX.
+.sp
+In general, the following is restricted:
+.INDENT 0.0
+.IP \(bu 2
+File I/O in the global scope. All file I/O must be within functions
+in the Package class.
+.IP \(bu 2
+Use of imports in the global scope, other than imports from the
+\fBcommon\fP or \fBpybuild\fP modules (the imports themselves can be in
+the global scope, however they will be ignored during package loading
+and using imported functions will cause an exception). \- File I/O
+outside the build directory in \fBsrc_unpack\fP and \fBcan_update_live\fP\&.
+.IP \(bu 2
+Network access outside \fBsrc_unpack\fP and \fBcan_update_live\fP
+.IP \(bu 2
+File writes outside the build directory in all scopes
+.UNINDENT
+.sp
+The idea is that this prevents:
+.INDENT 0.0
+.IP 1. 3
+Poorly written code from accidentally performing dangerous actions such
+as deleting your files.
+.IP 2. 3
+Malicious actors from creating a seemingly benign third\-party
+repository (or sneaking packages into a repository which is otherwise
+trustworthy) and causing either deliberate damage to your system or
+stealing your personal information when you try to install or update
+packages from that repository.
+.UNINDENT
+.SS Python Sandbox
+.sp
+Note that for compatibility reasons, packages should be written to
+target the minimum version of python portmod supports (this is currently
+Python 3.7). Using features introduced in later versions of python will
+break the packages on systems which are using an older version of
+python.
+.sp
+Additionally, the following restrictions apply to the pybuild code:
+.INDENT 0.0
+.IP \(bu 2
+\fIPrior to Portmod 2.4\fP, you could only access the following modules:
+.INDENT 2.0
+.IP \(bu 2
+\fBpybuild\fP
+.IP \(bu 2
+\fBpybuild.info\fP
+.IP \(bu 2
+\fBpybuild.winreg\fP
+.IP \(bu 2
+\fBfilecmp\fP
+.IP \(bu 2
+\fBglob\fP
+.IP \(bu 2
+\fBos\fP
+.IP \(bu 2
+\fBos.path\fP
+.IP \(bu 2
+\fBsys\fP
+.IP \(bu 2
+\fBshutil\fP
+.IP \(bu 2
+\fBstat\fP
+.IP \(bu 2
+\fBfnmatch\fP
+.IP \(bu 2
+\fBre\fP
+.IP \(bu 2
+\fBcsv\fP
+.IP \(bu 2
+\fBjson\fP
+.IP \(bu 2
+\fBtyping\fP
+.IP \(bu 2
+\fBcollections\fP
+.IP \(bu 2
+\fBcommon\fP submodules (noting that \fBcommon\fP modules are subject to the
+same restrictions as pybuilds).
+.UNINDENT
+.sp
+\fISince Portmod 2.4\fP all module imports are allowed. Modules outside the
+standard library and \fBpybuild\fP/\fBcommon\fP must be installed within the prefix
+and the package must depend on them.
+.IP \(bu 2
+Use of the \fBstr.format\fP function is banned. This is known to be
+unsafe and is disabled by RestrictedPython by default. It is
+encouraged to used f\-strings instead.
+.IP \(bu 2
+Access to attributes that begin with underscores is banned. The convention
+in python is that these attributes are considered hidden, and represent
+internal functions and variables which could change at any time.
+By blocking the use of them pybuilds are forced to use the more stable
+public module APIs.
+.IP \(bu 2
+Use of the \fBsuper\fP function is allowed, however note that
+\fBsuper().__init__(self)\fP cannot be invoked manually due to underscored
+functions being banned. As such, it is automatically called in any
+Package class that overrides \fB__init__\fP\&.
+.IP \(bu 2
+Use of builtins that allow arbitrary code execution is banned.
+This includes \fBexec\fP, \fBcompile\fP, \fBeval\fP, etc.
+.IP \(bu 2
+\fIPrior to Portmod 2.4\fP: The \fBdir\fP function was not implemented. The
+implementation omits private underscored fields, which are inaccessible
+anyway.
+.UNINDENT
+.SS Executable Sandbox
+.sp
+All external executable calls are sandboxed using a platform\-specific
+sandbox command. This prevents filesystem write access outside the build
+directory and prevents filesystem read access until all
+potentially\-unsafe network access has been completed (i.e.\ prevents a
+malicious pybuild from scanning your system and uploading data to a
+remote server).
+.SS Temporary Directories
+.sp
+Writable temporary directories are always available in the Sandbox.
+On Windows and Linux, the \fBTMP\fP environment variable will provide the path
+to a writable temporary directory, and the \fBTMPDIR\fP environment variable
+will on macOS.
+.SS Windows
+.sp
+Portmod uses Sandboxie on Windows. Please note that there are known
+issues with Sandboxie (see #102), however in general it appears to be
+working. If you encounter issues, please report them, as portmod\(aqs primary
+developers do not work regularly with Windows and is usually only regularly
+tested via CI.
+.SH CONFIGURATION PROTECTION
+.sp
+For certain files in the prefix, and all files outside the prefix, portmod will not blindly overwrite them when installing, and will not allow modules to overwrite them. This helps nicely handle changes to files the user has manually modified.
+.sp
+Instead, these writes will be diverted to a different file, and the changes will be displayed to the user when they run \fBportmod <prefix> cfg\-update\fP\&.
+.sp
+Portmod has a simple builtin tool to accept or reject the changes, and you can get it to launch a custom merge tool by setting the \fI\%MERGE_TOOL\fP configuration variable in \fI\%portmod.conf\fP\&.
+.sp
+Changed in version 2.6: Portmod no longer runs cfg\-update automatically after merges, to avoid covering up important information which may be displayed after a merge.
+
+.SH MODULES
+.sp
+Modules can be used to run global updates after package installation has been completed.
+This is often used to update configuration files to inform game engines of the locations
+of the mods which have been installed,
+.sp
+Module updates can be triggered manually with the \fBportmod <prefix> module\-update\fP subcommand.
+.sp
+Changed in version 2.6: Module updates are no longer run as part of the \fBcfg\-update\fP subcommand
+
+.sp
+For implementing modules, see the \fI\%Modules\fP chapter in the Developer Guide.
+.SH AUTHOR
+Benjamin Winger, Roma Tentser, PopeRigby, Hristos N. Triantafillou, lumbo7332, Pope_Rigby, marius david, marius851000, Joel, Nords Morrow, Basile Thullen, Paul Infield-Harm, Tenchi, louisabraham, ultramink
+.SH COPYRIGHT
+2019-2023, Portmod Authors
+.\" Generated by docutils manpage writer.
+.

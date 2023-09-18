@@ -1,0 +1,34 @@
+.. _l10n:
+
+Localisation
+============
+
+For Localisers/Translators
+--------------------------
+
+.. image:: https://hosted.weblate.org/widgets/portmod/-/portmod/open-graph.png
+    :alt: Translation status
+    :target: https://hosted.weblate.org/engage/portmod/
+
+Portmod’s internationalization is handled using `Project
+Fluent <https://projectfluent.org>`__.
+
+Weblate
+~~~~~~~
+
+Localisation can be done using `Portmod's Weblate Project <https://hosted.weblate.org/projects/portmod/portmod/>`__.
+
+For Portmod Developers
+----------------------
+
+Text displayed to the user should be output using the
+`portmodlib.l10n:l10n <../apidoc/portmodlib.l10n.html#portmodlib.l10n.l10n>`__
+function, and added to the source localisation file ``l10n/en-GB/main.ftl``.
+
+Also see `Good Practices for Developers <https://github.com/projectfluent/fluent/wiki/Good-Practices-for-Developers>`__
+
+Internally, the localisation is done using `fluent-rs <https://github.com/projectfluent/fluent-rs>`__
+and compiled into portmod's rust extension. The localisations themselves are also
+compiled into the rust extension, so after adding localisations it is also necessary
+to either rebuild the rust extension or to build the extension in debug mode where
+it will read the files directly from the filesystem at runtime (see :ref:`dev-setup`).
