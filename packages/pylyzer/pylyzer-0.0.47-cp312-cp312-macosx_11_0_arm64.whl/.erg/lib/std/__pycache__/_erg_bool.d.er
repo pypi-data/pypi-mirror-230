@@ -1,0 +1,26 @@
+##[pylyzer] failed /users/shiba/documents/github/erg/crates/erg_compiler/lib/std/_erg_bool.py 1689011296 1243
+.___v_desugar_1 = pyimport "_erg_nat"
+.Nat: {_erg_nat.Nat}
+.___v_desugar_2 = pyimport "_erg_nat"
+.NatMut: {_erg_nat.NatMut}
+.___v_desugar_3 = pyimport "_erg_result"
+.Error: {_erg_result.Error}
+.Bool: ClassType
+.Bool <: _erg_nat.Nat
+.Bool.try_new: (b: Bool) -> _erg_result.Error
+.Bool.__str__: (self: .Bool) -> Str
+.Bool.__repr__: (self: .Bool) -> Str
+.Bool.mutate: (self: .Bool) -> _erg_nat.NatMut
+.Bool.invert: (self: .Bool) -> Never
+
+.BoolMut: ClassType
+.BoolMut <: _erg_nat.NatMut
+.BoolMut.value: .Bool
+.BoolMut.__call__: (value: Obj) -> .BoolMut
+.BoolMut.__repr__: (self: .BoolMut) -> Str
+.BoolMut.__bool__: (self: .BoolMut) -> Never
+.BoolMut.__hash__: (self: .BoolMut) -> Never
+.BoolMut.__eq__: |Type_82 <: Structural({.value = E}), E :> .Bool|(self: .BoolMut, other: Type_82) -> Bool
+.BoolMut.__ne__: |Type_86 <: Structural({.value = E}), E :> .Bool|(self: .BoolMut, other: Type_86) -> Bool
+.BoolMut.invert: (self: .BoolMut) -> NoneType
+

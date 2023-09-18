@@ -1,0 +1,43 @@
+##[pylyzer] failed /users/shiba/documents/github/erg/crates/erg_compiler/lib/std/_erg_range.py 1689389221 3301
+.___v_desugar_1 = pyimport "_erg_nat"
+.Nat: {_erg_nat.Nat}
+.___v_desugar_2 = pyimport "_erg_str"
+.Str: {_erg_str.Str}
+.Range: ClassType
+.Range.end: Never
+.Range.start: Never
+.Range.__call__: (start: Obj, end: Obj) -> .Range
+.Range.__contains__: (self: .Range, item: Obj) -> Never
+.Range.from_slice: (slice: Obj) -> Never
+.Range.into_slice: (self: .Range) -> Never
+.Range.__getitem__: (self: .Range, item: Obj) -> Never
+.Range.__len__: (self: .Range) -> Never
+.Range.__iter__: (self: .Range) -> Never
+
+.LeftOpenRange: ClassType
+.LeftOpenRange <: .Range
+.LeftOpenRange.__contains__: (self: .LeftOpenRange, item: Obj) -> Bool
+
+.RightOpenRange: ClassType
+.RightOpenRange <: .Range
+.RightOpenRange.__contains__: (self: .RightOpenRange, item: Obj) -> Bool
+.RightOpenRange.from_slice: |Type_107: Type, Type_98 <: Structural({.stop = Type_107})|(slice: Type_98) -> .Range
+.RightOpenRange.into_slice: (self: .RightOpenRange) -> Slice
+
+.OpenRange: ClassType
+.OpenRange <: .Range
+.OpenRange.__contains__: (self: .OpenRange, item: Obj) -> Bool
+
+.ClosedRange: ClassType
+.ClosedRange <: .Range
+.ClosedRange.__contains__: (self: .ClosedRange, item: Obj) -> Bool
+.ClosedRange.from_slice: |Type_129 <: Structural({.__sub__ = (self: Never, R) -> O}), O: Type, Type_120 <: Structural({.stop = Type_129}), R :> {1}|(slice: Type_120) -> .Range
+.ClosedRange.into_slice: (self: .ClosedRange) -> Slice
+
+.RangeIterator: ClassType
+.RangeIterator.rng: Never
+.RangeIterator.needle: Never
+.RangeIterator.__call__: (rng: Obj, needle: Obj) -> .RangeIterator
+.RangeIterator.__iter__: (self: .RangeIterator) -> .RangeIterator
+.RangeIterator.__next__: (self: .RangeIterator) -> Never
+
