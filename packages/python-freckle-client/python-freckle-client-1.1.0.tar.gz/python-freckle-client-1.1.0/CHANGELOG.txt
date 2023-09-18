@@ -1,0 +1,55 @@
+=== 1.1.0 ===
+
+Add package as py.typed
+
+=== 1.0.5 ===
+
+Minor fixes to docs and to the Noko client
+
+=== 1.0.0 ===
+
+* Implement new NokoClient for the v2 API
+* Support individual methods for all resource endpoints
+* Support parameter validation on requests
+* Support passing parameters as keyword arguments and as natural types
+
+=== 0.5.0 ===
+
+* Handle successful No Content response
+* Handle pagination on the v2 API
+
+=== 0.4.0 ===
+
+* Uses new application name & URL (nokotime.com)
+
+=== 0.3.X ===
+
+* prepared app for Python3.x
+* Fixed request headers
+* Fixed response handling
+
+=== 0.2 ===
+
+* Raising proper HTTP exception from the Requests library instead of our
+  self-made FreckleClientException if the request was not successful.
+* IMPORTANT: If you were catching FreckleClientException before, please make
+  sure to catch `requests.exceptions.HttpError` now.
+
+=== 0.1 ===
+- Initial commit
+
+
+# Suggested file syntax:
+#
+# === (ongoing) ===
+# - this is always on top of the file
+# - when you release a new version, you rename the last `(ongoing)` to the new
+#   version and add a new `=== (ongoing) ===` to the top of the file
+#
+# === 1.0 ===
+# - a major version is created when the software reached a milestone and is
+#   feature complete
+#
+# === 0.2 ===
+# - a minor version is created when a lot of new features have bene added or
+#   significant backwards incompatible changes have been made.
