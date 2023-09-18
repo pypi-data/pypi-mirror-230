@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "unstructured-fileconverter-haystack"
+dynamic = ["version"]
+description = 'Haystack 2.x component to convert files into Documents using the Unstructured API'
+readme = "README.md"
+requires-python = ">=3.8"
+license = "Apache-2.0"
+keywords = []
+authors = [
+  { name = "anakin87", email = "stefanofiorucci@gmail.com" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+  "haystack-ai",
+  "unstructured"
+  ]
+
+[project.urls]
+Documentation = "https://github.com/anakin87/unstructured-fileconverter-haystack#readme"
+Issues = "https://github.com/anakin87/unstructured-fileconverter-haystack/issues"
+Source = "https://github.com/anakin87/unstructured-fileconverter-haystack"
+
+[tool.hatch.version]
+path = "src/unstructured_fileconverter_haystack/__about__.py"
+
+[tool.black]
+line-length = 120
+
