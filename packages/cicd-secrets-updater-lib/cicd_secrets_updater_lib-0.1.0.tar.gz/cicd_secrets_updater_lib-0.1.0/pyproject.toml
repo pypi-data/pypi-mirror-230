@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "cicd-secrets-updater-lib"
+version = "0.1.0"
+description = "The set of reusable and modular functions used to update secrets in a CI/CD pipeline."
+authors = ["Nicholas Adamou <nicholas.adamou@ibm.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pygithub = "^1.59.1"
+pyyaml = "^6.0.1"
+toml = "^0.10.2"
+pyfiglet = "^1.0.2"
+
+[[tool.poetry.packages]]
+include = "cicd_secrets_updater_lib"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
