@@ -1,0 +1,100 @@
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+unfixable = []
+
+select = [
+    "F",
+    "E",
+    "W",
+    "I",
+    "YTT",
+    "B",
+    "Q",
+    "T10",
+    "INT",
+    "PLC",
+    "PLE",
+    "PLW",
+    "PIE",
+    "PYI",
+    "ISC",
+    "TCH",
+    "C4",
+    "PGH",
+    "RUF",
+    "S102",
+    "NPY002",
+    "PERF",
+]
+
+ignore = [
+    "E203",
+    "E402",
+    "E731",
+    "E722",
+    "B006",
+    "B007",
+    "B008",
+    "B009",
+    "B010",
+    "B011",
+    "B015",
+    "B019",
+    "B020",
+    "B023",
+    "B905",
+    "PLR0913",
+    "PLR0911",
+    "PLR0912",
+    "PLR0915",
+    "PLW2901",
+    "PLW0603",
+    "PYI021",
+    "PGH001",
+    "PLC1901",
+    "PERF102",
+    "PERF203",
+    "RUF001",
+]
+
+exclude = [
+    ".git",
+    ".venv",
+    "build",
+    "dist",
+    "docs",
+    "logs",
+]
+
+[tool.black]
+line-length = 88
+
+[tool.mypy]
+exclude = [
+    ".git",
+    ".venv",
+    "build",
+    "dist",
+    "docs",
+    "logs",
+]
+
+[[tool.mypy.overrides]]
+module = [
+    "openai",
+    "pytest",
+    "setuptools",
+]
+ignore_missing_imports = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+]
+
+omit = [
+    "ml3m/_typing.py",
+]
