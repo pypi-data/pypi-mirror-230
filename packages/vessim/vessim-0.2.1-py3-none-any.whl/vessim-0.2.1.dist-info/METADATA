@@ -1,0 +1,136 @@
+Metadata-Version: 2.1
+Name: vessim
+Version: 0.2.1
+Summary: A simulator for carbon-aware applications and systems.
+Home-page: https://github.com/dos-group/vessim
+License: MIT
+Keywords: simulation,energy system,testbed,carbon-aware computing,software-in-the-loop
+Author: Philipp Wiesner
+Author-email: wiesner@tu-berlin.de
+Requires-Python: >=3.8,<4.0
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Topic :: Education
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Software Development :: Testing
+Provides-Extra: analysis
+Provides-Extra: sil
+Requires-Dist: docker ; extra == "sil"
+Requires-Dist: fastapi ; extra == "sil"
+Requires-Dist: jupyterlab ; extra == "analysis"
+Requires-Dist: loguru
+Requires-Dist: matplotlib ; extra == "analysis"
+Requires-Dist: mosaik
+Requires-Dist: mosaik-api
+Requires-Dist: pandas
+Requires-Dist: requests ; extra == "sil"
+Requires-Dist: seaborn (==0.12.2) ; extra == "analysis"
+Requires-Dist: uvicorn ; extra == "sil"
+Project-URL: Bug Reports, https://github.com/dos-group/vessim/issues
+Project-URL: Documentation, https://github.com/dos-group/vessim
+Project-URL: Repository, https://github.com/dos-group/vessim
+Description-Content-Type: text/markdown
+
+# Vessim
+
+[![PyPI version](https://img.shields.io/pypi/v/vessim.svg?color=52c72b)](https://pypi.org/project/vessim/)
+![Build](https://github.com/dos-group/vessim/actions/workflows/vessim-ci.yml/badge.svg)
+[![License](https://img.shields.io/pypi/l/vessim.svg)](https://pypi.org/project/vessim/)
+[![Supported versions](https://img.shields.io/pypi/pyversions/vessim.svg)](https://pypi.org/project/vessim/)
+
+Vessim is a versatile **co-simulation testbed for carbon-aware applications and systems**.
+It lets users connect domain-specific simulators for energy system components like renewable power generation, 
+energy storage, and power flow analysis with real software and hardware.
+
+Vessim is in alpha stage and under active development.
+Functionality and documentation will improve in the next weeks and months.
+
+
+## ⚙️ Installation
+
+If you are using Vessim for the first time, we recommend to clone and install this repository, so you have all
+code and examples at hand:
+
+```
+$ pip install -e .
+```
+
+Alternatively, you can also install our [latest release](https://pypi.org/project/vessim/) 
+via [pip](https://pip.pypa.io/en/stable/quickstart/):
+
+```
+$ pip install vessim
+```
+
+
+## 🚀 Getting started
+
+To execute our exemplary co-simulation scenario, run:
+
+```
+$ python examples/cosim_example/cosim_example.py
+```
+
+
+### Software-in-the-Loop Simulation
+
+Software-in-the-Loop (SiL) allows Vessim to interact with real computing systems.
+There is not yet good documentation on how to set up a full SiL scenario, but you can play with the existing
+functionality by installing 
+
+```
+pip install vessim[sil]
+```
+
+and running:
+
+```
+$ python examples/cosim_sil_example/cosim_sil_example.py
+```
+
+
+### Vessim Base Components
+
+We are still working on examples for the base modules such as `CarbonApi` or `Generator` which can be used directly
+without the use of Mosaik to support simple experiments that do not require the entire co-simulation engine to run.
+
+Documentation and API are in progress.
+
+
+## 🏗️ Development
+
+Install Vessim with the `dev` option in a virtual environment:
+
+```
+python -m venv venv                # create venv
+. venv/bin/activate                # activate venv
+pip install ".[sil,dev,analysis]"  # install dependencies
+```
+
+
+## 📖 Publications
+
+If you use Vessim in your research, please cite our vision paper:
+
+- Philipp Wiesner, Ilja Behnke and Odej Kao. "[A Testbed for Carbon-Aware Applications and Systems](https://arxiv.org/pdf/2306.09774.pdf)" arXiv:2302.08681 [cs.DC]. 2023.
+
+Bibtex:
+```
+@misc{vessim2023,
+    title={A Testbed for Carbon-Aware Applications and Systems}, 
+    author={Wiesner, Philipp and Behnke, Ilja and Kao, Odej},
+    year={2023},
+    eprint={2306.09774},
+    archivePrefix={arXiv},
+    primaryClass={cs.DC}
+}
+```
+
