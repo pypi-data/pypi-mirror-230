@@ -1,0 +1,27 @@
+Metadata-Version: 2.1
+Name: irtk
+Version: 0.1.3
+Summary: Inverse-Rendering Toolkit
+Author-email: Guangyan Cai <gcai3@uci.edu>
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: imageio >= 2.27.0
+Requires-Dist: imageio_ffmpeg
+Requires-Dist: numpy
+Requires-Dist: gin-config
+Requires-Dist: gpytoolbox
+Requires-Dist: trimesh
+Requires-Dist: chamferdist == 1.0.0
+Requires-Dist: matplotlib
+Project-URL: Home, https://github.com/uci-rendering/inv-render-toolkit
+
+# irtk
+`irtk` stands for Inverse-Rendering Toolkit. It is a simple framework for conducting inverse rendering experiments. Since there are a lot differentiable renderers in development, mastering them all and migrating between them can be a headache. `irtk` provides a simple scene representation based on `pytorch` that can be rendered by **connectors** that connect to different differentiable renderers and get the graident of the scene parameters. Migrating between renderers is just a matter of changing the connector. 
+
+## Installation
+`irtk` depends on `pytorch`. Since it is widely used and some projects might have specific requirements to it, we leave its installation to the user. 
+
+After installing `pytorch`, you can install `irtk` via
+```
+pip install irtk
+```
