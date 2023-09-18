@@ -1,0 +1,24 @@
+[% if actions.get_random_user_v1.is_xml is defined and actions.get_random_user_v1.is_xml is true %]
+model_name: XmlHttpActionModel
+[% else %]
+model_name: JsonHttpActionModel
+[% endif %]
+config:
+  method:
+    format: string
+    template: GET
+  params:
+    format: yaml
+    template: |
+      size: [[ actions.get_random_user_v1.size ]]
+      ## is_xml in parameters has to be a string. In Quotation marks
+      is_xml: "[[ actions.get_random_user_v1.is_xml | lower ]]"
+  url:
+    format: string
+    template: "[[ globals.base_url_v1 ]]/users/random_user"
+description: Get random users
+[% if actions.get_random_user_v1.execution_id is defined %]
+execution_id: [[ actions.get_random_user_v1.execution_id ]]
+[% endif %]
+
+

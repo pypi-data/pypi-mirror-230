@@ -1,0 +1,10 @@
+model_name: DummyActionModel
+config:
+  sleep_seconds:
+    format: integer
+    template: |
+      [[ actions.sleep.sleep_seconds ]]
+description: Sleep
+[% if actions.sleep.execution_id is defined %]
+execution_id: [[ actions.sleep.execution_id ]]
+[% endif %]

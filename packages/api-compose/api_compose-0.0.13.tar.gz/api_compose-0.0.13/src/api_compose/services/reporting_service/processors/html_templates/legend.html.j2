@@ -1,0 +1,61 @@
+  <!-- Legend -->
+  <section id="Legend">
+    <h2>Legend - Registered Classes</h2>
+    <h3>Registered Entries</h3>
+
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Registered Class</th>
+        <th>Description</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      {% for registered_entry in registered_entries %}
+      <tr>
+        <td>{{ registered_entry.processor_class.__qualname__ }}</td>
+        <td>{{ registered_entry.processor_class.__doc__ }}</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+    <h3>Success Definition</h3>
+
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Model</th>
+        <th>Success Criteria</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Action Model</td>
+        <td>At minimum, the expected status is checked against the actual status. If is_success_exp_temp (expression template in jinja) is defined, then the rendered is_success_exp (expression) must evaluate to True as well. </td>
+      </tr>
+      <tr>
+        <td>Executor Model</td>
+        <td>Executor executes action and provides action with one of the below states:
+          <pre>
+            {% for member in action_state.__members__.values() %}
+            {{ loop.index }}. {{ member.name }}
+            {% endfor %}
+          </pre>
+        </td>
+      </tr>
+      <tr>
+        <td>Scenario</td>
+        <td>When all the actions are successful, then it is successful. When either one has failed, it failed </td>
+      </tr>
+      <tr>
+        <td>Specification</td>
+        <td>When all the scenarios are successful, then it is successful. When either one has failed, it failed </td>
+      </tr>
+      </tbody>
+    </table>
+
+
+  </section>
