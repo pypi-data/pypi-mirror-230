@@ -1,0 +1,43 @@
+##[pylyzer] failed /users/shiba/documents/github/erg/crates/erg_compiler/lib/std/_erg_nat.py 1694876768 3188
+.___v_desugar_1 = pyimport "_erg_result"
+.Error: {_erg_result.Error}
+.___v_desugar_2 = pyimport "_erg_int"
+.Int: Never
+.___v_desugar_3 = pyimport "_erg_int"
+.IntMut: Never
+.___v_desugar_4 = pyimport "_erg_control"
+.then__: |E :> {None}|(x: E, f: (E) -> E) -> E
+.Nat: ClassType
+.Nat <: Int
+.Nat.try_new: |Type_14 <: Structural({.__ge__ = (self: Never, R) -> Bool}), R :> {0}|(i: Type_14) -> Int
+.Nat.times: |MAX: Int|(self: {_: .Nat | _ == MAX}, f: () -> NoneType) -> NoneType
+.Nat.saturating_sub: (self: .Nat, other: Int) -> Int
+.Nat.mutate: (self: .Nat) -> Never
+.Nat.__add__: (self: .Nat, other: Obj) -> {None}
+.Nat.__mul__: (self: .Nat, other: Obj) -> {None}
+.Nat.__pos__: |Type_36 <: .Nat|(self: Type_36) -> Type_36
+
+t|(self: Type_59) -> Type_59
+
+.NatMut: ClassType
+.NatMut <: _erg_int.IntMut
+.NatMut.value: .Nat
+.NatMut.__call__: (value: Obj) -> .NatMut
+.NatMut.__int__: |Type_140 <: Float, Type_77 <: Structural({.value = Type_140})|(self: Type_77) -> Int
+.NatMut.__repr__: |Type_142: Type, Type_80 <: Structural({.value = Type_142})|(self: Type_80) -> Str
+.NatMut.__hash__: |Type_83 <: Structural({.value = Type_144}), Type_144 <: Float|(self: Type_83) -> Nat
+.NatMut.__eq__: |E: Type, Type_86 <: Structural({.value = E})|(self: Type_86, other: Structural({.value = E})) -> Bool
+.NatMut.__ne__: |E: Type, Type_90 <: Structural({.value = E})|(self: Type_90, other: Structural({.value = E})) -> Bool
+.NatMut.__le__: |Type_158 <: Structural({.__le__ = (self: Never, R) -> Bool}), R: Type, Type_94 <: Structural({.value = Type_158})|(self: Type_94, other: Structural({.value = R})) -> Bool
+.NatMut.__ge__: |Type_98 <: Structural({.value = Type_163}), Type_163 <: Structural({.__ge__ = (self: Never, R) -> Bool}), R: Type|(self: Type_98, other: Structural({.value = R})) -> Bool
+.NatMut.__lt__: |Type_102 <: Structural({.value = Type_168}), R: Type, Type_168 <: Structural({.__lt__ = (self: Never, R) -> Bool})|(self: Type_102, other: Structural({.value = R})) -> Bool
+.NatMut.__gt__: |Type_173 <: Structural({.__gt__ = (self: Never, R) -> Bool}), R: Type, Type_106 <: Structural({.value = Type_173})|(self: Type_106, other: Structural({.value = R})) -> Bool
+.NatMut.__add__: |Type_178 <: Structural({.__add__ = (self: Never, R) -> O}), Type_110 <: Structural({.value = Type_178}), R: Type, O: Type|(self: Type_110, other: Structural({.value = R})) -> _erg_int.IntMut
+.NatMut.__radd__: |Type_114 <: Structural({.value = R}), R: Type|(self: Type_114, other: Structural({.value = Structural({.__add__ = (self: Never, R) -> Never})})) -> Never
+.NatMut.__mul__: |Type_188 <: Structural({.__mul__ = (self: Never, R) -> O}), Type_118 <: Structural({.value = Type_188}), R: Type, O: Type|(self: Type_118, other: Structural({.value = R})) -> _erg_int.IntMut
+.NatMut.__rmul__: |Type_122 <: Structural({.value = R}), R: Type|(self: Type_122, other: Structural({.value = Structural({.__mul__ = (self: Never, R) -> Never})})) -> Never
+.NatMut.__pow__: |Type_126 <: Structural({.value = Type_198}), Type_198 <: Structural({.__pow__ = (self: Never, R) -> O}), R: Type, O: Type|(self: Type_126, other: Structural({.value = R})) -> _erg_int.IntMut
+.NatMut.__pos__: |Type_130 <: .NatMut|(self: Type_130) -> Type_130
+.NatMut.try_new: |Type_133 <: Structural({.__ge__ = (self: Never, R) -> Bool}), R :> {0}|(i: Type_133) -> _erg_int.IntMut
+.NatMut.times: |MAX: Int, Type_136 <: Structural({.value = Type_204}), Type_204 <: {MAX}|(self: Type_136, f: () -> NoneType) -> NoneType
+
