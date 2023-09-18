@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "evalit"
+version = "0.2"
+description = "Eval-it Evaluates models for Training"
+authors = ["yada <trojblue@gmail.com>"]
+readme = "README.md"
+packages = [{include = "evalit"}]
+
+[tool.poetry.scripts]
+eval-it = 'evalit.cli:cli'
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pillow = "^10.0.0"
+webuiapi = "^0.9.5"
+tqdm = "^4.65.0"
+pysimplegui = "^4.60.5"
+pyperclip = "^1.8.2"
+unibox = "^0.3.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
