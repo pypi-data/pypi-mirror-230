@@ -1,0 +1,18 @@
+##[pylyzer] failed /users/shiba/documents/github/erg/crates/erg_compiler/lib/std/_erg_type.py 1694540598 1008
+.___v_desugar_1 = pyimport "typing"
+.Union: {typing.Union}
+.UnionType: ClassType
+.UnionType.__args__: GenericArray
+.UnionType.__call__: (__args__: Obj) -> .UnionType
+.UnionType.__origin__: {typing.Union}
+
+.FakeGenericAlias: ClassType
+.FakeGenericAlias.__origin__: Type
+.FakeGenericAlias.__args__: GenericArray
+.FakeGenericAlias.__call__: (__origin__: Obj, __args__: Obj) -> .FakeGenericAlias
+
+.___v_desugar_2 = pyimport "types"
+.GenericAlias: {types.GenericAlias(_, _)}
+
+.is_type: (x: Obj) -> Bool
+._isinstance: |Type_21: Type, Type_4 <: Structural({.__origin__ = Type_21})|(obj: Obj, classinfo: Type_4) -> Bool
