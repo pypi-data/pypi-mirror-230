@@ -1,0 +1,25 @@
+##[pylyzer] failed /users/shiba/documents/github/erg/crates/erg_compiler/lib/std/_erg_array.py 1694533872 2411
+.___v_desugar_1 = pyimport "_erg_control"
+.then__: |E :> {None}|(x: E, f: (E) -> E) -> E
+.___v_desugar_2 = pyimport "_erg_range"
+.Range: {_erg_range.Range}
+.___v_desugar_3 = pyimport "_erg_nat"
+.NatMut: {_erg_nat.NatMut}
+.___v_desugar_4 = pyimport "_erg_int"
+.IntMut: {_erg_int.IntMut}
+.___v_desugar_5 = pyimport "(...)"
+.contains_operator: Never
+.Array: ClassType
+.Array <: GenericArray
+.Array.try_new: (arr: Obj) -> Never
+.Array.dedup: |T: Type|(self: Never, same_bucket := (T, Obj) -> Bool) -> T or Array(T, _: Nat)
+.Array.get: |Type_124: Type, Type_77: Type, Type_76 <: Structural({.__getitem__ = (self: Type_76, Type_77) -> Type_124}), Type_76 <: Structural({.__getitem__ = (self: Obj, Type_77) -> Type_124})|(self: Type_76, index: Type_77, default := Obj) -> Type_124
+.Array.push: |Type_81 <: Structural({.append = (self: Obj, Type_82) -> Type_128}), Type_128: Type, Type_81 <: Structural({.append = (self: Type_81, Type_82) -> Type_128}), Type_82: Type, Type_81 <: Structural({.append = (self: Type_81, Type_82) -> Type_128}), Type_81 <: Structural({.append = (self: Never, Type_82) -> Type_128})|(self: Type_81, value: Type_82) -> Type_81
+.Array.partition: |T: Type|(self: Never, f: (T) -> Never) -> Tuple([Array(T, _: Nat), Array(T, _: Nat)])
+.Array.__mul__: (self: .Array, n: Obj) -> {None}
+.Array.__getitem__: (self: .Array, index_or_slice: Obj) -> Never
+.Array.type_check: (self: Never, t: Type) -> Bool
+.Array.update_nth: (self: Never, index: Obj, f: (Obj) -> Never) -> NoneType
+
+setitem__ = (self: Type_73, Type_74, Type_131) -> Type_134}), Type_73 <: Structural({.__setitem__ = (self: Obj, Type_74, Type_131) -> Type_134}), Type_74: Type|(self: Type_73, index: Type_74, f: (Obj) -> Type_131) -> Type_134
+

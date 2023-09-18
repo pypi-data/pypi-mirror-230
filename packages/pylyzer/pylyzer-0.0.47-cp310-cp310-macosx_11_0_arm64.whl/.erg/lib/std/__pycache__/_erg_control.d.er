@@ -1,0 +1,8 @@
+##[pylyzer] failed /Users/shiba/Documents/GitHub/erg/crates/erg_compiler/lib/std/_erg_control.py 1685465903 518
+.if__: |Type_33 :> T or U, T: Type, U: Type|(cond: Bool, then: () -> Type_33, else_ := () -> Type_33) -> Type_33
+.for__: |T: Type|(iterable: Iterable(T), body: (T) -> NoneType) -> NoneType
+.while__: (cond_block: () -> Bool, body: () -> NoneType) -> NoneType
+.with__: |Type_46: Type, Type_15 <: Structural({.__exit__ = (self: Type_15) -> Type_46}), Type_15 <: Structural({.__exit__ = (self: Obj) -> Type_46})|(obj: Type_15, body: (Type_15) -> Never) -> Type_46
+.discard__: (obj: Obj) -> Never
+.assert__: (test: Bool, msg := Str) -> NoneType
+.then__: |E :> {None}|(x: E, f: (E) -> E) -> E
