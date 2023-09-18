@@ -1,0 +1,65 @@
+[tool.poetry]
+name = "vimgpt"
+version = "0.1.2"
+description = "LLM agent with direct Vim access using neovim/pynvim"
+authors = ["nsbradford <nsbradford@gmail.com>"]
+license = "MIT license"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pynvim = "0.4.3"
+promptlayer = "^0.2.4"
+litellm = "0.1.618"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.0.287"
+black = "^23.7.0"
+mypy = "^1.5.1"
+pytest = "^7.4.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+vimgpt = "vimgpt.cli:main"
+
+[tool.ruff]
+# Same as Black.
+# line-length = 88
+target-version = "py311"
+
+select = [
+    "E",  # pycodestyle
+    "F",  # pyflakes
+    "I",  # isort
+]
+
+ignore = [
+    "E712",  # Allow using if x == False, as it's not always equivalent to if x.
+    "E501",  # Supress line-too-long warnings: trust black's judgement on this one.
+]
+
+exclude = [
+ 'stubs',
+]
+
+[tool.mypy]
+mypy_path = "stubs"
+
+[[tool.mypy.overrides]]
+module = 'pynvim.*'
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = 'litellm.*'
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = 'litellm.*'
+ignore_errors = true
+
+# [[tool.mypy.overrides]]
+# module = 'vimgpt.*'
+# ignore_missing_imports = true
