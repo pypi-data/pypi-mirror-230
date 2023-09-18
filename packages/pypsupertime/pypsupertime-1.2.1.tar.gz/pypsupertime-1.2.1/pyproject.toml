@@ -1,0 +1,35 @@
+[build-system]
+requires = ["flit_core>=3.2"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "pypsupertime"
+version = "1.2.1"
+authors = [
+  { name="Julian Flesch", email="julian.flesch@student.uni-tuebingen.de" },
+]
+description = "PyPsupertime"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies=[
+  "numpy",
+  "matplotlib",
+  "seaborn",
+  "scikit-learn",
+  "scipy",
+  "scanpy",
+  "anndata",
+]
+
+[project.urls]
+"Source" = "https://github.com/claassenlab/PyPsupertime"
+"Bug Tracker" = "https://github.com/claassenlab/pyPsupertime/issues"
+"API Documentation" = "https://pypsupertime.readthedocs.io/en/latest/"
+
+[tool.setuptools.package-data]
+"mypkg.data"=[]
