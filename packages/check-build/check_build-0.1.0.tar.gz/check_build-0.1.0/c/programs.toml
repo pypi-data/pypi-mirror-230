@@ -1,0 +1,31 @@
+# SPDX-FileCopyrightText: Peter Pentchev <roam@ringlet.net>
+# SPDX-License-Identifier: BSD-2-Clause
+
+[format.version]
+major = 0
+minor = 1
+
+[program.triv-cc]
+executable = "triv"
+
+[program.triv-cc.prerequisites]
+programs = ["cc"]
+
+[program.triv-cc.commands]
+clean = [["rm", "-f", "--", "triv.o", "triv"]]
+build = [
+  ["cc", "-c", "-o", "trivial.o", "trivial.c"],
+  ["cc", "-o", "triv", "trivial.o"],
+]
+test = [["./triv"]]
+
+[program.triv-make]
+executable = "triv"
+
+[program.triv-make.prerequisites]
+programs = ["cc", "make"]
+
+[program.triv-make.commands]
+clean = [["make", "clean"]]
+build = [["make"]]
+test = [["make", "test"]]
