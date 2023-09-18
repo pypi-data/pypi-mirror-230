@@ -1,0 +1,29 @@
+[build-system]
+requires = ["flit_core>=3.4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "pdfinsight"
+version = "0.0.14"
+authors = [
+  { name="erjieyong", email="erjieyong@gmail.com" },
+]
+description = "Text Mining & Classification Toolkit"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU Affero General Public License v3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+  "PyMuPDF>=1.22.5",
+  "pandas>=1.5.3",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/erjieyong/PDFInsight"
+"Bug Tracker" = "https://github.com/erjieyong/PDFInsight/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
