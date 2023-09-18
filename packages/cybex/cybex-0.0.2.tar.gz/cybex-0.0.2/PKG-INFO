@@ -1,0 +1,55 @@
+Metadata-Version: 2.1
+Name: cybex
+Version: 0.0.2
+Summary: Cybex - Pytorch
+Home-page: https://github.com/kyegomez/Cybex
+License: MIT
+Keywords: artificial intelligence,deep learning,optimizers,Prompt Engineering
+Author: Kye Gomez
+Author-email: kye@apac.ai
+Requires-Python: >=3.6,<4.0
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Dist: openai
+Project-URL: Repository, https://github.com/kyegomez/Cybex
+Description-Content-Type: text/markdown
+
+[![Multi-Modality](agorabanner.png)](https://discord.gg/qUtxnK2NMf)
+
+# Cybex
+Autonomously generate high-quality unit tests for entire repositories, just plug in and play the repo link and enjoy high quality tests to elevate your project
+
+
+## Installation
+`pip install cybex`
+
+
+## Usage
+```python
+from cybex import TestGenerator
+
+# Example usage:
+test_generator = TestGenerator(
+    repo_url="https://github.com/kyegomez/exa", 
+    api_key=""
+)
+test_generator.download()
+test_generator.generate_tests()
+```
+
+# License
+MIT
+
+
+
+
