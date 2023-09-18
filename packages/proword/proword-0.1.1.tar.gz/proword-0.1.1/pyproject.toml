@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "proword"
+version = "0.1.1"
+description = "proword is a python package allowing you to develop terminal applications while being modular and flexible. "
+authors = ["Adam Garza <117498948+TVRework@users.noreply.github.com>"]
+repository = "https://github.com/JAGDC/Proword"
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+attrs = "^23.1.0"
+requests = "^2.31.0"
+nox-poetry = "^1.0.3"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.7.0"
+ruff = "^0.0.286"
+pytest = "^7.4.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
