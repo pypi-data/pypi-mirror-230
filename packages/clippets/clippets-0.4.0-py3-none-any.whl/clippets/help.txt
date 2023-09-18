@@ -1,0 +1,171 @@
+# Introduction
+
+Clippets was developed to support people such as teachers who often find they
+make the same comments many times when marking student papers.
+
+Clippets reads the input file, which defines a tree of groups of text snippets,
+and allows you to arrange one or more into the clipboard. This provides a
+convenient way to quickly build up common pieces of text, ready to paste into a
+different program.
+
+Clippets allows you to add and modify snippets, saving each such change back to
+the input file. Up to 10 backups of the original input file are also kept.
+
+Each snippet may be plain text or may use Markdown formatting. Markdown formatted
+text is converted to HTML before being placed in the clipboard. Programs such as
+Word and LibreOffice will intelligently interpret such HTML, preserving italics,
+bold, bulleted lists, *etc*.
+
+
+# Keyboard and mouse control summary
+
+Clippets allows control using both the mouse and the keyboard. This is a summary
+of the keyboard controls. Where appropriate, mouse based alternatives are
+indicated.
+
+
+## All modes
+
+**Ctrl+C**
+    Abort Clippets. Similar to *Ctrl+Q*, but this works when not in *normal
+    mode*.
+
+## Normal mode keys
+
+**F1**
+    Display this help. Press F1 again to return to *normal mode*.
+
+**F2**
+    Edit the contents of the clipboard. This allows you to 'tweak' the text
+    before you paste it into another program.  Such edits will be lost if you
+    add or remove another snippet, but you can use *Ctrl+U* to get them back.
+
+**F3**
+    Remove all snippets from the clipboard.
+
+**F7**
+    Edit the keywords of the group containing the selected snippet.
+
+**F8**
+    Toggle the order of snippets in the clipboard between ``order added`` and
+    ``order within snippet tree``.
+
+**F9**
+    Collapse (close) all the groups if any group is not currently collapsed. If
+    all the groups are already collapsed then open them all.
+
+**a**
+    Add a snippet new snippet; opened in the editor. The new snippet is added
+    below any currently selected snippet or, if a group is selected, the
+    snippet becomes the first in the group.
+
+    [Mouse: Right click the snippet and then select the 'Add' button.]
+
+**d**
+    Duplicate the currently selected snippet and then edit the copy.
+
+    [Mouse: Right click the snippet and then select the 'Duplicate' button.]
+
+**e**
+    Edit the contents of the currently selected snippet.
+
+    [Mouse: Right click the snippet and then select the 'Edit' button.]
+
+**f, Ins**
+    Collapse or open the selected group (or group containing the selected snippet).
+
+    [Mouse: Left click on the group label.]
+
+**m**
+    Start moving the currently selected snippet. This switches Clippets to
+    the *snippet movement mode*.
+
+    [Mouse: Right click the snippet and then select the 'Move' button. Or
+    Alt+Right click the snippet.]
+
+**Enter (Return), Space**
+    If the selected snippet is already in the clipboard, remove it. Otherwise
+    append the snippet to clipboard contents list. The preview window near the
+    top of the UI is updated accordingly.
+
+    [Mouse: Left click on a snippet.]
+
+**Up, Down**
+    If the filter field currently has focus then the exit filter field.
+    Otherwise move the selection to the previous or next snippet/group.
+
+**Left**
+    If a snippet is selected, moves the selection into the group headings.
+
+**Right**
+    If a group heading is selected and it has at least one visible snippet, move
+    the selection into that group's snippets.
+
+**Ctrl+B**
+    Clears (Blanks) the filter field's contents.
+
+**Ctrl+F, Tab**
+    Toggle the focus to or away from the filter field at the top of the display.
+    See (TBD) for how this is used.
+
+    [Mouse: Left click the field to give it focus.]
+
+**Ctrl+Q**
+    Exit Clippets.
+
+**Ctrl+U, Ctrl+R**
+    *Ctrl+U* undoes the last change to the clipboard. Use *Ctrl+R* reverse the
+    effect of undo. Up to the last 20 changes can be undone.
+
+
+## Snippet movement mode keys.
+
+**Enter (Return)**
+    Complete the move operation and go back to *normal mode*.
+
+**Escape (Esc)**
+    Abandon *snippet movement mode* and go back to *normal mode*.
+
+**Up, Down**
+    Move the insertion point.
+
+
+# File format details.
+
+A Clippets file contains a mixture of the following:
+
+Comments
+    Any unindented line that starts with a hash ('#').
+
+One-off directives
+    Any unindented line that starts with the '@' symbol. The currently
+    recognised directives are::
+
+        @title: <text>
+
+Group plus tag names
+    Any non-indented *line* that is not a comment. Tag names appear after the
+    group name and within brackets ('[' and ']'). Tags are separated by
+    spaces. The file format is basically flat, but colons (':') may be used
+    to indicate nested groups. For example::
+
+        Main                                  .- Main
+            ...                               |  `- Sub
+        Main:Sub             --->             |- Secondary
+            ...                               :
+        Secondary
+            ...
+
+Element start markers
+    An indented line starting and ending with '@' symbols. The current valid
+    markers are::
+
+        @keywords@
+        @md@
+        @text@
+
+Content
+    Indented or blank lines that follow a start marker.
+
+Uninterpreted
+    Any other lines.
