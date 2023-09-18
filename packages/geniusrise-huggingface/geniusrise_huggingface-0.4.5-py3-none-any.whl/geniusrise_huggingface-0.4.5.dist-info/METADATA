@@ -1,0 +1,269 @@
+Metadata-Version: 2.1
+Name: geniusrise-huggingface
+Version: 0.4.5
+Summary: Huggingface bolts for geniusrise
+Home-page: https://github.com/geniusrise/geniusrise-huggingface
+Author: ixaxaar
+Author-email: ixaxaar@geniusrise.ai
+Project-URL: Bug Reports, https://github.com/geniusrise/geniusrise-huggingface/issues
+Project-URL: Source, https://github.com/geniusrise/geniusrise-huggingface
+Project-URL: Documentation, https://docs.geniusrise.ai/
+Keywords: mlops,llm,geniusrise,machine learning,data processing
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: License :: OSI Approved :: GNU Affero General Public License v3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: absl-py (==1.4.0)
+Requires-Dist: accelerate (==0.22.0)
+Requires-Dist: aiohttp (==3.8.5)
+Requires-Dist: aiosignal (==1.3.1)
+Requires-Dist: annotated-types (==0.5.0)
+Requires-Dist: ansicolors (==1.1.8)
+Requires-Dist: argparse-color-formatter (==1.2.2.post2)
+Requires-Dist: asttokens (==2.4.0)
+Requires-Dist: async-timeout (==4.0.3)
+Requires-Dist: attrs (==23.1.0)
+Requires-Dist: backcall (==0.2.0)
+Requires-Dist: black (==23.7.0)
+Requires-Dist: bleach (==6.0.0)
+Requires-Dist: boto3 (==1.28.25)
+Requires-Dist: botocore (==1.31.25)
+Requires-Dist: build (==0.10.0)
+Requires-Dist: cachetools (==5.3.1)
+Requires-Dist: certifi (==2023.7.22)
+Requires-Dist: cffi (==1.15.1)
+Requires-Dist: charset-normalizer (==3.2.0)
+Requires-Dist: click (==8.1.7)
+Requires-Dist: cmake (==3.27.2)
+Requires-Dist: colorama (==0.4.6)
+Requires-Dist: colorlog (==6.7.0)
+Requires-Dist: coverage (==7.3.0)
+Requires-Dist: cryptography (==41.0.3)
+Requires-Dist: datasets (==2.14.4)
+Requires-Dist: decorator (==5.1.1)
+Requires-Dist: dill (==0.3.7)
+Requires-Dist: direnv (==2020.12.3)
+Requires-Dist: docutils (==0.20.1)
+Requires-Dist: emoji (==2.7.0)
+Requires-Dist: env-file (==2020.12.3)
+Requires-Dist: et-xmlfile (==1.1.0)
+Requires-Dist: evaluate (==0.4.0)
+Requires-Dist: exceptiongroup (==1.1.2)
+Requires-Dist: executing (==1.2.0)
+Requires-Dist: filelock (==3.12.2)
+Requires-Dist: flake8 (==6.1.0)
+Requires-Dist: frozenlist (==1.4.0)
+Requires-Dist: fsspec (==2023.6.0)
+Requires-Dist: geniusrise (==0.0.3)
+Requires-Dist: google-auth (==2.17.3)
+Requires-Dist: huggingface-hub (==0.16.4)
+Requires-Dist: idna (==3.4)
+Requires-Dist: importlib-metadata (==6.8.0)
+Requires-Dist: iniconfig (==2.0.0)
+Requires-Dist: ipython (==8.15.0)
+Requires-Dist: jaraco.classes (==3.3.0)
+Requires-Dist: jedi (==0.19.0)
+Requires-Dist: jeepney (==0.8.0)
+Requires-Dist: Jinja2 (==3.1.2)
+Requires-Dist: jmespath (==0.10.0)
+Requires-Dist: joblib (==1.3.2)
+Requires-Dist: jsonpickle (==3.0.1)
+Requires-Dist: kafka-python (==2.0.2)
+Requires-Dist: keyring (==24.2.0)
+Requires-Dist: kubernetes (==27.2.0)
+Requires-Dist: lit (==16.0.6)
+Requires-Dist: lxml (==4.9.3)
+Requires-Dist: markdown-it-py (==3.0.0)
+Requires-Dist: MarkupSafe (==2.1.3)
+Requires-Dist: matplotlib-inline (==0.1.6)
+Requires-Dist: mccabe (==0.7.0)
+Requires-Dist: mdurl (==0.1.2)
+Requires-Dist: more-itertools (==10.1.0)
+Requires-Dist: mpmath (==1.3.0)
+Requires-Dist: multidict (==6.0.4)
+Requires-Dist: multiprocess (==0.70.15)
+Requires-Dist: mypy (==1.5.0)
+Requires-Dist: mypy-extensions (==1.0.0)
+Requires-Dist: networkx (==3.1)
+Requires-Dist: nltk (==3.8.1)
+Requires-Dist: numpy (==1.25.2)
+Requires-Dist: nvidia-cublas-cu11 (==11.10.3.66)
+Requires-Dist: nvidia-cuda-cupti-cu11 (==11.7.101)
+Requires-Dist: nvidia-cuda-nvrtc-cu11 (==11.7.99)
+Requires-Dist: nvidia-cuda-runtime-cu11 (==11.7.99)
+Requires-Dist: nvidia-cudnn-cu11 (==8.5.0.96)
+Requires-Dist: nvidia-cufft-cu11 (==10.9.0.58)
+Requires-Dist: nvidia-curand-cu11 (==10.2.10.91)
+Requires-Dist: nvidia-cusolver-cu11 (==11.4.0.1)
+Requires-Dist: nvidia-cusparse-cu11 (==11.7.4.91)
+Requires-Dist: nvidia-nccl-cu11 (==2.14.3)
+Requires-Dist: nvidia-nvtx-cu11 (==11.7.91)
+Requires-Dist: oauthlib (==3.2.2)
+Requires-Dist: openpyxl (==3.1.2)
+Requires-Dist: packaging (==23.1)
+Requires-Dist: pandas (==2.0.3)
+Requires-Dist: parso (==0.8.3)
+Requires-Dist: pathspec (==0.11.2)
+Requires-Dist: pexpect (==4.8.0)
+Requires-Dist: pickleshare (==0.7.5)
+Requires-Dist: pkginfo (==1.9.6)
+Requires-Dist: platformdirs (==3.10.0)
+Requires-Dist: pluggy (==1.2.0)
+Requires-Dist: portalocker (==2.7.0)
+Requires-Dist: prettytable (==3.8.0)
+Requires-Dist: prometheus-client (==0.17.1)
+Requires-Dist: prompt-toolkit (==3.0.39)
+Requires-Dist: psutil (==5.9.5)
+Requires-Dist: psycopg2 (==2.9.7)
+Requires-Dist: ptyprocess (==0.7.0)
+Requires-Dist: pure-eval (==0.2.2)
+Requires-Dist: pyarrow (==13.0.0)
+Requires-Dist: pyasn1 (==0.5.0)
+Requires-Dist: pyasn1-modules (==0.3.0)
+Requires-Dist: pycodestyle (==2.11.0)
+Requires-Dist: pycparser (==2.21)
+Requires-Dist: pydantic (==2.1.1)
+Requires-Dist: pydantic-core (==2.4.0)
+Requires-Dist: pyflakes (==3.1.0)
+Requires-Dist: Pygments (==2.16.1)
+Requires-Dist: pyproject-hooks (==1.0.0)
+Requires-Dist: pytest (==7.4.0)
+Requires-Dist: pytest-cov (==4.1.0)
+Requires-Dist: python-dateutil (==2.8.2)
+Requires-Dist: pytz (==2023.3)
+Requires-Dist: PyYAML (==6.0.1)
+Requires-Dist: readme-renderer (==40.0)
+Requires-Dist: redis (==4.6.0)
+Requires-Dist: regex (==2023.8.8)
+Requires-Dist: requests (==2.31.0)
+Requires-Dist: requests-oauthlib (==1.3.1)
+Requires-Dist: requests-toolbelt (==1.0.0)
+Requires-Dist: responses (==0.18.0)
+Requires-Dist: retrying (==1.3.4)
+Requires-Dist: rfc3986 (==2.0.0)
+Requires-Dist: rich (==13.5.2)
+Requires-Dist: rich-argparse (==1.3.0)
+Requires-Dist: rouge-score (==0.1.2)
+Requires-Dist: rsa (==4.9)
+Requires-Dist: s3transfer (==0.6.1)
+Requires-Dist: sacrebleu (==2.3.1)
+Requires-Dist: sacremoses (==0.0.53)
+Requires-Dist: safetensors (==0.3.3)
+Requires-Dist: scikit-learn (==1.3.0)
+Requires-Dist: scipy (==1.11.2)
+Requires-Dist: SecretStorage (==3.3.3)
+Requires-Dist: sentencepiece (==0.1.99)
+Requires-Dist: shortuuid (==1.0.11)
+Requires-Dist: six (==1.16.0)
+Requires-Dist: stack-data (==0.6.2)
+Requires-Dist: sympy (==1.12)
+Requires-Dist: tabulate (==0.9.0)
+Requires-Dist: termcolor (==2.3.0)
+Requires-Dist: threadpoolctl (==3.2.0)
+Requires-Dist: tokenizers (==0.13.3)
+Requires-Dist: tomli (==2.0.1)
+Requires-Dist: torch (==2.0.1)
+Requires-Dist: tqdm (==4.66.1)
+Requires-Dist: traitlets (==5.9.0)
+Requires-Dist: transformers (==4.32.0)
+Requires-Dist: triton (==2.0.0)
+Requires-Dist: twine (==4.0.2)
+Requires-Dist: types-PyYAML (==6.0.12.11)
+Requires-Dist: typing-extensions (==4.7.1)
+Requires-Dist: tzdata (==2023.3)
+Requires-Dist: urllib3 (==1.26.16)
+Requires-Dist: values (==2020.12.3)
+Requires-Dist: wcwidth (==0.2.6)
+Requires-Dist: webencodings (==0.5.1)
+Requires-Dist: websocket-client (==1.6.1)
+Requires-Dist: xxhash (==3.3.0)
+Requires-Dist: yarl (==1.9.2)
+Requires-Dist: zipp (==3.16.2)
+Provides-Extra: dev
+Requires-Dist: check-manifest ; extra == 'dev'
+Provides-Extra: test
+Requires-Dist: coverage ; extra == 'test'
+
+![banner](./assets/banner.jpg)
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+# Huggingface Bolts
+
+This is a collection of generic streaming and (micro) batch bolts interfacing
+with the huggingface ecosystem.
+
+**Table of Contents**
+
+- [Huggingface Bolts](#huggingface-bolts)
+  - [Usage](#usage)
+  - [Usage](#usage-1)
+    - [Text Classification](#text-classification)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+Includes:
+
+| No. | Name                                                  | Description                                    | Input Type | Output Type |
+| --- | ----------------------------------------------------- | ---------------------------------------------- | ---------- | ----------- |
+| 1   | [Text Classification](#text-classification)           | Fine-tuning for text classification tasks      | Batch      | Batch       |
+| 2   | [Instruction Tuning](#instruction-tuning)             | Fine-tuning for instruction tuning tasks       | Batch      | Batch       |
+| 3   | [Commonsense Reasoning](#commonsense-reasoning)       | Fine-tuning for commonsense reasoning tasks    | Batch      | Batch       |
+| 4   | [Language Modeling](#language-modeling)               | Fine-tuning for language modeling tasks        | Batch      | Batch       |
+| 5   | [Named Entity Recognition](#named-entity-recognition) | Fine-tuning for named entity recognition tasks | Batch      | Batch       |
+| 6   | [Question Answering](#question-answering)             | Fine-tuning for question answering tasks       | Batch      | Batch       |
+| 7   | [Sentiment Analysis](#sentiment-analysis)             | Fine-tuning for sentiment analysis tasks       | Batch      | Batch       |
+| 8   | [Summarization](#summarization)                       | Fine-tuning for summarization tasks            | Batch      | Batch       |
+| 9   | [Translation](#translation)                           | Fine-tuning for translation tasks              | Batch      | Batch       |
+
+## Usage
+
+To test, first bring up all related services via the supplied docker-compose:
+
+```bash
+docker compose up -d
+docker compose logs -f
+```
+
+These management consoles will be available:
+
+| Console  | Link                   |
+| -------- | ---------------------- |
+| Kafka UI | http://localhost:8088/ |
+
+Postgres can be accessed with:
+
+```bash
+docker exec -it geniusrise-postgres-1 psql -U postgres
+```
+
+## Usage
+
+### Text Classification
+
+To fine-tune a model for text classification tasks, you can use the following
+command:
+
+```bash
+genius HuggingFaceClassificationFineTuner rise \
+  batch \
+      --input_folder my_dataset \
+  streaming \
+      --output_kafka_topic my_topic \
+      --output_kafka_cluster_connection_string localhost:9094 \
+  postgres \
+      --postgres_host 127.0.0.1 \
+      --postgres_port 5432 \
+      --postgres_user postgres \
+      --postgres_password postgres \
+      --postgres_database geniusrise \
+      --postgres_table state \
+  load_dataset \
+      --args
+```
