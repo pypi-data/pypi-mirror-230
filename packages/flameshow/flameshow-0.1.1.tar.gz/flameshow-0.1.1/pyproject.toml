@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "flameshow"
+version = "0.1.1"
+description = ""
+authors = ["laixintao <laixintaoo@gmail.com>"]
+readme = "README.md"
+packages = [{include = "flameshow"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+typing-extensions = "^4.7.1"
+textual = "^0.37.1"
+click = "^8.1.7"
+
+[tool.poetry.scripts]
+fgv = 'flameshow.main:main'
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
