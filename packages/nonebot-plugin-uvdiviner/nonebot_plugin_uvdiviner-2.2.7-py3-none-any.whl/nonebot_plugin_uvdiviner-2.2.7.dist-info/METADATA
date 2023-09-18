@@ -1,0 +1,48 @@
+Metadata-Version: 2.1
+Name: nonebot-plugin-uvdiviner
+Version: 2.2.7
+Summary: 基于周易蓍草算法的 QQ 占卜师.
+Home-page: https://gitee.com/unvisitor/nonebot-plugin-uvdiviner
+Author: Night Resurgent <fu050409@163.com>
+Author-email: fu050409@163.com
+License: Apache-2.0
+Project-URL: Bug Tracker, https://gitee.com/unvisitor/nonebot-plugin-uvdiviner/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: nonebot2
+Requires-Dist: uvdiviner
+Requires-Dist: nonebot-plugin-apscheduler
+
+# Diviner
+基于周易蓍草占卜原理实现的中国古占卜, 该项目适配于 Nonebot2.
+
+感谢熊逸先生的《周易江湖》对本项目提供的基本原理支持.
+
+## 安装
+### 直接安装
+使用`pip`安装:
+```sh
+pip install nonebot-plugin-uvdiviner
+```
+
+### Nonebot2 安装
+依次执行指令:
+```sh
+pip install nb-cli
+nb create
+```
+
+选择`bootstrap`并输入自定义的项目名称, 随后选择`fastapi`、`httpx`以及`websockets`, 适配器选择`Onebot V11`回车, 执行以下指令切入 Nonebot2 项目文件夹:
+```sh
+cd [你的项目名称]
+```
+
+随后执行:
+```sh
+nb plugin install nonebot-plugin-uvdiviner
+nb run --reload
+```
