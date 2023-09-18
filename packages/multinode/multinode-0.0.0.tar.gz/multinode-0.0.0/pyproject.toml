@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "multinode"
+version = "0.0.0"
+description = "Multinode's Python client"
+authors = ["Kacper Kielak <kacper@quantumboost.com>"]
+readme = "README.md"
+packages = [{include = "multinode"}]
+
+[tool.poetry.scripts]
+multinode = 'multinode.main:cli'
+
+[tool.poetry.dependencies]
+python = "^3.8"
+click = "^8.1.7"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
