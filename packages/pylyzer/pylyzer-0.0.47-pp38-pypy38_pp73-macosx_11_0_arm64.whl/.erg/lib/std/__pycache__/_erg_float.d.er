@@ -1,0 +1,54 @@
+##[pylyzer] failed /users/shiba/documents/github/erg/crates/erg_compiler/lib/std/_erg_float.py 1692430197 3909
+.___v_desugar_1 = pyimport "_erg_result"
+.Error: {_erg_result.Error}
+.___v_desugar_2 = pyimport "_erg_control"
+.then__: |E :> {None}|(x: E, f: (E) -> E) -> E
+.Float: ClassType
+.Float <: Float
+.Float.EPSILON: {0.0}
+.Float.try_new: (i: Obj) -> Complex
+.Float.mutate: (self: .Float) -> Never
+.Float.__add__: (self: .Float, other: Obj) -> {None}
+.Float.__radd__: (self: .Float, other: Float) -> {None}
+.Float.__sub__: (self: .Float, other: Obj) -> {None}
+.Float.__rsub__: (self: .Float, other: Float) -> {None}
+.Float.__mul__: (self: .Float, other: Obj) -> {None}
+.Float.__rmul__: (self: .Float, other: Float) -> {None}
+.Float.__div__: (self: .Float, other: Obj) -> {None}
+.Float.__rdiv__: (self: .Float, other: Float) -> {None}
+.Float.__floordiv__: (self: .Float, other: Obj) -> {None}
+.Float.__rfloordiv__: (self: .Float, other: Float) -> {None}
+.Float.__pow__: (self: .Float, other: Obj) -> {None}
+.Float.__rpow__: (self: .Float, other: Float) -> {None}
+.Float.__pos__: (self: .Float) -> .Float
+.Float.__neg__: (self: .Float) -> {None}
+
+.FloatMut: ClassType
+.FloatMut.value: .Float
+.FloatMut.__call__: (value: Obj) -> .FloatMut
+.FloatMut.EPSILON: {0.0}
+.FloatMut.__repr__: (self: .FloatMut) -> Str
+.FloatMut.__hash__: (self: .FloatMut) -> Nat
+.FloatMut.__deref__: (self: .FloatMut) -> .Float
+.FloatMut.__eq__: |Type_108 <: Structural({.value = E}), E :> .Float|(self: .FloatMut, other: Type_108) -> Bool
+.FloatMut.__ne__: |Type_112 <: Structural({.value = E}), E :> .Float|(self: .FloatMut, other: Type_112) -> Bool
+.FloatMut.__le__: |R: Type, Type_116 <: Structural({.value = R})|(self: .FloatMut, other: Type_116) -> Never
+.FloatMut.__ge__: |Type_120 <: Structural({.value = R}), R: Type|(self: .FloatMut, other: Type_120) -> Never
+.FloatMut.__lt__: |Type_124 <: Structural({.value = R}), R: Type|(self: .FloatMut, other: Type_124) -> Never
+.FloatMut.__gt__: |Type_128 <: Structural({.value = R}), R: Type|(self: .FloatMut, other: Type_128) -> Never
+.FloatMut.__add__: |Type_132 <: Structural({.value = Type_15}), Type_15: Type|(self: .FloatMut, other: Type_132) -> .FloatMut
+.FloatMut.__sub__: |Type_136 <: Structural({.value = Type_23}), Type_23: Type|(self: .FloatMut, other: Type_136) -> .FloatMut
+.FloatMut.__mul__: |Type_140 <: Structural({.value = Type_31}), Type_31: Type|(self: .FloatMut, other: Type_140) -> .FloatMut
+.FloatMut.__floordiv__: |Type_47: Type, Type_144 <: Structural({.value = Type_47})|(self: .FloatMut, other: Type_144) -> .FloatMut
+.FloatMut.__pow__: |Type_148 <: Structural({.value = Type_55}), Type_55: Type|(self: .FloatMut, other: Type_148) -> .FloatMut
+.FloatMut.__pos__: (self: .FloatMut) -> .FloatMut
+.FloatMut.__neg__: (self: .FloatMut) -> .FloatMut
+
+131, other: Structural({.value = R})) -> .FloatMut
+.FloatMut.__sub__: |Type_200 <: Structural({.__sub__ = (self: Never, R) -> O}), O: Type, Type_135 <: Structural({.value = Type_200}), R: Type|(self: Type_135, other: Structural({.value = R})) -> .FloatMut
+.FloatMut.__mul__: |O: Type, Type_139 <: Structural({.value = Type_205}), R: Type, Type_205 <: Structural({.__mul__ = (self: Never, R) -> O})|(self: Type_139, other: Structural({.value = R})) -> .FloatMut
+.FloatMut.__floordiv__: |Type_210 <: Structural({.__floordiv__ = (self: Never, R) -> O}), Type_143 <: Structural({.value = Type_210}), R: Type, O: Type|(self: Type_143, other: Structural({.value = R})) -> .FloatMut
+.FloatMut.__pow__: |Type_215 <: Structural({.__pow__ = (self: Never, R) -> O}), O: Type, R: Type, Type_147 <: Structural({.value = Type_215})|(self: Type_147, other: Structural({.value = R})) -> .FloatMut
+.FloatMut.__pos__: |Type_151 <: .FloatMut|(self: Type_151) -> Type_151
+.FloatMut.__neg__: |Type_154 <: Structural({.value = Type_219}), Type_219 <: Structural({.__neg__ = (self: Never) -> R}), R: Type|(self: Type_154) -> .FloatMut
+
