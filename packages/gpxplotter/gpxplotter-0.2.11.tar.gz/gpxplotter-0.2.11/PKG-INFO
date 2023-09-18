@@ -1,0 +1,90 @@
+Metadata-Version: 2.1
+Name: gpxplotter
+Version: 0.2.11
+Summary: A package for reading gpx files and creating simple plots
+Home-page: https://github.com/andersle/gpxplotter
+Author: Anders Lervik
+Author-email: andersle@gmail.com
+License: LGPLv2.1+
+Keywords: gpx gps
+Classifier: Development Status :: 3 - Alpha
+Classifier: Environment :: Console
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: License :: OSI Approved :: GNU Lesser General Public License v2 or later (LGPLv2+)
+Classifier: Natural Language :: English
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Operating System :: POSIX
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Topic :: Other/Nonlisted Topic
+Description-Content-Type: text/markdown
+License-File: LICENSE
+License-File: COPYING
+License-File: COPYING.LESSER
+Requires-Dist: altair
+Requires-Dist: branca
+Requires-Dist: folium
+Requires-Dist: jinja2
+Requires-Dist: matplotlib
+Requires-Dist: numpy
+Requires-Dist: pandas
+Requires-Dist: Pillow
+Requires-Dist: python-dateutil
+Requires-Dist: seaborn
+Requires-Dist: scipy
+Requires-Dist: scikit-learn
+Requires-Dist: sphinx
+Requires-Dist: sphinx_rtd_theme
+Requires-Dist: sphinx-gallery
+Requires-Dist: vincent
+
+# gpxplotter
+
+[![Documentation Status](https://readthedocs.org/projects/gpxplotter/badge/?version=latest)](https://gpxplotter.readthedocs.io/en/latest/?badge=latest)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/andersle/gpxplotter/main?filepath=examples%2Fjupyter%2F)
+
+**gpxplotter** is a Python package for reading 
+[gpx](https://en.wikipedia.org/wiki/GPS_Exchange_Format)
+files and creating simple predefined plots using
+[matplotlib](http://matplotlib.org/) 
+and maps using
+[folium](https://python-visualization.github.io/folium/).
+
+Please see
+[https://gpxplotter.readthedocs.io/en/latest/](https://gpxplotter.readthedocs.io/en/latest/)
+for the latest documentation and the 
+[Binder notebooks](https://mybinder.org/v2/gh/andersle/gpxplotter/main?filepath=examples%2Fjupyter%2F) for examples.
+
+## Installation
+
+```
+pip install gpxplotter
+```
+
+## Examples
+
+Interactive examples can be explored
+via [Binder](https://mybinder.org/v2/gh/andersle/gpxplotter/main?filepath=examples%2Fjupyter%2F).
+
+
+#### Simple example for showing a track in a map, colored by heart rate
+
+```python
+
+from gpxplotter import read_gpx_file, create_folium_map, add_segment_to_map
+
+the_map = create_folium_map()
+for track in read_gpx_file('ruten.gpx'):
+    for i, segment in enumerate(track['segments']):
+        add_segment_to_map(the_map, segment, color_by='hr')
+
+# To display the map in a Jupyter notebook:
+the_map
+```
+
+### Further examples
+
+Please see the [gallery in the documentation](https://gpxplotter.readthedocs.io/en/latest/auto_examples/index.html)
+for further examples. 
