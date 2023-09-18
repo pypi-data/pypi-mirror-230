@@ -1,0 +1,85 @@
+Metadata-Version: 2.1
+Name: sliceguard
+Version: 0.0.27
+Summary: A library for detecting critical data slices in structured and unstructured data based on features, metadata and model predictions.
+Author-email: Renumics GmbH <info@renumics.com>, Daniel Klitzke <daniel.klitzke@renumics.com>
+Project-URL: Homepage, https://github.com/Renumics/sliceguard
+Project-URL: Bug Tracker, https://github.com/Renumics/sliceguard/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: hnne>=0.1.10
+Requires-Dist: numpy>=1.17.2
+Requires-Dist: pandas>=2.0.0
+Requires-Dist: fairlearn>=0.8.0
+Requires-Dist: scikit-learn>=1.2.2
+Requires-Dist: umap-learn>=0.5.3
+Requires-Dist: tqdm>=4.65.0
+Requires-Dist: renumics-spotlight>=1.3.0
+Requires-Dist: datasets>=2.13.1
+Provides-Extra: automl
+Requires-Dist: flaml>=2.0.0; extra == "automl"
+Requires-Dist: xgboost<2.0.0,>=1.7.6; extra == "automl"
+Provides-Extra: embedding
+Requires-Dist: transformers>=4.30.2; extra == "embedding"
+Requires-Dist: sentence-transformers>=2.2.1; extra == "embedding"
+Requires-Dist: torch>=2.0.1; extra == "embedding"
+Requires-Dist: torchaudio>=2.0.2; extra == "embedding"
+Requires-Dist: datasets[audio,vision]>=2.13.1; extra == "embedding"
+Provides-Extra: all
+Requires-Dist: flaml>=2.0.0; extra == "all"
+Requires-Dist: xgboost<2.0.0,>=1.7.6; extra == "all"
+Requires-Dist: transformers>=4.30.2; extra == "all"
+Requires-Dist: sentence-transformers>=2.2.1; extra == "all"
+Requires-Dist: torch>=2.0.1; extra == "all"
+Requires-Dist: torchaudio>=2.0.2; extra == "all"
+Requires-Dist: datasets[audio,vision]>=2.13.1; extra == "all"
+Provides-Extra: docs
+Requires-Dist: sphinxcontrib-applehelp>=1.0.7; extra == "docs"
+Requires-Dist: sphinxcontrib-devhelp>=1.0.5; extra == "docs"
+Requires-Dist: sphinxcontrib-htmlhelp>=2.0.4; extra == "docs"
+Requires-Dist: sphinxcontrib-jsmath>=1.0.1; extra == "docs"
+Requires-Dist: sphinxcontrib-qthelp>=1.0.6; extra == "docs"
+Requires-Dist: sphinxcontrib-serializinghtml>=1.1.9; extra == "docs"
+Requires-Dist: myst-parser>=2.0.0; extra == "docs"
+
+<p align="center"><a href="https://github.com/Renumics/sliceguard"><img src="https://github.com/Renumics/sliceguard/raw/main/static/img/sliceguard.svg" alt="Sliceguard Logo" height="80"/></a></p>
+<h1 align="center">sliceguard</h1>
+<p align="center">Detect problematic data slices in unstructured and structured data – fast.</p>
+
+<p align="center">
+ 	<a href="https://pypi.org/project/sliceguard/"><img src="https://img.shields.io/pypi/pyversions/sliceguard" height="20"/></a>
+ 	<a href="https://pypi.org/project/sliceguard/"><img src="https://img.shields.io/pypi/wheel/sliceguard" height="20"/></a>
+	<a href="https://sliceguard.readthedocs.io/en/latest/index.html"><img src="https://readthedocs.org/projects/sliceguard/badge/?version=latest&amp;style=flat" height="20"></a>
+</p>
+
+<p align="center"><img src="https://github.com/Renumics/sliceguard/raw/main/static/img/sliceguard_github.gif" width="100%"/><img src="https://github.com/Renumics/sliceguard/raw/main/static/img/dropshadow.png" width="100%"/></p>
+
+## 🚀 Introduction
+
+Sliceguard helps you to quickly discover **problematic data segments**. It supports structured data as well as unstructured data like images, text or audio. Sliceguard generates an **interactive report** with just a few lines of code:
+
+```python
+from sliceguard import SliceGuard
+
+sg = SliceGuard()
+issues = sg.find_issues(df, features=["image"])
+
+sg.report()
+```
+
+## ⏱️ Quickstart
+
+Install sliceguard by running `pip install sliceguard`.
+
+Go straight to our quickstart examples for your use case:
+
+* 🖼️ **[Unstructured Data (Images, Audio, Text)](https://github.com/Renumics/sliceguard/blob/main/examples/quickstart_unstructured_data.ipynb)** **–** **[🕹️ Interactive Demo](https://huggingface.co/spaces/renumics/sliceguard-unstructured-data)**
+* 📈 **[Structured Data (Numerical, Categorical Variables)](https://github.com/Renumics/sliceguard/blob/main/examples/quickstart_structured_data.ipynb)** **–** **[🕹️ Interactive Demo](https://huggingface.co/spaces/renumics/sliceguard-structured-data)**
+* 📊 **[Mixed Data (Contains Both)](https://github.com/Renumics/sliceguard/blob/main/examples/quickstart_mixed_data.ipynb)** **–** **[🕹️ Interactive Demo](https://huggingface.co/spaces/renumics/sliceguard-mixed-data)**
+
+## 🗺️ Public Roadmap
+We maintain a **[public roadmap](https://github.com/Renumics/sliceguard/blob/main/ROADMAP.md)** so you can follow along the development of this library.
