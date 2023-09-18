@@ -1,0 +1,60 @@
+Metadata-Version: 2.1
+Name: img2scad
+Version: 0.5
+Summary: Image to OpenSCAD converter
+Home-page: https://gitlab.com/engmark/img2scad
+Download-URL: https://gitlab.com/engmark/img2scad
+Author: Victor Engmark
+Author-email: victor@engmark.name
+Maintainer: Victor Engmark
+Maintainer-email: victor@engmark.name
+License: GPL v3 or newer
+Keywords: image images height heightmap heightmaps elevation convert converter OpenSCAD SCAD
+Platform: POSIX
+Platform: Windows
+Classifier: Development Status :: 3 - Alpha
+Classifier: Environment :: Console
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: License :: OSI Approved :: GNU General Public License (GPL)
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Artistic Software
+Classifier: Topic :: Multimedia :: Graphics :: 3D Modeling
+Classifier: Topic :: Multimedia :: Graphics :: Graphics Conversion
+License-File: LICENSE.txt
+Requires-Dist: Pillow (==9.4.0)
+
+img2scad - Convert images to OpenSCAD structures
+<https://gitlab.com/engmark/img2scad>
+
+Default syntax:
+
+img2scad [-b|--base=N] [-l|--log] < input_file
+
+Description:
+
+For each pixel in the input, it will create a cube in the output. The height of
+the cube corresponds to the whiteness of the corresponding pixel.
+
+If -b or --base is specified, all values will be shifted by that value. This
+can be positive or negative. This can be used to output zero values.
+
+If -l or --log is specified, the logarithm of the grey values will be used for the output.
+
+Examples:
+
+img2scad < example.png > example.scad
+    Convert example.png to example.scad.
+
+img2scad -b 1 < example.png > example.scad
+    Convert example.png to example.scad, with a "bedrock" of height 1.
+
+img2scad -b 2 -l < example.png > example.scad
+    Convert example.png to example.scad, taking the logarithm for the height
+    and preserving the black pixels.
+
+<http://www.thingiverse.com/thing:4448>
+
+Bugs:
+
+Please submit bug reports at https://gitlab.com/engmark/img2scad/-/issues.
