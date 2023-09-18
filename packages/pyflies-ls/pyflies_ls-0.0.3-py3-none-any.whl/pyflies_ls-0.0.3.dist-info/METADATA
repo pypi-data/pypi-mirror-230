@@ -1,0 +1,60 @@
+Metadata-Version: 2.1
+Name: pyflies-ls
+Version: 0.0.3
+Summary: a language server for pyFlies language
+Home-page: https://github.com/DejanS24/pyflies-LS
+Author: Dejan Sorgic
+Author-email: dejans1224@gmail.com
+Keywords: pyFlies DSL python domain specific languages language server protocol pygls
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Information Technology
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pygls ==1.0.2
+Requires-Dist: textx
+Requires-Dist: pyflies
+
+# _pyflies-LS_
+
+
+
+pyflies-LS is a language server that provides smartness for [pyflies](https://github.com/pyflies/pyflies) language.
+
+
+
+It is expected to use this package in conbination with some IDE extension for pyflies.
+
+An example for this would be [vscode-pyflies](https://github.com/pyflies/vscode-pyflies) extension for Visual Studio Code.
+
+
+
+## Features
+
+
+
+pyflies Language Server contains all logic for providing features like:
+
+
+
+- _Code completion_
+
+- _Code validation and error reporting_
+
+- _Quick fix for typos_
+
+- _Find all refernces_
+
+- _Go to definition_
+
+
+
+The server uses  _[pygls](https://github.com/openlawlibrary/pygls)_ to expose all functionalities over
+
+_[Language Server Protocol](https://microsoft.github.io/language-server-protocol/specification)_.
