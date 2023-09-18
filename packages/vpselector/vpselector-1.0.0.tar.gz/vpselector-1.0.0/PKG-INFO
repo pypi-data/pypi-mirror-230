@@ -1,0 +1,66 @@
+Metadata-Version: 2.1
+Name: vpselector
+Version: 1.0.0
+Summary: Visualize and interactively select time-series data from a pandas DataFrame.
+Keywords: python,dataframe,pandas,visualization,data selection,time-series data,data tools,data science,data-driven engineering,machine learning,system identification
+Author: Manuel Yves Galliker
+Author-email: manuel@galliker.tech
+Maintainer-email: Manuel Yves Galliker <manuel@galliker.tech>
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Classifier: Development Status :: 4 - Beta
+Classifier: Programming Language :: Python
+Requires-Dist: pandas >= 1.1.5
+Requires-Dist: PyQt5==5.14.0
+Requires-Dist: matplotlib>=3.7.1
+Requires-Dist: seaborn>=0.11.1
+Requires-Dist: overrides>=7.3.1
+Requires-Dist: twine>=4.0.2
+Requires-Dist: black >= 23.3.0 ; extra == "format"
+Project-URL: repository, https://github.com/manumerous/vpselector
+Provides-Extra: format
+
+# vpselector
+
+The Visual Pandas Selector is a tool to visually select portions of numeric time-series data from a pandas dataframe. The tool is intended to provide an fast interactive way for manual data selection, as can be very useful in for example machine learning, regression or system identification.
+
+Easily configure the tool to plot dataframe columns in vertically stacked subplots and view data distributions with the included histogram feature. With a simple click and drag, you can then select horizontal data windows, and let the tool automatically combine them into a new dataframe.
+
+The user can subsequentially select different horizontal data windows via click and drag and he tool then automatically combines the visually selected sections into a new dataframe.
+
+![ezgif com-gif-maker(1)](https://github.com/manumerous/visual-pandas-curator/assets/18735094/b5ebbb99-d2f7-4901-b101-cbeed6c230aa)
+
+
+## Install
+
+Install the package using:
+
+```bash
+pip install vpselector
+```
+
+## Use in your project
+
+Then simply import it using `import vpselector`. Then simply use:
+
+- If your project does not contain a pyqt application: `vpselector.select_visual_data(data : pd.DataFrame, plot_config : dict)` 
+
+- To add the vpselector to an existing pyqt application: `vpselector.select_visual_data_in_pyqt_app(data : pd.DataFrame, plot_config : dict, pyqt_app)` 
+
+
+## Run the Example 
+
+```bash
+python3 vpselector_example.py
+```
+
+#### Use the Tool
+
+- Left click with your mouse and drag to define the desired horizontal window of the data to be selected.
+  - The current selection distribution is now visualized in the histogram plot on the right.
+- Confirm or cancel data selection.
+  - The already selected data is now marked by a grey span in the plot on the left.
+  - The plot on the right contains now the histogram of all selected data.
+- repeat as many times as needed.
+- Once you could select all desired horizontal data windows click "Done selecting"
+
