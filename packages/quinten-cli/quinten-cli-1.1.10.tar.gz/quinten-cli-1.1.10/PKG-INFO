@@ -1,0 +1,45 @@
+Metadata-Version: 2.1
+Name: quinten-cli
+Version: 1.1.10
+Author-email: Quinten Roets <qdr2104@columbia.edu>
+License: MIT
+Project-URL: Source Code, https://github.com/quintenroets/cli
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: python-dotenv
+Requires-Dist: rich
+Requires-Dist: sh
+Requires-Dist: superpathlib
+Provides-Extra: dev
+Requires-Dist: pre-commit; extra == "dev"
+Requires-Dist: twine; extra == "dev"
+Provides-Extra: test
+Requires-Dist: pytest; extra == "test"
+
+# Cli
+
+Package with utilities to interact with the command line interface:
+* Output interactions
+* Input interactions
+* Running processes
+
+## Installation
+
+```shell
+pip install quinten-cli
+```
+
+## Usage
+Use 
+
+```shell
+import cli
+```
+instead of
+
+```shell
+import subprocess
+```
+
+to run processes
