@@ -1,0 +1,39 @@
+# serializer version: 1
+# name: test_parse_output
+  Receipt(amount=1.0, currency='USD', customer='John Doe')
+# ---
+# name: test_pydantic_parser_get_format_instructions
+  '''
+  - The output should be formatted as a JSON instance that conforms to the JSON schema below.
+  
+  - As an example, for the schema {"properties": {"foo": {"title": "Foo", "description": "a list of strings", "type": "array", "items": {"type": "string"}}}, "required": ["foo"]}}
+  the object {"foo": ["bar", "baz"]} is a well-formatted instance of the schema. The object {"properties": {"foo": ["bar", "baz"]}} is not well-formatted.
+  
+  - Here is the output schema:
+  ```
+  {"description": "The Receipt for user", "properties": {"amount": {"title": "Amount", "type": "number"}, "currency": {"title": "Currency", "description": "ISO 4217 currency code", "type": "string"}, "customer": {"title": "Customer", "type": "string"}}, "required": ["amount", "currency", "customer"]}
+  ```
+  '''
+# ---
+# name: test_pydantic_parser_with_prompt[email.txt-Email][gpt response]
+  Email(subject='RIVERTON Industries - Revolutionizing the Aluminum Casting Industry for E-Bikes', body="Dear [Recipient's Name],\n\nI am writing to inform you about RIVERTON Industries, a leading manufacturer and exporter of aluminum casting products for E-Bikes. Our company, established in 2022, has quickly gained a reputation for its innovative approach to aluminum frame manufacturing.\n\nAt RIVERTON Industries, we offer one-stop solutions for customized bike frames, which include designing, manufacturing, and assembly services. We specialize in aluminum frames built specifically for E-bikes and provide modular features for multiple modeling combinations.\n\nOur main product, the Aluminum frame for E-bike, is available in three models - 001, 002, and 003. However, we can also customize frames according to our customers' requirements. The one-piece-formed bike frame provides increased rigidity, improving the stability and safety of the ride. Our solid aluminum frames built-in supports complex designs for electric bikes.\n\nAlong with Aluminum frames for E-bikes, we also offer Electric bike frames, Aluminum motor frames for E-bikes, Motor frames for E-bikes, and Customized Motor frames for E-bikes. Our commitment to quality has earned us a reputation for producing high-quality aluminum frames that meet international standards.\n\nWe are proud to announce that RIVERTON Industries exports its products to Europe and the USA. Our dedication to customer satisfaction and specialized services tailored to their requirements has made us a popular choice among customers.\n\nIf you're looking for high-quality aluminum frames for your E-bikes, we invite you to visit our website at [Insert website URL]. Feel free to contact us for any inquiries or to discuss customized options.\n\nThank you for your attention.\n\nBest regards,\n[Your Name]\nRIVERTON Industries")
+# ---
+# name: test_pydantic_parser_with_prompt[email.txt-Email][instructoin]
+  '''
+  Given the press release article of our company: "RIVERTON Industries - Revolutionizing the Aluminum Casting Industry for E-Bikes
+  
+  RIVERTON Industries is a leading manufacturer and exporter of aluminum casting products for E-Bikes. Established in 2022, the company has quickly gained a reputation for its innovative approach to aluminum frame manufacturing. We offer one-stop solutions for customized bike frames, which include designing, manufacturing, and assembly services.
+  
+  ### About RIVERTON Industries
+  RIVERTON Industries is an innovative international company specializing in aluminum casting products for E-Bikes. The company is committed to providing innovative aluminum frames built for bicycles and modular features for multiple modeling combinations. We offer ready-to-use products and vehicle assembly services that meet customer satisfaction and provide specialized services tailored to their requirements.
+  
+  RIVERTON Industries is revolutionizing the aluminum casting industry for E-bikes. Our main product, the Aluminum frame for E-bike, is available in three models - 001, 002, and 003 but more could be customized. The one-piece-formed bike frame provides increased rigidity, improving the stability and safety of the ride. The solid frame made of aluminum pipeline built-in supports complex designs for electric bikes.
+  
+  Our one-stop solution for customized bike frames has made us a popular choice among customers. We offer a range of products, including the Electric bike frame, Aluminum motor frames for E-bikes, Motor frames for E-bikes, and Customized Motor frames for E-bikes.
+  
+  RIVERTON Industries exports its products to Europe and the USA. Our commitment to quality has earned us a reputation for producing high-quality aluminum frames that meet international standards.
+  
+  In conclusion, RIVERTON Industries is a company that is revolutionizing the aluminum casting industry for E-bikes. Our innovative approach to manufacturing aluminum frames and one-stop solutions for customized bike frames has made us a popular choice among customers. If you're looking for high-quality aluminum frames for your E-bikes, visit our website at https://riverton.example.com/."
+  
+  '''
+# ---
