@@ -1,0 +1,35 @@
+Metadata-Version: 2.1
+Name: the_weather
+Version: 1.4.1
+Summary: Package for getting weather data based on a zipcode
+Home-page: https://github.com/michaelMondoro/the_weather
+Author: Michael Mondoro
+Author-email: michaelmondoro@gmail.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+[![Generic badge](https://img.shields.io/badge/Licence-MIT-blue.svg)](https://shields.io/)
+[![Generic badge](https://img.shields.io/badge/Maintained-yes-green.svg)](https://shields.io/)
+[![Generic badge](https://img.shields.io/badge/Python-3.7-yellow.svg)](https://shields.io/)
+[![Generic badge](https://img.shields.io/badge/the_weather-1.4.1-red.svg)](https://pypi.org/project/the-weather/)
+
+## Package
+Package for getting weather data using a zipcode
+
+## Usage
+```python
+from the_weather import *
+
+weather = Weather(22025)
+
+d = weather.daily_forecast("2023-09-17")
+print(d[0])
+
+# Output
+Sunday 2023-09-17 [05:00 PM] - 19° 50: Scattered Showers
+
+```
