@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=64.0"] # editable install using setuptool available since v64.0.0
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tdfl"
+version = "0.1.8"
+description = "Lightweight DataFrame with native torch.Tensor support."
+readme = "README.md"
+requires-python = ">=3.9" # package developed with python v3.9.16
+license = {file = "LICENSE"}
+authors = [
+    {name = "Ho Yin Chau"},
+]
+keywords = ["PyTorch", "torch", "pandas", "DataFrame", "SQLite", "sqlite3"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.9",
+]
+dependencies = [
+    'numpy>=1.23',
+    'torch',
+    'pandas',
+    'addict',
+    'beautifulsoup4',
+    'hyclib>=0.1.24',
+]
+
+[project.urls]
+repository = "https://github.com/hchau630/tdfl"
+
+[tool.pytest.ini_options]
+env = [
+    "PYTORCH_ENABLE_MPS_FALLBACK=1",  # due to torch.bucketize currently not supporting MPS (as of torch 2.0.1)
+]
