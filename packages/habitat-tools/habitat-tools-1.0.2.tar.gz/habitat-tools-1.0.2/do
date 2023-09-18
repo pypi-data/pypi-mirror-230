@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+
+source .env
+set -eo pipefail
+
+ROOT="$(cd "$(dirname "$0")"; pwd -P)"
+PYVER="$(python -c 'import sys; print("py" + str(sys.version_info[0]))')"
+
+# Create VENV
+VIRTUAL_ENV="${VIRTUAL_ENV:-$ROOT/venv}"
+VENV_COMMAND="python -m venv $VIRTUAL_ENV"
+
+# Activate VENV
+PATH="$VIRTUAL_ENV/bin:$PATH"
+
+if [ ! -e "$VIRTUAL_ENV/bin/python" ]
+then
+    bash -c "$VENV_COMMAND"
+    pip install -U pip pip-tools
+fi
+
+# Setup functions
+function setup() {
+    prepare
+    install
+}
+
+function prepare() {
+    pip-compile "requirements/requirements.in" --output-file="requirements/requirements.txt"
+    pip-compile "requirements/requirements-dev.in" --output-file="requirements/requirements-dev.txt"
+}
+
+function install() {
+    pip-sync "requirements/requirements.txt" "requirements/requirements-dev.txt"
+    # Think we need to do this here as we are running modules such as seeder separately
+    pip install -e $ROOT
+}
+
+function clean() {
+    rm -rf "$VIRTUAL_ENV"
+    rm -rf "$ROOT/dist"
+    rm -rf "$ROOT/requirements/requirements.txt"
+    rm -rf "$ROOT/requirements/requirements-dev.txt"
+}
+
+function build_sdist() {
+    python setup.py sdist
+}
+
+function deploy() {
+    if [ ! -d "$ROOT/dist" ]
+    then
+        build_sdist
+    fi
+
+    twine upload "$ROOT/dist/*"
+}
+
+
+if [ ! -e "$ROOT/requirements/requirements.txt" ]
+then
+    prepare
+fi
+
+NAME=$(python setup.py --name)
+VERSION=$(python setup.py --version)
+
+printf "$NAME ($VERSION)\n"
+printf "Interpreter $PYVER: $(which python)\n\n"
+
+
+function usage() {
+    echo "Usage: $0 <setup|clean|build-sdist|deploy>"
+}
+
+# Entrypoints
+case "$1" in
+    "setup")
+        setup
+        ;;
+    "clean")
+        clean
+        ;;
+    "build-sdist")
+        build_sdist
+        ;;
+    "deploy")
+        deploy
+        ;;
+    *)
+        usage
+        ;;
+esac
