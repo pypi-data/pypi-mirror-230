@@ -1,0 +1,167 @@
+Metadata-Version: 2.1
+Name: geniusrise-prompt-actions
+Version: 0.1.0
+Summary: listeners bolts for geniusrise
+Home-page: https://github.com/geniusrise/geniusrise-prompt-actions
+Author: ixaxaar
+Author-email: ixaxaar@geniusrise.ai
+Project-URL: Bug Reports, https://github.com/geniusrise/geniusrise-prompt-actions/issues
+Project-URL: Source, https://github.com/geniusrise/geniusrise-prompt-actions
+Project-URL: Documentation, https://docs.geniusrise.ai/
+Keywords: mlops,llm,geniusrise,machine learning,data processing
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: License :: OSI Approved :: GNU Affero General Public License v3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: annotated-types (==0.5.0)
+Requires-Dist: ansicolors (==1.1.8)
+Requires-Dist: argparse-color-formatter (==1.2.2.post2)
+Requires-Dist: async-timeout (==4.0.3)
+Requires-Dist: black (==23.7.0)
+Requires-Dist: bleach (==6.0.0)
+Requires-Dist: boto3 (==1.28.25)
+Requires-Dist: botocore (==1.31.25)
+Requires-Dist: build (==0.10.0)
+Requires-Dist: cachetools (==5.3.1)
+Requires-Dist: certifi (==2023.7.22)
+Requires-Dist: cffi (==1.15.1)
+Requires-Dist: charset-normalizer (==3.2.0)
+Requires-Dist: click (==8.1.7)
+Requires-Dist: colorama (==0.4.6)
+Requires-Dist: colorlog (==6.7.0)
+Requires-Dist: coverage (==7.3.0)
+Requires-Dist: cryptography (==41.0.3)
+Requires-Dist: direnv (==2020.12.3)
+Requires-Dist: docutils (==0.20.1)
+Requires-Dist: emoji (==2.7.0)
+Requires-Dist: env-file (==2020.12.3)
+Requires-Dist: exceptiongroup (==1.1.2)
+Requires-Dist: flake8 (==6.1.0)
+Requires-Dist: geniusrise (==0.0.3)
+Requires-Dist: google-auth (==2.17.3)
+Requires-Dist: idna (==3.4)
+Requires-Dist: importlib-metadata (==6.8.0)
+Requires-Dist: iniconfig (==2.0.0)
+Requires-Dist: jaraco.classes (==3.3.0)
+Requires-Dist: jeepney (==0.8.0)
+Requires-Dist: jmespath (==0.10.0)
+Requires-Dist: jsonpickle (==3.0.1)
+Requires-Dist: kafka-python (==2.0.2)
+Requires-Dist: keyring (==24.2.0)
+Requires-Dist: kubernetes (==27.2.0)
+Requires-Dist: markdown-it-py (==3.0.0)
+Requires-Dist: mccabe (==0.7.0)
+Requires-Dist: mdurl (==0.1.2)
+Requires-Dist: more-itertools (==10.1.0)
+Requires-Dist: mypy (==1.5.0)
+Requires-Dist: mypy-extensions (==1.0.0)
+Requires-Dist: oauthlib (==3.2.2)
+Requires-Dist: packaging (==23.1)
+Requires-Dist: pathspec (==0.11.2)
+Requires-Dist: pkginfo (==1.9.6)
+Requires-Dist: platformdirs (==3.10.0)
+Requires-Dist: pluggy (==1.2.0)
+Requires-Dist: prettytable (==3.8.0)
+Requires-Dist: prometheus-client (==0.17.1)
+Requires-Dist: psutil (==5.9.5)
+Requires-Dist: psycopg2 (==2.9.7)
+Requires-Dist: pyasn1 (==0.5.0)
+Requires-Dist: pyasn1-modules (==0.3.0)
+Requires-Dist: pycodestyle (==2.11.0)
+Requires-Dist: pycparser (==2.21)
+Requires-Dist: pydantic (==2.1.1)
+Requires-Dist: pydantic-core (==2.4.0)
+Requires-Dist: pyflakes (==3.1.0)
+Requires-Dist: Pygments (==2.16.1)
+Requires-Dist: pyproject-hooks (==1.0.0)
+Requires-Dist: pytest (==7.4.0)
+Requires-Dist: python-dateutil (==2.8.2)
+Requires-Dist: PyYAML (==6.0.1)
+Requires-Dist: readme-renderer (==40.0)
+Requires-Dist: redis (==4.6.0)
+Requires-Dist: requests (==2.31.0)
+Requires-Dist: requests-oauthlib (==1.3.1)
+Requires-Dist: requests-toolbelt (==1.0.0)
+Requires-Dist: retrying (==1.3.4)
+Requires-Dist: rfc3986 (==2.0.0)
+Requires-Dist: rich (==13.5.2)
+Requires-Dist: rich-argparse (==1.3.0)
+Requires-Dist: rsa (==4.9)
+Requires-Dist: s3transfer (==0.6.1)
+Requires-Dist: SecretStorage (==3.3.3)
+Requires-Dist: shortuuid (==1.0.11)
+Requires-Dist: six (==1.16.0)
+Requires-Dist: termcolor (==2.3.0)
+Requires-Dist: tomli (==2.0.1)
+Requires-Dist: twine (==4.0.2)
+Requires-Dist: typing-extensions (==4.7.1)
+Requires-Dist: urllib3 (==1.26.16)
+Requires-Dist: values (==2020.12.3)
+Requires-Dist: wcwidth (==0.2.6)
+Requires-Dist: webencodings (==0.5.1)
+Requires-Dist: websocket-client (==1.6.1)
+Requires-Dist: zipp (==3.16.2)
+Provides-Extra: dev
+Requires-Dist: check-manifest ; extra == 'dev'
+Provides-Extra: test
+Requires-Dist: coverage ; extra == 'test'
+
+![banner](./assets/banner.jpg)
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+# Database Spouts
+
+This is a collection of generic batch spouts for various databases.
+
+Includes:
+
+| No. | Name                                                       | Description                         | Output Type | Input Type          |
+| --- | ---------------------------------------------------------- | ----------------------------------- | ----------- | ------------------- |
+| 1   | [HBase](geniusrise_databases/hbase.py)                     | Batch spout for HBase               | Batch       | HBase               |
+| 2   | [PostgreSQL](geniusrise_databases/postgres.py)             | Batch spout for PostgreSQL          | Batch       | PostgreSQL          |
+| 3   | [MySQL](geniusrise_databases/mysql.py)                     | Batch spout for MySQL               | Batch       | MySQL               |
+| 4   | [MongoDB](geniusrise_databases/mongodb.py)                 | Batch spout for MongoDB             | Batch       | MongoDB             |
+| 5   | [Cassandra](geniusrise_databases/cassandra.py)             | Batch spout for Cassandra           | Batch       | Cassandra           |
+| 6   | [Redis](geniusrise_databases/redis.py)                     | Batch spout for Redis               | Batch       | Redis               |
+| 7   | [Elasticsearch](geniusrise_databases/elasticsearch.py)     | Batch spout for Elasticsearch       | Batch       | Elasticsearch       |
+| 8   | [Oracle](geniusrise_databases/oracle.py)                   | Batch spout for Oracle              | Batch       | Oracle              |
+| 9   | [SQL Server](geniusrise_databases/sql_server.py)           | Batch spout for SQL Server          | Batch       | SQL Server          |
+| 10  | [SQLite](geniusrise_databases/sqlite.py)                   | Batch spout for SQLite              | Batch       | SQLite              |
+| 11  | [Neo4j](geniusrise_databases/neo4j.py)                     | Batch spout for Neo4j               | Batch       | Neo4j               |
+| 12  | [Bigtable](geniusrise_databases/bigtable.py)               | Batch spout for Bigtable            | Batch       | Bigtable            |
+| 13  | [DynamoDB](geniusrise_databases/dynamodb.py)               | Batch spout for DynamoDB            | Batch       | DynamoDB            |
+| 14  | [Azure Table Storage](geniusrise_databases/azure_table.py) | Batch spout for Azure Table Storage | Batch       | Azure Table Storage |
+| 15  | [Couchbase](geniusrise_databases/couchbase.py)             | Batch spout for Couchbase           | Batch       | Couchbase           |
+| 16  | [InfluxDB](geniusrise_databases/influxdb.py)               | Batch spout for InfluxDB            | Batch       | InfluxDB            |
+| 17  | [TimescaleDB](geniusrise_databases/timescaledb.py)         | Batch spout for TimescaleDB         | Batch       | TimescaleDB         |
+| 18  | [Teradata](geniusrise_databases/teradata.py)               | Batch spout for Teradata            | Batch       | Teradata            |
+| 19  | [TiDB](geniusrise_databases/tidb.py)                       | Batch spout for TiDB                | Batch       | TiDB                |
+| 20  | [Voltdb](geniusrise_databases/voltdb.py)                   | Batch spout for Voltdb              | Batch       | Voltdb              |
+| 21  | [Sybase](geniusrise_databases/sybase.py)                   | Batch spout for Sybase              | Batch       | Sybase              |
+| 22  | [DB2](geniusrise_databases/db2.py)                         | Batch spout for DB2                 | Batch       | DB2                 |
+| 23  | [Presto](geniusrise_databases/presto.py)                   | Batch spout for Presto              | Batch       | Presto              |
+| 24  | [Riak](geniusrise_databases/riak.py)                       | Batch spout for Riak                | Batch       | Riak                |
+| 25  | [MemSQL](geniusrise_databases/memsql.py)                   | Batch spout for MemSQL              | Batch       | MemSQL              |
+| 26  | [LDAP](geniusrise_databases/ldap.py)                       | Batch spout for LDAP                | Batch       | LDAP                |
+| 27  | [KeySpaces](geniusrise_databases/keyspaces.py)             | Batch spout for KeySpaces           | Batch       | KeySpaces           |
+| 28  | [KairosDB](geniusrise_databases/kairosdb.py)               | Batch spout for KairosDB            | Batch       | KairosDB            |
+| 29  | [Graphite](geniusrise_databases/graphite.py)               | Batch spout for Graphite            | Batch       | Graphite            |
+| 30  | [FireStore](geniusrise_databases/firestore.py)             | Batch spout for FireStore           | Batch       | FireStore           |
+| 31  | [DocumentDB](geniusrise_databases/documentdb.py)           | Batch spout for DocumentDB          | Batch       | DocumentDB          |
+| 32  | [Cockroach](geniusrise_databases/cockroach.py)             | Batch spout for Cockroach           | Batch       | Cockroach           |
+| 33  | [Cloud SQL](geniusrise_databases/cloud_sql.py)             | Batch spout for Cloud SQL           | Batch       | Cloud SQL           |
+| 34  | [CosmosDB](geniusrise_databases/cosmosdb.py)               | Batch spout for CosmosDB            | Batch       | CosmosDB            |
+| 35  | [Athena](geniusrise_databases/athena.py)                   | Batch spout for Athena              | Batch       | Athena              |
+| 36  | [ArangoDB](geniusrise_databases/arangodb.py)               | Batch spout for ArangoDB            | Batch       | ArangoDB            |
+| 37  | [Nuodb](geniusrise_databases/nuodb.py)                     | Batch spout for Nuodb               | Batch       | Nuodb               |
+| 38  | [OpenTSDB](geniusrise_databases/opentsdb.py)               | Batch spout for OpenTSDB            | Batch       | OpenTSDB            |
+| 39  | [OpenTSDB](geniusrise_databases/vertica.py)                | Batch spout for Vertica             | Batch       | Vertica             |
+| 40  | [OpenTSDB](geniusrise_databases/bigquery.py)               | Batch spout for Google Bigquery     | Batch       | Bigquery            |
+| 41  | [Spanner](geniusrise_databases/spanner.py)                 | Batch spout for Google Spanner      | Batch       | Spanner             |
