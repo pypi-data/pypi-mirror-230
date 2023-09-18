@@ -1,0 +1,214 @@
+Metadata-Version: 2.1
+Name: geniusrise
+Version: 0.0.9
+Summary: An LLM framework
+Home-page: https://github.com/geniusrise/geniusrise
+Author: Geniusrise
+Author-email: ixaxaar@geniusrise.ai
+Project-URL: Bug Reports, https://github.com/geniusrise/geniusrise/issues
+Project-URL: Source, https://github.com/geniusrise/geniusrise
+Project-URL: Documentation, https://docs.geniusrise.ai/
+Keywords: mlops,llm,geniusrise,machine learning,data processing
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: License :: OSI Approved :: GNU Affero General Public License v3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: annotated-types (==0.5.0)
+Requires-Dist: ansicolors (==1.1.8)
+Requires-Dist: argparse-color-formatter (==1.2.2.post2)
+Requires-Dist: async-timeout (==4.0.3)
+Requires-Dist: black (==23.7.0)
+Requires-Dist: bleach (==6.0.0)
+Requires-Dist: boto3 (==1.28.25)
+Requires-Dist: botocore (==1.31.25)
+Requires-Dist: build (==0.10.0)
+Requires-Dist: cachetools (==5.3.1)
+Requires-Dist: certifi (==2023.7.22)
+Requires-Dist: cffi (==1.15.1)
+Requires-Dist: charset-normalizer (==3.2.0)
+Requires-Dist: click (==8.1.7)
+Requires-Dist: colorama (==0.4.6)
+Requires-Dist: colorlog (==6.7.0)
+Requires-Dist: coverage (==7.3.0)
+Requires-Dist: cryptography (==41.0.3)
+Requires-Dist: direnv (==2020.12.3)
+Requires-Dist: docutils (==0.20.1)
+Requires-Dist: emoji (==2.7.0)
+Requires-Dist: env-file (==2020.12.3)
+Requires-Dist: exceptiongroup (==1.1.2)
+Requires-Dist: flake8 (==6.1.0)
+Requires-Dist: google-auth (==2.17.3)
+Requires-Dist: GPUtil (==1.4.0)
+Requires-Dist: idna (==3.4)
+Requires-Dist: importlib-metadata (==6.8.0)
+Requires-Dist: iniconfig (==2.0.0)
+Requires-Dist: jaraco.classes (==3.3.0)
+Requires-Dist: jeepney (==0.8.0)
+Requires-Dist: jmespath (==0.10.0)
+Requires-Dist: jsonpickle (==3.0.1)
+Requires-Dist: kafka-python (==2.0.2)
+Requires-Dist: keyring (==24.2.0)
+Requires-Dist: kubernetes (==27.2.0)
+Requires-Dist: markdown-it-py (==3.0.0)
+Requires-Dist: mccabe (==0.7.0)
+Requires-Dist: mdurl (==0.1.2)
+Requires-Dist: more-itertools (==10.1.0)
+Requires-Dist: mypy (==1.5.0)
+Requires-Dist: mypy-extensions (==1.0.0)
+Requires-Dist: oauthlib (==3.2.2)
+Requires-Dist: packaging (==23.1)
+Requires-Dist: pathspec (==0.11.2)
+Requires-Dist: pkginfo (==1.9.6)
+Requires-Dist: platformdirs (==3.10.0)
+Requires-Dist: pluggy (==1.2.0)
+Requires-Dist: prettytable (==3.8.0)
+Requires-Dist: prometheus-client (==0.17.1)
+Requires-Dist: psutil (==5.9.5)
+Requires-Dist: psycopg2 (==2.9.7)
+Requires-Dist: pyasn1 (==0.5.0)
+Requires-Dist: pyasn1-modules (==0.3.0)
+Requires-Dist: pycodestyle (==2.11.0)
+Requires-Dist: pycparser (==2.21)
+Requires-Dist: pydantic (==2.1.1)
+Requires-Dist: pydantic-core (==2.4.0)
+Requires-Dist: pyflakes (==3.1.0)
+Requires-Dist: Pygments (==2.16.1)
+Requires-Dist: pyproject-hooks (==1.0.0)
+Requires-Dist: pytest (==7.4.0)
+Requires-Dist: python-dateutil (==2.8.2)
+Requires-Dist: PyYAML (==6.0.1)
+Requires-Dist: readme-renderer (==40.0)
+Requires-Dist: redis (==4.6.0)
+Requires-Dist: requests (==2.31.0)
+Requires-Dist: requests-oauthlib (==1.3.1)
+Requires-Dist: requests-toolbelt (==1.0.0)
+Requires-Dist: retrying (==1.3.4)
+Requires-Dist: rfc3986 (==2.0.0)
+Requires-Dist: rich (==13.5.2)
+Requires-Dist: rich-argparse (==1.3.0)
+Requires-Dist: rsa (==4.9)
+Requires-Dist: s3transfer (==0.6.1)
+Requires-Dist: SecretStorage (==3.3.3)
+Requires-Dist: shortuuid (==1.0.11)
+Requires-Dist: six (==1.16.0)
+Requires-Dist: termcolor (==2.3.0)
+Requires-Dist: tomli (==2.0.1)
+Requires-Dist: twine (==4.0.2)
+Requires-Dist: typing-extensions (==4.7.1)
+Requires-Dist: urllib3 (==1.26.16)
+Requires-Dist: values (==2020.12.3)
+Requires-Dist: wcwidth (==0.2.6)
+Requires-Dist: webencodings (==0.5.1)
+Requires-Dist: websocket-client (==1.6.1)
+Requires-Dist: zipp (==3.16.2)
+Provides-Extra: dev
+Requires-Dist: check-manifest ; extra == 'dev'
+Provides-Extra: test
+Requires-Dist: coverage ; extra == 'test'
+
+<p align="center">
+  <img src="./assets/grace-hopper.jpg" alt="Grace Hopper" width="900"/>
+</p>
+
+<h1 align="center">
+  🧠 <span style="color:#f34960">Geniusrise</span>
+</h1>
+
+<p align="center">
+  <img src="https://img.shields.io/github/actions/workflow/status/geniusrise/geniusrise/pytest.yml?branch=master" alt="GitHub Workflow Status"/>
+  <img src="https://codecov.io/gh/geniusrise/geniusrise/branch/main/graph/badge.svg?token=0b359b3a-f29c-4966-9661-a79386b3450d" alt="Codecov"/>
+  <img src="https://img.shields.io/github/license/geniusrise/geniusrise" alt="Codecov"/>
+  <img src="https://img.shields.io/github/issues/geniusrise/geniusrise" alt="Codecov"/>
+</p>
+
+---
+
+## <span style="color:#e667aa">About</span>
+
+<span style="color:#e4e48c">Geniusrise</span> is a modular, loosely-coupled
+AgentOps / MLOps framework designed for the era of Large Language Models,
+offering flexibility, inclusivity, and standardization in designing networks of
+AI agents.
+
+It seamlessly integrates tasks, state management, data handling, and model
+versioning, all while supporting diverse infrastructures and user expertise
+levels. With its plug-and-play architecture,
+<span style="color:#e4e48c">Geniusrise</span> empowers teams to build, share,
+and deploy AI agent workflows across various platforms efficiently.
+
+## <span style="color:#e667aa">TLDR 🙄</span>
+
+### 1. Install geniusrise
+
+```bash
+pip install geniusrise
+pip install geniusrise-huggingface
+```
+
+### 2. Create genius.yaml
+
+```yaml
+version: '1'
+bolts:
+  HuggingFaceInstructionTuningBolt:
+    name: 'hf-fine-tune-my-shit'
+    method: fine_tune
+    args:
+      model_name: bert-base-uncased
+      tokenizer_name: bert-base-uncased
+      batches: 2
+      hf_repo_id: my/repo
+      token: 'hf_woohoo'
+      commit_message: say hello to genius!
+    input:
+      type: batch
+      args:
+        bucket: geniusrise-test
+        folder: my-shit
+    output:
+      type: batch
+      args:
+        bucket: geniusrise-test
+        folder: my-model
+    deploy:
+      type: 'k8s'
+      args:
+        cluster_name: my-cluster
+        namespace: geniusrise-huggingface
+        labels: { 'needs': 'gpu' }
+        cpu: 16
+        memory: 50G
+        storage: 250Gb
+        gpu: 1
+```
+
+### 3. Copy data to s3
+
+```bash
+cat > data.jsonl <<- EOM
+{"instruction": "instruction1", "output":"output1"}
+{"instruction": "instruction2", "output":"output2"}
+EOM
+
+aws s3 cp data.jsonl s3://geniusrise-test/my-shit/
+```
+
+### 4. Fine tune
+
+```bash
+genius --yaml genius.yaml deploy
+```
+
+🙄 This was not even crux of the iceberg. Please see docs.
+
+## <span style="color:#e667aa">Links</span>
+
+- **Website**: [geniusrise.ai](https://geniusrise.ai)
+- **Docs**: [docs.geniusrise.ai](https://docs.geniusrise.ai)
+- **Hub**: [geniusrise.com](https://geniusrise.com) [coming soon]
