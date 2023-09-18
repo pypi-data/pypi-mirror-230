@@ -1,0 +1,60 @@
+[project]
+name = "fava-envelope"
+version = "0.5.8"
+description = ""
+readme = "README.md"
+keywords = [
+    "fava",
+    "budget",
+    "envelope",
+]
+authors = [
+    { email = "me@brianryall.xyz" },
+    { name = "Brian Ryall" },
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+]
+dependencies = [
+    "fava>=1.26",
+    "pandas>=2.0.3",
+]
+requires-python = ">=3.8"
+
+[project.license]
+text = "MIT"
+
+[project.urls]
+homepage = "https://github.com/polarmutex/fava-envelope"
+documentation = "https://github.com/polarmutex/fava-envelope"
+repository = "https://github.com/polarmutex/fava-envelope"
+changelog = "https://github.com/polarmutex/fava-envelope/master/CHANGELOG.md"
+
+[build-system]
+requires = [
+    "pdm-backend",
+]
+build-backend = "pdm.backend"
+
+[tool.pdm.build]
+excludes = [
+    "./**/.git",
+]
+package-dir = "src"
+includes = [
+    "src/fava_envelope",
+]
+editable-backend = "path"
+
+[tool.setuptools.packages.find]
+where = [
+    "src",
+]
+
+[tool.black]
+line-length = 79
