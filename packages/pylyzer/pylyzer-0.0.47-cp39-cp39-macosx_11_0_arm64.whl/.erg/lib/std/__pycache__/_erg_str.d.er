@@ -1,0 +1,35 @@
+##[pylyzer] failed /users/shiba/documents/github/erg/crates/erg_compiler/lib/std/_erg_str.py 1689011296 2378
+.___v_desugar_1 = pyimport "_erg_result"
+.Error: {_erg_result.Error}
+.___v_desugar_2 = pyimport "_erg_int"
+.Int: {_erg_int.Int}
+.___v_desugar_3 = pyimport "_erg_control"
+.then__: |E :> {None}|(x: E, f: (E) -> E) -> E
+.Str: ClassType
+.Str <: Str
+.Str.__instancecheck__: (cls: Obj, obj: Obj) -> Bool
+.Str.try_new: (s: Str) -> _erg_result.Error
+.Str.get: (self: .Str, i: Int) -> {None}
+.Str.mutate: |Type_45: Type|(self: .Str) -> Type_45
+.Str.to_int: |T: Type, U :> {None}|(self: .Str) -> T or U
+.Str.contains: |Type_52: Type, Type_51: Type|(self: .Str, s: Type_51) -> Type_52
+.Str.__add__: |Type_55: Type|(self: .Str, other: Type_55) -> {None}
+.Str.__radd__: |Type_59: Type|(self: .Str, other: Type_59) -> {None}
+.Str.__mul__: |Type_63: Type|(self: .Str, other: Type_63) -> {None}
+.Str.__mod__: |Type_67: Type|(self: .Str, other: Type_67) -> {None}
+
+.StrMut: ClassType
+.StrMut.value: .Str
+.StrMut.__call__: (value: Obj) -> .StrMut
+.StrMut.__repr__: (self: .StrMut) -> Str
+.StrMut.__str__: (self: .StrMut) -> Str
+.StrMut.__hash__: (self: .StrMut) -> Never
+.StrMut.__eq__: |E :> .Str, Type_97 <: Structural({.value = E})|(self: .StrMut, other: Type_97) -> Bool
+.StrMut.__ne__: |E :> .Str, Type_101 <: Structural({.value = E})|(self: .StrMut, other: Type_101) -> Bool
+.StrMut.try_new: (s: Str) -> _erg_result.Error
+.StrMut.clear: (self: .StrMut) -> NoneType
+.StrMut.pop: (self: .StrMut) -> _erg_result.Error
+.StrMut.push: (self: .StrMut, s: Str) -> NoneType
+.StrMut.remove: |V: Type|(self: .StrMut, idx: Int) -> V
+.StrMut.insert: (self: .StrMut, idx: Int, s: Str) -> NoneType
+

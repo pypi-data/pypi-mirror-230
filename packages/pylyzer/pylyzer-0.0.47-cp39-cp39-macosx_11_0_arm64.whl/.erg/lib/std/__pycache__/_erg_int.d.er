@@ -1,0 +1,54 @@
+##[pylyzer] failed /users/shiba/documents/github/erg/crates/erg_compiler/lib/std/_erg_int.py 1694540105 4186
+.___v_desugar_1 = pyimport "_erg_result"
+.Error: {_erg_result.Error}
+.___v_desugar_2 = pyimport "_erg_control"
+.then__: |E :> {None}|(x: E, f: (E) -> E) -> E
+.Int: ClassType
+.Int <: Int
+.Int.try_new: (i: Obj) -> Float
+.Int.bit_count: (self: .Int) -> Nat
+.Int.succ: (self: .Int) -> Float
+.Int.pred: (self: .Int) -> Float
+.Int.mutate: (self: Never) -> .IntMut
+.Int.__add__: (self: .Int, other: Float) -> {None}
+.Int.__radd__: (self: .Int, other: Float) -> {None}
+.Int.__sub__: (self: .Int, other: Float) -> {None}
+.Int.__rsub__: (self: .Int, other: Float) -> {None}
+.Int.__mul__: (self: .Int, other: Float) -> {None}
+.Int.__rmul__: (self: .Int, other: Float) -> {None}
+.Int.__div__: (self: .Int, other: Float) -> {None}
+.Int.__rdiv__: (self: .Int, other: Float) -> {None}
+.Int.__floordiv__: (self: .Int, other: Float) -> {None}
+.Int.__rfloordiv__: (self: .Int, other: Float) -> {None}
+.Int.__pow__: (self: .Int, other: Obj) -> {None}
+.Int.__rpow__: (self: .Int, other: Obj) -> {None}
+.Int.__pos__: |Type_71 <: .Int|(self: Type_71) -> Type_71
+.Int.__neg__: (self: .Int) -> {None}
+
+.IntMut: ClassType
+.IntMut.value: .Int
+.IntMut.__call__: (value: Obj) -> .IntMut
+.IntMut.__int__: |Type_110 <: Structural({.value = Type_183}), Type_183 <: Float|(self: Type_110) -> Int
+.IntMut.__repr__: |Type_113 <: Structural({.value = Type_185}), Type_185: Type|(self: Type_113) -> Str
+.IntMut.__hash__: |Self <: Hash, Type_116 <: Structural({.value = Self})|(self: Type_116) -> Int
+.IntMut.__eq__: |Type_119 <: Structural({.value = E}), E: Type|(self: Type_119, other: Structural({.value = E})) -> Bool
+.IntMut.__ne__: |E: Type, Type_123 <: Structural({.value = E})|(self: Type_123, other: Structural({.value = E})) -> Bool
+.IntMut.__le__: |Type_201 <: Structural({.__le__ = (self: Never, R) -> Bool}), Type_127 <: Structural({.value = Type_201}), R: Type|(self: Type_127, other: Structural({.value = R})) -> Bool
+.IntMut.__ge__: |Type_206 <: Structural({.__ge__ = (self: Never, R) -> Bool}), R: Type, Type_131 <: Structural({.value = Type_206})|(self: Type_131, other: Structural({.value = R})) -> Bool
+.IntMut.__lt__: |Type_135 <: Structural({.value = Type_211}), Type_211 <: Structural({.__lt__ = (self: Never, R) -> Bool}), R: Type|(self: Type_135, other: Structural({.value = R})) -> Bool
+.IntMut.__gt__: |Type_139 <: Structural({.value = Type_216}), Type_216 <: Structural({.__gt__ = (self: Never, R) -> Bool}), R: Type|(self: Type_139, other: Structural({.value = R})) -> Bool
+.IntMut.__add__: |Type_221 <: Structural({.__add__ = (self: Never, R) -> O}), Type_143 <: Structural({.value = Type_221}), R: Type, O: Type|(self: Type_143, other: Structural({.value = R})) -> .IntMut
+.IntMut.__sub__: |Type_147 <: Structural({.value = Type_226}), Type_226 <: Structural({.__sub__ = (self: Never, R) -> O}), R: Type, O: Type|(self: Type_147, other: Structural({.value = R})) -> .IntMut
+.IntMut.__mul__: |R: Type, O: Type, Type_231 <: Structural({.__mul__ = (self: Never, R) -> O}), Type_151 <: Structural({.value = Type_231})|(self: Type_151, other: Structural({.value = R})) -> .IntMut
+.IntMut.__floordiv__: |Type_155 <: Structural({.value = Type_236}), Type_236 <: Structural({.__floordiv__ = (self: Never, R) -> O}), R: Type, O: Type|(self: Type_155, other: Structural({.value = R})) -> .IntMut
+.IntMut.__pow__: |Type_241 <: Structural({.__pow__ = (self: Never, R) -> O}), R: Type, Type_159 <: Structural({.value = Type_241}), O: Type|(self: Type_159, other: Structural({.value = R})) -> .IntMut
+.IntMut.__pos__: |Type_163 <: .IntMut|(self: Type_163) -> Type_163
+.IntMut.__neg__: |Type_245 <: Structural({.__neg__ = (self: Never) -> R}), R: Type, Type_166 <: Structural({.value = Type_245})|(self: Type_166) -> .IntMut
+.IntMut.inc: |Type_249 <: Structural({.__add__ = (self: Never, R) -> O}), Type_169 <: Structural({.value = Type_249}), R: Type, O: Type|(self: Type_169, i := R) -> NoneType
+.IntMut.dec: |Type_173 <: Structural({.value = Type_253}), Type_253 <: Structural({.__sub__ = (self: Never, R) -> O}), R: Type, O: Type|(self: Type_173, i := R) -> NoneType
+.IntMut.succ: |Type_177 <: Structural({.value = Type_255}), Type_255 <: .Int|(self: Type_177) -> Float
+.IntMut.pred: |Type_180 <: Structural({.value = Type_257}), Type_257 <: .Int|(self: Type_180) -> Float
+
+tructural({.value = Type_256}), Type_256 <: .Int|(self: Type_178) -> Float
+.IntMut.pred: |Type_181 <: Structural({.value = Type_258}), Type_258 <: .Int|(self: Type_181) -> Float
+
