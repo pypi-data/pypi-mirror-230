@@ -1,0 +1,73 @@
+lb pl ~/lb/audio.db Catlow --cols id -pa
+lb pl ~/lb/audio.db Catlow --cols id -pf
+
+wt: search playlist
+lb lt ~/lb/audio.db -c -w 'pl.title = "Catlow"'
+
+- proliferation: tools generator
+
+- automatic photo essay generator
+
+- organize util functions by data type
+
+- globalnamespace py package to scan function names and search in github, print frequency of use in project, world, and namealikes, search function name, function body
+
+- scan bpm and key sig
+
+    https://github.com/aubio/aubio
+    https://github.com/tyiannak/pyAudioAnalysis
+
+ - cluster images
+
+    https://github.com/rhsimplex/image-match/blob/master/image_match/goldberg.py
+    https://github.com/HughKu/Im2txt
+    https://github.com/immich-app/immich/tree/main/machine-learning/app
+
+- CLI EDA tool
+
+- CLI incremental diff (SQLITE, NDJSON, CSV)
+
+    compare 100 rows at a time using primary key
+
+    show the differences between files
+
+- todo recursive todo management, fortune cookie style
+
+    https://github.com/VladimirMarkelov/ttdl
+
+- CLI recursive financial planner (nano budget)
+
+- CLI incremental book reading
+
+- CLI reverse flight search
+
+- CLI city abacus
+
+- CLI UNLI Neighborhoods
+https://indigo.re/feed.xml
+
+- POIs CLI -- save your trip plans and see places to go with automated day trip itineraries, geopandas buffer
+
+places lookup
+places plan
+places add
+
+# compare speed with sjoin
+def intersect_using_spatial_index(source_gdf, intersecting_gdf):
+    source_sindex = source_gdf.sindex
+    possible_matches_index = []
+
+    for other in intersecting_gdf.itertuples():
+        bounds = other.geometry.bounds
+        c = list(source_sindex.intersection(bounds))
+        possible_matches_index += c
+
+    unique_candidate_matches = list(set(possible_matches_index))
+    possible_matches = source_gdf.iloc[unique_candidate_matches]
+
+    result = possible_matches.loc[possible_matches.intersects(intersecting_gdf.unary_union)]
+    return result
+
+- upscale command -- download higher quality videos; use webpath, PURL, comment to get URL
+
+- dogsheep RSS feed rssadd rssupdate
