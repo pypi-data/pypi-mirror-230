@@ -1,0 +1,34 @@
+[build-system]
+requires = ["maturin>=1.2,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "euid"
+version = "0.1.1"
+description = "EUID for Python"
+readme = "README.md"
+requires-python = ">=3.7"
+license = {file = "LICENSE"}
+keywords = ["euid"]
+authors = [
+  {email = "contact@ardikars.com"},
+  {name = "Ardika Rommy Sanjaya"}
+]
+maintainers = [
+  {name = "Ardika Rommy Sanjaya", email = "contact@ardikars.com"}
+]
+classifiers = [
+  "Programming Language :: Python"
+]
+dependencies = [
+  "euid"
+]
+
+[project.urls]
+homepage = "https://github.com/ardikars/euid-python"
+documentation = "https://readthedocs.org"
+repository = "https://github.com/ardikars/euid-python"
+changelog = "https://github.com/ardikars/euid-python/blob/master/CHANGELOG.md"
+
+[tool.maturin]
+features = ["pyo3/extension-module"]

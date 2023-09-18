@@ -1,0 +1,18 @@
+[package]
+name = "euid-python"
+version = "0.1.1"
+edition = "2021"
+authors = ["Ardika Rommy Sanjaya <contact@ardikars.com>"]
+license = "MIT"
+description = "EUID for Python"
+homepage = "https://github.com/ardikars/euid-python"
+repository = "https://github.com/ardikars/euid-python"
+readme = "README.md"
+
+[lib]
+name = "euid"
+crate-type = ["cdylib"]
+
+[dependencies]
+euid = "0.1.5"
+pyo3 = { version = "=0.19.0", features = ["abi3-py37", "extension-module"] }
