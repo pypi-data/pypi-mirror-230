@@ -1,0 +1,46 @@
+Metadata-Version: 2.1
+Name: cmdu
+Version: 0.0.4
+Summary: A small command line library for daily tasks.
+Project-URL: Homepage, https://github.com/xh-dev-py/weather-warning-summary-xethhung12
+Project-URL: Bug Tracker, https://github.com/xh-dev-py/weather-warning-summary-xethhung12/issues
+Author-email: Xeth Hung <admin@xethh.me>
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.7
+Requires-Dist: pyyaml
+Requires-Dist: tzdata
+Description-Content-Type: text/markdown
+
+# build
+```shell
+pip install -r requirements.txt
+rm -rf dist
+python -m build
+python -m twine upload dist/* -u __token__ -p {token}
+```
+# pypi-AgEIcHlwaS5vcmcCJDkwYTBjZTY5LWU5NGQtNDNhYS05ZWIxLTBiZjdjMzJlMmUyZQACDFsxLFsiY21kdSJdXQACLFsyLFsiNmQ2NWI5ZmQtZDAzYS00YzE4LTgwNjYtOTdlZTBkY2UwMGZiIl1dAAAGIJKby55lo8IXSuyaedbHLVaGOx6K1Wp_SdWeBXwcF3O9
+
+# Commands
+```
+|-- cmdu
+|   |-- json2json
+|   |-- json2yaml
+|   |-- yaml2json
+```
+# json2yaml
+convert a json input (from stdin) as json output (to stdout)
+1. with raw json `python -m cmdu json2json`
+2. with pretty format `python -m cmdu json2json --pretty`
+2. with pretty format and indentation as 2 `python -m cmdu json2json --pretty --indent 2`
+
+# json2yaml
+convert a json input (from stdin) as yaml output (to stdout)
+1. `python -m cmdu json2yaml`
+
+# yaml2json
+convert a yaml input (from stdin) as json output (to stdout)
+1. with raw json `python -m cmdu yaml2json`
+2. with pretty format `python -m cmdu yaml2json --pretty`
+2. with pretty format and indentation as 2 `python -m cmdu yaml2json --pretty --indent 2`
