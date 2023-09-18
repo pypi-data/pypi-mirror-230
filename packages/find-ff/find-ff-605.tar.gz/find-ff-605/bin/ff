@@ -1,0 +1,34 @@
+#!/usr/bin/python
+# -----------------------------------------------------------------------
+#
+# ff - a tool for finding files in the filesystem
+# Copyright (C) 2020 Lars Gustäbel <lars@gustaebel.de>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+# -----------------------------------------------------------------------
+
+# I hope this is only a temporary work-around: We rely heavily on assert
+# statements and __debug__ code blocks, which will be removed when using -O.
+# The idea was that in a production environment ff would be started via shebang
+# with the -O option, whereas debug mode could be entered by simply calling
+# `python -m libff`.
+# Unfortunately, setuptools seems to mess up the shebang line and replaces it
+# with the path to the python interpreter without with no regard for further
+# options.
+
+import os
+import sys
+
+os.execv(sys.executable, [sys.executable, "-O", "-m", "ff"] + sys.argv[1:])
