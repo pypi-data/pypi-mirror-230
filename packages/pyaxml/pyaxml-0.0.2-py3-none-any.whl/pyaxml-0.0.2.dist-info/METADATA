@@ -1,0 +1,61 @@
+Metadata-Version: 2.1
+Name: pyaxml
+Version: 0.0.2
+Summary: Manipulate AXML file and create one from scratch
+Home-page: https://ci-yow.com
+Download-URL: https://gitlab.com/MadSquirrels/mobile/pyaxml
+Author: MadSquirrel
+Author-email: benoit.forgette@ci-yow.com
+Classifier: Programming Language :: Python :: 3
+Classifier: Development Status :: 1 - Planning
+Requires-Python: >=3.5
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: androguard
+Requires-Dist: click
+
+# README
+
+
+## GENERAL INFO
+
+
+  Project: Library to modify AXML file  
+  Contributors: MadSquirrel  
+  License: GNU General Public License v3.0  
+  Version: v1.0  
+  Date: 12-08-23  
+
+## GOAL
+
+  Library to patch AXML over the fly
+
+## USAGE
+
+  You can use 2 samples:
+  ```shell
+  $ python copymanifest.py code/tata2.xml test.xml
+  ```
+  to simply copy the AXML file to test.xml with reencoding
+  
+  The second sample can replace the name of an activity inside an
+  AndroidManifest.xml:
+
+  ```shell
+  $ androaxml.py code/tata2.xml
+    <manifest xmlns:android="http://schemas.android.com/apk/res/android" compileSdkVersion="30" compileSdkVersionCodename="11" package="exploit.intent" platformBuildVersionCode="30" platformBuildVersionName="11">
+      <application>
+        <activity android:name="app.activity"/>
+      </application>
+    </manifest>
+  $ python replace_activity_name.py code/tata2.xml test.xml app.activity app.test
+  $ androaxml.py test.xml 
+    <manifest xmlns:android="http://schemas.android.com/apk/res/android" compileSdkVersion="30" compileSdkVersionCodename="11" package="exploit.intent" platformBuildVersionCode="30" platformBuildVersionName="11">
+      <application>
+        <activity android:name="app.test"/>
+      </application>
+    </manifest>
+  ```
+
+## CHANGELOG
+
