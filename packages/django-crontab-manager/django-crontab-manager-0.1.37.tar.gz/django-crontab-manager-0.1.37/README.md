@@ -1,0 +1,61 @@
+# django-crontab-manager
+
+Manage crontab tasks on web. Update crontab file on system while changes made on manager. Work with django-crontab-agent.
+
+## Install
+
+```
+pip install django-crontab-manager
+```
+
+## Usage
+
+*settings.py*
+
+```
+INSTALLED_APPS = [
+    "django_fastadmin",
+    "django_apiview",
+    "django_simple_export_admin",
+    "django_data_import_management",
+    'django_crontab_manager',
+]
+```
+- set DJANGO_CRONTAB_MANAGER_COPY_IMPORTED_DATAFILE=True if you are using AES like backend for file storage.
+
+## Usage
+
+1. Setup django-crontab-manager at server side. django-crontab-manager is a simple django application, include it in django project.
+1. Install django-crontab-agent on all target linux server.
+
+## Releases
+
+### v0.1.13 2020/01/29
+
+- First release.
+
+### v0.1.26 2021/03/03
+
+- Add server.variables. You can use the variable in script in python format way, e.g. `curl http://{api_server}/api/xxx`.
+- Add result success determination.
+- Add data encryption.
+
+### v0.1.30 2021/03/10
+
+- Add schedules export and import.
+
+### v0.1.31 2021/04/08
+
+- Ignore add_time, modify_time in schedules exporting.
+
+### v0.1.32 2021/07/19
+
+- Delete stdout/stderr columns from changelist view.
+
+### v0.1.36 2021/10/08
+
+- Fix django version problem.
+
+### v0.1.37 2023/09/18
+
+- Doc update.
