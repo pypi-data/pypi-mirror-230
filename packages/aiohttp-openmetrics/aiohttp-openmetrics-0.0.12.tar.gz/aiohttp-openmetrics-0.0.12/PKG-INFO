@@ -1,0 +1,48 @@
+Metadata-Version: 2.1
+Name: aiohttp-openmetrics
+Version: 0.0.12
+Summary: OpenMetrics provider for aiohttp
+Author-email: Jelmer Vernooĳ <jelmer@jelmer.uk>
+License: Apache v2 or later
+Project-URL: Homepage, https://github.com/jelmer/aiohttp-openmetrics/
+Project-URL: Repository, https://github.com/jelmer/aiohttp-openmetrics
+Classifier: Development Status :: 4 - Beta
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Classifier: Operating System :: POSIX
+Description-Content-Type: text/x-rst
+License-File: AUTHORS
+
+aiohttp-openmetrics
+===================
+
+This project contains a simple middleware and /metrics route endpoint for
+aiohttp that allow easy implementation of the
+`openmetrics <https://www.openmetrics.io/>`_ protocol.
+
+At the moment, this package is a thin wrapper around the ``prometheus_client``
+package.
+
+Example usage
+-------------
+
+.. code-block:: python
+
+  from aiohttp import web
+  from aiohttp_openmetrics import metrics, metrics_middleware
+
+  app = web.Application()
+  app.middlewares.append(metrics_middlware)
+  app.router.add_get('/metrics', metrics)
+
+  web.run_app(app)
+
+License
+-------
+
+This package is licensed under the Apache v2 or later license.
