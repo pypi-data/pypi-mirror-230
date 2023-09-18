@@ -1,0 +1,36 @@
+[project]
+name = "roboto_sdk"
+requires-python = ">=3.9"
+# Ignore this version attribute, it is here to satisfy setuptools.
+# The actual version is set by Poetry in the [tool.poetry] section.
+version = "0.0.0"
+
+[tool.poetry]
+name = "roboto_sdk"
+version = "0.1.30"
+description = "Tools for interacting with roboto.ai"
+license = "MIT"
+readme = "README.md"
+authors = ["Roboto <admin@roboto.ai>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+boto3 = {extras = ["crt"], version = "~1.26"}
+pathspec = "~0.11"
+pydantic = "~1.10"
+tenacity = "~8.2"
+tqdm = "~4.65"
+pyjwt = "~2.7"
+
+# While Poetry is used for dependency and venv management,
+# it relies on setuptools for packaging when installing from a local directory.
+[tool.setuptools.package-data]
+roboto_sdk = ["py.typed"]
+
+[tool.poetry.scripts]
+roboto = 'roboto_sdk.cli:entry'
+
+[tool.pytest.ini_options]
+markers = [
+    "cli: tests which assume that the CLI is available on ${PATH}. (deselect with '-m \"not cli\"')",
+]
