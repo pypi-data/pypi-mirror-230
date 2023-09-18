@@ -1,0 +1,38 @@
+Metadata-Version: 2.1
+Name: solaar
+Version: 1.1.10rc3
+Summary: Linux device manager for Logitech receivers, keyboards, mice, and tablets.
+Home-page: http://pwr-solaar.github.io/Solaar/
+Author: Daniel Pavel
+License: GPLv2
+Platform: linux
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: X11 Applications :: GTK
+Classifier: Environment :: Console
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: License :: DFSG approved
+Classifier: License :: OSI Approved :: GNU General Public License v2 (GPLv2)
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Topic :: Utilities
+Requires-Python: >=3.7
+License-File: COPYING
+Requires-Dist: evdev (>=1.1.2)
+Requires-Dist: pyudev (>=0.13)
+Requires-Dist: PyYAML (>=3.12)
+Requires-Dist: python-xlib (>=0.27)
+Requires-Dist: psutil (>=5.4.3)
+Requires-Dist: dbus-python (>=1.3.2)
+Provides-Extra: desktop-notifications
+Requires-Dist: Notify (>=0.7) ; extra == 'desktop-notifications'
+Provides-Extra: git-commit
+Requires-Dist: python-git-info ; extra == 'git-commit'
+Provides-Extra: report-descriptor
+Requires-Dist: hid-parser ; extra == 'report-descriptor'
+
+Solaar is a Linux device manager for many Logitech peripherals that connect through
+Unifying and other receivers or via USB or Bluetooth.
+Solaar is able to pair/unpair devices with receivers and show and modify some of the
+modifiable features of devices.
+For instructions on installing Solaar see https://pwr-solaar.github.io/Solaar/installation
