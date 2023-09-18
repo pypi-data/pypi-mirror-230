@@ -1,0 +1,60 @@
+python:
+- src/**/*.py
+
+json:
+- src/templates/**/*.json
+
+cli-frontend:
+- src/nester/cli.py
+
+commands:
+- src/nester/commands.py
+
+logging:
+- src/nester/nester_log.py
+
+interactive-mode:
+- src/nester/tui.py
+
+utils:
+- src/nester/utils.py
+
+documentation:
+- docs/*
+- README.md
+- LICENSE
+- CODE_OF_CONDUCT.md
+- CONTRIBUTING
+- .readthedocs.yaml
+
+tests:
+- tests/*
+
+codequality:
+- .pylintrc
+- .pre-commit-config.yaml
+
+configs:
+- ./**/*.toml
+- ./**/*.yml
+- ./**/*.cfg
+
+packaging:
+- pyproject.toml
+- setup.cfg
+
+workflows:
+- .github/workflows/*.yml
+- .github/labeler.yml
+
+container:
+- Dockerfile
+
+repository-maintenance:
+- .gitignore
+- .pre-commit-config.yaml
+- CODEOWNERS
+- CONTRIBUTING.md
+- LICENSE
+- INSTALL.md
+- .github/*
