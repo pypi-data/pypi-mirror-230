@@ -1,0 +1,65 @@
+# pyproject.toml
+
+[build-system]
+requires = ["setuptools>=65.6.3", "wheel"]
+build-backend = "setuptools.build_meta"
+
+
+[tool.setuptools.packages.find]
+where = [".","src"]
+exclude = ["notebooks", "test"]
+
+[project]
+name = "pyphetools"
+# version in __init__
+requires-python = ">=3.8"
+description = "Generate and work with GA4GH phenopackets"
+readme = "README.md"
+authors = [
+    {name = "Peter Robinson", email="peter.robinson@jax.org"},
+     ]
+license = { file = "LICENSE" }
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+]
+keywords = [
+    "Global Alliance for Genomics and Health",
+    "GA4GH Phenopacket Schema",
+    "Human Phenotype Ontology",
+    "GA4GH",
+    "HPO"]
+dependencies = [
+    "hpo-toolkit>=0.2.0",
+    "openpyxl",
+    "pandas",
+    "phenopackets",
+    "protobuf",
+    "requests"
+]
+dynamic = ["version"]
+[project.optional-dependencies]
+test = ["pytest"]
+
+
+
+#[project.optional-dependencies]
+#dev = ["black", "bumpver", "isort", "pip-tools", "pytest"]
+
+[project.urls]
+homepage = "https://github.com/monarch-initiative/pyphetools"
+repository = "https://github.com/monarch-initiative/pyphetools.git"
+documentation = "https://github.com/monarch-initiative/pyphetools"
+bugtracker = "https://github.com/monarch-initiative/pyphetools/issues"
+
+
+
+
+[tool.setuptools]
+package-dir = { "" = "." }
+zip-safe = false
+[tool.setuptools.dynamic]
+version = { attr = "pyphetools.__version__" }
+
