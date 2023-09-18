@@ -1,0 +1,558 @@
+# uipy 编程指南
+
+## 1. 概述
+
+https://pypi.org/project/uipy/
+
+uipy 是基于 pyside 6 的二次封装，包含如下特性：
+
+- MVVM
+  
+  简单 mvvm 模型，开发更方便。
+
+- .ui 生成
+  
+  依赖 webmix，用 js 语言撰写原生 .ui 文件
+
+- DOM 操作
+  
+  模仿 jquery 对组件进行操作
+
+- Dispatcher
+  
+  模仿 jquery 事件机制，将 pyside 的 Event、Action、Signal+Slot 改为 jquery 事件模式，写起来更顺手
+
+- widget、layout
+   
+  包含一系列新的组件。
+
+  包含了 FlowLayout 流式布局。
+
+- assets
+  
+  包含一系列新的资源，比如各种小图标。
+
+- themes
+
+  包含一系列新的主题。
+
+依靠这些特性，编程的感觉就与 javascript 开发类似了。
+
+## 2. 第一步
+
+通过 pypi.org 来安装本包：
+
+`pip install uipy'
+
+或者，通过本包源码编译包。转到源码目录 uipyPackage/uipy 执行命令：
+
+`python compileUIPY.py develop`
+
+```python
+import sys
+from PySide6.QtWidgets import QApplication, QMainWindow
+# 本文示例中 ui 均表示 uipy 模块
+import uipy as ui
+
+if __name__ == "__main__":
+
+    # 全局只调用一次，推荐在主.py文件中调用
+    ui.init()
+
+    app = QApplication(sys.argv)
+    window = QMainWindow()
+    # 设定主窗口，方便后续使用，也可以调用 ui.getMW() 来获得
+    ui.MW = window
+    window.show()
+
+    sys.exit(app.exec())
+```
+
+## 3. 功能
+
+
+
+### 3.1 派发器
+
+Dispatcher，融合 Action、Event、Signal & Slot，并提供类似 jquery 的使用方法。
+
+- uuid
+  唯一编号
+
+- setSignals(signals)
+  
+  设置字符串类的信号。需要先设置，才能侦听。
+
+  signals 是一个 list，元素可以是字符串（作为信号的名字），则创建 Signal(object)，也可以是元组，元组的第一个元素是字符串（作为信号的名字），后接的元素是给 Signal 的参数。
+
+  ```python
+  x.setSignals(['change','undo','redo']) # 等于 Signal(object)
+  x.setSignals([('change',int)]) # 等于 Signal(int)
+  x.setSignals([('change',str,int)]) # 等于 Signal(str,int)
+  ```
+
+- on(signal,slot)
+  
+  侦听信号
+
+- off(signal,slot)
+  
+  断开侦听
+
+- fire(signal,*args)
+  
+  触发信号
+
+- mixin(obj)
+  
+  静态方法，为对象提供 on/off/fire 方法。
+
+简单示例：
+
+```python
+# 因 python 没有 js 那种匿名函数，只能这样写
+def click1():
+    pass
+
+def click2(msg):
+    print(msg)
+
+Dispatcher.mixin(label1)
+
+label1.on(label1.clicked,click1)
+label1.setSignals(['signal1'])
+label1.on('signal1',click2)
+
+# 自定义信号
+label1.fire('signal1','hello')
+```
+
+信号可以是 Qt 自带的，也可以是自定义的字符串。
+
+在 ViewModel.bind 方法中会自动为组件进行 minxin，无需显式调用。
+
+
+### 3.2 数据绑定
+
+数据双向绑定器。
+
+ViewModel 作为视图模型基类。
+
+Binder 统管 DataBinder、Observable、ViewModel 三者，并且可以通过 ui.BINDER 全局访问到。
+
+DataBinder 与组件绑定，为组件连通 Observable 提供桥梁，如：
+
+```python
+name=ui.Observable('jerry')
+label1.databind={'str',name}
+```
+
+数据流只有两个方向，一是从值变更触发组件变更，如：
+
+```python
+name.set('jerry1979')
+```
+
+将会导致 label1 显示的文本改变。
+
+二是从组件本身变更触发值的改变，如文本框里面的值被用户修改，会同时改变绑定的 Observable 里面的值。
+
+数据流的两个方向的改变均由 Binder 总控。
+
+除了数据流以外，还有信号流，信号流绑定的不再是 Observable 对象，而是一个函数，如：
+
+```python
+def click1():
+    pass
+
+button1.databind={'click',click1}
+```
+
+#### 3.2.1 绑定类型
+
+- 值类型
+
+  可以为：str/int/float/bool/color/date/datetime/time，
+
+  绑定的是一个字符串、整数、浮点数、布尔、颜色、日期、日期时间、时间。
+
+- 行为
+  
+  可以为：visible/enable，表明可见和可用。
+
+- 信号
+
+  可以为：click/dbclick/select/mousedown/mouseup，表明点击、双击、列表类（列表、树形、表格、单选钮组、复选框组、下拉框）选择、按下、弹起信号。双击仅用于 list/tree/table。
+
+- 集合类
+
+  可以为：list/tree/table/combobox/radioGroup/checkboxGroup，表明为列表、树形、表格、下拉框、单选钮组、复选框组提供的数据源（model）。
+
+- 选择类
+  
+  可以为：selectItem/selectIndex/selectValue/selectText/selectId，表明当前选中的项/索引/值/文本/Id。
+  要注意，list/tree/talbe 的 selectIndex 为 QModelIndex 类型（可以通过 QAbstractItemModel::createIndex 来创建），而 combobox/radioGroup/checkboxGroup 的 selectIndex 为选择的索引（从0开始）。
+
+#### 3.2.2 Observable/ObservableArray
+
+用于绑定，称为可绑定对象。
+
+Observable 绑定值，ObservableArray 绑定 ui.Model 及子类（暂不支持普通 list）。
+
+共有方法：
+
+- get/set
+  
+  取值，赋值
+
+ObservableArray 独有方法：
+
+- add/insert/remove/update/clear
+
+  添加、插入、移除、更新、清除。
+
+  详见 table.py 示例。
+
+举例：
+```python
+name=ui.Observable('jerry')
+print(name.get())
+name.set('jerry1979')
+print(name.get())
+
+shapes = ui.ObservableArray(ui.ListModel([{
+    'text': '三角形',
+    'icon': './imgs/triangle.png'
+}, {
+    'text': '圆形',
+    'icon': './imgs/circle.png',
+    'age': 12
+}, {
+    'text': '矩形',
+    'icon': './imgs/rect.png'
+}]))
+shapes.add({
+    'text': '矩形2',
+    'icon': './imgs/rect.png'
+})
+```
+
+绑定对象也支持显式侦听变化：
+
+```python
+# 前述 name
+def print1(newValue):
+  print(newValue)
+
+name.on('change', print1)
+```
+
+#### 3.2.3 ViewModel
+
+视图模型基类。
+
+**注：此类的实例在全局中只能一个。**
+
+```python
+# MyUserControl.py
+class MyUserControl:
+  def click2():
+    pass
+```
+
+```python
+import uipy as ui
+from UserControl import *
+
+class User:
+  username=''
+  gender=1
+  age=38
+
+class VM(ViewModel):
+  # 对象转绑定对象
+  user=ui.fromObj(User())
+
+  # 绑定对象
+  userId=ui.Observable(-1)
+
+  # 列表绑定对象
+  genders = ui.ObservableArray(ui.ListModel([{
+        'id': 0,
+        'text': '女性'
+    }, {
+        'id': 1,
+        'text': '男性'
+    }]))
+
+  # 绑定事件的响应
+  def click1():
+    pass
+
+  # 绑定导入文件对象的方法
+  uctl=ui.fromObj(UserControl())
+
+class MainWindow(QMainWindow):
+
+    def __init__(self):
+        super(MainWindow, self).__init__()
+
+        # Ui_MainWindow 为已经布局好的窗口
+        self.ui1 = Ui_MainWindow()
+        self.ui1.setupUi(self)
+
+        ui.MW = self
+
+        self.ui1.radiobuttonGroup1.databind = {
+            'radioGroup': vm.genders,
+            'selectId': vm.user.gender
+        }
+        self.ui1.pushButton1.databind = {
+            'click': vm.click1
+        }
+        self.ui1.label1.databind = {
+            'int': vm.userId
+        }
+        self.ui1.pushButton2.databind = {
+            'click': vm.uctl.click1
+        }
+
+if __name__ == "__main__":
+
+    ui.init()
+
+    vm = VM()
+
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+
+    vm.bind()
+
+    sys.exit(app.exec())
+```
+
+上述示例，演示了一个实体类 User + 实体控制器 UserControl，前者用于封装属性，后者用于控制这个实体类的各种方法。
+
+这是一种比较好的实践。当然，将实体类和实体控制器放在一个类里面也是可以的。
+
+vm.bind 可以传递父组件，如果整个界面中只有一部分需要绑定，可以这样做，默认是整个窗口。
+
+#### 3.2.4 相关工具
+
+- fromObj
+
+  从对象转换为可绑定对象。
+
+
+## 4. 其他API
+
+### MW
+
+本应用主窗口。
+
+```python
+print(ui.MW.name)
+```
+
+### F
+
+依据名称或类型找控件。
+
+```python
+label1=ui.F('label1')
+label1=ui.F(QLabel)
+``` 
+ 
+### ListModel
+
+给列表用的数据源。
+
+- `__init__(items,options)`
+
+  构造函数。
+  
+  items 为集合。
+
+  其中每一项，可以是自定义的数据结构（可以是字典和对象），但 id/text/value/icon/checked 有特定意义，分别表示 id/文本/值/图标/复选否。
+
+  其中每一项，也可以是简单的 list，比如 ['a','b','c','d']
+   
+  options 为选项。
+
+  也可以通过 defaultIcon 来指定默认图标，defaultAlign 来指定默认对齐方式。
+
+  还可以通过 textCallback/iconCallback/alignCallback 来自处理每个字段。
+
+  ```python
+  # 用字典方式
+  lm=ListModel([
+    {
+      'text':'hello',
+      'checked': True
+    },
+    {
+      'text':'world'
+    }
+  ],{'defaultIcon': './imgs/1.jpg'})
+
+  # 用对象方式
+  class Item:
+    text=''
+    checked=False
+
+    def __init__(self,text,checked):
+        self.text = text
+        self.checked = checked
+
+  items=[]
+  for i in range(5):
+    item=Item(str(i),True if i%2==0 else False)
+    items.append(item)
+
+  lm=ListModel(items,{'defaultIcon': './imgs/1.jpg'})
+  ```
+
+### TableModel
+
+给表格用的数据源。
+
+- `__init__(items, hHeaderItems=[], vHeaderItems=[], options={}):`
+
+  构造函数。
+
+- hHeaderItems
+
+  设定水平头，字符串组成的 list。
+
+- vHeaderItems
+
+  设定垂直头，字符串组成的 list。
+
+- options
+  - vHeaderAutoIncrement
+  
+    垂直头是否采用数字自增，为 True 时，vHeaderItems 失效。
+
+```python
+# 两行两列
+model1=ui.TableModel([
+  [{
+    'text': 'Using',
+    'icon': mu.myPath() + './imgs/triangle.png',
+    'checked': True
+  }, {
+    'text': 'Connecting widgets using a naming scheme',
+    'icon': mu.myPath() + './imgs/circle.png',
+    'checked': False
+  }], 
+  [{
+    'text': 'Form'
+  }, {
+    'text': 'How to edit a form in Qt Designer'
+  }]], 
+
+  ['Title', 'Description'], 
+  [], 
+  {'defaultAlign': Qt.AlignCenter}
+)
+```
+
+### TreeModel
+
+给树形结构用的数据源。
+
+### eachChild
+
+遍历孩子控件。
+
+### eachChildLayout
+
+遍历孩子布局。
+
+### findLayoutByWidget
+
+通过组件找到自己的或所在的布局。
+
+### checkButtons
+
+选择按钮组中的按钮。
+
+### center2Screen/center2Parent/center2MW
+
+居中对齐，相对于屏幕、父亲、主窗口。
+
+
+## 5. 扩展组件和布局
+
+### ColorButton
+
+点击可以弹出颜色选择框的按钮。
+
+### ButtonGroup
+
+按钮组，与 QButtonGroup 不同的是，本类继承 QWidget，通过 setModel 就可以自动形成多个按钮。
+
+exclusive 为 True，则是单选按钮组，否则是复选框组。
+
+并且，本组件也可以作为 QT Designer 的自定义组件，拷贝 widgetButtonGroup.py、registerButtonGroup.py、pluginButtonGroup.py 到你指定的某个目录，再设置环境变量 PYSIDE_DESIGNER_PLUGINS 指向该目录，重启 QT Designer 即可看到，在 uipy 组下面。
+
+示例可以查看 mainButtonGroup.py 文件。
+
+- exclusive()/setExclusive(val)
+  
+  取值和赋值，可以用这两个函数，也可以直接当做属性用。
+
+  ```python
+  bg1.exclusive=True
+  print(bg1.exclusive) 
+  ```
+
+- setModel(items)
+
+  设置模型，可以是 list['a','b','c']，也可以是 list[{'id':1,'text':'hello'},...]
+
+- clear()
+
+  清除里面的按钮。
+
+### FlowLayout
+
+流式布局。
+
+例子 examples/flow.py
+
+## 6. 资源
+
+```python
+icon=QIcon(':/edit/conference_64px.png')
+```
+
+包含 160 个图标，具体详见 assets/imgs 目录下。
+
+在 QT Designer 的资源面板中也可以导入 assets/imgs/imgs.qrc 来使用。
+
+
+## 7. 其他
+
+### 全局异常
+
+对于全局未捕获异常，自动抓取，并弹出消息框。
+
+如果未弹出，程序退出了，可以查看应用程序下的 UncaughtHook.txt 文件。
+
+### 示例
+
+详见 examples 下面。
+
+## 8. 依赖
+
+- pyside 6
+
+- mupy
+  
+  一套 python 的各类工具集
+
+- webmix
+  
+  一套生成 .ui 文件的界面撰写语言。依赖于 pyside6 designer.exe 和 uic.exe。
