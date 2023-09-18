@@ -1,0 +1,69 @@
+[project]
+name = "absl_extra"
+version = "0.1.2.dev9"
+description = "A wrapper to run and monitor absl app."
+readme = "Readme.md"
+requires-python = ">=3.8"
+authors = [
+    { name = "Artem Sereda", email = "artem.sereda.tub@gmail.com" }
+]
+maintainers = [
+    { name = "Artem Sereda", email = "artem.sereda.tub@gmail.com" }
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+]
+dependencies = [
+    "absl_py",
+    "toolz",
+    "typing_extensions; python_version < '3.10'"
+]
+[project.optional-dependencies]
+dev = [
+    "black",
+    "pytest",
+    "chex",
+    "absl_extra[mongo,ml_collections,slack,tensorflow,jax,flax]",
+    "ruff",
+    "mypy==1.4.1"
+]
+mongo = ["pymongo"]
+ml_collections = ["ml_collections"]
+slack = ["slack_sdk"]
+tensorflow = [
+    "tensorflow; sys_platform == 'linux'",
+    "tensorflow_macos; sys_platform == 'darwin'"
+]
+jax = [
+    "jaxtyping",
+    "jax",
+    "jaxlib"
+]
+flax = [
+    "absl_extra[jax]",
+    "flax",
+    "clu",
+    "tqdm"
+]
+cuda = [
+    "nvidia-ml-py"
+]
+
+
+[project.urls]
+"Homepage" = "https://github.com/aaarrti/absl_extra"
+
+
+[build-system]
+requires = ["flit-core >= 3.4"]
+build-backend = "flit_core.buildapi"
+
+[tool.black]
+line-length = 120
+
+
+[tool.isort]
+profile = "black"
+
+[tool.ruff]
+line-length = 120
