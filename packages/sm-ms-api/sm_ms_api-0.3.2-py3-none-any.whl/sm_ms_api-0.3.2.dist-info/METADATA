@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: sm-ms-api
+Version: 0.3.2
+Summary: 
+License: MIT
+Author: kaesinol
+Author-email: keiplyer@gmail.com
+Requires-Python: >=3.11,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: requests (>=2.31.0,<3.0.0)
+Description-Content-Type: text/markdown
+
+```python
+from sm_ms_api import SMMS
+test=SMMS(token="YOUR_TOKEN")
+print(test.upload_image("./tests/test.png"))
+```
