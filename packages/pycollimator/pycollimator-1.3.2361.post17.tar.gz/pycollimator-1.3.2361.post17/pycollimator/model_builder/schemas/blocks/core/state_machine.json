@@ -1,0 +1,51 @@
+{
+  "$schema": "../../block-class.schema.json",
+  "$id": "https://collimator.ai/models/blocks/base/user_defined/state_machine.json",
+  "base": {
+    "name": "StateMachine",
+    "namespace": "core",
+    "description": "Executes a user defined state machine designed using pytransitions to compute the outputs from the inputs.",
+    "feature_level": "dev"
+  },
+  "modes": {
+    "time": "any",
+    "feedthrough": true
+  },
+  "ports": {
+    "inputs": {
+      "dynamic": {
+        "min_count": 1,
+        "max_count": -1,
+        "default_count": 1
+      }
+    },
+    "outputs": {
+      "dynamic": {
+        "min_count": 1,
+        "max_count": -1,
+        "default_count": 1,
+        "parameter_definitions": [
+          {
+            "name": "dtype",
+            "data_type": "string",
+            "default_value": "float64",
+            "value_is_a_type": true,
+            "description": "Data type of the output signal, follows numpy syntax like: double"
+          },
+          {
+            "name": "shape",
+            "data_type": "any",
+            "default_value": "()",
+            "description": "Shape or dimension of the output signal, follows numpy syntax like: (2,3) or ()"
+          }
+        ]
+      }
+    }
+  },
+  "states": {
+    "feedthrough_states_dimension": 1,
+    "min_feedthrough_states_dimension": 1,
+    "max_feedthrough_states_dimension": -1
+  },
+  "parameter_definitions": []
+}

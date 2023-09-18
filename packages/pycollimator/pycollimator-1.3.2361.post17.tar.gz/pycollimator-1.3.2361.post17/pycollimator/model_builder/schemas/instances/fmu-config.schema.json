@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://collimator.ai/models/fmu-config.schema.json",
+
+    "title": "FMU Export Config",
+    "description": "Configuration required for export an FMU from a submodel",
+    "type": "object",
+    "development_notes": "presently only FMI2.0 Cosimulation is supported. if/when we support FMI3.0, and/or Model Exchange, we will have to expand on the config options.",
+
+    "properties": {
+        "submodel_uuid": { "$ref": "uuid.schema.json" },
+        "submodel_uuid_path": {
+          "type": "array",
+          "items": {
+            "$ref": "uuid.schema.json"
+          }
+        },
+        "name": {
+            "type": "string",
+            "description": "Name of the submodel form which FMU is to be generated",
+            "$comment": "default is there for frontend autogen types",
+            "default": "Submodel_0"
+          }
+    },
+    "required": [
+        "name"
+    ]
+}

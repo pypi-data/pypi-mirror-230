@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=61.0", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pycollimator"
+dynamic = ["version"]
+authors = [
+  { name="Collimator.ai" },
+]
+description = "Package for building models for Collimator.ai"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "numpy",
+    "pandas",
+    "requests",
+    "control",
+    "simpleeval",
+]
+
+[project.optional-dependencies]
+notebook = ["ipywidgets==7.7.2"]
+
+[tool.setuptools.package-data]
+"pycollimator.model_builder.schemas" = ["**/*.json"]
+
+[tool.setuptools]
+packages = ["pycollimator"]
+
+[tool.black]
+line-length = 120
+
+[tool.setuptools_scm]
+root = "../../../"
+local_scheme = "no-local-version"
+version_scheme = "post-release"
