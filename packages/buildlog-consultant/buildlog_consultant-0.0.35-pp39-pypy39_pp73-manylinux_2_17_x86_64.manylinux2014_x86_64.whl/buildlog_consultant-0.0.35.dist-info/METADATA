@@ -1,0 +1,26 @@
+Metadata-Version: 2.1
+Name: buildlog-consultant
+Version: 0.0.35
+Summary: buildlog parser and analyser
+Author-email: Jelmer Vernooĳ <jelmer@jelmer.uk>
+Project-URL: Homepage, https://github.com/jelmer/buildlog-consultant
+Project-URL: Repository, https://github.com/jelmer/buildlog-consultant.git
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+License-File: AUTHORS
+Requires-Dist: python-debian
+Requires-Dist: PyYAML
+Requires-Dist: requirements-parser
+Provides-Extra: chatgpt
+Requires-Dist: openai ; extra == 'chatgpt'
+
+The build log consultant can parse and analyse build log files.
+
+Currently supported container formats:
+
+ * sbuild
+ * plain
+
+For a longer introduction, see the
+[blog post](https://www.jelmer.uk/buildlog-consultant.html).
