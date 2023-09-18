@@ -1,0 +1,73 @@
+Metadata-Version: 2.1
+Name: k-lights-interface
+Version: 0.0.3
+Summary: A package to control Kelvin lights using a serial interace. Set channel outputs, color outputs and much more.
+Author-email: dev1 <developer@riftlabs.com>
+License-File: LICENSE
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.7
+Requires-Dist: betterproto==2.0.0b4
+Requires-Dist: betterproto[compiler]==2.0.0b4
+Requires-Dist: grpcio-tools
+Requires-Dist: markupsafe==2.0.1
+Requires-Dist: nest-asyncio
+Requires-Dist: numpy
+Requires-Dist: ordered-set
+Requires-Dist: pyserial
+Requires-Dist: python4yahdlc
+Description-Content-Type: text/markdown
+
+# Kelvin lights interface 
+
+
+## Installation
+
+Public install. Some parts of the communication interface which are closely tied to Kelvins ip is removed.
+
+     pip install k-lights-interface
+
+Private install
+
+     Use Look at private_access_key.md
+
+## Features
+
+- Control Kelvin devices. Set brightness, CCT and Duv, RGB, HSI, and more. Read out temperatures, voltages, and more. 
+- Supports Serial communication using pyserial package
+- Supports BLE communication using bleak package. Check bleak for requirements. Bleak must also be installed separately, f.ex pip install bleak
+
+
+## Usage
+### Serial usage:
+
+To get a device to control:
+```python
+from k_lights_interface.k_serial_manager import KSerialManager
+
+dev_manager = KSerialManager()
+alldevs = dev_manager.get_all_devices()
+[print(dev) for dev in alldevs]
+```
+
+
+
+
+## Running tests
+Ensure workspace at root
+
+     pytest
+     
+
+## Updating protocol buffers file
+
+Ensure at workspace root
+
+Run this to generate the proto files for internal use
+     
+     python -m grpc_tools.protoc -I raw_proto/ --python_betterproto_out=src/k_lights_interface/ k_full.proto
+
+Run this to generate the proto files for public use
+
+     python -m grpc_tools.protoc -I raw_proto/ --python_betterproto_out=src/k_lights_interface/ k_public.proto
