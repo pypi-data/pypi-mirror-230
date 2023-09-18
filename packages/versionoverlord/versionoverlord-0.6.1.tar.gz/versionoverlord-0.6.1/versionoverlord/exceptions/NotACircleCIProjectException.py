@@ -1,0 +1,3 @@
+
+class NotACircleCIProjectException(Exception):
+    pass
