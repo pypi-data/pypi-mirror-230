@@ -1,0 +1,63 @@
+Metadata-Version: 2.1
+Name: discord-cache
+Version: 1.0.0
+Summary: A better way to boost youre discord bot performace.
+Author: ryzmae
+Author-email: ryzmae <contact@ryzm.tech>
+Project-URL: Homepage, https://github.com/ryzmae/discord-cache
+Project-URL: Bug Tracker, https://github.com/ryzmae/discord-cache/issues
+Keywords: python,discord-cache,discord,cache,caching
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: redis-py
+Requires-Dist: pymongo
+Requires-Dist: colorama
+Requires-Dist: typer
+Requires-Dist: pycryptodome
+Requires-Dist: rich
+Requires-Dist: pyyaml
+
+# Discord Cache
+
+- A better way to boost the performance of your Discord bot.
+
+![image](assets/image.png)
+
+---
+## Installation
+
+```bash
+pip install discord-cache
+```
+
+## Usage
+
+```python
+from discord_cache import Cache
+
+cache = Cache()
+
+anyfunction():
+    # Do something
+    cache.insert("key", "value")
+    # Do something else
+
+anyfunction2():
+    # Do something
+    cache.get("key")
+    # Do something else
+
+anyfunction3():
+    # Do something
+    cache.delete("key")
+    # Do something else
+```
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
