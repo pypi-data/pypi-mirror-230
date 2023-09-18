@@ -1,0 +1,191 @@
+[project]
+name = "snickerdoodle"
+description = "Easy-to-use, general-purpose, modern cookiecutter template for Python"
+authors = [
+    { name = "coreyrayburnyung", email = "coreyrayburnyung@gmail.com" },
+]
+version = "0.1.7"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Software Development :: Pre-processors",
+]
+keywords = []
+dependencies = []
+
+[project.license]
+text = "Apache 2.0"
+
+[project.urls]
+Documentation = "https://WithPrecedent.github.io/snickerdoodle"
+Repository = "https://github.com/WithPrecedent/snickerdoodle"
+Issues = "https://github.com/WithPrecedent/snickerdoodle/issues"
+Changelog = "https://WithPrecedent.github.io/snickerdoodle/changelog"
+
+[build-system]
+requires = [
+    "pdm-backend",
+]
+build-backend = "pdm.backend"
+
+[tool.pdm]
+plugins = [
+    "sync-pre-commit-lock[pdm]",
+    "pdm-multirun",
+]
+
+[tool.pdm.build]
+package-dir = "."
+editable-backend = "editables"
+
+[tool.pdm.dev-dependencies]
+docs = [
+    "markdown-callouts >= 0.3",
+    "markdown-exec >= 1.6.0",
+    "mkdocs >= 1.5.2",
+    "mkdocs-coverage >= 1.0.0",
+    "mkdocs-gen-files >= 0.5.0",
+    "mkdocs-git-committers-plugin-2 >= 1.1.2",
+    "mkdocs-literate-nav >= 0.6.0",
+    "mkdocs-material >= 9.1.2",
+    "mkdocs-minify-plugin >= 0.7.1",
+    "mkdocstrings[python] >= 0.22.0",
+    "toml >= 0.10.2",
+]
+quality = [
+    "pre-commit >= 3.3.3",
+    "ruff >= 0.0.286",
+]
+tests = [
+    "coverage >= 7.2.7",
+    "pytest >= 7.4.0",
+    "pytest-cov >= 4.1.0",
+    "pytest-randomly >= 3.13.0",
+    "pytest-xdist >= 3.3.1",
+]
+
+[tool.pytest.ini_options]
+addopts = "--showlocals"
+asyncio_mode = "auto"
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
+pythonpath = [
+    ".",
+]
+
+[tool.ruff]
+extend-exclude = [
+    "docs",
+    "scripts",
+    "site",
+    "tests",
+    ".*.*",
+]
+fix = true
+fixable = [
+    "ALL",
+]
+ignore = [
+    "A001",
+    "ANN101",
+    "ANN102",
+    "ANN401",
+    "ARG003",
+    "ARG005",
+    "C901",
+    "D105",
+    "D400",
+    "D401",
+    "D406",
+    "D407",
+    "D415",
+    "E501",
+    "E731",
+    "ERA001",
+    "EXE002",
+    "FBT001",
+    "G004",
+    "PTH123",
+    "PLR0911",
+    "PLR0912",
+    "PLR0913",
+    "PLR0915",
+    "PLR1711",
+    "Q000",
+    "SLF001",
+    "TID252",
+    "TRY003",
+]
+line-length = 80
+select = [
+    "A",
+    "ANN",
+    "ARG",
+    "B",
+    "BLE",
+    "C",
+    "C4",
+    "COM",
+    "D",
+    "DTZ",
+    "E",
+    "ERA",
+    "EXE",
+    "F",
+    "FBT",
+    "G",
+    "I",
+    "ICN",
+    "INP",
+    "ISC",
+    "N",
+    "NPY",
+    "PD",
+    "PGH",
+    "PIE",
+    "PL",
+    "PLC",
+    "PLE",
+    "PLR",
+    "PLW",
+    "PT",
+    "PTH",
+    "PYI",
+    "Q",
+    "RUF",
+    "RSE",
+    "RET",
+    "S",
+    "SIM",
+    "SLF",
+    "T",
+    "T10",
+    "T20",
+    "TCH",
+    "TID",
+    "TRY",
+    "UP",
+    "W",
+    "YTT",
+]
+
+[tool.ruff.flake8-quotes]
+docstring-quotes = "double"
+
+[tool.ruff.isort]
+force-wrap-aliases = true
+known-first-party = [
+    "snickerdoodle",
+]
