@@ -1,0 +1,34 @@
+# https://peps.python.org/pep-0621/#example
+# https://packaging.python.org/en/latest/specifications/declaring-project-metadata/#declaring-project-metadata
+
+[project]
+name = 'bindex'
+version = '0.0.5'
+description = 'Commands for Beni'
+requires-python = '>=3.10'
+keywords = ['benimang', 'beni', 'bindex']
+authors = [{ name = 'Beni Mang', email = 'benimang@126.com' }]
+maintainers = [{ name = 'Beni Mang', email = 'benimang@126.com' }]
+
+dependencies = [
+  'aioconsole',
+  'aiofiles',
+  'aiohttp',
+  'autopep8',
+  'benimang>=0.4.27',
+  'build',
+  'colorama',
+  'nest-asyncio',
+  'orjson',
+  'portalocker',
+  'pretty_errors',
+  'prettytable',
+  'pyperclip',
+  'qiniu',
+  'twine',
+  'typer',
+  'tzdata',
+]
+
+[project.scripts]
+idx = 'idx.main:run'
