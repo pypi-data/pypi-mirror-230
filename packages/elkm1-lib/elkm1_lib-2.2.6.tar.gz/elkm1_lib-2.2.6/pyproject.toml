@@ -1,0 +1,73 @@
+[tool.poetry]
+name = "elkm1-lib"
+version = "2.2.6"
+description = "Library for interacting with ElkM1 alarm/automation panel."
+homepage = "https://github.com/gwww/elkm1"
+authors = ["Glenn Waters <gwwaters+elkm1@gmail.com>"]
+readme = "README.md"
+license = "MIT"
+classifiers = [
+  'Development Status :: 5 - Production/Stable',
+  'Intended Audience :: Developers',
+]
+include = ["CHANGELOG.md", "bin/**/*"]
+exclude = ["test"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pyserial-asyncio = ">= 0.5"
+async-timeout = "^4.0"
+
+[tool.poetry.group.dev.dependencies]
+attrs = ">=21.2"
+black = ">= 22.3"
+colorlog = ">= 4.0"
+isort = ">= 5.10"
+mypy = ">= 0.9"
+pylint = ">= 2"
+urwid = ">= 2.0"
+
+[tool.poetry.group.test.dependencies]
+pytest = ">= 7.2"
+pytest-asyncio = ">= 0.18"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
+[tool.pyright]
+pythonVersion = "3.9"
+
+[tool.pylint."MESSAGES CONTROL"]
+disable = [
+    "format",  # Handled by black
+    "abstract-method",  # With intro of async there are always methods missing
+    "cyclic-import",  # Doesn't test if both import on load
+    "duplicate-code",  # Unavoidable
+    "inconsistent-return-statements",  # Doesn't handle raise
+    "locally-disabled",  # It spams too much
+    "not-context-manager",
+    "too-few-public-methods",
+    "too-many-ancestors",  # Too strict
+    "too-many-arguments",
+    "too-many-branches",
+    "too-many-instance-attributes",
+    "too-many-lines",
+    "too-many-locals",
+    "too-many-public-methods",
+    "too-many-return-statements",
+    "too-many-statements",
+    "too-many-boolean-expressions",
+    "unused-argument",  # Generic callbacks and setup methods create a lot of warnings
+]
+enable = [
+    #"useless-suppression",  # temporarily every now and then to clean them up
+    "use-symbolic-message-instead",
+]
+
+[tool.mypy]
+python_version = "3.9"
+ignore_missing_imports = true
