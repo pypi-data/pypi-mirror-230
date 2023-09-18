@@ -1,0 +1,123 @@
+#!/usr/bin/env python
+# -*-coding:utf-8 -*-
+'''
+@File    :   start.py
+@Time    :   2021/04/16 12:35:34
+@Author  :   Xin Dong
+@Contact :   xindong9511@gmail.com
+@License :   (C)Copyright 2020-2021, XinDong
+'''
+
+import argparse
+import sys
+from numpy import require
+import ruamel.yaml
+from SCRIP.Constants import SCRIP_VERSION
+from SCRIP.enrichment.enrich import run_enrich
+from SCRIP.imputation.impute import run_impute
+from SCRIP.targets.target import run_target
+from SCRIP.index.index import run_index
+from SCRIP.conf.config import update_setting
+from SCRIP.utilities.utils import read_config
+yaml = ruamel.yaml.YAML()
+
+CONFIG, CONFIG_PATH = read_config()
+
+def main():
+    argparser = prepare_argparser()
+    args = argparser.parse_args()
+
+    subcommand  = args.subcommand
+
+    if subcommand == "enrich":
+        try:
+            run_enrich(args)
+        except MemoryError:
+            sys.exit( "MemoryError occurred.")
+    elif subcommand == "impute":
+        try:
+            run_impute(args)
+        except MemoryError:
+            sys.exit("MemoryError occurred.")
+    elif subcommand == "target":
+        try:
+            run_target(args)
+        except MemoryError:
+            sys.exit("MemoryError occurred.")
+    elif subcommand == "config":
+        try:
+            update_setting( args )
+        except:
+            sys.exit("Setting set wrong.")
+    elif subcommand == "index":
+        try:
+            run_index(args)
+        except MemoryError:
+            sys.exit("MemoryError occurred.")
+    elif subcommand == "format":
+        pass
+
+    return
+
+def prepare_argparser():
+    description = "%(prog)s"
+    epilog = "For command line options of each command, type: %(prog)s COMMAND -h"
+
+    # top-level parser
+    argparser = argparse.ArgumentParser( description = description, epilog = epilog )
+    argparser.add_argument( "--version", action="version", version="%(prog)s "+SCRIP_VERSION )
+    subparsers = argparser.add_subparsers( dest = 'subcommand' )
+    subparsers.required = True
+
+    add_enrich_parser(subparsers)
+    add_impute_parser(subparsers)
+    add_target_parser(subparsers)
+    add_config_parser(subparsers)
+    add_index_parser(subparsers)
+
+
+    return argparser
+
+
+def add_enrich_parser( subparsers ):
+    """Add main function 'enrich' argument parsers.
+    """
+    argparser_enrich = subparsers.add_parser("enrich", help="Main function.")
+
+    # group for input files
+    group_input = argparser_enrich.add_argument_group( "Input files arguments" )
+    group_input.add_argument( "-i", "--input_feature_matrix", dest = "feature_matrix", type = str, required = True,
+                              help = 'A cell by peak matrix . REQUIRED.' )
+    group_input.add_argument( "-s", "--species", dest = "species", choices= ['hs', 'mm'], required = True,
+                              help = 'Species. "hs"(human) or "mm"(mouse). REQUIRED.' )
+    # group for output files
+    group_output = argparser_enrich.add_argument_group( "Output arguments" )
+    group_output.add_argument( "-p", "--project", dest = "project", type = str, default = "" ,
+                               help = 'Project name, which will be used to generate output files folder. DEFAULT: Random generate.')
+
+    # group for preprocessing
+    group_preprocessing = argparser_enrich.add_argument_group( "Preprocessing paramater arguments" )
+    group_preprocessing.add_argument( "--min_cells", dest = "min_cells", type = str, default = 'auto',
+                                      help='Minimal cell cutoff for features. Auto will take 0.05%% of total cell number.DEFAULT: "auto".')
+    group_preprocessing.add_argument("--min_peaks", dest="min_peaks", type=str, default='auto',
+                                     help='Minimal peak cutoff for cells. Auto will take the mean-3*std of all feature number (if less than 500 is 500). DEFAULT: "auto".')
+    group_preprocessing.add_argument("--max_peaks", dest="max_peaks", type=str, default='auto',
+                                     help='Max peak cutoff for cells. This will help you to remove the doublet cells. Auto will take the mean+5*std of all feature number. DEFAULT: "auto".')
+
+    group_other = argparser_enrich.add_argument_group( "Other options" )
+    group_other.add_argument( "-t", '--thread', dest='n_cores', type = int, default = 16,
+                              help="Number of cores use to run SCRIP. DEFAULT: 16.")
+    group_other.add_argument( "-m", '--mode', dest='mode', choices= ['max', 'mean'], default = 'max',
+                              help="Deduplicate strategy. DEFAULT: max.")
+    group_other.add_argument( "-y", "--yes", dest='yes', action = 'store_true', default = False,
+                              help="Whether ask for confirmation. DEFAULT: False.")
+    group_other.add_argument( "--clean", dest = "clean", action = 'store_true', default = False,
+                              help="Whether delete tmp files(including bed and search results) generated by SCRIP. DEFAULT: False.")
+    
+    
+if __name__ == '__main__':
+    try:
+        main()
+    except KeyboardInterrupt:
+        sys.stderr.write("User interrupted!\n")
+        sys.exit(0)
