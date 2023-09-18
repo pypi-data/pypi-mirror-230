@@ -1,0 +1,99 @@
+Metadata-Version: 2.1
+Name: pathvalidate-cli
+Version: 0.0.1
+Summary: pathvalidate-cli is a command line interface for pathvalidate library.
+Home-page: https://github.com/thombashi/pathvalidate-cli
+Author: Tsuyoshi Hombashi
+Author-email: tsuyoshi.hombashi@gmail.com
+License: MIT License
+Project-URL: Source, https://github.com/thombashi/pathvalidate-cli
+Project-URL: Tracker, https://github.com/thombashi/pathvalidate-cli/issues
+Keywords: file,path,validate,sanitize
+Classifier: Development Status :: 3 - Alpha
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Information Technology
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Topic :: Terminals
+Classifier: Topic :: Utilities
+Requires-Python: >=3.8
+Description-Content-Type: text/x-rst
+License-File: LICENSE
+Requires-Dist: click<9,>=6.2
+Requires-Dist: loguru<1,>=0.4.1
+Requires-Dist: msgfy<1,>=0.2
+Requires-Dist: pathvalidate<4,>=3.2.0
+Provides-Extra: test
+Requires-Dist: pytest>=7; extra == "test"
+Requires-Dist: pytest-md-report>=0.4.1; extra == "test"
+
+.. contents:: **pathvalidate-cli**
+   :backlinks: top
+   :depth: 2
+
+
+Summary
+============================================
+
+pathvalidate-cli is a command line interface for `pathvalidate <https://github.com/thombashi/pathvalidate>`__ library.
+
+
+Installation
+============================================
+::
+
+    pip install pathvalidate-cli
+
+
+Usage
+============================================
+
+::
+
+    $ pathvalidate sanitize 'fi:l*e/p"a?t>h|.t<xt'
+    file/path.txt
+    $ pathvalidate --filename sanitize 'fi:l*e/p"a?t>h|.t<xt'
+    filepath.txt
+
+    $ pathvalidate validate 'fi:l*e/p"a?t>h|.t<xt'
+    [PV1100] invalid characters found: invalids=(':', '*', '"', '?', '>', '|', '<'), value='fi:l*e/p"a?t>h|.t<xt', platform=Windows
+
+Command Help
+--------------------------------------------
+
+::
+
+    Usage: pathvalidate [OPTIONS] COMMAND [ARGS]...
+
+    Options:
+      --version                     Show the version and exit.
+      --debug                       For debug print.
+      -q, --quiet                   Suppress execution log messages.
+      --filename                    Consider inputs as filenames.
+      --max-len, --max-bytes BYTES  Maximum byte counts of file paths. -1: same
+                                    value with the platform limitation.  [default:
+                                    -1]
+      --platform PLATFORM           Execution platform name (case-insensitive).
+                                    Valid platform specifiers are
+                                    Linux/Windows/macOS. Valid special values are:
+                                    POSIX, universal (a) auto: automatically
+                                    detects the execution platform. (b) universal:
+                                    platform independent.  [default: universal]
+      -v, --verbose                 Verbosity level  [default: 0]
+      -h, --help                    Show this message and exit.
+
+    Commands:
+      error     Print error reasons.
+      sanitize  Sanitize file paths.
+      validate  Validate file paths.
+
+
+Dependencies
+============================================
+Python 3.8+
