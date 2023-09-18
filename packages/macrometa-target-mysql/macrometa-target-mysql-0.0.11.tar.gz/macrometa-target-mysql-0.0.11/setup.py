@@ -1,0 +1,40 @@
+# -*- coding: utf-8 -*-
+from setuptools import setup
+
+packages = \
+['macrometa_target_mysql', 'macrometa_target_mysql.tests']
+
+package_data = \
+{'': ['*'], 'macrometa_target_mysql.tests': ['data_files/*']}
+
+install_requires = \
+['c8connector==0.0.32',
+ 'cryptography>=41.0.2,<42.0.0',
+ 'prometheus-client==0.16.0',
+ 'pymysql>=1.1.0,<2.0.0',
+ 'requests>=2.25.1,<3.0.0',
+ 'singer-sdk>=0.30.0,<0.31.0']
+
+entry_points = \
+{'console_scripts': ['macrometa-target-mysql = '
+                     'macrometa_target_mysql.target:MacrometaTargetMySQL.cli']}
+
+setup_kwargs = {
+    'name': 'macrometa-target-mysql',
+    'version': '0.0.11',
+    'description': 'A Meltano target for MySQL.',
+    'long_description': "# macrometa-target-mongo\n\n`macrometa-target-mysql` is a Macrometa connector for writing data into MySQL, can be used as a target for any\nData Mesh Integration.\n\n## Installation\n\nUse PIP for installation:\n\n```bash\npip install macrometa-target-mysql\n```\n\n## Configuration\n\nThe available configuration options for `macrometa-target-mysql` are:\n\n| Property                            | Type              | Required?  | Description                                                                                         |\n|-------------------------------------|-------------------|------------|-----------------------------------------------------------------------------------------------------|\n| host                                | String            | Yes        | MySQL host                                                                                         |\n| port                                | Int               | Yes        | MySQL port                                                                                         |\n| username                            | String            | Yes        | MySQL user                                                                                         |\n| password                            | Password          | Yes        | MySQL password                                                                                     |\n| database                            | String            | Yes        | MySQL database name                                                                                |\n| target_table                        | String            | Yes        | Destination table name                                                                             |\n| batch_flush_size                    | Int               | No         | Maximum size of batch. Exceeding this will trigger a batch flush                                   |\n| batch_flush_interval                | Int               | No         | Time between batch flush executions                                                                |\n| hard_delete                         | Boolean           | No         | When `hard_delete` option is true, DELETE SQL commands will be performed in MySQL to delete rows   |\n| add_metadata_columns                | Boolean           | No         | Metadata columns add extra row level information about data ingestion,                             |\n|                                     |                   |            | (i.e. when was the row read in source, when was inserted or deleted in MySQL etc.) Metadata       |\n|                                     |                   |            | columns are created automatically by adding extra columns to the tables with a column prefix `_SDC_`. |\n|                                     |                   |            | The column names are following the stitch naming conventions documented at                         |\n|                                     |                   |            | [link](https://www.stitchdata.com/docs/data-structure/integration-schemas#sdc-columns).              |\n| ssl                                 | Boolean           | No         | If set to `true` then use SSL for connecting with MySQL.                                          |\n|                                     |                   |            | If the server does not accept SSL connections or the client certificate is not recognized         |\n|                                     |                   |            | then the connection will fail.                                                                     |\n| ssl_check_hostname                 | Boolean           | No         | Flag to configure whether SSL handshake should verify that the certificate                        |\n|                                     |                   |            | matches the DB hostname.                                                                           |\n| ssl_root_ca_cert                   | File              | No         | Specific CA certificate in PEM string format. This is most often the case                         |\n|                                     |                   |            | when using `self-signed` server certificate.                                                       |\n| ssl_client_certificate             | File              | No         | Specific client certificate in PEM string format. The private key for the client                    |\n|                                     |                   |            | certificate should be specified in a different parameter, SSL Client Key.                          |\n| ssl_client_key                     | File              | No         | Specific client key in PEM string format.                                                          |\n\nConfigurations can be stored in a JSON configuration file and specified using the `--config` flag with\n`macrometa-target-mysql`.\n\n## Usage\n\n```bash\ncat <input_stream> | macrometa-target-mysql --config <config.json>\n```\n\n- `<input_stream>`: Input data stream\n- `<config.json>`: JSON configuration file\n\n`macrometa-target-mysql` reads data from a Singer Tap and writes it to a MySQL database. Run Singer Tap to generate\ndata before launching `macrometa-target-mysql`.\n\nHere's an example of using Singer Tap with `macrometa-target-mysql`:\n\n```bash\ntap-exchangeratesapi | target-mysql --config config.json\n```\n\nIn this case, `tap-exchangeratesapi` is a Singer Tap that generates exchange rate data. The data is passed to\n`macrometa-target-mysql` through a pipe(`|`), and `macrometa-target-mysql` writes it to a MySQL database. `config.json` contains\n`macrometa-target-mysql` settings.\n\n## Developer Resources\n\n### Initializing the Development Environment\n\n```bash\npipx install poetry\npoetry install\n```\n\n### Creating and Running Tests\n\nCreate tests in the `macrometa_target_mysql/tests` subfolder and run:\n\n```bash\npoetry run pytest\n```\n\nUse `poetry run` to test `macrometa-target-mysql` CLI interface:\n\n```bash\npoetry run target-mysql --help\n```\n\n### Testing with [Meltano](https://meltano.com/)\n\n_**Note:** This target functions within a Singer environment and does not require Meltano._\n\nFirstly, install Meltano and necessary plugins:\n\n```bash\n# Install Meltano\npipx install meltano\n\n# Initialize Meltano in this directory\ncd target-mysql\nmeltano install\n```\n\nThen, test and orchestrate with Meltano:\n\n```bash\n# Call tests:\nmeltano invoke macrometa-target-mysql --version\n\n# Or execute pipeline with Carbon Intensity sample tap:\nmeltano run tap-carbon-intensity target-mysql\n```\n\n## Reference Links\n\n- [Meltano Target SDK Documentation](https://sdk.meltano.com)\n- [Singer Specification](https://github.com/singer-io/getting-started/blob/master/docs/SPEC.md)\n- [Meltano](https://meltano.com/)\n- [Singer.io](https://www.singer.io/)\n",
+    'author': 'Macrometa',
+    'author_email': 'info@macrometa.com',
+    'maintainer': 'None',
+    'maintainer_email': 'None',
+    'url': 'None',
+    'packages': packages,
+    'package_data': package_data,
+    'install_requires': install_requires,
+    'entry_points': entry_points,
+    'python_requires': '>=3.8.1,<3.11',
+}
+
+
+setup(**setup_kwargs)
