@@ -1,0 +1,69 @@
+Metadata-Version: 2.1
+Name: panda-utils
+Version: 1.6b1
+Summary: PandaUtils includes multiple tools for basic Panda3D automation
+Author-email: "Toontown: Event Horizon" <development@toontowneventhorizon.com>
+Project-URL: homepage, https://github.com/toontown-event-horizon/panda-utils
+Project-URL: bugtracker, https://github.com/toontown-event-horizon/panda-utils/issues
+Classifier: Programming Language :: Python :: 3.9
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Provides-Extra: autopath
+Requires-Dist: panda3d !=1.10.13.*,~=1.10 ; extra == 'autopath'
+Provides-Extra: composer
+Requires-Dist: panda-utils[pipeline] ; extra == 'composer'
+Requires-Dist: doit ; extra == 'composer'
+Requires-Dist: pydantic ; extra == 'composer'
+Provides-Extra: everything
+Requires-Dist: panda-utils[imagery] ; extra == 'everything'
+Requires-Dist: panda-utils[autopath] ; extra == 'everything'
+Requires-Dist: panda-utils[runnable] ; extra == 'everything'
+Requires-Dist: panda-utils[composer] ; extra == 'everything'
+Provides-Extra: imagery
+Requires-Dist: Pillow ~=9.0 ; extra == 'imagery'
+Provides-Extra: pipeline
+Requires-Dist: pyyaml ~=6.0 ; extra == 'pipeline'
+Requires-Dist: numpy ~=1.24.0 ; extra == 'pipeline'
+Requires-Dist: panda3d-blend2bam !=1.0.0 ; extra == 'pipeline'
+Requires-Dist: panda3d !=1.10.13.*,~=1.10 ; extra == 'pipeline'
+Provides-Extra: runnable
+Requires-Dist: platformdirs ~=3.5 ; extra == 'runnable'
+
+# Panda3D Utils v1.5
+ 
+Panda Utils is a set of Python scripts meant to help various projects
+running on the game engine [Panda3D](https://panda3d.org).
+It includes tools for manual use, as well as a full-fledged asset
+importing pipeline. It also includes an implementation of Egg Syntax Tree,
+which can be used programmatically in some scenarios.
+
+## Installation
+* Install Python 3.9 or above
+* `pip install panda_utils`
+* This package includes a number of optional dependencies:
+  * `pip install panda_utils[imagery]` to enable the Downscale module
+  * `pip install panda_utils[autopath]` to automatically download P3D
+  * `pip install panda_utils[runnable]` to enable the CLI runner
+    * Requires a settings file to be used that way, see: `config_example.ini`
+      in this repository
+  * `pip install panda_utils[pipeline]` to enable the Pipeline runner
+    * Requires Blender to be in the system PATH to run
+  * `pip install panda_utils[composer]` to use the Composer tool
+    used for Pipeline automation
+    * Requires `pipeline` and has the same requirements for Blender
+  * `pip install panda_utils[everything]` to include all of the above
+
+## Some of the features
+* Automated asset pipeline, allowing to build BAM model files from input
+  FBX or BLEND models adding optimizations and modifying them on the fly
+* A tool to easily rescale and palettize all images in a folder
+* Bam2Egg converter that does not suck
+* A tool to export toon model and fix most issues arising from that
+* Fast and flexible implementation of the Egg Syntax Tree
+
+## Documentation
+
+See here: [Documentation](https://panda-utils.readthedocs.io/en/latest/)
