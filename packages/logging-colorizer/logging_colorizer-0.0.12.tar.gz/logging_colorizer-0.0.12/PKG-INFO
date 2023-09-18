@@ -1,0 +1,103 @@
+Metadata-Version: 2.1
+Name: logging_colorizer
+Version: 0.0.12
+Summary: This library is based on the requests library but it colorizes the logs.
+Author: Ali Kianigohar
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+Requires-Dist: requests
+Requires-Dist: colorlog>=6.7.0
+
+# Installation
+you can install the following library simply by just running:
+```
+pip install logging-colorizer
+```
+
+# Usage
+In addition to use this library first we need to import it using:
+```python
+from logging_colorizer import Log
+```
+after that we instantiate our logger and we also can costumize its format
+```python
+log = Log() #this is the logger with its default settings
+log = Log(format="%(light_black)s TIME: %(asctime)s %(cyan)s|%(light_black)s IP: %(clientip)s %(cyan)s|%(light_black)s CODE: %(Code)s %(cyan)s|%(purple)s [%(lvl)s] %(cyan)s|%(log_color)s %(message)s %(reset)s") # this is the logger with costumized format like so
+```
+
+# The levels to trigger a log
+| Level           | Default function name  | Abbriviation | Shortened name |
+| :-------------: | :-------------------:  | :----------: | :------------: |
+| Info            | info                   | inf          | i              |
+| warning         | warning                | warn         | w              |
+| debug           | debug                  | dbg          | d              |
+| error           | error                  | err          | e              |
+| critical        | critical               | crit          | c              |
+
+So all of three lines bellow do the exact same thing
+```python
+log.info('Here is the info')
+log.inf('Here is the info')
+log.i('Here is the info')
+```
+And so on...
+
+# The colors
+For using different colors in your logger you should provide the color on the format argument of the module like this:
+```python
+log = Log(format="%(purple)s %(message)s %(reset)s")
+```
+in the above example in every call of the logger, it writes the message in purple color and then resets the color for future logs.(just incase if there were no colors provided)
+
+instead of purple, you can use these colors:
+* light_black, black, bold_black
+* light_red, red, bold_red
+* light_green, green, bold_green
+* light_yellow, yellow, bold_yellow
+* light_blue, blue, bold_blue
+* light_purple, purple, bold_purple
+* light_cyan, cyan, bold_cyan
+* light_white, white, bold_white
+
+# Example
+A boilerplate code can be like this:
+```python
+# Imports
+from logging_colorizer import Log
+import requests
+# A function that gets the current IP address
+def check_ip():
+    session = requests.session()
+    ip = session.get("http://icanhazip.com").text.replace("\n","")
+    session.close()
+    return ip
+ip = check_ip() # Run the function to get the ip
+log = Log(format="%(light_black)s TIME: %(asctime)s %(cyan)s|%(light_black)s IP: %(clientip)s %(cyan)s|%(light_black)s CODE: %(Code)s %(cyan)s|%(purple)s [%(lvl)s] %(cyan)s|%(log_color)s %(message)s %(reset)s") # Initializing our logging module with our custom format
+
+log.info('Here is an info log', extra_plus_ali={'clientip': ip, "Code": "Boilerplate.py"})
+log.warning('Here is a warning log', extra_plus_ali={'clientip': ip, "Code": "Boilerplate.py"})
+log.debug('Here is a debug log', extra_plus_ali={'clientip': ip, "Code": "Boilerplate.py"})
+log.error('Here is an error log', extra_plus_ali={'clientip': ip, "Code": "Boilerplate.py"})
+log.critical('Here is a critical log', extra_plus_ali={'clientip': ip, "Code": "Boilerplate.py"})
+```
+* Which is supposed to write the current time, ip, the code name in black color and the log level in purple and the message color is based on the log level.
+1. if the log level is info, the message color will be green
+2. if the log level is warning, the message color will be yellow
+3. if the log level is debug, the message color will be white
+4. if the log level is error, the message color will be red
+5. if the log level is critical, the message color will be bold red
+
+Which returns an output like bellow:
+
+<span style="color: #919191;"> TIME: 2023-09-18 01:01:30,354</span>  <span style="color: #1B89CD;">|</span> <span style="color: #919191;"> IP: 94.215.84.39</span> <span style="color: #1B89CD;">|</span> <span style="color: #919191;"> CODE: Boilerplate.py</span> <span style="color: #1B89CD;">|</span> <span style="color: #BE65A8;">[INFO]</span> <span style="color: #1B89CD;">|</span> <span style="color: #13A10E;">Here is an info log </span>
+
+<span style="color: #919191;"> TIME: 2023-09-18 00:55:50,360</span>  <span style="color: #1B89CD;">|</span> <span style="color: #919191;"> IP: 94.215.84.39</span> <span style="color: #1B89CD;">|</span> <span style="color: #919191;"> CODE: Boilerplate.py</span> <span style="color: #1B89CD;">|</span> <span style="color: #BE65A8;">[WARNING]</span> <span style="color: #1B89CD;">|</span> <span style="color: #E5E510;">Here is a warning log </span>
+
+<span style="color: #919191;"> TIME: 2023-09-18 00:55:50,360</span>  <span style="color: #1B89CD;">|</span> <span style="color: #919191;"> IP: 94.215.84.39</span> <span style="color: #1B89CD;">|</span> <span style="color: #919191;"> CODE: Boilerplate.py</span> <span style="color: #1B89CD;">|</span> <span style="color: #BE65A8;">[DEBUG]</span> <span style="color: #1B89CD;">|</span> <span style="color: #E5E5E5;">Here is a debug log </span>
+
+<span style="color: #919191;"> TIME: 2023-09-18 00:55:50,360</span>  <span style="color: #1B89CD;">|</span> <span style="color: #919191;"> IP: 94.215.84.39</span> <span style="color: #1B89CD;">|</span> <span style="color: #919191;"> CODE: Boilerplate.py</span> <span style="color: #1B89CD;">|</span> <span style="color: #BE65A8;">[ERROR]</span> <span style="color: #1B89CD;">|</span> <span style="color: #DB6A6A;">Here is an error log </span>
+
+<span style="color: #919191;"> TIME: 2023-09-18 00:55:50,362</span>  <span style="color: #1B89CD;">|</span> <span style="color: #919191;"> IP: 94.215.84.39</span> <span style="color: #1B89CD;">|</span> <span style="color: #919191;"> CODE: Boilerplate.py</span> <span style="color: #1B89CD;">|</span> <span style="color: #BE65A8;">[CRITICAL]</span> <span style="color: #1B89CD;">|</span> <span style="color: #F14C4C; font-weight:bold">Here is a critical log </span>
