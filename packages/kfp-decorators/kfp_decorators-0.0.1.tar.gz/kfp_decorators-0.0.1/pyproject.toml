@@ -1,0 +1,45 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "kfp-decorators"
+description = ""
+authors = [{ name = "Takahiro Yano", email = "speg03@gmail.com" }]
+
+readme = "README.md"
+license = "MIT"
+
+requires-python = ">=3.7"
+keywords = ["kfp", "kubeflow", "pipelines", "decorators"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+dynamic = ["version"]
+
+dependencies = ["kfp~=2.0"]
+
+[project.optional-dependencies]
+test = ["pytest", "pytest-cov"]
+
+[project.urls]
+Repository = "https://github.com/speg03/kfp-decorators"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/kfp_decorators/_version.py"
+
+[tool.pytest.ini_options]
+addopts = "--cov=kfp_decorators --cov-report=term-missing --cov-report=xml"
