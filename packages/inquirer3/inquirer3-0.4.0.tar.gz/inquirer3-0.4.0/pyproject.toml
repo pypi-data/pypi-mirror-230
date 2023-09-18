@@ -1,0 +1,70 @@
+[tool.poetry]
+name = "inquirer3"
+version = "0.4.0"
+description = "Collection of common interactive command line user interfaces, based on Inquirer.js"
+authors = ["Guy Salton <guy123121@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/guysalt/python-inquirer3"
+repository = "https://github.com/guysalt/python-inquirer3"
+documentation = "https://python-inquirer3.readthedocs.io/en/latest/"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: User Interfaces",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+blessed = "^1.20.0"
+readchar = "^4.0.5"
+python-editor = "^1.0.4"
+coloredlogs = "^15.0.1"
+
+[tool.poetry.group.dev.dependencies]
+bandit = "^1.7.5"
+flake8 = "^5.0.0"
+flake8-docstrings = "^1.7.0"
+furo = "^2023.5.20"
+isort = "^5.12.0"
+pexpect = "^4.8.0"
+pre-commit = "^3.3.3"
+pre-commit-hooks = "^4.4.0"
+pyupgrade = "^3.8.0"
+safety = "^2.3.5"
+sphinx = "^7.0.1"
+sphinx-autobuild = "^2021.3.14"
+nox = "^2023.4.22"
+nox-poetry = "^1.0.3"
+
+[tool.coverage.paths]
+source = ["src", "*/site-packages"]
+tests = ["tests", "*/tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["inquirer3", "tests"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 97
+
+[tool.black]
+line-length = 119
+
+[tool.isort]
+profile = "black"
+force_single_line = true
+lines_after_imports = 2
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
