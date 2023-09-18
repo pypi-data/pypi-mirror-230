@@ -1,0 +1,2225 @@
+.\" Man page generated from reStructuredText.
+.
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.TH "PYBUILD" "3" "Sep 17, 2023" "Portmod 2.7.0" "Portmod"
+.SH NAME
+pybuild \- Pybuild API
+.SH SUBMODULES
+.TS
+center;
+|l|l|.
+_
+T{
+\fI\%pybuild.info\fP
+T}	T{
+Importing values from this module fills them with information about the pybuild file from which they were imported
+T}
+_
+T{
+\fI\%pybuild.winreg\fP
+T}	T{
+Helper functions for interacting with the Windows registry
+T}
+_
+.TE
+.SS pybuild.info module
+.sp
+Importing values from this module fills them with information about the
+pybuild file from which they were imported
+.sp
+\fBData:\fP
+.TS
+center;
+|l|l|.
+_
+T{
+\fI\%CATEGORY\fP
+T}	T{
+The package\(aqs category.
+T}
+_
+T{
+\fI\%P\fP
+T}	T{
+The package name and version.
+T}
+_
+T{
+\fI\%PF\fP
+T}	T{
+The package name with version and revision.
+T}
+_
+T{
+\fI\%PN\fP
+T}	T{
+The package name without version.
+T}
+_
+T{
+\fI\%PR\fP
+T}	T{
+The package\(aqs revision
+T}
+_
+T{
+\fI\%PV\fP
+T}	T{
+The package\(aqs version without revision
+T}
+_
+T{
+\fI\%PVR\fP
+T}	T{
+The package\(aqs version and revision
+T}
+_
+.TE
+.INDENT 0.0
+.TP
+.B pybuild.info.CATEGORY:  \fI\%str\fP  =  \(aq\(aq
+The package\(aqs category.
+.sp
+E.g. \fBbase\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B pybuild.info.P:  \fI\%str\fP  =  \(aq\(aq
+The package name and version.
+.sp
+E.g.: \fBexample\-suite\-1.0\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B pybuild.info.PF:  \fI\%str\fP  =  \(aq\(aq
+The package name with version and revision.
+.sp
+E.g.: \fBexample\-suite\-1.0\-r1\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B pybuild.info.PN:  \fI\%str\fP  =  \(aq\(aq
+The package name without version.
+.sp
+E.g.: \fBexample\-suite\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B pybuild.info.PR:  \fI\%Optional\fP[\fI\%str\fP]  =  None
+The package\(aqs revision
+.sp
+E.g. \fBr1\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B pybuild.info.PV:  \fI\%str\fP  =  \(aq\(aq
+The package\(aqs version without revision
+.sp
+E.g. \fB1.0\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B pybuild.info.PVR:  \fI\%str\fP  =  \(aq\(aq
+The package\(aqs version and revision
+.sp
+E.g. \fB1.0\-r1\fP
+.UNINDENT
+.SS pybuild.winreg module
+.sp
+Helper functions for interacting with the Windows registry
+.sp
+Also provides the following constants from the \fBwinreg\fP builtin module:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+HKEY_CLASSES_ROOT: int
+HKEY_CURRENT_CONFIG: int
+HKEY_CURRENT_USER: int
+HKEY_LOCAL_MACHINE: int
+HKEY_USERS: int
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+\fBFunctions:\fP
+.TS
+center;
+|l|l|.
+_
+T{
+\fI\%read_reg\fP(key, subkey[, entry])
+T}	T{
+Reads the given registry key/subkey
+T}
+_
+.TE
+.INDENT 0.0
+.TP
+.B pybuild.winreg.read_reg(key, subkey, entry=None)
+Reads the given registry key/subkey
+.INDENT 7.0
+.TP
+.B Parameters
+.INDENT 7.0
+.IP \(bu 2
+\fBkey\fP (\fI\%str\fP) \-\- Registry key to read from
+.IP \(bu 2
+\fBsubkey\fP (\fI\%str\fP) \-\- Registry subkey to read from
+.IP \(bu 2
+\fBentry\fP (\fI\%Optional\fP[\fI\%str\fP]) \-\- Optional name in the dictionary stored at the given key/subkey
+to use.
+.UNINDENT
+.TP
+.B Return type
+\fI\%Union\fP[\fI\%Any\fP, \fI\%Dict\fP[\fI\%str\fP, \fI\%Any\fP]]
+.TP
+.B Returns
+Key data, type is usually a string. If the key contains subkeys and the entry
+is not provided, returns a dictionary mapping subkey names to their values
+.UNINDENT
+.UNINDENT
+.SH MODULE CONTENTS
+.sp
+The module accessible within pybuilds
+.sp
+Note that this module should not be imported outside of pybuild files
+.sp
+\fBClasses:\fP
+.TS
+center;
+|l|l|.
+_
+T{
+\fI\%File\fP(NAME[, REQUIRED_USE, OVERRIDES])
+T}	T{
+Represents important installed files and their metadata
+T}
+_
+T{
+\fI\%InstallDir\fP(PATH[, REQUIRED_USE, PATCHDIR, ...])
+T}	T{
+Represents a directory in the Virtual File System
+T}
+_
+T{
+\fI\%Pybuild1\fP()
+T}	T{
+Legacy class.
+T}
+_
+T{
+\fI\%Pybuild2\fP()
+T}	T{
+The class all Pybuilds should derive.
+T}
+_
+.TE
+.sp
+\fBFunctions:\fP
+.TS
+center;
+|l|l|.
+_
+T{
+\fI\%apply_patch\fP(patch)
+T}	T{
+Applies git patch using Git apply
+T}
+_
+T{
+\fI\%find_file\fP(name)
+T}	T{
+Locates the path of a file within the OpenMW virtual file system
+T}
+_
+T{
+\fI\%get_masters\fP(file)
+T}	T{
+Detects masters for the given file
+T}
+_
+T{
+\fI\%list_dir\fP(name)
+T}	T{
+Locates all path of files matching the given pattern within the OpenMW virtual file system
+T}
+_
+T{
+\fI\%patch_dir\fP(src, dst, *[, overwrite, ignore, ...])
+T}	T{
+Copies src ontop of dst
+T}
+_
+T{
+\fI\%use_reduce\fP(depstr[, uselist, masklist, ...])
+T}	T{
+Takes a dep string and reduces the use? conditionals out, leaving an array with subarrays.
+T}
+_
+T{
+\fI\%version_gt\fP(version1, version2)
+T}	T{
+Version comparision function
+T}
+_
+.TE
+.INDENT 0.0
+.TP
+.B class  pybuild.File(NAME, REQUIRED_USE=\(aq\(aq, OVERRIDES=[], **kwargs)
+Bases: \fI\%object\fP
+.sp
+Represents important installed files and their metadata
+.sp
+Deprecated since version 2.4: It will be removed in Portmod 3.0
+
+.INDENT 7.0
+.TP
+.B Parameters
+.INDENT 7.0
+.IP \(bu 2
+\fBNAME\fP (\fI\%str\fP) \-\- 
+.IP \(bu 2
+\fBREQUIRED_USE\fP (\fI\%str\fP) \-\- 
+.IP \(bu 2
+\fBOVERRIDES\fP (\fI\%Union\fP[\fI\%str\fP, \fI\%List\fP[\fI\%str\fP]]) \-\- 
+.UNINDENT
+.UNINDENT
+.sp
+\fBAttributes:\fP
+.TS
+center;
+|l|l|.
+_
+T{
+\fI\%NAME\fP
+T}	T{
+Name of the file relative to the root of the InstallDir
+T}
+_
+T{
+\fI\%OVERRIDES\fP
+T}	T{
+A list of files which this overrides when sorting (if applicable).
+T}
+_
+T{
+\fI\%REQUIRED_USE\fP
+T}	T{
+Requirements for installing this file
+T}
+_
+.TE
+.INDENT 7.0
+.TP
+.B NAME:  \fI\%str\fP
+Name of the file relative to the root of the InstallDir
+.UNINDENT
+.INDENT 7.0
+.TP
+.B OVERRIDES:  \fI\%Union\fP[\fI\%str\fP, \fI\%List\fP[\fI\%str\fP]]
+A list of files which this overrides when sorting (if applicable).
+.sp
+Can either be in the form of a string containing use\-conditionals (note that
+this does not support files that contain spaces) or a list of files to override.
+Note that these overridden files are not considered masters and do not need to
+be present.
+.sp
+For archives it determines the order in which the fallback archives will be
+searched during VFS lookups.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B REQUIRED_USE:  \fI\%str\fP
+Requirements for installing this file
+.sp
+The default empty string is always satisfied.
+See Pybuild2.REQUIRED_USE for details on the syntax.
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B class  pybuild.InstallDir(PATH, REQUIRED_USE=\(aq\(aq, PATCHDIR=\(aq.\(aq, S=None, WHITELIST=None, BLACKLIST=None, RENAME=None, DATA_OVERRIDES=\(aq\(aq, ARCHIVES=(), VFS=None, DOC=(), **kwargs)
+Bases: \fI\%object\fP
+.sp
+Represents a directory in the Virtual File System
+.sp
+Note that arbitrary arguments can be passed to the constructor, as
+repositories may make use of custom information.
+See the repository\-level documentation for such information.
+.sp
+Deprecated since version 2.4: It will be removed in Portmod 3.0
+
+.INDENT 7.0
+.TP
+.B Parameters
+.INDENT 7.0
+.IP \(bu 2
+\fBPATH\fP (\fI\%str\fP) \-\- 
+.IP \(bu 2
+\fBREQUIRED_USE\fP (\fI\%str\fP) \-\- 
+.IP \(bu 2
+\fBPATCHDIR\fP (\fI\%str\fP) \-\- 
+.IP \(bu 2
+\fBS\fP (\fI\%Optional\fP[\fI\%str\fP]) \-\- 
+.IP \(bu 2
+\fBWHITELIST\fP (\fI\%Optional\fP[\fI\%List\fP[\fI\%str\fP]]) \-\- 
+.IP \(bu 2
+\fBBLACKLIST\fP (\fI\%Optional\fP[\fI\%List\fP[\fI\%str\fP]]) \-\- 
+.IP \(bu 2
+\fBRENAME\fP (\fI\%Optional\fP[\fI\%str\fP]) \-\- 
+.IP \(bu 2
+\fBDATA_OVERRIDES\fP (\fI\%str\fP) \-\- 
+.IP \(bu 2
+\fBARCHIVES\fP (\fI\%Iterable\fP[\fI\%File\fP]) \-\- 
+.IP \(bu 2
+\fBVFS\fP (\fI\%Optional\fP[\fI\%bool\fP]) \-\- 
+.IP \(bu 2
+\fBDOC\fP (\fI\%Iterable\fP[\fI\%str\fP]) \-\- 
+.UNINDENT
+.UNINDENT
+.sp
+\fBAttributes:\fP
+.TS
+center;
+|l|l|.
+_
+T{
+\fI\%ARCHIVES\fP
+T}	T{
+A list of File objects representing VFS archives.
+T}
+_
+T{
+\fI\%BLACKLIST\fP
+T}	T{
+If present, does not install files matching the patterns in this list.
+T}
+_
+T{
+\fI\%DATA_OVERRIDES\fP
+T}	T{
+A list of packages that this InstallDir should override in the VFS
+T}
+_
+T{
+\fI\%DOC\fP
+T}	T{
+A list of patterns matching documentation files within the package
+T}
+_
+T{
+\fI\%PATCHDIR\fP
+T}	T{
+The destination path of the InstallDir within the package\(aqs directory.
+T}
+_
+T{
+\fI\%PATH\fP
+T}	T{
+The path to the data directory that this InstallDir represents relative to the root of the archive it is contained within.
+T}
+_
+T{
+\fI\%RENAME\fP
+T}	T{
+Destination path of this directory within the final directory.
+T}
+_
+T{
+\fI\%REQUIRED_USE\fP
+T}	T{
+A list of use flags with the same format as the package\(aqs REQUIRED_USE variable which enable the InstallDir if satisfied.
+T}
+_
+T{
+\fI\%S\fP
+T}	T{
+The source directory corresponding to this InstallDir.
+T}
+_
+T{
+\fI\%VFS\fP
+T}	T{
+Whether or not this InstallDir gets added to the VFS
+T}
+_
+T{
+\fI\%WHITELIST\fP
+T}	T{
+If present, only installs files matching the patterns in this list.
+T}
+_
+.TE
+.sp
+\fBMethods:\fP
+.TS
+center;
+|l|l|.
+_
+T{
+\fI\%get_files\fP()
+T}	T{
+Generator function yielding file subattributes of the installdir
+T}
+_
+.TE
+.INDENT 7.0
+.TP
+.B ARCHIVES:  \fI\%List\fP[\fI\%File\fP]
+A list of File objects representing VFS archives.
+.sp
+These will be searched, in order, during VFS file lookups if the file is not
+present in the package directories.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B BLACKLIST:  \fI\%Optional\fP[\fI\%List\fP[\fI\%str\fP]]
+If present, does not install files matching the patterns in this list.
+fnmatch\-style globbing patterns (e.g. * and [a\-z]) can be used
+.UNINDENT
+.INDENT 7.0
+.TP
+.B DATA_OVERRIDES:  \fI\%str\fP
+A list of packages that this InstallDir should override in the VFS
+.sp
+This only has a different effect from Pybuild1.DATA_OVERRIDES if multiple PATCHDIRs
+are set, as it can define overrides for individual PATCHDIRS, while
+Pybuild1.DATA_OVERRIDES affects all PATCHDIRs.
+See Pybuild1.DATA_OVERRIDES for details of the syntax.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B DOC:  \fI\%List\fP[\fI\%str\fP]
+A list of patterns matching documentation files within the package
+.sp
+This documentation will be installed separately
+fnmatch\-style globbing patterns (e.g. * and [a\-z]) can be used.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B PATCHDIR:  \fI\%str\fP
+The destination path of the InstallDir within the package\(aqs directory.
+.sp
+Defaults to \(dq.\(dq, i.e. the root of the mod directory. If multiple InstallDirs
+share the same PATCHDIR they will be installed into the same directory in the
+order that they are defined in the INSTALL_DIRS list.
+Each unique PATCHDIR has its own entry in the VFS, and its own sorting rules
+.UNINDENT
+.INDENT 7.0
+.TP
+.B PATH:  \fI\%str\fP
+The path to the data directory that this InstallDir represents
+relative to the root of the archive it is contained within.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B RENAME:  \fI\%Optional\fP[\fI\%str\fP]
+Destination path of this directory within the final directory.
+.sp
+E.g.:
+.INDENT 7.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+InstallDir(\(dqfoo/bar\(dq, PATCHDIR=\(dq.\(dq, RENAME=\(dqbar\(dq)
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Will install the contents of \fBfoo/bar\fP (in the source) into the directory
+\fBbar\fP inside the package\(aqs installation directory (and also the VFS).
+.UNINDENT
+.INDENT 7.0
+.TP
+.B REQUIRED_USE:  \fI\%str\fP
+A list of use flags with the same format as the package\(aqs
+REQUIRED_USE variable which enable the InstallDir if satisfied.
+Defaults to an empty string that is always satisfied.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B S:  \fI\%Optional\fP[\fI\%str\fP]
+The source directory corresponding to this InstallDir.
+.sp
+Similar function to S for the entire pybuild, this determines which directory
+contains this InstallDir, and generally corresponds to the name of the source
+archive, minus extensions. This is required for packages that contain more
+than one source, but is automatically detected for those with only one source
+if it is not specified, and will first take the value of Pybuild2.S, then the
+source\(aqs file name without extension if the former was not defined.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B VFS:  \fI\%Optional\fP[\fI\%bool\fP]
+Whether or not this InstallDir gets added to the VFS
+.sp
+Defaults to the value of the VFS variable in the profile configuration
+.UNINDENT
+.INDENT 7.0
+.TP
+.B WHITELIST:  \fI\%Optional\fP[\fI\%List\fP[\fI\%str\fP]]
+If present, only installs files matching the patterns in this list.
+fnmatch\-style globbing patterns (e.g. * and [a\-z]) can be used
+.UNINDENT
+.INDENT 7.0
+.TP
+.B get_files()
+Generator function yielding file subattributes of the installdir
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B class  pybuild.Pybuild1
+Bases: \fI\%Pybuild2\fP
+.sp
+Legacy class. Superseded by Pybuild2
+.sp
+Deprecated since version 2.4: Pybuild2 should be used instead.
+This will be removed in Portmod 3.0
+
+.sp
+\fBAttributes:\fP
+.TS
+center;
+|l|l|.
+_
+T{
+\fI\%DATA_OVERRIDES\fP
+T}	T{
+A use\-reduce\-able list of atoms indicating packages whose data directories should come before the data directories of this package when sorting data directories.
+T}
+_
+T{
+\fI\%INSTALL_DIRS\fP
+T}	T{
+The INSTALL_DIRS variable consists of a python list of InstallDir objects.
+T}
+_
+T{
+\fI\%REBUILD_FILES\fP
+T}	T{
+Files in the VFS which, if changed, should cause this package to be rebuilt
+T}
+_
+T{
+\fI\%TIER\fP
+T}	T{
+The Tier of a package represents the position of its data directories and plugins in the virtual file system.
+T}
+_
+.TE
+.sp
+\fBMethods:\fP
+.TS
+center;
+|l|l|.
+_
+T{
+\fI\%get_files\fP(typ)
+T}	T{
+Returns all enabled files and their directories
+T}
+_
+T{
+\fI\%src_install\fP()
+T}	T{
+The src_install function installs the package’s content to a directory specified in \fI\%Pybuild2.D\fP\&.
+T}
+_
+T{
+\fI\%unpack\fP(archives)
+T}	T{
+Unpacks the given archive into the workdir
+T}
+_
+.TE
+.INDENT 7.0
+.TP
+.B A:  List[Source]
+The list of enabled sources [1]
+.sp
+Scope: All except __init__
+.UNINDENT
+.INDENT 7.0
+.TP
+.B ATOM:  FQAtom
+.UNINDENT
+.INDENT 7.0
+.TP
+.B CATEGORY:  str
+The package\(aqs category. [1]
+.sp
+E.g. \fBbase\fP
+.UNINDENT
+.INDENT 7.0
+.TP
+.B CP:  QualifiedAtom
+.UNINDENT
+.INDENT 7.0
+.TP
+.B CPN:  QualifiedAtom
+.UNINDENT
+.INDENT 7.0
+.TP
+.B D:  str
+The full path of the directory where the package is to be installed. [1]
+.sp
+Note that this is a temporary directory and not the final install location.
+.sp
+Scope: src_install
+.UNINDENT
+.INDENT 7.0
+.TP
+.B DATA_OVERRIDES  =  \(aq\(aq
+A use\-reduce\-able list of atoms indicating packages whose data directories should
+come before the data directories of this package when sorting data directories.
+.sp
+They do not need to be dependencies. Blockers (atoms beginning with !!) can be used
+to specify underrides, and use dependencies (e.g. the [bar] in foo[bar]) can be
+used to conditionally override based on the target atom\(aqs flag configuration.
+.sp
+Not included in PMS
+.UNINDENT
+.INDENT 7.0
+.TP
+.B FILE:  str
+.UNINDENT
+.INDENT 7.0
+.TP
+.B FILESDIR:  str
+Path of the directory containing additional repository files
+.sp
+Scope: src_*
+.UNINDENT
+.INDENT 7.0
+.TP
+.B INSTALL_DIRS:  \fI\%List\fP[\fI\%InstallDir\fP]  =  []
+The INSTALL_DIRS variable consists of a python list of InstallDir objects.
+.sp
+E.g.:
+.INDENT 7.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+INSTALL_DIRS=[
+    InstallDir(
+        \(aqMorrowind/Data Files\(aq,
+        REQUIRED_USE=\(aquse use ...\(aq,
+        DESTPATH=\(aq.\(aq,
+        PLUGINS=[File(\(aqPlugin Name\(aq,
+            REQUIRED_USE=\(aquse use ...\(aq, satisfied
+        )],
+        ARCHIVES=[File(\(aqArchive Name\(aq)],
+        S=\(aqSource Name Without Extension\(aq,
+    )
+]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Not included in PMS
+.UNINDENT
+.INDENT 7.0
+.TP
+.B P:  Atom
+The package name and version. [1]
+.sp
+E.g.: \fBexample\-suite\-1.0\fP
+.UNINDENT
+.INDENT 7.0
+.TP
+.B PF:  Atom
+The package name with version and revision. [1]
+.sp
+E.g.: \fBexample\-suite\-1.0\-r1\fP
+.UNINDENT
+.INDENT 7.0
+.TP
+.B PN:  Atom
+The package name without version. [1]
+.sp
+E.g.: \fBexample\-suite\fP
+.UNINDENT
+.INDENT 7.0
+.TP
+.B PR:  str
+The package\(aqs revision [1]
+.sp
+E.g. \fBr1\fP
+.sp
+Is equal to \fBr0\fP is no revision is specified
+.UNINDENT
+.INDENT 7.0
+.TP
+.B PV:  str
+The package\(aqs version without revision [1]
+.sp
+E.g. \fB1.0\fP
+.UNINDENT
+.INDENT 7.0
+.TP
+.B PVR:  str
+The package\(aqs version and revision [1]
+.sp
+E.g. \fB1.0\-r1\fP
+.UNINDENT
+.INDENT 7.0
+.TP
+.B REBUILD_FILES:  \fI\%List\fP[\fI\%str\fP]  =  []
+Files in the VFS which, if changed, should cause this package to be rebuilt
+.sp
+Can include glob\-style patterns using the \fI, ? and [] operators.
+See https://docs.python.org/3/library/fnmatch.html.
+Unlike normal fnmatch parsing, wildcards (\fP) will not match accross
+path separators.
+.sp
+This field can be modified during installation, and will only be used after the
+package has been installed.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B REPO:  str
+.UNINDENT
+.INDENT 7.0
+.TP
+.B REPO_PATH:  Optional[str]
+.UNINDENT
+.INDENT 7.0
+.TP
+.B ROOT:  str
+The full path of the prefix root where packages will be installed
+.sp
+Note: This functions as both ROOT and SYSROOT (as defined by PMS section 11.1).
+.sp
+Scope: src_*, pkg_*
+.UNINDENT
+.INDENT 7.0
+.TP
+.B T:  str
+Path to a temporary directory which may be used during packaging [1]
+.sp
+Scope: All except __init__
+.UNINDENT
+.INDENT 7.0
+.TP
+.B TIER  =  \(aqa\(aq
+The Tier of a package represents the position of its data directories and plugins
+in the virtual file system.
+.sp
+This is used to group packages in such a way to avoid having to individually
+specify overrides whenever possible.
+.sp
+The value is either in the range [0\-9] or [a\-z].
+.sp
+Default value: \(aqa\(aq
+.sp
+Tier 0 represents top\-level mods such as morrowind
+Tier 1 is for mods that replace or modify top\-level mods. E.g. texture and mesh replacers.
+Tier 2 is for large mods that are designed to be built on top of by other mods, such as Tamriel Data
+Tier a is for all other mods.
+Tier z is for mods that should be installed or loaded last. E.g. omwllf
+The remaining tiers are reserved in case the tier system needs to be expanded
+.sp
+Not included in PMS
+.UNINDENT
+.INDENT 7.0
+.TP
+.B UNFETCHED:  List[Source]
+The list of sources which need to be fetched [1]
+.sp
+Scope: pkg_nofetch
+.UNINDENT
+.INDENT 7.0
+.TP
+.B USE:  Set[str]
+Enabled use flags [1]
+.sp
+Scope: All except __init__
+.UNINDENT
+.INDENT 7.0
+.TP
+.B WORKDIR:  str
+The directory where packaging takes place [1]
+.sp
+Scope: src_*
+.UNINDENT
+.INDENT 7.0
+.TP
+.B get_files(typ)
+Returns all enabled files and their directories
+.INDENT 7.0
+.TP
+.B Parameters
+\fBtyp\fP (\fI\%str\fP) \-\- 
+.TP
+.B Return type
+\fI\%Generator\fP[\fI\%Tuple\fP[\fI\%InstallDir\fP, \fI\%File\fP], \fI\%None\fP, \fI\%None\fP]
+.UNINDENT
+.UNINDENT
+.INDENT 7.0
+.TP
+.B src_install()
+The src_install function installs the package’s content to a directory specified
+in \fI\%Pybuild2.D\fP\&.
+.sp
+The initial working directory is \fI\%Pybuild2.S\fP, falling back to
+\fBPybuild.WORKDIR\fP if the directory does not exist.
+.sp
+The default implementation used when the package lacks the \fBsrc_install\fP function
+moves each InstallDir in \fI\%Pybuild1.INSTALL_DIRS\fP which is not hidden due
+to an unsatisfied \fBREQUIRED_USE\fP into \fI\%Pybuild2.D\fP\&.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B unpack(archives)
+Unpacks the given archive into the workdir
+.sp
+Uses \fI\%patool\fP  as its backend.
+.INDENT 7.0
+.TP
+.B Parameters
+\fBarchives\fP (\fI\%Union\fP[\fI\%str\fP, \fI\%Iterable\fP[\fI\%Union\fP[\fBSource\fP, \fI\%str\fP]]]) \-\- The list of archives to be unpacked
+.UNINDENT
+.UNINDENT
+.INDENT 7.0
+.TP
+.B version:  Version
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B class  pybuild.Pybuild2
+Bases: \fBFullPybuild\fP
+.sp
+The class all Pybuilds should derive.
+.sp
+The name and path of a pybuild declares the package name, category, version and
+(optionally) revision:
+.INDENT 7.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+{CATEGORY}/{PKG_NAME}\-{VER}(\-r{REV}).pybuild
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Categories and package names may contain lower case letters, numbers and hyphens.
+Versions may contain numbers and dots. Revisions may only contain numbers
+(following the \-r prefix). (See the PMS for the complete naming scheme).
+.sp
+Note that revisions refer to revisions of the pybuild itself, not the package,
+and are used to indicate that the way the mod is configured has changed in a way
+that will impact the installed version. For changes, such as the source files
+moving, that would not impact a mod that is already installed, you do not need to
+update the revision.
+.sp
+There are certain fields which are defined automatically and may only be available
+in some scopes:
+.TS
+center;
+|l|l|.
+_
+T{
+Variable
+T}	T{
+Scope
+T}
+_
+T{
+\fI\%Pybuild2.P\fP
+T}	T{
+All scopes
+T}
+_
+T{
+\fI\%Pybuild2.PF\fP
+T}	T{
+All scopes
+T}
+_
+T{
+\fI\%Pybuild2.PN\fP
+T}	T{
+All scopes
+T}
+_
+T{
+\fI\%Pybuild2.CATEGORY\fP
+T}	T{
+All scopes
+T}
+_
+T{
+\fI\%Pybuild2.PV\fP
+T}	T{
+All scopes
+T}
+_
+T{
+\fI\%Pybuild2.PVR\fP
+T}	T{
+All scopes
+T}
+_
+T{
+\fI\%Pybuild2.USE\fP
+T}	T{
+All scopes except \fB__init__\fP
+T}
+_
+T{
+\fI\%Pybuild2.WORKDIR\fP
+T}	T{
+src_*
+T}
+_
+T{
+\fI\%Pybuild2.T\fP
+T}	T{
+All scopes except \fB__init__\fP
+T}
+_
+T{
+\fI\%Pybuild2.D\fP
+T}	T{
+\fI\%Pybuild2.src_install()\fP
+T}
+_
+T{
+\fI\%Pybuild2.FILESDIR\fP
+T}	T{
+src_*
+T}
+_
+T{
+\fI\%Pybuild2.ROOT\fP
+T}	T{
+src_*, pkg_*
+T}
+_
+T{
+\fI\%Pybuild2.A\fP
+T}	T{
+src_*, pkg_nofetch
+T}
+_
+T{
+\fI\%Pybuild2.UNFETCHED\fP
+T}	T{
+pkg_nofetch
+T}
+_
+T{
+\fI\%Pybuild2.S\fP
+T}	T{
+src_*
+T}
+_
+.TE
+.IP [1] 5
+Fields which are set automatically and should not be defined in the
+package file. Described in the table above.
+.sp
+\fBAttributes:\fP
+.TS
+center;
+|l|l|.
+_
+T{
+\fI\%A\fP
+T}	T{
+The list of enabled sources [1]
+T}
+_
+T{
+\fI\%CATEGORY\fP
+T}	T{
+The package\(aqs category.
+T}
+_
+T{
+\fI\%D\fP
+T}	T{
+The full path of the directory where the package is to be installed.
+T}
+_
+T{
+\fI\%DEPEND\fP
+T}	T{
+Build dependencies.
+T}
+_
+T{
+\fI\%DESC\fP
+T}	T{
+A short description of the package.
+T}
+_
+T{
+\fI\%DOCS\fP
+T}	T{
+A list of documentation patterns for the default \fBsrc_install\fP to install using \fI\%Pybuild2.dodoc\fP
+T}
+_
+T{
+\fI\%FILESDIR\fP
+T}	T{
+Path of the directory containing additional repository files
+T}
+_
+T{
+\fI\%HOMEPAGE\fP
+T}	T{
+The URL of the package\(aqs homepage(s).
+T}
+_
+T{
+\fI\%IUSE\fP
+T}	T{
+A field containing a space\-separated list of the use flags used by the package.
+T}
+_
+T{
+\fI\%KEYWORDS\fP
+T}	T{
+Keywords indicating compatibility.
+T}
+_
+T{
+\fI\%LICENSE\fP
+T}	T{
+One or more licenses used by the package.
+T}
+_
+T{
+\fI\%NAME\fP
+T}	T{
+Descriptive package name.
+T}
+_
+T{
+\fI\%P\fP
+T}	T{
+The package name and version.
+T}
+_
+T{
+\fI\%PATCHES\fP
+T}	T{
+A list of patch files stored within the package\(aqs files directory in the repository
+T}
+_
+T{
+\fI\%PF\fP
+T}	T{
+The package name with version and revision.
+T}
+_
+T{
+\fI\%PN\fP
+T}	T{
+The package name without version.
+T}
+_
+T{
+\fI\%PR\fP
+T}	T{
+The package\(aqs revision [1]
+T}
+_
+T{
+\fI\%PROPERTIES\fP
+T}	T{
+A white\-space\-delimited list of additional properties of the given pybuild to enable special behaviour.
+T}
+_
+T{
+\fI\%PV\fP
+T}	T{
+The package\(aqs version without revision [1]
+T}
+_
+T{
+\fI\%PVR\fP
+T}	T{
+The package\(aqs version and revision [1]
+T}
+_
+T{
+\fI\%RDEPEND\fP
+T}	T{
+Runtime dependencies.
+T}
+_
+T{
+\fI\%REQUIRED_USE\fP
+T}	T{
+An expression indicating valid combinations of use flags.
+T}
+_
+T{
+\fI\%RESTRICT\fP
+T}	T{
+Lists features which should be disabled for this package
+T}
+_
+T{
+\fI\%ROOT\fP
+T}	T{
+The full path of the prefix root where packages will be installed
+T}
+_
+T{
+\fI\%S\fP
+T}	T{
+Specifies the default working directory for src_* functions.
+T}
+_
+T{
+\fI\%SRC_URI\fP
+T}	T{
+A List of sources to be fetched.
+T}
+_
+T{
+\fI\%T\fP
+T}	T{
+Path to a temporary directory which may be used during packaging [1]
+T}
+_
+T{
+\fI\%TEXTURE_SIZES\fP
+T}	T{
+A field declaring the texture size options that the package supports.
+T}
+_
+T{
+\fI\%UNFETCHED\fP
+T}	T{
+The list of sources which need to be fetched [1]
+T}
+_
+T{
+\fI\%USE\fP
+T}	T{
+Enabled use flags [1]
+T}
+_
+T{
+\fI\%WORKDIR\fP
+T}	T{
+The directory where packaging takes place [1]
+T}
+_
+.TE
+.sp
+\fBMethods:\fP
+.TS
+center;
+|l|l|.
+_
+T{
+\fI\%can_update_live\fP()
+T}	T{
+Indicates whether or not a live package can be updated.
+T}
+_
+T{
+\fI\%dodoc\fP(pattern)
+T}	T{
+Installs documentation matching the given pattern into the image directory (\fBSelf.D\fP)
+T}
+_
+T{
+\fI\%execute\fP(command[, pipe_output, pipe_error])
+T}	T{
+Allows execution of arbitrary commands at runtime.
+T}
+_
+T{
+\fI\%get_installed_env\fP()
+T}	T{
+Returns a dictionary containing installed object values
+T}
+_
+T{
+\fI\%info\fP(string)
+T}	T{
+Displays info message both immediately, and in the summary after all transactions have been completed
+T}
+_
+T{
+\fI\%pkg_postinst\fP()
+T}	T{
+Function called immediately after package installation
+T}
+_
+T{
+\fI\%pkg_prerm\fP()
+T}	T{
+Function called immediately before package removal
+T}
+_
+T{
+\fI\%pkg_pretend\fP()
+T}	T{
+May be used to carry out sanity checks early on in the install process
+T}
+_
+T{
+\fI\%src_install\fP()
+T}	T{
+The src_install function installs the package’s content to a directory specified in \fI\%Pybuild2.D\fP\&.
+T}
+_
+T{
+\fI\%src_prepare\fP()
+T}	T{
+The src_prepare function can be used for post\-unpack source preparation.
+T}
+_
+T{
+\fI\%src_unpack\fP()
+T}	T{
+The \fBsrc_unpack\fP function extracts all of the package’s sources.
+T}
+_
+T{
+\fI\%unpack\fP(archives)
+T}	T{
+Unpacks the given archive into the workdir
+T}
+_
+T{
+\fI\%validate\fP()
+T}	T{
+\fI(Since Portmod 2.4)\fP inquisitor will call this function when scanning repositories.
+T}
+_
+T{
+\fI\%warn\fP(string)
+T}	T{
+Displays warning message both immediately, and in the summary after all transactions have been completed
+T}
+_
+.TE
+.INDENT 7.0
+.TP
+.B A:  \fI\%List\fP[\fBSource\fP]
+The list of enabled sources [1]
+.sp
+Scope: All except __init__
+.UNINDENT
+.INDENT 7.0
+.TP
+.B ATOM:  FQAtom
+.UNINDENT
+.INDENT 7.0
+.TP
+.B CATEGORY:  \fI\%str\fP
+The package\(aqs category. [1]
+.sp
+E.g. \fBbase\fP
+.UNINDENT
+.INDENT 7.0
+.TP
+.B CP:  QualifiedAtom
+.UNINDENT
+.INDENT 7.0
+.TP
+.B CPN:  QualifiedAtom
+.UNINDENT
+.INDENT 7.0
+.TP
+.B D:  \fI\%str\fP
+The full path of the directory where the package is to be installed. [1]
+.sp
+Note that this is a temporary directory and not the final install location.
+.sp
+Scope: src_install
+.UNINDENT
+.INDENT 7.0
+.TP
+.B DEPEND:  str  =  \(aq\(aq
+Build dependencies.
+.sp
+The DEPEND field is used to specify packages which need to be installed in order
+for this package to install correctly.
+.sp
+Most mods do not have build dependencies, however mods that require patching using
+tools external to portmod, or packages that generate content from other sources,
+will need to include their masters, or the other sources, as build dependencies,
+to ensure that they are installed prior to the package being installed.
+.sp
+Format (both \fBDEPEND\fP and \fBRDEPEND\fP):
+A list of dependencies in the form of package atoms. All dependencies should
+include both category and package name. Versions should also be included if
+the package depends on a specific version of another mod.
+It is recommended not to include a version number in the dependency unless it is
+known that the package will not work with other versions.
+.sp
+Ranges of versions can be indicated by prefixing >,<,<=,>= to the atoms.
+E.g. \fB>=cat/foo\-1.0\fP
+.sp
+Specific versions can be indicated by prefixing \fB=\fP (matches version and
+revision exactly) or \fB~\fP (matches version, but allows any revision) to the atoms.
+E.g. \fB=cat/foo\-1.0\fP
+.sp
+Use flag dependencies can be specified in the following manner:
+.INDENT 7.0
+.IP \(bu 2
+\fBcat/foo[flag]\fP \- Indicates that flag must be enabled
+.IP \(bu 2
+\fBcat/foo[flag,flag2]\fP \- Indicates that both flag and flag2 must be enabled
+.IP \(bu 2
+\fBcat/foo[\-flag]\fP \- Indicates that flag must be disabled
+.IP \(bu 2
+\fBcat/foo[flag?]\fP \- Indicates that flag must be enabled if it is enabled for
+this package
+.IP \(bu 2
+\fBcat/foo[!flag?]\fP \- Indicates that flag must be disabled if it is enabled for
+this package
+.UNINDENT
+.sp
+Atoms can be surrounded by use\-conditionals if they are only dependencies when
+that use flag is enabled/disabled.
+.sp
+E.g. \fBflag? ( cat/foo )\fP
+.sp
+Atoms can be grouped and prefixed by a \fB||\fP operator to indicate that any of the
+given packages will satisfy the dependency.
+.sp
+E.g. \fB|| ( cat/foo cat/bar cat/baz )\fP
+.sp
+Note that it is required that the parentheses \fB(\fP \fB)\fP are separated from the atoms
+by whitespace.
+.sp
+Packages which cannot be installed at the same time can be marked as blocks using the
+\fB!!\fP operator. I.e. \fB!!cat/foo\fP indicates that \fBcat/foo\fP cannot be installed at
+the same time as the current package.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B DESC:  str  =  \(aq\(aq
+A short description of the package.
+.sp
+Is may (depending on options provided) be used in searches.
+Note that a longer description can be provided in metadata.yaml.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B DOCS:  \fI\%List\fP[\fI\%str\fP]  =  [\(aqREADME*\(aq, \(aqreadme*\(aq, \(aqReadMe*\(aq, \(aqChangeLog\(aq, \(aqCHANGELOG*\(aq, \(aqAUTHORS*\(aq, \(aqNEWS*\(aq, \(aqTODO*\(aq, \(aqCHANGES*\(aq, \(aqTHANKS*\(aq, \(aqBUGS*\(aq, \(aqFAQ*\(aq, \(aqCREDITS*\(aq, \(aqDoc/*\(aq, \(aqdoc/*\(aq, \(aqdocs/*\(aq, \(aqDocs/*\(aq]
+A list of documentation patterns for the default \fBsrc_install\fP to install using \fI\%Pybuild2.dodoc\fP
+.UNINDENT
+.INDENT 7.0
+.TP
+.B FILE:  str
+.UNINDENT
+.INDENT 7.0
+.TP
+.B FILESDIR:  \fI\%str\fP
+Path of the directory containing additional repository files
+.sp
+Scope: src_*
+.UNINDENT
+.INDENT 7.0
+.TP
+.B HOMEPAGE:  str  =  \(aq\(aq
+The URL of the package\(aqs homepage(s).
+.sp
+Used for descriptive purposes and included in search results.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B IUSE:  Union[Set[str], str]  =  \(aq\(aq
+A field containing a space\-separated list of the use flags used by the package.
+.sp
+IUSE should contain all regular use flags used by this package, both local and
+global. Prefixing the use flags with a + means that the option is enabled by
+default. Otherwise use flags are disabled by default.
+.sp
+Note that you do not need to include TEXTURE_SIZES type flags in IUSE, but
+USE_EXPAND variables should be included in IUSE.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B KEYWORDS:  str  =  \(aq\(aq
+Keywords indicating compatibility.
+Existence of the keyword indicates that the mod is stable on that platform.
+.sp
+a ~ in front of the keyword indicates that the mod is unstable on that platform
+no keyword indicates that the mod is untested on that platform
+a \- in front of the keyword indicates that the mod is known to not work on that platform
+.sp
+E.g. A package that works on OpenMW but does not on tes3mp:
+.INDENT 7.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+KEYWORDS=\(aqopenmw \-tes3mp\(aq
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Keywords can optionally be followed by a \fI\%Version Specifier\fP surrounded by \fB{}\fP\&.
+This requires setting up version detection so that the \fBARCH_VERSION\fP variable
+is available. See \fI\%Architecture Versioning\fP for details.
+.sp
+E.g.
+.INDENT 7.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+KEYWORDS=\(dqopenmw{>=0.48.0}\(dq
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 7.0
+.TP
+.B LICENSE:  str  =  \(aq\(aq
+One or more licenses used by the package.
+.sp
+A list of licenses can be found in the licenses directory of the repository.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B NAME:  str  =  \(aq\(aq
+Descriptive package name.
+.sp
+The package name used for identification is the name used in the filename, however
+this name is included when searching for packages.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B P:  \fBAtom\fP
+The package name and version. [1]
+.sp
+E.g.: \fBexample\-suite\-1.0\fP
+.UNINDENT
+.INDENT 7.0
+.TP
+.B PATCHES:  str  =  \(aq\(aq
+A list of patch files stored within the package\(aqs files directory in the repository
+.sp
+Note that unlike as specified in the PMS, their paths must be relative to the
+files directory.
+.sp
+See \fI\%apply_patch()\fP for details on the supported patch format.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B PF:  \fBAtom\fP
+The package name with version and revision. [1]
+.sp
+E.g.: \fBexample\-suite\-1.0\-r1\fP
+.UNINDENT
+.INDENT 7.0
+.TP
+.B PN:  \fBAtom\fP
+The package name without version. [1]
+.sp
+E.g.: \fBexample\-suite\fP
+.UNINDENT
+.INDENT 7.0
+.TP
+.B PR:  \fI\%str\fP
+The package\(aqs revision [1]
+.sp
+E.g. \fBr1\fP
+.sp
+Is equal to \fBr0\fP is no revision is specified
+.UNINDENT
+.INDENT 7.0
+.TP
+.B PROPERTIES:  str  =  \(aq\(aq
+A white\-space\-delimited list of additional properties of the given pybuild to
+enable special behaviour.
+.sp
+Possible values are given below:
+.INDENT 7.0
+.IP \(bu 2
+.INDENT 2.0
+.TP
+.B \fBlive\fP: Indicates that the pybuild doesn\(aqt have a specific version (e.g. if
+installing from a git repository branch but not using a specific commit).
+Live pybuilds should have an empty KEYWORDS list, as stability testing is
+not meaningful if the upstream source is changing. Live packages must override
+\fI\%Pybuild2.can_update_live()\fP\&.
+.UNINDENT
+.IP \(bu 2
+\fBlocal\fP: Only used internally to refer to Local mods with generated metadata
+.UNINDENT
+.UNINDENT
+.INDENT 7.0
+.TP
+.B PV:  \fI\%str\fP
+The package\(aqs version without revision [1]
+.sp
+E.g. \fB1.0\fP
+.UNINDENT
+.INDENT 7.0
+.TP
+.B PVR:  \fI\%str\fP
+The package\(aqs version and revision [1]
+.sp
+E.g. \fB1.0\-r1\fP
+.UNINDENT
+.INDENT 7.0
+.TP
+.B RDEPEND:  str  =  \(aq\(aq
+Runtime dependencies.
+.sp
+Is used to specify packages which are required at runtime for this package
+to function. The format is the same as for DEPEND
+.UNINDENT
+.INDENT 7.0
+.TP
+.B REPO:  str
+.UNINDENT
+.INDENT 7.0
+.TP
+.B REPO_PATH:  Optional[str]
+.UNINDENT
+.INDENT 7.0
+.TP
+.B REQUIRED_USE:  str  =  \(aq\(aq
+An expression indicating valid combinations of use flags.
+.sp
+Consists of a string containing sub\-expressions of the form given below.
+Note that the brackets can contain arbitrary nested expressions of this form, and
+are not limited to what is shown in the examples below.
+.TS
+center;
+|l|l|.
+_
+T{
+Behaviour
+T}	T{
+Expression
+T}
+_
+T{
+flag must be enabled
+T}	T{
+\fBflag\fP
+T}
+_
+T{
+flag must not be enabled
+T}	T{
+\fB!flag\fP
+T}
+_
+T{
+If flag1 enabled then flag2 enabled
+T}	T{
+\fBflag1? ( flag2 )\fP
+T}
+_
+T{
+If flag1 disabled then flag2 enabled
+T}	T{
+\fB!flag1? ( flag2 )\fP
+T}
+_
+T{
+If flag1 disabled then flag2 disabled
+T}	T{
+\fB!flag1? ( !flag2 )\fP
+T}
+_
+T{
+Must enable any one or more (inclusive or)
+T}	T{
+\fB|| ( flag1 flag2 flag3 )\fP
+T}
+_
+T{
+Must enable exactly one but not more (exclusive or)
+T}	T{
+\fB^^ ( flag1 flag2 flag3 )\fP
+T}
+_
+T{
+May enable at most one
+T}	T{
+\fB?? ( flag1 flag2 flag3 )\fP
+T}
+_
+.TE
+.UNINDENT
+.INDENT 7.0
+.TP
+.B RESTRICT:  str  =  \(aq\(aq
+Lists features which should be disabled for this package
+.sp
+The following two options are supported:
+.INDENT 7.0
+.IP \(bu 2
+mirror: The package\(aqs SRC_URI entries should not be mirrored, and mirrors
+should not be checked when fetching.
+.IP \(bu 2
+fetch: The packages\(aqs SRC_URI entries should not be fetched automatically,
+and the pkg_nofetch function should be invoked if a source cannot be found.
+This option implies mirror.
+.UNINDENT
+.sp
+Note that portmod also supports determining these automatically based on source
+URIs and licenses, so it is no longer necessary to set them explicitly. mirror
+is restricted for licenses which are not in the REDISTRIBUTABLE license group
+(see license_groups.yaml), and fetch is restricted for files which are not
+redistributable (according to license) and do not have a scheme in their
+SRC_URI (i.e. just a filename, no \fI\%https://domain.tld\fP etc.).
+.UNINDENT
+.INDENT 7.0
+.TP
+.B ROOT:  \fI\%str\fP
+The full path of the prefix root where packages will be installed
+.sp
+Note: This functions as both ROOT and SYSROOT (as defined by PMS section 11.1).
+.sp
+Scope: src_*, pkg_*
+.UNINDENT
+.INDENT 7.0
+.TP
+.B S:  Optional[str]  =  None
+Specifies the default working directory for src_* functions.
+.sp
+The default value (if S is None) is the name (minus extension) of the first source
+in SRC_URI (after use\-conditionals have been evaluated).
+If this path does not exist, the working directory falls back to WORKDIR.
+.sp
+This is also used to determine the base source path used for installing a InstallDir
+in the default src_install if S is not defined on the InstallDir.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B SRC_URI:  str  =  \(aq\(aq
+A List of sources to be fetched.
+.sp
+If source files should be renamed, this can be done with the arrow operator as
+shown in the example below.
+.sp
+Sources can be wrapped in use\-conditional expressions to prevent certain sources
+from being downloaded unless certain use flags are set or unset.
+.sp
+E.g.:
+.INDENT 7.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+SRC_URI=\(dq\(dq\(dq
+    http://mw.modhistory.com/file.php?id=9321 \-> FileName\-1.0.zip
+    flag? ( https://cdn.bethsoft.com/elderscrolls/morrowind/other/masterindex.zip )
+\(dq\(dq\(dq
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Note that if you are renaming files, they should correspond to the original
+filename as best possible, but should also contain version information of some sort
+to prevent conflicts with other sources from the same package. That is, if the
+package is updated, we do not want the updated source name to be the same as a
+previous source name, even if the source name did not change upstream.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B T:  \fI\%str\fP
+Path to a temporary directory which may be used during packaging [1]
+.sp
+Scope: All except __init__
+.UNINDENT
+.INDENT 7.0
+.TP
+.B TEXTURE_SIZES:  str  =  \(aq\(aq
+A field declaring the texture size options that the package supports.
+.sp
+If only one texture size option is available, this field need not be included.
+Texture sizes should be numbers representing the size of the texture in pixels.
+Given that textures are usually two\-dimensional, the convention is to use:
+\esqrt{ l \ecdot w}
+.sp
+E.g.:
+.INDENT 7.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+TEXTURE_SIZES = \(dq1024 2048\(dq
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+This is a special type of USE_EXPAND variable, as use flags are created for its
+values in the form texture_size_SIZE (in the above example texture_size_1024 and
+texture_size_2048).
+.sp
+These use flags can (and should) be used in the pybuild to enable sources and
+InstallDirs conditionally depending on whether or not the texture size was selected.
+Exactly one of these use flags will be enabled when the mod is installed depending
+on the value of the TEXTURE_SIZE variable in the user\(aqs portmod.cfg.
+.sp
+Not included in the PMS
+.UNINDENT
+.INDENT 7.0
+.TP
+.B UNFETCHED:  \fI\%List\fP[\fBSource\fP]
+The list of sources which need to be fetched [1]
+.sp
+Scope: pkg_nofetch
+.UNINDENT
+.INDENT 7.0
+.TP
+.B USE:  \fI\%Set\fP[\fI\%str\fP]
+Enabled use flags [1]
+.sp
+Scope: All except __init__
+.UNINDENT
+.INDENT 7.0
+.TP
+.B WORKDIR:  \fI\%str\fP
+The directory where packaging takes place [1]
+.sp
+Scope: src_*
+.UNINDENT
+.INDENT 7.0
+.TP
+.B can_update_live()
+Indicates whether or not a live package can be updated.
+.sp
+The default implementation just returns False. If the package has \fBlive\fP in its
+\fB\(gaPROPERTIES\fP, it must implement this method.
+.INDENT 7.0
+.TP
+.B Return type
+\fI\%bool\fP
+.TP
+.B Returns
+If the package has \fBPROPERTIES=\(dqlive\(dq\fP and can be updated, should return True
+Otherwise, should return False
+.UNINDENT
+.UNINDENT
+.INDENT 7.0
+.TP
+.B dodoc(pattern)
+Installs documentation matching the given pattern into the image directory
+(\fBSelf.D\fP)
+.INDENT 7.0
+.TP
+.B Parameters
+\fBpattern\fP (\fI\%str\fP) \-\- A pattern which can include glob\-style wildcards as implemented by
+\fI\%glob\fP\&.
+.UNINDENT
+.UNINDENT
+.INDENT 7.0
+.TP
+.B static  execute(command, pipe_output=False, pipe_error=False)
+Allows execution of arbitrary commands at runtime.
+Command is sandboxed with filesystem and network access depending on
+the context in which it is called
+.INDENT 7.0
+.TP
+.B Parameters
+.INDENT 7.0
+.IP \(bu 2
+\fBcommand\fP (\fI\%str\fP) \-\- Command to be executed
+.IP \(bu 2
+\fBpipe_output\fP (\fI\%bool\fP) \-\- If true, returns the output of the command
+.IP \(bu 2
+\fBpipe_error\fP (\fI\%bool\fP) \-\- 
+.UNINDENT
+.TP
+.B Return type
+\fI\%Optional\fP[\fI\%str\fP]
+.UNINDENT
+.UNINDENT
+.INDENT 7.0
+.TP
+.B get_installed_env()
+Returns a dictionary containing installed object values
+.UNINDENT
+.INDENT 7.0
+.TP
+.B info(string)
+Displays info message both immediately, and in the summary after all
+transactions have been completed
+.INDENT 7.0
+.TP
+.B Parameters
+\fBstring\fP (\fI\%str\fP) \-\- String to display
+.UNINDENT
+.UNINDENT
+.INDENT 7.0
+.TP
+.B pkg_postinst()
+Function called immediately after package installation
+.sp
+In Pybuild1, this function has full write permissions to ROOT.
+In Pybuild2 it only has read permissions.
+.sp
+Note that the default does nothing, and it will not even be executed unless defined.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B pkg_prerm()
+Function called immediately before package removal
+.sp
+In Pybuild1, this function has full write permissions to ROOT.
+In Pybuild2 it only has read permissions.
+.sp
+Note that the default does nothing, and it will not even be executed unless defined.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B pkg_pretend()
+May be used to carry out sanity checks early on in the install process
+.sp
+Note that the default does nothing, and it will not even be executed unless defined.
+.sp
+\fBpkg_pretend\fP is run separately from the main phase function sequence, and does not
+participate in any kind of environment saving. There is no guarantee that any of
+an package’s dependencies will be met at this stage, and no guarantee that the system
+state will not have changed substantially before the next phase is executed.
+.sp
+\fBpkg_pretend\fP must not write to the filesystem and the initial working directory
+should not be expected to be consistent.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B src_install()
+The src_install function installs the package’s content to a directory specified in \fI\%Pybuild2.D\fP\&.
+.sp
+The initial working directory is \fI\%Pybuild2.S\fP, falling back to \fBPybuild.WORKDIR\fP
+if the directory does not exist.
+.sp
+The default implementation used when the package lacks the \fBsrc_install\fP function shall behave as:
+.INDENT 7.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+for pattern in self.DOCS:
+    self.dodoc(pattern)
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 7.0
+.TP
+.B src_prepare()
+The src_prepare function can be used for post\-unpack source preparation.
+.sp
+The initial working directory is \fI\%Pybuild2.S\fP, falling back to
+\fI\%Pybuild2.WORKDIR\fP if the directory does not exist.
+.sp
+The default implementation used when the package lacks
+the \fBsrc_prepare\fP function shall behave as:
+.INDENT 7.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+if self.PATCHES:
+    for patch in use_reduce(self.PATCHES, self.USE, flat=True):
+        path = os.path.join(self.FILESDIR, patch)
+        apply_patch(path)
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 7.0
+.TP
+.B src_unpack()
+The \fBsrc_unpack\fP function extracts all of the package’s sources.
+.sp
+The initial working directory must be \fBself.WORKDIR\fP, and the default implementation
+used when the package lacks the src_unpack function shall behave as:
+.INDENT 7.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+self.unpack(self.A)
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 7.0
+.TP
+.B unpack(archives)
+Unpacks the given archive into the workdir
+.sp
+Uses \fI\%shutil.unpack_archive()\fP as its backend, supporting the following
+archive formats:
+\- .zip
+\- .tar
+\- .tar.xz / .txz
+\- .tar.bz2 / .tbz2
+\- .tar.xz / .txz
+.INDENT 7.0
+.TP
+.B Parameters
+\fBarchives\fP (\fI\%Union\fP[\fI\%str\fP, \fI\%Iterable\fP[\fI\%Union\fP[\fBSource\fP, \fI\%str\fP]]]) \-\- The list of archives to be unpacked
+.UNINDENT
+.UNINDENT
+.INDENT 7.0
+.TP
+.B validate()
+\fI(Since Portmod 2.4)\fP inquisitor will call this function when scanning repositories.
+.sp
+Only code that would be valid in the package global scope (see \fI\%Sandbox\fP) may be
+used.
+.sp
+This is designed to allow basic structural checks without hindering package loading.
+.sp
+It differs from \fI\%Pybuild2.pkg_pretend()\fP in that it is meant for static checks,
+not runtime checks.
+.UNINDENT
+.INDENT 7.0
+.TP
+.B version:  Version
+.UNINDENT
+.INDENT 7.0
+.TP
+.B warn(string)
+Displays warning message both immediately, and in the summary after all
+transactions have been completed
+.INDENT 7.0
+.TP
+.B Parameters
+\fBstring\fP (\fI\%str\fP) \-\- String to display
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B pybuild.apply_patch(patch)
+Applies git patch using Git apply
+.sp
+Patch files must be in a format that can be applied via git apply. Such patches can
+be produced with \fBgit diff \-\-no\-index ORIG NEW\fP\&. The \fB\-\-binary\fP option can be
+used to produce binary diffs for non\-text files.
+.sp
+Patches must be self\-applying.  I.e. they should not rely on paths being passed to
+git apply, and must apply from the default working directory in src_prepare.
+.sp
+It is recommended that a comment header is included to describe what the patch
+does, where it\(aqs from etc.
+.INDENT 7.0
+.TP
+.B Parameters
+\fBpatch\fP (\fI\%str\fP) \-\- Path to the patch to be applied
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B pybuild.find_file(name)
+Locates the path of a file within the OpenMW virtual file system
+.sp
+Deprecated since version 2.4: It will be removed in Portmod 3.0
+
+.INDENT 7.0
+.TP
+.B Parameters
+\fBname\fP (\fI\%str\fP) \-\- The relative path within the VFS to search for
+.TP
+.B Return type
+\fI\%str\fP
+.TP
+.B Returns
+The absolute path of the file
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B pybuild.get_masters(file)
+Detects masters for the given file
+.sp
+Deprecated since version 2.4: it will be removed in Portmod 3.0
+
+.INDENT 7.0
+.TP
+.B Parameters
+\fBfile\fP (\fI\%str\fP) \-\- File to be examined
+.TP
+.B Return type
+\fI\%Set\fP[\fI\%str\fP]
+.TP
+.B Returns
+A set of all the master names
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B pybuild.list_dir(name)
+Locates all path of files matching the given pattern within the OpenMW
+virtual file system
+.sp
+Deprecated since version 2.4: It will be removed in Portmod 3.0
+
+.INDENT 7.0
+.TP
+.B Parameters
+\fBname\fP (\fI\%str\fP) \-\- The relative path of the directory within the VFS
+.TP
+.B Return type
+\fI\%List\fP[\fI\%str\fP]
+.TP
+.B Returns
+A list of files contained within the directory
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B pybuild.patch_dir(src, dst, *, overwrite=True, ignore=None, case_sensitive=True, move_function=<function _move2>)
+Copies src ontop of dst
+.INDENT 7.0
+.TP
+.B Parameters
+.INDENT 7.0
+.IP \(bu 2
+\fBsrc\fP (\fI\%Union\fP[\fI\%str\fP, \fBDirEntry\fP]) \-\- Source directory to copy from
+.IP \(bu 2
+\fBdst\fP (\fI\%str\fP) \-\- Destination directory to copy to
+.IP \(bu 2
+\fBoverwrite\fP (\fI\%bool\fP) \-\- If true, overwrite existing files.
+.IP \(bu 2
+\fBignore\fP (\fI\%Optional\fP[\fI\%Callable\fP[[\fI\%str\fP, \fI\%List\fP[\fI\%str\fP]], \fI\%Set\fP[\fI\%str\fP]]]) \-\- A callable which, given a directory and its contents, should return
+a set of files to ignore
+.IP \(bu 2
+\fBcase_sensitive\fP (\fI\%bool\fP) \-\- If False, treat file and directory names as case insensitive
+.IP \(bu 2
+\fBmove_function\fP (\fI\%Callable\fP[[\fBDirEntry\fP, \fI\%str\fP], \fI\%None\fP]) \-\- The function to use to transfer individual files.
+Default is shutil.move (modified to accept a DirEntry).
+The signature should match shutil.copy2.
+.UNINDENT
+.TP
+.B Raises
+\fI\%FileExistsError\fP \-\- 
+.TP
+.B Return type
+\fI\%str\fP
+.TP
+.B Returns
+Returns dst
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B pybuild.use_reduce(depstr, uselist={}, masklist={}, matchall=False, excludeall={}, is_src_uri=False, opconvert=False, flat=False, is_valid_flag=None, token_class=None, matchnone=False)
+Takes a dep string and reduces the use? conditionals out, leaving an array
+with subarrays. All redundant brackets are removed.
+Adapted from portage\(aqs use_reduce
+.INDENT 7.0
+.TP
+.B Parameters
+.INDENT 7.0
+.IP \(bu 2
+\fBdepstr\fP (\fI\%str\fP) \-\- depstring
+.IP \(bu 2
+\fBuselist\fP (\fI\%AbstractSet\fP[\fI\%str\fP]) \-\- List of use enabled flags
+.IP \(bu 2
+\fBmasklist\fP (\fI\%AbstractSet\fP[\fI\%str\fP]) \-\- List of masked flags (always treated as disabled)
+.IP \(bu 2
+\fBmatchall\fP (\fI\%bool\fP) \-\- Treat all conditionals as active. Used by inquisitor.
+.IP \(bu 2
+\fBexcludeall\fP (\fI\%AbstractSet\fP[\fI\%str\fP]) \-\- List of flags for which negated conditionals are always treated
+as inactive.
+.IP \(bu 2
+\fBis_src_uri\fP (\fI\%bool\fP) \-\- Indicates if depstr represents a SRC_URI
+.IP \(bu 2
+\fBopconvert\fP (\fI\%bool\fP) \-\- Put every operator as first element into it\(aqs argument list
+.IP \(bu 2
+\fBflat\fP (\fI\%bool\fP) \-\- Create a flat list of all tokens
+.IP \(bu 2
+\fBis_valid_flag\fP (\fI\%Optional\fP[\fI\%Callable\fP[[\fI\%str\fP], \fI\%bool\fP]]) \-\- Function that decides if a given use flag might be used in
+use conditionals
+.IP \(bu 2
+\fBtoken_class\fP (\fI\%Optional\fP[\fI\%Type\fP]) \-\- Convert all non operator tokens into this class
+.IP \(bu 2
+\fBmatchnone\fP (\fI\%bool\fP) \-\- Treat all conditionals as inactive. Used by digestgen().
+.IP \(bu 2
+\fBmatchall\fP \-\- 
+.UNINDENT
+.TP
+.B Return type
+\fI\%List\fP
+.TP
+.B Returns
+The use reduced depend array
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B pybuild.version_gt(version1, version2)
+Version comparision function
+.INDENT 7.0
+.TP
+.B Parameters
+.INDENT 7.0
+.IP \(bu 2
+\fBversion1\fP (\fI\%str\fP) \-\- A version string
+.IP \(bu 2
+\fBversion2\fP (\fI\%str\fP) \-\- Another version string
+.UNINDENT
+.TP
+.B Return type
+\fI\%bool\fP
+.TP
+.B Returns
+True if and only if version1 is greater than version2
+.UNINDENT
+.UNINDENT
+.SH AUTHOR
+Benjamin Winger, Roma Tentser, PopeRigby, Hristos N. Triantafillou, lumbo7332, Pope_Rigby, marius david, marius851000, Joel, Nords Morrow, Basile Thullen, Paul Infield-Harm, Tenchi, louisabraham, ultramink
+.SH COPYRIGHT
+2019-2023, Portmod Authors
+.\" Generated by docutils manpage writer.
+.
