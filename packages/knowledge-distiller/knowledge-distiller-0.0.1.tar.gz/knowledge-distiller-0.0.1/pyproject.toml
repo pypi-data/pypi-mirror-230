@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68.2.2", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "knowledge-distiller"
+version = "0.0.1"
+description = "Distilling knowledge from a ml model"
+readme = "README.md"
+authors = [{ name = "Felix Jobson", email = "felix.jobson@outlook.de" }]
+license = { file = "LICENSE" }
+dynamic = ["dependencies"]
+requires-python = ">=3.9"
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+[project.optional-dependencies]
+dev = ["pytest", "flake8"]
+
+[project.scripts]
+realpython = "kdistiller.__main__:main"
