@@ -1,0 +1,38 @@
+"""Enums."""
+
+from enum import Enum
+
+
+class ObjectModelName(str, Enum):
+    """Object model names."""
+
+    BORG_ARCHIVE: str = "BorgArchive"
+    BORG_REPOSITORY: str = "BorgRepository"
+    CLUSTER: str = "Cluster"
+    CMS: str = "CMS"
+    FPM_POOL: str = "FPMPool"
+    VIRTUAL_HOST: str = "VirtualHost"
+    PASSENGER_APP: str = "PassengerApp"
+    DATABASE: str = "Database"
+    CERTIFICATE_MANAGER: str = "CertificateManager"
+    BASIC_AUTHENTICATION_REALM: str = "BasicAuthenticationRealm"
+    CRON: str = "Cron"
+    DATABASE_USER: str = "DatabaseUser"
+    DATABASE_USER_GRANT: str = "DatabaseUserGrant"
+    HTPASSWD_FILE: str = "HtpasswdFile"
+    HTPASSWD_USER: str = "HtpasswdUser"
+    MAIL_ACCOUNT: str = "MailAccount"
+    MAIL_ALIASES: str = "MailAlias"
+    MAIL_DOMAIN: str = "MailDomain"
+    NODE: str = "Node"
+    REDIS_INSTANCE: str = "RedisInstance"
+    DOMAIN_ROUTER: str = "DomainRouter"
+    MAIL_HOSTNAME: str = "MailHostname"
+    CERTIFICATE: str = "Certificate"
+    ROOT_SSH_KEY: str = "RootSSHKey"
+    SSH_KEY: str = "SSHKey"
+    UNIX_USER: str = "UNIXUser"
+    UNIX_USER_RABBITMQ_CREDENTIALS: str = "UNIXUserRabbitMQCredentials"
+    HAPROXY_LISTEN: str = "HAProxyListen"
+    HAPROXY_LISTEN_TO_NODE: str = "HAProxyListenToNode"
+    URL_REDIRECT: str = "URLRedirect"
