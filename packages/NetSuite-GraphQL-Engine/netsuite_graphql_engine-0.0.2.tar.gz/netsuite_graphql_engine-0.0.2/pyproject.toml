@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "NetSuite-GraphQL-Engine"
+version = "0.0.2"
+description = "The NetSuite GraphQL Engine simplifies interaction with the NetSuite SuiteTalk API using GraphQL, enabling seamless data access and integration into Python applications."
+authors = ["Idea Bosque <ideabosque@gmail.com>"]
+license = "MIT"
+classifiers = [
+    "Programming Language :: Python",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+readme = "README.md"
+homepage = "https://github.com/ideabosque/netsuite_graphql_engine"
+repository = "https://github.com/ideabosque/netsuite_graphql_engine"
+
+[tool.poetry.dependencies]
+python = "^3.6"
+SuiteTalk-Connector = "*"
+graphene = "*"
+pynamodb = "*"
+boto3 = "*"
+silvaengine_utility = "*"
+deepdiff = "*"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
