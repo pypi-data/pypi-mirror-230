@@ -1,0 +1,201 @@
+Metadata-Version: 2.1
+Name: dongwha-datalab
+Version: 0.0.0.28
+Summary: 동화기업 데이터랩에서 만든 통합 패키지이다.
+Home-page: 
+Author: 
+Author-email: 
+License: MIT
+Requires-Python: >=3.4
+Description-Content-Type: text/markdown
+Requires-Dist: boto3
+Requires-Dist: pymongo
+Requires-Dist: panel
+Requires-Dist: ipyfilechooser
+
+# Dangwha-datalab 설명
+동화기업의 MLOPS 소스 코드 이다. 
+
+# 설치
+pip install dongwha-datalab
+
+
+# 필요한 리스트
+해당 프로그램을 돌리기 위해서는 로컬PC 총4개의 파일이 필요하다.
+* 추출 : sql.txt
+* 전처리 : k121_transform.py
+* 학습 : k121_density.py 
+* ENDPOINT : k121_sf_api.py
+
+
+# 사용 방법
+### 1. 기본모드( 학습 )
+from data_lab import mlops_train
+
+AWS_ACCESS_KEY="key"
+AWS_SECRET_KEY="key"
+
+Mlops = mlops_train.mlops('dev', AWS_ACCESS_KEY, AWS_SECRET_KEY)
+
+Mlops.main_display()
+
+### 1.1 기본모드( 배포 )
+
+from data_lab import mlops_deploy
+
+AWS_ACCESS_KEY="key"
+AWS_SECRET_KEY="key"
+
+Mlops = mlops_deploy.mlops(AWS_ACCESS_KEY, AWS_SECRET_KEY)
+
+Mlops.main_display()
+
+### 1.1 기본모드 화면
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fcj7ZuL%2Fbtsj6PYWc7T%2F0U8pmMPNtyH5NMjXFmZjE0%2Fimg.png)
+
+
+### 2. 간단 모드
+* Mlops = mlops('dev_simple', AWS_ACCESS_KEY, AWS_SECRET_KEY)
+* Mlops.main_display()
+
+### 2.1 기본모드 화면
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FDHdeW%2Fbtsj6NUl6u0%2FhEajqqz3BFdfPbJ6KJkKL1%2Fimg.png)
+
+
+
+# 함수 설명
+
+## 최초 실행
+create_config_train_image( environment, model_id, endpoint_url,  aws_access_key_id = '', aws_secret_access_key = '', ssm_path = '/mlops/{0}/database/mongo' ) : 
+* environment : DEV/PROD 여부를 입력한다. 
+* model_id : ML의 고유 아이디를 입력한다. 
+* endpoint_url : endpoint_url 주소를 입력한다. 입력이 필요한 경우는 aws_access_key_id, aws_secret_access_key가 없는 경우이다. aws_access_key_id, aws_secret_access_key가 입력을 받으면, NONE으로 입력을 해준다. 
+* aws_access_key_id : AWS 발급 키이다. 
+* aws_secret_access_key : AWS 발급 키이다. 
+* ssm_path : 주소값이다.
+
+
+#### 최초 실행 예시 
+config = create_config_train_image( 'dev', '0776438ecc5911ed87d5027b3249a460', None, aws_access_key_id, aws_secret_access_key )
+
+
+## 중간부터 실행 하는 방법
+get_config_train_image(environment, model_id, script_ver, endpoint_url = None, aws_access_key_id = '', aws_secret_access_key = '', ssm_path = '/mlops/{0}/database/mongo' ) : 
+* environment : DEV/PROD 여부를 입력한다. 
+* model_id : ML의 고유 아이디를 입력한다. 
+* script_ver : ML의 실행 버전을 입력한다. 
+* endpoint_url : endpoint_url 주소를 입력한다. 입력이 필요한 경우는 aws_access_key_id, aws_secret_access_key가 없는 경우이다. aws_access_key_id, aws_secret_access_key가 입력을 받으면, NONE으로 입력을 해준다. 
+* aws_access_key_id : AWS 발급 키이다. 
+* aws_secret_access_key : AWS 발급 키이다. 
+* ssm_path : 주소값이다.
+
+#### 중간부터 실행 예시 
+config = get_config_train_image( 'dev', '0776438ecc5911ed87d5027b3249a460', 22, None, aws_access_key_id, aws_secret_access_key )
+
+
+# config의 구성
+{  
+   "model_id" : "0776438ecc5911ed87d5027b3249a460",  
+   "model_name" : "k121-dev-density",  
+   "script_ver" : 29,  
+   "endp_name" : "k121-dev-labcut-density-optimization-serverless",  
+   "endp_config_mode" : "serverless",  
+   "max_concurrency" : 1,  
+   "mem_size" : 2048,  
+   "local" : {  
+        "model_id" : "0776438ecc5911ed87d5027b3249a460",  
+        "model_name" : "k121-dev-density",  
+        "endp_name" : "k121-dev-labcut-density-optimization-serverless",  
+        "endp_config_mode" : "serverless",  
+        "max_concurrency" : 1,  
+        "mem_size" : 2048,  
+        "user_id" : "auto",  
+        "user_name" : "auto",  
+        "comment" : "휨강도 평균 예측",  
+        "extract_local_script_path" : "./script/k121/sql.txt",  
+        "transform_local_script_path" : "./script/k121/k121_transform.py",  
+        "train_local_script_path" : "./script/k121/k121_density.py",  
+        "endpoint_local_script_path" : "./script/k121/k121_sf_api.py",  
+        "image_name" : "autogluon",  
+        "transform_image_name" : "scikit-learn",  
+        "deploy" : true,  
+        "mongo_ssm" : "/mlops/dev/database/mongo",  
+        "script_ver" : 29  
+    },  
+    "init" : {  
+        "model_id" : "0776438ecc5911ed87d5027b3249a460",  
+        "model_name" : "k121-dev-density",  
+        "mongo_ssm" : "/mlops/dev/database/mongo",  
+        "tar_to_s3_bucket" : "test-commit-event-dwe-v1",  
+        "tar_to_s3_file_path" : "dev/k121-dev-density/29/local/sourcedir.tar.gz",  
+        "script_ver" : 29,  
+        "sourcedir_train_path" : "./script/k121_density.py",  
+        "sagemaker_model_id" : "k121-dev-density-20230508-044647-752939",  
+        "bucket" : "test-commit-event-dwe-v1",  
+        "script_path" : "dev/k121-dev-density/29/script",  
+        "extract_script_path" : "sql.txt",  
+        "transform_script_path" : "k121_transform.py",  
+        "create_model_script_path" : "k121_density.py",  
+        "endpoint_script_path" : "k121_sf_api.py",  
+        "endp_name" : "k121-dev-labcut-density-optimization-serverless",  
+        "endp_config_mode" : "serverless",  
+        "max_concurrency" : 1,  
+        "mem_size" : 2048  
+    }  
+}  
+
+
+## config 생성 발생 에러
+* print( 'extract_local_script_path 작업을 pass 할 수 없습니다.')
+* print( 'transform_local_script_path 작업을 pass 할 수 없습니다.')
+* print( 'train_local_script_path 작업을 pass 할 수 없습니다.')
+* print( 'transform_local_script_path 작업을 pass 할 수 없습니다.')
+* print( 'train_local_script_path 작업을 pass 할 수 없습니다.')
+* print( 'train_local_script_path 작업을 pass 할 수 없습니다.')
+* print( '전부 extract, transform, train, endpoint를 전부 패스하시면, 배포가 불필요합니다. ')
+
+
+## 배포
+upload_s3_ml_script(environment, config, endpoint_url = None, aws_access_key_id = '', aws_secret_access_key = '', stepfunction_job = 'mlops_test_step_01',  bucket = 'dwe-mlops-hub-repository',  ssm_path = '/mlops/{0}/database/mongo'  ):
+* environment : DEV/PROD 여부를 입력한다. 
+* config : get_config_train_image(), create_config_train_image() 에서 만들어진 config를 넣어준다. 
+* endpoint_url : endpoint_url 주소를 입력한다. 입력이 필요한 경우는 aws_access_key_id, aws_secret_access_key가 없는 경우이다. aws_access_key_id, aws_secret_access_key가 입력을 받으면, NONE으로 입력을 해준다. 
+* aws_access_key_id : AWS 발급 키이다. 
+* aws_secret_access_key : AWS 발급 키이다. 
+* stepfunction_job : 배포 프로세스를 입력해 준다. 
+* bucket: s3 버킷이름이다. 
+* ssm_path : 주소값이다.
+
+#### 배포 실행 예시 
+data = upload_s3_ml_script('dev', config, None, aws_access_key_id , aws_secret_access_key,  'mlops_test_step_01', 'test-commit-event-dwe-v1'  )
+
+
+## 자동 실행
+auto_excute(environment, model_id, endpoint_url = None, aws_access_key_id = '', aws_secret_access_key = '', stepfunction_job = 'mlops_test_step_01',  bucket = 'dwe-mlops-hub-repository',  ssm_path = '/mlops/{0}/database/mongo'  ):
+* environment : DEV/PROD 여부를 입력한다. 
+* model_id : ML의 고유 아이디를 입력한다. 
+* endpoint_url : endpoint_url 주소를 입력한다. 입력이 필요한 경우는 aws_access_key_id, aws_secret_access_key가 없는 경우이다. aws_access_key_id, aws_secret_access_key가 입력을 받으면, NONE으로 입력을 해준다. 
+* aws_access_key_id : AWS 발급 키이다. 
+* aws_secret_access_key : AWS 발급 키이다. 
+* stepfunction_job : 배포 프로세스를 입력해 준다. 
+* bucket: s3 버킷이름이다. 
+* ssm_path : 주소값이다.
+
+
+#### 자동 실행 예시
+auto_excute('dev', '0776438ecc5911ed87d5027b3249a460', None, aws_access_key_id, aws_secret_access_key, stepfunction_job = 'mlops_test_step_01',  bucket = 'test-commit-event-dwe-v1')
+
+
+
+### 업데이트 내용
+* 0.0.0.16 : 리젠 추가
+* 0.0.0.17 : 리젠 추가 수정
+* 0.0.0.18 : README 사진 첨부 테스트 (삭제)
+* 0.0.0.19 : README 사진 첨부( 삭제 ) 
+* 0.0.0.20 : README 사진 첨부
+
+
+
+
+
+
