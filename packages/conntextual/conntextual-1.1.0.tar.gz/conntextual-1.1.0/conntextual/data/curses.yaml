@@ -1,0 +1,13 @@
+---
+includes:
+  - package://runtimepy/factories.yaml
+
+factories:
+  - {name: conntextual.curses.TuiApp}
+
+tasks:
+  - {name: tui, factory: TuiApp, period_s: 0.01}
+
+app:
+  - [conntextual.curses.run, conntextual.ui.stop_after]
+  - runtimepy.net.apps.wait_for_stop
