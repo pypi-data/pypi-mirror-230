@@ -1,0 +1,86 @@
+[tool.autoflake]
+expand-star-imports = true
+in-place = true
+remove-all-unused-imports = true
+remove-duplicate-keys = true
+remove-unused-variables = true
+
+[tool.poetry]
+name = "vistafetch"
+version = "1.0.0"
+description = "Small & simple library to fetch financial data for stocks, ETFs, funds, etc. from Onvista."
+authors = ["bossenti <bossenti@apache.org>"]
+license = "Apache 2.0"
+readme = "README.md"
+
+repository = "https://github.com/bossenti/vistafetch"
+documentation = "https://github.com/bossenti/vistafetch#readme"
+
+keywords = [
+    "etf",
+    "exchange",
+    "financial-data",
+    "funds",
+    "onvista",
+    "stocks"
+]
+
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Framework :: Pydantic :: 2",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Topic :: Office/Business :: Financial :: Investment"
+]
+
+include = [
+    { path = "vistafetch/py.typed" }
+]
+
+[tool.poetry.dependencies]
+python = ">=3.8, <3.12"
+pydantic = ">=2.0.0"
+requests = ">=2.31.0"
+rich = ">=13.0.0"
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+autoflake = "2.2.0"
+black = "23.7.0"
+mypy = "1.5.1"
+pre-commit = "3.3.3"
+pytest = "7.4.0"
+pytest-cov = "4.1.0"
+ruff = "0.0.285"
+types-requests = "2.31.0.2"
+
+[tool.poetry.group.release]
+optional = true
+
+[tool.poetry.group.release.dependencies]
+twine = "4.0.2"
+
+[tool.ruff]
+select = ["C90", "D", "E", "F", "I", "ICN", "N", "PL", "UP"]
+ignore = [
+    "D107",
+    "D203", # ignore in favour of D211
+    "D213", # ignore in favour of D212
+]
+
+[tool.ruff.per-file-ignores]
+"tests/**/*" = ["D100","D101", "D102", "D103", "D104"]
+"tests/test_client.py" = ["I001"]
+"vistafetch/client.py" = ["I001"]
+"vistafetch/model/asset/__init__.py" = ["I001"]
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
