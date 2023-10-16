@@ -1,0 +1,48 @@
+import asyncio
+
+from arku import create_pool
+from arku.connections import RedisSettings
+
+
+async def the_task(ctx):
+    print('running the task with id', ctx['job_id'])
+
+
+async def main():
+    redis = await create_pool(RedisSettings())
+
+    # no id, random id will be generated
+    job1 = await redis.enqueue_job('the_task')
+    print(job1)
+    """
+    >  <arku job 99edfef86ccf4145b2f64ee160fa3297>
+    """
+
+    # random id again, again the job will be enqueued and a job will be returned
+    job2 = await redis.enqueue_job('the_task')
+    print(job2)
+    """
+    >  <arku job 7d2163c056e54b62a4d8404921094f05>
+    """
+
+    # custom job id, job will be enqueued
+    job3 = await redis.enqueue_job('the_task', _job_id='foobar')
+    print(job3)
+    """
+    >  <arku job foobar>
+    """
+
+    # same custom job id, job will not be enqueued and enqueue_job will return None
+    job4 = await redis.enqueue_job('the_task', _job_id='foobar')
+    print(job4)
+    """
+    >  None
+    """
+
+
+class WorkerSettings:
+    functions = [the_task]
+
+
+if __name__ == '__main__':
+    asyncio.run(main())

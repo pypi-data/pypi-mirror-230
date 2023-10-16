@@ -1,0 +1,260 @@
+arku
+====
+
+.. toctree::
+   :maxdepth: 2
+
+|pypi| |license|
+
+Job queues and RPC in python with asyncio and redis.
+
+*arku*, pronounced as ``ar·kyu``, was conceived as a simple, modern and performant successor to rq_.
+
+Why use *arku*?
+
+**non-blocking**
+    *arku* is built using python 3's asyncio_ allowing
+    non-blocking job enqueuing and execution. Multiple jobs (potentially hundreds) can be run simultaneously
+    using a pool of *asyncio* ``Tasks``.
+
+**powerful-features**
+    Deferred execution, easy retrying of jobs, and pessimistic execution (:ref:`see below <usage>`)
+    means *arku* is great for critical jobs that **must** be completed.
+
+**fast**
+    Asyncio and no forking make *arku* around 7x faster than
+    *rq* for short jobs with no io. With io that might increase to around 40x
+    faster. (TODO)
+
+**elegant**
+    I'm a long time contributor to and user of `rq`_, *arku* is designed to be simpler, clearer and more powerful.
+
+**small**
+    and easy to reason with - currently *arku* is only about 700 lines, that won't change significantly.
+
+Install
+-------
+
+Just::
+
+    python -m pip install arku
+
+Redesigned to be less elegant?
+------------------------------
+
+The approach used in *arku* ``v0.16`` of enqueueing jobs by name rather than "just calling a function" and knowing it
+will be called on the worker (as used in *arku* ``<= v0.15``, rq, celery et al.) might seem less elegant,
+but it's for good reason.
+
+This approach means your frontend (calling the worker) doesn't need access to the worker code,
+meaning better code separation and possibly smaller images etc.
+
+.. _usage:
+
+Usage
+-----
+
+.. warning::
+
+   **Jobs may be called more than once!**
+
+   *arku* v0.16 has what I'm calling "pessimistic execution": jobs aren't removed from the queue until they've either
+   succeeded or failed. If the worker shuts down, the job will be cancelled immediately and will remain in the queue
+   to be run again when the worker starts up again (or run by another worker which is still running).
+
+   (This differs from other similar libraries like *arku* ``<= v0.15``, rq, celery et al. where jobs generally don't get
+   rerun when a worker shuts down. This in turn requires complex logic to try and let jobs finish before
+   shutting down (I wrote the ``HerokuWorker`` for rq), however this never really works unless either: all jobs take
+   less than 6 seconds or your worker never shuts down when a job is running (impossible).)
+
+   All *arku* jobs should therefore be designed to cope with being called repeatedly if they're cancelled,
+   eg. use database transactions, idempotency keys or redis to mark when an API request or similar has succeeded
+   to avoid making it twice.
+
+   **In summary:** sometimes *exactly once* can be hard or impossible, *arku* favours multiple times over zero times.
+
+Simple Usage
+............
+
+.. literalinclude:: examples/main_demo.py
+
+(This script is complete, it should run "as is" both to enqueue jobs and run them)
+
+To enqueue the jobs, simply run the script::
+
+    python demo.py
+
+To execute the jobs, either after running ``demo.py`` or before/during::
+
+    arku demo.WorkerSettings
+
+Append ``--burst`` to stop the worker once all jobs have finished. See :class:`arku.worker.Worker` for more available
+properties of ``WorkerSettings``.
+
+You can also watch for changes and reload the worker when the source changes::
+
+    arku demo.WorkerSettings --watch path/to/src
+
+This requires watchgod_ to be installed (``pip install watchgod``).
+
+For details on the *arku* CLI::
+
+    arku --help
+
+Startup & Shutdown coroutines
+.............................
+
+The ``on_startup`` and ``on_shutdown`` coroutines are provided as a convenient way to run logic as the worker
+starts and finishes, see :class:`arku.worker.Worker`.
+
+For example, in the above example ``session`` is created once when the work starts up and is then used in subsequent
+jobs.
+
+Deferring Jobs
+..............
+
+By default, when a job is enqueued it will run as soon as possible (provided a worker is running). However
+you can schedule jobs to run in the future, either by a given duration (``_defer_by``) or
+at a particular time ``_defer_until``, see :func:`arku.connections.ArkuRedis.enqueue_job`.
+
+.. literalinclude:: examples/deferred.py
+
+Job Uniqueness
+..............
+
+Sometimes you want a job to only be run once at a time (eg. a backup) or once for a given parameter (eg. generating
+invoices for a particular company).
+
+*arku* supports this via custom job ids, see :func:`arku.connections.ArkuRedis.enqueue_job`. It guarantees
+that a job with a particular ID cannot be enqueued again until its execution has finished.
+
+.. literalinclude:: examples/job_ids.py
+
+The check of ``job_id`` uniqueness in the queue is performed using a redis transaction so you can be certain jobs
+with the same id won't be enqueued twice (or overwritten) even if they're enqueued at exactly the same time.
+
+Job Results
+...........
+
+You can access job information, status and job results using the :class:`arku.jobs.Job` instance returned from
+:func:`arku.connections.ArkuRedis.enqueue_job`.
+
+.. literalinclude:: examples/job_results.py
+
+Retrying jobs and cancellation
+..............................
+
+As described above, when an arku work shuts down any going jobs are cancelled immediately
+(via vanilla ``task.cancel()``, so a ``CancelledError`` will be raised). You can see this by running a slow job
+(eg. add ``await asyncio.sleep(5)``) and hitting ``Ctrl+C`` once it's started.
+
+You'll get something like.
+
+.. literalinclude:: examples/slow_job_output.txt
+
+You can also retry jobs by raising the :class:`arku.worker.Retry` exception from within a job,
+optionally with a duration to defer rerunning the jobs by:
+
+.. literalinclude:: examples/retry.py
+
+To abort a job, call :func:`arku.job.Job.abort`. (Note for the :func:`arku.job.Job.abort` method to
+have any effect, you need to set ``allow_abort_jobs`` to ``True`` on the worker, this is for performance reason.
+``allow_abort_jobs=True`` may become the default in future)
+
+:func:`arku.job.Job.abort` will abort a job if it's already running or prevent it being run if it's currently
+in the queue.
+
+.. literalinclude:: examples/job_abort.py
+
+Health checks
+.............
+
+*arku* will automatically record some info about its current state in redis every ``health_check_interval`` seconds.
+That key/value will expire after ``health_check_interval + 1`` seconds so you can be sure if the variable exists *arku*
+is alive and kicking (technically you can be sure it was alive and kicking ``health_check_interval`` seconds ago).
+
+You can run a health check with the CLI (assuming you're using the first example above)::
+
+    arku --check demo.WorkerSettings
+
+The command will output the value of the health check if found;
+then exit ``0`` if the key was found and ``1`` if it was not.
+
+A health check value takes the following form::
+
+    Mar-01 17:41:22 j_complete=0 j_failed=0 j_retried=0 j_ongoing=0 queued=0
+
+Where the items have the following meaning:
+
+* ``j_complete`` the number of jobs completed
+* ``j_failed`` the number of jobs which have failed eg. raised an exception
+* ``j_ongoing`` the number of jobs currently being performed
+* ``j_retried`` the number of jobs retries run
+
+Cron Jobs
+.........
+
+Functions can be scheduled to be run periodically at specific times. See :func:`arku.cron.cron`.
+
+.. literalinclude:: examples/cron.py
+
+Usage roughly shadows `cron <https://helpmanual.io/man8/cron/>`_ except ``None`` is equivalent on ``*`` in crontab.
+As per the example sets can be used to run at multiple of the given unit.
+
+Note that ``second`` defaults to ``0`` so you don't in inadvertently run jobs every second and ``microsecond``
+defaults to ``123456`` so you don't inadvertently run jobs every microsecond and so *arku* avoids enqueuing jobs
+at the top of a second when the world is generally slightly busier.
+
+Synchronous Jobs
+................
+
+Functions that can block the loop for extended periods should be run in an executor like
+``concurrent.futures.ThreadPoolExecutor`` or ``concurrent.futures.ProcessPoolExecutor`` using
+``loop.run_in_executor`` as shown below.
+
+.. literalinclude:: examples/sync_job.py
+
+Custom job serializers
+......................
+
+By default, *arku* will use the built-in ``pickle`` module to serialize and deserialize jobs. If you wish to
+use an alternative serialization methods, you can do so by specifying them when creating the connection pool
+and the worker settings. A serializer function takes a Python object and returns a binary representation
+encoded in a ``bytes`` object. A deserializer function, on the other hand, creates Python objects out of
+a ``bytes`` sequence.
+
+.. warning::
+   It is essential that the serialization functions used by :func:`arku.connections.create_pool` and
+   :class:`arku.worker.Worker` are the same, otherwise jobs created by the former cannot be executed by the
+   latter. This also applies when you update your serialization functions: you need to ensure that your new
+   functions are backward compatible with the old jobs, or that there are no jobs with the older serialization
+   scheme in the queue.
+
+Here is an example with `MsgPack <http://msgpack.org>`_, an efficient binary serialization format that
+may enable significant memory improvements over pickle:
+
+.. literalinclude:: examples/custom_serialization_msgpack.py
+
+
+Reference
+---------
+
+.. automodule:: arku.connections
+   :members:
+
+.. automodule:: arku.worker
+   :members: func, Retry, Worker
+
+.. automodule:: arku.cron
+   :members: cron
+
+.. automodule:: arku.jobs
+   :members: JobStatus, Job
+
+.. |pypi| image:: https://img.shields.io/pypi/v/arku.svg
+   :target: https://pypi.python.org/pypi/arku
+.. |license| image:: https://img.shields.io/pypi/l/arku.svg
+   :target: https://github.com/targetaidev/arku
+.. _asyncio: https://docs.python.org/3/library/asyncio.html
+.. _watchgod: https://pypi.org/project/watchgod/
+.. _rq: http://python-rq.org/
