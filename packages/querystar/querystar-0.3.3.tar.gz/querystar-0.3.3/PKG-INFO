@@ -1,0 +1,54 @@
+Metadata-Version: 2.1
+Name: querystar
+Version: 0.3.3
+Summary: Python framework for workflow automations.
+Home-page: https://querystar.io
+License: Apache-2.0
+Author: Adithya Krishnan
+Author-email: krishsandeep@gmail.com
+Requires-Python: >=3.8,<4.0
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Dist: click (>=8.1.7,<9.0.0)
+Requires-Dist: python-dotenv (>=1.0.0,<2.0.0)
+Requires-Dist: requests (>=2.31.0,<3.0.0)
+Requires-Dist: websockets (>=11.0.3,<12.0.0)
+Project-URL: Repository, https://github.com/modelstar-labs/querystar
+Description-Content-Type: text/markdown
+
+# Hi there, this is <a href="https://querystar.io/" style="color: #AF3BEA;"><img src="./assets/logo.png" height="28"> QueryStar</a> 👋
+
+### QueryStar is the easiest way for data and Python developers to ship AI-powered bots.
+
+![How does QueryStar work?](./assets/diagram.png)
+
+## Install
+
+```
+pip install querystar
+```
+
+## Get your access token : app.querystar.io
+
+## Add access token to environment variable
+
+## Sample app
+
+```py
+# app.py
+import querystar as qs
+
+message_info = qs.triggers.slack.new_message()
+print(message_info)
+```
+
+## Run using
+
+```bash
+querystar run app.py
+```
+
