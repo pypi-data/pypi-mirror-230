@@ -1,0 +1,85 @@
+[project]
+name = "pspdfutils"
+version = "3.3.2"
+description = "Manipulate PDF and PostScript documents"
+license = {text = "GPL v3 or later"}
+authors = [
+    {name = "Reuben Thomas", email = "rrt@sc3d.org"}
+]
+readme = "README.md"
+urls = {Homepage = "https://github.com/rrthomas/psutils"}
+requires-python = ">= 3.9"
+dependencies = [
+    "puremagic",
+    "pypdf >= 3.15.0",
+]
+classifiers = [
+    "Environment :: Console",
+    "Programming Language :: Python :: 3",
+]
+
+[project.scripts]
+epsffit = "psutils.command.epsffit:epsffit"
+extractres = "psutils.command.extractres:extractres"
+includeres = "psutils.command.includeres:includeres"
+psbook = "psutils.command.psbook:psbook"
+psjoin = "psutils.command.psjoin:psjoin"
+psnup = "psutils.command.psnup:psnup"
+psresize = "psutils.command.psresize:psresize"
+psselect = "psutils.command.psselect:psselect"
+pstops = "psutils.command.pstops:pstops"
+
+[build-system]
+requires = [
+    "argparse-manpage[setuptools] >= 4.2",
+    "pytest-datafiles",
+    "puremagic",
+    "pypdf >= 3.16.0",
+    "Wand",
+]
+
+[tool.build_manpages]
+manpages = [
+    "epsffit.1:module=psutils.command.epsffit:function=get_parser:manual_title=User Command:include=epsffit-include.man",
+    "extractres.1:module=psutils.command.extractres:function=get_parser:manual_title=User Commands:include=extractres-include.man",
+    "includeres.1:module=psutils.command.includeres:function=get_parser:manual_title=User Commands:include=includeres-include.man",
+    "psbook.1:module=psutils.command.psbook:function=get_parser:manual_title=User Commands:include=psbook-include.man",
+    "psjoin.1:module=psutils.command.psjoin:function=get_parser:manual_title=User Commands",
+    "psnup.1:module=psutils.command.psnup:function=get_parser_manpages:manual_title=User Commands:include=psnup-include.man",
+    "psresize.1:module=psutils.command.psresize:function=get_parser:manual_title=User Commands:include=psresize-include.man",
+    "psselect.1:module=psutils.command.psselect:function=get_parser:manual_title=User Commands:include=psselect-include.man",
+    "pstops.1:module=psutils.command.pstops:function=get_parser_manpages:manual_title=User Commands:include=pstops-include.man",
+    "psutils.1:manfile=psutils.1",
+]
+
+[tool.mypy]
+exclude = [
+    '^dist',
+    '^build',
+    '^tests-output',
+]
+strict = true
+
+[tool.pylint.main]
+# Use multiple processes to speed up Pylint: 0 = auto-detect.
+jobs = 0
+
+[tool.pylint.MASTER]
+init-hook = 'import sys; sys.path.append(".")'
+
+[tool.pylint.format]
+good-names = "e,f,h,i,j,m,n,s,t,w,up"
+disable = [
+    "missing-module-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "fixme",
+    "too-many-locals",
+    "too-many-arguments",
+    "too-many-statements",
+    "too-many-branches",
+    "too-many-nested-blocks",
+]
+enable = [
+    "useless-suppression",
+]
