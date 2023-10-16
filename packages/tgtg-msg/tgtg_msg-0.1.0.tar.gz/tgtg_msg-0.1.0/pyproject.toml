@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "tgtg-msg"
+version = "0.1.0"
+description = "tg msg forward"
+authors = ["HUAJUNSHU <0x11a1@proton.me>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[tool.poetry.scripts]
+test-env = 'tgtg_msg.comm:print_env'
+tgcf-web = 'tgtg_msg.web_ui.run:main'
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[[tool.poetry.source]]
+name = "aliyun"
+url = "https://mirrors.aliyun.com/pypi/simple"
+priority = "default"
