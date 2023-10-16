@@ -1,0 +1,49 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+        },
+        {
+            "name": "train QM9 CC",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args" : ["--type", "train", "--config", "qm9_CC_test", "--comment", "Try to train our CCSD on QM9"],
+        },
+        {
+            "name": "sample QM9 CC",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args" : ["--type", "sample", "--config", "sample_qm9_CC_test", "--comment", "Try to sample our CCSD on QM9"],
+        },
+        {
+            "name": "sample ENZYMES_small_CC",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args" : ["--type", "sample", "--config", "sample_enzymes_small_CC"],
+        },
+        {
+            "name": "sample ego_small_CC",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args" : ["--type", "sample", "--config", "sample_ego_small_CC"],
+        }
+    ]
+}

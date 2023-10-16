@@ -1,0 +1,109 @@
+# Upgrade / next steps
+- reduce .to(device) operations
+- Modify architecture?! Especially identity layer or torch.bmm for V computation (heavy)
+- reduce calculation time CC
+- python-igraph/cairocffi for analysis/plot/generation of graphs
+- ModelNET & ShapeNET
+- add more eval_CC_list metrics (e.g. preservation of cycles?)
+- Add more parameters for ScoreNetwork (ex: activation function?) and for Graph data generators?
+- Update unit tests (add more of them, especially for the remaining files)
+- add conditional diffusion?
+- losses.py get_score_fn_cc, std of adjacency matrix, but also rank2 or not??
+- for mol, we generate mol and lift into cc again. Do the same for graph-based applications?
+    OR generate two types of CC, one with the lift, one with the predicted rank2 matrices and compare?
+
+
+# Documentation
+- Complete code coverage
+- Update the package with latest version
+- Add to README link of my thesis
+- add scripts/ folder and their files to README
+-orca
+cd evaluation/orca 
+g++ -O2 -std=c++11 -o orca orca.cpp
+
+- Other datasets
+- Releases/Packages/Deployments on GitHub?
+- Based on test_ files, add Examples: ... on each functions
+- Check if docs.yml works well?
+- Update Dependencies: (pipreqs ./ --force --mode gt)  in README and repo
+- Better CITATION.cff https://citation-file-format.github.io/assets/pdf/cff-specifications-1.0.0.pdf
+- Documentation command line: data_generator, main, preprocess, preprocess_for_nspdk.py
+- Add CONTRIBUTING.md?
+- Add uni logo on GitHub? / my github page add link to the thesis?
+- More info dataset generation
+
+For the evaluation of generic graph generation tasks, run the following command to compile the ORCA program (see http://www.biolab.si/supp/orca/orca.html):
+cd evaluation/orca 
+g++ -O2 -std=c++11 -o orca orca.cpp
+
+# Before pushing
+black .
+isort . --profile black -o wandb
+(optionally) test sphinx build
+cd docs
+Update requirements.txt files, conf.py, .rst files, .readthedocs.yaml
+.\make html
+Run a readthedocs build
+
+##### Instance (at root)
+tmux attach -t ccsd
+
+sudo su
+
+# Set up user passeword if not already done
+# passwd root
+
+source ccsd_env/bin/activate
+cd CCSD
+export PATH=/usr/local/cuda-12.1/bin${PATH:+:${PATH}}
+export LD_LIBRARY_PATH=/usr/local/cuda-12.1/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+export "PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:512"
+
+# Check drivers
+cat /proc/driver/nvidia/version
+nvcc --version
+
+sudo apt-get install lshw
+lshw -c display
+# Clean terminal
+printf "\033c"
+
+
+########
+To DL (finished)
+########
+
+python main.py --type train --config community_small
+python main.py --type train --config grid_small
+python main.py --type train --config grid_small_CC
+
+python main.py --type sample --config sample_qm9_Base_CC
+
+########
+In progress
+########
+
+python main.py --type sample --config sample_ego_small_CC
+python main.py --type sample --config sample_grid_small_CC
+
+########
+To do
+########
+
+python main.py --type train --config community_small_CC
+python main.py --type train --config grid_small_Base_CC
+python main.py --type train --config community_small_Base_CC
+python main.py --type train --config ego_small_Base_CC
+
+python main.py --type sample --config sample_grid_small_retrained
+
+python main.py --type sample --config sample_ego_small_retrained
+python main.py --type sample --config sample_ego_small_Base_CC
+python main.py --type sample --config sample_grid_small_Base_CC
+python main.py --type sample --config sample_community_small_CC
+python main.py --type sample --config sample_community_small_Base_CC
+
+
+
+TANIMOTO: O=CC1NC12CC=CC2
