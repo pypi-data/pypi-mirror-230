@@ -1,0 +1,66 @@
+# This section describes the requirements of the build/installation
+# process itself. Being able to do this was the original reason to
+# introduce pyproject.toml
+[build-system]
+requires = [
+    "setuptools >=61",
+]
+build-backend = "setuptools.build_meta"
+
+# This section provides general project metadata that is used across
+# a variety of build tools. Notably, the version specified here is the
+# single source of truth for cnsr's version
+[project]
+name = "cnsr"
+version = "0.0.1"
+description = "Lab code package for the CNSR lab at Heidelberg University"
+readme = "README.md"
+maintainers = [
+    { name = "Dominic Kempf", email = "ssc@iwr.uni-heidelberg.de" },
+    { name = "Torsten Wüstenberg", email = "torsten.wuestenberg@psychologie.uni-heidelberg.de" },
+    { name = "Daniel Holt", email = "daniel.holt@psychologie.uni-heidelberg.de" },
+]
+requires-python = ">=3.9"
+license = { text = "MIT" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "License :: OSI Approved :: MIT License",
+]
+dependencies = [
+    "click >=8.1,<9",
+    "ipyfilechooser >=0.6,<1",
+    "jupyter_app_launcher >=0.1,<1",
+    "jupyterlab >=3.1,<4",
+    "matplotlib >=3.7,<4",
+    "mne >=1.4,<2",
+    "mne-nirs >=0.5,<1",
+    "neurokit2 >=0.2,<1",
+    "nilearn >=0.10,<1",
+    "numpy >=1.25,<2",
+    "openpyxl >=3.1,<4",
+    "pandas >=2,<3",
+]
+
+[project.optional-dependencies]
+tests = [
+    "pytest",
+]
+
+[project.scripts]
+cnsr_copy_notebooks = "cnsr.install:copy_notebooks"
+install_cnsr_launcher_data = "cnsr.install:install_cnsr_launcher_data"
+
+# The following section contains setuptools-specific configuration
+# options. For a full reference of available options, check the overview
+# at https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html
+[tool.setuptools]
+packages = [
+    "cnsr",
+]
+
+# The following is the configuration for the pytest test suite
+[tool.pytest.ini_options]
+testpaths = [
+    "tests",
+]
