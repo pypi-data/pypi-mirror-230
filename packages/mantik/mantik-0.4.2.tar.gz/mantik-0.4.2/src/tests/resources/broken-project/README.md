@@ -1,0 +1,1 @@
+This is an intentionally broken project to test validation of MLproject file.

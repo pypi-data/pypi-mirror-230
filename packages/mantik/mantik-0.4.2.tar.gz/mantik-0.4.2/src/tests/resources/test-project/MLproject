@@ -1,0 +1,15 @@
+name: mantik-test
+
+docker_env:
+  image:  mantik-test:latest
+
+entry_points:
+  main:
+    parameters:
+      print: {type: "string", default: "test"}
+    command: python main.py {print}
+  # This entry point exists to allow a successful job for integration tests
+  echo:
+    parameters:
+      output: {type: "string", default: "test"}
+    command: echo {output}

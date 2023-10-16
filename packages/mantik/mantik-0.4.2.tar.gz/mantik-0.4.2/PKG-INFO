@@ -1,0 +1,55 @@
+Metadata-Version: 2.1
+Name: mantik
+Version: 0.4.2
+Summary: mantik for mlflow
+Home-page: https://mantik.ai/
+License: MIT
+Keywords: mlflow,machine learning,hpc,unicore
+Author: Fabian Emmerich
+Author-email: fabian.emmerich@4-cast.de
+Maintainer: Elia Boscaini
+Maintainer-email: elia.boscaini@ambrosys.de
+Requires-Python: >=3.8,<4.0
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Dist: Flask (>=2.1.2,<3.0.0)
+Requires-Dist: PyYAML (>=6.0,<7.0)
+Requires-Dist: boto3 (>=1.23.6,<2.0.0)
+Requires-Dist: click (>=8.1.3,<9.0.0)
+Requires-Dist: fastapi (>=0.78.0,<0.79.0)
+Requires-Dist: fs-s3fs (>=1.1.1,<2.0.0)
+Requires-Dist: mlflow (==2.2.2)
+Requires-Dist: pydantic (>=1.9.0,<2.0.0)
+Requires-Dist: pytest-xdist (>=3.3.1,<4.0.0)
+Requires-Dist: python-jose (>=3.3.0,<4.0.0)
+Requires-Dist: python-multipart (>=0.0.5,<0.0.6)
+Requires-Dist: pyunicore[crypto,fs,fuse] (>=0.15.0,<0.16.0)
+Requires-Dist: requests (>=2.27.1,<3.0.0)
+Requires-Dist: uvicorn[standard] (>=0.17.6,<0.18.0)
+Project-URL: Documentation, https://mantik-ai.gitlab.io/mantik
+Project-URL: Repository, https://gitlab.com/mantik-ai/mantik
+Description-Content-Type: text/markdown
+
+# mantik - plugin for MLflow with HPC (UNICORE)
+
+[Documentation](https://mantik-ai.gitlab.io/mantik)
+
+Mantik allows to manage the full Machine Learning workflow on HPC by
+supporting MLflow and deployment of applications to HPC.
+
+```shell
+mlflow run --backend unicore --backend-config <path to config> <path to project>
+```
+
+For a quickstart see [our documentation](https://mantik-ai.gitlab.io/mantik/quickstart.html)
+
+Service desk email: [contact-project+mantik-ai-mantik-42525397-issue-@incoming.gitlab.com](mailto:contact-project+mantik-ai-mantik-42525397-issue-@incoming.gitlab.com)
+
